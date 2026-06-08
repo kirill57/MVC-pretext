@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch01-points-vectors-space.tex, Section 6.
+     Status: CONVERTED. -->
+<section xml:id="sec-1-lines-planes-and-hyperplanes" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Lines, planes, and hyperplanes</title>
+
+  <p>
+    In <xref ref="sec-1-vectors-in-the-plane-and-in-space"/>, lines and planes appeared as
+    translated spans:
+    <md>P+\operatorname{span}\{\mathbf u\}, \qquad P+\operatorname{span}\{\mathbf u,\mathbf v\}.</md>
+    In <xref ref="sec-1-norm-distance-and-spheres"/>, we learned how to measure distance. Put
+    those together, and flat geometry becomes useful: we can describe roads, walls, flight
+    paths, and constraints, and then measure how far away things are from them.
+  </p>
+
+  <subsection xml:id="subsec-parametric-equations-lines">
+    <title>Parametric equations of lines</title>
+
+    <p>
+      A trail in space begins at
+      <md>P=(2,-1,3)</md>
+      and follows the direction
+      <md>\mathbf u=(1,4,-2).</md>
+      A point on the trail has the form
+      <md>P+t\mathbf u=(2,-1,3)+t(1,4,-2).</md>
+      Writing the coordinates separately gives
+      <md>x=2+t,\qquad y=-1+4t,\qquad z=3-2t.</md>
+      The parameter <m>t</m> tells how far we have moved in the chosen direction, measured in
+      units of the vector <m>\mathbf u</m>.
+    </p>
+
+    <definition xml:id="def-parametric-equation-line">
+      <title>Parametric equation of a line</title>
+      <statement>
+        <p>
+          Let <m>P</m> be a point in <m>\mathbb R^n</m>, and let
+          <m>\mathbf u\neq \mathbf 0</m> be a vector. The line through <m>P</m> in the
+          direction <m>\mathbf u</m> is
+          <md>L=\{P+t\mathbf u:t\in\mathbb R\}.</md>
+          The equation
+          <md>X=P+t\mathbf u</md>
+          is called a <term>parametric equation</term> of the line.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The condition <m>\mathbf u\neq \mathbf 0</m> is essential. If <m>\mathbf u=\mathbf 0</m>,
+      then
+      <md>P+t\mathbf 0=P</md>
+      for every <m>t</m>. The formula does not trace a line at all. It stays at one point.
+    </p>
+
+    <example xml:id="ex-line-in-the-plane">
+      <title>A line in the plane</title>
+      <statement>
+        <p>
+          The line through
+          <md>P=(1,2)</md>
+          in the direction
+          <md>\mathbf u=(3,1)</md>
+          has parametric equation
+          <md>(x,y)=(1,2)+t(3,1).</md>
+          Thus
+          <md>x=1+3t,\qquad y=2+t.</md>
+          When <m>t=0</m>, the point is <m>(1,2)</m>. When <m>t=2</m>, the point is
+          <md>(1,2)+2(3,1)=(7,4).</md>
+          When <m>t=-1</m>, the point is
+          <md>(1,2)-(3,1)=(-2,1).</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The same geometric line can have many parametric equations. For example,
+      <md>(x,y)=(1,2)+t(3,1)</md>
+      and
+      <md>(x,y)=(7,4)+s(-6,-2)</md>
+      describe the same line. The second one starts at a different point and uses a direction
+      vector pointing the opposite way with twice the length.
+    </p>
+
+    <p>A parametrization is a way of moving through the line, not the line itself.</p>
+  </subsection>
+
+  <subsection xml:id="subsec-parametric-equations-planes">
+    <title>Parametric equations of planes</title>
+
+    <p>A flat sheet in space needs a point and two independent directions.</p>
+
+    <p>
+      Suppose a shade sail has one corner at
+      <md>P=(1,0,2)</md>
+      and follows two support directions
+      <md>\mathbf u=(2,1,0),\qquad \mathbf v=(0,1,3).</md>
+      Points on the sail have the form
+      <md>P+s\mathbf u+t\mathbf v.</md>
+      So
+      <md>(x,y,z)=(1,0,2)+s(2,1,0)+t(0,1,3),</md>
+      or
+      <md>x=1+2s,\qquad y=s+t,\qquad z=2+3t.</md>
+    </p>
+
+    <definition xml:id="def-parametric-equation-plane">
+      <title>Parametric equation of a plane</title>
+      <statement>
+        <p>
+          Let <m>P</m> be a point in <m>\mathbb R^3</m>, and let <m>\mathbf u</m> and
+          <m>\mathbf v</m> be two vectors that are not scalar multiples of each other. The plane
+          through <m>P</m> in the directions <m>\mathbf u</m> and <m>\mathbf v</m> is
+          <md>\Pi=\{P+s\mathbf u+t\mathbf v:s,t\in\mathbb R\}.</md>
+          The equation
+          <md>X=P+s\mathbf u+t\mathbf v</md>
+          is called a <term>parametric equation</term> of the plane.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The condition on <m>\mathbf u</m> and <m>\mathbf v</m> matters. If
+      <md>\mathbf v=3\mathbf u,</md>
+      then
+      <md>P+s\mathbf u+t\mathbf v=P+s\mathbf u+3t\mathbf u=P+(s+3t)\mathbf u.</md>
+      This is only a line. Two written vectors do not guarantee two genuine directions.
+    </p>
+
+    <figure xml:id="fig-plane-two-directions">
+      <caption>A plane is swept out by two independent directions from a starting point.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.8, &gt;=stealth]
+          \coordinate (P) at (0,0);
+          \coordinate (U) at (3,0.8);
+          \coordinate (V) at (1.1,2.2);
+          \coordinate (UV) at (4.1,3.0);
+          \filldraw[fill=gray!12, draw=gray!60] (-0.8,-0.5) -- (3.8,0.7) -- (5.1,3.4) -- (0.4,2.4) -- cycle;
+          \draw[-&gt;, very thick] (P) -- (U) node[midway, below] {\(\mathbf u\)};
+          \draw[-&gt;, very thick] (P) -- (V) node[midway, left] {\(\mathbf v\)};
+          \draw[-&gt;, thick] (P) -- (UV) node[midway, above left] {\(s\mathbf u+t\mathbf v\)};
+          \draw[dashed] (U) -- (UV);
+          \draw[dashed] (V) -- (UV);
+          \fill (P) circle (2pt);
+          \node[below left] at (P) {\(P\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="subsec-normal-equations-planes">
+    <title>Normal equations of planes</title>
+
+    <p>
+      Parametric equations describe how to move around inside a plane. There is another way to
+      describe a plane: give a direction straight across it.
+    </p>
+
+    <p>
+      Consider the plane
+      <md>2x-y+3z=0.</md>
+      If we move inside this plane by a small displacement
+      <md>(\Delta x,\Delta y,\Delta z),</md>
+      then the value of <m>2x-y+3z</m> should not change. Therefore the displacement must
+      satisfy
+      <md>2\Delta x-\Delta y+3\Delta z=0.</md>
+      For example,
+      <md>(1,2,0)</md>
+      is allowed because
+      <md>2(1)-2+3(0)=0.</md>
+      Also
+      <md>(0,3,1)</md>
+      is allowed because
+      <md>2(0)-3+3(1)=0.</md>
+      These are directions along the plane.
+    </p>
+
+    <p>
+      The coefficients
+      <md>(2,-1,3)</md>
+      measure motion across the plane. This vector is called a <term>normal vector</term> to
+      the plane. The next chapter will explain this language using the dot product. For now, the
+      key point is that the plane is made of all points where the linear expression
+      <md>2x-y+3z</md>
+      has one fixed value.
+    </p>
+
+    <definition xml:id="def-normal-equation-plane">
+      <title>Normal equation of a plane</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf n=(A,B,C)\neq \mathbf 0</md>
+          and let
+          <md>P_0=(x_0,y_0,z_0).</md>
+          The plane through <m>P_0</m> with normal vector <m>\mathbf n</m> has equation
+          <md>A(x-x_0)+B(y-y_0)+C(z-z_0)=0.</md>
+          Equivalently, it can be written
+          <md>Ax+By+Cz=D</md>
+          for some constant <m>D</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The condition
+      <md>(A,B,C)\neq (0,0,0)</md>
+      is necessary. If <m>A=B=C=0</m>, then the equation becomes
+      <md>0=D.</md>
+      If <m>D=0</m>, every point in space satisfies it. If <m>D\neq0</m>, no point satisfies it.
+      Neither case gives a plane.
+    </p>
+
+    <example xml:id="ex-normal-vector-to-plane">
+      <title>From a normal vector to a plane equation</title>
+      <statement>
+        <p>
+          Find the plane through
+          <md>P_0=(1,2,0)</md>
+          with normal vector
+          <md>\mathbf n=(2,-1,3).</md>
+          Using the definition,
+          <md>2(x-1)-(y-2)+3(z-0)=0.</md>
+          Simplifying,
+          <md>2x-2-y+2+3z=0,</md>
+          so
+          <md>2x-y+3z=0.</md>
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="ex-plane-equation-to-parametrization">
+      <title>From a plane equation to a parametrization</title>
+      <statement>
+        <p>
+          The plane
+          <md>2x-y+3z=0</md>
+          can be parametrized by choosing two coordinates freely. Let
+          <md>x=s,\qquad z=t.</md>
+          Then the equation gives
+          <md>2s-y+3t=0,</md>
+          so
+          <md>y=2s+3t.</md>
+          Therefore
+          <md>(x,y,z)=(s,2s+3t,t).</md>
+          Writing this as a point plus directions,
+          <md>(x,y,z)=s(1,2,0)+t(0,3,1).</md>
+          So a parametric equation is
+          <md>(x,y,z)=s(1,2,0)+t(0,3,1).</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>The two descriptions tell different stories.</p>
+
+    <table xml:id="tab-parametric-vs-normal">
+      <title>Two descriptions of a plane.</title>
+      <tabular>
+        <row><cell>Parametric equation</cell><cell>How to move inside the plane</cell></row>
+        <row><cell>Normal equation</cell><cell>How to test whether a point is on the plane</cell></row>
+      </tabular>
+    </table>
+
+    <p>Both are useful.</p>
+  </subsection>
+
+  <subsection xml:id="subsec-distances-to-lines-planes">
+    <title>Distances to lines and planes</title>
+
+    <p>Distance questions turn flat geometry into calculus.</p>
+
+    <p>
+      A road in the plane is described by
+      <md>L=(1,2)+t(3,1).</md>
+      A house is located at
+      <md>A=(4,6).</md>
+      How far is the house from the road?
+    </p>
+
+    <p>
+      A point on the road is
+      <md>P(t)=(1+3t,\;2+t).</md>
+      The squared distance from <m>A</m> to <m>P(t)</m> is
+      <md>
+        <mrow>D(t)^2 \amp= (4-(1+3t))^2+(6-(2+t))^2</mrow>
+        <mrow>\amp= (3-3t)^2+(4-t)^2.</mrow>
+      </md>
+      We minimize <m>D(t)^2</m> instead of <m>D(t)</m>, because the square root is not needed to
+      find the closest point.
+    </p>
+
+    <p>
+      Expanding,
+      <md>D(t)^2=10t^2-26t+25.</md>
+      This is a single-variable calculus problem. Differentiate:
+      <md>\frac{d}{dt}D(t)^2=20t-26.</md>
+      Set this equal to zero:
+      <md>20t-26=0,</md>
+      so
+      <md>t=\frac{13}{10}.</md>
+      The nearest point on the road is
+      <md>P\left(\frac{13}{10}\right)=\left(1+3\cdot\frac{13}{10},\;2+\frac{13}{10}\right)=\left(\frac{49}{10},\frac{33}{10}\right).</md>
+      The distance is
+      <md>
+        <mrow>d(A,L) \amp= \sqrt{\left(4-\frac{49}{10}\right)^2+\left(6-\frac{33}{10}\right)^2}</mrow>
+        <mrow>\amp= \sqrt{\left(-\frac{9}{10}\right)^2+\left(\frac{27}{10}\right)^2}</mrow>
+        <mrow>\amp= \frac{9\sqrt{10}}{10}.</mrow>
+      </md>
+    </p>
+
+    <example xml:id="ex-nearest-point-formula-line">
+      <title>The nearest point formula for a line</title>
+      <statement>
+        <p>
+          Let
+          <md>L=P+t\mathbf u</md>
+          be a line in <m>\mathbb R^n</m>, where
+          <md>P=(p_1,\ldots,p_n),\qquad \mathbf u=(u_1,\ldots,u_n)\neq \mathbf 0.</md>
+          Let
+          <md>A=(a_1,\ldots,a_n)</md>
+          be a point.
+        </p>
+        <p>
+          The value of <m>t</m> that gives the closest point on the line is
+          <md>t_*=\frac{(a_1-p_1)u_1+\cdots+(a_n-p_n)u_n}{u_1^2+\cdots+u_n^2}.</md>
+          Then the distance from <m>A</m> to the line is
+          <md>d(A,L)=\|A-(P+t_*\mathbf u)\|.</md>
+          The numerator in this formula will soon get a name. It is the dot product hiding in
+          plain sight.
+        </p>
+      </statement>
+    </example>
+
+    <p>Planes have an especially clean distance formula.</p>
+
+    <example xml:id="ex-distance-point-to-plane">
+      <title>Distance from a point to a plane</title>
+      <statement>
+        <p>
+          Find the distance from
+          <md>A=(3,1,4)</md>
+          to the plane
+          <md>2x-y+2z=5.</md>
+          The normal direction is
+          <md>\mathbf n=(2,-1,2).</md>
+          A line starting at <m>A</m> and moving straight across the plane is
+          <md>(x,y,z)=(3,1,4)+t(2,-1,2).</md>
+          Substitute this into the plane equation:
+          <md>2(3+2t)-(1-t)+2(4+2t)=5.</md>
+          Simplify:
+          <md>13+9t=5.</md>
+          Thus
+          <md>t=-\frac{8}{9}.</md>
+          The distance traveled along the normal line is
+          <md>\left|-\frac{8}{9}\right|\|(2,-1,2)\|=\frac{8}{9}\sqrt{4+1+4}=\frac{8}{3}.</md>
+          So the distance from the point to the plane is
+          <md>\frac83.</md>
+        </p>
+      </statement>
+    </example>
+
+    <theorem xml:id="thm-distance-point-to-plane">
+      <title>Distance from a point to a plane</title>
+      <statement>
+        <p>
+          Let
+          <md>\Pi:\quad \alpha x+\beta y+\gamma z=d</md>
+          be a plane, where
+          <md>(\alpha,\beta,\gamma)\neq (0,0,0).</md>
+          The distance from
+          <md>A=(a,b,c)</md>
+          to <m>\Pi</m> is
+          <md>\boxed{d(A,\Pi)=\frac{|\alpha a+\beta b+\gamma c-d|}{\sqrt{\alpha^2+\beta^2+\gamma^2}}.}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Move from <m>A</m> in the normal direction
+          <md>\mathbf n=(\alpha,\beta,\gamma).</md>
+          The normal line is
+          <md>(x,y,z)=(a,b,c)+t(\alpha,\beta,\gamma).</md>
+          Substitute into the plane equation:
+          <md>\alpha(a+t\alpha)+\beta(b+t\beta)+\gamma(c+t\gamma)=d.</md>
+          This becomes
+          <md>\alpha a+\beta b+\gamma c+t(\alpha^2+\beta^2+\gamma^2)=d.</md>
+          Thus
+          <md>t=\frac{d-(\alpha a+\beta b+\gamma c)}{\alpha^2+\beta^2+\gamma^2}.</md>
+          The distance traveled is
+          <md>|t|\|\mathbf n\|=\left|\frac{d-(\alpha a+\beta b+\gamma c)}{\alpha^2+\beta^2+\gamma^2}\right|\sqrt{\alpha^2+\beta^2+\gamma^2}.</md>
+          After simplifying, this gives
+          <md>d(A,\Pi)=\frac{|\alpha a+\beta b+\gamma c-d|}{\sqrt{\alpha^2+\beta^2+\gamma^2}}.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The absolute value is important. The expression
+      <md>\alpha a+\beta b+\gamma c-d</md>
+      can be positive or negative depending on which side of the plane the point lies. Distance
+      does not remember the side. It only remembers how far.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-hyperplanes-rn">
+    <title>Hyperplanes in <m>\mathbb R^n</m></title>
+
+    <p>
+      In <m>\mathbb R^2</m>, an equation like
+      <md>3x-2y=5</md>
+      describes a line.
+    </p>
+
+    <p>
+      In <m>\mathbb R^3</m>, an equation like
+      <md>3x-2y+z=5</md>
+      describes a plane.
+    </p>
+
+    <p>
+      In <m>\mathbb R^4</m>, an equation like
+      <md>3x_1-2x_2+x_3+7x_4=5</md>
+      describes something we cannot draw honestly. But the pattern is clear: one linear
+      constraint removes one free direction.
+    </p>
+
+    <definition xml:id="def-hyperplane">
+      <title>Hyperplane</title>
+      <statement>
+        <p>
+          A <term>hyperplane</term> in <m>\mathbb R^n</m> is a set of points satisfying one
+          linear equation
+          <md>a_1x_1+a_2x_2+\cdots+a_nx_n=d,</md>
+          where at least one coefficient <m>a_i</m> is nonzero.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      A hyperplane in <m>\mathbb R^2</m> is a line. A hyperplane in <m>\mathbb R^3</m> is a
+      plane. A hyperplane in <m>\mathbb R^4</m> is a three-dimensional flat slice of
+      four-dimensional space.
+    </p>
+
+    <example xml:id="ex-constraint-data-space">
+      <title>A constraint in a data space</title>
+      <statement>
+        <p>
+          A greenhouse sensor records four quantities:
+          <md>(T,p,h,c),</md>
+          where <m>T</m> is temperature, <m>p</m> is pressure, <m>h</m> is humidity, and
+          <m>c</m> is carbon dioxide level.
+        </p>
+        <p>
+          Suppose an alarm triggers when
+          <md>2T+p-3h+4c=100.</md>
+          The set of all readings that trigger the alarm is a hyperplane in <m>\mathbb R^4</m>.
+          We cannot draw it as a surface in ordinary space, but we can still work with it
+          algebraically.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      If
+      <md>a_n\neq0,</md>
+      then the hyperplane equation can be solved for <m>x_n</m>:
+      <md>x_n=\frac{d-a_1x_1-\cdots-a_{n-1}x_{n-1}}{a_n}.</md>
+      The first <m>n-1</m> coordinates may be chosen freely, and the last one is then
+      determined. That is why a hyperplane in <m>\mathbb R^n</m> has dimension <m>n-1</m>.
+    </p>
+
+    <p>
+      Lines, planes, and hyperplanes are the flat objects of multivariable calculus. They are
+      simple enough to compute with, but rich enough to approximate curved objects. Later, a
+      curve will become a tangent line when we zoom in. A surface will become a tangent plane. A
+      nonlinear constraint will become a hyperplane.
+    </p>
+
+    <p>
+      But one important piece is still missing. We can add vectors and stretch them. We can
+      measure their length. We still cannot multiply two vectors in a useful way. There is not
+      just one useful multiplication. One product will measure how much two directions agree.
+      Another will measure the signed area they create. Those two ideas begin the next chapter.
+    </p>
+  </subsection>
+</section>

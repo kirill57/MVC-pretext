@@ -1,0 +1,4700 @@
+% =====================================================================
+%  Chapter 10: Double Integrals
+%  Sections 10.1 and 10.2
+% =====================================================================
+
+\chapter{Double Integrals}
+\label{ch:10}
+
+Chapter \ref{ch:9} asked pointwise questions.  We looked for peaks, valleys, saddle
+points, and constrained best points.  The tools were local:
+\[
+    df,\qquad \nabla f,\qquad H_f.
+\]
+They told us what happens near one point.
+
+Now the question changes.  A farmer does not only ask where a field is tallest.  She
+asks how much crop the field will produce.  A builder does not only ask where a roof is
+highest.  He asks how much air lies under it.  A metal plate is not only hot at one
+point.  It stores heat across its whole surface.
+
+Single-variable integration added tiny pieces along an interval.  A double integral adds
+tiny pieces across a region in the plane.
+
+\section{From area to volume by slicing}
+\label{sec:10.1}
+
+The single-variable integral began with area under a curve.  A double integral begins
+with the same idea, but the base is no longer an interval.  The base is a region in the
+plane, and the graph above it is a surface.
+
+\subsection{Area as a limit of sums}
+
+Imagine a garden bed whose edge is curved.  The owner wants its area, but the shape is
+not a rectangle, a triangle, or a circle.  One practical method is to lay a square grid over
+the garden and count squares.
+
+Large squares give a rough estimate.  Smaller squares give a better one.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.72, >=stealth]
+    \draw[step=1, gray!25, very thin] (0,0) grid (8,5);
+
+    \draw[thick, fill=green!10]
+        plot[smooth cycle] coordinates {
+            (1.0,0.8)
+            (2.1,0.25)
+            (4.3,0.55)
+            (6.8,1.2)
+            (7.25,2.7)
+            (6.0,4.25)
+            (3.6,4.65)
+            (1.35,3.75)
+            (0.55,2.1)
+        };
+
+    \node at (4,-0.7) {a curved region estimated by grid squares};
+\end{tikzpicture}
+\caption{Area can be estimated by adding the areas of many small squares.}
+\end{figure}
+
+If each small square has area
+\[
+    \Delta A,
+\]
+and \(N\) of them lie mostly inside the garden, then
+\[
+    \operatorname{Area} \approx N\Delta A.
+\]
+This is only an estimate, because boundary squares are awkward.  But as the grid gets
+finer, the boundary error gets squeezed into a thinner and thinner strip.
+
+The idea is not new.  In single-variable calculus, we approximated area under a curve by
+rectangles:
+\[
+    \sum f(x_i^*)\,\Delta x.
+\]
+Now each small piece has area
+\[
+    \Delta A
+\]
+instead of length \(\Delta x\).
+
+For a plain area problem, every small piece contributes just its own area.  So area is
+the limit of sums like
+\[
+    \sum \Delta A.
+\]
+Equivalently,
+\[
+\boxed{
+    \operatorname{Area}(R)=\iint_R 1\,dA.
+}
+\]
+This formula says: add the constant value \(1\) over every tiny area piece in \(R\).
+
+\subsection{Volume under a surface}
+
+Now put a surface above the region.  Suppose a slanted canopy covers a rectangular
+market stall:
+\[
+    0\le x\le 4,\qquad 0\le y\le 3.
+\]
+Its height in meters is
+\[
+    f(x,y)=2+\frac{x}{4}+\frac{y}{6}.
+\]
+We want the volume of air under the canopy.
+
+Cut the floor into \(1\)-meter by \(1\)-meter squares.  Over each small square, pretend
+the canopy height is constant and equal to the height at the center of that square.
+Then each piece is approximately a rectangular column:
+\[
+    \text{volume of one column}
+    \approx
+    \text{height at center}\times \text{base area}.
+\]
+
+The centers have
+\[
+    x=0.5,1.5,2.5,3.5
+\]
+and
+\[
+    y=0.5,1.5,2.5.
+\]
+Since each small square has area \(1\), the volume estimate is
+\[
+    \sum f(x_i^*,y_j^*)\cdot 1.
+\]
+Compute the sum:
+\[
+\begin{aligned}
+\sum f(x_i^*,y_j^*)
+&=
+\sum\left(2+\frac{x_i^*}{4}+\frac{y_j^*}{6}\right)\\
+&=
+12\cdot 2
++
+\frac14\left(3(0.5+1.5+2.5+3.5)\right)\\
+&\qquad
++
+\frac16\left(4(0.5+1.5+2.5)\right)\\
+&=
+24+\frac14(24)+\frac16(18)\\
+&=
+24+6+3\\
+&=
+33.
+\end{aligned}
+\]
+So the estimated volume is
+\[
+    33\text{ m}^3.
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+    \begin{axis}[
+        view={45}{35},
+        width=13cm, height=9cm,
+        axis lines=center,
+        xlabel={\(x\)}, ylabel={\(y\)}, zlabel={\(z\)},
+        xmin=0, xmax=4.8, ymin=0, ymax=3.8, zmin=0, zmax=4,
+        xtick={0,1,2,3,4}, ytick={0,1,2,3}, ztick={0,1,2,3,4},
+        ticklabel style={font=\footnotesize},
+        enlargelimits=0.05
+    ]
+        % Corrected Painter's Algorithm: Draw from back-to-front 
+        % Since the camera is at +x, -y, we draw large y first and small x first.
+        \foreach \y in {2,1,0} {
+            \foreach \x in {0,1,2,3} {
+                \pgfmathsetmacro{\h}{2 + (\x+0.5)/4 + (\y+0.5)/6}
+                \pgfmathsetmacro{\xp}{\x+1}
+                \pgfmathsetmacro{\yp}{\y+1}
+                
+                \edef\temp{
+                    % Front Face (facing the viewer, constant y)
+                    \noexpand\filldraw[fill=cyan!40!white, draw=cyan!80!black, thin]
+                        (\x,\y,0) -- (\xp,\y,0) -- (\xp,\y,\h) -- (\x,\y,\h) -- cycle;
+                    
+                    % Right Face (facing the viewer, constant x)
+                    \noexpand\filldraw[fill=cyan!60!white, draw=cyan!80!black, thin]
+                        (\xp,\y,0) -- (\xp,\yp,0) -- (\xp,\yp,\h) -- (\xp,\y,\h) -- cycle;
+                    
+                    % Top Face (facing up, constant z)
+                    \noexpand\filldraw[fill=cyan!10!white, draw=cyan!80!black, thin]
+                        (\x,\y,\h) -- (\xp,\y,\h) -- (\xp,\yp,\h) -- (\x,\yp,\h) -- cycle;
+                }
+                \temp 
+            }
+        }
+
+        % Plot the exact sample points at the center of each column top
+        \addplot3[
+            only marks,
+            mark=*,
+            mark size=1.0pt,
+            color=black
+        ] coordinates {
+            (0.5,0.5,2.208) (1.5,0.5,2.458) (2.5,0.5,2.708) (3.5,0.5,2.958)
+            (0.5,1.5,2.375) (1.5,1.5,2.625) (2.5,1.5,2.875) (3.5,1.5,3.125)
+            (0.5,2.5,2.542) (1.5,2.5,2.792) (2.5,2.5,3.042) (3.5,2.5,3.292)
+        };
+
+        % Translucent canopy surface
+        \addplot3[
+            surf,
+            domain=0:4,
+            domain y=0:3,
+            samples=2,
+            fill=red!40,
+            draw=red!60!black,
+            opacity=0.4,
+            thick
+        ] {2 + x/4 + y/6};
+        
+    \end{axis}
+\end{tikzpicture}
+\caption{A double integral adds many small column volumes.}
+\end{figure}
+
+The same pattern works for any surface
+\[
+    z=f(x,y)
+\]
+above a region \(R\).  Divide \(R\) into many small pieces.  On each piece, choose a
+sample point \((x^*,y^*)\).  The small column has approximate volume
+\[
+    f(x^*,y^*)\,\Delta A.
+\]
+Add all the columns:
+\[
+    \sum f(x^*,y^*)\,\Delta A.
+\]
+If these sums settle down to one number as the pieces shrink, that number is the
+volume under the surface.
+
+\subsection{Riemann sums over rectangles}
+
+The market canopy computation had the same shape as a one-variable Riemann sum,
+but with area pieces instead of length pieces.
+
+For a rectangle
+\[
+    R=[a,b]\times[c,d],
+\]
+we cut the \(x\)-interval into pieces and the \(y\)-interval into pieces.  This creates
+many small subrectangles.
+
+A typical subrectangle has side lengths
+\[
+    \Delta x_i,\qquad \Delta y_j,
+\]
+so its area is
+\[
+    \Delta A_{ij}=\Delta x_i\,\Delta y_j.
+\]
+Choose a sample point
+\[
+    (x_{ij}^*,y_{ij}^*)
+\]
+inside that subrectangle.  Then the Riemann sum is
+\[
+\boxed{
+    \sum_i\sum_j f(x_{ij}^*,y_{ij}^*)\,\Delta A_{ij}.
+}
+\]
+
+This expression has a simple meaning:
+
+\[
+\begin{array}{c|c}
+\text{factor} & \text{meaning} \\ \hline
+f(x_{ij}^*,y_{ij}^*) & \text{height, density, temperature, or value on the piece}\\[1mm]
+\Delta A_{ij} & \text{area of the piece}\\[1mm]
+f(x_{ij}^*,y_{ij}^*)\Delta A_{ij} & \text{small contribution}
+\end{array}
+\]
+
+When the function is a height, the contribution is a small volume.  When the function
+is a density, the contribution is a small mass.  When the function is temperature, the
+contribution is temperature times area, which leads to average temperature after we
+divide by total area.
+
+\begin{definition}[Double integral, first meaning]
+If the Riemann sums
+\[
+    \sum_i\sum_j f(x_{ij}^*,y_{ij}^*)\,\Delta A_{ij}
+\]
+approach one number as the subrectangles get smaller, independent of the sample
+points, then that number is called the \emph{double integral} of \(f\) over \(R\), written
+\[
+\boxed{
+    \iint_R f(x,y)\,dA.
+}
+\]
+\end{definition}
+
+The symbol \(dA\) means a tiny positive area piece.
+
+There is also a differential-forms way to write the same object.  In Chapter
+\ref{ch:2}, the form
+\[
+    dx\wedge dy
+\]
+measured signed area in the \(xy\)-plane.  On the usual orientation of the plane, a tiny
+rectangle whose sides point in the positive \(x\)- and \(y\)-directions has signed area
+\[
+    dx\wedge dy=\Delta x\,\Delta y.
+\]
+So the oriented version of the same integral is
+\[
+\boxed{
+    \iint_R f(x,y)\,dx\wedge dy.
+}
+\]
+For ordinary area, volume, mass, and average value, we usually write
+\[
+    f\,dA.
+\]
+When orientation matters, especially near Green's theorem, the wedge notation will
+return.
+
+\subsection{What a double integral measures}
+
+A double integral is not tied to one picture.  It is an adding machine for quantities
+spread over a region.
+
+\[
+\begin{array}{c|c|c}
+\text{Function} & \text{Units of } f & \text{Meaning of } \displaystyle\iint_R f\,dA \\ \hline
+f(x,y)=1 & 1 & \text{area of }R\\[1mm]
+f(x,y)=\text{height} & \text{meters} & \text{volume under a surface}\\[1mm]
+\rho(x,y)=\text{density} & \text{kg/m}^2 & \text{mass of a plate}\\[1mm]
+T(x,y)=\text{temperature} & ^\circ\text{C} & \text{temperature-area total}\\[1mm]
+q(x,y)=\text{charge density} & \text{C/m}^2 & \text{total charge}
+\end{array}
+\]
+
+\begin{example}[Mass of a thin plate]
+A thin metal plate occupies a region \(R\) in the plane.  Its density at \((x,y)\) is
+\[
+    \rho(x,y)\quad \text{kg/m}^2.
+\]
+A tiny area piece \(\Delta A\) near \((x,y)\) has mass approximately
+\[
+    \rho(x,y)\Delta A.
+\]
+Adding all such pieces gives
+\[
+\boxed{
+    M=\iint_R \rho(x,y)\,dA.
+}
+\]
+The double integral is not a volume here.  It is mass.
+\end{example}
+
+\begin{example}[Signed volume can cancel]
+Let
+\[
+    f(x,y)=x-y
+\]
+on the unit square
+\[
+    R=[0,1]\times[0,1].
+\]
+Above the diagonal \(x=y\), the function is positive.  Below the diagonal, it is
+negative.
+
+For every point \((x,y)\), the reflected point \((y,x)\) has value
+\[
+    f(y,x)=y-x=-(x-y).
+\]
+The square is symmetric under this reflection.  So the positive and negative
+contributions cancel:
+\[
+\boxed{
+    \iint_R (x-y)\,dA=0.
+}
+\]
+This does not mean the surface is flat.  It means the signed volume above the square
+equals the signed volume below it.
+\end{example}
+
+The idea is now visible: choose small area pieces, multiply each by the value sitting on
+it, and add.  But the phrase ``small area pieces'' still needs a careful meaning.  If two
+people choose different sample points, will they get the same answer?  If the function
+jumps around wildly, can the sums refuse to settle?  The next section turns the picture
+of columns into a definition strong enough to compute with.
+
+\section{Double integrals over rectangles}
+\label{sec:10.2}
+
+Section \ref{sec:10.1} built the double integral from a picture: columns over small
+rectangles.  Now we make the pieces precise.  The goal is the same as in
+single-variable calculus: define the integral in a way that does not depend on a lucky
+choice of sample points.
+
+\subsection{Partitions and sample points}
+
+Start with a rectangle
+\[
+    R=[a,b]\times[c,d].
+\]
+A partition of the \(x\)-interval is a list
+\[
+    a=x_0<x_1<\cdots<x_m=b.
+\]
+A partition of the \(y\)-interval is a list
+\[
+    c=y_0<y_1<\cdots<y_n=d.
+\]
+Together they cut \(R\) into subrectangles
+\[
+    R_{ij}=[x_{i-1},x_i]\times[y_{j-1},y_j].
+\]
+The area of \(R_{ij}\) is
+\[
+    \Delta A_{ij}=\Delta x_i\,\Delta y_j,
+\]
+where
+\[
+    \Delta x_i=x_i-x_{i-1},
+    \qquad
+    \Delta y_j=y_j-y_{j-1}.
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.75, >=stealth]
+    \draw[->] (-0.4,0) -- (6.6,0) node[right] {\(x\)};
+    \draw[->] (0,-0.4) -- (0,4.7) node[above] {\(y\)};
+
+    \draw[thick] (0,0) rectangle (6,4);
+
+    \foreach \x in {1,2.4,4.1} {
+        \draw[gray!50] (\x,0) -- (\x,4);
+    }
+    \foreach \y in {0.9,2.2,3.1} {
+        \draw[gray!50] (0,\y) -- (6,\y);
+    }
+
+    \foreach \p in {
+        (0.55,0.45),(1.65,0.55),(3.2,0.35),(5.0,0.65),
+        (0.4,1.5),(1.7,1.35),(3.3,1.75),(5.2,1.45),
+        (0.75,2.75),(1.5,2.6),(3.5,2.55),(5.0,2.75),
+        (0.55,3.55),(1.8,3.55),(3.3,3.65),(5.2,3.5)
+    } {
+        \fill \p circle (1.5pt);
+    }
+
+    \node at (3,-0.8) {one sample point in each subrectangle};
+\end{tikzpicture}
+\caption{A partition cuts a rectangle into smaller rectangles.  A Riemann sum chooses
+one sample point in each piece.}
+\end{figure}
+
+Choose a sample point
+\[
+    (x_{ij}^*,y_{ij}^*)\in R_{ij}
+\]
+for each subrectangle.  The corresponding Riemann sum is
+\[
+\boxed{
+    S=
+    \sum_{i=1}^{m}\sum_{j=1}^{n}
+    f(x_{ij}^*,y_{ij}^*)\,\Delta x_i\,\Delta y_j.
+}
+\]
+
+\begin{example}[A midpoint estimate on a rectangle]
+Let
+\[
+    R=[0,4]\times[0,2],
+\]
+and let
+\[
+    f(x,y)=3+x+\frac12y.
+\]
+Cut \(R\) into four rectangles of size \(2\times1\).  The midpoint sample points are
+\[
+    (1,0.5),\quad (3,0.5),\quad (1,1.5),\quad (3,1.5).
+\]
+Each subrectangle has area
+\[
+    \Delta A=2.
+\]
+The midpoint Riemann sum is
+\[
+\begin{aligned}
+S
+&=
+2\Bigl[
+f(1,0.5)+f(3,0.5)+f(1,1.5)+f(3,1.5)
+\Bigr]\\
+&=
+2\Bigl[
+\left(3+1+\frac14\right)
++\left(3+3+\frac14\right)
++\left(3+1+\frac34\right)
++\left(3+3+\frac34\right)
+\Bigr]\\
+&=
+2\left[
+\frac{17}{4}+\frac{25}{4}+\frac{19}{4}+\frac{27}{4}
+\right]\\
+&=
+2\cdot 22\\
+&=
+44.
+\end{aligned}
+\]
+So this grid estimates
+\[
+    \iint_R f\,dA
+\]
+by \(44\).
+\end{example}
+
+For this linear function, the midpoint estimate is already exact.  We will prove such
+facts later using iterated integrals.  For now, the sum is the object to understand.
+
+\subsection{Integrable functions, informally}
+
+A function is integrable over a rectangle when the Riemann sums settle down to one
+number as the rectangles get small.
+
+The sample points should stop mattering.  The exact shape of the grid should stop
+mattering.  Only the function and the region should matter.
+
+\begin{definition}[Integrable over a rectangle]
+A bounded function
+\[
+    f:R\to\mathbb R
+\]
+on a rectangle
+\[
+    R=[a,b]\times[c,d]
+\]
+is \emph{integrable over \(R\)} if all Riemann sums
+\[
+    \sum_i\sum_j f(x_{ij}^*,y_{ij}^*)\,\Delta A_{ij}
+\]
+approach the same number as the largest side length of the subrectangles approaches
+\(0\).
+
+That common number is
+\[
+\boxed{
+    \iint_R f\,dA.
+}
+\]
+\end{definition}
+
+There is another way to say the same thing.  On each subrectangle, the function has a
+largest possible value and a smallest possible value, at least for the functions we first
+meet.  If we use all the largest values, we get an upper estimate.  If we use all the
+smallest values, we get a lower estimate.
+
+If the upper and lower estimates can be forced close together by using a fine enough
+partition, then the function is integrable.
+
+\begin{theorem}[Continuous functions on rectangles are integrable]
+If
+\[
+    f
+\]
+is continuous on a rectangle
+\[
+    R=[a,b]\times[c,d],
+\]
+then
+\[
+    f
+\]
+is integrable over \(R\).
+\end{theorem}
+
+\begin{proof}[Idea of proof]
+A continuous function on a closed rectangle cannot oscillate too much inside very
+small rectangles.  If the partition is fine enough, then the largest and smallest values
+of \(f\) on each subrectangle are close.  Multiplying those small differences by the
+areas of the subrectangles and adding them gives upper and lower sums that are close.
+So every reasonable Riemann sum is trapped between two nearly equal numbers.
+\end{proof}
+
+We required continuity because it gives a clean guarantee.  Without it, the conclusion
+can fail.
+
+\begin{example}[A bounded function that is not integrable]
+Define a function on the unit square
+\[
+    R=[0,1]\times[0,1]
+\]
+by
+\[
+    D(x,y)=
+    \begin{cases}
+    1, & x\text{ and }y\text{ are both rational},\\
+    0, & \text{otherwise}.
+    \end{cases}
+\]
+Every small rectangle contains points with rational coordinates and also points where
+at least one coordinate is irrational.  So on every subrectangle,
+\[
+    \text{largest value}=1,
+    \qquad
+    \text{smallest value}=0.
+\]
+Every upper sum is therefore
+\[
+    1\cdot \operatorname{Area}(R)=1,
+\]
+and every lower sum is
+\[
+    0.
+\]
+The upper and lower sums never get close.
+
+The function is bounded, but not integrable.  It jumps too wildly on every tiny piece.
+\end{example}
+
+The boundedness condition is also part of this definition.
+
+\begin{example}[An unbounded function needs a different treatment]
+Define
+\[
+    u(x,y)=
+    \begin{cases}
+    \dfrac{1}{x^2+y^2}, & (x,y)\ne(0,0),\\[2mm]
+    0, & (x,y)=(0,0),
+    \end{cases}
+\]
+on
+\[
+    [-1,1]\times[-1,1].
+\]
+The function is unbounded near the origin.  A sample point very close to the origin
+can make a Riemann sum extremely large.
+
+This function does not fit the ordinary rectangle definition above.  Integrals of
+unbounded functions require a limiting process.  Those are improper double integrals,
+which return in Section \ref{sec:10.7}.
+\end{example}
+
+The rectangle itself also has finite area.  If we try to integrate
+\[
+    f(x,y)=1
+\]
+over the whole plane, the sums do not approach a finite number.  They grow with the
+area being covered.  Infinite regions also need improper integrals.
+
+For now, rectangles are finite, functions are bounded, and continuity is the safe
+condition that makes the integral exist.
+
+\subsection{Average value over a rectangle}
+
+Single-variable calculus defined the average value of a function on an interval by
+\[
+    f_{\text{avg}}
+    =
+    \frac{1}{b-a}\int_a^b f(x)\,dx.
+\]
+The denominator was the length of the interval.
+
+For a rectangle, length is replaced by area.
+
+\begin{definition}[Average value over a rectangle]
+Let \(f\) be integrable over a rectangle \(R\) with positive area.  The \emph{average
+value} of \(f\) over \(R\) is
+\[
+\boxed{
+    f_{\text{avg}}
+    =
+    \frac{1}{\operatorname{Area}(R)}
+    \iint_R f\,dA.
+}
+\]
+\end{definition}
+
+The units work out exactly as they should.  If \(f\) is temperature in degrees Celsius,
+then
+\[
+    \iint_R f\,dA
+\]
+has units
+\[
+    ^\circ\text{C}\cdot \text{m}^2.
+\]
+Dividing by area leaves
+\[
+    ^\circ\text{C}.
+\]
+
+\begin{example}[Average height of the market canopy]
+In Section \ref{sec:10.1}, the canopy over the rectangle
+\[
+    [0,4]\times[0,3]
+\]
+had estimated volume
+\[
+    33\text{ m}^3.
+\]
+The floor area is
+\[
+    4\cdot 3=12\text{ m}^2.
+\]
+So the average canopy height is
+\[
+    \frac{33}{12}=\frac{11}{4}=2.75\text{ m}.
+\]
+The average height is the height of a flat roof over the same floor that would enclose
+the same volume.
+\end{example}
+
+That last sentence is often the best way to remember average value:
+
+\[
+\boxed{
+    \text{average height}\times\text{base area}
+    =
+    \text{total volume}.
+}
+\]
+
+\subsection{Numerical estimates from tables and contour maps}
+
+In applications, we often do not know a formula for \(f(x,y)\).  We may only have
+measurements.
+
+Suppose a greenhouse floor is
+\[
+    0\le x\le 6,\qquad 0\le y\le 4,
+\]
+and temperature is measured at the centers of six equal rectangles.  Each rectangle has
+dimensions
+\[
+    2\times2,
+\]
+so each has area
+\[
+    4.
+\]
+
+\[
+\begin{array}{c|ccc}
+ & x=1 & x=3 & x=5 \\ \hline
+y=3 & 18 & 19 & 20\\
+y=1 & 22 & 24 & 23
+\end{array}
+\]
+
+The midpoint estimate for the integral is
+\[
+\begin{aligned}
+\iint_R T\,dA
+&\approx
+4(18+19+20+22+24+23)\\
+&=
+4(126)\\
+&=
+504.
+\end{aligned}
+\]
+The total area is
+\[
+    6\cdot4=24.
+\]
+So the estimated average temperature is
+\[
+    T_{\text{avg}}
+    \approx
+    \frac{504}{24}
+    =
+    21^\circ\text{C}.
+\]
+
+This is a double integral computed from a table.  The table supplies the sample values.
+The grid supplies the area pieces.
+
+Contour maps give another kind of estimate.  They do not give values at isolated
+points; they show curves of equal value.  We can estimate by splitting the region into
+bands.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.82, >=stealth]
+    \draw[thick, fill=blue!6]
+        plot[smooth cycle] coordinates {
+            (0.4,1.2)
+            (1.2,0.3)
+            (3.2,0.2)
+            (5.3,0.9)
+            (5.7,2.4)
+            (4.7,3.8)
+            (2.5,4.2)
+            (0.7,3.3)
+        };
+
+    \draw[blue!55!black, thick]
+        plot[smooth cycle] coordinates {
+            (1.0,1.4)
+            (1.7,0.9)
+            (3.4,0.8)
+            (4.7,1.3)
+            (4.9,2.4)
+            (4.0,3.2)
+            (2.4,3.4)
+            (1.2,2.7)
+        };
+    \node[blue!55!black] at (5.35,1.35) {\(1\) m};
+
+    \draw[blue!65!black, thick]
+        plot[smooth cycle] coordinates {
+            (1.6,1.7)
+            (2.2,1.25)
+            (3.4,1.25)
+            (4.1,1.8)
+            (4.1,2.5)
+            (3.4,2.9)
+            (2.3,2.9)
+            (1.7,2.4)
+        };
+    \node[blue!65!black] at (4.55,2.55) {\(2\) m};
+
+    \draw[blue!75!black, thick]
+        plot[smooth cycle] coordinates {
+            (2.25,1.9)
+            (2.8,1.65)
+            (3.35,1.8)
+            (3.55,2.35)
+            (3.1,2.55)
+            (2.45,2.45)
+        };
+    \node[blue!75!black] at (3.75,2.05) {\(3\) m};
+
+    \node at (3,-0.55) {depth contours for a small pond};
+\end{tikzpicture}
+\caption{A contour map can be turned into an estimate by using the areas between
+contours.}
+\end{figure}
+
+\begin{example}[Estimating water volume from depth bands]
+A pond is divided by contour lines into depth bands.  Suppose the estimated areas are:
+
+\[
+\begin{array}{c|c|c}
+\text{depth band} & \text{typical depth} & \text{area} \\ \hline
+0\text{ to }1\text{ m} & 0.5\text{ m} & 120\text{ m}^2\\
+1\text{ to }2\text{ m} & 1.5\text{ m} & 200\text{ m}^2\\
+2\text{ to }3\text{ m} & 2.5\text{ m} & 160\text{ m}^2\\
+3\text{ to }4\text{ m} & 3.5\text{ m} & 60\text{ m}^2
+\end{array}
+\]
+
+Then the water volume is estimated by
+\[
+\begin{aligned}
+V
+&\approx
+0.5(120)+1.5(200)+2.5(160)+3.5(60)\\
+&=
+60+300+400+210\\
+&=
+970\text{ m}^3.
+\end{aligned}
+\]
+The pond area is
+\[
+    120+200+160+60=540\text{ m}^2.
+\]
+So the estimated average depth is
+\[
+    \frac{970}{540}\approx 1.80\text{ m}.
+\]
+\end{example}
+
+Both the table method and the contour method are Riemann sums in disguise.  Each
+small contribution has the form
+\[
+    \text{value}\times\text{area}.
+\]
+
+So far, our double integrals have been built by estimates.  That is honest, but slow.
+Single-variable calculus became powerful when area sums turned into ordinary
+antiderivatives.  The same thing happens here in a surprising way: a double integral
+over a rectangle can often be computed by doing two single-variable integrals, one
+after the other.  The next step is to slice the rectangle into strips and let the old
+Fundamental Theorem of Calculus do part of the work.
+% =====================================================================
+%  Chapter 10: Double Integrals
+%  Sections 10.3 and 10.4
+% =====================================================================
+
+\section{Iterated integrals and Fubini's theorem}
+\label{sec:10.3}
+
+Section \ref{sec:10.2} defined a double integral over a rectangle as a limit of sums:
+\[
+    \iint_R f(x,y)\,dA.
+\]
+That definition tells us what the integral means.  It adds tiny contributions
+\[
+    f(x,y)\,\Delta A
+\]
+over many small rectangles.
+
+But the definition is not always the best way to compute.  In single-variable calculus,
+we did not evaluate every definite integral by taking a limit of Riemann sums.  Once the
+integral was defined, the Fundamental Theorem of Calculus gave us a practical method.
+
+Something similar happens here.  A double integral can often be computed by doing two
+ordinary one-variable integrals, one after the other.
+
+\subsection{A roof sliced two ways}
+
+A market stall has a rectangular base
+\[
+    0\le x\le 4,
+    \qquad
+    0\le y\le 3.
+\]
+The height of its slanted roof above the floor is modeled by
+\[
+    h(x,y)=5+x+2y.
+\]
+The volume under the roof is
+\[
+    V=\iint_R h(x,y)\,dA,
+\]
+where
+\[
+    R=[0,4]\times[0,3].
+\]
+
+Instead of adding tiny columns all at once, freeze \(x\).  Then \(y\) runs from \(0\) to
+\(3\), and the roof above that vertical strip has cross-sectional area
+\[
+    A(x)=\int_0^3 (5+x+2y)\,dy.
+\]
+Compute the inner integral:
+\[
+\begin{aligned}
+    A(x)
+    &=
+    \int_0^3 (5+x+2y)\,dy      \\
+    &=
+    \Bigl[(5+x)y+y^2\Bigr]_0^3 \\
+    &=
+    3(5+x)+9                  \\
+    &=
+    24+3x.
+\end{aligned}
+\]
+So a slice at position \(x\) has area
+\[
+    24+3x.
+\]
+Now add those slice areas from \(x=0\) to \(x=4\):
+\[
+\begin{aligned}
+    V
+    &=
+    \int_0^4 A(x)\,dx       \\
+    &=
+    \int_0^4 (24+3x)\,dx    \\
+    &=
+    \Bigl[24x+\frac32x^2\Bigr]_0^4 \\
+    &=
+    96+24                  \\
+    &=
+    120.
+\end{aligned}
+\]
+Thus
+\[
+\boxed{
+    \iint_R (5+x+2y)\,dA=120.
+}
+\]
+
+The same volume can be sliced the other way.  Freeze \(y\), let \(x\) run from \(0\) to
+\(4\), and compute
+\[
+    B(y)=\int_0^4 (5+x+2y)\,dx.
+\]
+Then
+\[
+\begin{aligned}
+    B(y)
+    &=
+    \Bigl[5x+\frac12x^2+2yx\Bigr]_0^4 \\
+    &=
+    20+8+8y                         \\
+    &=
+    28+8y.
+\end{aligned}
+\]
+Now add these horizontal slice areas:
+\[
+\begin{aligned}
+    V
+    &=
+    \int_0^3 B(y)\,dy              \\
+    &=
+    \int_0^3 (28+8y)\,dy           \\
+    &=
+    \Bigl[28y+4y^2\Bigr]_0^3       \\
+    &=
+    84+36                          \\
+    &=
+    120.
+\end{aligned}
+\]
+
+Both slicing methods give the same volume:
+\[
+\boxed{
+    \int_0^4\int_0^3 (5+x+2y)\,dy\,dx
+    =
+    \int_0^3\int_0^4 (5+x+2y)\,dx\,dy.
+}
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.9, >=stealth]
+    \draw[->] (-0.3,0) -- (5.1,0) node[right] {\(x\)};
+    \draw[->] (0,-0.3) -- (0,4.1) node[above] {\(y\)};
+
+    \draw[fill=gray!8] (0,0) rectangle (4,3);
+
+    \draw[fill=blue!20, draw=blue!60!black, thick] (1.35,0) rectangle (1.75,3);
+    \node[blue!60!black] at (2.75,2.4) {fix \(x\)};
+    \draw[->, blue!60!black, thick] (2.45,2.25) -- (1.75,2.25);
+
+    \draw[fill=red!18, draw=red!65!black, thick, opacity=0.75] (0,1.05) rectangle (4,1.45);
+    \node[red!65!black] at (3.0,0.65) {fix \(y\)};
+    \draw[->, red!65!black, thick] (2.55,0.75) -- (2.55,1.05);
+
+    \node[below] at (4,0) {\(4\)};
+    \node[left] at (0,3) {\(3\)};
+    \node[below left] at (0,0) {\(0\)};
+    \node at (2,-0.7) {\(R=[0,4]\times[0,3]\)};
+\end{tikzpicture}
+\caption{A rectangle can be added by vertical slices or by horizontal slices.}
+\end{figure}
+
+The picture is simple, but the idea is important.  A double integral over a rectangle can
+be computed by reducing it to ordinary integrals.
+
+\subsection{Iterated integrals}
+
+The expression
+\[
+    \int_0^4\int_0^3 (5+x+2y)\,dy\,dx
+\]
+means this:
+
+First, hold \(x\) fixed and integrate with respect to \(y\):
+\[
+    \int_0^3 (5+x+2y)\,dy.
+\]
+Then integrate the result with respect to \(x\):
+\[
+    \int_0^4 \left(\int_0^3 (5+x+2y)\,dy\right) dx.
+\]
+
+This is called an \emph{iterated integral}, because one integral is nested inside another.
+
+\begin{definition}[Iterated integral over a rectangle]
+Let
+\[
+    R=[a,b]\times[c,d].
+\]
+The iterated integral
+\[
+\boxed{
+    \int_a^b\int_c^d f(x,y)\,dy\,dx
+}
+\]
+means
+\[
+\boxed{
+    \int_a^b
+    \left(
+        \int_c^d f(x,y)\,dy
+    \right)
+    dx.
+}
+\]
+In the inner integral, \(x\) is held constant and \(y\) is the variable.
+
+Similarly,
+\[
+\boxed{
+    \int_c^d\int_a^b f(x,y)\,dx\,dy
+}
+\]
+means
+\[
+\boxed{
+    \int_c^d
+    \left(
+        \int_a^b f(x,y)\,dx
+    \right)
+    dy.
+}
+\]
+\end{definition}
+
+The inner integral makes a slice.  The outer integral adds the slices.
+
+A small notation warning is useful here.  The symbol
+\[
+    dy\,dx
+\]
+in an iterated integral is an instruction for the order of calculation:
+\[
+    \text{integrate in }y\text{ first, then in }x.
+\]
+It is not a wedge product.
+
+With the standard orientation of the \(xy\)-plane, the corresponding area \(2\)-form is
+\[
+    dx\wedge dy.
+\]
+So, for a positively oriented rectangle,
+\[
+    \iint_R f\,dA
+    =
+    \int_R f\,dx\wedge dy.
+\]
+But
+\[
+    dy\wedge dx=-dx\wedge dy.
+\]
+Thus the wedge product remembers orientation, while the ordinary area element
+\[
+    dA
+\]
+remembers positive area.
+
+\subsection{Fubini's theorem for rectangles}
+
+The roof example showed that the two orders gave the same answer.  Fubini's theorem
+tells us when this is guaranteed.
+
+\begin{theorem}[Fubini's theorem for rectangles]
+Let
+\[
+    R=[a,b]\times[c,d],
+\]
+and suppose \(f\) is continuous on \(R\).  Then
+\[
+\boxed{
+    \iint_R f(x,y)\,dA
+    =
+    \int_a^b\int_c^d f(x,y)\,dy\,dx
+    =
+    \int_c^d\int_a^b f(x,y)\,dx\,dy.
+}
+\]
+\end{theorem}
+
+The continuity assumption is a safe hypothesis.  It guarantees that the double integral
+exists and that slicing in either order gives the same total.
+
+\begin{proof}[Idea of the proof]
+For each fixed \(x\), define
+\[
+    A(x)=\int_c^d f(x,y)\,dy.
+\]
+Geometrically, \(A(x)\) is the signed cross-sectional area of the surface over the vertical
+line segment above \(x\).  Adding those cross-sections gives
+\[
+    \int_a^b A(x)\,dx
+    =
+    \int_a^b\int_c^d f(x,y)\,dy\,dx.
+\]
+This adds the same tiny rectangular contributions that the double integral adds:
+\[
+    f(x,y)\,\Delta x\,\Delta y.
+\]
+
+Similarly, if
+\[
+    B(y)=\int_a^b f(x,y)\,dx,
+\]
+then
+\[
+    \int_c^d B(y)\,dy
+    =
+    \int_c^d\int_a^b f(x,y)\,dx\,dy
+\]
+adds the same tiny contributions, only grouped into horizontal slices instead of vertical
+ones.
+
+Both methods refine to the same Riemann sum limit, so both give the double integral.
+\end{proof}
+
+\subsection{A separated example}
+
+Sometimes the integrand splits into an \(x\)-part and a \(y\)-part.  Then the double
+integral factors.
+
+Let
+\[
+    R=[0,3]\times[0,\pi],
+\]
+and let
+\[
+    f(x,y)=(1+x^2)(2+\sin y).
+\]
+Then
+\[
+\begin{aligned}
+    \iint_R (1+x^2)(2+\sin y)\,dA
+    &=
+    \int_0^3\int_0^\pi (1+x^2)(2+\sin y)\,dy\,dx.
+\end{aligned}
+\]
+Since \(1+x^2\) is constant with respect to \(y\),
+\[
+\begin{aligned}
+    \int_0^\pi (1+x^2)(2+\sin y)\,dy
+    &=
+    (1+x^2)\int_0^\pi (2+\sin y)\,dy    \\
+    &=
+    (1+x^2)\Bigl[2y-\cos y\Bigr]_0^\pi \\
+    &=
+    (1+x^2)(2\pi+2).
+\end{aligned}
+\]
+Now integrate in \(x\):
+\[
+\begin{aligned}
+    \iint_R (1+x^2)(2+\sin y)\,dA
+    &=
+    \int_0^3 (1+x^2)(2\pi+2)\,dx\\
+    &=
+    (2\pi+2)\Bigl[x+\frac{x^3}{3}\Bigr]_0^3\\
+    &=
+    (2\pi+2)(3+9)\\
+    &=
+    24\pi+24.
+\end{aligned}
+\]
+Equivalently,
+\[
+\boxed{
+    \iint_R (1+x^2)(2+\sin y)\,dA
+    =
+    \left(\int_0^3 (1+x^2)\,dx\right)
+    \left(\int_0^\pi (2+\sin y)\,dy\right).
+}
+\]
+
+The double integral factors because the rectangle has independent limits and the
+integrand is a product:
+\[
+    f(x,y)=g(x)h(y).
+\]
+
+\subsection{Choosing an order}
+
+Fubini's theorem says that both orders work.  It does not say that both orders are equally
+pleasant.
+
+Consider
+\[
+    I=
+    \int_0^1\int_0^1 2x e^{xy}\,dy\,dx.
+\]
+If we integrate with respect to \(y\) first, \(x\) is a constant:
+\[
+\begin{aligned}
+    \int_0^1 2x e^{xy}\,dy
+    &=
+    2\int_0^1 x e^{xy}\,dy\\
+    &=
+    2\Bigl[e^{xy}\Bigr]_{y=0}^{y=1}\\
+    &=
+    2(e^x-1).
+\end{aligned}
+\]
+Then
+\[
+\begin{aligned}
+    I
+    &=
+    \int_0^1 2(e^x-1)\,dx\\
+    &=
+    2\Bigl[e^x-x\Bigr]_0^1\\
+    &=
+    2(e-1)-2\\
+    &=
+    2e-4.
+\end{aligned}
+\]
+So
+\[
+\boxed{
+    \int_0^1\int_0^1 2x e^{xy}\,dy\,dx=2e-4.
+}
+\]
+
+The other order is possible, but less direct.  The moral is simple: before computing,
+look for the order in which the inner integral has an easy antiderivative.
+
+\subsection{Why the hypotheses matter}
+
+Fubini's theorem is safe for continuous functions on rectangles.  If we sneak in an
+unbounded singularity, the story can break.
+
+Define
+\[
+    f(x,y)
+    =
+    \frac{x^2-y^2}{(x^2+y^2)^2}
+\]
+away from the origin in the square
+\[
+    0\le x\le1,
+    \qquad
+    0\le y\le1.
+\]
+This function is not continuous at \((0,0)\), and it is unbounded there.
+
+If we read the iterated integrals as improper integrals, the two orders give different
+answers.
+
+For fixed \(x>0\),
+\[
+    \frac{\partial}{\partial y}
+    \left(
+        \frac{y}{x^2+y^2}
+    \right)
+    =
+    \frac{x^2-y^2}{(x^2+y^2)^2}.
+\]
+Therefore
+\[
+\begin{aligned}
+    \int_0^1
+    \frac{x^2-y^2}{(x^2+y^2)^2}\,dy
+    &=
+    \left[
+        \frac{y}{x^2+y^2}
+    \right]_0^1\\
+    &=
+    \frac{1}{1+x^2}.
+\end{aligned}
+\]
+Then
+\[
+    \int_0^1 \frac{1}{1+x^2}\,dx=\frac{\pi}{4}.
+\]
+
+But for fixed \(y>0\),
+\[
+    \frac{\partial}{\partial x}
+    \left(
+        -\frac{x}{x^2+y^2}
+    \right)
+    =
+    \frac{x^2-y^2}{(x^2+y^2)^2}.
+\]
+So
+\[
+\begin{aligned}
+    \int_0^1
+    \frac{x^2-y^2}{(x^2+y^2)^2}\,dx
+    &=
+    \left[
+        -\frac{x}{x^2+y^2}
+    \right]_0^1\\
+    &=
+    -\frac{1}{1+y^2}.
+\end{aligned}
+\]
+Then
+\[
+    \int_0^1 -\frac{1}{1+y^2}\,dy=-\frac{\pi}{4}.
+\]
+
+The two answers are
+\[
+    \frac{\pi}{4}
+    \qquad\text{and}\qquad
+    -\frac{\pi}{4}.
+\]
+This is not a contradiction.  Fubini's theorem did not apply.  The function was not
+continuous on the rectangle, and the ordinary double integral was not a proper double
+integral over the square.
+
+The warning is not meant to make the theorem feel fragile.  It is meant to protect the
+theorem from being used outside its home.  For continuous functions on rectangles, the
+order may be chosen for convenience.
+
+\subsection{What comes next}
+
+Rectangles are clean.  Their bounds do not change:
+\[
+    a\le x\le b,
+    \qquad
+    c\le y\le d.
+\]
+But most regions are not rectangular.  A pond has a curved shore.  A triangular plate has
+a slanted edge.  A disk has circular boundaries.
+
+The next step is to let the limits of the inner integral depend on the outer variable.
+
+That is how double integrals escape the rectangle.
+
+\section{Double integrals over general regions}
+\label{sec:10.4}
+
+A rectangle is easy to slice because every vertical slice has the same \(y\)-limits, and
+every horizontal slice has the same \(x\)-limits.  A general region asks for more care.
+
+The main rule is not a formula.  It is a habit:
+
+\[
+\boxed{
+    \text{Draw the region before writing the integral.}
+}
+\]
+
+The picture tells us the limits.
+
+\subsection{A triangular flower bed}
+
+A triangular flower bed is bounded by
+\[
+    y=0,
+    \qquad
+    x=4,
+    \qquad
+    y=\frac{x}{2}.
+\]
+Suppose the height of a layer of mulch spread over the bed is modeled by
+\[
+    m(x,y)=6-y.
+\]
+Find the total volume of mulch over the bed.
+
+The region is
+\[
+    D=\left\{(x,y):0\le x\le4,\ 0\le y\le \frac{x}{2}\right\}.
+\]
+For each fixed \(x\), the vertical slice runs from the bottom edge
+\[
+    y=0
+\]
+to the slanted edge
+\[
+    y=\frac{x}{2}.
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.05, >=stealth]
+    \draw[->] (-0.3,0) -- (5.0,0) node[right] {\(x\)};
+    \draw[->] (0,-0.3) -- (0,3.0) node[above] {\(y\)};
+
+    \draw[fill=green!12, draw=green!45!black, thick]
+        (0,0) -- (4,0) -- (4,2) -- cycle;
+
+    \draw[thick] (0,0) -- (4,2);
+    
+    % Shifted the formula to the right side of the line to avoid overlap
+    \node[above left] at (3.6,1.8) {\(y=x/2\)};
+
+    \draw[fill=blue!25, draw=blue!60!black, thick]
+        (2.2,0) -- (2.55,0) -- (2.55,1.275) -- (2.2,1.1) -- cycle;
+
+    \node[blue!60!black] at (1.45,1.7) {vertical slice};
+    \draw[->, blue!60!black, thick] (1.75,1.55) -- (2.3,0.9);
+
+    \node[below] at (4,0) {\(4\)};
+    \node[left] at (0,2) {\(2\)};
+    \fill (4,2) circle (2pt);
+    \node[right] at (4,2) {\((4,2)\)};
+\end{tikzpicture}
+\caption{For this triangle, a vertical slice has variable height \(x/2\).}
+\end{figure}
+
+Therefore
+\[
+    V=\iint_D (6-y)\,dA
+\]
+becomes
+\[
+    V=
+    \int_0^4\int_0^{x/2} (6-y)\,dy\,dx.
+\]
+Compute the inner integral:
+\[
+\begin{aligned}
+    \int_0^{x/2} (6-y)\,dy
+    &=
+    \left[6y-\frac12y^2\right]_0^{x/2}\\
+    &=
+    3x-\frac{x^2}{8}.
+\end{aligned}
+\]
+Now integrate in \(x\):
+\[
+\begin{aligned}
+    V
+    &=
+    \int_0^4
+    \left(
+        3x-\frac{x^2}{8}
+    \right)\,dx\\
+    &=
+    \left[
+        \frac32x^2-\frac{x^3}{24}
+    \right]_0^4\\
+    &=
+    24-\frac{64}{24}\\
+    &=
+    24-\frac{8}{3}\\
+    &=
+    \frac{64}{3}.
+\end{aligned}
+\]
+Thus
+\[
+\boxed{
+    V=\frac{64}{3}.
+}
+\]
+
+The only new feature was the upper limit
+\[
+    \frac{x}{2}.
+\]
+The upper edge of the region became a limit of integration.
+
+\subsection{Type I regions}
+
+The triangular flower bed is an example of a region that is easy to slice vertically.
+
+\begin{definition}[Type I region]
+A region \(D\) in the plane is called a \emph{Type I region} if it can be written as
+\[
+\boxed{
+    D=
+    \left\{
+        (x,y):
+        a\le x\le b,\ 
+        \phi_1(x)\le y\le \phi_2(x)
+    \right\}.
+}
+\]
+Here the \(x\)-values run from \(a\) to \(b\), and for each fixed \(x\), the \(y\)-values run
+from a lower curve
+\[
+    y=\phi_1(x)
+\]
+to an upper curve
+\[
+    y=\phi_2(x).
+\]
+\end{definition}
+
+For a Type I region,
+\[
+\boxed{
+    \iint_D f(x,y)\,dA
+    =
+    \int_a^b
+    \int_{\phi_1(x)}^{\phi_2(x)}
+    f(x,y)\,dy\,dx.
+}
+\]
+
+The inner integral moves along a vertical slice.  The outer integral moves those slices
+from left to right.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0, >=stealth]
+    \draw[->] (-0.4,0) -- (5.5,0) node[right] {\(x\)};
+    \draw[->] (0,-0.5) -- (0,4.2) node[above] {\(y\)};
+
+    \draw[fill=gray!10, draw=none]
+        plot[domain=0.8:4.6, samples=80] (\x,{0.65+0.25*(\x-1.2)^2})
+        -- plot[domain=4.6:0.8, samples=80] (\x,{3.1-0.18*(\x-2.8)^2})
+        -- cycle;
+
+    \draw[thick, blue!60!black, domain=0.8:4.6, samples=80]
+        plot (\x,{0.65+0.25*(\x-1.2)^2});
+    \draw[thick, red!65!black, domain=0.8:4.6, samples=80]
+        plot (\x,{3.1-0.18*(\x-2.8)^2});
+
+    \draw[dashed] (0.8,0) -- (0.8,{0.65+0.25*(0.8-1.2)^2});
+    \draw[dashed] (4.6,0) -- (4.6,{0.65+0.25*(4.6-1.2)^2});
+
+    \draw[very thick, green!50!black]
+        (2.7,{0.65+0.25*(2.7-1.2)^2})
+        -- (2.7,{3.1-0.18*(2.7-2.8)^2});
+
+    \node[blue!60!black] at (2.0,0.65) {\(y=\phi_1(x)\)};
+    \node[red!65!black] at (3.2,3.35) {\(y=\phi_2(x)\)};
+    \node[below] at (0.8,0) {\(a\)};
+    \node[below] at (4.6,0) {\(b\)};
+    \node[green!50!black, right] at (2.75,2.0) {vertical slice};
+\end{tikzpicture}
+\caption{A Type I region is described by vertical slices.}
+\end{figure}
+
+\begin{theorem}[Double integral over a Type I region]
+Suppose
+\[
+    D=
+    \left\{
+        (x,y):
+        a\le x\le b,\ 
+        \phi_1(x)\le y\le \phi_2(x)
+    \right\},
+\]
+where \(\phi_1\) and \(\phi_2\) are continuous, and suppose \(f\) is continuous on \(D\).
+Then
+\[
+\boxed{
+    \iint_D f(x,y)\,dA
+    =
+    \int_a^b
+    \int_{\phi_1(x)}^{\phi_2(x)}
+    f(x,y)\,dy\,dx.
+}
+\]
+\end{theorem}
+
+\begin{proof}[Idea of the proof]
+For each fixed \(x\), the vertical cross-section of \(D\) has \(y\)-values from
+\[
+    \phi_1(x)
+\]
+to
+\[
+    \phi_2(x).
+\]
+So the inner integral
+\[
+    \int_{\phi_1(x)}^{\phi_2(x)} f(x,y)\,dy
+\]
+adds \(f\) along that vertical slice.  The outer integral then adds all those slices from
+\(x=a\) to \(x=b\).
+
+This is the same slicing idea as Fubini's theorem, except now the slice endpoints can move
+with \(x\).
+\end{proof}
+
+\subsection{Type II regions}
+
+Some regions are easier to slice horizontally.
+
+The same triangular flower bed can also be described by horizontal slices.  Since
+\[
+    y=\frac{x}{2}
+\]
+is the same as
+\[
+    x=2y,
+\]
+the triangle can be written as
+\[
+    D=
+    \left\{
+        (x,y):
+        0\le y\le2,\ 
+        2y\le x\le4
+    \right\}.
+\]
+Thus
+\[
+\begin{aligned}
+    V
+    &=
+    \int_0^2\int_{2y}^4 (6-y)\,dx\,dy\\
+    &=
+    \int_0^2 (6-y)(4-2y)\,dy\\
+    &=
+    \int_0^2 (24-16y+2y^2)\,dy\\
+    &=
+    \left[
+        24y-8y^2+\frac23y^3
+    \right]_0^2\\
+    &=
+    48-32+\frac{16}{3}\\
+    &=
+    \frac{64}{3}.
+\end{aligned}
+\]
+This matches the answer from vertical slices:
+\[
+\boxed{
+    \frac{64}{3}.
+}
+\]
+
+\begin{definition}[Type II region]
+A region \(D\) in the plane is called a \emph{Type II region} if it can be written as
+\[
+\boxed{
+    D=
+    \left\{
+        (x,y):
+        c\le y\le d,\ 
+        \psi_1(y)\le x\le \psi_2(y)
+    \right\}.
+}
+\]
+Here the \(y\)-values run from \(c\) to \(d\), and for each fixed \(y\), the \(x\)-values run
+from a left curve
+\[
+    x=\psi_1(y)
+\]
+to a right curve
+\[
+    x=\psi_2(y).
+\]
+\end{definition}
+
+For a Type II region,
+\[
+\boxed{
+    \iint_D f(x,y)\,dA
+    =
+    \int_c^d
+    \int_{\psi_1(y)}^{\psi_2(y)}
+    f(x,y)\,dx\,dy.
+}
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.0, >=stealth]
+    \draw[->] (-0.4,0) -- (5.5,0) node[right] {\(x\)};
+    \draw[->] (0,-0.5) -- (0,4.2) node[above] {\(y\)};
+
+    \draw[fill=gray!10, draw=none]
+        plot[domain=0.7:3.5, samples=80] ({0.7+0.18*(\x-2)^2},\x)
+        -- plot[domain=3.5:0.7, samples=80] ({4.7-0.25*(\x-2.2)^2},\x)
+        -- cycle;
+
+    \draw[thick, blue!60!black, domain=0.7:3.5, samples=80]
+        plot ({0.7+0.18*(\x-2)^2},\x);
+    \draw[thick, red!65!black, domain=0.7:3.5, samples=80]
+        plot ({4.7-0.25*(\x-2.2)^2},\x);
+
+    \draw[dashed] (0,0.7) -- ({0.7+0.18*(0.7-2)^2},0.7);
+    \draw[dashed] (0,3.5) -- ({0.7+0.18*(3.5-2)^2},3.5);
+
+    \draw[very thick, green!50!black]
+        ({0.7+0.18*(2.4-2)^2},2.4)
+        -- ({4.7-0.25*(2.4-2.2)^2},2.4);
+
+    \node[blue!60!black] at (1.45,1.1) {\(x=\psi_1(y)\)};
+    \node[red!65!black] at (4.2,3.45) {\(x=\psi_2(y)\)};
+    \node[left] at (0,0.7) {\(c\)};
+    \node[left] at (0,3.5) {\(d\)};
+    \node[green!50!black, above] at (3.0,2.45) {horizontal slice};
+\end{tikzpicture}
+\caption{A Type II region is described by horizontal slices.}
+\end{figure}
+
+\begin{theorem}[Double integral over a Type II region]
+Suppose
+\[
+    D=
+    \left\{
+        (x,y):
+        c\le y\le d,\ 
+        \psi_1(y)\le x\le \psi_2(y)
+    \right\},
+\]
+where \(\psi_1\) and \(\psi_2\) are continuous, and suppose \(f\) is continuous on \(D\).
+Then
+\[
+\boxed{
+    \iint_D f(x,y)\,dA
+    =
+    \int_c^d
+    \int_{\psi_1(y)}^{\psi_2(y)}
+    f(x,y)\,dx\,dy.
+}
+\]
+\end{theorem}
+
+\subsection{Drawing the region before integrating}
+
+The hardest part of many double integral problems is not the integration.  It is setting
+up the bounds.
+
+A reliable routine is:
+
+\begin{enumerate}
+\item Draw the boundary curves.
+
+\item Mark the intersection points.
+
+\item Decide whether vertical slices or horizontal slices are simpler.
+
+\item Write the outer limits from the shadow of the region on the outer axis.
+
+\item Write the inner limits from the slice.
+\end{enumerate}
+
+The word \emph{shadow} is useful.  For a Type I setup, the region casts a shadow on the
+\(x\)-axis:
+\[
+    a\le x\le b.
+\]
+For a Type II setup, it casts a shadow on the \(y\)-axis:
+\[
+    c\le y\le d.
+\]
+
+\subsection{Reversing the order of integration}
+
+Sometimes one order leads to an integral we cannot evaluate with elementary functions.
+The other order may be easy.
+
+Consider
+\[
+    I=
+    \int_0^1\int_y^1 e^{x^2}\,dx\,dy.
+\]
+The inner integral
+\[
+    \int_y^1 e^{x^2}\,dx
+\]
+has no elementary antiderivative.  But the region may save us.
+
+The bounds say
+\[
+    0\le y\le1,
+    \qquad
+    y\le x\le1.
+\]
+So the region is the triangle
+\[
+    0\le y\le x\le1.
+\]
+Equivalently,
+\[
+    0\le x\le1,
+    \qquad
+    0\le y\le x.
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=2.4, >=stealth]
+    \draw[->] (-0.08,0) -- (1.25,0) node[right] {\(x\)};
+    \draw[->] (0,-0.08) -- (0,1.25) node[above] {\(y\)};
+
+    \draw[fill=purple!13, draw=purple!60!black, thick]
+        (0,0) -- (1,0) -- (1,1) -- cycle;
+
+    \draw[thick] (0,0) -- (1,1);
+    \node[above left] at (0.52,0.52) {\(y=x\)};
+
+    \draw[very thick, blue!60!black] (0.62,0) -- (0.62,0.62);
+    \node[blue!60!black, right] at (0.63,0.33) {\(0\le y\le x\)};
+
+    \node[below] at (1,0) {\(1\)};
+    \node[left] at (0,1) {\(1\)};
+    \fill (1,1) circle (0.8pt);
+    \node[above right] at (1,1) {\((1,1)\)};
+\end{tikzpicture}
+\caption{The integral \(\int_0^1\int_y^1 e^{x^2}\,dx\,dy\) is over the triangle
+\(0\le y\le x\le1\).}
+\end{figure}
+
+Now reverse the order:
+\[
+    I=
+    \int_0^1\int_0^x e^{x^2}\,dy\,dx.
+\]
+The inner integral is now easy because \(e^{x^2}\) is constant with respect to \(y\):
+\[
+\begin{aligned}
+    \int_0^x e^{x^2}\,dy
+    &=
+    xe^{x^2}.
+\end{aligned}
+\]
+So
+\[
+\begin{aligned}
+    I
+    &=
+    \int_0^1 xe^{x^2}\,dx.
+\end{aligned}
+\]
+Let
+\[
+    u=x^2,
+    \qquad
+    du=2x\,dx.
+\]
+Then
+\[
+\begin{aligned}
+    I
+    &=
+    \frac12\int_0^1 e^u\,du\\
+    &=
+    \frac12(e-1).
+\end{aligned}
+\]
+Thus
+\[
+\boxed{
+    \int_0^1\int_y^1 e^{x^2}\,dx\,dy
+    =
+    \frac{e-1}{2}.
+}
+\]
+
+The integral became possible not because the function changed, but because the slices
+changed.
+
+\subsection{A region that must be split}
+
+Not every region is Type I or Type II in one piece.  Sometimes a slice hits the region in
+two separate intervals.  Then one pair of limits would fill in space that is not really part
+of the region.
+
+For example, let
+\[
+    D=
+    \bigl([0,1]\times[0,1]\bigr)
+    \cup
+    \bigl([0,1]\times[2,3]\bigr).
+\]
+This is two square islands with a gap between them.
+
+A vertical slice at a fixed \(x\) hits
+\[
+    0\le y\le1
+\]
+and also
+\[
+    2\le y\le3.
+\]
+It does not hit the gap
+\[
+    1<y<2.
+\]
+So writing
+\[
+    0\le x\le1,
+    \qquad
+    0\le y\le3
+\]
+would describe the full rectangle, not the two islands.
+
+The correct setup is a sum:
+\[
+\boxed{
+    \iint_D f(x,y)\,dA
+    =
+    \int_0^1\int_0^1 f(x,y)\,dy\,dx
+    +
+    \int_0^1\int_2^3 f(x,y)\,dy\,dx.
+}
+\]
+
+The principle is simple:
+
+\[
+\boxed{
+    \text{If one slice breaks into pieces, split the region.}
+}
+\]
+
+\subsection{Regions with holes}
+
+A hole is another reason to split or subtract.
+
+Imagine an L-shaped floor:
+\[
+    D=
+    [0,3]\times[0,2]
+    \setminus
+    [1,3]\times[1,2].
+\]
+It is a \(3\)-by-\(2\) rectangle with the upper-right rectangle removed.
+
+Suppose
+\[
+    f(x,y)=1+x
+\]
+is the density of a thin coating on the floor.  The total amount of coating is
+\[
+    \iint_D (1+x)\,dA.
+\]
+One method is to split the L-shape into two rectangles:
+\[
+    D_1=[0,3]\times[0,1],
+\]
+and
+\[
+    D_2=[0,1]\times[1,2].
+\]
+Then
+\[
+\begin{aligned}
+    \iint_D (1+x)\,dA
+    &=
+    \int_0^3\int_0^1 (1+x)\,dy\,dx
+    +
+    \int_0^1\int_1^2 (1+x)\,dy\,dx.
+\end{aligned}
+\]
+Compute:
+\[
+\begin{aligned}
+    \int_0^3\int_0^1 (1+x)\,dy\,dx
+    &=
+    \int_0^3 (1+x)\,dx\\
+    &=
+    \left[x+\frac12x^2\right]_0^3\\
+    &=
+    3+\frac92\\
+    &=
+    \frac{15}{2}.
+\end{aligned}
+\]
+Also,
+\[
+\begin{aligned}
+    \int_0^1\int_1^2 (1+x)\,dy\,dx
+    &=
+    \int_0^1 (1+x)\,dx\\
+    &=
+    \left[x+\frac12x^2\right]_0^1\\
+    &=
+    \frac32.
+\end{aligned}
+\]
+Therefore
+\[
+\boxed{
+    \iint_D (1+x)\,dA
+    =
+    \frac{15}{2}+\frac32
+    =
+    9.
+}
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.1, >=stealth]
+    \draw[->] (-0.3,0) -- (4.0,0) node[right] {\(x\)};
+    \draw[->] (0,-0.3) -- (0,3.0) node[above] {\(y\)};
+
+    % The L-shaped region
+    \draw[fill=orange!18, draw=orange!60!black, thick]
+        (0,0) -- (3,0) -- (3,1) -- (1,1) -- (1,2) -- (0,2) -- cycle;
+
+    % Line splitting D1 and D2
+    \draw[dashed, thick] (0,1) -- (1,1);
+
+    % Dashed outline showing the missing part of the full 3x2 rectangle
+    \draw[dashed, gray!80, thick] (3,1) -- (3,2) -- (1,2);
+
+    \node at (1.5,0.5) {\(D_1\)};
+    \node at (0.5,1.5) {\(D_2\)};
+    \node[gray!80!black] at (2.0,1.5) {hole};
+
+    \node[below] at (1,0) {\(1\)};
+    \node[below] at (3,0) {\(3\)};
+    \node[left] at (0,1) {\(1\)};
+    \node[left] at (0,2) {\(2\)};
+\end{tikzpicture}
+\caption{An L-shaped region is easiest to integrate over by splitting it into pieces.}
+\end{figure}
+
+Another method is subtraction:
+\[
+\iint_D (1+x)\,dA
+=
+\iint_{[0,3]\times[0,2]}(1+x)\,dA
+-
+\iint_{[1,3]\times[1,2]}(1+x)\,dA.
+\]
+The full rectangle contributes
+\[
+    \int_0^3\int_0^2(1+x)\,dy\,dx
+    =
+    2\int_0^3(1+x)\,dx
+    =
+    15.
+\]
+The removed rectangle contributes
+\[
+    \int_1^3\int_1^2(1+x)\,dy\,dx
+    =
+    \int_1^3(1+x)\,dx
+    =
+    6.
+\]
+So again
+\[
+    15-6=9.
+\]
+
+Both methods are correct.  The good method is the one that makes the region easiest to
+describe.
+
+\subsection{The main lesson}
+
+For rectangles, the limits are constant:
+\[
+    a\le x\le b,
+    \qquad
+    c\le y\le d.
+\]
+For general regions, one pair of limits often depends on the other variable:
+\[
+    \phi_1(x)\le y\le\phi_2(x)
+\]
+or
+\[
+    \psi_1(y)\le x\le\psi_2(y).
+\]
+
+So the calculation is still based on one idea:
+
+\[
+\boxed{
+    \text{add slices.}
+}
+\]
+
+The only difference is that the slices may grow, shrink, split, or avoid holes.
+
+The next obstacle is circular geometry.  A disk can be described with \(x\)- and
+\(y\)-bounds, but the limits contain square roots.  A circular ring is even less friendly in
+rectangular coordinates.
+
+For circular regions, the natural slices are not vertical or horizontal.  They are radial
+and angular.
+
+That leads to polar coordinates.
+% =====================================================================
+%  Chapter 10: Double Integrals
+%  Sections 10.5 and 10.6
+% =====================================================================
+
+\section{Double integrals in polar coordinates}
+\label{sec:10.5}
+
+Section \ref{sec:10.4} taught us how to integrate over regions that are not rectangles.
+The main tool was slicing.  But circular regions still felt awkward in rectangular
+coordinates.  A disk can be described by
+\[
+    -a\le x\le a,
+    \qquad
+    -\sqrt{a^2-x^2}\le y\le \sqrt{a^2-x^2},
+\]
+but those square roots are a sign that the coordinates are fighting the geometry.
+
+For circular regions, the natural coordinates are
+\[
+    x=r\cos\theta,
+    \qquad
+    y=r\sin\theta.
+\]
+The new question is not just how to rewrite the region.  We must also understand how
+area changes.
+
+\subsection{A circular bowl}
+
+A shallow circular bowl has height
+\[
+    z=9-x^2-y^2
+\]
+above the circular floor
+\[
+    x^2+y^2\le 9.
+\]
+The volume under the surface is
+\[
+    V=\iint_D (9-x^2-y^2)\,dA,
+\]
+where
+\[
+    D=\{(x,y):x^2+y^2\le9\}.
+\]
+
+In rectangular coordinates, the same integral becomes
+\[
+    \int_{-3}^{3}
+    \int_{-\sqrt{9-x^2}}^{\sqrt{9-x^2}}
+    (9-x^2-y^2)\,dy\,dx.
+\]
+This is correct, but it does not look like the bowl.
+
+In polar coordinates,
+\[
+    x^2+y^2=r^2.
+\]
+The disk is simply
+\[
+    0\le r\le3,
+    \qquad
+    0\le\theta\le2\pi.
+\]
+The height becomes
+\[
+    9-x^2-y^2=9-r^2.
+\]
+
+But there is one more piece.  A tiny polar box does not have area
+\[
+    \Delta r\,\Delta\theta.
+\]
+It has area approximately
+\[
+    r\,\Delta r\,\Delta\theta.
+\]
+So the integral should be
+\[
+    V=
+    \int_0^{2\pi}\int_0^3 (9-r^2)r\,dr\,d\theta.
+\]
+Compute:
+\[
+\begin{aligned}
+    V
+    &=
+    \int_0^{2\pi}
+    \left[
+        \frac92r^2-\frac14r^4
+    \right]_0^3
+    d\theta \\
+    &=
+    \int_0^{2\pi}
+    \left(
+        \frac92\cdot9-\frac14\cdot81
+    \right)
+    d\theta\\
+    &=
+    \int_0^{2\pi}
+    \frac{81}{4}\,d\theta\\
+    &=
+    \frac{81\pi}{2}.
+\end{aligned}
+\]
+Thus
+\[
+\boxed{
+    V=\frac{81\pi}{2}.
+}
+\]
+
+The factor \(r\) is the new feature.  Everything in polar integration depends on it.
+
+\subsection{Why the area element is \texorpdfstring{\(r\,dr\,d\theta\)}{r dr dtheta}}
+
+A polar grid is made from circles and rays.  If we fix \(r\) and let \(\theta\) change, we
+move around a circle.  If we fix \(\theta\) and let \(r\) change, we move along a ray.
+
+A small polar rectangle has two side lengths:
+
+\[
+    \text{radial side length}\approx \Delta r,
+\]
+and
+\[
+    \text{circular side length}\approx r\,\Delta\theta.
+\]
+The second formula is arc length:
+\[
+    \text{arc length}=(\text{radius})(\text{angle}).
+\]
+Therefore
+\[
+    \Delta A
+    \approx
+    (r\,\Delta\theta)(\Delta r)
+    =
+    r\,\Delta r\,\Delta\theta.
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.15, >=stealth]
+    \draw[->] (-0.3,0) -- (4.8,0) node[right] {\(x\)};
+    \draw[->] (0,-0.3) -- (0,4.2) node[above] {\(y\)};
+
+    \draw[gray!25] (0,0) circle (1.4);
+    \draw[gray!25] (0,0) circle (2.2);
+    \draw[gray!25] (0,0) circle (3.0);
+
+    \draw[gray!40] (0,0) -- (4.0,0.0);
+    \draw[gray!40] (0,0) -- ({4*cos(20)},{4*sin(20)});
+    \draw[gray!40] (0,0) -- ({4*cos(40)},{4*sin(40)});
+    \draw[gray!40] (0,0) -- ({4*cos(60)},{4*sin(60)});
+
+    \filldraw[fill=blue!20, draw=blue!60!black, thick]
+        ({2.2*cos(20)},{2.2*sin(20)})
+        arc[start angle=20,end angle=40,radius=2.2]
+        -- ({3.0*cos(40)},{3.0*sin(40)})
+        arc[start angle=40,end angle=20,radius=3.0]
+        -- cycle;
+
+    \draw[<->, blue!70!black]
+        ({2.45*cos(20)},{2.45*sin(20)})
+        -- ({2.95*cos(20)},{2.95*sin(20)})
+        node[midway, below right] {\(\Delta r\)};
+
+    \node[blue!70!black] at ({3.35*cos(30)},{3.35*sin(30)})
+        {\(r\,\Delta\theta\)};
+
+    % Inner arc placed at r=0.8, label placed safely inside at r=0.55
+    \draw[->, thick] (0.8,0) arc[start angle=0,end angle=20,radius=0.8];
+    \node at ({0.55*cos(10)},{0.55*sin(10)}) {\(\theta_1\)};
+    
+    % Outer arc placed at r=1.15 to clear the inner label, label outside at r=1.4
+    \draw[->, thick] (1.15,0) arc[start angle=0,end angle=40,radius=1.15];
+    \node at ({1.4*cos(35)},{1.4*sin(35)}) {\(\theta_2\)};
+
+    \node at (2.2,-0.55) {polar grid cells grow as \(r\) grows};
+\end{tikzpicture}
+\caption{A small polar rectangle has area approximately \(r\,\Delta r\,\Delta\theta\).}
+\end{figure}
+
+There is also a differential-forms way to see the same factor.
+
+From
+\[
+    x=r\cos\theta,
+    \qquad
+    y=r\sin\theta,
+\]
+we get
+\[
+    dx=\cos\theta\,dr-r\sin\theta\,d\theta,
+\]
+and
+\[
+    dy=\sin\theta\,dr+r\cos\theta\,d\theta.
+\]
+Now wedge:
+\[
+\begin{aligned}
+    dx\wedge dy
+    &=
+    (\cos\theta\,dr-r\sin\theta\,d\theta)
+    \wedge
+    (\sin\theta\,dr+r\cos\theta\,d\theta)\\
+    &=
+    r\cos^2\theta\,dr\wedge d\theta
+    +
+    r\sin^2\theta\,dr\wedge d\theta\\
+    &=
+    r(\cos^2\theta+\sin^2\theta)\,dr\wedge d\theta\\
+    &=
+    r\,dr\wedge d\theta.
+\end{aligned}
+\]
+So the standard area form becomes
+\[
+\boxed{
+    dx\wedge dy=r\,dr\wedge d\theta.
+}
+\]
+For ordinary positive area,
+\[
+\boxed{
+    dA=r\,dr\,d\theta.
+}
+\]
+
+This is the same factor we saw geometrically.
+
+\subsection{Polar rectangles}
+
+A rectangle in the \((r,\theta)\)-plane becomes a curved region in the \(xy\)-plane.
+
+\begin{definition}[Polar rectangle]
+A \emph{polar rectangle} is a region described by
+\[
+\boxed{
+    a\le r\le b,
+    \qquad
+    \alpha\le\theta\le\beta.
+}
+\]
+In the \(xy\)-plane, this is the region between the circles
+\[
+    r=a
+    \qquad\text{and}\qquad
+    r=b
+\]
+and between the rays
+\[
+    \theta=\alpha
+    \qquad\text{and}\qquad
+    \theta=\beta.
+\]
+\end{definition}
+
+For example,
+\[
+    1\le r\le3,
+    \qquad
+    0\le\theta\le\pi
+\]
+is a half-annulus.
+
+Its area is
+\[
+\begin{aligned}
+    A
+    &=
+    \int_0^\pi\int_1^3 r\,dr\,d\theta\\
+    &=
+    \int_0^\pi
+    \left[
+        \frac12r^2
+    \right]_1^3
+    d\theta\\
+    &=
+    \int_0^\pi 4\,d\theta\\
+    &=
+    4\pi.
+\end{aligned}
+\]
+This agrees with geometry:
+\[
+    \frac12\pi(3^2)-\frac12\pi(1^2)=\frac92\pi-\frac12\pi=4\pi.
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.95, >=stealth]
+    \draw[->] (-3.8,0) -- (3.8,0) node[right] {\(x\)};
+    \draw[->] (0,-0.5) -- (0,3.9) node[above] {\(y\)};
+
+    \fill[orange!18]
+        (1,0) arc[start angle=0,end angle=180,radius=1]
+        -- (-3,0) arc[start angle=180,end angle=0,radius=3]
+        -- cycle;
+
+    \draw[orange!60!black, thick] (1,0) arc[start angle=0,end angle=180,radius=1];
+    \draw[orange!60!black, thick] (3,0) arc[start angle=0,end angle=180,radius=3];
+    \draw[orange!60!black, thick] (1,0) -- (3,0);
+    \draw[orange!60!black, thick] (-1,0) -- (-3,0);
+
+    \node at (0,2.1) {\(1\le r\le3\)};
+    \node at (0,1.55) {\(0\le\theta\le\pi\)};
+\end{tikzpicture}
+\caption{A polar rectangle can be a curved sector or annular sector.}
+\end{figure}
+
+\subsection{The polar-coordinate formula}
+
+Now we can state the general rule.
+
+\begin{theorem}[Double integrals in polar coordinates]
+Suppose \(D\) is described in polar coordinates by
+\[
+    D=
+    \left\{
+        (r,\theta):
+        \alpha\le\theta\le\beta,\ 
+        g(\theta)\le r\le h(\theta)
+    \right\},
+\]
+where \(g\) and \(h\) are continuous, \(0\le g(\theta)\le h(\theta)\), and the polar
+description covers the region once except possibly along boundary curves.
+
+If \(f\) is continuous on \(D\), then
+\[
+\boxed{
+    \iint_D f(x,y)\,dA
+    =
+    \int_\alpha^\beta
+    \int_{g(\theta)}^{h(\theta)}
+    f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta.
+}
+\]
+Equivalently, in form language,
+\[
+\boxed{
+    \int_D f(x,y)\,dx\wedge dy
+    =
+    \int_\alpha^\beta
+    \int_{g(\theta)}^{h(\theta)}
+    f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta.
+}
+\]
+\end{theorem}
+
+\begin{proof}[Idea of the proof]
+Divide the region into small polar rectangles.  A small piece at radius \(r\) has area
+approximately
+\[
+    r\,\Delta r\,\Delta\theta.
+\]
+On that piece,
+\[
+    f(x,y)=f(r\cos\theta,r\sin\theta).
+\]
+So a Riemann sum looks like
+\[
+    \sum
+    f(r\cos\theta,r\sin\theta)\,r\,\Delta r\,\Delta\theta.
+\]
+As the polar pieces get small, this sum becomes
+\[
+    \int_\alpha^\beta
+    \int_{g(\theta)}^{h(\theta)}
+    f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta.
+\]
+The same conclusion follows from
+\[
+    dx\wedge dy=r\,dr\wedge d\theta.
+\]
+\end{proof}
+
+There are two warnings hidden in the theorem.
+
+First, the function \(f\) is assumed continuous.  This is a safe hypothesis that guarantees
+the usual Riemann integral exists.  A wildly discontinuous function, such as the function
+that is \(1\) at rational-coordinate points and \(0\) at irrational-coordinate points inside
+a disk, is not Riemann integrable.  Changing coordinates cannot fix a function whose
+ordinary integral is not defined.
+
+Second, the polar description must not cover the region more than once.
+
+For example,
+\[
+    0\le r\le1,
+    \qquad
+    0\le\theta\le4\pi
+\]
+traces the unit disk twice.  If we integrate \(1\), we get
+\[
+\begin{aligned}
+    \int_0^{4\pi}\int_0^1 r\,dr\,d\theta
+    &=
+    \int_0^{4\pi}\frac12\,d\theta\\
+    &=
+    2\pi.
+\end{aligned}
+\]
+But the area of the unit disk is only
+\[
+    \pi.
+\]
+The formula did not fail.  The setup counted every point twice.
+
+\[
+\boxed{
+    \text{A repeated polar description gives a repeated integral.}
+}
+\]
+
+\subsection{Radial symmetry}
+
+A function is radially symmetric if it depends only on the distance from the origin:
+\[
+    f(x,y)=F(r),
+    \qquad
+    r=\sqrt{x^2+y^2}.
+\]
+On a disk or annulus centered at the origin, polar coordinates make this especially
+simple.
+
+If
+\[
+    D=\{(x,y):0\le r\le a\},
+\]
+then
+\[
+\begin{aligned}
+    \iint_D F(r)\,dA
+    &=
+    \int_0^{2\pi}\int_0^a F(r)\,r\,dr\,d\theta\\
+    &=
+    2\pi\int_0^a F(r)\,r\,dr.
+\end{aligned}
+\]
+So for radially symmetric functions on centered disks,
+\[
+\boxed{
+    \iint_D F(r)\,dA
+    =
+    2\pi\int_0^a F(r)\,r\,dr.
+}
+\]
+
+The factor \(2\pi\) comes from going all the way around the circle.  The factor \(r\)
+still comes from area.
+
+\begin{example}[A radially symmetric mound]
+A circular pile of sand has height
+\[
+    h(r)=12-3r
+\]
+over the disk
+\[
+    0\le r\le4.
+\]
+The total volume is
+\[
+\begin{aligned}
+    V
+    &=
+    \int_0^{2\pi}\int_0^4 (12-3r)r\,dr\,d\theta\\
+    &=
+    2\pi\int_0^4 (12r-3r^2)\,dr\\
+    &=
+    2\pi\left[6r^2-r^3\right]_0^4\\
+    &=
+    2\pi(96-64)\\
+    &=
+    64\pi.
+\end{aligned}
+\]
+Thus
+\[
+\boxed{
+    V=64\pi.
+}
+\]
+\end{example}
+
+\subsection{A shifted circle}
+
+Polar coordinates are not only for regions centered at the origin.  They are often useful
+whenever a boundary has a simple polar equation.
+
+Consider the disk
+\[
+    D:\quad x^2+y^2\le2x.
+\]
+Complete the square:
+\[
+    x^2-2x+y^2\le0,
+\]
+so
+\[
+    (x-1)^2+y^2\le1.
+\]
+This is the disk of radius \(1\) centered at \((1,0)\).
+
+In polar coordinates,
+\[
+    x^2+y^2=r^2,
+    \qquad
+    x=r\cos\theta.
+\]
+So the boundary
+\[
+    x^2+y^2=2x
+\]
+becomes
+\[
+    r^2=2r\cos\theta.
+\]
+For \(r\ge0\), this gives
+\[
+    r=2\cos\theta.
+\]
+This is nonnegative when
+\[
+    -\frac{\pi}{2}\le\theta\le\frac{\pi}{2}.
+\]
+Thus the disk is
+\[
+    -\frac{\pi}{2}\le\theta\le\frac{\pi}{2},
+    \qquad
+    0\le r\le2\cos\theta.
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.05, >=stealth]
+    \draw[->] (-0.8,0) -- (3.2,0) node[right] {\(x\)};
+    \draw[->] (0,-1.7) -- (0,1.7) node[above] {\(y\)};
+
+    \draw[fill=blue!12, draw=blue!60!black, thick] (1,0) circle (1);
+
+    \fill (1,0) circle (2pt);
+    \node[below] at (1,0) {\((1,0)\)};
+
+    \draw[thick, red!65!black] (0,0) -- ({2*cos(35)*cos(35)},{2*cos(35)*sin(35)});
+    \node[red!65!black, right] at (1.25,0.55) {\(r=2\cos\theta\)};
+
+    \draw[->] (0.55,0) arc[start angle=0,end angle=35,radius=0.55];
+    \node at (0.72,0.18) {\(\theta\)};
+
+    \node at (1,-1.35) {\((x-1)^2+y^2\le1\)};
+\end{tikzpicture}
+\caption{The shifted disk \((x-1)^2+y^2\le1\) has polar boundary \(r=2\cos\theta\).}
+\end{figure}
+
+Now find
+\[
+    \iint_D (x^2+y^2)\,dA.
+\]
+Since
+\[
+    x^2+y^2=r^2,
+\]
+we get
+\[
+\begin{aligned}
+    \iint_D (x^2+y^2)\,dA
+    &=
+    \int_{-\pi/2}^{\pi/2}
+    \int_0^{2\cos\theta}
+    r^2\,r\,dr\,d\theta\\
+    &=
+    \int_{-\pi/2}^{\pi/2}
+    \left[
+        \frac14r^4
+    \right]_0^{2\cos\theta}
+    d\theta\\
+    &=
+    \int_{-\pi/2}^{\pi/2}
+    4\cos^4\theta\,d\theta.
+\end{aligned}
+\]
+Using
+\[
+    \cos^4\theta
+    =
+    \left(\frac{1+\cos2\theta}{2}\right)^2
+    =
+    \frac38+\frac12\cos2\theta+\frac18\cos4\theta,
+\]
+we get
+\[
+\begin{aligned}
+    \iint_D (x^2+y^2)\,dA
+    &=
+    4\left[
+        \frac38\theta
+        +\frac14\sin2\theta
+        +\frac1{32}\sin4\theta
+    \right]_{-\pi/2}^{\pi/2}\\
+    &=
+    4\cdot\frac{3\pi}{8}\\
+    &=
+    \frac{3\pi}{2}.
+\end{aligned}
+\]
+Thus
+\[
+\boxed{
+    \iint_D (x^2+y^2)\,dA=\frac{3\pi}{2}.
+}
+\]
+
+\subsection{A spiral region}
+
+Polar coordinates also describe regions bounded by spirals.
+
+Suppose a garden path has boundary
+\[
+    r=\frac{\theta}{2\pi},
+    \qquad
+    0\le\theta\le2\pi.
+\]
+The region inside one turn of the spiral is
+\[
+    0\le\theta\le2\pi,
+    \qquad
+    0\le r\le \frac{\theta}{2\pi}.
+\]
+Its area is
+\[
+\begin{aligned}
+    A
+    &=
+    \int_0^{2\pi}
+    \int_0^{\theta/(2\pi)}
+    r\,dr\,d\theta\\
+    &=
+    \int_0^{2\pi}
+    \frac12\left(\frac{\theta}{2\pi}\right)^2
+    d\theta\\
+    &=
+    \frac{1}{8\pi^2}
+    \left[
+        \frac{\theta^3}{3}
+    \right]_0^{2\pi}\\
+    &=
+    \frac{1}{8\pi^2}\cdot\frac{8\pi^3}{3}\\
+    &=
+    \frac{\pi}{3}.
+\end{aligned}
+\]
+So
+\[
+\boxed{
+    A=\frac{\pi}{3}.
+}
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=2.1, >=stealth]
+    \draw[->] (-1.25,0) -- (1.35,0) node[right] {\(x\)};
+    \draw[->] (0,-1.25) -- (0,1.35) node[above] {\(y\)};
+
+    \draw[fill=green!13, draw=none]
+        plot[domain=0:6.283, samples=200, smooth, variable=\t]
+        ({(\t/(2*pi))*cos(\t r)}, {(\t/(2*pi))*sin(\t r)})
+        -- (0,0)
+        -- cycle;
+
+    \draw[thick, green!45!black, domain=0:6.283, samples=200, smooth, variable=\t]
+        plot ({(\t/(2*pi))*cos(\t r)}, {(\t/(2*pi))*sin(\t r)});
+
+    \node[green!45!black] at (0.15,-0.8) {\(r=\theta/(2\pi)\)};
+    \node at (0,-1.45) {area \(=\pi/3\)};
+\end{tikzpicture}
+\caption{A spiral region can have very simple polar bounds.}
+\end{figure}
+
+The rectangular description of the same region would be unpleasant.  The polar
+description is almost a sentence:
+\[
+    \text{as \(\theta\) turns once, \(r\) grows from \(0\) to \(1\).}
+\]
+
+\subsection{The main lesson}
+
+Changing to polar coordinates does two things:
+
+\[
+    x=r\cos\theta,\qquad y=r\sin\theta,
+\]
+and
+\[
+    dA=r\,dr\,d\theta.
+\]
+
+The first line changes the function and the region.  The second line changes the area
+element.
+
+So the safe routine is:
+
+\begin{enumerate}
+\item Draw the region.
+
+\item Rewrite the boundary in polar form.
+
+\item Rewrite the integrand using
+\[
+    x=r\cos\theta,\qquad y=r\sin\theta.
+\]
+
+\item Multiply by the area factor \(r\).
+
+\item Check that the polar description covers the region once.
+\end{enumerate}
+
+The factor \(r\) is not optional.  It is the price of using circular coordinates.
+
+Now that we can integrate over many regions, we can ask what double integrals are
+good for besides volume.  The same symbol
+\[
+    \iint_D f\,dA
+\]
+can measure mass, center of mass, rotational inertia, probability, average temperature,
+rainfall, or elevation.
+
+The integral is the same.  The meaning of \(f\) changes.
+
+\section{Applications of double integrals}
+\label{sec:10.6}
+
+A double integral adds tiny pieces:
+\[
+    f(x,y)\,\Delta A.
+\]
+If \(f\) is height, the pieces are tiny volumes.  But \(f\) does not have to be height.
+It can be density, temperature, probability, or any quantity spread over a region.
+
+This is why double integrals are useful.  They turn a local measurement into a total
+quantity.
+
+\subsection{Mass from density}
+
+A thin metal sign occupies the rectangle
+\[
+    D=[0,2]\times[0,1].
+\]
+Because of a coating process, the sign is heavier toward the east.  Its density is
+\[
+    \sigma(x,y)=1+x
+\]
+kilograms per square meter.
+
+A tiny piece of area \(\Delta A\) near \((x,y)\) has approximate mass
+\[
+    \sigma(x,y)\,\Delta A.
+\]
+So the total mass should be
+\[
+    m=\iint_D \sigma(x,y)\,dA.
+\]
+For this sign,
+\[
+\begin{aligned}
+    m
+    &=
+    \int_0^2\int_0^1 (1+x)\,dy\,dx\\
+    &=
+    \int_0^2 (1+x)\,dx\\
+    &=
+    \left[
+        x+\frac12x^2
+    \right]_0^2\\
+    &=
+    2+2\\
+    &=
+    4.
+\end{aligned}
+\]
+Thus the sign has mass
+\[
+\boxed{
+    m=4\text{ kg}.
+}
+\]
+
+\begin{definition}[Mass of a lamina]
+A thin plate in the plane is often called a \emph{lamina}.  If a lamina occupies a region
+\(D\) and has density
+\[
+    \sigma(x,y)
+\]
+measured in mass per unit area, then its total mass is
+\[
+\boxed{
+    m=\iint_D \sigma(x,y)\,dA.
+}
+\]
+In form language,
+\[
+\boxed{
+    m=\int_D \sigma(x,y)\,dx\wedge dy.
+}
+\]
+\end{definition}
+
+Density must be nonnegative for a physical mass distribution:
+\[
+    \sigma(x,y)\ge0.
+\]
+Also, the total mass must be positive if we want to speak about a center of mass.
+
+A signed function can still be integrated, but then it describes something like signed
+charge, not ordinary mass.  For instance, on the symmetric rectangle
+\[
+    [-1,1]\times[0,1],
+\]
+the signed density
+\[
+    \sigma(x,y)=x
+\]
+has total integral
+\[
+    \iint_D x\,dA=0.
+\]
+That may make sense as total charge.  It does not make sense as a mass whose center we
+can find by dividing by total mass.
+
+\subsection{Center of mass}
+
+The same coated sign from above has density
+\[
+    \sigma(x,y)=1+x
+\]
+on
+\[
+    D=[0,2]\times[0,1].
+\]
+Its mass is
+\[
+    m=4.
+\]
+
+Where should we balance it?
+
+For a collection of point masses, the center of mass is a weighted average of positions.
+For a continuous lamina, the sums become integrals.
+
+The \(x\)-coordinate of the center of mass should be the average of \(x\), weighted by
+mass:
+\[
+    \bar x
+    =
+    \frac{1}{m}\iint_D x\,\sigma(x,y)\,dA.
+\]
+The \(y\)-coordinate is
+\[
+    \bar y
+    =
+    \frac{1}{m}\iint_D y\,\sigma(x,y)\,dA.
+\]
+
+For our sign,
+\[
+\begin{aligned}
+    \iint_D x\sigma(x,y)\,dA
+    &=
+    \int_0^2\int_0^1 x(1+x)\,dy\,dx\\
+    &=
+    \int_0^2 (x+x^2)\,dx\\
+    &=
+    \left[
+        \frac12x^2+\frac13x^3
+    \right]_0^2\\
+    &=
+    2+\frac83\\
+    &=
+    \frac{14}{3}.
+\end{aligned}
+\]
+So
+\[
+    \bar x=\frac{1}{4}\cdot\frac{14}{3}=\frac76.
+\]
+
+Similarly,
+\[
+\begin{aligned}
+    \iint_D y\sigma(x,y)\,dA
+    &=
+    \int_0^2\int_0^1 y(1+x)\,dy\,dx\\
+    &=
+    \int_0^2
+    (1+x)
+    \left[
+        \frac12y^2
+    \right]_0^1
+    dx\\
+    &=
+    \frac12\int_0^2(1+x)\,dx\\
+    &=
+    \frac12\cdot4\\
+    &=
+    2.
+\end{aligned}
+\]
+Thus
+\[
+    \bar y=\frac{2}{4}=\frac12.
+\]
+The center of mass is
+\[
+\boxed{
+    \left(\bar x,\bar y\right)=\left(\frac76,\frac12\right).
+}
+\]
+
+The answer makes sense.  If the sign had uniform density, the center would be
+\[
+    (1,1/2).
+\]
+Since the density is larger when \(x\) is larger, the center moves right to
+\[
+    \bar x=\frac76>1.
+\]
+But the density does not depend on \(y\), so the vertical coordinate stays
+\[
+    \bar y=\frac12.
+\]
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=1.4, >=stealth]
+    \draw[->] (-0.25,0) -- (2.65,0) node[right] {\(x\)};
+    \draw[->] (0,-0.25) -- (0,1.55) node[above] {\(y\)};
+
+    % Replaced uniform fill with a gradient to show increasing density
+    \draw[left color=gray!5, right color=gray!45, draw=black, thick] (0,0) rectangle (2,1);
+
+    \foreach \x in {0.25,0.55,0.85,1.15,1.45,1.75}
+    {
+        \pgfmathsetmacro{\rad}{0.7+0.35*\x}
+        \fill[blue!60] (\x,0.25) circle ({0.025*\rad});
+        \fill[blue!60] (\x,0.50) circle ({0.025*\rad});
+        \fill[blue!60] (\x,0.75) circle ({0.025*\rad});
+    }
+
+    \fill[red!70!black] (1.1667,0.5) circle (2pt);
+    \draw[red!70!black, dashed] (1.1667,0) -- (1.1667,0.5);
+    \draw[red!70!black, dashed] (0,0.5) -- (1.1667,0.5);
+    \node[red!70!black, above right] at (1.1667,0.5)
+        {\(\left(\frac76,\frac12\right)\)};
+
+    \node[below] at (2,0) {\(2\)};
+    \node[left] at (0,1) {\(1\)};
+    \node at (1,-0.55) {density \(\sigma(x,y)=1+x\)};
+\end{tikzpicture}
+\caption{The density increases to the right, so the center of mass shifts right.}
+\end{figure}
+
+\begin{definition}[Moments and center of mass]
+Let a lamina occupy a region \(D\), with density \(\sigma(x,y)\), and total mass
+\[
+    m=\iint_D \sigma(x,y)\,dA>0.
+\]
+The \emph{moment about the \(y\)-axis} is
+\[
+\boxed{
+    M_y=\iint_D x\,\sigma(x,y)\,dA.
+}
+\]
+The \emph{moment about the \(x\)-axis} is
+\[
+\boxed{
+    M_x=\iint_D y\,\sigma(x,y)\,dA.
+}
+\]
+The center of mass is
+\[
+\boxed{
+    \bar x=\frac{M_y}{m},
+    \qquad
+    \bar y=\frac{M_x}{m}.
+}
+\]
+\end{definition}
+
+The notation can feel backwards at first:
+\[
+    M_y
+\]
+uses \(x\), because \(x\) measures distance from the \(y\)-axis.  Similarly,
+\[
+    M_x
+\]
+uses \(y\), because \(y\) measures distance from the \(x\)-axis.
+
+If the density is constant, the center of mass is the geometric center of the region,
+called the \emph{centroid}.
+
+\subsection{Moment of inertia}
+
+Mass tells us how hard it is to move an object in a straight line.  Moment of inertia
+tells us how hard it is to rotate an object.
+
+A small mass far from the axis of rotation matters more than the same mass near the
+axis.  The distance is squared.
+
+Consider a uniform circular disk of radius \(a\), centered at the origin, with constant
+density
+\[
+    \sigma_0.
+\]
+Find its moment of inertia about the origin, as if it were spinning around an axle through
+the center perpendicular to the disk.
+
+A point at distance \(r\) from the origin contributes a factor
+\[
+    r^2.
+\]
+The density is \(\sigma_0\), and
+\[
+    dA=r\,dr\,d\theta.
+\]
+So
+\[
+\begin{aligned}
+    I_0
+    &=
+    \int_0^{2\pi}\int_0^a r^2\sigma_0\,r\,dr\,d\theta\\
+    &=
+    \sigma_0\int_0^{2\pi}\int_0^a r^3\,dr\,d\theta\\
+    &=
+    \sigma_0(2\pi)
+    \left[
+        \frac14r^4
+    \right]_0^a\\
+    &=
+    \frac{\pi\sigma_0a^4}{2}.
+\end{aligned}
+\]
+The mass of the disk is
+\[
+    m=\sigma_0\pi a^2.
+\]
+Therefore
+\[
+\boxed{
+    I_0=\frac12ma^2.
+}
+\]
+
+This formula says that increasing the radius has a strong effect.  The mass grows like
+\(a^2\), but the moment of inertia about the center grows like \(a^4\) if density stays
+fixed.
+
+\begin{definition}[Moments of inertia]
+Let a lamina occupy a region \(D\), with density \(\sigma(x,y)\).
+
+The moment of inertia about the \(x\)-axis is
+\[
+\boxed{
+    I_x=\iint_D y^2\sigma(x,y)\,dA.
+}
+\]
+The moment of inertia about the \(y\)-axis is
+\[
+\boxed{
+    I_y=\iint_D x^2\sigma(x,y)\,dA.
+}
+\]
+The moment of inertia about the origin is
+\[
+\boxed{
+    I_0=\iint_D (x^2+y^2)\sigma(x,y)\,dA.
+}
+\]
+Since
+\[
+    x^2+y^2
+\]
+is the squared distance from the origin,
+\[
+\boxed{
+    I_0=I_x+I_y.
+}
+\]
+\end{definition}
+
+In polar coordinates,
+\[
+    x^2+y^2=r^2,
+\]
+so moments of inertia about the origin often become especially simple:
+\[
+    I_0=\iint_D r^2\sigma\,dA.
+\]
+
+\subsection{Probability density over a region}
+
+A probability density is another kind of density.  Instead of mass per unit area, it
+measures probability per unit area.
+
+Suppose a dart lands in the unit disk
+\[
+    0\le r\le1,
+    \qquad
+    0\le\theta\le2\pi.
+\]
+The dart is more likely to land near the center than near the edge.  A simple model is
+\[
+    p(r)=C(1-r),
+\]
+where \(C\) is a constant.
+
+To be a probability density, the total probability must be \(1\):
+\[
+    \iint_D p\,dA=1.
+\]
+So
+\[
+\begin{aligned}
+    1
+    &=
+    \int_0^{2\pi}\int_0^1 C(1-r)\,r\,dr\,d\theta\\
+    &=
+    2\pi C\int_0^1(r-r^2)\,dr\\
+    &=
+    2\pi C
+    \left[
+        \frac12r^2-\frac13r^3
+    \right]_0^1\\
+    &=
+    2\pi C\left(\frac12-\frac13\right)\\
+    &=
+    \frac{\pi C}{3}.
+\end{aligned}
+\]
+Thus
+\[
+    C=\frac{3}{\pi}.
+\]
+The density is
+\[
+    p(r)=\frac{3}{\pi}(1-r).
+\]
+
+Now find the probability that the dart lands within half the radius:
+\[
+    0\le r\le\frac12.
+\]
+Compute:
+\[
+\begin{aligned}
+    P\left(r\le\frac12\right)
+    &=
+    \int_0^{2\pi}
+    \int_0^{1/2}
+    \frac{3}{\pi}(1-r)r\,dr\,d\theta\\
+    &=
+    6\int_0^{1/2}(r-r^2)\,dr\\
+    &=
+    6\left[
+        \frac12r^2-\frac13r^3
+    \right]_0^{1/2}\\
+    &=
+    6\left(
+        \frac18-\frac1{24}
+    \right)\\
+    &=
+    6\cdot\frac{2}{24}\\
+    &=
+    \frac12.
+\end{aligned}
+\]
+So
+\[
+\boxed{
+    P\left(r\le\frac12\right)=\frac12.
+}
+\]
+
+For a uniform dartboard, the probability inside half the radius would be
+\[
+    \frac{\pi(1/2)^2}{\pi(1)^2}=\frac14.
+\]
+Here it is larger because the density is concentrated near the center.
+
+\begin{definition}[Probability density over a region]
+A function \(p(x,y)\) is a probability density on a region \(D\) if
+\[
+\boxed{
+    p(x,y)\ge0
+}
+\]
+and
+\[
+\boxed{
+    \iint_D p(x,y)\,dA=1.
+}
+\]
+For a subregion \(A\subseteq D\),
+\[
+\boxed{
+    P((X,Y)\in A)=\iint_A p(x,y)\,dA.
+}
+\]
+\end{definition}
+
+Both conditions matter.
+
+If
+\[
+    p(x,y)=2
+\]
+on the unit square, then
+\[
+    \iint_{[0,1]\times[0,1]}2\,dA=2,
+\]
+so it cannot be a probability density.  Total probability would be \(2\), which is
+impossible.
+
+If
+\[
+    p(x,y)=-1
+\]
+on any region of positive area, then probabilities over that region would be negative.
+That is also impossible.
+
+\subsection{Average value over a region}
+
+In single-variable calculus, the average value of \(f(x)\) on \([a,b]\) was
+\[
+    f_{\text{avg}}
+    =
+    \frac{1}{b-a}\int_a^b f(x)\,dx.
+\]
+In two variables, we divide by area instead of length.
+
+\begin{definition}[Average value over a region]
+If \(f\) is continuous on a region \(D\) with positive area, then the average value of
+\(f\) over \(D\) is
+\[
+\boxed{
+    f_{\text{avg}}
+    =
+    \frac{1}{\operatorname{Area}(D)}
+    \iint_D f(x,y)\,dA.
+}
+\]
+\end{definition}
+
+\begin{example}[Average temperature in a circular pond]
+A circular pond has radius \(4\) meters.  Its surface temperature depends only on
+distance from the center:
+\[
+    T(r)=20-r.
+\]
+The center is warmest, and the edge is coolest.
+
+The area of the pond is
+\[
+    16\pi.
+\]
+The total temperature integral is
+\[
+\begin{aligned}
+    \iint_D T\,dA
+    &=
+    \int_0^{2\pi}\int_0^4 (20-r)r\,dr\,d\theta\\
+    &=
+    2\pi\int_0^4(20r-r^2)\,dr\\
+    &=
+    2\pi
+    \left[
+        10r^2-\frac13r^3
+    \right]_0^4\\
+    &=
+    2\pi
+    \left(
+        160-\frac{64}{3}
+    \right)\\
+    &=
+    \frac{832\pi}{3}.
+\end{aligned}
+\]
+Therefore
+\[
+\begin{aligned}
+    T_{\text{avg}}
+    &=
+    \frac{1}{16\pi}\cdot\frac{832\pi}{3}\\
+    &=
+    \frac{52}{3}.
+\end{aligned}
+\]
+So the average temperature is
+\[
+\boxed{
+    \frac{52}{3}^\circ\text{C}\approx 17.33^\circ\text{C}.
+}
+\]
+\end{example}
+
+The same formula can average rainfall, elevation, pollution concentration, light intensity,
+or any other scalar field over a region.
+
+\subsection{One integral, many meanings}
+
+The expression
+\[
+    \iint_D f(x,y)\,dA
+\]
+has one mathematical structure: add local contributions over area.
+
+Its meaning depends on what \(f\) measures.
+
+\[
+\begin{array}{c|c|c}
+\text{Quantity} & f(x,y) & \iint_D f(x,y)\,dA \\ \hline
+\text{height} & \text{height above a floor} & \text{volume}\\[1mm]
+\text{density} & \text{mass per area} & \text{mass}\\[1mm]
+\text{charge density} & \text{charge per area} & \text{total charge}\\[1mm]
+\text{temperature} & \text{temperature} & \text{area-total used for average}\\[1mm]
+\text{probability density} & \text{probability per area} & \text{probability}\\[1mm]
+\text{rotational weight} & \text{squared distance}\times\text{density} & \text{moment of inertia}
+\end{array}
+\]
+
+This is one of the strengths of integration.  Once we know how to add over a region,
+many physical and geometric quantities become the same kind of calculation.
+
+\subsection{A compact summary of the main formulas}
+
+Let \(D\) be a region in the plane.
+
+If \(\sigma(x,y)\) is density, then
+\[
+\boxed{
+    m=\iint_D \sigma\,dA.
+}
+\]
+
+The moments are
+\[
+\boxed{
+    M_y=\iint_D x\sigma\,dA,
+    \qquad
+    M_x=\iint_D y\sigma\,dA.
+}
+\]
+
+The center of mass is
+\[
+\boxed{
+    \bar x=\frac{M_y}{m},
+    \qquad
+    \bar y=\frac{M_x}{m}.
+}
+\]
+
+The moments of inertia are
+\[
+\boxed{
+    I_x=\iint_D y^2\sigma\,dA,
+    \qquad
+    I_y=\iint_D x^2\sigma\,dA,
+}
+\]
+and
+\[
+\boxed{
+    I_0=\iint_D (x^2+y^2)\sigma\,dA.
+}
+\]
+
+If \(p(x,y)\) is a probability density, then
+\[
+\boxed{
+    P((X,Y)\in A)=\iint_A p(x,y)\,dA.
+}
+\]
+
+If \(f(x,y)\) is a scalar field, then its average value is
+\[
+\boxed{
+    f_{\text{avg}}
+    =
+    \frac{1}{\operatorname{Area}(D)}
+    \iint_D f\,dA.
+}
+\]
+
+Each formula is a weighted sum.  The weight tells the integral what to measure.
+
+\subsection{What comes next}
+
+So far all our regions have lived in the plane.  We have added over area:
+\[
+    dA.
+\]
+But real objects fill space.  A loaf of bread, a storm cloud, a storage tank, and a solid
+metal part occupy three-dimensional regions.
+
+The next layer of the story is to add over volume:
+\[
+    dV.
+\]
+That leads to triple integrals.
+
+Before that, there is one warning worth understanding.  Some regions are unbounded,
+and some functions blow up near a point.  Then the ordinary double integral becomes an
+improper double integral.  The same idea of adding tiny pieces remains, but convergence
+becomes the new question.
+\section{Improper double integrals}
+\label{sec:10.7}
+
+Section \ref{sec:10.6} used double integrals to add mass, moments, probability,
+rainfall, temperature, and elevation over finite regions.  The pieces were tiny, but the
+region itself was bounded, and the function stayed finite.
+
+Some real quantities refuse to be that polite.  Smoke can spread across a whole plain.
+A gravitational field can become very large near a point.  A probability density may
+live on the entire plane.  To handle these cases, we keep the same idea of adding tiny
+pieces, but the final answer now comes from a limit.
+
+\subsection{Unbounded regions}
+
+Imagine a thin layer of dust settling on a flat desert after a volcanic eruption.  The dust
+is thickest near the source and thinner farther away.  A simple radial model is
+\[
+    \rho(x,y)=e^{-\sqrt{x^2+y^2}},
+\]
+measured in grams per square meter.
+
+The dust has no sharp edge in the model.  It covers the whole plane.  Still, the total
+mass might be finite because the density decreases fast.
+
+Use polar coordinates:
+\[
+    r=\sqrt{x^2+y^2}.
+\]
+Then
+\[
+    \rho=e^{-r},
+    \qquad
+    dA=r\,dr\,d\theta.
+\]
+The mass inside a disk of radius \(A\) is
+\[
+\begin{aligned}
+M(A)
+&=
+\int_0^{2\pi}\int_0^A e^{-r}r\,dr\,d\theta\\
+&=
+2\pi\int_0^A re^{-r}\,dr.
+\end{aligned}
+\]
+Integrate by parts:
+\[
+    \int re^{-r}\,dr=-re^{-r}-e^{-r}.
+\]
+So
+\[
+\begin{aligned}
+M(A)
+&=
+2\pi\left[-re^{-r}-e^{-r}\right]_0^A\\
+&=
+2\pi\left(1-(A+1)e^{-A}\right).
+\end{aligned}
+\]
+As
+\[
+    A\to\infty,
+\]
+we have
+\[
+    (A+1)e^{-A}\to0.
+\]
+Therefore
+\[
+\boxed{
+    M=\lim_{A\to\infty}M(A)=2\pi.
+}
+\]
+
+The dust covers an infinite plane, but its total mass is finite.
+
+\begin{definition}[Improper double integral over an unbounded region]
+Let \(R\) be an unbounded region in the plane.  For \(A>0\), let
+\[
+    R_A=R\cap\{(x,y):x^2+y^2\le A^2\}.
+\]
+If the limit
+\[
+\boxed{
+    \lim_{A\to\infty}\iint_{R_A} f\,dA
+}
+\]
+exists, then we call it the \emph{improper double integral} of \(f\) over \(R\), and we
+write
+\[
+\boxed{
+    \iint_R f\,dA.
+}
+\]
+\end{definition}
+
+For nonnegative functions, this definition matches the physical picture: measure more
+and more of the region, then see whether the accumulated total settles to a finite
+number.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.85, >=stealth]
+    \begin{scope}
+        \draw[->] (-3.4,0) -- (3.7,0) node[right] {\(x\)};
+        \draw[->] (0,-3.4) -- (0,3.7) node[above] {\(y\)};
+
+        \foreach \r in {1,2,3} {
+            \draw[gray!45] (0,0) circle (\r);
+        }
+
+        \draw[->, thick] (2.2,2.2) -- (3.0,3.0);
+        \node at (0,-4.0) {expand the disk: \(A\to\infty\)};
+    \end{scope}
+
+    \begin{scope}[shift={(8,0)}]
+        \draw[->] (-3.2,0) -- (3.5,0) node[right] {\(x\)};
+        \draw[->] (0,-3.2) -- (0,3.5) node[above] {\(y\)};
+
+        \draw[fill=green!8, thick] (0,0) circle (2.7);
+        \draw[fill=white, thick] (0,0) circle (0.65);
+
+        \draw[->, thick] (0.65,0.65) -- (0.25,0.25);
+        \node at (0,-4.0) {shrink the missing disk: \(\varepsilon\to0\)};
+    \end{scope}
+\end{tikzpicture}
+\caption{Improper integrals use limits.  For an unbounded region, the outer boundary
+moves outward.  For a singular point, a small excluded disk shrinks inward.}
+\end{figure}
+
+The infinite size of the region does not automatically make the integral diverge.  What
+matters is the balance between area growth and decay of the function.
+
+Here is the simplest failure.
+
+\begin{example}[Infinite area gives infinite integral]
+Let
+\[
+    f(x,y)=1
+\]
+on the whole plane.  The integral over the disk of radius \(A\) is
+\[
+    \iint_{x^2+y^2\le A^2}1\,dA=\pi A^2.
+\]
+As
+\[
+    A\to\infty,
+\]
+this grows without bound.  So
+\[
+\boxed{
+    \iint_{\mathbb R^2}1\,dA
+}
+\]
+does not converge to a finite number.
+
+The plane has infinite area, so adding \(1\) over the whole plane gives an infinite total.
+\end{example}
+
+A function can tend to \(0\) and still have infinite total.
+
+\begin{example}[Decay that is too slow]
+Let
+\[
+    f(x,y)=\frac{1}{1+x^2+y^2}
+\]
+on the whole plane.  In polar coordinates,
+\[
+    f=\frac{1}{1+r^2}.
+\]
+The integral over the disk of radius \(A\) is
+\[
+\begin{aligned}
+\int_0^{2\pi}\int_0^A \frac{1}{1+r^2}r\,dr\,d\theta
+&=
+2\pi\int_0^A \frac{r}{1+r^2}\,dr\\
+&=
+\pi\ln(1+A^2).
+\end{aligned}
+\]
+As
+\[
+    A\to\infty,
+\]
+the logarithm grows without bound.  Therefore
+\[
+\boxed{
+    \iint_{\mathbb R^2}\frac{1}{1+x^2+y^2}\,dA
+}
+\]
+diverges.
+\end{example}
+
+The density
+\[
+    \frac{1}{1+r^2}
+\]
+goes to \(0\), but not fast enough.  The rings farther and farther away have larger
+circumference, and their combined contribution never settles down.
+
+\subsection{Unbounded functions}
+
+A different problem happens when the region is bounded, but the function becomes
+infinite at a point.
+
+Imagine heat concentrated near the center of a thin circular plate.  Let the plate be
+the unit disk
+\[
+    D=\{(x,y):x^2+y^2\le1\}.
+\]
+Suppose the heat density is modeled by
+\[
+    h(x,y)=\frac{1}{\sqrt{x^2+y^2}}.
+\]
+This function is unbounded at the origin.  But the origin is only one point, so the
+total heat may still be finite.
+
+In polar coordinates,
+\[
+    h=\frac1r,
+    \qquad
+    dA=r\,dr\,d\theta.
+\]
+The product is simple:
+\[
+    h\,dA=\frac1r\cdot r\,dr\,d\theta=dr\,d\theta.
+\]
+To avoid the singularity at first, remove a tiny disk of radius \(\varepsilon\).  Then
+\[
+\begin{aligned}
+\iint_{\varepsilon\le r\le1}\frac1r\,dA
+&=
+\int_0^{2\pi}\int_\varepsilon^1 1\,dr\,d\theta\\
+&=
+2\pi(1-\varepsilon).
+\end{aligned}
+\]
+Let
+\[
+    \varepsilon\to0^+.
+\]
+Then
+\[
+\boxed{
+    \iint_D\frac{1}{\sqrt{x^2+y^2}}\,dA=2\pi.
+}
+\]
+The function blows up at the center, but the total is finite.
+
+\begin{definition}[Improper double integral near a singular point]
+Let \(R\) be a bounded region, and suppose \(f\) is unbounded at a point
+\[
+    \mathbf p\in R.
+\]
+Let
+\[
+    R_\varepsilon=R\setminus B_\varepsilon(\mathbf p),
+\]
+where \(B_\varepsilon(\mathbf p)\) is the disk of radius \(\varepsilon\) centered at
+\(\mathbf p\).  If the limit
+\[
+\boxed{
+    \lim_{\varepsilon\to0^+}\iint_{R_\varepsilon} f\,dA
+}
+\]
+exists, then it is called the improper double integral of \(f\) over \(R\).
+\end{definition}
+
+The power of \(r\) decides many singularities.  Compare the previous example with
+\[
+    k(x,y)=\frac{1}{x^2+y^2}.
+\]
+In polar coordinates,
+\[
+    k=\frac1{r^2}.
+\]
+On the punctured disk,
+\[
+\begin{aligned}
+\iint_{\varepsilon\le r\le1}\frac1{r^2}\,dA
+&=
+\int_0^{2\pi}\int_\varepsilon^1 \frac1{r^2}r\,dr\,d\theta\\
+&=
+2\pi\int_\varepsilon^1\frac1r\,dr\\
+&=
+2\pi\ln\frac1{\varepsilon}.
+\end{aligned}
+\]
+As
+\[
+    \varepsilon\to0^+,
+\]
+this grows without bound.  So
+\[
+\boxed{
+    \iint_D\frac{1}{x^2+y^2}\,dA
+}
+\]
+diverges.
+
+The difference between
+\[
+    \frac1r
+    \qquad\text{and}\qquad
+    \frac1{r^2}
+\]
+is not small.  The area element contributes a factor of \(r\), and that factor saves
+\[
+    \frac1r
+\]
+but not
+\[
+    \frac1{r^2}.
+\]
+
+\subsection{Convergence and comparison}
+
+Most improper double integrals are not computed exactly.  We often only need to know
+whether the total is finite.
+
+Suppose a chemical concentration on the whole plane satisfies
+\[
+    0\le c(x,y)\le \frac{3}{(1+x^2+y^2)^2}.
+\]
+The upper bound is easier to integrate.  In polar coordinates,
+\[
+\begin{aligned}
+\iint_{\mathbb R^2}\frac{3}{(1+x^2+y^2)^2}\,dA
+&=
+\int_0^{2\pi}\int_0^\infty \frac{3r}{(1+r^2)^2}\,dr\,d\theta.
+\end{aligned}
+\]
+Use
+\[
+    u=1+r^2,
+    \qquad
+    du=2r\,dr.
+\]
+Then
+\[
+\begin{aligned}
+\int_0^\infty \frac{3r}{(1+r^2)^2}\,dr
+&=
+\frac32\int_1^\infty u^{-2}\,du\\
+&=
+\frac32.
+\end{aligned}
+\]
+Therefore
+\[
+    \iint_{\mathbb R^2}\frac{3}{(1+x^2+y^2)^2}\,dA
+    =
+    3\pi.
+\]
+Since \(c\) is squeezed below a function with finite integral, the total amount of
+chemical is also finite.
+
+\begin{theorem}[Comparison test for nonnegative double integrals]
+Let
+\[
+    0\le f(x,y)\le g(x,y)
+\]
+on a region \(R\), except possibly at boundary points or singular points handled by
+improper limits.
+
+\begin{enumerate}
+\item If
+\[
+    \iint_R g\,dA
+\]
+converges, then
+\[
+    \iint_R f\,dA
+\]
+also converges.
+
+\item If
+\[
+    0\le g(x,y)\le f(x,y)
+\]
+and
+\[
+    \iint_R g\,dA
+\]
+diverges, then
+\[
+    \iint_R f\,dA
+\]
+also diverges.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}[Idea of proof]
+For nonnegative functions, the accumulated integral over larger and larger pieces can
+only increase.  If it is always bounded above by a finite number, it must settle to a
+finite limit.  If it is always at least as large as a quantity that grows without bound,
+then it must also grow without bound.
+\end{proof}
+
+The nonnegative condition is there because signed functions can cancel.  Cancellation
+may be real, but it can also hide size.
+
+For example, over the exterior region \(r\ge1\), the radial function
+\[
+    f(r,\theta)=\frac{\cos r}{r}
+\]
+has annular integral
+\[
+    \int_0^{2\pi}\int_1^A \frac{\cos r}{r}\,r\,dr\,d\theta
+    =
+    2\pi\int_1^A \cos r\,dr
+    =
+    2\pi(\sin A-\sin 1).
+\]
+This has no limit as \(A\to\infty\).  It keeps oscillating.  Positive comparison tests
+are designed for totals that do not cancel.
+
+A useful rule of thumb comes from powers of \(r\).
+
+Near the origin, on a disk,
+\[
+    \frac1{r^p}
+\]
+has integral like
+\[
+    \int_0^1 r^{1-p}\,dr.
+\]
+This converges exactly when
+\[
+    p<2.
+\]
+
+Far from the origin, on the outside of a large disk,
+\[
+    \frac1{r^p}
+\]
+has integral like
+\[
+    \int_1^\infty r^{1-p}\,dr.
+\]
+This converges exactly when
+\[
+    p>2.
+\]
+
+So in two dimensions:
+\[
+\begin{array}{c|c}
+\text{place} & \dfrac1{r^p}\text{ is integrable when} \\ \hline
+\text{near }r=0 & p<2\\[2mm]
+\text{near }r=\infty & p>2
+\end{array}
+\]
+
+The number \(2\) appears because area in polar coordinates carries the extra factor
+\[
+    r.
+\]
+In three dimensions, that number will change.
+
+\subsection{The Gaussian integral}
+
+One of the most famous single-variable integrals has no elementary antiderivative:
+\[
+    \int e^{-x^2}\,dx.
+\]
+But its improper integral over the whole real line has an exact value.  The surprise is
+that a one-dimensional integral becomes easier after we square it and turn it into a
+double integral.
+
+Let
+\[
+    I=\int_{-\infty}^{\infty}e^{-x^2}\,dx.
+\]
+Since the integrand is positive, we may write
+\[
+\begin{aligned}
+I^2
+&=
+\left(\int_{-\infty}^{\infty}e^{-x^2}\,dx\right)
+\left(\int_{-\infty}^{\infty}e^{-y^2}\,dy\right)\\
+&=
+\iint_{\mathbb R^2} e^{-x^2}e^{-y^2}\,dA\\
+&=
+\iint_{\mathbb R^2} e^{-(x^2+y^2)}\,dA.
+\end{aligned}
+\]
+Now use polar coordinates:
+\[
+    x^2+y^2=r^2,
+    \qquad
+    dA=r\,dr\,d\theta.
+\]
+Then
+\[
+\begin{aligned}
+I^2
+&=
+\int_0^{2\pi}\int_0^\infty e^{-r^2}r\,dr\,d\theta\\
+&=
+2\pi\int_0^\infty e^{-r^2}r\,dr.
+\end{aligned}
+\]
+Use
+\[
+    u=r^2,
+    \qquad
+    du=2r\,dr.
+\]
+Then
+\[
+\begin{aligned}
+2\pi\int_0^\infty e^{-r^2}r\,dr
+&=
+2\pi\cdot\frac12\int_0^\infty e^{-u}\,du\\
+&=
+\pi.
+\end{aligned}
+\]
+Therefore
+\[
+    I^2=\pi.
+\]
+Since \(I>0\),
+\[
+\boxed{
+    \int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt{\pi}.
+}
+\]
+
+A single-variable antiderivative was missing, but the double integral found the value.
+The plane gave the problem a symmetry that the line could not show.
+
+That is a fitting ending for double integrals.  They began as volume under a surface,
+then became a way to add density, probability, and mass across a region.  Even a
+one-dimensional integral can become clearer after we let it spread into the plane.
+Before moving to space, it is worth gathering the whole chapter into one map.
+
+\section{Chapter review and applications}
+\label{sec:10.8}
+
+Chapter \ref{ch:10} began with the same idea that built single-variable integration:
+cut, multiply, add, and pass to a limit.  The interval became a region.  The tiny length
+\(dx\) became a tiny area \(dA\), or, when orientation matters,
+\[
+    dx\wedge dy.
+\]
+
+The hardest part of most double integral problems is not the integration.  It is deciding
+what the small pieces look like.
+
+\subsection{The chapter in one decision path}
+
+A double integral begins with a question:
+\[
+    \text{What is being added, and over what region?}
+\]
+
+If the region is a rectangle, iterated integrals usually go straight through.  If the
+region has curved edges, draw it first.  If the region is circular, polar coordinates may
+turn the picture into simple bounds.  If the region is infinite or the function blows up,
+use an improper limit.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.88, >=stealth]
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (start) at (0,0) {Double integral\\ \(\displaystyle \iint_R f\,dA\)};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (rect) at (-5,-2) {Rectangle\\ use Fubini};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (gen) at (0,-2) {Curved region\\ draw bounds};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (polar) at (5,-2) {Circular geometry\\ try polar};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (app) at (-2.6,-4.4) {Density, mass,\\ average, probability};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (improper) at (2.6,-4.4) {Infinite or singular\\ take a limit};
+
+    \draw[->, thick] (start) -- (rect);
+    \draw[->, thick] (start) -- (gen);
+    \draw[->, thick] (start) -- (polar);
+    \draw[->, thick] (gen) -- (app);
+    \draw[->, thick] (polar) -- (app);
+    \draw[->, thick] (rect) -- (app);
+    \draw[->, thick] (app) -- (improper);
+\end{tikzpicture}
+\caption{Most double integral problems are solved by matching the region to the right
+description.}
+\end{figure}
+
+Here are the main formulas from the chapter.
+
+\[
+\begin{array}{c|c}
+\text{Quantity} & \text{Double integral} \\ \hline
+\text{area of }R
+&
+\displaystyle \operatorname{Area}(R)=\iint_R 1\,dA
+\\[3mm]
+\text{volume under }z=f(x,y)
+&
+\displaystyle V=\iint_R f(x,y)\,dA
+\\[3mm]
+\text{average value}
+&
+\displaystyle f_{\mathrm{avg}}
+=
+\frac{1}{\operatorname{Area}(R)}\iint_R f\,dA
+\\[4mm]
+\text{mass of a lamina}
+&
+\displaystyle M=\iint_R \rho\,dA
+\\[3mm]
+\text{moments}
+&
+\displaystyle M_y=\iint_R x\rho\,dA,
+\qquad
+M_x=\iint_R y\rho\,dA
+\\[4mm]
+\text{center of mass}
+&
+\displaystyle
+\bar x=\frac{M_y}{M},
+\qquad
+\bar y=\frac{M_x}{M}
+\\[4mm]
+\text{moment of inertia about the origin}
+&
+\displaystyle
+I_O=\iint_R (x^2+y^2)\rho\,dA
+\\[4mm]
+\text{probability over }R
+&
+\displaystyle
+P((X,Y)\in R)=\iint_R p(x,y)\,dA
+\end{array}
+\]
+
+For polar coordinates,
+\[
+\boxed{
+    x=r\cos\theta,
+    \qquad
+    y=r\sin\theta,
+    \qquad
+    dA=r\,dr\,d\theta.
+}
+\]
+The extra factor
+\[
+    r
+\]
+is the area-scaling factor for a small polar rectangle.
+
+For improper double integrals, the same symbols are used, but the meaning includes a
+limit:
+\[
+\boxed{
+    \iint_R f\,dA
+    =
+    \lim_{A\to\infty}\iint_{R_A}f\,dA
+}
+\]
+for an unbounded region, or
+\[
+\boxed{
+    \iint_R f\,dA
+    =
+    \lim_{\varepsilon\to0^+}\iint_{R_\varepsilon}f\,dA
+}
+\]
+when a singular point has been removed and then allowed back in by a limit.
+
+\subsection{Worked review example: drawing the region before integrating}
+
+Let \(R\) be the region bounded by
+\[
+    y=x^2
+    \qquad\text{and}\qquad
+    y=2x.
+\]
+Compute
+\[
+    \iint_R y\,dA.
+\]
+
+First find the intersection points:
+\[
+    x^2=2x
+    \quad\Longrightarrow\quad
+    x(x-2)=0.
+\]
+So
+\[
+    x=0
+    \qquad\text{or}\qquad
+    x=2.
+\]
+On
+\[
+    0\le x\le2,
+\]
+the line \(y=2x\) lies above the parabola \(y=x^2\).  Therefore
+\[
+    R=\{(x,y):0\le x\le2,\ x^2\le y\le 2x\}.
+\]
+Set up the integral:
+\[
+\begin{aligned}
+\iint_R y\,dA
+&=
+\int_0^2\int_{x^2}^{2x} y\,dy\,dx\\
+&=
+\int_0^2
+\left[\frac12y^2\right]_{x^2}^{2x}\,dx\\
+&=
+\frac12\int_0^2(4x^2-x^4)\,dx\\
+&=
+\frac12\left[\frac43x^3-\frac15x^5\right]_0^2\\
+&=
+\frac12\left(\frac{32}{3}-\frac{32}{5}\right)\\
+&=
+\boxed{\frac{32}{15}}.
+\end{aligned}
+\]
+
+The same region can be described the other way.  Since
+\[
+    y=2x
+    \quad\Longrightarrow\quad
+    x=\frac y2,
+\]
+and
+\[
+    y=x^2
+    \quad\Longrightarrow\quad
+    x=\sqrt y
+\]
+on the right-hand branch, the reversed description is
+\[
+    R=\left\{(x,y):0\le y\le4,\ \frac y2\le x\le \sqrt y\right\}.
+\]
+So the same integral is
+\[
+\boxed{
+    \iint_R y\,dA
+    =
+    \int_0^4\int_{y/2}^{\sqrt y}y\,dx\,dy.
+}
+\]
+This is the same quantity with a different slicing direction.
+
+\subsection{Worked review example: a circular sprinkler pattern}
+
+A sprinkler waters a circular garden of radius \(2\) meters.  The water density at a
+point depends only on distance from the center:
+\[
+    w(r)=10-r,
+    \qquad
+    0\le r\le2.
+\]
+Find the total water and the average water density over the garden.
+
+The region is a disk, and the density is radial, so use polar coordinates:
+\[
+    0\le r\le2,
+    \qquad
+    0\le\theta\le2\pi.
+\]
+The total water is
+\[
+\begin{aligned}
+W
+&=
+\int_0^{2\pi}\int_0^2 (10-r)r\,dr\,d\theta\\
+&=
+2\pi\int_0^2(10r-r^2)\,dr\\
+&=
+2\pi\left[5r^2-\frac13r^3\right]_0^2\\
+&=
+2\pi\left(20-\frac83\right)\\
+&=
+\boxed{\frac{104\pi}{3}}.
+\end{aligned}
+\]
+The garden area is
+\[
+    \pi(2)^2=4\pi.
+\]
+Therefore the average water density is
+\[
+\boxed{
+    w_{\mathrm{avg}}
+    =
+    \frac{W}{4\pi}
+    =
+    \frac{26}{3}.
+}
+\]
+
+The value
+\[
+    \frac{26}{3}
+\]
+is less than \(10\), because most of the garden is not near the center.  In polar
+coordinates, the factor \(r\) reminds us that larger rings contain more area.
+
+\subsection{Concept check}
+
+\begin{enumerate}
+\item What does
+\[
+    dA
+\]
+mean in a double integral?
+
+\item Why is
+\[
+    \iint_R 1\,dA
+\]
+the area of \(R\)?
+
+\item What does the inner integral mean geometrically in an iterated integral?
+
+\item Why does changing the order of integration require redrawing the region?
+
+\item What is a Type I region?  What is a Type II region?
+
+\item Why does polar area have the factor
+\[
+    r
+\]
+in
+\[
+    dA=r\,dr\,d\theta?
+\]
+
+\item When is polar integration likely to simplify a problem?
+
+\item How are mass and density related by a double integral?
+
+\item Why are the moments
+\[
+    M_y=\iint_R x\rho\,dA,
+    \qquad
+    M_x=\iint_R y\rho\,dA
+\]
+named with the opposite coordinate?
+
+\item What does the average value formula say in words?
+
+\item How can a function be unbounded at one point but still have a finite double
+integral?
+
+\item Why can a function that tends to \(0\) at infinity still have a divergent integral?
+
+\item What does the comparison test require?
+\end{enumerate}
+
+\subsection{Skill problems}
+
+\begin{enumerate}
+\item Compute
+\[
+    \int_0^3\int_0^2 (x+2y)\,dy\,dx.
+\]
+
+\item Compute
+\[
+    \int_0^1\int_0^x (x^2+y)\,dy\,dx.
+\]
+
+\item Let \(R\) be the triangle with vertices
+\[
+    (0,0),\qquad (4,0),\qquad (4,2).
+\]
+Set up
+\[
+    \iint_R f(x,y)\,dA
+\]
+as an iterated integral in both orders.
+
+\item Let \(R\) be bounded by
+\[
+    y=x^2
+    \qquad\text{and}\qquad
+    y=4.
+\]
+Set up and evaluate
+\[
+    \iint_R x^2\,dA.
+\]
+
+\item Reverse the order of integration:
+\[
+    \int_0^1\int_y^1 f(x,y)\,dx\,dy.
+\]
+
+\item Reverse the order of integration:
+\[
+    \int_0^4\int_{\sqrt y}^{2} f(x,y)\,dx\,dy.
+\]
+
+\item Find the area of the region inside the circle
+\[
+    x^2+y^2=9
+\]
+and above the line
+\[
+    y=0
+\]
+using polar coordinates.
+
+\item Evaluate
+\[
+    \iint_D (x^2+y^2)\,dA,
+\]
+where \(D\) is the disk
+\[
+    x^2+y^2\le 4.
+\]
+
+\item Evaluate
+\[
+    \iint_A \frac{1}{1+x^2+y^2}\,dA,
+\]
+where \(A\) is the annulus
+\[
+    1\le x^2+y^2\le 9.
+\]
+
+\item A lamina occupies the rectangle
+\[
+    0\le x\le2,
+    \qquad
+    0\le y\le3,
+\]
+with density
+\[
+    \rho(x,y)=1+x.
+\]
+Find its mass.
+
+\item For the lamina in Problem 10, find
+\[
+    M_x,\qquad M_y,
+\]
+and its center of mass.
+
+\item A probability density on the square
+\[
+    0\le x\le1,\qquad 0\le y\le1
+\]
+is
+\[
+    p(x,y)=C(x+y).
+\]
+Find \(C\), and then find the probability that
+\[
+    x+y\le1.
+\]
+
+\item Find the average value of
+\[
+    f(x,y)=x+y
+\]
+over the triangle with vertices
+\[
+    (0,0),\qquad (1,0),\qquad (0,1).
+\]
+
+\item Decide whether the improper integral converges:
+\[
+    \iint_{\mathbb R^2}\frac{1}{(1+x^2+y^2)^2}\,dA.
+\]
+
+\item Decide whether the improper integral converges:
+\[
+    \iint_{\mathbb R^2}\frac{1}{1+x^2+y^2}\,dA.
+\]
+
+\item Decide whether the improper integral over the unit disk converges:
+\[
+    \iint_{x^2+y^2\le1}\frac{1}{(x^2+y^2)^{3/4}}\,dA.
+\]
+
+\item Decide whether the improper integral over the unit disk converges:
+\[
+    \iint_{x^2+y^2\le1}\frac{1}{x^2+y^2}\,dA.
+\]
+
+\item Use the Gaussian integral result to evaluate
+\[
+    \int_{-\infty}^{\infty} e^{-4x^2}\,dx.
+\]
+\end{enumerate}
+
+\subsection{Project: estimating rainfall from gridded data}
+
+A storm passes over a rectangular watershed.  The watershed is
+\[
+    0\le x\le8,
+    \qquad
+    0\le y\le6,
+\]
+where \(x\) and \(y\) are measured in kilometers.
+
+The region is divided into rectangles of size
+\[
+    2\text{ km}\times 2\text{ km}.
+\]
+Rainfall is measured at the center of each rectangle, in centimeters.
+
+\[
+\begin{array}{c|cccc}
+ & x=1 & x=3 & x=5 & x=7 \\ \hline
+y=5 & 3.2 & 4.1 & 4.6 & 3.8\\
+y=3 & 2.4 & 3.5 & 5.0 & 4.2\\
+y=1 & 1.1 & 2.0 & 3.1 & 2.7
+\end{array}
+\]
+
+Each grid cell has area
+\[
+    4\text{ km}^2.
+\]
+
+\subsubsection*{Part 1. Estimate the total rainfall integral}
+
+Use a midpoint sum:
+\[
+    \iint_R r(x,y)\,dA
+    \approx
+    4\sum r(x_i^*,y_j^*).
+\]
+For the data above,
+\[
+\begin{aligned}
+\sum r(x_i^*,y_j^*)
+&=
+3.2+4.1+4.6+3.8\\
+&\qquad
++2.4+3.5+5.0+4.2\\
+&\qquad
++1.1+2.0+3.1+2.7\\
+&=
+39.7.
+\end{aligned}
+\]
+So
+\[
+\boxed{
+    \iint_R r(x,y)\,dA
+    \approx
+    4(39.7)=158.8
+    \text{ cm}\cdot\text{km}^2.
+}
+\]
+
+\subsubsection*{Part 2. Convert to water volume}
+
+One centimeter of rain over one square kilometer equals
+\[
+    10{,}000\text{ m}^3
+\]
+of water.  Therefore the estimated water volume is
+\[
+\boxed{
+    158.8(10{,}000)=1{,}588{,}000\text{ m}^3.
+}
+\]
+
+\subsubsection*{Part 3. Estimate average rainfall}
+
+The watershed area is
+\[
+    8\cdot6=48\text{ km}^2.
+\]
+The average rainfall is
+\[
+\boxed{
+    r_{\mathrm{avg}}
+    \approx
+    \frac{158.8}{48}
+    \approx
+    3.31\text{ cm}.
+}
+\]
+
+\subsubsection*{Part 4. What to hand in}
+
+Write a short report with the following pieces.
+
+\begin{enumerate}
+\item A sketch of the watershed grid.
+
+\item The midpoint-sum estimate for
+\[
+    \iint_R r(x,y)\,dA.
+\]
+
+\item The conversion from
+\[
+    \text{cm}\cdot\text{km}^2
+\]
+to cubic meters.
+
+\item The estimated average rainfall.
+
+\item A contour-style sketch showing where the rainfall appears largest.
+
+\item A paragraph explaining one possible source of error in the estimate.  For example,
+what if the heaviest rain fell between two sensors?
+\end{enumerate}
+
+A double integral sees a thin region: a floor, a plate, a map, a lamina.  But many
+objects are not thin.  Air fills a room.  Charge fills a solid ball.  Density can vary from
+one shelf of a tank to another.  The same adding idea is waiting there too, but the tiny
+pieces are no longer small rectangles.  They are small boxes, and the bounds must
+describe a three-dimensional body.  One more coordinate turns the double integral into
+a triple integral.

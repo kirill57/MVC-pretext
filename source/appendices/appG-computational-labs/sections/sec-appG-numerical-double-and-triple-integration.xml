@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/appendices/appG-computational-labs.tex, Section G.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-appG-numerical-double-and-triple-integration" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Numerical double and triple integration</title>
+
+  <subsection xml:id="appG-numint-midpoint-rule-one-variable">
+    <title>Midpoint rule in one variable</title>
+
+    <p>
+      <md>\int_a^b f(x)\,dx \approx \sum_{i=1}^{N} f(x_i^*)\,\Delta x.</md>
+    </p>
+
+    <p>
+      Here
+      <md>\Delta x=\frac{b-a}{N},</md>
+      and <m>x_i^*</m> is the midpoint of the <m>i</m>th subinterval.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numint-midpoint-rule-rectangle">
+    <title>Midpoint rule over a rectangle</title>
+
+    <p>
+      For
+      <md>R=[a,b]\times[c,d],</md>
+      <md>\iint_R f(x,y)\,dA \approx \sum_{i=1}^{M}\sum_{j=1}^{N} f(x_i^*,y_j^*)\,\Delta x\,\Delta y.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numint-code-rectangular-midpoint-rule">
+    <title>Code for rectangular midpoint rule</title>
+
+    <program language="python">
+      <input>
+def midpoint_double(f, a, b, c, d, M=200, N=200):
+    dx = (b - a) / M
+    dy = (d - c) / N
+
+    x = a + (np.arange(M) + 0.5)*dx
+    y = c + (np.arange(N) + 0.5)*dy
+
+    X, Y = np.meshgrid(x, y)
+    return np.sum(f(X, Y))*dx*dy
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-numint-region-variable-bounds">
+    <title>Region under variable bounds</title>
+
+    <p>
+      For
+      <md>a\le x\le b, \qquad g_1(x)\le y\le g_2(x),</md>
+      <md>\iint_R f\,dA = \int_a^b\int_{g_1(x)}^{g_2(x)}f(x,y)\,dy\,dx.</md>
+    </p>
+
+    <p>
+      Using <c>dblquad</c>:
+    </p>
+
+    <program language="python">
+      <input>
+from scipy.integrate import dblquad
+
+value, error = dblquad(
+    lambda y, x: f(x, y),
+    a, b,
+    lambda x: g1(x),
+    lambda x: g2(x)
+)
+      </input>
+    </program>
+
+    <p>
+      Notice the order in the function:
+      <md>\texttt{lambda y, x}</md>
+      because <c>dblquad</c> uses the inner variable first.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numint-polar-numerical-integration">
+    <title>Polar numerical integration</title>
+
+    <p>
+      If
+      <md>x=r\cos\theta, \qquad y=r\sin\theta,</md>
+      then
+      <md>dA=r\,dr\,d\theta.</md>
+    </p>
+
+    <p>
+      So
+      <md>\iint_R f(x,y)\,dA = \iint_{\widetilde R} f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta.</md>
+    </p>
+
+    <p>
+      Code pattern:
+    </p>
+
+    <program language="python">
+      <input>
+value, error = dblquad(
+    lambda r, theta: f(r*np.cos(theta), r*np.sin(theta))*r,
+    theta0, theta1,
+    lambda theta: r0(theta),
+    lambda theta: r1(theta)
+)
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-numint-triple-integral-box">
+    <title>Triple integral over a box</title>
+
+    <p>
+      For
+      <md>B=[a,b]\times[c,d]\times[e,f],</md>
+      <md>\iiint_B F(x,y,z)\,dV \approx \sum F(x_i^*,y_j^*,z_k^*)\,\Delta x\,\Delta y\,\Delta z.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numint-triple-integral-variable-bounds">
+    <title>Triple integral with variable bounds</title>
+
+    <p>
+      For
+      <md>a\le x\le b,</md>
+      <md>g_1(x)\le y\le g_2(x),</md>
+      <md>h_1(x,y)\le z\le h_2(x,y),</md>
+      <md>\iiint_E F\,dV = \int_a^b\int_{g_1(x)}^{g_2(x)} \int_{h_1(x,y)}^{h_2(x,y)} F(x,y,z)\,dz\,dy\,dx.</md>
+    </p>
+
+    <p>
+      Using <c>tplquad</c>:
+    </p>
+
+    <program language="python">
+      <input>
+from scipy.integrate import tplquad
+
+value, error = tplquad(
+    lambda z, y, x: F(x, y, z),
+    a, b,
+    lambda x: g1(x),
+    lambda x: g2(x),
+    lambda x, y: h1(x, y),
+    lambda x, y: h2(x, y)
+)
+      </input>
+    </program>
+
+    <p>
+      Again, the innermost variable comes first.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numint-cylindrical-numerical-integration">
+    <title>Cylindrical numerical integration</title>
+
+    <p>
+      <md>dV=r\,dr\,d\theta\,dz.</md>
+    </p>
+
+    <p>
+      <md>F(x,y,z) = F(r\cos\theta,r\sin\theta,z).</md>
+    </p>
+
+    <p>
+      Use the integrand
+      <md>F(r\cos\theta,r\sin\theta,z)\,r.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numint-spherical-numerical-integration">
+    <title>Spherical numerical integration</title>
+
+    <p>
+      <md>dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
+    </p>
+
+    <p>
+      Use the integrand
+      <md>F(\rho\sin\phi\cos\theta,\rho\sin\phi\sin\theta,\rho\cos\phi) \rho^2\sin\phi.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numint-monte-carlo-estimate">
+    <title>Monte Carlo estimate</title>
+
+    <p>
+      For a region <m>R</m> inside a box <m>B</m>:
+      <md>\iint_R f\,dA \approx \operatorname{Area}(B) \cdot \frac1N \sum_{i=1}^N f(x_i,y_i)\mathbf 1_R(x_i,y_i).</md>
+    </p>
+
+    <p>
+      Code pattern:
+    </p>
+
+    <program language="python">
+      <input>
+def monte_carlo_double(f, inside, a, b, c, d, N=100000):
+    x = np.random.uniform(a, b, N)
+    y = np.random.uniform(c, d, N)
+
+    mask = inside(x, y)
+    box_area = (b - a)*(d - c)
+
+    return box_area*np.mean(f(x, y)*mask)
+      </input>
+    </program>
+
+    <p>
+      Monte Carlo is usually slow but useful in irregular regions or high dimensions.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numint-common-warnings">
+    <title>Common warnings</title>
+
+    <p>
+      Numerical integration returns an approximation and often an error estimate.
+    </p>
+
+    <p>
+      Singularities require special care.
+    </p>
+
+    <p>
+      Highly oscillatory functions require finer sampling.
+    </p>
+
+    <p>
+      Coordinate changes require Jacobian factors.
+    </p>
+
+    <p>
+      Improper integrals may appear finite on a finite sample but still diverge.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch03-linear-functions-matrices.tex, Section 3.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-3-matrix-multiplication-as-composition" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Matrix multiplication as composition</title>
+
+  <p>
+    <xref ref="sec-3-linear-transformations-r-n-r-m"/> ended with a linear transformation as a
+    machine written in coordinates. The columns of its matrix tell us where the basic input
+    directions go. But machines are rarely used alone. A camera may first rotate a picture and
+    then crop it. A robot arm may first stretch a coordinate grid and then project it onto a
+    screen. Once two linear machines are connected, we need a matrix for the combined machine.
+  </p>
+
+  <p>That need is the real reason matrix multiplication exists.</p>
+
+  <subsection xml:id="c3s3-subsec-applying-one-after-another">
+    <title>Applying one linear map after another</title>
+
+    <p>
+      Start with the linear transformation
+      <md>A:\mathbb R^2\to\mathbb R^2</md>
+      given by
+      <md>
+        A(x,y)=
+        \begin{pmatrix}
+            2&amp;1\\
+            1&amp;3
+        \end{pmatrix}
+        \begin{pmatrix}x\\y\end{pmatrix}
+        =
+        \begin{pmatrix}
+            2x+y\\
+            x+3y
+        \end{pmatrix}.
+      </md>
+      This machine stretches and shears the grid. Now send the result through a second machine
+      <md>
+        B:\mathbb R^2\to\mathbb R^2,
+        \qquad
+        B(X,Y)=
+        \begin{pmatrix}
+            1&amp;0\\
+            2&amp;1
+        \end{pmatrix}
+        \begin{pmatrix}X\\Y\end{pmatrix}
+        =
+        \begin{pmatrix}
+            X\\
+            2X+Y
+        \end{pmatrix}.
+      </md>
+      The capital letters <m>X,Y</m> remind us that <m>B</m> acts on the output of <m>A</m>.
+    </p>
+
+    <p>
+      Let us follow one point:
+      <md>\mathbf x=(4,2).</md>
+      First apply <m>A</m>:
+      <md>
+        A(4,2)
+        =
+        \begin{pmatrix}
+            2\cdot4+2\\
+            4+3\cdot2
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            10\\
+            10
+        \end{pmatrix}.
+      </md>
+      Then apply <m>B</m>:
+      <md>
+        B(A(4,2))
+        =
+        B(10,10)
+        =
+        \begin{pmatrix}
+            10\\
+            2\cdot10+10
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            10\\
+            30
+        \end{pmatrix}.
+      </md>
+    </p>
+
+    <p>
+      We can also compute the combined rule directly. Since
+      <md>A(x,y)=(2x+y,\;x+3y),</md>
+      we get
+      <md>
+        <mrow>B(A(x,y)) \amp= B(2x+y,\;x+3y)</mrow>
+        <mrow>\amp= \bigl(2x+y,\;2(2x+y)+(x+3y)\bigr)</mrow>
+        <mrow>\amp= (2x+y,\;5x+5y).</mrow>
+      </md>
+      So the combined machine is
+      <md>(x,y)\longmapsto (2x+y,\;5x+5y).</md>
+      Its matrix is
+      <md>
+        \begin{pmatrix}
+            2&amp;1\\
+            5&amp;5
+        \end{pmatrix}.
+      </md>
+    </p>
+
+    <p>
+      This matrix is not guessed. It comes from the columns. The first column is the image of
+      <m>\mathbf e_1</m> after both machines:
+      <md>
+        A\mathbf e_1=
+        \begin{pmatrix}2\\1\end{pmatrix},
+        \qquad
+        B(A\mathbf e_1)=
+        B\begin{pmatrix}2\\1\end{pmatrix}
+        =
+        \begin{pmatrix}2\\5\end{pmatrix}.
+      </md>
+      The second column is the image of <m>\mathbf e_2</m> after both machines:
+      <md>
+        A\mathbf e_2=
+        \begin{pmatrix}1\\3\end{pmatrix},
+        \qquad
+        B(A\mathbf e_2)=
+        B\begin{pmatrix}1\\3\end{pmatrix}
+        =
+        \begin{pmatrix}1\\5\end{pmatrix}.
+      </md>
+      Therefore the matrix of the combined transformation is
+      <md>
+        \begin{pmatrix}
+            2&amp;1\\
+            5&amp;5
+        \end{pmatrix}.
+      </md>
+    </p>
+
+    <definition xml:id="c3s3-def-composition">
+      <title>Composition</title>
+      <statement>
+        <p>
+          If
+          <md>S:\mathbb R^n\to\mathbb R^m</md>
+          and
+          <md>T:\mathbb R^m\to\mathbb R^p,</md>
+          then the <term>composition</term>
+          <md>T\circ S:\mathbb R^n\to\mathbb R^p</md>
+          is the function
+          <md>(T\circ S)(\mathbf x)=T(S(\mathbf x)).</md>
+          The map <m>S</m> acts first, and <m>T</m> acts second.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The notation is read from right to left:
+      <md>
+        T\circ S
+        \qquad
+        \text{means}
+        \qquad
+        \text{first }S,\text{ then }T.
+      </md>
+    </p>
+
+    <theorem xml:id="c3s3-thm-composition-of-linear-is-linear">
+      <title>A composition of linear transformations is linear</title>
+      <statement>
+        <p>
+          Let
+          <md>S:\mathbb R^n\to\mathbb R^m</md>
+          and
+          <md>T:\mathbb R^m\to\mathbb R^p</md>
+          be linear transformations. Then
+          <md>T\circ S:\mathbb R^n\to\mathbb R^p</md>
+          is linear.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          For vectors <m>\mathbf u,\mathbf v\in\mathbb R^n</m>,
+          <md>
+            <mrow>(T\circ S)(\mathbf u+\mathbf v) \amp= T(S(\mathbf u+\mathbf v))</mrow>
+            <mrow>\amp= T(S(\mathbf u)+S(\mathbf v))</mrow>
+            <mrow>\amp= T(S(\mathbf u))+T(S(\mathbf v))</mrow>
+            <mrow>\amp= (T\circ S)(\mathbf u)+(T\circ S)(\mathbf v).</mrow>
+          </md>
+          Also, for a scalar <m>c</m>,
+          <md>
+            <mrow>(T\circ S)(c\mathbf u) \amp= T(S(c\mathbf u))</mrow>
+            <mrow>\amp= T(cS(\mathbf u))</mrow>
+            <mrow>\amp= cT(S(\mathbf u))</mrow>
+            <mrow>\amp= c(T\circ S)(\mathbf u).</mrow>
+          </md>
+          So <m>T\circ S</m> respects addition and scaling.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The hypotheses are doing real work. If the first map is not linear, the composition need
+      not be linear.
+    </p>
+
+    <example xml:id="c3s3-ex-nonlinear-first-step">
+      <title>A nonlinear first step breaks linearity</title>
+      <statement>
+        <p>
+          Let
+          <md>S(x,y)=(x^2,y)</md>
+          and let
+          <md>T(X,Y)=(X+Y,Y).</md>
+          The second map <m>T</m> is linear, but <m>S</m> is not. The composition is
+          <md>(T\circ S)(x,y)=T(x^2,y)=(x^2+y,y).</md>
+          This is not linear because
+          <md>(T\circ S)(2,0)=(4,0),</md>
+          but
+          <md>2(T\circ S)(1,0)=2(1,0)=(2,0).</md>
+          A single nonlinear step can bend the whole machine.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c3s3-subsec-matrix-of-a-composition">
+    <title>The matrix of a composition</title>
+
+    <p>The example above gives the rule.</p>
+
+    <p>
+      Let <m>A</m> be an <m>m\times n</m> matrix. It represents a linear transformation
+      <md>A:\mathbb R^n\to\mathbb R^m.</md>
+      Let <m>B</m> be a <m>p\times m</m> matrix. It represents a linear transformation
+      <md>B:\mathbb R^m\to\mathbb R^p.</md>
+      Then the combined transformation is
+      <md>\mathbf x\longmapsto B(A\mathbf x).</md>
+      Its matrix is called
+      <md>BA.</md>
+    </p>
+
+    <p>
+      The columns of <m>BA</m> are easy to describe. If the columns of <m>A</m> are
+      <md>\mathbf a_1,\mathbf a_2,\ldots,\mathbf a_n,</md>
+      then
+      <md>A\mathbf e_j=\mathbf a_j.</md>
+      After applying <m>B</m>,
+      <md>B(A\mathbf e_j)=B\mathbf a_j.</md>
+      So the <m>j</m>-th column of <m>BA</m> is
+      <md>B\mathbf a_j.</md>
+    </p>
+
+    <definition xml:id="c3s3-def-matrix-multiplication">
+      <title>Matrix multiplication</title>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>m\times n</m> matrix with columns
+          <md>\mathbf a_1,\ldots,\mathbf a_n\in\mathbb R^m,</md>
+          and let <m>B</m> be a <m>p\times m</m> matrix. The product
+          <md>BA</md>
+          is the <m>p\times n</m> matrix whose columns are
+          <md>B\mathbf a_1,\;B\mathbf a_2,\;\ldots,\;B\mathbf a_n.</md>
+          Equivalently,
+          <md>
+            \boxed{
+                BA=
+                \begin{pmatrix}
+                    |&amp;|&amp;&amp;|\\
+                    B\mathbf a_1&amp;B\mathbf a_2&amp;\cdots&amp;B\mathbf a_n\\
+                    |&amp;|&amp;&amp;|
+                \end{pmatrix}.
+            }
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>This is the cleanest meaning of matrix multiplication:</p>
+
+    <p>
+      <md>
+        \boxed{
+            \text{matrix multiplication records composition of linear transformations.}
+        }
+      </md>
+    </p>
+
+    <example xml:id="c3s3-ex-multiplying-by-columns">
+      <title>Multiplying two matrices by columns</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            A=
+            \begin{pmatrix}
+                2&amp;1\\
+                1&amp;3
+            \end{pmatrix},
+            \qquad
+            B=
+            \begin{pmatrix}
+                1&amp;0\\
+                2&amp;1
+            \end{pmatrix}.
+          </md>
+          The columns of <m>A</m> are
+          <md>
+            \mathbf a_1=
+            \begin{pmatrix}2\\1\end{pmatrix},
+            \qquad
+            \mathbf a_2=
+            \begin{pmatrix}1\\3\end{pmatrix}.
+          </md>
+          Apply <m>B</m> to each:
+          <md>
+            B\mathbf a_1
+            =
+            \begin{pmatrix}
+                1&amp;0\\
+                2&amp;1
+            \end{pmatrix}
+            \begin{pmatrix}2\\1\end{pmatrix}
+            =
+            \begin{pmatrix}2\\5\end{pmatrix},
+          </md>
+          and
+          <md>
+            B\mathbf a_2
+            =
+            \begin{pmatrix}
+                1&amp;0\\
+                2&amp;1
+            \end{pmatrix}
+            \begin{pmatrix}1\\3\end{pmatrix}
+            =
+            \begin{pmatrix}1\\5\end{pmatrix}.
+          </md>
+          Therefore
+          <md>
+            BA=
+            \begin{pmatrix}
+                2&amp;1\\
+                5&amp;5
+            \end{pmatrix}.
+          </md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      There is also a row-by-column formula. If
+      <md>A=(a_{ij})</md>
+      is <m>m\times n</m>, and
+      <md>B=(b_{ij})</md>
+      is <m>p\times m</m>, then <m>BA</m> is <m>p\times n</m>, and its <m>(i,j)</m>-entry is
+      <md>
+        \boxed{
+            (BA)_{ij}
+            =
+            b_{i1}a_{1j}+b_{i2}a_{2j}+\cdots+b_{im}a_{mj}.
+        }
+      </md>
+      This formula is useful for calculation, but the meaning is the same: first apply
+      <m>A</m>, then apply <m>B</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s3-subsec-why-ordered">
+    <title>Why matrix multiplication is ordered</title>
+
+    <p>The order matters because the machines are connected in order.</p>
+
+    <p>
+      Using the same two matrices,
+      <md>
+        A=
+        \begin{pmatrix}
+            2&amp;1\\
+            1&amp;3
+        \end{pmatrix},
+        \qquad
+        B=
+        \begin{pmatrix}
+            1&amp;0\\
+            2&amp;1
+        \end{pmatrix},
+      </md>
+      we found
+      <md>
+        BA=
+        \begin{pmatrix}
+            2&amp;1\\
+            5&amp;5
+        \end{pmatrix}.
+      </md>
+    </p>
+
+    <p>
+      Now reverse the order. Compute <m>AB</m>. The columns of <m>B</m> are
+      <md>
+        \begin{pmatrix}1\\2\end{pmatrix},
+        \qquad
+        \begin{pmatrix}0\\1\end{pmatrix}.
+      </md>
+      Applying <m>A</m> to them gives
+      <md>
+        A\begin{pmatrix}1\\2\end{pmatrix}
+        =
+        \begin{pmatrix}4\\7\end{pmatrix},
+        \qquad
+        A\begin{pmatrix}0\\1\end{pmatrix}
+        =
+        \begin{pmatrix}1\\3\end{pmatrix}.
+      </md>
+      So
+      <md>
+        AB=
+        \begin{pmatrix}
+            4&amp;1\\
+            7&amp;3
+        \end{pmatrix}.
+      </md>
+      Thus
+      <md>AB\neq BA.</md>
+    </p>
+
+    <example xml:id="c3s3-ex-two-moves-different-orders">
+      <title>Two simple moves in different orders</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            R=
+            \begin{pmatrix}
+                0&amp;-1\\
+                1&amp;0
+            \end{pmatrix}
+          </md>
+          be a <m>90^\circ</m> counterclockwise rotation, and let
+          <md>
+            P=
+            \begin{pmatrix}
+                1&amp;0\\
+                0&amp;0
+            \end{pmatrix}
+          </md>
+          be projection onto the <m>x</m>-axis.
+        </p>
+        <p>
+          Apply them to
+          <md>\mathbf x=(1,2).</md>
+        </p>
+        <p>
+          First rotate, then project:
+          <md>
+            R(1,2)=(-2,1),
+            \qquad
+            P(R(1,2))=(-2,0).
+          </md>
+        </p>
+        <p>
+          First project, then rotate:
+          <md>
+            P(1,2)=(1,0),
+            \qquad
+            R(P(1,2))=(0,1).
+          </md>
+        </p>
+        <p>
+          The answers are different:
+          <md>
+            PR(1,2)=(-2,0),
+            \qquad
+            RP(1,2)=(0,1).
+          </md>
+          Projection throws away information. Whether we throw it away before or after rotating
+          changes the result.
+        </p>
+      </statement>
+    </example>
+
+    <figure xml:id="c3s3-fig-order-matters">
+      <caption>Changing the order of two linear transformations can change the result.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.8, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-3,0) -- (2,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-1) -- (0,3) node[above] {\(y\)};
+                \draw[-&gt;, very thick] (0,0) -- (1,2) node[above right] {\((1,2)\)};
+                \draw[-&gt;, thick] (0,0) -- (-2,1) node[above left] {\(R(1,2)\)};
+                \draw[-&gt;, thick] (0,0) -- (-2,0) node[below] {\(PR(1,2)\)};
+                \node at (-0.4,-1.0) {rotate, then project};
+            \end{scope}
+
+            \begin{scope}[shift={(6,0)}]
+                \draw[-&gt;] (-1,0) -- (3,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-1) -- (0,3) node[above] {\(y\)};
+                \draw[-&gt;, very thick] (0,0) -- (1,2) node[above right] {\((1,2)\)};
+                \draw[-&gt;, thick] (0,0) -- (1,0) node[below] {\(P(1,2)\)};
+                \draw[-&gt;, thick] (0,0) -- (0,1) node[left] {\(RP(1,2)\)};
+                \node at (1.0,-1.0) {project, then rotate};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      Matrix multiplication is usually not commutative:
+      <md>AB\neq BA.</md>
+      This is not a flaw in the notation. It is the notation telling the truth.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s3-subsec-identity-inverse">
+    <title>Identity matrices and inverse matrices</title>
+
+    <p>
+      Some machines do nothing. In <m>\mathbb R^2</m>, the matrix
+      <md>
+        I_2=
+        \begin{pmatrix}
+            1&amp;0\\
+            0&amp;1
+        \end{pmatrix}
+      </md>
+      satisfies
+      <md>
+        I_2
+        \begin{pmatrix}x\\y\end{pmatrix}
+        =
+        \begin{pmatrix}x\\y\end{pmatrix}.
+      </md>
+      In <m>\mathbb R^3</m>,
+      <md>
+        I_3=
+        \begin{pmatrix}
+            1&amp;0&amp;0\\
+            0&amp;1&amp;0\\
+            0&amp;0&amp;1
+        \end{pmatrix}.
+      </md>
+    </p>
+
+    <definition xml:id="c3s3-def-identity-matrix">
+      <title>Identity matrix</title>
+      <statement>
+        <p>
+          The <m>n\times n</m> identity matrix is
+          <md>
+            I_n=
+            \begin{pmatrix}
+                1&amp;0&amp;\cdots&amp;0\\
+                0&amp;1&amp;\cdots&amp;0\\
+                \vdots&amp;\vdots&amp;\ddots&amp;\vdots\\
+                0&amp;0&amp;\cdots&amp;1
+            \end{pmatrix}.
+          </md>
+          It satisfies
+          <md>I_n\mathbf x=\mathbf x</md>
+          for every <m>\mathbf x\in\mathbb R^n</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      If <m>A</m> is <m>m\times n</m>, then
+      <md>
+        AI_n=A,
+        \qquad
+        I_mA=A.
+      </md>
+      The identity matrix is the matrix version of multiplying by <m>1</m>.
+    </p>
+
+    <p>
+      Some machines can be undone. If a matrix <m>A</m> transforms the grid without collapsing
+      information, there may be another matrix that reverses its effect.
+    </p>
+
+    <definition xml:id="c3s3-def-inverse-matrix">
+      <title>Inverse matrix</title>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix. An <m>n\times n</m> matrix
+          <m>A^{-1}</m> is called the <term>inverse</term> of <m>A</m> if
+          <md>
+            A^{-1}A=I_n
+            \qquad\text{and}\qquad
+            AA^{-1}=I_n.
+          </md>
+          If such a matrix exists, <m>A</m> is called <term>invertible</term>.
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c3s3-ex-undoing-transformation">
+      <title>Undoing a linear transformation</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            A=
+            \begin{pmatrix}
+                2&amp;1\\
+                1&amp;1
+            \end{pmatrix}
+          </md>
+          and
+          <md>
+            C=
+            \begin{pmatrix}
+                1&amp;-1\\
+                -1&amp;2
+            \end{pmatrix}.
+          </md>
+          Then
+          <md>
+            CA=
+            \begin{pmatrix}
+                1&amp;-1\\
+                -1&amp;2
+            \end{pmatrix}
+            \begin{pmatrix}
+                2&amp;1\\
+                1&amp;1
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                1&amp;0\\
+                0&amp;1
+            \end{pmatrix}.
+          </md>
+          Also,
+          <md>
+            AC=
+            \begin{pmatrix}
+                2&amp;1\\
+                1&amp;1
+            \end{pmatrix}
+            \begin{pmatrix}
+                1&amp;-1\\
+                -1&amp;2
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+                1&amp;0\\
+                0&amp;1
+            \end{pmatrix}.
+          </md>
+          So
+          <md>C=A^{-1}.</md>
+        </p>
+        <p>
+          For instance,
+          <md>A(3,1)=(7,4).</md>
+          Applying the inverse gives
+          <md>
+            A^{-1}(7,4)
+            =
+            \begin{pmatrix}
+                1&amp;-1\\
+                -1&amp;2
+            \end{pmatrix}
+            \begin{pmatrix}7\\4\end{pmatrix}
+            =
+            \begin{pmatrix}3\\1\end{pmatrix}.
+          </md>
+          The inverse recovers the original input.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The requirement that <m>A</m> be square is important for a two-sided inverse.
+    </p>
+
+    <example xml:id="c3s3-ex-not-every-map-has-inverse">
+      <title>Why not every useful map has an inverse</title>
+      <statement>
+        <p>
+          The projection
+          <md>
+            P:\mathbb R^3\to\mathbb R^2,
+            \qquad
+            P(x,y,z)=(x,y),
+          </md>
+          has matrix
+          <md>
+            P=
+            \begin{pmatrix}
+                1&amp;0&amp;0\\
+                0&amp;1&amp;0
+            \end{pmatrix}.
+          </md>
+          It loses the height coordinate. For example,
+          <md>P(2,5,0)=(2,5),</md>
+          and
+          <md>P(2,5,100)=(2,5).</md>
+          No function can recover the original height from the output alone.
+        </p>
+        <p>
+          The inclusion
+          <md>
+            S:\mathbb R^2\to\mathbb R^3,
+            \qquad
+            S(x,y)=(x,y,0),
+          </md>
+          has the opposite problem. It does not lose information from the input, but it only
+          reaches the plane <m>z=0</m>. No inverse from all of <m>\mathbb R^3</m> back to
+          <m>\mathbb R^2</m> can undo it everywhere.
+        </p>
+        <p>
+          A true two-sided inverse is a square-machine idea: same input dimension, same output
+          dimension, no information lost, and nothing unreachable.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c3s3-subsec-rotations-reflections-projections-shears">
+    <title>Rotations, reflections, projections, and shears</title>
+
+    <p>Many familiar geometric moves are linear transformations.</p>
+
+    <table xml:id="c3s3-tab-common-transformations">
+      <title>Common linear transformations of the plane.</title>
+      <tabular>
+        <col right="minor"/>
+        <col right="minor"/>
+        <col/>
+        <row header="yes" bottom="medium">
+          <cell>Transformation</cell>
+          <cell>Matrix</cell>
+          <cell>Effect on <m>(x,y)</m></cell>
+        </row>
+        <row>
+          <cell>rotation by <m>\theta</m></cell>
+          <cell><m>\begin{pmatrix} \cos\theta&amp;-\sin\theta\\ \sin\theta&amp;\cos\theta \end{pmatrix}</m></cell>
+          <cell><m>(x\cos\theta-y\sin\theta,\;x\sin\theta+y\cos\theta)</m></cell>
+        </row>
+        <row>
+          <cell>reflection across the <m>x</m>-axis</cell>
+          <cell><m>\begin{pmatrix} 1&amp;0\\ 0&amp;-1 \end{pmatrix}</m></cell>
+          <cell><m>(x,-y)</m></cell>
+        </row>
+        <row>
+          <cell>projection onto the <m>x</m>-axis</cell>
+          <cell><m>\begin{pmatrix} 1&amp;0\\ 0&amp;0 \end{pmatrix}</m></cell>
+          <cell><m>(x,0)</m></cell>
+        </row>
+        <row>
+          <cell>horizontal shear</cell>
+          <cell><m>\begin{pmatrix} 1&amp;k\\ 0&amp;1 \end{pmatrix}</m></cell>
+          <cell><m>(x+ky,y)</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>The columns still tell the story.</p>
+
+    <p>
+      For a rotation by <m>\theta</m>,
+      <md>\mathbf e_1\longmapsto(\cos\theta,\sin\theta),</md>
+      and
+      <md>\mathbf e_2\longmapsto(-\sin\theta,\cos\theta).</md>
+      These are the two rotated coordinate directions.
+    </p>
+
+    <p>
+      For a projection onto the <m>x</m>-axis,
+      <md>
+        \mathbf e_1\longmapsto \mathbf e_1,
+        \qquad
+        \mathbf e_2\longmapsto \mathbf 0.
+      </md>
+      The vertical direction is collapsed.
+    </p>
+
+    <p>
+      For a shear,
+      <md>
+        \mathbf e_1\longmapsto \mathbf e_1,
+        \qquad
+        \mathbf e_2\longmapsto(k,1).
+      </md>
+      Vertical lines tilt, but horizontal lines stay horizontal.
+    </p>
+
+    <example xml:id="c3s3-ex-composing-rotations">
+      <title>Composing rotations</title>
+      <statement>
+        <p>
+          Let <m>R_\alpha</m> be rotation by angle <m>\alpha</m>, and let <m>R_\beta</m> be
+          rotation by angle <m>\beta</m>. Rotating first by <m>\alpha</m> and then by
+          <m>\beta</m> should be the same as rotating by <m>\alpha+\beta</m>:
+          <md>R_\beta R_\alpha=R_{\alpha+\beta}.</md>
+          Matrix multiplication turns this geometric fact into the angle-addition formulas:
+          <md>
+            \begin{pmatrix}
+            \cos\beta&amp;-\sin\beta\\
+            \sin\beta&amp;\cos\beta
+            \end{pmatrix}
+            \begin{pmatrix}
+            \cos\alpha&amp;-\sin\alpha\\
+            \sin\alpha&amp;\cos\alpha
+            \end{pmatrix}
+            =
+            \begin{pmatrix}
+            \cos(\alpha+\beta)&amp;-\sin(\alpha+\beta)\\
+            \sin(\alpha+\beta)&amp;\cos(\alpha+\beta)
+            \end{pmatrix}.
+          </md>
+          Here a familiar trigonometric identity is really a statement about composing two
+          linear transformations.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Matrix multiplication lets us keep track of connected machines. But it does not yet tell
+      us everything we want to know about those machines. A rotation turns a square without
+      changing its area. A shear slants it without changing area. A projection flattens it to a
+      line and destroys its area completely. Somewhere inside a square matrix there must be a
+      single number that measures this area or volume effect. Chapter 2 already gave that number
+      a name: the determinant.
+    </p>
+  </subsection>
+</section>

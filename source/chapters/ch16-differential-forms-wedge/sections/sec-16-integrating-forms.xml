@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch16-differential-forms-wedge.tex, Section 16.6.
+     Status: CONVERTED. -->
+<section xml:id="sec-16-integrating-forms" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Integrating forms</title>
+
+  <p>
+    A pullback turns a form on a curve, surface, or solid into a form on a simple parameter
+    domain. That is the bridge from geometry to calculation.
+  </p>
+
+  <p>
+    Now we define the integral of a form by crossing that bridge:
+    <md>\boxed{\text{pull back first, then integrate on the parameter domain.}}</md>
+  </p>
+
+  <p>
+    This is the same procedure we have been using all along for line integrals, surface
+    integrals, and change of variables. The difference is that the form notation lets us say all
+    three at once.
+  </p>
+
+  <subsection xml:id="c16s6-integrating-1-forms-curves">
+    <title>Integrating <m>1</m>-forms over oriented curves</title>
+
+    <p>
+      Let <m>C</m> be an oriented curve in space, and let
+      <md>\mathbf r:[a,b]\to\mathbb R^3</md>
+      be a parametrization that follows the chosen orientation of <m>C</m>. If
+      <md>\omega=P\,dx+Q\,dy+R\,dz,</md>
+      then
+      <md>\mathbf r^*\omega=\bigl[P(\mathbf r(t))x'(t)+Q(\mathbf r(t))y'(t)+R(\mathbf r(t))z'(t)\bigr]\,dt.</md>
+      We define
+      <md>\boxed{\int_C\omega=\int_a^b \mathbf r^*\omega.}</md>
+      In expanded form,
+      <md>\boxed{\int_C\omega=\int_a^b\bigl[P(\mathbf r(t))x'(t)+Q(\mathbf r(t))y'(t)+R(\mathbf r(t))z'(t)\bigr]\,dt.}</md>
+    </p>
+
+    <definition xml:id="c16s6-def-integral-1-form-curve">
+      <title>Integral of a <m>1</m>-form over a curve</title>
+      <statement>
+        <p>
+          Let <m>C</m> be an oriented piecewise smooth curve, and let <m>\omega</m> be a
+          <m>1</m>-form. Choose a parametrization <m>\mathbf r(t)</m> that traces <m>C</m> once in
+          the chosen orientation. Then
+          <md>\boxed{\int_C\omega=\int \mathbf r^*\omega.}</md>
+          If the curve has corners, integrate over each smooth piece and add the results.
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c16s6-ex-circulation-fountain">
+      <title>Circulation around a fountain</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=-y\,dx+x\,dy.</md>
+          Let <m>C</m> be the circle of radius <m>3</m>, oriented counterclockwise:
+          <md>\mathbf r(t)=(3\cos t,3\sin t),\qquad 0\le t\le2\pi.</md>
+          Then
+          <md>dx=-3\sin t\,dt,\qquad dy=3\cos t\,dt.</md>
+          Also,
+          <md>x=3\cos t,\qquad y=3\sin t.</md>
+          So
+          <md>
+            <mrow>\mathbf r^*\omega \amp= -(3\sin t)(-3\sin t\,dt)+(3\cos t)(3\cos t\,dt)</mrow>
+            <mrow>\amp= 9(\sin^2t+\cos^2t)\,dt</mrow>
+            <mrow>\amp= 9\,dt.</mrow>
+          </md>
+          Therefore
+          <md>\boxed{\int_C\omega=\int_0^{2\pi}9\,dt=18\pi.}</md>
+          The same form on the unit circle gave <m>2\pi</m>. On a circle of radius <m>3</m>, the
+          value is <m>9</m> times as large because this form measures twice the signed area swept
+          out by the circle.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      In vector language, if
+      <md>\mathbf F=(P,Q,R),</md>
+      then
+      <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+      is the work form of <m>\mathbf F</m>, and
+      <md>\int_C\omega=\int_C \mathbf F\cdot d\mathbf r.</md>
+      The form notation keeps the coordinate changes visible:
+      <md>dx,\ dy,\ dz</md>
+      are exactly the pieces that the parametrization pulls back to
+      <md>x'(t)\,dt,\ y'(t)\,dt,\ z'(t)\,dt.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s6-integrating-2-forms-surfaces">
+    <title>Integrating <m>2</m>-forms over oriented surfaces</title>
+
+    <p>
+      Let <m>S</m> be an oriented surface, and let
+      <md>\mathbf r:D\subseteq\mathbb R^2\to\mathbb R^3</md>
+      be a parametrization that matches the chosen orientation. Matching the orientation means
+      that the normal direction
+      <md>\mathbf r_u\times\mathbf r_v</md>
+      points to the chosen side of the surface.
+    </p>
+
+    <p>
+      If
+      <md>\Phi=A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy,</md>
+      then
+      <md>\mathbf r^*\Phi</md>
+      is a <m>2</m>-form on the parameter domain:
+      <md>\mathbf r^*\Phi=G(u,v)\,du\wedge dv.</md>
+      We define
+      <md>\boxed{\int_S\Phi=\iint_D \mathbf r^*\Phi.}</md>
+      In coefficient form,
+      <md>\boxed{\int_S\Phi=\iint_D G(u,v)\,du\,dv,}</md>
+      where
+      <md>
+        <mrow>G(u,v) \amp= A(\mathbf r)(y_u z_v-y_v z_u)+B(\mathbf r)(z_u x_v-z_v x_u)</mrow>
+        <mrow>\amp\qquad+C(\mathbf r)(x_u y_v-x_v y_u).</mrow>
+      </md>
+    </p>
+
+    <p>
+      For a flux form
+      <md>\Phi_{\mathbf F}=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy,</md>
+      this becomes
+      <md>\boxed{\int_S\Phi_{\mathbf F}=\iint_D\mathbf F(\mathbf r(u,v))\cdot(\mathbf r_u\times\mathbf r_v)\,du\,dv.}</md>
+      That is the classical flux integral.
+    </p>
+
+    <definition xml:id="c16s6-def-integral-2-form-surface">
+      <title>Integral of a <m>2</m>-form over a surface</title>
+      <statement>
+        <p>
+          Let <m>S</m> be an oriented piecewise smooth surface, and let <m>\Phi</m> be a
+          <m>2</m>-form. Choose a parametrization
+          <md>\mathbf r:D\to S</md>
+          that covers the surface once, except possibly along boundary curves, and whose
+          orientation agrees with the chosen orientation of <m>S</m>. Then
+          <md>\boxed{\int_S\Phi=\iint_D\mathbf r^*\Phi.}</md>
+          If the surface is made from several patches, integrate over the patches and add the
+          results.
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c16s6-ex-flux-cylinder-side">
+      <title>Flux through the side of a cylinder</title>
+      <statement>
+        <p>
+          Let <m>S</m> be the side of the cylinder
+          <md>x^2+y^2=4,\qquad 0\le z\le3,</md>
+          oriented outward. Parametrize it by
+          <md>\mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),</md>
+          where
+          <md>0\le \theta\le2\pi,\qquad 0\le z\le3.</md>
+          Then
+          <md>\mathbf r_\theta=(-2\sin\theta,2\cos\theta,0),\qquad \mathbf r_z=(0,0,1),</md>
+          so
+          <md>\mathbf r_\theta\times\mathbf r_z=(2\cos\theta,2\sin\theta,0),</md>
+          which points outward.
+        </p>
+        <p>
+          Take the flux form for the vector field
+          <md>\mathbf F=(x,y,z):</md>
+          <md>\Phi=x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy.</md>
+          We can use the flux formula:
+          <md>\mathbf F(\mathbf r(\theta,z))=(2\cos\theta,2\sin\theta,z),</md>
+          and
+          <md>
+            <mrow>\mathbf F(\mathbf r)\cdot(\mathbf r_\theta\times\mathbf r_z) \amp= (2\cos\theta,2\sin\theta,z)\cdot(2\cos\theta,2\sin\theta,0)</mrow>
+            <mrow>\amp= 4\cos^2\theta+4\sin^2\theta</mrow>
+            <mrow>\amp= 4.</mrow>
+          </md>
+          Thus
+          <md>\mathbf r^*\Phi=4\,d\theta\wedge dz.</md>
+          Therefore
+          <md>\boxed{\begin{aligned}\int_S\Phi\amp=\int_0^{2\pi}\int_0^3 4\,dz\,d\theta\\ \amp=24\pi.\end{aligned}}</md>
+          The same answer would be called the outward flux of <m>\mathbf F</m> through the
+          cylinder side in vector calculus notation.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The surface orientation is not optional. If the same cylinder were oriented inward, the
+      normal vector would be reversed, and the integral would become
+      <md>-24\pi.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s6-integrating-3-forms-regions">
+    <title>Integrating <m>3</m>-forms over regions in space</title>
+
+    <p>
+      A <m>3</m>-form in space has the shape
+      <md>\Omega=H(x,y,z)\,dx\wedge dy\wedge dz.</md>
+      With the standard orientation of space, we integrate it over a solid region <m>E</m> by
+      <md>\boxed{\int_E \Omega=\iiint_E H(x,y,z)\,dV.}</md>
+      Here
+      <md>dx\wedge dy\wedge dz</md>
+      is the standard oriented volume form.
+    </p>
+
+    <p>
+      If we use a coordinate map
+      <md>T(u,v,w)=(x,y,z),</md>
+      then
+      <md>\int_E\Omega</md>
+      is computed by pulling back:
+      <md>\boxed{\int_E\Omega=\iiint_{D} T^*\Omega,}</md>
+      where <m>D</m> is the parameter region.
+    </p>
+
+    <definition xml:id="c16s6-def-integral-3-form-solid">
+      <title>Integral of a <m>3</m>-form over a solid</title>
+      <statement>
+        <p>
+          Let <m>E</m> be an oriented solid region in space, and let
+          <md>\Omega=H\,dx\wedge dy\wedge dz.</md>
+          With the standard orientation,
+          <md>\boxed{\int_E\Omega=\iiint_E H\,dV.}</md>
+          If <m>E</m> is described by a smooth coordinate map <m>T:D\to E</m>, then
+          <md>\boxed{\int_E\Omega=\iiint_D T^*\Omega.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c16s6-ex-density-form-cylinder">
+      <title>A density form in a cylinder</title>
+      <statement>
+        <p>
+          Let <m>E</m> be the solid cylinder
+          <md>x^2+y^2\le4,\qquad 0\le z\le3,</md>
+          with the standard orientation. Let
+          <md>\Omega=(1+z)\,dx\wedge dy\wedge dz.</md>
+          Use cylindrical coordinates:
+          <md>x=r\cos\theta,\qquad y=r\sin\theta,\qquad z=z.</md>
+          From <xref ref="sec-16-pullbacks"/>,
+          <md>dx\wedge dy\wedge dz=r\,dr\wedge d\theta\wedge dz.</md>
+          So
+          <md>T^*\Omega=(1+z)r\,dr\wedge d\theta\wedge dz.</md>
+          Therefore
+          <md>
+            <mrow>\int_E\Omega \amp= \int_0^2\int_0^{2\pi}\int_0^3(1+z)r\,dz\,d\theta\,dr</mrow>
+            <mrow>\amp= \left(\int_0^2 r\,dr\right)\left(\int_0^{2\pi}d\theta\right)\left(\int_0^3(1+z)\,dz\right)</mrow>
+            <mrow>\amp= 2\cdot2\pi\cdot\frac{15}{2}</mrow>
+            <mrow>\amp= 30\pi.</mrow>
+          </md>
+          So
+          <md>\boxed{\int_E (1+z)\,dx\wedge dy\wedge dz=30\pi.}</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      For physical mass, we usually think of
+      <md>(1+z)\,dV</md>
+      as a positive density times positive volume. The form
+      <md>(1+z)\,dx\wedge dy\wedge dz</md>
+      is the oriented version. With the standard orientation, the numbers agree.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s6-parametrization-independence">
+    <title>Parametrization independence</title>
+
+    <p>
+      An integral over a curve or surface should depend on the oriented geometric object, not on
+      the particular clock or grid used to describe it.
+    </p>
+
+    <p>
+      That statement is true when the new parametrization covers the same object exactly once and
+      preserves orientation.
+    </p>
+
+    <theorem xml:id="c16s6-thm-reparametrize-curve">
+      <title>Reparametrizing a curve</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r:[a,b]\to\mathbb R^n</md>
+          parametrize an oriented curve <m>C</m>, and let
+          <md>\phi:[\alpha,\beta]\to[a,b]</md>
+          be smooth, one-to-one, and increasing. Then
+          <md>\widetilde{\mathbf r}(s)=\mathbf r(\phi(s))</md>
+          parametrizes the same curve with the same orientation, and for every <m>1</m>-form
+          <m>\omega</m>,
+          <md>\boxed{\int_\alpha^\beta \widetilde{\mathbf r}^{\,*}\omega=\int_a^b \mathbf r^*\omega.}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Suppose
+          <md>\mathbf r^*\omega=g(t)\,dt.</md>
+          Then
+          <md>\widetilde{\mathbf r}^{\,*}\omega=g(\phi(s))\phi'(s)\,ds.</md>
+          Therefore
+          <md>\int_\alpha^\beta \widetilde{\mathbf r}^{\,*}\omega=\int_\alpha^\beta g(\phi(s))\phi'(s)\,ds.</md>
+          By the single-variable substitution rule, this equals
+          <md>\int_a^b g(t)\,dt=\int_a^b \mathbf r^*\omega.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <example xml:id="c16s6-ex-same-segment-different-clock">
+      <title>The same segment with a different clock</title>
+      <statement>
+        <p>
+          Let <m>C</m> be the line segment from <m>(0,0)</m> to <m>(1,1)</m>, and let
+          <md>\omega=x\,dy.</md>
+          First parametrize by
+          <md>\mathbf r(t)=(t,t),\qquad 0\le t\le1.</md>
+          Then
+          <md>x=t,\qquad dy=dt,</md>
+          so
+          <md>\mathbf r^*\omega=t\,dt.</md>
+          Hence
+          <md>\int_C\omega=\int_0^1 t\,dt=\frac12.</md>
+        </p>
+        <p>
+          Now use the slower clock
+          <md>\widetilde{\mathbf r}(s)=\left(\frac{s}{2},\frac{s}{2}\right),\qquad 0\le s\le2.</md>
+          Then
+          <md>x=\frac{s}{2},\qquad dy=\frac12\,ds.</md>
+          So
+          <md>\widetilde{\mathbf r}^{\,*}\omega=\frac{s}{4}\,ds.</md>
+          Therefore
+          <md>\int_0^2 \frac{s}{4}\,ds=\frac12.</md>
+          The clock changed, but the oriented curve did not.
+        </p>
+      </statement>
+    </example>
+
+    <p>The hypotheses matter.</p>
+
+    <example xml:id="c16s6-ex-tracing-twice">
+      <title>Tracing twice is not a harmless reparametrization</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=-y\,dx+x\,dy</md>
+          on the unit circle.
+        </p>
+        <p>
+          The once-around parametrization
+          <md>\mathbf r(t)=(\cos t,\sin t),\qquad 0\le t\le2\pi,</md>
+          gives
+          <md>\int_C\omega=2\pi.</md>
+          But the parametrization
+          <md>\widetilde{\mathbf r}(t)=(\cos t,\sin t),\qquad 0\le t\le4\pi,</md>
+          traces the same circle twice. Its pullback is still
+          <md>dt,</md>
+          but now the interval has twice the length:
+          <md>\int_0^{4\pi}dt=4\pi.</md>
+          So the integral doubles.
+        </p>
+        <p>
+          This is why a parametrization used for a single integral must cover the oriented curve
+          once, except for harmless endpoint repetitions.
+        </p>
+      </statement>
+    </example>
+
+    <p>For surfaces, the same idea uses a two-variable change of parameters.</p>
+
+    <theorem xml:id="c16s6-thm-reparametrize-surface">
+      <title>Reparametrizing a surface</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r:D\to S</md>
+          parametrize an oriented surface, and let
+          <md>\psi:D'\to D</md>
+          be a smooth one-to-one change of parameters with positive Jacobian determinant. Then
+          <md>\widetilde{\mathbf r}=\mathbf r\circ\psi</md>
+          parametrizes the same surface with the same orientation, and for every <m>2</m>-form
+          <m>\Phi</m>,
+          <md>\boxed{\iint_{D'}\widetilde{\mathbf r}^{\,*}\Phi=\iint_D\mathbf r^*\Phi.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      The proof is the change-of-variables formula written in pullback language. If
+      <md>\mathbf r^*\Phi=G(u,v)\,du\wedge dv,</md>
+      and
+      <md>(u,v)=\psi(a,b),</md>
+      then
+      <md>\widetilde{\mathbf r}^{\,*}\Phi=G(\psi(a,b))\frac{\partial(u,v)}{\partial(a,b)}\,da\wedge db.</md>
+      A positive Jacobian preserves orientation, so the oriented integral is unchanged.
+    </p>
+
+    <p>
+      If the Jacobian is negative, the surface orientation is reversed. Then the integral changes
+      sign.
+    </p>
+
+    <p>
+      There is one more quiet condition: the parametrization must be regular, except possibly on
+      boundary curves or isolated harmless sets. If a parametrization collapses a two-dimensional
+      region to a curve, it is not describing a surface patch.
+    </p>
+
+    <example xml:id="c16s6-ex-collapsed-parametrization">
+      <title>A collapsed parametrization is not a surface parametrization</title>
+      <statement>
+        <p>
+          Consider
+          <md>\mathbf r(u,v)=(u,0,0).</md>
+          The whole <m>(u,v)</m>-rectangle maps to a line on the <m>x</m>-axis. The tangent
+          vectors are
+          <md>\mathbf r_u=(1,0,0),\qquad \mathbf r_v=(0,0,0),</md>
+          so
+          <md>\mathbf r_u\times\mathbf r_v=\mathbf 0.</md>
+          There is no small parallelogram on a surface. Every <m>2</m>-form pulls back to zero
+          because the image has no area.
+        </p>
+        <p>
+          The regularity condition
+          <md>\mathbf r_u\times\mathbf r_v\ne\mathbf 0</md>
+          is what prevents this collapse.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c16s6-orientation-reversal-sign">
+    <title>Orientation reversal and sign</title>
+
+    <p>Forms are oriented integrands. Reversing orientation reverses the sign.</p>
+
+    <p>
+      For curves,
+      <md>\boxed{\int_{-C}\omega=-\int_C\omega.}</md>
+      Here <m>-C</m> means the same curve with the opposite direction.
+    </p>
+
+    <example xml:id="c16s6-ex-reversing-curve">
+      <title>Reversing a curve</title>
+      <statement>
+        <p>
+          Let
+          <md>C</md>
+          be the unit circle oriented counterclockwise, and let
+          <md>\omega=-y\,dx+x\,dy.</md>
+          We know
+          <md>\int_C\omega=2\pi.</md>
+          If <m>-C</m> is the same circle oriented clockwise, then
+          <md>\boxed{\int_{-C}\omega=-2\pi.}</md>
+          A clockwise trip turns the same geometric circle into the opposite oriented curve.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      For surfaces,
+      <md>\boxed{\int_{-S}\Phi=-\int_S\Phi.}</md>
+      Here <m>-S</m> means the same surface with the opposite choice of normal side.
+    </p>
+
+    <p>
+      The cylinder example above gave
+      <md>\int_S\bigl(x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy\bigr)=24\pi</md>
+      for the outward orientation. With the inward orientation, the value is
+      <md>-24\pi.</md>
+    </p>
+
+    <p>
+      For regions in space, reversing orientation means replacing
+      <md>dx\wedge dy\wedge dz</md>
+      by
+      <md>-dx\wedge dy\wedge dz.</md>
+      So
+      <md>\boxed{\int_{-E}\Omega=-\int_E\Omega.}</md>
+    </p>
+
+    <p>
+      This sign behavior is the reason differential forms fit the boundary theorems so well. A
+      boundary always comes with an induced orientation. The outer boundary of a plane region is
+      counterclockwise, while the boundary around a hole is clockwise. The sign is not an
+      afterthought; it is how the inside and outside agree.
+    </p>
+
+    <p>
+      We can now integrate <m>0</m>-forms over points, <m>1</m>-forms over curves, <m>2</m>-forms
+      over surfaces, and <m>3</m>-forms over solids. Pullbacks tell us how to calculate those
+      integrals using parameters. Orientation tells us the sign. One piece is still missing. The
+      Fundamental Theorem of Calculus did not only integrate forms; it integrated a
+      <em>derivative</em>. For functions, that derivative was
+      <md>df.</md>
+      The next question is unavoidable: what is the derivative of a <m>1</m>-form or a
+      <m>2</m>-form? The answer will be the exterior derivative, and it will turn gradient, curl,
+      and divergence into one operation.
+    </p>
+  </subsection>
+</section>

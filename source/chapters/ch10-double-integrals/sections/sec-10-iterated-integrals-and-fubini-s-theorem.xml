@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch10-double-integrals.tex, Section 10.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-10-iterated-integrals-and-fubini-s-theorem" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Iterated integrals and Fubini's theorem</title>
+
+  <p>
+    <xref ref="sec-10-double-integrals-over-rectangles"/> defined a double integral over a
+    rectangle as a limit of sums:
+    <md>\iint_R f(x,y)\,dA.</md>
+    That definition tells us what the integral means. It adds tiny contributions
+    <md>f(x,y)\,\Delta A</md>
+    over many small rectangles.
+  </p>
+
+  <p>
+    But the definition is not always the best way to compute. In single-variable calculus, we
+    did not evaluate every definite integral by taking a limit of Riemann sums. Once the
+    integral was defined, the Fundamental Theorem of Calculus gave us a practical method.
+  </p>
+
+  <p>
+    Something similar happens here. A double integral can often be computed by doing two
+    ordinary one-variable integrals, one after the other.
+  </p>
+
+  <subsection xml:id="c10s3-subsec-roof-sliced-two-ways">
+    <title>A roof sliced two ways</title>
+
+    <p>
+      A market stall has a rectangular base
+      <md>0\le x\le 4, \qquad 0\le y\le 3.</md>
+      The height of its slanted roof above the floor is modeled by
+      <md>h(x,y)=5+x+2y.</md>
+      The volume under the roof is
+      <md>V=\iint_R h(x,y)\,dA,</md>
+      where
+      <md>R=[0,4]\times[0,3].</md>
+    </p>
+
+    <p>
+      Instead of adding tiny columns all at once, freeze <m>x</m>. Then <m>y</m> runs from
+      <m>0</m> to <m>3</m>, and the roof above that vertical strip has cross-sectional area
+      <md>A(x)=\int_0^3 (5+x+2y)\,dy.</md>
+      Compute the inner integral:
+      <md>
+        <mrow>A(x) \amp= \int_0^3 (5+x+2y)\,dy</mrow>
+        <mrow>\amp= \Bigl[(5+x)y+y^2\Bigr]_0^3</mrow>
+        <mrow>\amp= 3(5+x)+9</mrow>
+        <mrow>\amp= 24+3x.</mrow>
+      </md>
+      So a slice at position <m>x</m> has area
+      <md>24+3x.</md>
+      Now add those slice areas from <m>x=0</m> to <m>x=4</m>:
+      <md>
+        <mrow>V \amp= \int_0^4 A(x)\,dx</mrow>
+        <mrow>\amp= \int_0^4 (24+3x)\,dx</mrow>
+        <mrow>\amp= \Bigl[24x+\frac32x^2\Bigr]_0^4</mrow>
+        <mrow>\amp= 96+24</mrow>
+        <mrow>\amp= 120.</mrow>
+      </md>
+      Thus
+      <md>\boxed{\iint_R (5+x+2y)\,dA=120.}</md>
+    </p>
+
+    <p>
+      The same volume can be sliced the other way. Freeze <m>y</m>, let <m>x</m> run from
+      <m>0</m> to <m>4</m>, and compute
+      <md>B(y)=\int_0^4 (5+x+2y)\,dx.</md>
+      Then
+      <md>
+        <mrow>B(y) \amp= \Bigl[5x+\frac12x^2+2yx\Bigr]_0^4</mrow>
+        <mrow>\amp= 20+8+8y</mrow>
+        <mrow>\amp= 28+8y.</mrow>
+      </md>
+      Now add these horizontal slice areas:
+      <md>
+        <mrow>V \amp= \int_0^3 B(y)\,dy</mrow>
+        <mrow>\amp= \int_0^3 (28+8y)\,dy</mrow>
+        <mrow>\amp= \Bigl[28y+4y^2\Bigr]_0^3</mrow>
+        <mrow>\amp= 84+36</mrow>
+        <mrow>\amp= 120.</mrow>
+      </md>
+    </p>
+
+    <p>
+      Both slicing methods give the same volume:
+      <md>\boxed{\int_0^4\int_0^3 (5+x+2y)\,dy\,dx = \int_0^3\int_0^4 (5+x+2y)\,dx\,dy.}</md>
+    </p>
+
+    <figure xml:id="c10s3-fig-rectangle-slices">
+      <caption>A rectangle can be added by vertical slices or by horizontal slices.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[-&gt;] (-0.3,0) -- (5.1,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.3) -- (0,4.1) node[above] {\(y\)};
+
+            \draw[fill=gray!8] (0,0) rectangle (4,3);
+
+            \draw[fill=blue!20, draw=blue!60!black, thick] (1.35,0) rectangle (1.75,3);
+            \node[blue!60!black] at (2.75,2.4) {fix \(x\)};
+            \draw[-&gt;, blue!60!black, thick] (2.45,2.25) -- (1.75,2.25);
+
+            \draw[fill=red!18, draw=red!65!black, thick, opacity=0.75] (0,1.05) rectangle (4,1.45);
+            \node[red!65!black] at (3.0,0.65) {fix \(y\)};
+            \draw[-&gt;, red!65!black, thick] (2.55,0.75) -- (2.55,1.05);
+
+            \node[below] at (4,0) {\(4\)};
+            \node[left] at (0,3) {\(3\)};
+            \node[below left] at (0,0) {\(0\)};
+            \node at (2,-0.7) {\(R=[0,4]\times[0,3]\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The picture is simple, but the idea is important. A double integral over a rectangle can
+      be computed by reducing it to ordinary integrals.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s3-subsec-iterated-integrals">
+    <title>Iterated integrals</title>
+
+    <p>
+      The expression
+      <md>\int_0^4\int_0^3 (5+x+2y)\,dy\,dx</md>
+      means this:
+    </p>
+
+    <p>
+      First, hold <m>x</m> fixed and integrate with respect to <m>y</m>:
+      <md>\int_0^3 (5+x+2y)\,dy.</md>
+      Then integrate the result with respect to <m>x</m>:
+      <md>\int_0^4 \left(\int_0^3 (5+x+2y)\,dy\right) dx.</md>
+    </p>
+
+    <p>
+      This is called an <term>iterated integral</term>, because one integral is nested inside
+      another.
+    </p>
+
+    <definition xml:id="c10s3-def-iterated-integral">
+      <title>Iterated integral over a rectangle</title>
+      <statement>
+        <p>
+          Let
+          <md>R=[a,b]\times[c,d].</md>
+          The iterated integral
+          <md>\boxed{\int_a^b\int_c^d f(x,y)\,dy\,dx}</md>
+          means
+          <md>\boxed{\int_a^b \left(\int_c^d f(x,y)\,dy\right) dx.}</md>
+          In the inner integral, <m>x</m> is held constant and <m>y</m> is the variable.
+        </p>
+        <p>
+          Similarly,
+          <md>\boxed{\int_c^d\int_a^b f(x,y)\,dx\,dy}</md>
+          means
+          <md>\boxed{\int_c^d \left(\int_a^b f(x,y)\,dx\right) dy.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>The inner integral makes a slice. The outer integral adds the slices.</p>
+
+    <p>
+      A small notation warning is useful here. The symbol
+      <md>dy\,dx</md>
+      in an iterated integral is an instruction for the order of calculation:
+      <md>\text{integrate in }y\text{ first, then in }x.</md>
+      It is not a wedge product.
+    </p>
+
+    <p>
+      With the standard orientation of the <m>xy</m>-plane, the corresponding area
+      <m>2</m>-form is
+      <md>dx\wedge dy.</md>
+      So, for a positively oriented rectangle,
+      <md>\iint_R f\,dA = \int_R f\,dx\wedge dy.</md>
+      But
+      <md>dy\wedge dx=-dx\wedge dy.</md>
+      Thus the wedge product remembers orientation, while the ordinary area element
+      <md>dA</md>
+      remembers positive area.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s3-subsec-fubini-rectangles">
+    <title>Fubini's theorem for rectangles</title>
+
+    <p>
+      The roof example showed that the two orders gave the same answer. Fubini's theorem tells
+      us when this is guaranteed.
+    </p>
+
+    <theorem xml:id="c10s3-thm-fubini-rectangles">
+      <title>Fubini's theorem for rectangles</title>
+      <statement>
+        <p>
+          Let
+          <md>R=[a,b]\times[c,d],</md>
+          and suppose <m>f</m> is continuous on <m>R</m>. Then
+          <md>\boxed{\iint_R f(x,y)\,dA = \int_a^b\int_c^d f(x,y)\,dy\,dx = \int_c^d\int_a^b f(x,y)\,dx\,dy.}</md>
+        </p>
+      </statement>
+      <proof>
+        <title>Idea of the proof</title>
+        <p>
+          For each fixed <m>x</m>, define
+          <md>A(x)=\int_c^d f(x,y)\,dy.</md>
+          Geometrically, <m>A(x)</m> is the signed cross-sectional area of the surface over the
+          vertical line segment above <m>x</m>. Adding those cross-sections gives
+          <md>\int_a^b A(x)\,dx = \int_a^b\int_c^d f(x,y)\,dy\,dx.</md>
+          This adds the same tiny rectangular contributions that the double integral adds:
+          <md>f(x,y)\,\Delta x\,\Delta y.</md>
+        </p>
+        <p>
+          Similarly, if
+          <md>B(y)=\int_a^b f(x,y)\,dx,</md>
+          then
+          <md>\int_c^d B(y)\,dy = \int_c^d\int_a^b f(x,y)\,dx\,dy</md>
+          adds the same tiny contributions, only grouped into horizontal slices instead of
+          vertical ones.
+        </p>
+        <p>
+          Both methods refine to the same Riemann sum limit, so both give the double integral.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The continuity assumption is a safe hypothesis. It guarantees that the double integral
+      exists and that slicing in either order gives the same total.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s3-subsec-separated-example">
+    <title>A separated example</title>
+
+    <p>
+      Sometimes the integrand splits into an <m>x</m>-part and a <m>y</m>-part. Then the double
+      integral factors.
+    </p>
+
+    <p>
+      Let
+      <md>R=[0,3]\times[0,\pi],</md>
+      and let
+      <md>f(x,y)=(1+x^2)(2+\sin y).</md>
+      Then
+      <md>\iint_R (1+x^2)(2+\sin y)\,dA = \int_0^3\int_0^\pi (1+x^2)(2+\sin y)\,dy\,dx.</md>
+      Since <m>1+x^2</m> is constant with respect to <m>y</m>,
+      <md>
+        <mrow>\int_0^\pi (1+x^2)(2+\sin y)\,dy \amp= (1+x^2)\int_0^\pi (2+\sin y)\,dy</mrow>
+        <mrow>\amp= (1+x^2)\Bigl[2y-\cos y\Bigr]_0^\pi</mrow>
+        <mrow>\amp= (1+x^2)(2\pi+2).</mrow>
+      </md>
+      Now integrate in <m>x</m>:
+      <md>
+        <mrow>\iint_R (1+x^2)(2+\sin y)\,dA \amp= \int_0^3 (1+x^2)(2\pi+2)\,dx</mrow>
+        <mrow>\amp= (2\pi+2)\Bigl[x+\frac{x^3}{3}\Bigr]_0^3</mrow>
+        <mrow>\amp= (2\pi+2)(3+9)</mrow>
+        <mrow>\amp= 24\pi+24.</mrow>
+      </md>
+      Equivalently,
+      <md>\boxed{\iint_R (1+x^2)(2+\sin y)\,dA = \left(\int_0^3 (1+x^2)\,dx\right) \left(\int_0^\pi (2+\sin y)\,dy\right).}</md>
+    </p>
+
+    <p>
+      The double integral factors because the rectangle has independent limits and the
+      integrand is a product:
+      <md>f(x,y)=g(x)h(y).</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s3-subsec-choosing-an-order">
+    <title>Choosing an order</title>
+
+    <p>
+      Fubini's theorem says that both orders work. It does not say that both orders are equally
+      pleasant.
+    </p>
+
+    <p>
+      Consider
+      <md>I= \int_0^1\int_0^1 2x e^{xy}\,dy\,dx.</md>
+      If we integrate with respect to <m>y</m> first, <m>x</m> is a constant:
+      <md>
+        <mrow>\int_0^1 2x e^{xy}\,dy \amp= 2\int_0^1 x e^{xy}\,dy</mrow>
+        <mrow>\amp= 2\Bigl[e^{xy}\Bigr]_{y=0}^{y=1}</mrow>
+        <mrow>\amp= 2(e^x-1).</mrow>
+      </md>
+      Then
+      <md>
+        <mrow>I \amp= \int_0^1 2(e^x-1)\,dx</mrow>
+        <mrow>\amp= 2\Bigl[e^x-x\Bigr]_0^1</mrow>
+        <mrow>\amp= 2(e-1)-2</mrow>
+        <mrow>\amp= 2e-4.</mrow>
+      </md>
+      So
+      <md>\boxed{\int_0^1\int_0^1 2x e^{xy}\,dy\,dx=2e-4.}</md>
+    </p>
+
+    <p>
+      The other order is possible, but less direct. The moral is simple: before computing, look
+      for the order in which the inner integral has an easy antiderivative.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s3-subsec-why-hypotheses-matter">
+    <title>Why the hypotheses matter</title>
+
+    <p>
+      Fubini's theorem is safe for continuous functions on rectangles. If we sneak in an
+      unbounded singularity, the story can break.
+    </p>
+
+    <p>
+      Define
+      <md>f(x,y) = \frac{x^2-y^2}{(x^2+y^2)^2}</md>
+      away from the origin in the square
+      <md>0\le x\le1, \qquad 0\le y\le1.</md>
+      This function is not continuous at <m>(0,0)</m>, and it is unbounded there.
+    </p>
+
+    <p>
+      If we read the iterated integrals as improper integrals, the two orders give different
+      answers.
+    </p>
+
+    <p>
+      For fixed <m>x\gt 0</m>,
+      <md>\frac{\partial}{\partial y} \left( \frac{y}{x^2+y^2} \right) = \frac{x^2-y^2}{(x^2+y^2)^2}.</md>
+      Therefore
+      <md>
+        <mrow>\int_0^1 \frac{x^2-y^2}{(x^2+y^2)^2}\,dy \amp= \left[ \frac{y}{x^2+y^2} \right]_0^1</mrow>
+        <mrow>\amp= \frac{1}{1+x^2}.</mrow>
+      </md>
+      Then
+      <md>\int_0^1 \frac{1}{1+x^2}\,dx=\frac{\pi}{4}.</md>
+    </p>
+
+    <p>
+      But for fixed <m>y\gt 0</m>,
+      <md>\frac{\partial}{\partial x} \left( -\frac{x}{x^2+y^2} \right) = \frac{x^2-y^2}{(x^2+y^2)^2}.</md>
+      So
+      <md>
+        <mrow>\int_0^1 \frac{x^2-y^2}{(x^2+y^2)^2}\,dx \amp= \left[ -\frac{x}{x^2+y^2} \right]_0^1</mrow>
+        <mrow>\amp= -\frac{1}{1+y^2}.</mrow>
+      </md>
+      Then
+      <md>\int_0^1 -\frac{1}{1+y^2}\,dy=-\frac{\pi}{4}.</md>
+    </p>
+
+    <p>
+      The two answers are
+      <md>\frac{\pi}{4} \qquad\text{and}\qquad -\frac{\pi}{4}.</md>
+      This is not a contradiction. Fubini's theorem did not apply. The function was not
+      continuous on the rectangle, and the ordinary double integral was not a proper double
+      integral over the square.
+    </p>
+
+    <p>
+      The warning is not meant to make the theorem feel fragile. It is meant to protect the
+      theorem from being used outside its home. For continuous functions on rectangles, the
+      order may be chosen for convenience.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s3-subsec-what-comes-next">
+    <title>What comes next</title>
+
+    <p>
+      Rectangles are clean. Their bounds do not change:
+      <md>a\le x\le b, \qquad c\le y\le d.</md>
+      But most regions are not rectangular. A pond has a curved shore. A triangular plate has a
+      slanted edge. A disk has circular boundaries.
+    </p>
+
+    <p>
+      The next step is to let the limits of the inner integral depend on the outer variable.
+    </p>
+
+    <p>That is how double integrals escape the rectangle.</p>
+  </subsection>
+</section>

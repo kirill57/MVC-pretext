@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch14-greens-theorem.tex, Section 14.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-14-green-s-theorem-in-differential-form-language" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Green's theorem in differential-form language</title>
+
+  <p>
+    The circulation form and the flux form of Green's theorem are two costumes for the same
+    idea. In both cases, a <m>1</m>-form is integrated around a boundary, and its exterior
+    derivative is integrated over the region inside.
+  </p>
+
+  <p>
+    The notation is shorter:
+    <md>\int_{\partial R}\omega=\int_R d\omega.</md>
+    But the meaning is the same story we have been building: boundary accumulation equals
+    interior accumulation of a derivative.
+  </p>
+
+  <subsection xml:id="c14s4-subsec-1-form-on-boundary">
+    <title>A <m>1</m>-form on the boundary</title>
+
+    <p>
+      Recall from <xref ref="sec-13-differential-1-forms"/> that a <m>1</m>-form in the plane
+      has the form
+      <md>\omega=P\,dx+Q\,dy.</md>
+      It is built to be integrated along a curve. At each tiny step, it reads the
+      <m>x</m>-change and <m>y</m>-change, weights them by <m>P</m> and <m>Q</m>, and adds.
+    </p>
+
+    <p>
+      For a vector field
+      <md>\mathbf F=(M,N),</md>
+      there are two natural <m>1</m>-forms one might build.
+    </p>
+
+    <p>
+      The work or circulation form is
+      <md>\boxed{\omega_{\mathrm{work}}=M\,dx+N\,dy.}</md>
+      It measures motion along the curve:
+      <md>\int_C \omega_{\mathrm{work}}=\int_C \mathbf F\cdot d\mathbf r.</md>
+    </p>
+
+    <p>
+      The flux form is
+      <md>\boxed{\omega_{\mathrm{flux}}=M\,dy-N\,dx.}</md>
+      When <m>C=\partial R</m> is positively oriented, it measures outward crossing:
+      <md>\int_{\partial R}\omega_{\mathrm{flux}}=\oint_{\partial R}\mathbf F\cdot\mathbf n\,ds.</md>
+    </p>
+
+    <p>
+      So the same vector field can give two different boundary measurements. The difference is
+      not in the field alone. It is in the <m>1</m>-form we choose to integrate.
+    </p>
+
+    <table xml:id="c14s4-tab-two-1-forms">
+      <title>Two <m>1</m>-forms built from one vector field.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Measurement</cell>
+          <cell><m>1</m>-form</cell>
+          <cell>What it reads</cell>
+        </row>
+        <row>
+          <cell>work/circulation</cell>
+          <cell><m>M\,dx+N\,dy</m></cell>
+          <cell>motion along the curve</cell>
+        </row>
+        <row>
+          <cell>flux</cell>
+          <cell><m>M\,dy-N\,dx</m></cell>
+          <cell>motion through the curve</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>This is why forms are useful. They remember the actual integrand.</p>
+  </subsection>
+
+  <subsection xml:id="c14s4-subsec-exterior-derivative-plane">
+    <title>The exterior derivative in the plane</title>
+
+    <p>
+      Take the form
+      <md>\omega=(x-y)\,dx+(x+2y)\,dy.</md>
+      This is the form from the triangle example in
+      <xref ref="sec-14-green-s-theorem-circulation-form"/>. There,
+      <md>P=x-y,\qquad Q=x+2y.</md>
+      The coefficient that appeared in Green's theorem was
+      <md>Q_x-P_y=1-(-1)=2.</md>
+      So the interior form was
+      <md>2\,dx\wedge dy.</md>
+      That is the exterior derivative of <m>\omega</m>:
+      <md>\boxed{d\omega=2\,dx\wedge dy.}</md>
+    </p>
+
+    <p>Now write the general rule.</p>
+
+    <definition xml:id="c14s4-def-exterior-derivative-plane-1-form">
+      <title>Exterior derivative of a plane <m>1</m>-form</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=P(x,y)\,dx+Q(x,y)\,dy</md>
+          be a <m>C^1</m> <m>1</m>-form in the plane. Its <term>exterior derivative</term> is
+          the <m>2</m>-form
+          <md>\boxed{d\omega=(Q_x-P_y)\,dx\wedge dy.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The coefficient
+      <md>Q_x-P_y</md>
+      is the scalar curl of the form
+      <md>P\,dx+Q\,dy.</md>
+      The factor
+      <md>dx\wedge dy</md>
+      is the signed area form.
+    </p>
+
+    <p>
+      Here is the same rule expanded once, so the signs are not mysterious. Since
+      <md>dP=P_x\,dx+P_y\,dy,</md>
+      and
+      <md>dQ=Q_x\,dx+Q_y\,dy,</md>
+      we compute
+      <md>
+        <mrow>d(P\,dx+Q\,dy) \amp= dP\wedge dx+dQ\wedge dy</mrow>
+        <mrow>\amp= (P_x\,dx+P_y\,dy)\wedge dx+(Q_x\,dx+Q_y\,dy)\wedge dy</mrow>
+        <mrow>\amp= P_y\,dy\wedge dx+Q_x\,dx\wedge dy</mrow>
+        <mrow>\amp= -P_y\,dx\wedge dy+Q_x\,dx\wedge dy</mrow>
+        <mrow>\amp= (Q_x-P_y)\,dx\wedge dy.</mrow>
+      </md>
+      The terms involving
+      <md>dx\wedge dx\qquad\text{and}\qquad dy\wedge dy</md>
+      vanish because a parallelogram with two identical directions has zero signed area.
+    </p>
+
+    <example xml:id="c14s4-ex-area-measuring-form">
+      <title>The area-measuring form</title>
+      <statement>
+        <p>
+          Let
+          <md>\eta=-y\,dx+x\,dy.</md>
+          Then
+          <md>P=-y,\qquad Q=x.</md>
+          So
+          <md>d\eta=(1-(-1))\,dx\wedge dy=2\,dx\wedge dy.</md>
+          Green's theorem says
+          <md>\oint_{\partial R}\eta=\iint_R 2\,dx\wedge dy.</md>
+          Thus
+          <md>\oint_{\partial R}(-y\,dx+x\,dy)=2\,\operatorname{Area}(R)</md>
+          for a positively oriented simple boundary. This is exactly the pattern
+          <xref ref="ch13-vector-fields-line-integrals"/> discovered before Green's theorem gave
+          it a name.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c14s4-subsec-greens-as-one-formula">
+    <title>Green's theorem as one formula</title>
+
+    <p>Now the circulation form of Green's theorem becomes a single statement.</p>
+
+    <theorem xml:id="c14s4-thm-greens-for-1-forms">
+      <title>Green's theorem for <m>1</m>-forms</title>
+      <statement>
+        <p>
+          Let <m>R</m> be a bounded plane region whose boundary consists of finitely many
+          piecewise smooth simple closed curves, with positive orientation.
+        </p>
+        <p>
+          Let
+          <md>\omega=P\,dx+Q\,dy</md>
+          be a <m>C^1</m> <m>1</m>-form on an open region containing <m>R</m>. Then
+          <md>\boxed{\int_{\partial R}\omega=\int_R d\omega.}</md>
+          Written out in coordinates, this says
+          <md>\boxed{\oint_{\partial R} P\,dx+Q\,dy=\iint_R (Q_x-P_y)\,dx\wedge dy.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      The symbol
+      <md>\int_R d\omega</md>
+      means an integral of the <m>2</m>-form
+      <md>d\omega</md>
+      over the oriented region <m>R</m>. For the standard counterclockwise orientation of the
+      plane,
+      <md>dx\wedge dy</md>
+      agrees with positive area, so this is the same number as
+      <md>\iint_R (Q_x-P_y)\,dA.</md>
+    </p>
+
+    <figure xml:id="c14s4-fig-boundary-interior">
+      <caption>Green's theorem says that a boundary integral of a <m>1</m>-form equals an
+      interior integral of its exterior derivative.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            % 1. Clipping region for the internal circulation grid
+            \begin{scope}
+                \clip plot[smooth cycle] coordinates {
+                    (0.4,0.5) (2.0,0.1) (4.0,0.7) (4.7,2.0)
+                    (3.8,3.3) (2.0,3.7) (0.5,2.7) (-0.1,1.4)
+                };
+                \fill[gray!8] (-1,-1) rectangle (6,5);
+                % Dense grid of circulation cells
+                \foreach \x in {-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5} {
+                    \foreach \y in {-0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5} {
+                        % Forward/Positive directions
+                        \draw[-&gt;, blue!60, line width=2pt, opacity=0.4]
+                            (\x+0.05, \y) -- (\x+0.45, \y);
+                        \draw[-&gt;, blue!60, line width=2pt, opacity=0.4]
+                            (\x+0.5, \y+0.05) -- (\x+0.5, \y+0.45);
+                        % Reverse/Negative directions
+                        \draw[-&gt;, red!80!black, thick, dashed]
+                            (\x+0.45, \y+0.5) -- (\x+0.05, \y+0.5);
+                        \draw[-&gt;, red!80!black, thick, dashed]
+                            (\x, \y+0.45) -- (\x, \y+0.05);
+                    }
+                }
+            \end{scope}
+            % 2. Draw the macroscopic outer boundary cleanly
+            \draw[thick]
+                plot[smooth cycle] coordinates {
+                    (0.4,0.5) (2.0,0.1) (4.0,0.7) (4.7,2.0)
+                    (3.8,3.3) (2.0,3.7) (0.5,2.7) (-0.1,1.4)
+                };
+            % 3. Single long red arrow to indicate orientation
+            \draw[-&gt;, very thick, red!65!black]
+                (4.4, 0.7) .. controls (5.4, 1.5) and (5.3, 2.8) .. (4.2, 3.5);
+            % 4. Labels
+            \node[red!65!black, right] at (5.1, 2.1) {\(\omega\) on \(\partial R\)};
+            \node[blue!60!black, fill=gray!8, inner sep=3pt, rounded corners] at (2.25,1.85) {\(d\omega\) inside \(R\)};
+            \node at (2.25,-0.7) {\(\displaystyle \int_{\partial R}\omega=\int_R d\omega\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>The two versions of Green's theorem now sit in one table.</p>
+
+    <table xml:id="c14s4-tab-two-versions">
+      <title>The circulation and flux forms in one place.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Boundary form</cell>
+          <cell>Exterior derivative</cell>
+          <cell>Interior meaning</cell>
+        </row>
+        <row>
+          <cell><m>M\,dx+N\,dy</m></cell>
+          <cell><m>(N_x-M_y)\,dx\wedge dy</m></cell>
+          <cell>curl density</cell>
+        </row>
+        <row>
+          <cell><m>M\,dy-N\,dx</m></cell>
+          <cell><m>(M_x+N_y)\,dx\wedge dy</m></cell>
+          <cell>divergence density</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The same vector field <m>(M,N)</m> can be used in either row. The form decides what kind
+      of boundary measurement we are making.
+    </p>
+
+    <example xml:id="c14s4-ex-flux-as-form-calculation">
+      <title>Flux as a form calculation</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F=(M,N)=(x+\sin y,\;y+e^x).</md>
+          The flux form is
+          <md>\omega_{\mathrm{flux}}=M\,dy-N\,dx=(x+\sin y)\,dy-(y+e^x)\,dx.</md>
+          Written as
+          <md>P\,dx+Q\,dy,</md>
+          this has
+          <md>P=-(y+e^x),\qquad Q=x+\sin y.</md>
+          Therefore
+          <md>
+            <mrow>d\omega_{\mathrm{flux}} \amp= (Q_x-P_y)\,dx\wedge dy</mrow>
+            <mrow>\amp= (1-(-1))\,dx\wedge dy</mrow>
+            <mrow>\amp= 2\,dx\wedge dy.</mrow>
+          </md>
+          So for any positively oriented region <m>R</m>,
+          <md>\oint_{\partial R}\omega_{\mathrm{flux}}=\iint_R 2\,dx\wedge dy=2\,\operatorname{Area}(R).</md>
+          This is the flux theorem again, because
+          <md>M_x+N_y=1+1=2.</md>
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c14s4-subsec-warnings-part-of-formula">
+    <title>The warnings are part of the formula</title>
+
+    <p>
+      The compact formula
+      <md>\int_{\partial R}\omega=\int_R d\omega</md>
+      is easy to remember. It is also easy to misuse.
+    </p>
+
+    <p>
+      The form must be defined and smooth on a region containing <m>R</m>. The boundary must
+      carry the correct orientation. All boundary components must be included.
+    </p>
+
+    <p>
+      The punctured-plane form
+      <md>\alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}</md>
+      is the cleanest warning. On the punctured plane,
+      <md>d\alpha=0.</md>
+      But on the unit circle,
+      <md>\oint_C \alpha=2\pi.</md>
+      We cannot apply Green's theorem to the whole disk because <m>\alpha</m> is not defined at
+      the origin.
+    </p>
+
+    <p>
+      If the region is an annulus around the origin, then the theorem works. The positively
+      oriented boundary has two pieces: the outer circle counterclockwise and the inner circle
+      clockwise. The two integrals are
+      <md>2\pi\qquad\text{and}\qquad -2\pi,</md>
+      so the total is
+      <md>0.</md>
+      That agrees with
+      <md>\int_R d\alpha=\int_R 0=0.</md>
+      The short formula is trustworthy only when its hypotheses are present.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s4-subsec-why-already-stokes">
+    <title>Why this is already Stokes' theorem in disguise</title>
+
+    <p>The Fundamental Theorem of Calculus can be written in the same shape.</p>
+
+    <p>
+      On an interval <m>[a,b]</m>, a function <m>f</m> has differential
+      <md>df=f'(x)\,dx.</md>
+      The boundary of the interval is the endpoint <m>b</m> with positive sign and the endpoint
+      <m>a</m> with negative sign. So
+      <md>\int_{\partial [a,b]} f=f(b)-f(a).</md>
+      The Fundamental Theorem of Calculus says
+      <md>\boxed{\int_{\partial [a,b]} f=\int_{[a,b]} df.}</md>
+      Written out,
+      <md>f(b)-f(a)=\int_a^b f'(x)\,dx.</md>
+    </p>
+
+    <p>
+      Green's theorem says the same kind of thing one dimension higher:
+      <md>\boxed{\int_{\partial R}\omega=\int_R d\omega.}</md>
+    </p>
+
+    <table xml:id="c14s4-tab-ftc-green">
+      <title>One sentence, two dimensions.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Dimension</cell>
+          <cell>Region</cell>
+          <cell>Boundary object</cell>
+          <cell>Interior derivative</cell>
+        </row>
+        <row>
+          <cell><m>1</m></cell>
+          <cell><m>[a,b]</m></cell>
+          <cell><m>f</m></cell>
+          <cell><m>df</m></cell>
+        </row>
+        <row>
+          <cell><m>2</m></cell>
+          <cell><m>R</m></cell>
+          <cell><m>\omega</m></cell>
+          <cell><m>d\omega</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      This is the beginning of Stokes' idea. The boundary of a region carries one kind of
+      integrand. The inside carries its exterior derivative. The integral over the boundary
+      equals the integral over the inside.
+    </p>
+
+    <p>
+      Later, a surface in space will have a boundary curve, and a solid in space will have a
+      boundary surface. The same sentence will survive both times. What changes is the kind of
+      form being integrated.
+    </p>
+
+    <p>
+      The formula is beautiful enough to make us suspicious: why should all the interior
+      information collapse to the boundary? The answer is not magic. Cut the region into many
+      small rectangles. Every shared interior edge is walked twice, in opposite directions, and
+      disappears. The proof of Green's theorem is the art of making that cancellation honest.
+    </p>
+  </subsection>
+</section>

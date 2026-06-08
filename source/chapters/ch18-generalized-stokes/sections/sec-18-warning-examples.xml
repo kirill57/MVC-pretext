@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch18-generalized-stokes.tex, Section 18.9.
+     Status: CONVERTED. -->
+<section xml:id="sec-18-warning-examples" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Warning examples</title>
+
+  <p>
+    The grand table in <xref ref="sec-18-the-grand-translation-table"/> compresses many theorems into one
+    line:
+    <md>\int_{\partial M}\omega=\int_M d\omega.</md>
+    But the line is not a spell. It is a precise sentence. Each hypothesis tells us how to read
+    the sentence correctly.
+  </p>
+
+  <p>This section collects the most common ways the formula is misread.</p>
+
+  <subsection xml:id="c18s9-subsec-boundary-orientation-reversed">
+    <title>Boundary orientation reversed</title>
+
+    <p>
+      Start with the simplest two-dimensional example:
+      <md>R=[0,1]\times[0,1],</md>
+      oriented by
+      <md>dx\wedge dy.</md>
+      The induced boundary orientation is counterclockwise.
+    </p>
+
+    <p>
+      Take
+      <md>\omega=x\,dy.</md>
+      Then
+      <md>d\omega=dx\wedge dy.</md>
+      So the interior integral is
+      <md>\int_R d\omega=\int_R dx\wedge dy=1.</md>
+    </p>
+
+    <p>
+      Now compute the boundary integral with the correct orientation. The bottom edge and top
+      edge have
+      <md>dy=0,</md>
+      so they contribute <m>0</m>. On the right edge,
+      <md>x=1,\qquad 0\le y\le1,</md>
+      so
+      <md>\int_{\text{right edge}}x\,dy=\int_0^1dy=1.</md>
+      On the left edge,
+      <md>x=0,</md>
+      so the contribution is <m>0</m>. Therefore
+      <md>\boxed{\int_{\partial R}\omega=1=\int_Rd\omega.}</md>
+    </p>
+
+    <p>
+      But if we walk the same square clockwise, every line integral changes sign:
+      <md>\int_{-\partial R}\omega=-1.</md>
+      The interior integral is still
+      <md>\int_R d\omega=1.</md>
+      So the false statement would be
+      <md>-1=1.</md>
+    </p>
+
+    <p>The theorem did not fail. We used the wrong boundary orientation.</p>
+
+    <md>\boxed{\text{The boundary orientation is not optional.}}</md>
+
+    <p>
+      The same warning appears for surfaces. If a disk is oriented upward, its boundary is
+      counterclockwise when viewed from above. If we keep the upward surface but walk the
+      boundary clockwise, Stokes' theorem changes sign on only one side. The two sides no longer
+      match.
+    </p>
+
+    <figure xml:id="c18s9-fig-boundary-orientation-reversed">
+      <caption>Reversing the boundary direction reverses the boundary integral.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \begin{scope}
+                \draw[fill=gray!10, thick] (0,0) rectangle (2.4,2.0);
+                \draw[-&gt;, very thick, red!65!black] (0,0) -- (1.2,0);
+                \draw[-&gt;, very thick, red!65!black] (2.4,0) -- (2.4,1.0);
+                \draw[-&gt;, very thick, red!65!black] (2.4,2.0) -- (1.2,2.0);
+                \draw[-&gt;, very thick, red!65!black] (0,2.0) -- (0,1.0);
+                \node at (1.2,-0.6) {correct};
+                \node at (1.2,-1.05) {region on the left};
+            \end{scope}
+
+            \begin{scope}[shift={(5.0,0)}]
+                \draw[fill=gray!10, thick] (0,0) rectangle (2.4,2.0);
+                \draw[-&gt;, very thick, blue!65!black] (0,0) -- (0,1.0);
+                \draw[-&gt;, very thick, blue!65!black] (0,2.0) -- (1.2,2.0);
+                \draw[-&gt;, very thick, blue!65!black] (2.4,2.0) -- (2.4,1.0);
+                \draw[-&gt;, very thick, blue!65!black] (2.4,0) -- (1.2,0);
+                \node at (1.2,-0.6) {reversed};
+                \node at (1.2,-1.05) {sign changes};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c18s9-subsec-missing-boundary-components">
+    <title>Missing boundary components around holes</title>
+
+    <p>A hole is not empty bookkeeping. It creates an inner boundary.</p>
+
+    <p>
+      Let
+      <md>A=\{(x,y):1\le x^2+y^2\le4\}</md>
+      be the annulus between the circles of radius <m>1</m> and <m>2</m>. Use the standard
+      orientation
+      <md>dx\wedge dy.</md>
+      The outer boundary is counterclockwise, and the inner boundary is clockwise.
+    </p>
+
+    <p>
+      Take the area-measuring form
+      <md>\omega=\frac12(-y\,dx+x\,dy).</md>
+      Then
+      <md>d\omega=dx\wedge dy.</md>
+      So
+      <md>\int_A d\omega=\operatorname{Area}(A)=4\pi-\pi=3\pi.</md>
+    </p>
+
+    <p>
+      Now compute the boundary integral. On a counterclockwise circle of radius <m>r</m>,
+      <md>x=r\cos t,\qquad y=r\sin t,\qquad 0\le t\le2\pi.</md>
+      Then
+      <md>dx=-r\sin t\,dt,\qquad dy=r\cos t\,dt.</md>
+      Substitute:
+      <md>
+        <mrow>\omega \amp= \frac12\left(-r\sin t(-r\sin t\,dt)+r\cos t(r\cos t\,dt)\right)</mrow>
+        <mrow>\amp= \frac12r^2\,dt.</mrow>
+      </md>
+      So a counterclockwise circle of radius <m>r</m> contributes
+      <md>\pi r^2.</md>
+    </p>
+
+    <p>
+      The outer circle contributes
+      <md>4\pi.</md>
+      The inner circle has radius <m>1</m>, but it is oriented clockwise, so it contributes
+      <md>-\pi.</md>
+      Therefore
+      <md>\boxed{\int_{\partial A}\omega=4\pi-\pi=3\pi.}</md>
+      This matches
+      <md>\int_A d\omega=3\pi.</md>
+    </p>
+
+    <p>
+      If we forgot the inner boundary, we would get
+      <md>4\pi,</md>
+      which is wrong.
+    </p>
+
+    <md>\boxed{\text{The boundary of a region with holes has all its boundary components.}}</md>
+
+    <p>
+      The same warning holds in three dimensions. A solid shell
+      <md>b\le x^2+y^2+z^2\le a^2</md>
+      has two boundary spheres. The outer sphere is oriented outward from the shell, away from
+      the origin. The inner sphere is also oriented outward from the shell, which points toward
+      the origin. That sign is exactly what makes flux contributions cancel when the field has no
+      source inside the shell.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s9-subsec-singularities-inside-region">
+    <title>Singularities inside the region</title>
+
+    <p>
+      Some forms look harmless on the boundary but fail inside. Stokes' theorem needs the form to
+      be defined on an open set containing the whole object <m>M</m>, not only on
+      <m>\partial M</m>.
+    </p>
+
+    <p>
+      Consider the <m>1</m>-form
+      <md>\alpha=\frac{-y}{x^2+y^2}\,dx+\frac{x}{x^2+y^2}\,dy.</md>
+      It is defined on
+      <md>\mathbb R^2\setminus\{(0,0)\}.</md>
+      Where it is defined,
+      <md>d\alpha=0.</md>
+    </p>
+
+    <p>
+      On the unit circle
+      <md>C:\quad x=\cos t,\qquad y=\sin t,\qquad 0\le t\le2\pi,</md>
+      we have
+      <md>dx=-\sin t\,dt,\qquad dy=\cos t\,dt.</md>
+      So
+      <md>
+        <mrow>\alpha \amp= (-\sin t)(-\sin t\,dt)+(\cos t)(\cos t\,dt)</mrow>
+        <mrow>\amp= dt.</mrow>
+      </md>
+      Therefore
+      <md>\boxed{\int_C\alpha=2\pi.}</md>
+    </p>
+
+    <p>
+      A careless argument would say:
+      <md>d\alpha=0,\qquad \text{so } \int_C\alpha=0.</md>
+      But that argument tries to use Stokes' theorem on the unit disk. The form <m>\alpha</m> is
+      not defined at the origin, and the origin lies inside the disk. The theorem is not
+      available.
+    </p>
+
+    <p>
+      If we remove a small disk around the origin, the theorem works again. The region is an
+      annulus:
+      <md>\varepsilon\le x^2+y^2\le1.</md>
+      On that annulus,
+      <md>d\alpha=0.</md>
+      The outer boundary contributes
+      <md>2\pi.</md>
+      The inner boundary is clockwise, so it contributes
+      <md>-2\pi.</md>
+      The total boundary integral is
+      <md>2\pi-2\pi=0,</md>
+      matching
+      <md>\int_{\text{annulus}}d\alpha=0.</md>
+    </p>
+
+    <p>The singularity did not disappear. We turned it into a boundary component.</p>
+
+    <md>\boxed{\text{A missing point inside can be detected by a loop around it.}}</md>
+
+    <p>
+      There is a three-dimensional version of the same warning. Let
+      <md>r=\sqrt{x^2+y^2+z^2}</md>
+      and consider the flux <m>2</m>-form
+      <md>\Psi=\frac{x}{r^3}\,dy\wedge dz+\frac{y}{r^3}\,dz\wedge dx+\frac{z}{r^3}\,dx\wedge dy.</md>
+      This is the flux form of
+      <md>\mathbf G=\frac{(x,y,z)}{r^3}.</md>
+      The field is not defined at the origin. Away from the origin,
+      <md>d\Psi=0.</md>
+    </p>
+
+    <p>
+      Yet the outward flux through a sphere of radius <m>a</m> is
+      <md>4\pi.</md>
+      It would be wrong to apply the divergence theorem to the whole ball and conclude zero flux.
+      The form is not defined at the origin. If we remove a smaller ball around the origin, the
+      outer flux <m>4\pi</m> and inner flux <m>-4\pi</m> cancel, just as they should.
+    </p>
+
+    <p>
+      A singularity inside a region behaves like a source the ordinary derivative does not see,
+      because the ordinary derivative is not defined there.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s9-subsec-smoothness-assumptions">
+    <title>Smoothness assumptions and piecewise smooth objects</title>
+
+    <p>
+      The theorem also asks for the form to be smooth enough. In this book, the safe condition
+      is:
+      <md>\omega\text{ has }C^1\text{ coefficients}</md>
+      on an open set containing <m>M</m>.
+    </p>
+
+    <p>A jump can hide an internal boundary.</p>
+
+    <p>
+      Let
+      <md>R=[-1,1]\times[-1,1],</md>
+      and define
+      <md>H(y)=\begin{cases}0, &amp; y&lt;0,\\1, &amp; y\ge 0.\end{cases}</md>
+      Consider the <m>1</m>-form
+      <md>\omega=H(y)\,dx.</md>
+      This form is not continuous across the line
+      <md>y=0.</md>
+      It is certainly not <m>C^1</m>.
+    </p>
+
+    <p>
+      If we ignore the jump and look only on the two open halves of the square, then <m>H</m> is
+      constant on each half, so a careless computation would say
+      <md>d\omega=0.</md>
+      That would suggest
+      <md>\int_{\partial R}\omega=0.</md>
+    </p>
+
+    <p>
+      But compute the boundary integral directly. On the bottom edge, <m>y=-1</m>, so
+      <md>H(y)=0,</md>
+      and the contribution is <m>0</m>. On the right and left edges,
+      <md>dx=0,</md>
+      so the contribution is <m>0</m>. On the top edge, <m>y=1</m>, and the positive boundary
+      orientation travels from
+      <md>x=1\quad\text{to}\quad x=-1.</md>
+      There
+      <md>H(y)=1,</md>
+      so the top contributes
+      <md>\int_1^{-1}dx=-2.</md>
+      Thus
+      <md>\boxed{\int_{\partial R}\omega=-2.}</md>
+    </p>
+
+    <p>
+      The jump along <m>y=0</m> is hiding an internal edge. The <m>C^1</m> theorem is not
+      designed to ignore that edge. More advanced versions of Stokes' theorem can handle jumps,
+      but then the jump contributes its own term.
+    </p>
+
+    <p>Smoothness of the boundary is a separate issue.</p>
+
+    <p>
+      A rectangle is allowed even though it has corners. Its boundary is made of finitely many
+      smooth edges. A box is allowed even though it has edges and corners. Its boundary is made
+      of finitely many smooth faces. That is what piecewise smooth means.
+    </p>
+
+    <p>Corners do not create extra terms. Interior shared edges cancel.</p>
+
+    <p>
+      For example, split the rectangle
+      <md>[0,2]\times[0,1]</md>
+      into two rectangles:
+      <md>R_1=[0,1]\times[0,1],\qquad R_2=[1,2]\times[0,1].</md>
+      The shared edge is
+      <md>x=1,\qquad 0\le y\le1.</md>
+      As part of <m>\partial R_1</m>, that edge is traveled upward. As part of
+      <m>\partial R_2</m>, the same edge is traveled downward. The two line integrals cancel for
+      every <m>1</m>-form:
+      <md>\int_{\text{shared edge from }R_1}\omega+\int_{\text{shared edge from }R_2}\omega=0.</md>
+      Only the outside boundary survives.
+    </p>
+
+    <p>So the warning is not <q>corners are bad.</q> The warning is more precise:</p>
+
+    <md>\boxed{\begin{array}{c}
+\text{finite piecewise smooth geometry is allowed,}\\[1mm]
+\text{but jumps, singularities, and wild boundaries are not covered by the basic theorem.}
+\end{array}}</md>
+  </subsection>
+
+  <subsection xml:id="c18s9-subsec-the-checklist">
+    <title>The checklist</title>
+
+    <p>
+      Before using
+      <md>\int_{\partial M}\omega=\int_M d\omega,</md>
+      check the grammar.
+    </p>
+
+    <md>\begin{array}{c|l}
+\text{Check} \amp \text{Question} \\ \hline
+\text{Degree} \amp
+\omega\text{ has degree }\dim M-1\text{?}\\[1mm]
+\text{Boundary} \amp
+\text{Is every boundary component included?}\\[1mm]
+\text{Orientation} \amp
+\text{Does }\partial M\text{ have the induced orientation?}\\[1mm]
+\text{Domain} \amp
+\omega\text{ is defined on an open set containing }M\text{?}\\[1mm]
+\text{Smoothness} \amp
+\omega\text{ has }C^1\text{ coefficients where needed?}\\[1mm]
+\text{Geometry} \amp
+M\text{ and }\partial M\text{ are compact and piecewise smooth?}
+\end{array}</md>
+
+    <p>
+      When one of these checks fails, the formula may still have a more advanced version. But the
+      missing condition must be paid for. A reversed orientation pays with a minus sign. A
+      missing hole pays with an extra boundary component. A singularity pays by acting like a
+      hidden source. A jump pays by creating an internal edge or sheet.
+    </p>
+
+    <p>
+      This is why the generalized Stokes theorem is both simple and strict. It gives one sentence
+      for the Fundamental Theorem of Calculus, Green's theorem, Stokes' theorem, and the
+      divergence theorem. But the sentence only works when every word is read correctly.
+    </p>
+
+    <p>
+      The chapter review will turn this into practice: translate the old vector formulas into
+      forms, choose the right boundary, and decide which side of the theorem is easier to
+      compute. After that, the same boundary idea begins to move in time. A conserved quantity
+      changes inside a region only because it flows through the boundary. That is where Stokes'
+      theorem becomes the language of conservation laws.
+    </p>
+  </subsection>
+</section>

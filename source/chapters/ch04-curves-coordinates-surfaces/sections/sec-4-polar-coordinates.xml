@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch04-curves-coordinates-surfaces.tex, Section 2.
+     Status: CONVERTED. -->
+<section xml:id="sec-4-polar-coordinates" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Polar coordinates</title>
+
+  <p>
+    The circle in <xref ref="sec-4-parametric-curves"/> kept producing the same pair of
+    functions:
+    <md>x=3\cos t,\qquad y=3\sin t.</md>
+    This was not an accident. Rectangular coordinates describe a point by its shadows on two
+    perpendicular axes. For a point moving around a center, another description is often more
+    natural:
+    <md>\text{How far from the center?}\qquad\text{At what angle?}</md>
+    That is polar coordinates.
+  </p>
+
+  <subsection xml:id="c4s2-subsec-plane-distance-angle">
+    <title>The plane described by distance and angle</title>
+
+    <p>
+      A radar screen tracks a small boat. The boat is <m>5</m> km from the radar station, in a
+      direction <m>30^\circ</m> counterclockwise from east.
+    </p>
+
+    <p>
+      In rectangular coordinates, the position is
+      <md>\left(5\cos 30^\circ,5\sin 30^\circ\right)=\left(\frac{5\sqrt3}{2},\frac52\right).</md>
+      But the radar description itself is shorter:
+      <md>(r,\theta)=\left(5,\frac{\pi}{6}\right).</md>
+      Here <m>r</m> is distance from the origin, and <m>\theta</m> is angle from the positive
+      <m>x</m>-axis.
+    </p>
+
+    <figure xml:id="c4s2-fig-radar-polar">
+      <caption>Polar coordinates describe a point by distance from the origin and angle from the positive <m>x</m>-axis.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (6.5,0) node[right] {east};
+            \draw[-&gt;] (0,-0.4) -- (0,4.2) node[above] {north};
+
+            \draw[gray!20, step=1] (0,0) grid (6,4);
+
+            \draw[-&gt;, very thick] (0,0) -- ({5*cos(30)}, {5*sin(30)})
+                node[midway, above left] {\(r=5\)};
+
+            \draw[dashed] ({5*cos(30)},0) -- ({5*cos(30)}, {5*sin(30)});
+            \draw[dashed] (0,{5*sin(30)}) -- ({5*cos(30)}, {5*sin(30)});
+
+            \draw[thick] (1.2,0) arc[start angle=0,end angle=30,radius=1.2];
+            \node at (1.6,0.35) {\(\theta=\pi/6\)};
+
+            \fill ({5*cos(30)}, {5*sin(30)}) circle (2.5pt);
+            \node[above right] at ({5*cos(30)}, {5*sin(30)})
+                {\(\left(5,\pi/6\right)\)};
+
+            \fill (0,0) circle (2pt);
+            \node[below left] at (0,0) {radar};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <definition xml:id="c4s2-def-polar-coordinates">
+      <title>Polar coordinates</title>
+      <statement>
+        <p>
+          The <term>polar coordinates</term> of a point in the plane are written
+          <md>(r,\theta).</md>
+          The number <m>r</m> is the distance from the origin, and <m>\theta</m> is the angle
+          measured counterclockwise from the positive <m>x</m>-axis.
+        </p>
+        <p>
+          The positive <m>x</m>-axis is called the <term>polar axis</term>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The origin is called the <term>pole</term>. When <m>r=0</m>, the angle does not matter. All
+      of these describe the same point:
+      <md>(0,0),\qquad\left(0,\frac{\pi}{3}\right),\qquad(0,100).</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s2-subsec-converting-polar-cartesian">
+    <title>Converting between polar and Cartesian coordinates</title>
+
+    <p>
+      The conversion formulas come directly from right-triangle trigonometry:
+      <md>\boxed{x=r\cos\theta,\qquad y=r\sin\theta.}</md>
+      Also,
+      <md>\boxed{r^2=x^2+y^2.}</md>
+      When <m>x\neq0</m>,
+      <md>\tan\theta=\frac{y}{x},</md>
+      but this last formula must be used carefully because tangent does not determine the
+      quadrant by itself.
+    </p>
+
+    <example xml:id="c4s2-ex-polar-to-cartesian">
+      <title>From polar to Cartesian</title>
+      <statement>
+        <p>
+          Convert
+          <md>(r,\theta)=\left(4,\frac{\pi}{3}\right)</md>
+          to Cartesian coordinates.
+        </p>
+        <p>
+          Using
+          <md>x=r\cos\theta,\qquad y=r\sin\theta,</md>
+          we get
+          <md>x=4\cos\frac{\pi}{3}=4\cdot\frac12=2,</md>
+          and
+          <md>y=4\sin\frac{\pi}{3}=4\cdot\frac{\sqrt3}{2}=2\sqrt3.</md>
+          So
+          <md>\left(4,\frac{\pi}{3}\right)=(2,2\sqrt3)</md>
+          in Cartesian coordinates.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c4s2-ex-cartesian-to-polar">
+      <title>From Cartesian to polar</title>
+      <statement>
+        <p>
+          Find polar coordinates for
+          <md>(-3,3).</md>
+          First,
+          <md>r=\sqrt{(-3)^2+3^2}=\sqrt{18}=3\sqrt2.</md>
+          The point lies in the second quadrant. The reference angle is <m>\pi/4</m>, so one
+          possible angle is
+          <md>\theta=\frac{3\pi}{4}.</md>
+          Thus one polar description is
+          <md>\left(3\sqrt2,\frac{3\pi}{4}\right).</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The quadrant matters. The points
+      <md>(1,1)\qquad\text{and}\qquad(-1,-1)</md>
+      both satisfy
+      <md>\frac{y}{x}=1.</md>
+      So both have
+      <md>\tan\theta=1.</md>
+      But their angles are different:
+      <md>(1,1) \text{ has angle } \frac{\pi}{4},</md>
+      while
+      <md>(-1,-1) \text{ has angle } \frac{5\pi}{4}.</md>
+      The tangent ratio alone cannot see the quadrant.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s2-subsec-polar-not-unique">
+    <title>Polar coordinates are not unique</title>
+
+    <p>
+      Rectangular coordinates are unique: a point has exactly one pair <m>(x,y)</m>. Polar
+      coordinates are different.
+    </p>
+
+    <p>
+      The angle can always be changed by a full turn:
+      <md>(r,\theta)=(r,\theta+2\pi)=(r,\theta-2\pi).</md>
+      For example,
+      <md>\left(5,\frac{\pi}{6}\right)</md>
+      and
+      <md>\left(5,\frac{13\pi}{6}\right)</md>
+      represent the same point.
+    </p>
+
+    <p>
+      There is another source of non-uniqueness. If we allow negative <m>r</m>, then
+      <md>(-r,\theta)</md>
+      means: go distance <m>r</m> in the opposite direction. Equivalently,
+      <md>\boxed{(-r,\theta)=(r,\theta+\pi).}</md>
+      For example,
+      <md>\left(-2,\frac{\pi}{4}\right)=\left(2,\frac{5\pi}{4}\right).</md>
+    </p>
+
+    <example xml:id="c4s2-ex-three-names-one-point">
+      <title>Three names for one point</title>
+      <statement>
+        <p>
+          The point with polar coordinates
+          <md>\left(3,\frac{\pi}{3}\right)</md>
+          also has coordinates
+          <md>\left(3,\frac{7\pi}{3}\right)</md>
+          because adding <m>2\pi</m> does not change the direction.
+        </p>
+        <p>
+          It also has coordinates
+          <md>\left(-3,\frac{4\pi}{3}\right)</md>
+          because a negative radius reverses the direction by <m>\pi</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This non-uniqueness is not a mistake. It is part of what makes polar equations flexible.
+      Some polar curves are much simpler if negative values of <m>r</m> are allowed.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s2-subsec-polar-graphs-symmetries">
+    <title>Polar graphs and their symmetries</title>
+
+    <p>
+      A polar equation relates <m>r</m> and <m>\theta</m>. The most common kind has the form
+      <md>r=f(\theta).</md>
+      To graph it, choose an angle <m>\theta</m>, compute <m>r</m>, and plot the point
+      <md>(r,\theta).</md>
+    </p>
+
+    <example xml:id="c4s2-ex-equation-r-equals-3">
+      <title>The equation <m>r=3</m></title>
+      <statement>
+        <p>
+          The polar equation
+          <md>r=3</md>
+          means that every point is distance <m>3</m> from the origin. The angle is free.
+          Therefore the graph is the circle
+          <md>x^2+y^2=9.</md>
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c4s2-ex-equation-theta-equals-pi-4">
+      <title>The equation <m>\theta=\pi/4</m></title>
+      <statement>
+        <p>
+          The polar equation
+          <md>\theta=\frac{\pi}{4}</md>
+          means that the direction is fixed and the distance may vary. The graph is the line
+          through the origin making angle <m>\pi/4</m> with the positive <m>x</m>-axis.
+        </p>
+        <p>
+          If we allow negative <m>r</m>, then the same equation gives the whole line. If we
+          require <m>r\ge0</m>, it gives only one ray.
+        </p>
+      </statement>
+    </example>
+
+    <p>Symmetry can often be read from the equation before drawing the whole curve.</p>
+
+    <table xml:id="c4s2-tab-polar-symmetries">
+      <title>Polar symmetry tests.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Polar behavior</cell>
+          <cell>Geometric symmetry</cell>
+        </row>
+        <row>
+          <cell><m>r(-\theta)=r(\theta)</m></cell>
+          <cell>symmetry across the <m>x</m>-axis</cell>
+        </row>
+        <row>
+          <cell><m>r(\pi-\theta)=r(\theta)</m></cell>
+          <cell>symmetry across the <m>y</m>-axis</cell>
+        </row>
+        <row>
+          <cell><m>r(\theta+\pi)=r(\theta)</m></cell>
+          <cell>symmetry through the origin</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <example xml:id="c4s2-ex-symmetric-curve">
+      <title>A symmetric curve</title>
+      <statement>
+        <p>
+          The curve
+          <md>r=2+\cos\theta</md>
+          is symmetric across the <m>x</m>-axis because
+          <md>r(-\theta)=2+\cos(-\theta)=2+\cos\theta=r(\theta).</md>
+          So once we know the upper half of the graph, the lower half is its mirror image.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      These tests are helpful, but they are not a substitute for understanding the curve. Polar
+      coordinates can describe the same point in more than one way, especially when negative
+      values of <m>r</m> occur. Symmetry tests are guides, not laws to follow blindly.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s2-subsec-circles-spirals-roses">
+    <title>Circles, spirals, and roses</title>
+
+    <p>
+      Polar coordinates are especially good for curves built from distance and angle.
+    </p>
+
+    <example xml:id="c4s2-ex-circle-not-centered-origin">
+      <title>A circle not centered at the origin</title>
+      <statement>
+        <p>
+          Consider
+          <md>r=4\cos\theta.</md>
+          Multiply both sides by <m>r</m>:
+          <md>r^2=4r\cos\theta.</md>
+          Using
+          <md>r^2=x^2+y^2,\qquad r\cos\theta=x,</md>
+          we get
+          <md>x^2+y^2=4x.</md>
+          Complete the square:
+          <md>x^2-4x+y^2=0,</md>
+          so
+          <md>(x-2)^2+y^2=4.</md>
+          This is a circle centered at <m>(2,0)</m> with radius <m>2</m>.
+        </p>
+        <figure xml:id="c4s2-fig-circle-4costheta">
+          <caption>The polar equation <m>r=4\cos\theta</m> is a circle tangent to the origin.</caption>
+          <image width="60%">
+            <latex-image>
+            \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+                \draw[-&gt;] (-1,0) -- (5,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-2.7) -- (0,2.7) node[above] {\(y\)};
+
+                \draw[gray!20, step=1] (-0.5,-2.5) grid (4.5,2.5);
+
+                \draw[thick] (2,0) circle (2);
+
+                \fill (2,0) circle (2pt);
+                \node[below] at (2,0) {\((2,0)\)};
+
+                \fill (0,0) circle (2pt);
+                \node[below left] at (0,0) {\(0\)};
+
+                \node at (2,-3.2) {\(r=4\cos\theta\)};
+            \end{tikzpicture}
+            </latex-image>
+          </image>
+        </figure>
+      </statement>
+    </example>
+
+    <p>
+      This example shows why polar equations can be surprising. A simple expression in <m>r</m>
+      and <m>\theta</m> may hide a familiar Cartesian curve.
+    </p>
+
+    <example xml:id="c4s2-ex-archimedean-spiral">
+      <title>An Archimedean spiral</title>
+      <statement>
+        <p>
+          The polar equation
+          <md>r=\frac{\theta}{4},\qquad 0\le\theta\le6\pi,</md>
+          describes a point whose distance from the origin grows steadily as the angle turns.
+          The result is a spiral.
+        </p>
+        <figure xml:id="c4s2-fig-archimedean-spiral">
+          <caption>A spiral appears when the distance from the origin changes with the angle.</caption>
+          <image width="60%">
+            <latex-image>
+            \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+                \draw[-&gt;] (-5,0) -- (5.4,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-5) -- (0,5.4) node[above] {\(y\)};
+
+                \draw[gray!15, step=1] (-4.8,-4.8) grid (4.8,4.8);
+
+                \draw[thick, domain=0:18.85, samples=300, smooth, variable=\theta]
+                    plot ({(\theta/4)*cos(\theta r)}, {(\theta/4)*sin(\theta r)});
+
+                \node at (0,-5.8) {\(r=\theta/4\)};
+            \end{tikzpicture}
+            </latex-image>
+          </image>
+        </figure>
+      </statement>
+    </example>
+
+    <example xml:id="c4s2-ex-rose-curve">
+      <title>A rose curve</title>
+      <statement>
+        <p>
+          The polar equation
+          <md>r=2\cos(3\theta)</md>
+          produces a three-petaled rose.
+        </p>
+        <p>
+          When
+          <md>\cos(3\theta)&gt;0,</md>
+          the radius is positive. When
+          <md>\cos(3\theta)&lt;0,</md>
+          the radius is negative, so the point is plotted in the opposite direction. This sign
+          change is what helps create petals.
+        </p>
+        <figure xml:id="c4s2-fig-rose-curve">
+          <caption>A rose curve uses negative radius values as part of the drawing.</caption>
+          <image width="60%">
+            <latex-image>
+            \begin{tikzpicture}[scale=1.0, &gt;=stealth]
+                \draw[-&gt;] (-2.6,0) -- (2.9,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-2.6) -- (0,2.9) node[above] {\(y\)};
+
+                \draw[gray!15, step=0.5] (-2.5,-2.5) grid (2.5,2.5);
+
+                \draw[thick, domain=0:6.283, samples=400, smooth, variable=\theta]
+                    plot ({(2*cos(3*\theta r))*cos(\theta r)},
+                          {(2*cos(3*\theta r))*sin(\theta r)});
+
+                \node at (0,-3.25) {\(r=2\cos(3\theta)\)};
+            \end{tikzpicture}
+            </latex-image>
+          </image>
+        </figure>
+      </statement>
+    </example>
+
+    <p>
+      Polar coordinates are not only a way to draw pretty curves. They are a coordinate change:
+      <md>(r,\theta)\longmapsto (r\cos\theta,r\sin\theta).</md>
+      This map bends a rectangular grid in the <m>(r,\theta)</m>-plane into circles and rays in
+      the <m>(x,y)</m>-plane.
+    </p>
+
+    <figure xml:id="c4s2-fig-polar-grid-map">
+      <caption>The polar coordinate map turns a rectangular coordinate grid into a curved grid.</caption>
+      <image width="90%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \begin{scope}
+                % Left grid axes
+                \draw[-&gt;] (0,0) -- (4.2,0) node[right] {\(r\)};
+                \draw[-&gt;] (0,0) -- (0,3.2) node[above] {\(\theta\)};
+
+                % Vertical lines (constant r) every 0.5 up to 3.5
+                \foreach \r in {0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5}
+                    \draw[gray!45] (\r,0) -- (\r,{150*pi/180});
+
+                % Horizontal lines (constant theta) every 15 degrees exactly in radians
+                \foreach \ang in {15, 30, 45, 60, 75, 90, 105, 120, 135, 150}
+                    \draw[gray!45] (0,{\ang*pi/180}) -- (3.5,{\ang*pi/180});
+
+                \node at (1.75,-0.7) {rectangles in \((r,\theta)\)};
+            \end{scope}
+
+            % Shifted further right to prevent overlap
+            \begin{scope}[shift={(9.5,1.2)}]
+                % Right grid axes
+                \draw[-&gt;] (-4.0,0) -- (4.2,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.4) -- (0,4.2) node[above] {\(y\)};
+
+                % Arcs (constant r) properly centered at origin by starting at (\r, 0)
+                \foreach \r in {0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5}
+                    \draw[gray!45] (\r,0) arc[start angle=0, end angle=150, radius=\r];
+
+                % Rays (constant theta) every 15 degrees, capped at outer radius 3.5
+                \foreach \ang in {0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150}
+                    \draw[gray!45] (0,0) -- (\ang:3.5);
+
+                \node at (0,-1.1) {circles and rays in \((x,y)\)};
+            \end{scope}
+
+            % Mapping arrow
+            \draw[-&gt;, thick] (4.5, 1.5) -- (6.2, 1.5)
+                node[midway, above] {\((r,\theta)\mapsto(r\cos\theta,r\sin\theta)\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This curved grid carries a hidden warning. A small change <m>\Delta\theta</m> sweeps a
+      short arc near the origin but a longer arc farther away. So a tiny polar rectangle with
+      side lengths <m>\Delta r</m> and <m>\Delta\theta</m> does not have area
+      <md>\Delta r\,\Delta\theta.</md>
+      The angular side has length about
+      <md>r\,\Delta\theta.</md>
+      That factor <m>r</m> will return later in integrals as
+      <md>r\,dr\,d\theta,</md>
+      and in the language of forms as the coefficient in
+      <md>dx\wedge dy=r\,dr\wedge d\theta.</md>
+    </p>
+
+    <p>
+      Polar coordinates solve circular problems in the plane. But a pipe has height, a sphere
+      has latitude as well as longitude, and a planet is better described by distance and two
+      angles than by <m>x,y,z</m>. The next step is to let polar coordinates grow upward into
+      space: first into cylindrical coordinates, then into spherical coordinates.
+    </p>
+  </subsection>
+</section>

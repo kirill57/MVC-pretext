@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch13-vector-fields-line-integrals.tex, Section 13.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-13-conservative-vector-fields-and-exact-1-forms" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Conservative vector fields and exact <m>1</m>-forms</title>
+
+  <p>
+    <xref ref="sec-13-differential-1-forms"/> ended with a small mystery. The form
+    <md>y\,dx+x\,dy</md>
+    quietly became an endpoint difference, because
+    <md>y\,dx+x\,dy=d(xy).</md>
+    But the angle form
+    <md>\frac{-y\,dx+x\,dy}{x^2+y^2}</md>
+    looked like it wanted to be <m>d\theta</m>, while its integral around a circle was
+    not zero. So the question is now unavoidable:
+    <md>\text{When is a line integral really just an endpoint difference?}</md>
+  </p>
+
+  <subsection xml:id="subsec-c13s5-potential-functions">
+    <title>Potential functions</title>
+
+    <p>
+      Start with a force field on a factory floor:
+      <md>\mathbf F(x,y)=(y,x).</md>
+      Its work form is
+      <md>\omega=\mathbf F\cdot d\mathbf r=y\,dx+x\,dy.</md>
+    </p>
+
+    <p>
+      Move a cart from
+      <md>A=(0,0)</md>
+      to
+      <md>B=(2,1).</md>
+      First take the straight path
+      <md>\mathbf r(t)=(2t,t), \qquad 0\le t\le1.</md>
+      Along this path,
+      <md>x=2t,\qquad y=t,</md>
+      so
+      <md>dx=2\,dt,\qquad dy=dt.</md>
+      Therefore
+      <md>
+        <mrow>\omega \amp= y\,dx+x\,dy</mrow>
+        <mrow>\amp= t(2\,dt)+(2t)(dt)</mrow>
+        <mrow>\amp= 4t\,dt.</mrow>
+      </md>
+      The work is
+      <md>\int_0^1 4t\,dt=2.</md>
+    </p>
+
+    <p>
+      Now take a broken path: first go east from <m>(0,0)</m> to <m>(2,0)</m>, then go
+      north from <m>(2,0)</m> to <m>(2,1)</m>.
+    </p>
+
+    <p>
+      On the eastward segment,
+      <md>y=0,\qquad dy=0,</md>
+      so
+      <md>y\,dx+x\,dy=0.</md>
+      On the northward segment,
+      <md>x=2,\qquad dx=0,</md>
+      so
+      <md>y\,dx+x\,dy=2\,dy.</md>
+      Thus
+      <md>\int_0^1 2\,dy=2.</md>
+      Both paths give the same work.
+    </p>
+
+    <figure xml:id="fig-c13s5-two-paths">
+      <caption>For the form <m>y\,dx+x\,dy</m>, these two paths from <m>A</m> to <m>B</m>
+      give the same integral.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=1.0, &gt;=stealth]
+            \draw[-&gt;] (-0.3,0) -- (3.0,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.3) -- (0,2.2) node[above] {\(y\)};
+            \draw[gray!20, step=1] (0,0) grid (2.5,1.7);
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (2,1);
+            \coordinate (M) at (2,0);
+            \draw[very thick, blue!65!black] (A) -- (B);
+            \draw[-&gt;, very thick, blue!65!black] (0.85,0.425) -- (1.15,0.575);
+            \draw[very thick, red!65!black] (A) -- (M) -- (B);
+            \draw[-&gt;, very thick, red!65!black] (0.8,0) -- (1.2,0);
+            \draw[-&gt;, very thick, red!65!black] (2,0.35) -- (2,0.65);
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (M) circle (2pt);
+            \node[below left] at (A) {\(A\)};
+            \node[above right] at (B) {\(B\)};
+            \node[below] at (M) {\((2,0)\)};
+            \node[blue!65!black] at (1.0,0.85) {straight};
+            \node[red!65!black] at (2.55,0.45) {broken};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The reason is not the shape of the paths. The reason is that
+      <md>y\,dx+x\,dy=d(xy).</md>
+      Let
+      <md>\phi(x,y)=xy.</md>
+      Then
+      <md>d\phi=y\,dx+x\,dy.</md>
+      So the integral becomes
+      <md>\int_C d\phi.</md>
+      It measures the change in <m>\phi</m> along the path:
+      <md>\phi(2,1)-\phi(0,0)=2-0=2.</md>
+    </p>
+
+    <p>The function <m>\phi</m> is called a potential function.</p>
+
+    <definition xml:id="def-c13s5-potential-conservative-exact">
+      <title>Potential function, conservative field, exact form</title>
+      <statement>
+        <p>Let <m>D</m> be a region in the plane or in space.</p>
+        <p>
+          A scalar function <m>\phi</m> is called a <term>potential function</term> for a
+          vector field
+          <md>\mathbf F</md>
+          on <m>D</m> if
+          <md>\boxed{ \mathbf F=\nabla \phi }</md>
+          on <m>D</m>. In that case, <m>\mathbf F</m> is called a
+          <term>conservative vector field</term>.
+        </p>
+        <p>
+          A <m>1</m>-form
+          <md>\omega=P\,dx+Q\,dy</md>
+          or
+          <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+          is called <term>exact</term> on <m>D</m> if there is a function <m>\phi</m> on
+          <m>D</m> such that
+          <md>\boxed{ \omega=d\phi. }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The two languages are the same in Cartesian coordinates. If
+      <md>\mathbf F=(P,Q,R),</md>
+      then
+      <md>\mathbf F=\nabla\phi</md>
+      means
+      <md>P=\phi_x,\qquad Q=\phi_y,\qquad R=\phi_z.</md>
+      The associated work form is
+      <md>P\,dx+Q\,dy+R\,dz=d\phi.</md>
+    </p>
+
+    <p>
+      In physics, one often writes a conservative force as
+      <md>\mathbf F=-\nabla U,</md>
+      where <m>U</m> is potential energy. The minus sign is a convention: the force
+      points downhill in potential energy. In this book, when we say a vector field has
+      a potential <m>\phi</m>, we mean
+      <md>\mathbf F=\nabla\phi.</md>
+    </p>
+
+    <example xml:id="ex-c13s5-potential-in-space">
+      <title>A potential in space</title>
+      <statement>
+        <p>
+          Let
+          <md>\phi(x,y,z)=xz+y^2.</md>
+          Then
+          <md>d\phi=z\,dx+2y\,dy+x\,dz.</md>
+          So the vector field
+          <md>\mathbf F(x,y,z)=(z,2y,x)</md>
+          is conservative, with potential <m>\phi</m>.
+        </p>
+        <p>
+          If a particle moves from
+          <md>A=(1,2,0)</md>
+          to
+          <md>B=(3,1,4),</md>
+          then the work done by <m>\mathbf F</m> along any path for which the integral is
+          defined is
+          <md>
+            <mrow>\phi(B)-\phi(A) \amp= \bigl(3\cdot4+1^2\bigr)-\bigl(1\cdot0+2^2\bigr)</mrow>
+            <mrow>\amp= 13-4</mrow>
+            <mrow>\amp= 9.</mrow>
+          </md>
+          The path does not have to be known.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="subsec-c13s5-fundamental-theorem">
+    <title>The fundamental theorem for line integrals</title>
+
+    <p>
+      The last example is the line-integral version of the Fundamental Theorem of
+      Calculus.
+    </p>
+
+    <p>
+      In one variable,
+      <md>\int_a^b f'(x)\,dx=f(b)-f(a).</md>
+      For a curve, the derivative <m>f'(x)\,dx</m> becomes the differential
+      <md>d\phi.</md>
+      The interval endpoints <m>a,b</m> become the initial and final points of the curve.
+    </p>
+
+    <theorem xml:id="thm-c13s5-ftli">
+      <title>Fundamental theorem for line integrals</title>
+      <statement>
+        <p>
+          Let <m>\phi</m> be a <m>C^1</m> function on a region <m>D</m>, and let <m>C</m>
+          be a piecewise smooth oriented curve in <m>D</m>, starting at <m>A</m> and
+          ending at <m>B</m>. Then
+          <md>\boxed{ \int_C d\phi=\phi(B)-\phi(A). }</md>
+          Equivalently, if
+          <md>\mathbf F=\nabla\phi,</md>
+          then
+          <md>\boxed{ \int_C \mathbf F\cdot d\mathbf r=\phi(B)-\phi(A). }</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          First suppose <m>C</m> is smoothly parametrized by
+          <md>\mathbf r(t), \qquad a\le t\le b,</md>
+          with
+          <md>\mathbf r(a)=A,\qquad \mathbf r(b)=B.</md>
+          By the chain rule from <xref ref="sec-8-the-chain-rule-along-a-curve"/>,
+          <md>\frac{d}{dt}\phi(\mathbf r(t)) = d\phi_{\mathbf r(t)}(\mathbf r'(t)).</md>
+          In coordinates, this is
+          <md>\frac{d}{dt}\phi(\mathbf r(t)) = \nabla\phi(\mathbf r(t))\cdot\mathbf r'(t).</md>
+          Therefore
+          <md>
+            <mrow>\int_C d\phi \amp= \int_a^b d\phi_{\mathbf r(t)}(\mathbf r'(t))\,dt</mrow>
+            <mrow>\amp= \int_a^b \frac{d}{dt}\phi(\mathbf r(t))\,dt</mrow>
+            <mrow>\amp= \phi(\mathbf r(b))-\phi(\mathbf r(a))</mrow>
+            <mrow>\amp= \phi(B)-\phi(A).</mrow>
+          </md>
+          If <m>C</m> is piecewise smooth, apply this argument on each smooth piece. The
+          endpoint values at the internal break points cancel.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The theorem has real hypotheses.</p>
+
+    <p>
+      First, the form must actually be exact. The form
+      <md>\eta=-y\,dx+x\,dy</md>
+      is not exact on the plane. Around the unit circle,
+      <md>\mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi,</md>
+      we get
+      <md>\eta=dt.</md>
+      Thus
+      <md>\oint_C \eta=2\pi.</md>
+      If <m>\eta=d\phi</m> on the whole plane, the fundamental theorem would force every
+      closed curve integral to be <m>0</m>. This one is not.
+    </p>
+
+    <p>
+      Second, the curve must stay inside the domain where the potential is defined. For
+      example,
+      <md>d(\ln x)=\frac1x\,dx</md>
+      on the half-plane <m>x\gt 0</m>. The formula cannot be used on a curve that crosses
+      the line <m>x=0</m>, because neither <m>\ln x</m> nor <m>\frac1x\,dx</m> is defined
+      there. A potential is not only a formula. It is a formula on a domain.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-c13s5-path-independence">
+    <title>Path independence</title>
+
+    <p>
+      The factory-floor example showed two paths with the same endpoints and the same
+      integral. Exact forms always behave that way.
+    </p>
+
+    <definition xml:id="def-c13s5-path-independence">
+      <title>Path independence</title>
+      <statement>
+        <p>
+          A line integral
+          <md>\int_C \omega</md>
+          is called <term>path independent</term> in a region <m>D</m> if its value
+          depends only on the initial and final points of <m>C</m>, not on the particular
+          path connecting them.
+        </p>
+      </statement>
+    </definition>
+
+    <theorem xml:id="thm-c13s5-exact-path-independent">
+      <title>Exact forms are path independent</title>
+      <statement>
+        <p>
+          If
+          <md>\omega=d\phi</md>
+          on a region <m>D</m>, then
+          <md>\int_C \omega</md>
+          is path independent on <m>D</m>. In fact, for every piecewise smooth curve
+          <m>C</m> from <m>A</m> to <m>B</m>,
+          <md>\boxed{ \int_C \omega=\phi(B)-\phi(A). }</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      There is also a converse. It is one of the best reasons to care about path
+      independence.
+    </p>
+
+    <theorem xml:id="thm-c13s5-path-independence-potential">
+      <title>Path independence produces a potential</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=P\,dx+Q\,dy</md>
+          be a continuous <m>1</m>-form on an open path-connected region <m>D</m> in the
+          plane. Suppose the integral of <m>\omega</m> is path independent in <m>D</m>.
+          Choose a base point <m>A\in D</m>, and define
+          <md>\boxed{ \phi(X)=\int_A^X \omega, }</md>
+          where the integral is taken along any piecewise smooth path in <m>D</m> from
+          <m>A</m> to <m>X</m>. Then
+          <md>\boxed{ d\phi=\omega. }</md>
+          So <m>\omega</m> is exact.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Path independence makes <m>\phi(X)</m> well-defined. The value does not depend
+          on the path chosen from <m>A</m> to <m>X</m>.
+        </p>
+        <p>
+          Let <m>X=(x,y)</m>. To compute <m>\phi_x(x,y)</m>, compare <m>\phi(x+h,y)</m>
+          and <m>\phi(x,y)</m>. Because of path independence, we may go from <m>(x,y)</m>
+          to <m>(x+h,y)</m> along the horizontal segment. Along that segment,
+          <md>dy=0,</md>
+          so
+          <md>\omega=P\,dx.</md>
+          Therefore
+          <md>\phi(x+h,y)-\phi(x,y) = \int_x^{x+h}P(s,y)\,ds.</md>
+          Divide by <m>h</m> and let <m>h\to0</m>. Since <m>P</m> is continuous,
+          <md>\phi_x(x,y)=P(x,y).</md>
+          Similarly, moving along a small vertical segment gives
+          <md>\phi_y(x,y)=Q(x,y).</md>
+          Thus
+          <md>d\phi=P\,dx+Q\,dy=\omega.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The same idea works in space:
+      <md>\omega=P\,dx+Q\,dy+R\,dz.</md>
+      If the integral is path independent, define
+      <md>\phi(X)=\int_A^X\omega.</md>
+      Small coordinate segments show
+      <md>\phi_x=P,\qquad \phi_y=Q,\qquad \phi_z=R.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-c13s5-closed-curves">
+    <title>Closed curves and zero work</title>
+
+    <p>
+      A path-independent integral has no reason to accumulate anything around a closed
+      loop. The beginning and the end are the same point.
+    </p>
+
+    <p>
+      If <m>C</m> is closed and
+      <md>\omega=d\phi,</md>
+      then
+      <md>\oint_C \omega=\phi(A)-\phi(A)=0.</md>
+    </p>
+
+    <theorem xml:id="thm-c13s5-equivalent-conditions">
+      <title>Equivalent ways to recognize path independence</title>
+      <statement>
+        <p>
+          Let <m>\omega</m> be a continuous <m>1</m>-form on an open path-connected region
+          <m>D</m>. Then the following statements are equivalent:
+          <md>\begin{array}{ll}
+1. \amp \displaystyle \int_C\omega \text{ is path independent in }D.\\[2mm]
+2. \amp \displaystyle \oint_C\omega=0 \text{ for every closed piecewise smooth curve }C
+      \text{ in }D.\\[2mm]
+3. \amp \omega \text{ is exact on }D.
+\end{array}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          If <m>\omega=d\phi</m>, then the fundamental theorem for line integrals gives
+          path independence. So <m>3\Rightarrow1</m>.
+        </p>
+        <p>
+          If the integral is path independent, then any closed curve starts and ends at
+          the same point, so its integral must be <m>0</m>. Thus <m>1\Rightarrow2</m>.
+        </p>
+        <p>
+          Now suppose every closed curve integral is <m>0</m>. Let <m>C_1</m> and
+          <m>C_2</m> be two paths from <m>A</m> to <m>B</m>. Travel along <m>C_1</m>, then
+          return from <m>B</m> to <m>A</m> along <m>C_2</m> with the opposite orientation.
+          This makes a closed curve. Therefore
+          <md>\int_{C_1}\omega-\int_{C_2}\omega=0.</md>
+          So
+          <md>\int_{C_1}\omega=\int_{C_2}\omega.</md>
+          The integral is path independent. Hence <m>2\Rightarrow1</m>.
+        </p>
+        <p>
+          Finally, the previous theorem showed that path independence produces a
+          potential. So <m>1\Rightarrow3</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      This theorem explains the word <em>conservative</em>. A conservative field can
+      transfer energy between forms, but it does not create net work around a closed
+      loop. Go out, come back, and the potential returns to its starting value.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-c13s5-exact-as-differentials">
+    <title>Exact forms as differentials <m>df</m></title>
+
+    <p>In practice, finding a potential is often a matching game.</p>
+
+    <p>
+      Suppose
+      <md>\omega=(2xy+3)\,dx+(x^2+2y)\,dy.</md>
+      We want to know whether
+      <md>\omega=d\phi</md>
+      for some <m>\phi(x,y)</m>. If so, then
+      <md>\phi_x=2xy+3,</md>
+      and
+      <md>\phi_y=x^2+2y.</md>
+    </p>
+
+    <p>
+      Start with the first equation:
+      <md>\phi_x=2xy+3.</md>
+      Integrate with respect to <m>x</m>, treating <m>y</m> as constant:
+      <md>\phi(x,y)=x^2y+3x+g(y).</md>
+      The extra term <m>g(y)</m> is allowed because it disappears when differentiating
+      with respect to <m>x</m>.
+    </p>
+
+    <p>
+      Now use the second equation:
+      <md>\phi_y=x^2+g'(y).</md>
+      We need this to equal
+      <md>x^2+2y.</md>
+      So
+      <md>g'(y)=2y,</md>
+      and therefore
+      <md>g(y)=y^2+C.</md>
+      One potential is
+      <md>\boxed{ \phi(x,y)=x^2y+3x+y^2. }</md>
+      The constant <m>C</m> does not matter, because
+      <md>dC=0.</md>
+    </p>
+
+    <p>
+      Now the line integral of <m>\omega</m> is immediate. From
+      <md>A=(0,1)</md>
+      to
+      <md>B=(2,3),</md>
+      any path gives
+      <md>
+        <mrow>\int_C \omega \amp= \phi(2,3)-\phi(0,1)</mrow>
+        <mrow>\amp= (4\cdot3+6+9)-(0+0+1)</mrow>
+        <mrow>\amp= 27-1</mrow>
+        <mrow>\amp= 26.</mrow>
+      </md>
+    </p>
+
+    <example xml:id="ex-c13s5-potential-in-space-2">
+      <title>Finding a potential in space</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=yz\,dx+xz\,dy+xy\,dz.</md>
+          If <m>\omega=d\phi</m>, then
+          <md>\phi_x=yz.</md>
+          Integrating with respect to <m>x</m>,
+          <md>\phi=xyz+g(y,z).</md>
+          Now
+          <md>\phi_y=xz+g_y(y,z).</md>
+          Since the coefficient of <m>dy</m> is <m>xz</m>, we need
+          <md>g_y=0.</md>
+          So <m>g</m> depends only on <m>z</m>:
+          <md>g(y,z)=h(z).</md>
+          Finally,
+          <md>\phi_z=xy+h'(z).</md>
+          Since the coefficient of <m>dz</m> is <m>xy</m>, we need
+          <md>h'(z)=0.</md>
+          Thus one potential is
+          <md>\boxed{ \phi(x,y,z)=xyz. }</md>
+          So
+          <md>yz\,dx+xz\,dy+xy\,dz=d(xyz).</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The matching method is useful, but it leaves a practical question. In the last two
+      examples, we were lucky: the pieces fit. How can we tell, before searching for a
+      potential, whether the pieces are even compatible? If
+      <md>P=\phi_x \qquad\text{and}\qquad Q=\phi_y,</md>
+      then <m>P_y</m> and <m>Q_x</m> are both trying to be the same mixed derivative
+      <md>\phi_{xy}.</md>
+      That small observation becomes the first curl test.
+    </p>
+  </subsection>
+</section>

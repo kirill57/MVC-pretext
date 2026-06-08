@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch15-surfaces-flux-curl-divergence.tex, Section 8.
+     Status: CONVERTED. -->
+<section xml:id="sec-15-warning-examples" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Warning examples</title>
+
+  <p>
+    The three big theorems in this chapter are easy to state:
+    <md>\int_{\partial S}\omega=\int_S d\omega, \qquad \int_{\partial E}\Phi=\int_E d\Phi.</md>
+    Their hypotheses are where many mistakes happen. A surface may have no consistent
+    normal direction. A field may be undefined at one hidden point. A boundary may be
+    walked the wrong way. A region may have an inner boundary that should not be
+    ignored.
+  </p>
+
+  <p>Each warning below is a small failure of one of those hidden assumptions.</p>
+
+  <subsection xml:id="c15s8-nonorientable-surface">
+    <title>A nonorientable surface and why flux is not globally defined</title>
+
+    <p>
+      A flux integral needs a chosen side:
+      <md>\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS.</md>
+      That means <m>S</m> must have a continuous unit normal vector field
+      <md>\widehat{\mathbf n}</md>
+      on the whole surface.
+    </p>
+
+    <p>
+      A sphere has two sides, inside and outside. A cylinder has two sides, inside and
+      outside. A disk has two sides, up and down.
+    </p>
+
+    <p>A M&#246;bius strip does not.</p>
+
+    <p>
+      One parametrization of a M&#246;bius strip is
+      <md>\mathbf r(u,v)= \left( \left(2+v\cos\frac u2\right)\cos u,\, \left(2+v\cos\frac u2\right)\sin u,\, v\sin\frac u2 \right),</md>
+      where
+      <md>0\le u\le2\pi, \qquad -\frac12\le v\le \frac12.</md>
+      The point at <m>u=0</m> with parameter <m>v</m> is identified with the point at
+      <m>u=2\pi</m> with parameter <m>-v</m>. That twist is the whole issue.
+    </p>
+
+    <p>
+      If you choose a normal vector at one point and slide it continuously around the
+      center of the strip, it returns to the same physical point pointing the opposite
+      way. The surface has only one side.
+    </p>
+
+    <figure xml:id="c15s8-fig-mobius-rectangle">
+      <caption>The M&#246;bius strip is made by identifying opposite ends with a twist. A
+      normal direction reverses after one trip around the strip.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+          \draw[thick, fill=gray!10] (0,0) rectangle (5,1.8);
+
+          \draw[-&gt;, very thick, red!65!black] (0,0.35) -- (0,1.35);
+          \draw[-&gt;, very thick, red!65!black] (5,1.35) -- (5,0.35);
+
+          \node[left] at (0,0.9) {\(v\)};
+          \node[right] at (5,0.9) {\(-v\)};
+
+          \draw[-&gt;, thick] (0.45,1.35) -- (4.55,1.35);
+          \draw[-&gt;, thick] (0.45,0.35) -- (4.55,0.35);
+
+          \node at (2.5,-0.55) {edge identification with a twist};
+          \node at (2.5,2.35) {rectangle model of a M\"obius strip};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      A scalar surface integral still makes sense:
+      <md>\iint_S f\,dS.</md>
+      Area has no sign, so it does not need a side.
+    </p>
+
+    <p>
+      But flux is signed. It asks whether the field crosses the positive side or the
+      negative side. On a M&#246;bius strip there is no globally consistent positive side.
+      So a global flux integral
+      <md>\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS</md>
+      is not defined.
+    </p>
+
+    <p>The problem is not the vector field. The problem is the surface.</p>
+  </subsection>
+
+  <subsection xml:id="c15s8-hidden-singularity">
+    <title>A field with nonzero flux because of a hidden singularity</title>
+
+    <p>
+      The divergence theorem says
+      <md>\iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS = \iiint_E \nabla\cdot\mathbf F\,dV.</md>
+      But the field must be defined and differentiable throughout the solid <m>E</m>, not
+      only on its boundary.
+    </p>
+
+    <p>
+      Consider again
+      <md>\mathbf G(x,y,z) = \frac{(x,y,z)}{(x^2+y^2+z^2)^{3/2}}.</md>
+      Away from the origin,
+      <md>\nabla\cdot\mathbf G=0.</md>
+      Now take the sphere <m>S_a</m> of radius <m>a</m>, oriented outward. On the sphere,
+      <md>\widehat{\mathbf n}=\frac{(x,y,z)}{a},</md>
+      and
+      <md>\mathbf G=\frac{(x,y,z)}{a^3}.</md>
+      Therefore
+      <md>
+        <mrow>\mathbf G\cdot\widehat{\mathbf n} \amp= \frac{(x,y,z)}{a^3}\cdot\frac{(x,y,z)}{a}</mrow>
+        <mrow>\amp= \frac{x^2+y^2+z^2}{a^4}</mrow>
+        <mrow>\amp= \frac{a^2}{a^4}</mrow>
+        <mrow>\amp= \frac1{a^2}.</mrow>
+      </md>
+      Thus
+      <md>
+        <mrow>\iint_{S_a}\mathbf G\cdot\widehat{\mathbf n}\,dS \amp= \frac1{a^2}\cdot 4\pi a^2</mrow>
+        <mrow>\amp= 4\pi.</mrow>
+      </md>
+    </p>
+
+    <p>
+      It would be tempting to say:
+      <md>\nabla\cdot\mathbf G=0, \qquad \text{so the flux should be }0.</md>
+      That is not allowed. The origin is inside the sphere, and the field is not defined
+      there.
+    </p>
+
+    <p>
+      The missing point behaves like a source. The divergence calculation sees zero
+      everywhere it is allowed to look, but the flux through the sphere reveals that
+      something has been hidden inside.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s8-incompatible-orientations">
+    <title>Stokes' theorem with incompatible orientations</title>
+
+    <p>
+      Stokes' theorem needs the orientation of the surface and the orientation of its
+      boundary to match.
+    </p>
+
+    <p>
+      Let
+      <md>\mathbf F(x,y,z)=\left(-\frac y2,\frac x2,0\right).</md>
+      Then
+      <md>\nabla\times\mathbf F=(0,0,1).</md>
+      Let <m>D</m> be the unit disk in the plane <m>z=0</m>, oriented upward. Then
+      <md>
+        <mrow>\iint_D(\nabla\times\mathbf F)\cdot\widehat{\mathbf n}\,dS \amp= \iint_D(0,0,1)\cdot(0,0,1)\,dS</mrow>
+        <mrow>\amp= \pi.</mrow>
+      </md>
+    </p>
+
+    <p>
+      The upward orientation gives the boundary circle the counterclockwise orientation as
+      seen from above. With that direction,
+      <md>\oint_{\partial D}\mathbf F\cdot d\mathbf r=\pi.</md>
+    </p>
+
+    <p>
+      But now walk around the same circle clockwise. A convenient parametrization is
+      <md>\mathbf r(t)=(\cos t,-\sin t,0), \qquad 0\le t\le2\pi.</md>
+      Then
+      <md>\mathbf r'(t)=(-\sin t,-\cos t,0),</md>
+      and
+      <md>\mathbf F(\mathbf r(t)) = \left(\frac{\sin t}{2},\frac{\cos t}{2},0\right).</md>
+      So
+      <md>
+        <mrow>\oint_C\mathbf F\cdot d\mathbf r \amp= \int_0^{2\pi} \left(\frac{\sin t}{2},\frac{\cos t}{2},0\right) \cdot (-\sin t,-\cos t,0) \,dt</mrow>
+        <mrow>\amp= -\frac12\int_0^{2\pi}1\,dt</mrow>
+        <mrow>\amp= -\pi.</mrow>
+      </md>
+    </p>
+
+    <p>
+      The line integral is now
+      <md>-\pi,</md>
+      but the upward surface integral is still
+      <md>\pi.</md>
+      There is no contradiction. The clockwise boundary is not compatible with the upward
+      normal. It would be compatible with the downward normal.
+    </p>
+
+    <p>The theorem did not fail. The orientation choice failed.</p>
+  </subsection>
+
+  <subsection xml:id="c15s8-inner-boundary">
+    <title>The divergence theorem on a region with an inner boundary</title>
+
+    <p>
+      A region with a hole has more than one boundary piece. The divergence theorem counts
+      all of them.
+    </p>
+
+    <p>
+      Let <m>E</m> be the spherical shell
+      <md>b\le r\le a, \qquad 0\lt b\lt a,</md>
+      where
+      <md>r=\sqrt{x^2+y^2+z^2}.</md>
+      Its boundary has two pieces:
+      <md>S_a:\ r=a, \qquad S_b:\ r=b.</md>
+      The outward normal on the outer sphere <m>S_a</m> points away from the origin. The
+      outward normal on the inner sphere <m>S_b</m>, for the shell, points toward the
+      origin.
+    </p>
+
+    <p>
+      Take the field
+      <md>\mathbf F(x,y,z)=(x,y,z).</md>
+      Then
+      <md>\nabla\cdot\mathbf F=3.</md>
+      The divergence theorem gives
+      <md>
+        <mrow>\iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS \amp= \iiint_E 3\,dV</mrow>
+        <mrow>\amp= 3\left(\frac43\pi a^3-\frac43\pi b^3\right)</mrow>
+        <mrow>\amp= 4\pi(a^3-b^3).</mrow>
+      </md>
+    </p>
+
+    <p>Now check the boundary pieces.</p>
+
+    <p>
+      On <m>S_a</m>,
+      <md>\widehat{\mathbf n}=\frac{(x,y,z)}{a},</md>
+      so
+      <md>\mathbf F\cdot\widehat{\mathbf n}=a.</md>
+      Thus
+      <md>\iint_{S_a}\mathbf F\cdot\widehat{\mathbf n}\,dS = a\cdot4\pi a^2 = 4\pi a^3.</md>
+    </p>
+
+    <p>
+      On the inner sphere <m>S_b</m>, the outward normal for the shell is
+      <md>-\frac{(x,y,z)}{b}.</md>
+      So
+      <md>\mathbf F\cdot\widehat{\mathbf n} = (x,y,z)\cdot\left(-\frac{(x,y,z)}{b}\right) = -b.</md>
+      Thus
+      <md>\iint_{S_b}\mathbf F\cdot\widehat{\mathbf n}\,dS = -b\cdot4\pi b^2 = -4\pi b^3.</md>
+      Adding both pieces gives
+      <md>4\pi a^3-4\pi b^3 = 4\pi(a^3-b^3),</md>
+      exactly as the divergence theorem predicted.
+    </p>
+
+    <p>
+      If we forget the inner boundary, we get
+      <md>4\pi a^3,</md>
+      which is wrong. A hole has a boundary, and its outward direction is the one that
+      points out of the material region, not out of the hole's center.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s8-common-pattern">
+    <title>The common pattern in the warnings</title>
+
+    <p>The warnings all say the same thing in different clothes.</p>
+
+    <table xml:id="c15s8-tab-warning-pattern">
+      <title>The four warnings and what each one breaks.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Mistake</cell>
+          <cell>What breaks</cell>
+        </row>
+        <row>
+          <cell>Surface is not orientable</cell>
+          <cell>no global signed flux</cell>
+        </row>
+        <row>
+          <cell>Field has a hidden singularity</cell>
+          <cell>the theorem cannot see inside</cell>
+        </row>
+        <row>
+          <cell>Boundary orientation is incompatible</cell>
+          <cell>the sign reverses</cell>
+        </row>
+        <row>
+          <cell>Inner boundary is ignored</cell>
+          <cell>part of <m>\partial E</m> is missing</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The formulas are powerful because they are precise. They are also unforgiving for
+      the same reason.
+    </p>
+
+    <p>
+      Now we can step back and put the chapter in one place: surface area, flux, curl,
+      divergence, and the three-dimensional versions of the Fundamental Theorem of
+      Calculus.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/appendices/appG-computational-labs.tex, Section G.6.
+     Status: CONVERTED. -->
+<section xml:id="sec-appG-simulating-flows-and-conservation-laws" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Simulating flows and conservation laws</title>
+
+  <subsection xml:id="appG-flow-subsec-flow-lines">
+    <title>Flow lines</title>
+
+    <p>
+      A flow line of a vector field
+      <md>\mathbf F</md>
+      solves the differential equation
+      <md>\frac{d\mathbf r}{dt}=\mathbf F(\mathbf r(t)).</md>
+    </p>
+
+    <p>
+      In the plane:
+      <md>x'=P(x,y), \qquad y'=Q(x,y).</md>
+    </p>
+
+    <p>
+      In space:
+      <md>x'=P(x,y,z), \qquad y'=Q(x,y,z), \qquad z'=R(x,y,z).</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-euler-method">
+    <title>Euler method</title>
+
+    <p>
+      For
+      <md>\mathbf r'=\mathbf F(\mathbf r),</md>
+      Euler's method is
+      <md>\mathbf r_{n+1} = \mathbf r_n+\Delta t\,\mathbf F(\mathbf r_n).</md>
+    </p>
+
+    <p>
+      It is simple but not very accurate.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-euler-method-code">
+    <title>Euler method code</title>
+
+    <program language="python">
+      <input>def euler_flow(F, r0, dt, steps):
+    r = np.array(r0, dtype=float)
+    points = [r.copy()]
+
+    for _ in range(steps):
+        r = r + dt*np.array(F(r))
+        points.append(r.copy())
+
+    return np.array(points)</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-using-an-ode-solver">
+    <title>Using an ODE solver</title>
+
+    <program language="python">
+      <input>from scipy.integrate import solve_ivp
+
+def ode(t, r):
+    x, y = r
+    return [Pfun(x, y), Qfun(x, y)]
+
+sol = solve_ivp(
+    ode,
+    [t0, t1],
+    [x0, y0],
+    max_step=0.02
+)
+
+plt.plot(sol.y[0], sol.y[1])
+plt.axis("equal")
+plt.show()</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-several-initial-points">
+    <title>Several initial points</title>
+
+    <program language="python">
+      <input>for r0 in initial_points:
+    sol = solve_ivp(ode, [t0, t1], r0, max_step=0.02)
+    plt.plot(sol.y[0], sol.y[1])
+
+plt.axis("equal")
+plt.show()</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-equilibrium-points">
+    <title>Equilibrium points</title>
+
+    <p>
+      Equilibrium points satisfy
+      <md>\mathbf F(\mathbf p)=\mathbf 0.</md>
+    </p>
+
+    <p>
+      In the plane:
+      <md>P(x,y)=0, \qquad Q(x,y)=0.</md>
+    </p>
+
+    <p>
+      Use symbolic solving:
+    </p>
+
+    <program language="python">
+      <input>solutions = sp.solve([P, Q], [x, y])</input>
+    </program>
+
+    <p>
+      Or numerical root finding if symbolic solving is too hard.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-linearization-near-an-equilibrium">
+    <title>Linearization near an equilibrium</title>
+
+    <p>
+      If
+      <md>\mathbf F(\mathbf p)=\mathbf 0,</md>
+      then near <m>\mathbf p</m>,
+      <md>\mathbf r' \approx J_{\mathbf F}(\mathbf p)(\mathbf r-\mathbf p).</md>
+    </p>
+
+    <p>
+      The eigenvalues of
+      <md>J_{\mathbf F}(\mathbf p)</md>
+      help classify the local behavior.
+    </p>
+
+    <table xml:id="appG-flow-table-eigenvalue-patterns">
+      <title>Eigenvalue patterns and typical behavior</title>
+      <tabular>
+        <row bottom="medium">
+          <cell>Eigenvalue pattern</cell>
+          <cell>Typical behavior</cell>
+        </row>
+        <row>
+          <cell>both negative real parts</cell>
+          <cell>sink</cell>
+        </row>
+        <row>
+          <cell>both positive real parts</cell>
+          <cell>source</cell>
+        </row>
+        <row>
+          <cell>opposite signs</cell>
+          <cell>saddle</cell>
+        </row>
+        <row>
+          <cell>pure imaginary</cell>
+          <cell>center or rotation-type behavior</cell>
+        </row>
+        <row>
+          <cell>complex with negative real part</cell>
+          <cell>spiral sink</cell>
+        </row>
+        <row>
+          <cell>complex with positive real part</cell>
+          <cell>spiral source</cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-conservation-law">
+    <title>Conservation law</title>
+
+    <p>
+      A conservation law has the form
+      <md>\frac{\partial \rho}{\partial t} + \nabla\cdot\mathbf J = s.</md>
+    </p>
+
+    <p>
+      Here:
+    </p>
+
+    <table xml:id="appG-flow-table-conservation-law-symbols">
+      <title>Symbols in the conservation law</title>
+      <tabular>
+        <row>
+          <cell><m>\rho</m></cell>
+          <cell>density</cell>
+        </row>
+        <row>
+          <cell><m>\mathbf J</m></cell>
+          <cell>flux density</cell>
+        </row>
+        <row>
+          <cell><m>s</m></cell>
+          <cell>source rate</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      If there are no sources or sinks:
+      <md>\rho_t+\nabla\cdot\mathbf J=0.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-integral-balance-law">
+    <title>Integral balance law</title>
+
+    <p>
+      For a fixed region <m>E</m>,
+      <md>\frac{d}{dt}\iiint_E \rho\,dV = -\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS + \iiint_E s\,dV.</md>
+    </p>
+
+    <p>
+      In words:
+      <md>\text{rate of stored amount} = -\text{outward flux} + \text{source production}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-numerical-balance-check">
+    <title>Numerical balance check</title>
+
+    <p>
+      At two nearby times,
+      <md>\frac{A(t+\Delta t)-A(t)}{\Delta t}</md>
+      approximates
+      <md>\frac{dA}{dt}.</md>
+    </p>
+
+    <p>
+      Compare it to
+      <md>-\text{outward flux}+\text{source integral}.</md>
+    </p>
+
+    <p>
+      This is a useful diagnostic for simulations.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-discrete-divergence-two-dimensions">
+    <title>Discrete divergence in two dimensions</title>
+
+    <p>
+      On a grid with spacing <m>\Delta x,\Delta y</m>, for
+      <md>\mathbf J=(M,N),</md>
+      a central-difference approximation is
+      <md>\nabla\cdot\mathbf J \approx \frac{M(x+\Delta x,y)-M(x-\Delta x,y)}{2\Delta x} + \frac{N(x,y+\Delta y)-N(x,y-\Delta y)}{2\Delta y}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-discrete-divergence-code">
+    <title>Discrete divergence code</title>
+
+    <program language="python">
+      <input>def divergence2(M, N, dx, dy):
+    M_y, M_x = np.gradient(M, dy, dx)
+    N_y, N_x = np.gradient(N, dy, dx)
+    return M_x + N_y</input>
+    </program>
+
+    <p>
+      Array-axis warning:
+      <md>\texttt{np.gradient} \text{ usually returns } y\text{-derivatives first.}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-advection-by-a-velocity-field">
+    <title>Advection by a velocity field</title>
+
+    <p>
+      If density moves with velocity
+      <md>\mathbf v,</md>
+      then the flux density is
+      <md>\mathbf J=\rho\mathbf v.</md>
+    </p>
+
+    <p>
+      With no sources:
+      <md>\rho_t+\nabla\cdot(\rho\mathbf v)=0.</md>
+    </p>
+
+    <p>
+      If
+      <md>\nabla\cdot\mathbf v=0</md>
+      and <m>\rho</m> is constant along moving particles, the flow is incompressible.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-flow-subsec-common-simulation-warnings">
+    <title>Common simulation warnings</title>
+
+    <warning>
+      <p>
+        Euler's method can be unstable for large time steps.
+      </p>
+
+      <p>
+        A good-looking picture may violate conservation.
+      </p>
+
+      <p>
+        Numerical diffusion can smear sharp features.
+      </p>
+
+      <p>
+        Boundary conditions matter.
+      </p>
+
+      <p>
+        A vector field with a singularity should not be simulated through the singular point.
+      </p>
+
+      <p>
+        Always test a simulation on a case with a known answer.
+      </p>
+    </warning>
+  </subsection>
+</section>

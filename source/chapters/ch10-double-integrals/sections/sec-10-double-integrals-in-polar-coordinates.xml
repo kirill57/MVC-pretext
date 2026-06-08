@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch10-double-integrals.tex, Section 10.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-10-double-integrals-in-polar-coordinates" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Double integrals in polar coordinates</title>
+
+  <p>
+    <xref ref="sec-10-double-integrals-over-general-regions"/> taught us how to integrate over
+    regions that are not rectangles. The main tool was slicing. But circular regions still felt
+    awkward in rectangular coordinates. A disk can be described by
+    <md>-a\le x\le a, \qquad -\sqrt{a^2-x^2}\le y\le \sqrt{a^2-x^2},</md>
+    but those square roots are a sign that the coordinates are fighting the geometry.
+  </p>
+
+  <p>
+    For circular regions, the natural coordinates are
+    <md>x=r\cos\theta, \qquad y=r\sin\theta.</md>
+    The new question is not just how to rewrite the region. We must also understand how area
+    changes.
+  </p>
+
+  <subsection xml:id="c10s5-subsec-circular-bowl">
+    <title>A circular bowl</title>
+
+    <p>
+      A shallow circular bowl has height
+      <md>z=9-x^2-y^2</md>
+      above the circular floor
+      <md>x^2+y^2\le 9.</md>
+      The volume under the surface is
+      <md>V=\iint_D (9-x^2-y^2)\,dA,</md>
+      where
+      <md>D=\{(x,y):x^2+y^2\le9\}.</md>
+    </p>
+
+    <p>
+      In rectangular coordinates, the same integral becomes
+      <md>\int_{-3}^{3} \int_{-\sqrt{9-x^2}}^{\sqrt{9-x^2}} (9-x^2-y^2)\,dy\,dx.</md>
+      This is correct, but it does not look like the bowl.
+    </p>
+
+    <p>
+      In polar coordinates,
+      <md>x^2+y^2=r^2.</md>
+      The disk is simply
+      <md>0\le r\le3, \qquad 0\le\theta\le2\pi.</md>
+      The height becomes
+      <md>9-x^2-y^2=9-r^2.</md>
+    </p>
+
+    <p>
+      But there is one more piece. A tiny polar box does not have area
+      <md>\Delta r\,\Delta\theta.</md>
+      It has area approximately
+      <md>r\,\Delta r\,\Delta\theta.</md>
+      So the integral should be
+      <md>V= \int_0^{2\pi}\int_0^3 (9-r^2)r\,dr\,d\theta.</md>
+      Compute:
+      <md>
+        <mrow>V \amp= \int_0^{2\pi} \left[ \frac92r^2-\frac14r^4 \right]_0^3 d\theta</mrow>
+        <mrow>\amp= \int_0^{2\pi} \left( \frac92\cdot9-\frac14\cdot81 \right) d\theta</mrow>
+        <mrow>\amp= \int_0^{2\pi} \frac{81}{4}\,d\theta</mrow>
+        <mrow>\amp= \frac{81\pi}{2}.</mrow>
+      </md>
+      Thus
+      <md>\boxed{ V=\frac{81\pi}{2}. }</md>
+    </p>
+
+    <p>
+      The factor <m>r</m> is the new feature. Everything in polar integration depends on it.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s5-subsec-why-area-element">
+    <title>Why the area element is <m>r\,dr\,d\theta</m></title>
+
+    <p>
+      A polar grid is made from circles and rays. If we fix <m>r</m> and let <m>\theta</m>
+      change, we move around a circle. If we fix <m>\theta</m> and let <m>r</m> change, we move
+      along a ray.
+    </p>
+
+    <p>
+      A small polar rectangle has two side lengths:
+      <md>\text{radial side length}\approx \Delta r,</md>
+      and
+      <md>\text{circular side length}\approx r\,\Delta\theta.</md>
+      The second formula is arc length:
+      <md>\text{arc length}=(\text{radius})(\text{angle}).</md>
+      Therefore
+      <md>\Delta A \approx (r\,\Delta\theta)(\Delta r) = r\,\Delta r\,\Delta\theta.</md>
+    </p>
+
+    <figure xml:id="c10s5-fig-polar-rectangle">
+      <caption>A small polar rectangle has area approximately <m>r\,\Delta r\,\Delta\theta</m>.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=1.15, &gt;=stealth]
+            \draw[-&gt;] (-0.3,0) -- (4.8,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.3) -- (0,4.2) node[above] {\(y\)};
+
+            \draw[gray!25] (0,0) circle (1.4);
+            \draw[gray!25] (0,0) circle (2.2);
+            \draw[gray!25] (0,0) circle (3.0);
+
+            \draw[gray!40] (0,0) -- (4.0,0.0);
+            \draw[gray!40] (0,0) -- ({4*cos(20)},{4*sin(20)});
+            \draw[gray!40] (0,0) -- ({4*cos(40)},{4*sin(40)});
+            \draw[gray!40] (0,0) -- ({4*cos(60)},{4*sin(60)});
+
+            \filldraw[fill=blue!20, draw=blue!60!black, thick]
+                ({2.2*cos(20)},{2.2*sin(20)})
+                arc[start angle=20,end angle=40,radius=2.2]
+                -- ({3.0*cos(40)},{3.0*sin(40)})
+                arc[start angle=40,end angle=20,radius=3.0]
+                -- cycle;
+
+            \draw[&lt;-&gt;, blue!70!black]
+                ({2.45*cos(20)},{2.45*sin(20)})
+                -- ({2.95*cos(20)},{2.95*sin(20)})
+                node[midway, below right] {\(\Delta r\)};
+
+            \node[blue!70!black] at ({3.35*cos(30)},{3.35*sin(30)})
+                {\(r\,\Delta\theta\)};
+
+            \draw[-&gt;, thick] (0.8,0) arc[start angle=0,end angle=20,radius=0.8];
+            \node at ({0.55*cos(10)},{0.55*sin(10)}) {\(\theta_1\)};
+
+            \draw[-&gt;, thick] (1.15,0) arc[start angle=0,end angle=40,radius=1.15];
+            \node at ({1.4*cos(35)},{1.4*sin(35)}) {\(\theta_2\)};
+
+            \node at (2.2,-0.55) {polar grid cells grow as \(r\) grows};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>There is also a differential-forms way to see the same factor.</p>
+
+    <p>
+      From
+      <md>x=r\cos\theta, \qquad y=r\sin\theta,</md>
+      we get
+      <md>dx=\cos\theta\,dr-r\sin\theta\,d\theta,</md>
+      and
+      <md>dy=\sin\theta\,dr+r\cos\theta\,d\theta.</md>
+      Now wedge:
+      <md>
+        <mrow>dx\wedge dy \amp= (\cos\theta\,dr-r\sin\theta\,d\theta) \wedge (\sin\theta\,dr+r\cos\theta\,d\theta)</mrow>
+        <mrow>\amp= r\cos^2\theta\,dr\wedge d\theta + r\sin^2\theta\,dr\wedge d\theta</mrow>
+        <mrow>\amp= r(\cos^2\theta+\sin^2\theta)\,dr\wedge d\theta</mrow>
+        <mrow>\amp= r\,dr\wedge d\theta.</mrow>
+      </md>
+      So the standard area form becomes
+      <md>\boxed{ dx\wedge dy=r\,dr\wedge d\theta. }</md>
+      For ordinary positive area,
+      <md>\boxed{ dA=r\,dr\,d\theta. }</md>
+    </p>
+
+    <p>This is the same factor we saw geometrically.</p>
+  </subsection>
+
+  <subsection xml:id="c10s5-subsec-polar-rectangles">
+    <title>Polar rectangles</title>
+
+    <p>
+      A rectangle in the <m>(r,\theta)</m>-plane becomes a curved region in the
+      <m>xy</m>-plane.
+    </p>
+
+    <definition xml:id="c10s5-def-polar-rectangle">
+      <title>Polar rectangle</title>
+      <statement>
+        <p>
+          A <term>polar rectangle</term> is a region described by
+          <md>\boxed{ a\le r\le b, \qquad \alpha\le\theta\le\beta. }</md>
+          In the <m>xy</m>-plane, this is the region between the circles
+          <md>r=a \qquad\text{and}\qquad r=b</md>
+          and between the rays
+          <md>\theta=\alpha \qquad\text{and}\qquad \theta=\beta.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For example,
+      <md>1\le r\le3, \qquad 0\le\theta\le\pi</md>
+      is a half-annulus.
+    </p>
+
+    <p>
+      Its area is
+      <md>
+        <mrow>A \amp= \int_0^\pi\int_1^3 r\,dr\,d\theta</mrow>
+        <mrow>\amp= \int_0^\pi \left[ \frac12r^2 \right]_1^3 d\theta</mrow>
+        <mrow>\amp= \int_0^\pi 4\,d\theta</mrow>
+        <mrow>\amp= 4\pi.</mrow>
+      </md>
+      This agrees with geometry:
+      <md>\frac12\pi(3^2)-\frac12\pi(1^2)=\frac92\pi-\frac12\pi=4\pi.</md>
+    </p>
+
+    <figure xml:id="c10s5-fig-half-annulus">
+      <caption>A polar rectangle can be a curved sector or annular sector.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.95, &gt;=stealth]
+            \draw[-&gt;] (-3.8,0) -- (3.8,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.5) -- (0,3.9) node[above] {\(y\)};
+
+            \fill[orange!18]
+                (1,0) arc[start angle=0,end angle=180,radius=1]
+                -- (-3,0) arc[start angle=180,end angle=0,radius=3]
+                -- cycle;
+
+            \draw[orange!60!black, thick] (1,0) arc[start angle=0,end angle=180,radius=1];
+            \draw[orange!60!black, thick] (3,0) arc[start angle=0,end angle=180,radius=3];
+            \draw[orange!60!black, thick] (1,0) -- (3,0);
+            \draw[orange!60!black, thick] (-1,0) -- (-3,0);
+
+            \node at (0,2.1) {\(1\le r\le3\)};
+            \node at (0,1.55) {\(0\le\theta\le\pi\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c10s5-subsec-polar-formula">
+    <title>The polar-coordinate formula</title>
+
+    <p>Now we can state the general rule.</p>
+
+    <theorem xml:id="c10s5-thm-double-integrals-polar">
+      <title>Double integrals in polar coordinates</title>
+      <statement>
+        <p>
+          Suppose <m>D</m> is described in polar coordinates by
+          <md>D= \left\{ (r,\theta): \alpha\le\theta\le\beta,\ g(\theta)\le r\le h(\theta) \right\},</md>
+          where <m>g</m> and <m>h</m> are continuous, <m>0\le g(\theta)\le h(\theta)</m>, and
+          the polar description covers the region once except possibly along boundary curves.
+        </p>
+        <p>
+          If <m>f</m> is continuous on <m>D</m>, then
+          <md>\boxed{ \iint_D f(x,y)\,dA = \int_\alpha^\beta \int_{g(\theta)}^{h(\theta)} f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta. }</md>
+          Equivalently, in form language,
+          <md>\boxed{ \int_D f(x,y)\,dx\wedge dy = \int_\alpha^\beta \int_{g(\theta)}^{h(\theta)} f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta. }</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <title>Idea of the proof</title>
+      <p>
+        Divide the region into small polar rectangles. A small piece at radius <m>r</m> has
+        area approximately
+        <md>r\,\Delta r\,\Delta\theta.</md>
+        On that piece,
+        <md>f(x,y)=f(r\cos\theta,r\sin\theta).</md>
+        So a Riemann sum looks like
+        <md>\sum f(r\cos\theta,r\sin\theta)\,r\,\Delta r\,\Delta\theta.</md>
+        As the polar pieces get small, this sum becomes
+        <md>\int_\alpha^\beta \int_{g(\theta)}^{h(\theta)} f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta.</md>
+        The same conclusion follows from
+        <md>dx\wedge dy=r\,dr\wedge d\theta.</md>
+      </p>
+    </proof>
+
+    <p>There are two warnings hidden in the theorem.</p>
+
+    <p>
+      First, the function <m>f</m> is assumed continuous. This is a safe hypothesis that
+      guarantees the usual Riemann integral exists. A wildly discontinuous function, such as the
+      function that is <m>1</m> at rational-coordinate points and <m>0</m> at
+      irrational-coordinate points inside a disk, is not Riemann integrable. Changing
+      coordinates cannot fix a function whose ordinary integral is not defined.
+    </p>
+
+    <p>Second, the polar description must not cover the region more than once.</p>
+
+    <p>
+      For example,
+      <md>0\le r\le1, \qquad 0\le\theta\le4\pi</md>
+      traces the unit disk twice. If we integrate <m>1</m>, we get
+      <md>
+        <mrow>\int_0^{4\pi}\int_0^1 r\,dr\,d\theta \amp= \int_0^{4\pi}\frac12\,d\theta</mrow>
+        <mrow>\amp= 2\pi.</mrow>
+      </md>
+      But the area of the unit disk is only
+      <md>\pi.</md>
+      The formula did not fail. The setup counted every point twice.
+    </p>
+
+    <p>
+      <md>\boxed{ \text{A repeated polar description gives a repeated integral.} }</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s5-subsec-radial-symmetry">
+    <title>Radial symmetry</title>
+
+    <p>
+      A function is radially symmetric if it depends only on the distance from the origin:
+      <md>f(x,y)=F(r), \qquad r=\sqrt{x^2+y^2}.</md>
+      On a disk or annulus centered at the origin, polar coordinates make this especially
+      simple.
+    </p>
+
+    <p>
+      If
+      <md>D=\{(x,y):0\le r\le a\},</md>
+      then
+      <md>
+        <mrow>\iint_D F(r)\,dA \amp= \int_0^{2\pi}\int_0^a F(r)\,r\,dr\,d\theta</mrow>
+        <mrow>\amp= 2\pi\int_0^a F(r)\,r\,dr.</mrow>
+      </md>
+      So for radially symmetric functions on centered disks,
+      <md>\boxed{ \iint_D F(r)\,dA = 2\pi\int_0^a F(r)\,r\,dr. }</md>
+    </p>
+
+    <p>
+      The factor <m>2\pi</m> comes from going all the way around the circle. The factor
+      <m>r</m> still comes from area.
+    </p>
+
+    <example xml:id="c10s5-ex-radially-symmetric-mound">
+      <title>A radially symmetric mound</title>
+      <statement>
+        <p>
+          A circular pile of sand has height
+          <md>h(r)=12-3r</md>
+          over the disk
+          <md>0\le r\le4.</md>
+          The total volume is
+          <md>
+            <mrow>V \amp= \int_0^{2\pi}\int_0^4 (12-3r)r\,dr\,d\theta</mrow>
+            <mrow>\amp= 2\pi\int_0^4 (12r-3r^2)\,dr</mrow>
+            <mrow>\amp= 2\pi\left[6r^2-r^3\right]_0^4</mrow>
+            <mrow>\amp= 2\pi(96-64)</mrow>
+            <mrow>\amp= 64\pi.</mrow>
+          </md>
+          Thus
+          <md>\boxed{ V=64\pi. }</md>
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c10s5-subsec-shifted-circle">
+    <title>A shifted circle</title>
+
+    <p>
+      Polar coordinates are not only for regions centered at the origin. They are often useful
+      whenever a boundary has a simple polar equation.
+    </p>
+
+    <p>
+      Consider the disk
+      <md>D:\quad x^2+y^2\le2x.</md>
+      Complete the square:
+      <md>x^2-2x+y^2\le0,</md>
+      so
+      <md>(x-1)^2+y^2\le1.</md>
+      This is the disk of radius <m>1</m> centered at <m>(1,0)</m>.
+    </p>
+
+    <p>
+      In polar coordinates,
+      <md>x^2+y^2=r^2, \qquad x=r\cos\theta.</md>
+      So the boundary
+      <md>x^2+y^2=2x</md>
+      becomes
+      <md>r^2=2r\cos\theta.</md>
+      For <m>r\ge0</m>, this gives
+      <md>r=2\cos\theta.</md>
+      This is nonnegative when
+      <md>-\frac{\pi}{2}\le\theta\le\frac{\pi}{2}.</md>
+      Thus the disk is
+      <md>-\frac{\pi}{2}\le\theta\le\frac{\pi}{2}, \qquad 0\le r\le2\cos\theta.</md>
+    </p>
+
+    <figure xml:id="c10s5-fig-shifted-disk">
+      <caption>The shifted disk <m>(x-1)^2+y^2\le1</m> has polar boundary <m>r=2\cos\theta</m>.</caption>
+      <image width="55%">
+        <latex-image>
+        \begin{tikzpicture}[scale=1.05, &gt;=stealth]
+            \draw[-&gt;] (-0.8,0) -- (3.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-1.7) -- (0,1.7) node[above] {\(y\)};
+
+            \draw[fill=blue!12, draw=blue!60!black, thick] (1,0) circle (1);
+
+            \fill (1,0) circle (2pt);
+            \node[below] at (1,0) {\((1,0)\)};
+
+            \draw[thick, red!65!black] (0,0) -- ({2*cos(35)*cos(35)},{2*cos(35)*sin(35)});
+            \node[red!65!black, right] at (1.25,0.55) {\(r=2\cos\theta\)};
+
+            \draw[-&gt;] (0.55,0) arc[start angle=0,end angle=35,radius=0.55];
+            \node at (0.72,0.18) {\(\theta\)};
+
+            \node at (1,-1.35) {\((x-1)^2+y^2\le1\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      Now find
+      <md>\iint_D (x^2+y^2)\,dA.</md>
+      Since
+      <md>x^2+y^2=r^2,</md>
+      we get
+      <md>
+        <mrow>\iint_D (x^2+y^2)\,dA \amp= \int_{-\pi/2}^{\pi/2} \int_0^{2\cos\theta} r^2\,r\,dr\,d\theta</mrow>
+        <mrow>\amp= \int_{-\pi/2}^{\pi/2} \left[ \frac14r^4 \right]_0^{2\cos\theta} d\theta</mrow>
+        <mrow>\amp= \int_{-\pi/2}^{\pi/2} 4\cos^4\theta\,d\theta.</mrow>
+      </md>
+      Using
+      <md>\cos^4\theta = \left(\frac{1+\cos2\theta}{2}\right)^2 = \frac38+\frac12\cos2\theta+\frac18\cos4\theta,</md>
+      we get
+      <md>
+        <mrow>\iint_D (x^2+y^2)\,dA \amp= 4\left[ \frac38\theta +\frac14\sin2\theta +\frac1{32}\sin4\theta \right]_{-\pi/2}^{\pi/2}</mrow>
+        <mrow>\amp= 4\cdot\frac{3\pi}{8}</mrow>
+        <mrow>\amp= \frac{3\pi}{2}.</mrow>
+      </md>
+      Thus
+      <md>\boxed{ \iint_D (x^2+y^2)\,dA=\frac{3\pi}{2}. }</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s5-subsec-spiral-region">
+    <title>A spiral region</title>
+
+    <p>Polar coordinates also describe regions bounded by spirals.</p>
+
+    <p>
+      Suppose a garden path has boundary
+      <md>r=\frac{\theta}{2\pi}, \qquad 0\le\theta\le2\pi.</md>
+      The region inside one turn of the spiral is
+      <md>0\le\theta\le2\pi, \qquad 0\le r\le \frac{\theta}{2\pi}.</md>
+      Its area is
+      <md>
+        <mrow>A \amp= \int_0^{2\pi} \int_0^{\theta/(2\pi)} r\,dr\,d\theta</mrow>
+        <mrow>\amp= \int_0^{2\pi} \frac12\left(\frac{\theta}{2\pi}\right)^2 d\theta</mrow>
+        <mrow>\amp= \frac{1}{8\pi^2} \left[ \frac{\theta^3}{3} \right]_0^{2\pi}</mrow>
+        <mrow>\amp= \frac{1}{8\pi^2}\cdot\frac{8\pi^3}{3}</mrow>
+        <mrow>\amp= \frac{\pi}{3}.</mrow>
+      </md>
+      So
+      <md>\boxed{ A=\frac{\pi}{3}. }</md>
+    </p>
+
+    <figure xml:id="c10s5-fig-spiral-region">
+      <caption>A spiral region can have very simple polar bounds.</caption>
+      <image width="55%">
+        <latex-image>
+        \begin{tikzpicture}[scale=2.1, &gt;=stealth]
+            \draw[-&gt;] (-1.25,0) -- (1.35,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-1.25) -- (0,1.35) node[above] {\(y\)};
+
+            \draw[fill=green!13, draw=none]
+                plot[domain=0:6.283, samples=200, smooth, variable=\t]
+                ({(\t/(2*pi))*cos(\t r)}, {(\t/(2*pi))*sin(\t r)})
+                -- (0,0)
+                -- cycle;
+
+            \draw[thick, green!45!black, domain=0:6.283, samples=200, smooth, variable=\t]
+                plot ({(\t/(2*pi))*cos(\t r)}, {(\t/(2*pi))*sin(\t r)});
+
+            \node[green!45!black] at (0.15,-0.8) {\(r=\theta/(2\pi)\)};
+            \node at (0,-1.45) {area \(=\pi/3\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The rectangular description of the same region would be unpleasant. The polar description
+      is almost a sentence:
+      <md>\text{as $\theta$ turns once, $r$ grows from $0$ to $1$.}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s5-subsec-main-lesson">
+    <title>The main lesson</title>
+
+    <p>
+      Changing to polar coordinates does two things:
+      <md>x=r\cos\theta,\qquad y=r\sin\theta,</md>
+      and
+      <md>dA=r\,dr\,d\theta.</md>
+    </p>
+
+    <p>
+      The first line changes the function and the region. The second line changes the area
+      element.
+    </p>
+
+    <p>So the safe routine is:</p>
+
+    <ol>
+      <li><p>Draw the region.</p></li>
+      <li><p>Rewrite the boundary in polar form.</p></li>
+      <li>
+        <p>
+          Rewrite the integrand using
+          <md>x=r\cos\theta,\qquad y=r\sin\theta.</md>
+        </p>
+      </li>
+      <li><p>Multiply by the area factor <m>r</m>.</p></li>
+      <li><p>Check that the polar description covers the region once.</p></li>
+    </ol>
+
+    <p>
+      The factor <m>r</m> is not optional. It is the price of using circular coordinates.
+    </p>
+
+    <p>
+      Now that we can integrate over many regions, we can ask what double integrals are good for
+      besides volume. The same symbol
+      <md>\iint_D f\,dA</md>
+      can measure mass, center of mass, rotational inertia, probability, average temperature,
+      rainfall, or elevation.
+    </p>
+
+    <p>The integral is the same. The meaning of <m>f</m> changes.</p>
+  </subsection>
+</section>

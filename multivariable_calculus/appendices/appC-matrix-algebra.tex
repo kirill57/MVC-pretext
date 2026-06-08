@@ -1,0 +1,1469 @@
+% =====================================================================
+%  Appendix C: Matrix Algebra Quick Reference
+% =====================================================================
+
+\chapter{Matrix Algebra Quick Reference}
+\label{app:matrix-algebra-reference}
+
+Matrices are the bookkeeping language for linear maps.  In this book they appear as
+linear transformations, Jacobian matrices, Hessian matrices, coordinate changes, and
+quadratic forms.
+
+This appendix is a reference.  It is meant to be scanned.
+
+\[
+\begin{array}{c|c}
+\text{Matrix idea} & \text{Where it appears in the book} \\ \hline
+\text{matrix multiplication} & \text{composition of linear maps}\\[1mm]
+\text{row reduction} & \text{solving linear systems}\\[1mm]
+\text{determinant} & \text{area, volume, orientation, Jacobians}\\[1mm]
+\text{inverse matrix} & \text{undoing a linear map}\\[1mm]
+\text{eigenvalues} & \text{principal directions, quadratic forms}\\[1mm]
+\text{quadratic forms} & \text{Hessian test, conics, local shape}
+\end{array}
+\]
+
+% ---------------------------------------------------------------------
+\section{Matrix operations}
+\label{app:C.1}
+
+\subsection*{Matrix notation}
+
+An \(m\times n\) matrix has \(m\) rows and \(n\) columns:
+\[
+\boxed{
+    A=
+    \begin{pmatrix}
+    a_{11} & a_{12} & \cdots & a_{1n}\\
+    a_{21} & a_{22} & \cdots & a_{2n}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    a_{m1} & a_{m2} & \cdots & a_{mn}
+    \end{pmatrix}.
+}
+\]
+
+The entry in row \(i\), column \(j\) is
+\[
+\boxed{
+    a_{ij}.
+}
+\]
+
+A column vector in \(\mathbb R^n\) is an \(n\times1\) matrix:
+\[
+\boxed{
+    \mathbf x=
+    \begin{pmatrix}
+    x_1\\
+    x_2\\
+    \vdots\\
+    x_n
+    \end{pmatrix}.
+}
+\]
+
+\subsection*{Addition}
+
+Matrices can be added only when they have the same size.
+
+\[
+\boxed{
+    (A+B)_{ij}=a_{ij}+b_{ij}.
+}
+\]
+
+\subsection*{Scalar multiplication}
+
+\[
+\boxed{
+    (cA)_{ij}=c\,a_{ij}.
+}
+\]
+
+\subsection*{Matrix-vector multiplication}
+
+If \(A\) is \(m\times n\) and \(\mathbf x\in\mathbb R^n\), then
+\[
+\boxed{
+    A\mathbf x\in\mathbb R^m.
+}
+\]
+
+The \(i\)th component is
+\[
+\boxed{
+    (A\mathbf x)_i
+    =
+    a_{i1}x_1+a_{i2}x_2+\cdots+a_{in}x_n.
+}
+\]
+
+Equivalently,
+\[
+\boxed{
+    A\mathbf x
+    =
+    x_1\mathbf a_1+x_2\mathbf a_2+\cdots+x_n\mathbf a_n,
+}
+\]
+where \(\mathbf a_1,\ldots,\mathbf a_n\) are the columns of \(A\).
+
+\subsection*{Matrix multiplication}
+
+If \(A\) is \(m\times n\) and \(B\) is \(n\times p\), then
+\[
+\boxed{
+    AB\text{ is }m\times p.
+}
+\]
+
+The entry in row \(i\), column \(j\) is
+\[
+\boxed{
+    (AB)_{ij}
+    =
+    \sum_{k=1}^{n}a_{ik}b_{kj}.
+}
+\]
+
+Matrix multiplication means composition of linear maps:
+\[
+\boxed{
+    A(B\mathbf x)=(AB)\mathbf x.
+}
+\]
+
+\subsection*{Identity matrix}
+
+The \(n\times n\) identity matrix is
+\[
+\boxed{
+    I_n=
+    \begin{pmatrix}
+    1&0&\cdots&0\\
+    0&1&\cdots&0\\
+    \vdots&\vdots&\ddots&\vdots\\
+    0&0&\cdots&1
+    \end{pmatrix}.
+}
+\]
+
+It satisfies
+\[
+\boxed{
+    I_n\mathbf x=\mathbf x.
+}
+\]
+
+If the sizes match,
+\[
+\boxed{
+    AI=IA=A.
+}
+\]
+
+\subsection*{Zero matrix}
+
+The zero matrix has all entries equal to \(0\).  It satisfies
+\[
+\boxed{
+    A+0=A.
+}
+\]
+
+If the sizes match,
+\[
+\boxed{
+    A0=0,
+    \qquad
+    0A=0.
+}
+\]
+
+\subsection*{Transpose}
+
+The transpose of \(A\) is \(A^T\).  Rows become columns.
+
+\[
+\boxed{
+    (A^T)_{ij}=a_{ji}.
+}
+\]
+
+Rules:
+\[
+\boxed{
+    (A+B)^T=A^T+B^T
+}
+\]
+
+\[
+\boxed{
+    (cA)^T=cA^T
+}
+\]
+
+\[
+\boxed{
+    (AB)^T=B^T A^T
+}
+\]
+
+\[
+\boxed{
+    (A^T)^T=A.
+}
+\]
+
+\subsection*{Symmetric matrix}
+
+A square matrix is symmetric if
+\[
+\boxed{
+    A^T=A.
+}
+\]
+
+Symmetric matrices are especially important for Hessians and quadratic forms.
+
+\subsection*{Common warnings}
+
+Matrix multiplication is usually not commutative:
+\[
+\boxed{
+    AB\ne BA
+    \quad\text{in general}.
+}
+\]
+
+The product \(AB\) may exist even when \(BA\) does not.
+
+If both \(AB\) and \(BA\) exist, they may have different sizes.
+
+Always check dimensions before multiplying.
+
+% ---------------------------------------------------------------------
+\section{Row reduction}
+\label{app:C.2}
+
+\subsection*{Linear systems}
+
+A system of linear equations can be written as
+\[
+\boxed{
+    A\mathbf x=\mathbf b.
+}
+\]
+
+The augmented matrix is
+\[
+\boxed{
+    [A\mid \mathbf b].
+}
+\]
+
+\subsection*{Elementary row operations}
+
+The allowed row operations are:
+
+\[
+\begin{array}{ll}
+1. & \text{Swap two rows.}\\[1mm]
+2. & \text{Multiply a row by a nonzero scalar.}\\[1mm]
+3. & \text{Add a multiple of one row to another row.}
+\end{array}
+\]
+
+These operations do not change the solution set of the system.
+
+\subsection*{Row echelon form}
+
+A matrix is in row echelon form if:
+
+\[
+\begin{array}{ll}
+1. & \text{All zero rows are at the bottom.}\\[1mm]
+2. & \text{Each leading entry is to the right of the leading entry above it.}\\[1mm]
+3. & \text{All entries below a leading entry are zero.}
+\end{array}
+\]
+
+\subsection*{Reduced row echelon form}
+
+A matrix is in reduced row echelon form if it is in row echelon form and:
+
+\[
+\begin{array}{ll}
+1. & \text{Each leading entry is }1.\\[1mm]
+2. & \text{Each leading }1\text{ is the only nonzero entry in its column.}
+\end{array}
+\]
+
+\subsection*{Pivot}
+
+A pivot is a leading nonzero entry in a row.
+
+A pivot column is a column containing a pivot.
+
+Variables corresponding to pivot columns are pivot variables.
+
+Variables corresponding to non-pivot columns are free variables.
+
+\subsection*{Rank}
+
+The rank of a matrix is the number of pivots:
+\[
+\boxed{
+    \operatorname{rank}(A)=\text{number of pivot columns in }A.
+}
+\]
+
+\subsection*{Consistency test}
+
+For the system
+\[
+    A\mathbf x=\mathbf b,
+\]
+row reduce
+\[
+    [A\mid \mathbf b].
+\]
+
+If a row has the form
+\[
+\boxed{
+    0\quad 0\quad \cdots\quad 0\mid c
+}
+\]
+with
+\[
+    c\ne0,
+\]
+then the system has no solution.
+
+Otherwise, the system is consistent.
+
+\subsection*{Number of solutions}
+
+For a consistent system:
+
+\[
+\begin{array}{c|c}
+\text{Situation} & \text{Solution type} \\ \hline
+\text{pivot in every variable column} & \text{unique solution}\\[1mm]
+\text{at least one free variable} & \text{infinitely many solutions}
+\end{array}
+\]
+
+\subsection*{Homogeneous systems}
+
+A homogeneous system has the form
+\[
+\boxed{
+    A\mathbf x=\mathbf 0.
+}
+\]
+
+It is always consistent because
+\[
+    \mathbf x=\mathbf 0
+\]
+is always a solution.
+
+This is called the trivial solution.
+
+A homogeneous system has a nontrivial solution exactly when there is at least one free
+variable.
+
+\subsection*{Null space}
+
+The null space of \(A\) is
+\[
+\boxed{
+    \operatorname{Null}(A)
+    =
+    \{\mathbf x:A\mathbf x=\mathbf 0\}.
+}
+\]
+
+It is the set of vectors that \(A\) sends to zero.
+
+\subsection*{Column space}
+
+The column space of \(A\) is
+\[
+\boxed{
+    \operatorname{Col}(A)
+    =
+    \text{span of the columns of }A.
+}
+\]
+
+The equation
+\[
+    A\mathbf x=\mathbf b
+\]
+has a solution exactly when
+\[
+\boxed{
+    \mathbf b\in\operatorname{Col}(A).
+}
+\]
+
+\subsection*{Common warnings}
+
+Row operations preserve the solution set of a linear system, but they do not usually
+preserve determinants.
+
+Do not row reduce \(A\) alone if the system is
+\[
+    A\mathbf x=\mathbf b.
+\]
+Row reduce the augmented matrix
+\[
+    [A\mid \mathbf b].
+\]
+
+Free variables are not errors.  They describe infinitely many solutions.
+
+% ---------------------------------------------------------------------
+\section{Determinants}
+\label{app:C.3}
+
+\subsection*{Only square matrices have determinants}
+
+The determinant is defined for square matrices:
+\[
+\boxed{
+    A\text{ is }n\times n
+    \quad\Longrightarrow\quad
+    \det A\text{ is a number}.
+}
+\]
+
+\subsection*{\(2\times2\) determinant}
+
+\[
+\boxed{
+    \det
+    \begin{pmatrix}
+    a&b\\
+    c&d
+    \end{pmatrix}
+    =
+    ad-bc.
+}
+\]
+
+Geometric meaning:
+
+\[
+\boxed{
+    |\det A|
+    =
+    \text{area scale factor of the linear map }A.
+}
+\]
+
+The sign records orientation.
+
+\subsection*{\(3\times3\) determinant}
+
+\[
+\boxed{
+\det
+\begin{pmatrix}
+a&b&c\\
+d&e&f\\
+g&h&i
+\end{pmatrix}
+=
+a(ei-fh)-b(di-fg)+c(dh-eg).
+}
+\]
+
+Geometric meaning:
+
+\[
+\boxed{
+    |\det A|
+    =
+    \text{volume scale factor of the linear map }A.
+}
+\]
+
+The sign records orientation.
+
+\subsection*{Determinant and orientation}
+
+\[
+\boxed{
+    \det A>0
+}
+\]
+means orientation is preserved.
+
+\[
+\boxed{
+    \det A<0
+}
+\]
+means orientation is reversed.
+
+\[
+\boxed{
+    \det A=0
+}
+\]
+means area or volume collapses.
+
+\subsection*{Singular matrices}
+
+For a square matrix \(A\),
+\[
+\boxed{
+    \det A=0
+}
+\]
+means \(A\) is singular.
+
+Equivalently, the linear map collapses some nonzero direction to zero.
+
+\subsection*{Determinant properties}
+
+\[
+\boxed{
+    \det(I)=1
+}
+\]
+
+\[
+\boxed{
+    \det(A^T)=\det(A)
+}
+\]
+
+\[
+\boxed{
+    \det(AB)=\det(A)\det(B)
+}
+\]
+
+If \(A\) is invertible,
+\[
+\boxed{
+    \det(A^{-1})=\frac1{\det(A)}.
+}
+\]
+
+If \(A\) is triangular, then
+\[
+\boxed{
+    \det(A)=\text{product of diagonal entries}.
+}
+\]
+
+\subsection*{Effect of row operations}
+
+Swapping two rows changes the sign of the determinant.
+
+Multiplying one row by \(c\) multiplies the determinant by \(c\).
+
+Adding a multiple of one row to another row does not change the determinant.
+
+\subsection*{Determinant and linear independence}
+
+For an \(n\times n\) matrix \(A\),
+\[
+\boxed{
+    \det A\ne0
+}
+\]
+if and only if the columns of \(A\) are linearly independent.
+
+\[
+\boxed{
+    \det A=0
+}
+\]
+if and only if the columns of \(A\) are linearly dependent.
+
+\subsection*{Determinant and change of variables}
+
+For a coordinate map
+\[
+    (u,v)\mapsto (x(u,v),y(u,v)),
+\]
+the Jacobian determinant is
+\[
+\boxed{
+    \frac{\partial(x,y)}{\partial(u,v)}
+    =
+    \det
+    \begin{pmatrix}
+    x_u & x_v\\
+    y_u & y_v
+    \end{pmatrix}.
+}
+\]
+
+For ordinary area,
+\[
+\boxed{
+    dA
+    =
+    \left|
+    \frac{\partial(x,y)}{\partial(u,v)}
+    \right|
+    \,du\,dv.
+}
+\]
+
+For oriented area,
+\[
+\boxed{
+    dx\wedge dy
+    =
+    \frac{\partial(x,y)}{\partial(u,v)}
+    \,du\wedge dv.
+}
+\]
+
+\subsection*{Common warnings}
+
+The determinant is not linear in the whole matrix:
+\[
+    \det(A+B)\ne\det(A)+\det(B)
+\]
+in general.
+
+A determinant can be negative.  Ordinary area and volume use \(|\det A|\).
+
+If row reduction uses row swaps or row scaling, track how the determinant changes.
+
+% ---------------------------------------------------------------------
+\section{Inverse matrices}
+\label{app:C.4}
+
+\subsection*{Definition}
+
+A square matrix \(A\) is invertible if there is a matrix \(A^{-1}\) such that
+\[
+\boxed{
+    A^{-1}A=AA^{-1}=I.
+}
+\]
+
+The matrix \(A^{-1}\) is the inverse of \(A\).
+
+\subsection*{Meaning}
+
+If
+\[
+    \mathbf y=A\mathbf x,
+\]
+then
+\[
+\boxed{
+    \mathbf x=A^{-1}\mathbf y.
+}
+\]
+
+The inverse matrix undoes the linear map \(A\).
+
+\subsection*{\(2\times2\) inverse formula}
+
+If
+\[
+    A=
+    \begin{pmatrix}
+    a&b\\
+    c&d
+    \end{pmatrix},
+\]
+then
+\[
+\boxed{
+    A^{-1}
+    =
+    \frac{1}{ad-bc}
+    \begin{pmatrix}
+    d&-b\\
+    -c&a
+    \end{pmatrix}
+}
+\]
+provided
+\[
+\boxed{
+    ad-bc\ne0.
+}
+\]
+
+\subsection*{Invertibility test}
+
+For an \(n\times n\) matrix \(A\), the following statements are equivalent:
+
+\[
+\begin{array}{ll}
+1. & A\text{ is invertible.}\\[1mm]
+2. & \det A\ne0.\\[1mm]
+3. & A\mathbf x=\mathbf 0\text{ has only the trivial solution.}\\[1mm]
+4. & A\mathbf x=\mathbf b\text{ has a unique solution for every }\mathbf b.\\[1mm]
+5. & \text{The columns of }A\text{ are linearly independent.}\\[1mm]
+6. & \text{The columns of }A\text{ span }\mathbb R^n.\\[1mm]
+7. & \operatorname{rref}(A)=I.
+\end{array}
+\]
+
+\subsection*{Finding an inverse by row reduction}
+
+To find \(A^{-1}\), row reduce
+\[
+\boxed{
+    [A\mid I].
+}
+\]
+
+If
+\[
+    [A\mid I]
+    \longrightarrow
+    [I\mid B],
+\]
+then
+\[
+\boxed{
+    B=A^{-1}.
+}
+\]
+
+If the left side cannot be reduced to \(I\), then \(A\) is not invertible.
+
+\subsection*{Solving systems with inverses}
+
+If \(A\) is invertible, then
+\[
+\boxed{
+    A\mathbf x=\mathbf b
+    \quad\Longrightarrow\quad
+    \mathbf x=A^{-1}\mathbf b.
+}
+\]
+
+\subsection*{Inverse rules}
+
+If \(A\) and \(B\) are invertible, then
+\[
+\boxed{
+    (AB)^{-1}=B^{-1}A^{-1}.
+}
+\]
+
+\[
+\boxed{
+    (A^{-1})^{-1}=A.
+}
+\]
+
+\[
+\boxed{
+    (A^T)^{-1}=(A^{-1})^T.
+}
+\]
+
+\[
+\boxed{
+    (cA)^{-1}=\frac1c A^{-1}
+    \qquad (c\ne0).
+}
+\]
+
+\subsection*{Common warnings}
+
+The inverse of a product reverses the order:
+\[
+    (AB)^{-1}=B^{-1}A^{-1}.
+\]
+
+Not every square matrix has an inverse.
+
+Non-square matrices do not have two-sided inverses.
+
+In practice, row reduction is usually better than explicitly computing \(A^{-1}\) to solve
+a system.
+
+% ---------------------------------------------------------------------
+\section{Eigenvalues and eigenvectors}
+\label{app:C.5}
+
+\subsection*{Definition}
+
+Let \(A\) be an \(n\times n\) matrix.
+
+A nonzero vector \(\mathbf v\) is an eigenvector of \(A\) if
+\[
+\boxed{
+    A\mathbf v=\lambda \mathbf v
+}
+\]
+for some scalar \(\lambda\).
+
+The scalar \(\lambda\) is the eigenvalue.
+
+\subsection*{Meaning}
+
+An eigenvector is a direction that \(A\) does not turn.
+
+The matrix \(A\) only stretches, shrinks, or reverses that direction.
+
+\[
+\begin{array}{c|c}
+\lambda & \text{Effect on eigenvector direction} \\ \hline
+\lambda>1 & \text{stretch}\\
+0<\lambda<1 & \text{shrink}\\
+\lambda<0 & \text{reverse direction and scale}\\
+\lambda=0 & \text{collapse to zero}
+\end{array}
+\]
+
+\subsection*{Finding eigenvalues}
+
+Start with
+\[
+    A\mathbf v=\lambda\mathbf v.
+\]
+Rewrite:
+\[
+    (A-\lambda I)\mathbf v=\mathbf 0.
+\]
+For a nonzero solution \(\mathbf v\), the matrix \(A-\lambda I\) must be singular:
+\[
+\boxed{
+    \det(A-\lambda I)=0.
+}
+\]
+
+This equation is the characteristic equation.
+
+\subsection*{Characteristic polynomial}
+
+\[
+\boxed{
+    p(\lambda)=\det(A-\lambda I).
+}
+\]
+
+Eigenvalues are the roots of
+\[
+\boxed{
+    p(\lambda)=0.
+}
+\]
+
+\subsection*{\(2\times2\) shortcut}
+
+If
+\[
+    A=
+    \begin{pmatrix}
+    a&b\\
+    c&d
+    \end{pmatrix},
+\]
+then
+\[
+\boxed{
+    \operatorname{tr}(A)=a+d
+}
+\]
+and
+\[
+\boxed{
+    \det(A)=ad-bc.
+}
+\]
+
+The characteristic equation can be written as
+\[
+\boxed{
+    \lambda^2-\operatorname{tr}(A)\lambda+\det(A)=0.
+}
+\]
+
+\subsection*{Finding eigenvectors}
+
+For each eigenvalue \(\lambda\), solve
+\[
+\boxed{
+    (A-\lambda I)\mathbf v=\mathbf 0.
+}
+\]
+
+The solution space is the eigenspace for \(\lambda\).
+
+\[
+\boxed{
+    E_\lambda=\operatorname{Null}(A-\lambda I).
+}
+\]
+
+Remember:
+\[
+\boxed{
+    \mathbf v\ne\mathbf 0.
+}
+\]
+The zero vector is never called an eigenvector.
+
+\subsection*{Diagonal matrices}
+
+If
+\[
+    D=
+    \begin{pmatrix}
+    \lambda_1&0&\cdots&0\\
+    0&\lambda_2&\cdots&0\\
+    \vdots&\vdots&\ddots&\vdots\\
+    0&0&\cdots&\lambda_n
+    \end{pmatrix},
+\]
+then the standard basis vectors are eigenvectors:
+\[
+\boxed{
+    D\mathbf e_i=\lambda_i\mathbf e_i.
+}
+\]
+
+\subsection*{Diagonalization}
+
+If \(A\) has \(n\) linearly independent eigenvectors
+\[
+    \mathbf v_1,\ldots,\mathbf v_n,
+\]
+then put them into a matrix
+\[
+\boxed{
+    P=
+    \begin{pmatrix}
+    |&|&&|\\
+    \mathbf v_1&\mathbf v_2&\cdots&\mathbf v_n\\
+    |&|&&|
+    \end{pmatrix}.
+}
+\]
+
+Let
+\[
+\boxed{
+    D=
+    \begin{pmatrix}
+    \lambda_1&0&\cdots&0\\
+    0&\lambda_2&\cdots&0\\
+    \vdots&\vdots&\ddots&\vdots\\
+    0&0&\cdots&\lambda_n
+    \end{pmatrix}.
+}
+\]
+
+Then
+\[
+\boxed{
+    A=PDP^{-1}.
+}
+\]
+
+\subsection*{Powers}
+
+If
+\[
+    A=PDP^{-1},
+\]
+then
+\[
+\boxed{
+    A^k=PD^kP^{-1}.
+}
+\]
+
+For a diagonal matrix,
+\[
+\boxed{
+    D^k=
+    \begin{pmatrix}
+    \lambda_1^k&0&\cdots&0\\
+    0&\lambda_2^k&\cdots&0\\
+    \vdots&\vdots&\ddots&\vdots\\
+    0&0&\cdots&\lambda_n^k
+    \end{pmatrix}.
+}
+\]
+
+\subsection*{Symmetric matrices}
+
+If
+\[
+    A^T=A,
+\]
+then:
+
+\[
+\begin{array}{ll}
+1. & \text{All eigenvalues of }A\text{ are real.}\\[1mm]
+2. & \text{Eigenvectors for different eigenvalues are orthogonal.}\\[1mm]
+3. & A\text{ has an orthonormal eigenbasis.}
+\end{array}
+\]
+
+Thus a symmetric matrix can be written as
+\[
+\boxed{
+    A=QDQ^T,
+}
+\]
+where \(Q\) is orthogonal:
+\[
+\boxed{
+    Q^TQ=I.
+}
+\]
+
+Symmetric matrices are the clean case.  Hessian matrices are symmetric when mixed
+partials agree.
+
+\subsection*{Common warnings}
+
+Eigenvectors must be nonzero.
+
+Eigenvalues can be repeated.
+
+A matrix may fail to have enough eigenvectors to diagonalize.
+
+Eigenvalues are defined only for square matrices.
+
+For real matrices, complex eigenvalues may occur unless the matrix is symmetric.
+
+% ---------------------------------------------------------------------
+\section{Quadratic forms}
+\label{app:C.6}
+
+\subsection*{Definition}
+
+A quadratic form is a function built from degree-two terms.
+
+In matrix form:
+\[
+\boxed{
+    q(\mathbf x)=\mathbf x^T A\mathbf x.
+}
+\]
+
+Usually \(A\) is taken to be symmetric.
+
+\subsection*{Two-variable form}
+
+For
+\[
+    \mathbf x=
+    \begin{pmatrix}
+    x\\
+    y
+    \end{pmatrix},
+\]
+and
+\[
+    A=
+    \begin{pmatrix}
+    a&b\\
+    b&c
+    \end{pmatrix},
+\]
+we get
+\[
+\boxed{
+    \mathbf x^T A\mathbf x
+    =
+    ax^2+2bxy+cy^2.
+}
+\]
+
+So the form
+\[
+    ax^2+2bxy+cy^2
+\]
+corresponds to the matrix
+\[
+\boxed{
+    \begin{pmatrix}
+    a&b\\
+    b&c
+    \end{pmatrix}.
+}
+\]
+
+\subsection*{Symmetric part}
+
+For any square matrix \(A\),
+\[
+\boxed{
+    \mathbf x^T A\mathbf x
+    =
+    \mathbf x^T\left(\frac{A+A^T}{2}\right)\mathbf x.
+}
+\]
+
+So only the symmetric part of \(A\) matters for a quadratic form.
+
+\subsection*{Positive definite}
+
+A quadratic form is positive definite if
+\[
+\boxed{
+    q(\mathbf x)>0
+    \quad\text{for every }\mathbf x\ne\mathbf 0.
+}
+\]
+
+A symmetric matrix \(A\) is positive definite if
+\[
+\boxed{
+    \mathbf x^T A\mathbf x>0
+    \quad\text{for every }\mathbf x\ne\mathbf 0.
+}
+\]
+
+\subsection*{Negative definite}
+
+A quadratic form is negative definite if
+\[
+\boxed{
+    q(\mathbf x)<0
+    \quad\text{for every }\mathbf x\ne\mathbf 0.
+}
+\]
+
+\subsection*{Indefinite}
+
+A quadratic form is indefinite if it takes both positive and negative values.
+
+\[
+\boxed{
+    q(\mathbf u)>0
+    \quad\text{and}\quad
+    q(\mathbf v)<0
+}
+\]
+for some vectors \(\mathbf u,\mathbf v\).
+
+\subsection*{Semidefinite}
+
+Positive semidefinite:
+\[
+\boxed{
+    q(\mathbf x)\ge0
+    \quad\text{for every }\mathbf x.
+}
+\]
+
+Negative semidefinite:
+\[
+\boxed{
+    q(\mathbf x)\le0
+    \quad\text{for every }\mathbf x.
+}
+\]
+
+Semidefinite forms can be zero on nonzero vectors.
+
+\subsection*{\(2\times2\) test}
+
+Let
+\[
+    A=
+    \begin{pmatrix}
+    a&b\\
+    b&c
+    \end{pmatrix}
+\]
+and
+\[
+    D=\det A=ac-b^2.
+\]
+
+\[
+\begin{array}{c|c}
+\text{Condition} & \text{Type} \\ \hline
+D>0,\ a>0 & \text{positive definite}\\[1mm]
+D>0,\ a<0 & \text{negative definite}\\[1mm]
+D<0 & \text{indefinite}\\[1mm]
+D=0 & \text{inconclusive from this test}
+\end{array}
+\]
+
+\subsection*{Eigenvalue test}
+
+For a symmetric matrix \(A\):
+
+\[
+\begin{array}{c|c}
+\text{Eigenvalues of }A & \text{Type of quadratic form} \\ \hline
+\text{all positive} & \text{positive definite}\\[1mm]
+\text{all negative} & \text{negative definite}\\[1mm]
+\text{positive and negative} & \text{indefinite}\\[1mm]
+\text{all nonnegative, at least one zero} & \text{positive semidefinite}\\[1mm]
+\text{all nonpositive, at least one zero} & \text{negative semidefinite}
+\end{array}
+\]
+
+\subsection*{Diagonalization of a quadratic form}
+
+If \(A\) is symmetric, then
+\[
+\boxed{
+    A=QDQ^T,
+}
+\]
+where \(Q\) is orthogonal and \(D\) is diagonal.
+
+Let
+\[
+    \mathbf y=Q^T\mathbf x.
+\]
+Then
+\[
+\boxed{
+    \mathbf x^T A\mathbf x
+    =
+    \mathbf y^T D\mathbf y
+    =
+    \lambda_1 y_1^2+\cdots+\lambda_n y_n^2.
+}
+\]
+
+The eigenvalues show the principal curvatures of the quadratic form.
+
+\subsection*{Connection to Hessians}
+
+For a function \(f(x,y)\), the Hessian matrix is
+\[
+\boxed{
+    H_f=
+    \begin{pmatrix}
+    f_{xx} & f_{xy}\\
+    f_{yx} & f_{yy}
+    \end{pmatrix}.
+}
+\]
+
+When mixed partials agree,
+\[
+    f_{xy}=f_{yx},
+\]
+so \(H_f\) is symmetric.
+
+Near a critical point \(\mathbf p\), the quadratic approximation is
+\[
+\boxed{
+    f(\mathbf p+\mathbf h)
+    \approx
+    f(\mathbf p)
+    +
+    \frac12\mathbf h^T H_f(\mathbf p)\mathbf h.
+}
+\]
+
+\subsection*{Second derivative test in two variables}
+
+Suppose
+\[
+    \nabla f(a,b)=\mathbf 0.
+\]
+
+Let
+\[
+\boxed{
+    D=f_{xx}(a,b)f_{yy}(a,b)-f_{xy}(a,b)^2.
+}
+\]
+
+Then:
+
+\[
+\begin{array}{c|c}
+\text{Condition} & \text{Conclusion} \\ \hline
+D>0,\ f_{xx}(a,b)>0 & \text{local minimum}\\[1mm]
+D>0,\ f_{xx}(a,b)<0 & \text{local maximum}\\[1mm]
+D<0 & \text{saddle point}\\[1mm]
+D=0 & \text{test inconclusive}
+\end{array}
+\]
+
+\subsection*{Common warnings}
+
+A zero determinant in the Hessian test does not mean there is no maximum or minimum.
+It means the quadratic test does not decide.
+
+The matrix for
+\[
+    ax^2+bxy+cy^2
+\]
+is
+\[
+    \begin{pmatrix}
+    a & b/2\\
+    b/2 & c
+    \end{pmatrix},
+\]
+not
+\[
+    \begin{pmatrix}
+    a & b\\
+    b & c
+    \end{pmatrix}.
+\]
+
+The form
+\[
+    \mathbf x^T A\mathbf x
+\]
+uses a symmetric matrix when reading geometry.
+
+% ---------------------------------------------------------------------
+\section*{One-page formula summary}
+
+\[
+\boxed{
+    (A\mathbf x)_i
+    =
+    \sum_{j=1}^n a_{ij}x_j
+}
+\]
+
+\[
+\boxed{
+    (AB)_{ij}
+    =
+    \sum_k a_{ik}b_{kj}
+}
+\]
+
+\[
+\boxed{
+    (AB)^T=B^T A^T
+}
+\]
+
+\[
+\boxed{
+    \det
+    \begin{pmatrix}
+    a&b\\
+    c&d
+    \end{pmatrix}
+    =
+    ad-bc
+}
+\]
+
+\[
+\boxed{
+    \det(AB)=\det(A)\det(B)
+}
+\]
+
+\[
+\boxed{
+    A^{-1}
+    =
+    \frac{1}{ad-bc}
+    \begin{pmatrix}
+    d&-b\\
+    -c&a
+    \end{pmatrix}
+}
+\]
+for
+\[
+    A=
+    \begin{pmatrix}
+    a&b\\
+    c&d
+    \end{pmatrix},
+    \qquad
+    ad-bc\ne0.
+\]
+
+\[
+\boxed{
+    A\text{ invertible}
+    \Longleftrightarrow
+    \det A\ne0
+}
+\]
+
+\[
+\boxed{
+    A\mathbf v=\lambda\mathbf v
+}
+\]
+
+\[
+\boxed{
+    \det(A-\lambda I)=0
+}
+\]
+
+\[
+\boxed{
+    A=PDP^{-1}
+}
+\]
+when \(A\) has enough independent eigenvectors.
+
+\[
+\boxed{
+    q(\mathbf x)=\mathbf x^T A\mathbf x
+}
+\]
+
+\[
+\boxed{
+    ax^2+2bxy+cy^2
+    =
+    \begin{pmatrix}x&y\end{pmatrix}
+    \begin{pmatrix}
+    a&b\\
+    b&c
+    \end{pmatrix}
+    \begin{pmatrix}
+    x\\
+    y
+    \end{pmatrix}
+}
+\]
+
+\[
+\boxed{
+    A\text{ positive definite}
+    \Longleftrightarrow
+    \mathbf x^T A\mathbf x>0
+    \text{ for every }\mathbf x\ne\mathbf 0
+}
+\]
+
+\[
+\boxed{
+    D=f_{xx}f_{yy}-f_{xy}^2
+}
+\]
+
+\[
+\boxed{
+\begin{array}{c|c}
+D>0,\ f_{xx}>0 & \text{local minimum}\\
+D>0,\ f_{xx}<0 & \text{local maximum}\\
+D<0 & \text{saddle}\\
+D=0 & \text{inconclusive}
+\end{array}
+}
+\]

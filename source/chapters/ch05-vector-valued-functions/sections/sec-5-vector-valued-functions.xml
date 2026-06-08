@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch05-vector-valued-functions.tex, Section 5.1.
+     Status: CONVERTED. -->
+<section xml:id="sec-5-vector-valued-functions" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Vector-valued functions</title>
+
+  <p>
+    Chapter 4 used parametric curves to describe shapes. The circle
+    <md>\mathbf r(t)=(3\cos t,3\sin t)</md>
+    was a set of points traced by a moving point. Now we read the same notation in a more
+    physical way: at time <m>t</m>, where is the object?
+  </p>
+
+  <p>
+    A function like this has one input, but its output is a vector. That is why it is called
+    a vector-valued function.
+  </p>
+
+  <subsection xml:id="c5s1-subsec-position-as-function-of-time">
+    <title>Position as a function of time</title>
+
+    <p>
+      Imagine a firefly circling a porch light while slowly rising. Put the light at the origin
+      of the <m>xy</m>-plane, and measure height by <m>z</m>. Suppose the firefly's position at
+      time <m>t</m> is
+      <md>\mathbf r(t)=\left(2\cos t,\;2\sin t,\;1+\frac{t}{4}\right), \qquad 0\le t\le 4\pi.</md>
+      At a few times,
+    </p>
+
+    <table xml:id="c5s1-tab-helix-positions">
+      <title>Sample positions of the firefly.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell><m>t</m></cell>
+          <cell><m>\mathbf r(t)</m></cell>
+        </row>
+        <row>
+          <cell><m>0</m></cell>
+          <cell><m>(2,0,1)</m></cell>
+        </row>
+        <row>
+          <cell><m>\dfrac{\pi}{2}</m></cell>
+          <cell><m>\left(0,2,1+\dfrac{\pi}{8}\right)</m></cell>
+        </row>
+        <row>
+          <cell><m>\pi</m></cell>
+          <cell><m>\left(-2,0,1+\dfrac{\pi}{4}\right)</m></cell>
+        </row>
+        <row>
+          <cell><m>2\pi</m></cell>
+          <cell><m>\left(2,0,1+\dfrac{\pi}{2}\right)</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The <m>x</m>- and <m>y</m>-coordinates circle around the light. The <m>z</m>-coordinate
+      rises steadily. The path is a helix.
+    </p>
+
+    <figure xml:id="c5s1-fig-helix-position">
+      <caption>A vector-valued function can record the position of a moving point. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="62%">
+        <asymptote>
+        // 3-D interactive (WebGL) figure.
+        import graph3;
+        size(8.5cm);
+        currentprojection=orthographic(5,3,2.4);
+        real a=2;
+        path3 helix=graph(new triple(real t){return (a*cos(t), a*sin(t), 1+t/4);}, 0, 4pi, 220, operator ..);
+        draw(helix, blue+linewidth(1.1pt));
+        draw(circle((0,0,0), a, (0,0,1)), gray(0.6)+dashed);
+        dot((0,0,0), yellow+8pt); label("porch light", (0,0,0), 3*S);
+        real t0=1.7; triple Q=(a*cos(t0), a*sin(t0), 1+t0/4);
+        draw((0,0,0)--Q, black+linewidth(1.3pt), Arrow3); label("$\mathbf r(t)$", 0.6*Q, NW);
+        dot((a,0,1)); label("$t=0$", (a,0,1), 2*E);
+        draw(O--(3,0,0),gray,Arrow3); draw(O--(0,3,0),gray,Arrow3); draw(O--(0,0,4.6),gray,Arrow3);
+        label("$x$",(3,0,0),S); label("$y$",(0,3,0),E); label("$z$",(0,0,4.6),N);
+        </asymptote>
+      </image>
+    </figure>
+
+    <p>
+      The input <m>t</m> is a number. The output
+      <md>\mathbf r(t)</md>
+      is a vector in <m>\mathbb R^3</m>. So this is not a real-valued function like
+      <md>f(t)=t^2.</md>
+      It is a function whose values are vectors.
+    </p>
+
+    <definition xml:id="c5s1-def-vector-valued-function">
+      <title>Vector-valued function</title>
+      <statement>
+        <p>
+          A <term>vector-valued function</term> is a function whose output is a vector.
+        </p>
+        <p>
+          A vector-valued function into <m>\mathbb R^n</m> has the form
+          <md>\mathbf r(t)=\bigl(r_1(t),r_2(t),\ldots,r_n(t)\bigr),</md>
+          where each <m>r_i(t)</m> is an ordinary real-valued function.
+        </p>
+        <p>
+          When <m>\mathbf r(t)</m> describes motion, we call <m>\mathbf r(t)</m> the
+          <term>position vector</term> at time <m>t</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For plane motion,
+      <md>\mathbf r(t)=(x(t),y(t)).</md>
+      For space motion,
+      <md>\mathbf r(t)=(x(t),y(t),z(t)).</md>
+    </p>
+
+    <p>
+      The coordinate functions
+      <md>x(t),\qquad y(t),\qquad z(t)</md>
+      are called the <term>component functions</term>. They are ordinary single-variable
+      functions, so the tools of single-variable calculus can act on them.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s1-subsec-component-functions">
+    <title>Component functions</title>
+
+    <p>
+      A bird flying through a room might have position
+      <md>\mathbf r(t)=(3+t,\;2+\sin t,\;5-\cos t).</md>
+      This one vector equation is really three equations:
+      <md>x(t)=3+t,</md>
+      <md>y(t)=2+\sin t,</md>
+      and
+      <md>z(t)=5-\cos t.</md>
+      Each coordinate tells a different part of the motion. The <m>x</m>-coordinate increases
+      steadily. The <m>y</m>-coordinate oscillates. The <m>z</m>-coordinate also oscillates, but
+      with a different timing.
+    </p>
+
+    <example xml:id="c5s1-ex-reading-motion-component-by-component">
+      <title>Reading a motion component by component</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=(4\cos t,\;4\sin t,\;2t), \qquad 0\le t\le 2\pi.</md>
+          Then
+          <md>x(t)=4\cos t,\qquad y(t)=4\sin t,\qquad z(t)=2t.</md>
+          The first two coordinates keep the point on the cylinder
+          <md>x^2+y^2=16.</md>
+          The third coordinate rises from <m>0</m> to <m>4\pi</m>. So the image is one turn of a
+          helix on a cylinder of radius <m>4</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This way of reading a vector-valued function is simple, but important. Almost every
+      calculus operation in this chapter will happen component by component.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s1-subsec-limits-of-vector-valued-functions">
+    <title>Limits of vector-valued functions</title>
+
+    <p>
+      A moving object has a limiting position as <m>t</m> approaches <m>a</m> if its whole
+      position settles down to one vector.
+    </p>
+
+    <p>
+      For example, consider
+      <md>\mathbf r(t)= \left( \frac{t^2-1}{t-1},\; \sin(\pi t),\; \sqrt{t+3} \right), \qquad t\ne 1.</md>
+      The formula is not defined at <m>t=1</m>, because the first component contains
+      <md>\frac{t^2-1}{t-1}.</md>
+      But for <m>t\ne1</m>,
+      <md>\frac{t^2-1}{t-1} = \frac{(t-1)(t+1)}{t-1} = t+1.</md>
+      So as <m>t\to1</m>,
+      <md>\frac{t^2-1}{t-1}\to2,</md>
+      <md>\sin(\pi t)\to \sin\pi=0,</md>
+      and
+      <md>\sqrt{t+3}\to2.</md>
+      Therefore
+      <md>\lim_{t\to1}\mathbf r(t)=(2,0,2).</md>
+    </p>
+
+    <definition xml:id="c5s1-def-limit-vector-valued-function">
+      <title>Limit of a vector-valued function</title>
+      <statement>
+        <p>
+          We write
+          <md>\lim_{t\to a}\mathbf r(t)=\mathbf L</md>
+          if the distance
+          <md>\|\mathbf r(t)-\mathbf L\|</md>
+          approaches <m>0</m> as <m>t</m> approaches <m>a</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The definition says exactly what it should say: the vector <m>\mathbf r(t)</m> gets close
+      to <m>\mathbf L</m> if the distance between them gets small.
+    </p>
+
+    <p>The previous example suggests the main rule.</p>
+
+    <theorem xml:id="c5s1-thm-limits-are-componentwise">
+      <title>Limits are componentwise</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=\bigl(r_1(t),r_2(t),\ldots,r_n(t)\bigr)</md>
+          and
+          <md>\mathbf L=(L_1,L_2,\ldots,L_n).</md>
+          Then
+          <md>\lim_{t\to a}\mathbf r(t)=\mathbf L</md>
+          if and only if
+          <md>\lim_{t\to a}r_i(t)=L_i</md>
+          for every component <m>i=1,2,\ldots,n</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          The distance from <m>\mathbf r(t)</m> to <m>\mathbf L</m> is
+          <md>\|\mathbf r(t)-\mathbf L\| = \sqrt{ (r_1(t)-L_1)^2+\cdots+(r_n(t)-L_n)^2 }.</md>
+          If this distance goes to <m>0</m>, then each component difference must go to <m>0</m>.
+        </p>
+        <p>
+          Conversely, if every component difference goes to <m>0</m>, then the sum of their
+          squares goes to <m>0</m>, so the square root also goes to <m>0</m>. Thus the whole
+          vector approaches <m>\mathbf L</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>We really do need every component to settle down.</p>
+
+    <example xml:id="c5s1-ex-one-bad-component-breaks-the-limit">
+      <title>One bad component breaks the limit</title>
+      <statement>
+        <p>
+          Define
+          <md>\mathbf r(t)=\left(t,\sin\frac{1}{t}\right), \qquad t\ne0.</md>
+          The first component has a limit:
+          <md>t\to0.</md>
+          But the second component
+          <md>\sin\frac{1}{t}</md>
+          oscillates forever as <m>t\to0</m>. It does not approach one number.
+        </p>
+        <p>
+          So the vector-valued function has no limit at <m>t=0</m>. The first coordinate behaves
+          well, but the whole point does not settle down.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is the same lesson as in single-variable calculus, but now it can fail in any
+      coordinate.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s1-subsec-continuity">
+    <title>Continuity</title>
+
+    <p>A position function is continuous when the moving point does not jump.</p>
+
+    <definition xml:id="c5s1-def-continuity-vector-valued-function">
+      <title>Continuity of a vector-valued function</title>
+      <statement>
+        <p>
+          A vector-valued function <m>\mathbf r(t)</m> is <term>continuous at <m>a</m></term> if
+          <md>\lim_{t\to a}\mathbf r(t)=\mathbf r(a).</md>
+          It is continuous on an interval if it is continuous at every point of that interval
+          with the usual one-sided interpretation at endpoints.
+        </p>
+      </statement>
+    </definition>
+
+    <p>By the componentwise limit theorem, continuity is also componentwise.</p>
+
+    <theorem xml:id="c5s1-thm-continuity-is-componentwise">
+      <title>Continuity is componentwise</title>
+      <statement>
+        <p>
+          The vector-valued function
+          <md>\mathbf r(t)=\bigl(r_1(t),r_2(t),\ldots,r_n(t)\bigr)</md>
+          is continuous at <m>a</m> if and only if each component function <m>r_i(t)</m> is
+          continuous at <m>a</m>.
+        </p>
+      </statement>
+    </theorem>
+
+    <example xml:id="c5s1-ex-a-continuous-motion">
+      <title>A continuous motion</title>
+      <statement>
+        <p>
+          The function
+          <md>\mathbf r(t)=(\cos t,\sin t,t)</md>
+          is continuous for every <m>t</m>, because <m>\cos t</m>, <m>\sin t</m>, and <m>t</m>
+          are continuous. The curve is a helix with no jumps.
+        </p>
+      </statement>
+    </example>
+
+    <p>Here is why the continuity condition matters.</p>
+
+    <example xml:id="c5s1-ex-a-jump-is-not-steady-motion">
+      <title>A jump is not a curve of steady motion</title>
+      <statement>
+        <p>
+          Define
+          <md>\mathbf r(t)= \begin{cases} (t,0), &amp; t&lt;0,\\ (t,1), &amp; t\ge0. \end{cases}</md>
+          For <m>t&lt;0</m>, the point moves along the line <m>y=0</m>. For <m>t\ge0</m>, it moves
+          along the line <m>y=1</m>.
+        </p>
+        <p>
+          At <m>t=0</m>,
+          <md>\mathbf r(0)=(0,1).</md>
+          But as <m>t\to0^-</m>,
+          <md>\mathbf r(t)\to(0,0).</md>
+          The left-hand limiting position and the actual position at <m>0</m> do not agree. The
+          point teleports upward.
+        </p>
+        <p>So this function is not continuous at <m>t=0</m>.</p>
+      </statement>
+    </example>
+
+    <p>
+      A curve used to model physical motion is usually continuous. Later, when we want velocity,
+      we will ask for more: differentiability.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s1-subsec-space-curves-as-images-of-intervals">
+    <title>Space curves as images of intervals</title>
+
+    <p>
+      The <term>image</term> of a vector-valued function
+      <md>\mathbf r:I\to\mathbb R^n</md>
+      is the set of all points reached:
+      <md>\{\mathbf r(t):t\in I\}.</md>
+      This image is the geometric curve. But the function <m>\mathbf r(t)</m> contains more
+      information than the image alone.
+    </p>
+
+    <example xml:id="c5s1-ex-same-image-different-clocks">
+      <title>The same image with different clocks</title>
+      <statement>
+        <p>
+          The two functions
+          <md>\mathbf r_1(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi,</md>
+          and
+          <md>\mathbf r_2(s)=(\cos 2s,\sin 2s), \qquad 0\le s\le\pi,</md>
+          have the same image: the unit circle.
+        </p>
+        <p>
+          But the clocks are different. In <m>\mathbf r_1</m>, the angle is <m>t</m>. In
+          <m>\mathbf r_2</m>, the angle is <m>2s</m>. The second parametrization moves around the
+          circle twice as fast with respect to its parameter.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c5s1-ex-same-circle-traced-twice">
+      <title>The same circle traced twice</title>
+      <statement>
+        <p>
+          The function
+          <md>\mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le4\pi,</md>
+          also has the unit circle as its image. But it traces the circle twice.
+        </p>
+        <p>
+          The image does not remember how many times the curve is traced. The parametrization
+          does.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This distinction will matter whenever we integrate along a curve. If we walk around a
+      circle twice, an accumulated quantity may be twice as large. If we reverse direction, some
+      accumulated quantities change sign.
+    </p>
+
+    <p>
+      In the language of differentials, the components of a curve also tell us how <m>dx</m>,
+      <m>dy</m>, and <m>dz</m> change along the curve. If
+      <md>x=x(t),</md>
+      then later we will write
+      <md>dx=x'(t)\,dt.</md>
+      That is the first hint of how a <m>1</m>-form like
+      <md>P\,dx+Q\,dy+R\,dz</md>
+      will be pulled back to an ordinary one-variable integral along a path.
+    </p>
+
+    <p>
+      For now, a vector-valued function gives us a position record. The next question is the one
+      every motion problem asks first: how fast is the position changing?
+    </p>
+  </subsection>
+</section>

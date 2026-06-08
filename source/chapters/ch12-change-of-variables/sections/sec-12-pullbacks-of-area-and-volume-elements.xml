@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch12-change-of-variables.tex, Section 12.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-12-pullbacks-of-area-and-volume-elements" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Pullbacks of area and volume elements</title>
+
+  <p>
+    <xref ref="sec-12-changes-of-variables-in-space"/> gave one rule for changing variables in
+    space:
+    <md>dV=|J|\,du\,dv\,dw.</md>
+    The absolute value is right for ordinary volume. But it hides a sign.
+  </p>
+
+  <p>
+    That sign is not decoration. It tells us whether the coordinate change preserves or reverses
+    orientation. To see the sign instead of hiding it, we return to the forms from
+    <xref ref="ch02-vector-products"/>:
+    <md>dx\wedge dy \qquad\text{and}\qquad dx\wedge dy\wedge dz.</md>
+    These measure signed area and signed volume.
+  </p>
+
+  <subsection xml:id="c12s5-subsec-what-happens-to-dxdy">
+    <title>What happens to <m>dx\,dy</m> under a change of variables</title>
+
+    <p>
+      The notation
+      <md>dx\,dy</md>
+      is useful in ordinary iterated integrals, but it does not show orientation. The form
+      <md>dx\wedge dy</md>
+      does. It measures signed area, and it changes sign when the two directions are swapped.
+    </p>
+
+    <p>
+      Consider the coordinate change
+      <md>T(u,v)=(x,y)=(u+v,\;u-v).</md>
+      Start with the unit square
+      <md>S=\{(u,v):0\le u\le1,\ 0\le v\le1\}.</md>
+      Its image is a parallelogram in the <m>xy</m>-plane.
+    </p>
+
+    <p>
+      The two coordinate directions become
+      <md>T_u=(1,1), \qquad T_v=(1,-1).</md>
+      The signed area scale factor is
+      <md>\det \begin{pmatrix} 1&amp;1\\ 1&amp;-1 \end{pmatrix} = -2.</md>
+      So the image parallelogram has ordinary area
+      <md>2,</md>
+      but the orientation induced by the ordered variables <m>(u,v)</m> is opposite to the usual
+      orientation of the <m>xy</m>-plane.
+    </p>
+
+    <figure xml:id="c12s5-fig-orientation-reversal">
+      <caption>The map <m>T(u,v)=(u+v,u-v)</m> sends the positive <m>uv</m>-orientation to the
+      opposite orientation in the <m>xy</m>-plane.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-0.4,0) -- (3.2,0) node[right] {\(u\)};
+                \draw[-&gt;] (0,-0.4) -- (0,3.2) node[above] {\(v\)};
+
+                \draw[fill=gray!12, thick] (0,0) rectangle (1.7,1.7);
+
+                \draw[-&gt;, very thick] (0,0) -- (1.7,0) node[midway, below] {\(u\)};
+                \draw[-&gt;, very thick] (0,0) -- (0,1.7) node[midway, left] {\(v\)};
+
+                % Arc perfectly centered at the origin, sweeping from u to v
+                \draw[-&gt;, thick] (15:1.2) arc[start angle=15, end angle=75, radius=1.2];
+
+                \node at (1.1,-0.9) {positive square};
+            \end{scope}
+
+            \draw[-&gt;, thick] (3.6,1.2) -- (5.2,1.2);
+            \node[above] at (4.4,1.2) {\(T\)};
+
+            \begin{scope}[shift={(6.4,1.2)}]
+                \draw[-&gt;] (-0.6,0) -- (4.5,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-2.4) -- (0,2.4) node[above] {\(y\)};
+
+                \coordinate (O) at (0,0);
+                \coordinate (A) at (1.7,1.7);
+                \coordinate (B) at (1.7,-1.7);
+                \coordinate (AB) at (3.4,0);
+
+                \draw[fill=blue!8, thick] (O) -- (A) -- (AB) -- (B) -- cycle;
+
+                \draw[-&gt;, very thick] (O) -- (A) node[midway, above left] {\(T_u\)};
+                \draw[-&gt;, very thick] (O) -- (B) node[midway, below left] {\(T_v\)};
+
+                % Arc perfectly centered at the origin, sweeping from T_u down to T_v
+                \draw[-&gt;, thick] (35:1.4) arc[start angle=35, end angle=-35, radius=1.4];
+
+                \node at (2,-2.9) {opposite orientation};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      Now watch the same fact through differentials:
+      <md>x=u+v, \qquad y=u-v.</md>
+      So
+      <md>dx=du+dv,</md>
+      and
+      <md>dy=du-dv.</md>
+      Therefore
+      <md>
+        <mrow>dx\wedge dy \amp= (du+dv)\wedge(du-dv)</mrow>
+        <mrow>\amp= du\wedge du-du\wedge dv+dv\wedge du-dv\wedge dv</mrow>
+        <mrow>\amp= -du\wedge dv-du\wedge dv</mrow>
+        <mrow>\amp= -2\,du\wedge dv.</mrow>
+      </md>
+      Thus
+      <md>\boxed{ dx\wedge dy=-2\,du\wedge dv. }</md>
+    </p>
+
+    <p>
+      The determinant has appeared as the coefficient of the pulled-back area form.
+    </p>
+
+    <p>
+      For ordinary area, we use the positive scale factor:
+      <md>\operatorname{Area}(T(S)) = \int_0^1\int_0^1 2\,du\,dv = 2.</md>
+      For signed area using the orientation induced by the parametrization <m>T</m>, we keep the
+      sign:
+      <md>\int_S T^*(dx\wedge dy) = \int_0^1\int_0^1 (-2)\,du\,dv = -2.</md>
+    </p>
+
+    <p>Both answers are correct. They answer different questions.</p>
+  </subsection>
+
+  <subsection xml:id="c12s5-subsec-determinant-as-coefficient">
+    <title>The determinant as the coefficient of a pulled-back area element</title>
+
+    <p>
+      The word <term>pullback</term> means that we express a form from the target coordinates back
+      in the parameter coordinates.
+    </p>
+
+    <p>
+      If
+      <md>T(u,v)=(x(u,v),y(u,v)),</md>
+      then pulling back <m>dx</m> means replacing it by the differential of <m>x(u,v)</m>:
+      <md>T^*(dx)=d(x(u,v))=x_u\,du+x_v\,dv.</md>
+      Similarly,
+      <md>T^*(dy)=d(y(u,v))=y_u\,du+y_v\,dv.</md>
+    </p>
+
+    <p>
+      So
+      <md>
+        <mrow>T^*(dx\wedge dy) \amp= (x_u\,du+x_v\,dv)\wedge(y_u\,du+y_v\,dv)</mrow>
+        <mrow>\amp= x_u y_v\,du\wedge dv+x_v y_u\,dv\wedge du</mrow>
+        <mrow>\amp= (x_u y_v-x_v y_u)\,du\wedge dv.</mrow>
+      </md>
+      Hence
+      <md>\boxed{ T^*(dx\wedge dy) = \frac{\partial(x,y)}{\partial(u,v)}\,du\wedge dv. }</md>
+    </p>
+
+    <p>This is the signed version of the change-of-variables rule.</p>
+
+    <definition xml:id="c12s5-def-pullback-area-form">
+      <title>Pullback of an area form</title>
+      <statement>
+        <p>
+          Let
+          <md>T(u,v)=(x(u,v),y(u,v)).</md>
+          For a <m>2</m>-form
+          <md>\omega=g(x,y)\,dx\wedge dy,</md>
+          its pullback by <m>T</m> is
+          <md>\boxed{ T^*\omega = g(x(u,v),y(u,v)) \frac{\partial(x,y)}{\partial(u,v)} \,du\wedge dv. }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The pullback does two things at once:
+      <md>g(x,y)\quad\longrightarrow\quad g(x(u,v),y(u,v)),</md>
+      and
+      <md>dx\wedge dy\quad\longrightarrow\quad \frac{\partial(x,y)}{\partial(u,v)}\,du\wedge dv.</md>
+    </p>
+
+    <p>
+      For ordinary area integrals, the second factor becomes positive:
+      <md>\boxed{ \iint_R g(x,y)\,dA = \iint_S g(T(u,v)) \left| \frac{\partial(x,y)}{\partial(u,v)} \right| du\,dv. }</md>
+      For oriented <m>2</m>-form integrals, the sign stays:
+      <md>\boxed{ \iint_R g(x,y)\,dx\wedge dy = \iint_S g(T(u,v)) \frac{\partial(x,y)}{\partial(u,v)} \,du\wedge dv, }</md>
+      when <m>T</m> is used to orient the image.
+    </p>
+
+    <example xml:id="c12s5-ex-chemical-quarter-disk">
+      <title>A chemical spread over a quarter disk</title>
+      <statement>
+        <p>
+          A thin chemical film has areal density
+          <md>g(x,y)=3+x.</md>
+          Let <m>R</m> be the quarter disk
+          <md>x^2+y^2\le4, \qquad x\ge0,\qquad y\ge0.</md>
+          Use polar coordinates:
+          <md>x=r\cos\theta, \qquad y=r\sin\theta,</md>
+          with
+          <md>0\le r\le2, \qquad 0\le\theta\le\frac{\pi}{2}.</md>
+        </p>
+        <p>
+          The area form pulls back as
+          <md>dx\wedge dy=r\,dr\wedge d\theta.</md>
+          The density becomes
+          <md>g(r\cos\theta,r\sin\theta)=3+r\cos\theta.</md>
+          So the pulled-back <m>2</m>-form is
+          <md>(3+r\cos\theta)\,r\,dr\wedge d\theta.</md>
+          The total amount of chemical is
+          <md>
+            <mrow>\iint_R (3+x)\,dA \amp= \int_0^{\pi/2}\int_0^2 (3+r\cos\theta)r\,dr\,d\theta</mrow>
+            <mrow>\amp= \int_0^{\pi/2} \left[ \frac{3r^2}{2}+\frac{r^3}{3}\cos\theta \right]_{0}^{2} d\theta</mrow>
+            <mrow>\amp= \int_0^{\pi/2} \left( 6+\frac83\cos\theta \right)d\theta</mrow>
+            <mrow>\amp= 3\pi+\frac83.</mrow>
+          </md>
+          So
+          <md>\boxed{ \iint_R (3+x)\,dA=3\pi+\frac83. }</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Here the polar Jacobian
+      <md>r</md>
+      is nonnegative on the chosen domain, so the signed and ordinary area factors agree except at
+      the origin.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c12s5-subsec-pulling-back-volume-elements">
+    <title>Pulling back volume elements</title>
+
+    <p>
+      The same idea works in space. Let
+      <md>T(u,v,w)=(x(u,v,w),y(u,v,w),z(u,v,w)).</md>
+      Then
+      <md>dx=x_u\,du+x_v\,dv+x_w\,dw,</md>
+      <md>dy=y_u\,du+y_v\,dv+y_w\,dw,</md>
+      and
+      <md>dz=z_u\,du+z_v\,dv+z_w\,dw.</md>
+      When we wedge these three expressions together, every repeated differential vanishes, and the
+      surviving coefficient is the <m>3\times3</m> determinant:
+      <md>\boxed{ T^*(dx\wedge dy\wedge dz) = \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw. }</md>
+    </p>
+
+    <p>
+      For a <m>3</m>-form
+      <md>\Omega=h(x,y,z)\,dx\wedge dy\wedge dz,</md>
+      the pullback is
+      <md>\boxed{ T^*\Omega = h(T(u,v,w)) \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw. }</md>
+    </p>
+
+    <example xml:id="c12s5-ex-skewed-box-reversed-orientation">
+      <title>A skewed box with reversed orientation</title>
+      <statement>
+        <p>
+          Let
+          <md>T(u,v,w)=(x,y,z)=(u+v,\;u-v,\;w).</md>
+          Then
+          <md>dx=du+dv,</md>
+          <md>dy=du-dv,</md>
+          and
+          <md>dz=dw.</md>
+          Therefore
+          <md>
+            <mrow>dx\wedge dy\wedge dz \amp= (du+dv)\wedge(du-dv)\wedge dw</mrow>
+            <mrow>\amp= (-2\,du\wedge dv)\wedge dw</mrow>
+            <mrow>\amp= -2\,du\wedge dv\wedge dw.</mrow>
+          </md>
+          So
+          <md>\boxed{ T^*(dx\wedge dy\wedge dz) = -2\,du\wedge dv\wedge dw. }</md>
+        </p>
+        <p>
+          If
+          <md>S=[0,1]\times[0,1]\times[0,1],</md>
+          then <m>T(S)</m> is a skewed prism. Its ordinary volume is
+          <md>2.</md>
+          But its oriented volume using the parametrization <m>T</m> is
+          <md>-2.</md>
+          The minus sign says that the ordered coordinate directions
+          <md>T_u,\quad T_v,\quad T_w</md>
+          have the opposite orientation from the usual <m>x,y,z</m>-orientation.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      For ordinary volume integrals, the positive rule is
+      <md>\boxed{ \iiint_E h(x,y,z)\,dV = \iiint_S h(T(u,v,w)) \left| \frac{\partial(x,y,z)}{\partial(u,v,w)} \right| du\,dv\,dw. }</md>
+      For oriented <m>3</m>-form integrals, the sign stays:
+      <md>\boxed{ \iiint_E h(x,y,z)\,dx\wedge dy\wedge dz = \iiint_S h(T(u,v,w)) \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw. }</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c12s5-subsec-orientation-versus-absolute-value">
+    <title>Orientation versus absolute value</title>
+
+    <p>There are now two languages.</p>
+
+    <table xml:id="c12s5-tab-orientation-vs-absolute-value">
+      <title>Ordinary and oriented elements and their Jacobian factors.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Object</cell>
+          <cell>Measures</cell>
+          <cell>Jacobian factor</cell>
+        </row>
+        <row>
+          <cell><m>dA</m></cell>
+          <cell>ordinary area</cell>
+          <cell><m>|J|</m></cell>
+        </row>
+        <row>
+          <cell><m>dV</m></cell>
+          <cell>ordinary volume</cell>
+          <cell><m>|J|</m></cell>
+        </row>
+        <row>
+          <cell><m>dx\wedge dy</m></cell>
+          <cell>signed area</cell>
+          <cell><m>J</m></cell>
+        </row>
+        <row>
+          <cell><m>dx\wedge dy\wedge dz</m></cell>
+          <cell>signed volume</cell>
+          <cell><m>J</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The ordinary symbols
+      <md>dA,\qquad dV</md>
+      forget orientation. They count size only.
+    </p>
+
+    <p>
+      The wedge forms
+      <md>dx\wedge dy,\qquad dx\wedge dy\wedge dz</md>
+      remember orientation. They count size with sign.
+    </p>
+
+    <p>
+      This is why the same determinant appears in two slightly different ways:
+      <md>\text{ordinary integration uses } |J|,</md>
+      while
+      <md>\text{oriented integration uses } J.</md>
+    </p>
+
+    <p>
+      If <m>J\gt 0</m>, the coordinate change preserves orientation. If <m>J\lt 0</m>, it reverses
+      orientation. If <m>J=0</m>, then the derivative crushes area or volume at that point, and the
+      coordinate change may stop being a genuine coordinate system there.
+    </p>
+
+    <p>
+      The notation
+      <md>T^*\omega</md>
+      is useful because it keeps the sign. But the same sign is also where mistakes begin. A
+      determinant can be negative, zero, or locally correct while the map still covers the same
+      region more than once. The next examples are traps worth meeting before the formula becomes a
+      habit.
+    </p>
+  </subsection>
+</section>

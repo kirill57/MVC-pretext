@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch17-exterior-derivatives.tex, Section 17.7.
+     Status: CONVERTED. -->
+<section xml:id="sec-17-chapter-review-and-translation-table" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter review and translation table</title>
+
+  <introduction>
+    <p>
+      <xref ref="sec-17-warning-examples"/> ended with a warning. The equation
+      <md>d\alpha=0</md>
+      is local. It checks what happens near each point where the form is defined. But
+      integrals around closed loops and closed surfaces can detect something larger: a
+      missing point, a missing axis, or a hole in the domain.
+    </p>
+    <p>
+      Now we collect the whole chapter into one dictionary.
+    </p>
+    <p>
+      The exterior derivative does one simple thing:
+      <md>\boxed{d \text{ raises degree by }1.}</md>
+    </p>
+    <p>
+      In ordinary three-dimensional space, the ladder is
+      <md>0\text{-forms} \xrightarrow{\ d\ } 1\text{-forms} \xrightarrow{\ d\ } 2\text{-forms} \xrightarrow{\ d\ } 3\text{-forms} \xrightarrow{\ d\ } 0.</md>
+      The last arrow gives zero because there are no nonzero <m>4</m>-forms in ordinary
+      three-dimensional space.
+    </p>
+    <p>
+      The practical rule is just as simple:
+      <md>\boxed{\text{Differentiate the coefficient, then wedge with the coordinate factors.}}</md>
+    </p>
+    <p>
+      The wedge product then takes care of the signs:
+      <md>dx\wedge dx=0, \qquad dx\wedge dy=-dy\wedge dx.</md>
+    </p>
+  </introduction>
+
+  <subsection xml:id="c17s7-d-on-0-forms">
+    <title><m>d</m> on <m>0</m>-forms: gradient information</title>
+
+    <p>
+      A <m>0</m>-form is a function. Its exterior derivative is the differential.
+    </p>
+    <p>
+      If
+      <md>f=f(x,y,z),</md>
+      then
+      <md>\boxed{df=f_x\,dx+f_y\,dy+f_z\,dz.}</md>
+      This <m>1</m>-form measures tangent vectors:
+      <md>df_{\mathbf p}(\mathbf v) = f_x(\mathbf p)v_x+f_y(\mathbf p)v_y+f_z(\mathbf p)v_z.</md>
+    </p>
+    <p>
+      The gradient is the vector that represents this same measurement when we use the
+      Euclidean dot product:
+      <md>\boxed{df_{\mathbf p}(\mathbf v) = \nabla f(\mathbf p)\cdot \mathbf v.}</md>
+    </p>
+
+    <example xml:id="c17s7-eg-0form">
+      <title>A <m>0</m>-form and its first-order change</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y,z)=x^2y+yz.</md>
+          Then
+          <md>f_x=2xy, \qquad f_y=x^2+z, \qquad f_z=y.</md>
+          So
+          <md>\boxed{df=2xy\,dx+(x^2+z)\,dy+y\,dz.}</md>
+        </p>
+        <p>
+          At the point
+          <md>P=(1,2,3),</md>
+          this becomes
+          <md>df_P=4\,dx+4\,dy+2\,dz.</md>
+          If a particle passes through <m>P</m> with velocity
+          <md>\mathbf v=(2,-1,3),</md>
+          then
+          <md>
+            <mrow>df_P(\mathbf v) \amp= 4(2)+4(-1)+2(3)</mrow>
+            <mrow>\amp= 10.</mrow>
+          </md>
+          So <m>f</m> is increasing at rate <m>10</m> along that motion.
+        </p>
+        <p>
+          In gradient notation,
+          <md>\nabla f(P)=(4,4,2),</md>
+          and
+          <md>\nabla f(P)\cdot \mathbf v = (4,4,2)\cdot(2,-1,3) = 10.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      So the first row of the dictionary is:
+      <md>\boxed{\text{exterior derivative of a function} = \text{gradient information as a }1\text{-form}.}</md>
+    </p>
+    <p>
+      But <m>df</m> is not mainly a vector. It is a covector, a measuring rule for tangent
+      vectors. The gradient vector appears only after the dot product translates that
+      measuring rule into a vector.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c17s7-d-on-1-forms">
+    <title><m>d</m> on <m>1</m>-forms: curl information</title>
+
+    <p>
+      A <m>1</m>-form is integrated along curves. Its exterior derivative is a <m>2</m>-form,
+      so it is integrated over surfaces. This is why <m>d\omega</m> measures circulation
+      density.
+    </p>
+    <p>
+      In the plane, let
+      <md>\omega=P\,dx+Q\,dy.</md>
+      Then
+      <md>\boxed{d\omega=(Q_x-P_y)\,dx\wedge dy.}</md>
+      The coefficient
+      <md>Q_x-P_y</md>
+      is the scalar curl in the plane.
+    </p>
+    <p>
+      So Green's theorem can be read as
+      <md>\text{circulation around the boundary} = \text{circulation density added over the inside}.</md>
+    </p>
+    <p>
+      In space, let
+      <md>\omega=P\,dx+Q\,dy+R\,dz.</md>
+      Then
+      <md>\boxed{d\omega = (R_y-Q_z)\,dy\wedge dz + (P_z-R_x)\,dz\wedge dx + (Q_x-P_y)\,dx\wedge dy.}</md>
+    </p>
+    <p>
+      If
+      <md>\mathbf F=(P,Q,R)</md>
+      and
+      <md>\omega_{\mathbf F}=P\,dx+Q\,dy+R\,dz,</md>
+      then
+      <md>\boxed{d\omega_{\mathbf F}=\Phi_{\nabla\times\mathbf F}.}</md>
+      In words:
+      <md>\boxed{\text{the exterior derivative of a work form is the curl as a flux form.}}</md>
+    </p>
+
+    <example xml:id="c17s7-eg-1form">
+      <title>A <m>1</m>-form and its curl <m>2</m>-form</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=(xy+z)\,dx+(y^2+xz)\,dy+(x^2-y)\,dz.</md>
+          Here
+          <md>P=xy+z, \qquad Q=y^2+xz, \qquad R=x^2-y.</md>
+          Compute the three curl coefficients:
+          <md>R_y-Q_z=-1-x,</md>
+          <md>P_z-R_x=1-2x,</md>
+          and
+          <md>Q_x-P_y=z-x.</md>
+          Therefore
+          <md>\boxed{d\omega = (-1-x)\,dy\wedge dz + (1-2x)\,dz\wedge dx + (z-x)\,dx\wedge dy.}</md>
+        </p>
+        <p>
+          If
+          <md>\mathbf F=(xy+z,\ y^2+xz,\ x^2-y),</md>
+          then
+          <md>\nabla\times\mathbf F=(-1-x,\ 1-2x,\ z-x),</md>
+          and <m>d\omega</m> is exactly the flux form of that curl.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The standard order
+      <md>dy\wedge dz,\qquad dz\wedge dx,\qquad dx\wedge dy</md>
+      is not accidental. These are the three coordinate area forms perpendicular to the
+      <m>x</m>-, <m>y</m>-, and <m>z</m>-axes:
+    </p>
+
+    <table xml:id="c17s7-tbl-area-forms">
+      <title>Coordinate area forms and the components they match</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Area form</cell>
+          <cell>Measures oriented shadow in</cell>
+          <cell>Matches component</cell>
+        </row>
+        <row>
+          <cell><m>dy\wedge dz</m></cell>
+          <cell><m>yz</m>-plane</cell>
+          <cell><m>x</m>-component</cell>
+        </row>
+        <row>
+          <cell><m>dz\wedge dx</m></cell>
+          <cell><m>zx</m>-plane</cell>
+          <cell><m>y</m>-component</cell>
+        </row>
+        <row>
+          <cell><m>dx\wedge dy</m></cell>
+          <cell><m>xy</m>-plane</cell>
+          <cell><m>z</m>-component</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      That is why the curl vector becomes a flux <m>2</m>-form in exactly this order.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c17s7-d-on-2-forms">
+    <title><m>d</m> on <m>2</m>-forms: divergence information</title>
+
+    <p>
+      A <m>2</m>-form is integrated over surfaces. Its exterior derivative is a <m>3</m>-form,
+      so it is integrated over solids. This is why <m>d\Phi</m> measures source density.
+    </p>
+    <p>
+      In space, a flux <m>2</m>-form has the shape
+      <md>\Phi = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy.</md>
+      Then
+      <md>\boxed{d\Phi = (P_x+Q_y+R_z)\,dx\wedge dy\wedge dz.}</md>
+    </p>
+    <p>
+      If
+      <md>\mathbf F=(P,Q,R),</md>
+      then
+      <md>P_x+Q_y+R_z=\nabla\cdot\mathbf F.</md>
+      So
+      <md>\boxed{d\Phi_{\mathbf F} = (\nabla\cdot\mathbf F)\,dx\wedge dy\wedge dz.}</md>
+      In words:
+      <md>\boxed{\text{the exterior derivative of a flux form is divergence as a volume form.}}</md>
+    </p>
+
+    <example xml:id="c17s7-eg-2form">
+      <title>A <m>2</m>-form and its source density</title>
+      <statement>
+        <p>
+          Let
+          <md>\Phi = (x^2+yz)\,dy\wedge dz + (\sin y+xz)\,dz\wedge dx + (xy+e^z)\,dx\wedge dy.</md>
+          Here
+          <md>P=x^2+yz, \qquad Q=\sin y+xz, \qquad R=xy+e^z.</md>
+          Therefore
+          <md>P_x=2x, \qquad Q_y=\cos y, \qquad R_z=e^z.</md>
+          So
+          <md>\boxed{d\Phi=(2x+\cos y+e^z)\,dx\wedge dy\wedge dz.}</md>
+          The coefficient
+          <md>2x+\cos y+e^z</md>
+          is the divergence of the vector field whose flux form is <m>\Phi</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is the third row of the dictionary:
+      <md>\boxed{\text{exterior derivative of a flux form} = \text{divergence information as a volume form}.}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c17s7-two-forms-of-a-field">
+    <title>The two forms attached to a vector field</title>
+
+    <p>
+      A vector field in space can be turned into two different forms. They do different jobs.
+    </p>
+    <p>
+      If
+      <md>\mathbf F=(P,Q,R),</md>
+      then its <term>work form</term> is
+      <md>\boxed{\omega_{\mathbf F}=P\,dx+Q\,dy+R\,dz.}</md>
+      This is integrated over curves.
+    </p>
+    <p>
+      Its <term>flux form</term> is
+      <md>\boxed{\Phi_{\mathbf F} = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy.}</md>
+      This is integrated over surfaces.
+    </p>
+    <p>
+      The exterior derivative treats these two forms differently:
+    </p>
+
+    <table xml:id="c17s7-tbl-two-forms">
+      <title>Work form and flux form of the same vector field</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Vector field used as</cell>
+          <cell>Form</cell>
+          <cell>Integrated over</cell>
+          <cell>Exterior derivative</cell>
+        </row>
+        <row>
+          <cell>work field</cell>
+          <cell><m>\omega_{\mathbf F}=P\,dx+Q\,dy+R\,dz</m></cell>
+          <cell>curves</cell>
+          <cell><m>d\omega_{\mathbf F}=\Phi_{\nabla\times\mathbf F}</m></cell>
+        </row>
+        <row>
+          <cell>flux field</cell>
+          <cell><m>\Phi_{\mathbf F}=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy</m></cell>
+          <cell>surfaces</cell>
+          <cell><m>d\Phi_{\mathbf F}=(\nabla\cdot\mathbf F)\,dx\wedge dy\wedge dz</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      This is a common place to mix things up. The same vector field
+      <md>\mathbf F=(P,Q,R)</md>
+      does not automatically tell us whether we are doing work or flux. The form tells us.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c17s7-the-whole-dictionary">
+    <title>The whole dictionary</title>
+
+    <p>
+      The chapter can now be compressed into one table.
+    </p>
+
+    <table xml:id="c17s7-tbl-dictionary">
+      <title>The exterior derivative across all degrees in <m>\mathbb R^3</m></title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Degree</cell>
+          <cell>Typical form in <m>\mathbb R^3</m></cell>
+          <cell>Integrated over</cell>
+          <cell><m>d</m> gives</cell>
+        </row>
+        <row>
+          <cell><m>0</m></cell>
+          <cell><m>f</m></cell>
+          <cell>oriented points</cell>
+          <cell><m>df=f_x\,dx+f_y\,dy+f_z\,dz</m></cell>
+        </row>
+        <row>
+          <cell><m>1</m></cell>
+          <cell><m>P\,dx+Q\,dy+R\,dz</m></cell>
+          <cell>curves</cell>
+          <cell>curl as a <m>2</m>-form</cell>
+        </row>
+        <row>
+          <cell><m>2</m></cell>
+          <cell><m>P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy</m></cell>
+          <cell>surfaces</cell>
+          <cell>divergence as a <m>3</m>-form</cell>
+        </row>
+        <row>
+          <cell><m>3</m></cell>
+          <cell><m>H\,dx\wedge dy\wedge dz</m></cell>
+          <cell>solids</cell>
+          <cell><m>0</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The classical vector-calculus names are shadows of the same operation:
+      <md>\boxed{\begin{array}{ccl} f \amp \xrightarrow{\ d\ } \amp df \quad\text{contains gradient information},\\ \omega_{\mathbf F} \amp \xrightarrow{\ d\ } \amp \Phi_{\nabla\times\mathbf F} \quad\text{contains curl information},\\ \Phi_{\mathbf F} \amp \xrightarrow{\ d\ } \amp (\nabla\cdot\mathbf F)\,dx\wedge dy\wedge dz \quad\text{contains divergence information}. \end{array}}</md>
+    </p>
+
+    <figure xml:id="c17s7-fig-deriv-ladder">
+      <caption>Gradient, curl, and divergence are one operation, <m>d</m>, seen in different degrees.</caption>
+      <image width="90%">
+        <latex-image>
+        \begin{tikzpicture}[&gt;=stealth, scale=0.95]
+            \node[draw, rounded corners, fill=gray!8, minimum width=2.4cm, minimum height=1cm] (A)
+                at (0,0) {\(\begin{array}{c}0\text{-forms}\\ f\end{array}\)};
+            \node[draw, rounded corners, fill=gray!8, minimum width=2.8cm, minimum height=1cm] (B)
+                at (4,0) {\(\begin{array}{c}1\text{-forms}\\ df,\ \omega\end{array}\)};
+            \node[draw, rounded corners, fill=gray!8, minimum width=2.8cm, minimum height=1cm] (C)
+                at (8,0) {\(\begin{array}{c}2\text{-forms}\\ d\omega,\ \Phi\end{array}\)};
+            \node[draw, rounded corners, fill=gray!8, minimum width=2.8cm, minimum height=1cm] (D)
+                at (12,0) {\(\begin{array}{c}3\text{-forms}\\ d\Phi\end{array}\)};
+
+            \draw[-&gt;, very thick] (A) -- (B) node[midway, above] {\(d\)};
+            \draw[-&gt;, very thick] (B) -- (C) node[midway, above] {\(d\)};
+            \draw[-&gt;, very thick] (C) -- (D) node[midway, above] {\(d\)};
+
+            \node at (2,-0.95) {gradient};
+            \node at (6,-0.95) {curl};
+            \node at (10,-0.95) {divergence};
+
+            \draw[-&gt;, thick, dashed] (D.east) -- ++(1.2,0) node[right] {\(0\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c17s7-closed-exact-holes">
+    <title>Closed, exact, and the role of holes</title>
+
+    <p>
+      The identity
+      <md>\boxed{d^2=0}</md>
+      says that every exact form is closed:
+      <md>\alpha=d\beta \quad\Longrightarrow\quad d\alpha=0.</md>
+    </p>
+    <p>
+      In vector language, this gives the familiar identities:
+      <md>\boxed{\nabla\times(\nabla f)=\mathbf 0}</md>
+      and
+      <md>\boxed{\nabla\cdot(\nabla\times\mathbf F)=0.}</md>
+    </p>
+    <p>
+      In forms language, both are the same statement:
+      <md>d(d(\text{something}))=0.</md>
+    </p>
+    <p>
+      The reverse direction is the delicate one.
+    </p>
+
+    <table xml:id="c17s7-tbl-closed-exact">
+      <title>Closed, exact, and the warning between them</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Word</cell>
+          <cell>Meaning</cell>
+          <cell>Warning</cell>
+        </row>
+        <row>
+          <cell>exact</cell>
+          <cell><m>\alpha=d\beta</m></cell>
+          <cell>automatically closed</cell>
+        </row>
+        <row>
+          <cell>closed</cell>
+          <cell><m>d\alpha=0</m></cell>
+          <cell>not always exact</cell>
+        </row>
+        <row>
+          <cell>closed but not exact</cell>
+          <cell><m>d\alpha=0,\ \alpha\ne d\beta</m></cell>
+          <cell>usually caused by holes or singularities</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The punctured-plane form
+      <md>\frac{-y}{x^2+y^2}\,dx + \frac{x}{x^2+y^2}\,dy</md>
+      is closed where it is defined, but its integral around the unit circle is
+      <md>2\pi.</md>
+      That nonzero integral proves it is not exact on
+      <md>\mathbb R^2\setminus\{(0,0)\}.</md>
+    </p>
+    <p>
+      The punctured-space flux form
+      <md>\frac{x}{r^3}\,dy\wedge dz + \frac{y}{r^3}\,dz\wedge dx + \frac{z}{r^3}\,dx\wedge dy</md>
+      is closed where it is defined, but its integral over any sphere around the missing
+      origin is
+      <md>4\pi.</md>
+      That nonzero integral proves it is not exact on
+      <md>\mathbb R^3\setminus\{(0,0,0)\}.</md>
+    </p>
+    <p>
+      So the slogan from <xref ref="sec-17-warning-examples"/> is worth keeping:
+      <md>\boxed{d\alpha=0 \text{ is local; } \alpha=d\beta \text{ is global.}}</md>
+    </p>
+    <p>
+      A derivative sees tiny neighborhoods. A closed loop or closed surface can see the shape
+      of the domain.
+    </p>
+  </subsection>
+
+  <conclusion>
+    <title>Hook: one theorem will connect a form on a boundary to its derivative inside</title>
+
+    <p>
+      <xref ref="ch17-exterior-derivatives"/> has focused on the right-hand side of the future
+      theorem:
+      <md>d\omega.</md>
+      We now know how to compute it. We know that it becomes gradient, curl, or divergence
+      depending on the degree of the form. We also know that applying <m>d</m> twice gives
+      zero.
+    </p>
+    <p>
+      The missing piece is the boundary.
+    </p>
+    <p>
+      The same pattern has already appeared several times:
+    </p>
+
+    <table xml:id="c17s7-tbl-boundary-pattern">
+      <title>A form on a boundary and its derivative inside</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Region <m>M</m></cell>
+          <cell>Boundary <m>\partial M</m></cell>
+          <cell>Form on <m>\partial M</m></cell>
+          <cell>Derivative inside <m>M</m></cell>
+        </row>
+        <row>
+          <cell>interval <m>[a,b]</m></cell>
+          <cell><m>\{b\}-\{a\}</m></cell>
+          <cell><m>f</m></cell>
+          <cell><m>df</m></cell>
+        </row>
+        <row>
+          <cell>plane region <m>R</m></cell>
+          <cell>closed curve <m>\partial R</m></cell>
+          <cell><m>P\,dx+Q\,dy</m></cell>
+          <cell><m>d(P\,dx+Q\,dy)</m></cell>
+        </row>
+        <row>
+          <cell>surface <m>S</m></cell>
+          <cell>boundary curve <m>\partial S</m></cell>
+          <cell><m>P\,dx+Q\,dy+R\,dz</m></cell>
+          <cell><m>d(P\,dx+Q\,dy+R\,dz)</m></cell>
+        </row>
+        <row>
+          <cell>solid <m>E</m></cell>
+          <cell>boundary surface <m>\partial E</m></cell>
+          <cell><m>\Phi</m></cell>
+          <cell><m>d\Phi</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The dimensions always match. If <m>M</m> is <m>k</m>-dimensional, then
+      <md>\partial M</md>
+      is <m>(k-1)</m>-dimensional. So a <m>(k-1)</m>-form can be integrated over the boundary,
+      and its exterior derivative, a <m>k</m>-form, can be integrated over the inside.
+    </p>
+    <p>
+      That is the shape of the theorem:
+      <md>\boxed{\int_{\partial M}\omega=\int_M d\omega.}</md>
+    </p>
+    <p>
+      In one dimension, it is the Fundamental Theorem of Calculus:
+      <md>f(b)-f(a)=\int_a^b df.</md>
+      In the plane, it is Green's theorem. On surfaces, it is Stokes' theorem. In solids, it
+      is the divergence theorem.
+    </p>
+    <p>
+      The surprise is that these are not four separate miracles. They are one boundary
+      principle wearing four different costumes.
+    </p>
+    <p>
+      <xref ref="ch18-generalized-stokes"/> will state that principle carefully. The signs will
+      matter. The orientation of the boundary will matter. Smoothness and missing points will
+      matter. But the heart of the proof is already visible: when a region is cut into many
+      tiny pieces, the interior boundary contributions cancel in pairs. Only the outside
+      boundary remains.
+    </p>
+  </conclusion>
+</section>

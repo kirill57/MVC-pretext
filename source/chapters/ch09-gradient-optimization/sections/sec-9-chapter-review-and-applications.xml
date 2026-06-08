@@ -1,0 +1,1082 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch09-gradient-optimization.tex, Section 7.
+     Status: CONVERTED. -->
+<section xml:id="sec-9-chapter-review-and-applications" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter review and applications</title>
+
+  <introduction>
+    <p>
+      <xref ref="sec-9-warning-examples"/> collected the traps. A zero gradient may hide a
+      saddle. A degenerate Hessian may hide higher-order behavior. A Lagrange multiplier
+      calculation may miss an endpoint. Those warnings do not weaken the tools. They tell us
+      where each tool belongs.
+    </p>
+    <p>
+      This review gathers the chapter into one decision path.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c9s7-subsec-chapter-in-one-picture">
+    <title>The chapter in one picture</title>
+
+    <p>
+      Optimization begins by asking what motions are allowed.
+    </p>
+    <p>
+      If a point is free to move in every direction, then an interior extremum forces
+      <md>df=\mathbf 0,</md>
+      or, in gradient notation,
+      <md>\nabla f=\mathbf 0.</md>
+      If the point must stay on a constraint
+      <md>g=c,</md>
+      then only tangent directions to the constraint are allowed. At a constrained extremum,
+      <md>df=\lambda\,dg,</md>
+      or
+      <md>\nabla f=\lambda\nabla g.</md>
+    </p>
+    <p>
+      After first-order candidates are found, the Hessian reads the second-order shape.
+    </p>
+
+    <figure xml:id="fig-c9s7-decision-path">
+      <caption>The first question is not <q>Which formula do I use?</q> but <q>What motions
+      are allowed?</q></caption>
+      <image width="70%">
+        <latex-image>
+\begin{tikzpicture}[scale=0.92, &gt;=stealth]
+    \node[draw, rounded corners, align=center, minimum width=3.7cm, minimum height=0.9cm]
+        (start) at (0,0) {Optimization problem};
+
+    \node[draw, rounded corners, align=center, minimum width=4.1cm, minimum height=0.9cm]
+        (free) at (-4.1,-2) {Free interior point\\ \(\nabla f=\mathbf 0\)};
+
+    \node[draw, rounded corners, align=center, minimum width=4.1cm, minimum height=0.9cm]
+        (constr) at (4.1,-2) {Smooth constraint\\ \(\nabla f=\lambda\nabla g\)};
+
+    \node[draw, rounded corners, align=center, minimum width=4.1cm, minimum height=0.9cm]
+        (hess) at (-4.1,-4.2) {Classify with Hessian\\ when possible};
+
+    \node[draw, rounded corners, align=center, minimum width=4.1cm, minimum height=0.9cm]
+        (boundary) at (4.1,-4.2) {Check endpoints, corners,\\ and singular points};
+
+    \node[draw, rounded corners, align=center, minimum width=5.3cm, minimum height=0.9cm]
+        (compare) at (0,-6.4) {Compare candidate values for absolute extrema};
+
+    \draw[-&gt;, thick] (start) -- (free);
+    \draw[-&gt;, thick] (start) -- (constr);
+    \draw[-&gt;, thick] (free) -- (hess);
+    \draw[-&gt;, thick] (constr) -- (boundary);
+    \draw[-&gt;, thick] (hess) -- (compare);
+    \draw[-&gt;, thick] (boundary) -- (compare);
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The main tests can be kept in one table.
+      <md>
+\begin{array}{c|c|c}
+\text{Situation} \amp \text{Candidate condition} \amp \text{What to do next} \\ \hline
+\text{free interior point}
+\amp
+\nabla f=\mathbf 0
+\amp
+\text{use Hessian if second derivatives behave well}
+\\[2mm]
+\text{derivative fails}
+\amp
+\text{point is still a candidate}
+\amp
+\text{check directly}
+\\[2mm]
+\text{boundary point}
+\amp
+\text{ordinary }\nabla f=\mathbf 0\text{ may fail}
+\amp
+\text{optimize on the boundary}
+\\[2mm]
+\text{smooth constraint }g=c
+\amp
+\nabla f=\lambda\nabla g
+\amp
+\text{compare constrained candidates}
+\\[2mm]
+\text{two constraints}
+\amp
+\nabla f=\lambda\nabla g+\mu\nabla h
+\amp
+\text{compare constrained candidates}
+\end{array}
+      </md>
+    </p>
+    <p>
+      For a twice continuously differentiable function of two variables, the Hessian test at a
+      critical point uses
+      <md>A=f_{xx}, \qquad B=f_{xy}, \qquad C=f_{yy},</md>
+      and
+      <md>\Delta=AC-B^2.</md>
+      <md>
+\begin{array}{c|c}
+\text{Condition} \amp \text{Conclusion} \\ \hline
+\Delta\gt 0,\ A\gt 0 \amp \text{local minimum}\\[1mm]
+\Delta\gt 0,\ A\lt 0 \amp \text{local maximum}\\[1mm]
+\Delta\lt 0 \amp \text{saddle point}\\[1mm]
+\Delta=0 \amp \text{test gives no conclusion}
+\end{array}
+      </md>
+    </p>
+    <p>
+      The number
+      <md>\Delta</md>
+      is only reading the quadratic part. If the quadratic part is silent in some direction,
+      the function may still be decided by third, fourth, or higher-order terms.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s7-subsec-worked-free-critical">
+    <title>Worked review example: free critical points</title>
+
+    <p>
+      Let
+      <md>f(x,y)=x^3-3x+y^2-4y.</md>
+      Find and classify the critical points.
+    </p>
+    <p>
+      First compute the gradient:
+      <md>f_x=3x^2-3, \qquad f_y=2y-4.</md>
+      Set both equal to zero:
+      <md>3x^2-3=0, \qquad 2y-4=0.</md>
+      Thus
+      <md>x=\pm1, \qquad y=2.</md>
+      The critical points are
+      <md>(1,2) \qquad\text{and}\qquad (-1,2).</md>
+    </p>
+    <p>
+      Now compute the second partials:
+      <md>f_{xx}=6x, \qquad f_{xy}=0, \qquad f_{yy}=2.</md>
+    </p>
+    <p>
+      At
+      <md>(1,2),</md>
+      we have
+      <md>A=6,\qquad B=0,\qquad C=2.</md>
+      So
+      <md>\Delta=AC-B^2=12\gt 0,</md>
+      and
+      <md>A\gt 0.</md>
+      Therefore
+      <md>\boxed{(1,2)\text{ is a local minimum.}}</md>
+    </p>
+    <p>
+      At
+      <md>(-1,2),</md>
+      we have
+      <md>A=-6,\qquad B=0,\qquad C=2.</md>
+      So
+      <md>\Delta=(-6)(2)-0=-12\lt 0.</md>
+      Therefore
+      <md>\boxed{(-1,2)\text{ is a saddle point.}}</md>
+    </p>
+    <p>
+      The same function has both behaviors. The gradient found the silent points. The Hessian
+      listened to the first nonzero shape near each one.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s7-subsec-worked-rectangle">
+    <title>Worked review example: absolute extrema on a rectangle</title>
+
+    <p>
+      Let
+      <md>f(x,y)=x^2+2y^2-4x-4y</md>
+      on the rectangle
+      <md>0\le x\le 3, \qquad 0\le y\le 2.</md>
+      Find the absolute maximum and minimum.
+    </p>
+    <p>
+      The domain is closed and bounded, and <m>f</m> is continuous, so an absolute maximum and
+      minimum exist.
+    </p>
+    <p>
+      First check the interior. The gradient is
+      <md>\nabla f=(2x-4,\;4y-4).</md>
+      Set it equal to zero:
+      <md>2x-4=0, \qquad 4y-4=0.</md>
+      Thus
+      <md>x=2, \qquad y=1.</md>
+      This point lies inside the rectangle. Its value is
+      <md>f(2,1)=4+2-8-4=-6.</md>
+    </p>
+    <p>
+      Now check the boundary.
+    </p>
+    <p>
+      On the left edge,
+      <md>x=0,\qquad 0\le y\le2.</md>
+      Then
+      <md>f(0,y)=2y^2-4y=2(y-1)^2-2.</md>
+      The minimum on this edge is <m>-2</m>, and the maximum is <m>0</m>, reached at
+      <md>y=0 \qquad\text{and}\qquad y=2.</md>
+    </p>
+    <p>
+      On the right edge,
+      <md>x=3,\qquad 0\le y\le2.</md>
+      Then
+      <md>f(3,y)=9+2y^2-12-4y=2(y-1)^2-5.</md>
+      The minimum on this edge is <m>-5</m>, and the maximum is <m>-3</m>.
+    </p>
+    <p>
+      On the bottom edge,
+      <md>y=0,\qquad 0\le x\le3.</md>
+      Then
+      <md>f(x,0)=x^2-4x=(x-2)^2-4.</md>
+      The minimum on this edge is <m>-4</m>, and the maximum is <m>0</m>, reached at
+      <m>x=0</m>.
+    </p>
+    <p>
+      On the top edge,
+      <md>y=2,\qquad 0\le x\le3.</md>
+      Then
+      <md>f(x,2)=x^2+8-4x-8=x^2-4x=(x-2)^2-4.</md>
+      The minimum on this edge is <m>-4</m>, and the maximum is <m>0</m>, reached at
+      <m>x=0</m>.
+    </p>
+    <p>
+      Compare all candidates:
+      <md>
+\begin{array}{c|c}
+\text{candidate} \amp f(x,y) \\ \hline
+(2,1) \amp -6\\
+(0,0) \amp 0\\
+(0,2) \amp 0\\
+\text{other boundary candidates} \amp -5,\,-4,\,-3,\,-2
+\end{array}
+      </md>
+    </p>
+    <p>
+      Therefore
+      <md>\boxed{\text{absolute minimum }-6\text{ at }(2,1),}</md>
+      and
+      <md>\boxed{\text{absolute maximum }0\text{ at }(0,0)\text{ and }(0,2).}</md>
+    </p>
+    <p>
+      The interior gradient found the minimum. The maximum lived on the boundary.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s7-subsec-worked-constraint">
+    <title>Worked review example: one smooth constraint</title>
+
+    <p>
+      Find the maximum and minimum of
+      <md>p(x,y)=x+2y</md>
+      on the ellipse
+      <md>x^2+4y^2=16.</md>
+    </p>
+    <p>
+      Let
+      <md>g(x,y)=x^2+4y^2.</md>
+      The constraint is
+      <md>g=16.</md>
+      The gradients are
+      <md>\nabla p=(1,2), \qquad \nabla g=(2x,8y).</md>
+      The Lagrange multiplier equation is
+      <md>\nabla p=\lambda\nabla g.</md>
+      So
+      <md>1=2\lambda x, \qquad 2=8\lambda y.</md>
+      Thus
+      <md>x=\frac{1}{2\lambda}, \qquad y=\frac{1}{4\lambda}.</md>
+      Substitute into the constraint:
+      <md>x^2+4y^2=16.</md>
+      This gives
+      <md>\frac{1}{4\lambda^2} + 4\cdot\frac{1}{16\lambda^2} = 16,</md>
+      so
+      <md>\frac{1}{2\lambda^2}=16.</md>
+      Therefore
+      <md>\lambda^2=\frac{1}{32},</md>
+      and
+      <md>\lambda=\pm \frac{1}{4\sqrt2}.</md>
+    </p>
+    <p>
+      When
+      <md>\lambda=\frac{1}{4\sqrt2},</md>
+      we get
+      <md>x=2\sqrt2, \qquad y=\sqrt2.</md>
+      When
+      <md>\lambda=-\frac{1}{4\sqrt2},</md>
+      we get
+      <md>x=-2\sqrt2, \qquad y=-\sqrt2.</md>
+    </p>
+    <p>
+      The values are
+      <md>p(2\sqrt2,\sqrt2)=2\sqrt2+2\sqrt2=4\sqrt2,</md>
+      and
+      <md>p(-2\sqrt2,-\sqrt2)=-4\sqrt2.</md>
+      The ellipse is closed and bounded, so these are the absolute extrema:
+      <md>\boxed{\text{maximum }4\sqrt2\text{ at }(2\sqrt2,\sqrt2),}</md>
+      <md>\boxed{\text{minimum }-4\sqrt2\text{ at }(-2\sqrt2,-\sqrt2).}</md>
+    </p>
+    <p>
+      Geometrically, the level lines
+      <md>x+2y=c</md>
+      slide across the ellipse. At the largest and smallest values, the line just touches the
+      ellipse. At those touching points, the normal direction to the line is parallel to the
+      normal direction to the ellipse.
+    </p>
+  </subsection>
+
+  <exercises xml:id="c9s7-ex-concept-check">
+    <title>Concept check</title>
+
+    <exercise xml:id="c9s7-cc-gradient-normal">
+      <statement>
+        <p>Why is the gradient normal to a level curve?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-tangent-line">
+      <statement>
+        <p>
+          What is the tangent line to
+          <md>f(x,y)=f(a,b)</md>
+          at a point where
+          <md>\nabla f(a,b)\ne\mathbf 0?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-tangent-plane">
+      <statement>
+        <p>
+          What is the tangent plane to
+          <md>F(x,y,z)=F(a,b,c)</md>
+          at a point where
+          <md>\nabla F(a,b,c)\ne\mathbf 0?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-interior-extremum">
+      <statement>
+        <p>
+          Why must an interior local maximum or minimum of a differentiable function satisfy
+          <md>\nabla f=\mathbf 0?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-not-guarantee">
+      <statement>
+        <p>
+          Why does
+          <md>\nabla f=\mathbf 0</md>
+          not guarantee a maximum or minimum?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-hessian-info">
+      <statement>
+        <p>What information does the Hessian contain that the gradient does not?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-discriminant">
+      <statement>
+        <p>
+          In the two-variable second derivative test, what does
+          <md>\Delta=f_{xx}f_{yy}-f_{xy}^2</md>
+          measure?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-positive-definite">
+      <statement>
+        <p>
+          What does it mean for a Hessian to be positive definite? What local shape does that
+          suggest at a critical point?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-require-critical">
+      <statement>
+        <p>Why does the second derivative test require the point to be critical?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-zero-discriminant">
+      <statement>
+        <p>
+          Why does the test give no conclusion when
+          <md>\Delta=0?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-constrained-condition">
+      <statement>
+        <p>
+          Why does a constrained extremum usually satisfy
+          <md>\nabla f=\lambda\nabla g</md>
+          instead of
+          <md>\nabla f=\mathbf 0?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-singular-constraint">
+      <statement>
+        <p>
+          What can go wrong if
+          <md>\nabla g=\mathbf 0</md>
+          on the constraint?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-endpoints-corners">
+      <statement>
+        <p>Why must endpoints and corners be checked separately?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-cc-differential-form">
+      <statement>
+        <p>
+          In the differential-form notation
+          <md>df=\lambda\,dg,</md>
+          what does the equation say about allowed tangent motions?
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises xml:id="c9s7-ex-skill-problems">
+    <title>Skill problems</title>
+
+    <exercise xml:id="c9s7-sk-tangent-line">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^2+xy+y^2.</md>
+          Find the tangent line to the level curve
+          <md>f(x,y)=3</md>
+          at
+          <md>(1,1).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-tangent-plane">
+      <statement>
+        <p>
+          Let
+          <md>F(x,y,z)=x^2+2y^2+3z^2.</md>
+          Find the tangent plane to
+          <md>F(x,y,z)=9</md>
+          at
+          <md>(1,1,\sqrt2).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-h-critical">
+      <statement>
+        <p>
+          Let
+          <md>h(x,y)=20+4x-y-x^2-2y^2.</md>
+          Find all critical points and classify them.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-f-critical">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^3-3x+y^2-2y.</md>
+          Find all critical points and classify them.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-q-origin">
+      <statement>
+        <p>
+          Let
+          <md>q(x,y)=x^2+4xy+y^2.</md>
+          Classify the origin using the Hessian.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-s-origin">
+      <statement>
+        <p>
+          Let
+          <md>s(x,y)=x^2+xy+2y^2.</md>
+          Use the Hessian to decide whether the origin is a local maximum, local minimum, or
+          saddle point.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-x4-plus-y2">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^4+y^2.</md>
+          Explain why the second derivative test gives no conclusion at the origin, and then
+          classify the origin directly.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-x4-minus-y2">
+      <statement>
+        <p>
+          Let
+          <md>g(x,y)=x^4-y^2.</md>
+          Explain why the origin is a saddle point even though the Hessian is degenerate.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-disk">
+      <statement>
+        <p>
+          Find the absolute maximum and minimum of
+          <md>f(x,y)=x+y</md>
+          on the closed disk
+          <md>x^2+y^2\le 9.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-rectangle">
+      <statement>
+        <p>
+          Find the absolute maximum and minimum of
+          <md>f(x,y)=x^2+y^2-2x</md>
+          on the rectangle
+          <md>-1\le x\le3, \qquad 0\le y\le2.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-circle-lagrange">
+      <statement>
+        <p>
+          Use Lagrange multipliers to find the maximum and minimum of
+          <md>f(x,y)=3x+4y</md>
+          on the circle
+          <md>x^2+y^2=25.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-ellipse-xy">
+      <statement>
+        <p>
+          Use Lagrange multipliers to find the maximum and minimum of
+          <md>f(x,y)=xy</md>
+          on the ellipse
+          <md>x^2+4y^2=16.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-plane-closest">
+      <statement>
+        <p>
+          Find the point on the plane
+          <md>x+y+z=6</md>
+          closest to the origin.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-sphere-largest">
+      <statement>
+        <p>
+          Find the point on the sphere
+          <md>x^2+y^2+z^2=25</md>
+          where
+          <md>f(x,y,z)=x+2y+2z</md>
+          is largest.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-curve-two-constraints">
+      <statement>
+        <p>
+          Find the maximum and minimum of
+          <md>f(x,y,z)=z</md>
+          on the curve where
+          <md>x^2+y^2+z^2=9, \qquad x+y=0.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-parabola-constraint">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^2+y^2</md>
+          subject to
+          <md>y=x^2.</md>
+          Find the constrained critical points by reducing to one variable. Then explain why
+          the ordinary condition
+          <md>\nabla f=\lambda\nabla g</md>
+          must be used with care at singular constraints.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-segment">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x</md>
+          on the line segment
+          <md>-1\le x\le1, \qquad y=0.</md>
+          Explain why the Lagrange multiplier equation for the smooth line <m>y=0</m> finds no
+          candidate, even though the function has a maximum and a minimum on the segment.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-abs-value">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=|x|+y^2.</md>
+          Does <m>f</m> have a local minimum at the origin? Is the gradient defined there?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-classify-origin">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^2-y^2+x^4.</md>
+          Classify the origin.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-x4-y4-4xy">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^4+y^4-4xy.</md>
+          Find all critical points. Use the Hessian where possible.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-exponential">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=e^{x+y}(x^2+y^2).</md>
+          Show that the origin is a critical point and classify it.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-complete-square">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^2+2y^2+2xy-6x.</md>
+          Complete the square to classify its critical point. Then check your answer with the
+          Hessian.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-mixed-partials">
+      <statement>
+        <p>
+          Let
+          <md>
+F(x,y)=
+\begin{cases}
+\dfrac{xy(x^2-y^2)}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[3mm]
+0, \amp (x,y)=(0,0).
+\end{cases}
+          </md>
+          Compute
+          <md>F_{xy}(0,0) \qquad\text{and}\qquad F_{yx}(0,0).</md>
+          What hypothesis of the mixed-partials theorem fails?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-zero-hessian-min">
+      <statement>
+        <p>
+          Give an example of a critical point where the Hessian is the zero matrix but the
+          point is a local minimum.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c9s7-sk-zero-hessian-saddle">
+      <statement>
+        <p>
+          Give an example of a critical point where the Hessian is the zero matrix but the
+          point is a saddle point.
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <subsection xml:id="c9s7-subsec-least-squares">
+    <title>Discovery project: least squares and the geometry of best fit</title>
+
+    <p>
+      A line rarely passes exactly through experimental data. Suppose a lab records four points:
+      <md>(0,1),\qquad (1,2),\qquad (2,2),\qquad (3,4).</md>
+      We want a line
+      <md>y=mx+b</md>
+      that fits them as well as possible.
+    </p>
+    <p>
+      For each data point <m>(x_i,y_i)</m>, the vertical error is
+      <md>mx_i+b-y_i.</md>
+      Instead of minimizing the sum of errors, which can cancel positive and negative mistakes,
+      minimize the sum of squared errors:
+      <md>\boxed{E(m,b)=\sum_{i=1}^4(mx_i+b-y_i)^2.}</md>
+      For these data,
+      <md>\boxed{E(m,b) = (b-1)^2+(m+b-2)^2+(2m+b-2)^2+(3m+b-4)^2.}</md>
+    </p>
+    <p>
+      The best-fit line is found by minimizing <m>E</m>. This is an optimization problem in the
+      two variables
+      <md>m \qquad\text{and}\qquad b.</md>
+    </p>
+
+    <subsubsection xml:id="c9s7-ls-normal-equations">
+      <title>Part 1. The normal equations</title>
+      <p>
+        Differentiate:
+        <md>E_m=2\sum_{i=1}^4 x_i(mx_i+b-y_i),</md>
+        and
+        <md>E_b=2\sum_{i=1}^4 (mx_i+b-y_i).</md>
+        At the minimum,
+        <md>E_m=0, \qquad E_b=0.</md>
+        These are called the normal equations.
+      </p>
+      <p>
+        For the four data points, compute
+        <md>\sum x_i=6, \qquad \sum x_i^2=14, \qquad \sum y_i=9, \qquad \sum x_iy_i=18.</md>
+        Show that the equations become
+        <md>\boxed{14m+6b=18,}</md>
+        and
+        <md>\boxed{6m+4b=9.}</md>
+        Solve them to get
+        <md>\boxed{m=\frac{9}{10}, \qquad b=\frac{9}{10}.}</md>
+        So the least-squares line is
+        <md>\boxed{y=\frac{9}{10}x+\frac{9}{10}.}</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c9s7-ls-minimum">
+      <title>Part 2. Why this critical point is a minimum</title>
+      <p>
+        The Hessian of <m>E</m> is
+        <md>
+H_E
+=
+2
+\begin{pmatrix}
+    \sum x_i^2 \amp \sum x_i\\
+    \sum x_i \amp 4
+\end{pmatrix}
+=
+\begin{pmatrix}
+    28 \amp 12\\
+    12 \amp 8
+\end{pmatrix}.
+        </md>
+        Compute
+        <md>\Delta=28\cdot8-12^2=224-144=80\gt 0.</md>
+        Since
+        <md>A=28\gt 0,</md>
+        the Hessian is positive definite. Therefore the critical point is a local minimum.
+      </p>
+      <p>
+        Because <m>E(m,b)</m> is a quadratic function whose leading quadratic part is positive
+        definite, this local minimum is the absolute minimum.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c9s7-ls-residual">
+      <title>Part 3. The geometry of the residual</title>
+      <p>
+        Let
+        <md>\mathbf y=(1,2,2,4)</md>
+        be the vector of measured <m>y</m>-values. Let
+        <md>\mathbf 1=(1,1,1,1), \qquad \mathbf x=(0,1,2,3).</md>
+        The predicted values from the line
+        <md>y=mx+b</md>
+        form the vector
+        <md>\widehat{\mathbf y}=m\mathbf x+b\mathbf 1.</md>
+        The residual vector is
+        <md>\mathbf r=\widehat{\mathbf y}-\mathbf y.</md>
+      </p>
+      <p>
+        At the best-fit line,
+        <md>m=b=\frac9{10}.</md>
+        So
+        <md>\widehat{\mathbf y} = \left(\frac9{10},\frac{18}{10},\frac{27}{10},\frac{36}{10}\right),</md>
+        and
+        <md>\mathbf r = \left(-\frac1{10},-\frac2{10},\frac7{10},-\frac4{10}\right).</md>
+        Check that
+        <md>\boxed{\mathbf r\cdot \mathbf 1=0}</md>
+        and
+        <md>\boxed{\mathbf r\cdot \mathbf x=0.}</md>
+      </p>
+      <p>
+        The residual is perpendicular to every change caused by adjusting <m>b</m> or adjusting
+        <m>m</m>. This is the geometric meaning of the normal equations: the error left over is
+        orthogonal to the space of possible predictions.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c9s7-ls-handin">
+      <title>What to hand in</title>
+      <p>Write a short report with the following pieces.</p>
+      <ol>
+        <li><p>A plot of the four data points and the best-fit line.</p></li>
+        <li>
+          <p>
+            The error function
+            <md>E(m,b).</md>
+          </p>
+        </li>
+        <li>
+          <p>
+            The two normal equations
+            <md>E_m=0,\qquad E_b=0.</md>
+          </p>
+        </li>
+        <li>
+          <p>
+            The solution
+            <md>m=b=\frac9{10}.</md>
+          </p>
+        </li>
+        <li><p>The Hessian calculation showing that this point gives a minimum.</p></li>
+        <li>
+          <p>
+            The residual vector and the two dot products
+            <md>\mathbf r\cdot\mathbf 1=0, \qquad \mathbf r\cdot\mathbf x=0.</md>
+          </p>
+        </li>
+        <li><p>A paragraph explaining why <q>best fit</q> means a perpendicular residual.</p></li>
+      </ol>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="c9s7-subsec-container">
+    <title>Discovery project: designing a container under constraints</title>
+
+    <p>
+      A rectangular open-top container has base side lengths
+      <md>x,\qquad y</md>
+      and height
+      <md>z.</md>
+      It must have volume
+      <md>32</md>
+      cubic units:
+      <md>xyz=32.</md>
+      The amount of material needed is
+      <md>A(x,y,z)=xy+2xz+2yz.</md>
+      The term <m>xy</m> is the base. The terms <m>2xz</m> and <m>2yz</m> are the four side
+      walls. There is no top.
+    </p>
+    <p>
+      Find the dimensions that use the least material.
+    </p>
+
+    <subsubsection xml:id="c9s7-box-setup">
+      <title>Part 1. Set up the Lagrange equations</title>
+      <p>
+        Let
+        <md>g(x,y,z)=xyz.</md>
+        The constraint is
+        <md>g=32.</md>
+        The gradients are
+        <md>\nabla A=(y+2z,\ x+2z,\ 2x+2y),</md>
+        and
+        <md>\nabla g=(yz,\ xz,\ xy).</md>
+        The Lagrange multiplier equation is
+        <md>\nabla A=\lambda\nabla g.</md>
+        So
+        <md>y+2z=\lambda yz,</md>
+        <md>x+2z=\lambda xz,</md>
+        <md>2x+2y=\lambda xy,</md>
+        together with
+        <md>xyz=32.</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c9s7-box-square-base">
+      <title>Part 2. Show that the base is square</title>
+      <p>
+        Multiply the first equation by <m>x</m>:
+        <md>xy+2xz=\lambda xyz.</md>
+        Multiply the second equation by <m>y</m>:
+        <md>xy+2yz=\lambda xyz.</md>
+        Subtract:
+        <md>2xz-2yz=0.</md>
+        Since
+        <md>z\gt 0,</md>
+        we get
+        <md>\boxed{x=y.}</md>
+      </p>
+      <p>
+        Set
+        <md>x=y=a.</md>
+        The third Lagrange equation becomes
+        <md>4a=\lambda a^2,</md>
+        so
+        <md>\lambda=\frac4a.</md>
+        The first equation becomes
+        <md>a+2z=\lambda az.</md>
+        Substitute
+        <md>\lambda=\frac4a:</md>
+        <md>a+2z=4z.</md>
+        Therefore
+        <md>\boxed{a=2z.}</md>
+        So
+        <md>z=\frac a2.</md>
+      </p>
+      <p>
+        Use the volume constraint:
+        <md>a^2z=32.</md>
+        Since
+        <md>z=\frac a2,</md>
+        we get
+        <md>a^2\cdot\frac a2=32,</md>
+        so
+        <md>a^3=64.</md>
+        Thus
+        <md>a=4,</md>
+        and
+        <md>z=2.</md>
+        The candidate is
+        <md>\boxed{x=4,\qquad y=4,\qquad z=2.}</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c9s7-box-check-minimum">
+      <title>Part 3. Check the minimum another way</title>
+      <p>
+        Since the Lagrange equations showed
+        <md>x=y,</md>
+        write
+        <md>x=y=a, \qquad z=\frac{32}{a^2}.</md>
+        Then
+        <md>
+\begin{aligned}
+    A(a)
+    \amp=
+    a^2+2a\left(\frac{32}{a^2}\right)
+        +2a\left(\frac{32}{a^2}\right)\\
+    \amp=
+    a^2+\frac{128}{a}.
+\end{aligned}
+        </md>
+        Differentiate:
+        <md>A'(a)=2a-\frac{128}{a^2}.</md>
+        Set
+        <md>A'(a)=0:</md>
+        <md>2a=\frac{128}{a^2}.</md>
+        Thus
+        <md>a^3=64,</md>
+        so
+        <md>a=4.</md>
+        Also,
+        <md>A''(a)=2+\frac{256}{a^3}\gt 0.</md>
+        So this point gives a minimum along the square-base family.
+      </p>
+      <p>
+        The dimensions are
+        <md>\boxed{4\times4\times2.}</md>
+      </p>
+      <p>
+        The answer is not a cube. Since the container has no top, it is cheaper to make the base
+        wider and the height shorter.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c9s7-box-handin">
+      <title>What to hand in</title>
+      <p>Write a short report with the following pieces.</p>
+      <ol>
+        <li><p>A diagram of the open-top box with side lengths <m>x</m>, <m>y</m>, and <m>z</m>.</p></li>
+        <li>
+          <p>
+            The material function
+            <md>A(x,y,z)=xy+2xz+2yz.</md>
+          </p>
+        </li>
+        <li>
+          <p>
+            The constraint
+            <md>xyz=32.</md>
+          </p>
+        </li>
+        <li><p>The Lagrange multiplier equations.</p></li>
+        <li>
+          <p>
+            The calculation showing that
+            <md>x=y.</md>
+          </p>
+        </li>
+        <li>
+          <p>
+            The calculation showing that
+            <md>z=\frac{x}{2}.</md>
+          </p>
+        </li>
+        <li><p>The final dimensions.</p></li>
+        <li><p>A sentence explaining why the answer is shorter than a cube.</p></li>
+      </ol>
+    </subsubsection>
+  </subsection>
+
+  <conclusion>
+    <p>
+      This chapter asked where a function is largest, smallest, or level to first order. That is
+      a pointwise question. We stood on a hill and asked for the summit. We walked around a
+      constraint and asked where the allowed motion stopped improving the value. The tools were
+      local:
+      <md>df, \qquad \nabla f, \qquad H_f.</md>
+    </p>
+    <p>
+      But sometimes the most interesting question is not about one point. A farmer does not only
+      ask where the field is tallest; she asks how much crop the whole field will produce. An
+      engineer does not only ask where a plate is hottest; she asks how much heat energy is
+      spread across the plate. A hill is not only its highest point; it also has a total volume
+      of earth under it.
+    </p>
+    <p>
+      To answer questions like that, we stop searching for a best point and start adding tiny
+      pieces over a region. The single-variable integral added pieces along an interval. The
+      next chapter lets the pieces fill a rectangle, a disk, or a curved region in the plane.
+    </p>
+    <p>
+      That is the double integral.
+    </p>
+  </conclusion>
+</section>

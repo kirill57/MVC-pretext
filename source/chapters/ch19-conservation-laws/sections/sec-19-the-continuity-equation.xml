@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch19-conservation-laws.tex, Section 19.2.
+     Status: CONVERTED. -->
+<section xml:id="sec-19-the-continuity-equation" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The continuity equation</title>
+
+  <p>
+    <xref ref="sec-19-balance-laws-from-flux"/> gave the integral balance law:
+    <md>
+      \frac{d}{dt}\iiint_E \rho\,dV
+      +
+      \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+      =
+      \iiint_E s\,dV.
+    </md>
+    This equation counts a whole region. To turn it into a differential equation, we use
+    the divergence theorem to move the boundary flux into the interior.
+  </p>
+
+  <subsection xml:id="c19s2-from-a-box-balance-to-a-local-equation">
+    <title>From a box balance to a local equation</title>
+
+    <p>
+      Return to the box
+      <md>E=[0,3]\times[0,1]\times[0,1]</md>
+      from <xref ref="sec-19-balance-laws-from-flux"/>. There we used
+      <md>
+        \rho(x,y,z,t)=10-t,
+        \qquad
+        \mathbf J(x,y,z,t)=(x,0,0).
+      </md>
+      There was no source:
+      <md>s=0.</md>
+    </p>
+
+    <p>
+      Compute the two local terms:
+      <md>\rho_t=-1,</md>
+      and
+      <md>
+        \nabla\cdot\mathbf J
+        =
+        \frac{\partial x}{\partial x}
+        +
+        \frac{\partial 0}{\partial y}
+        +
+        \frac{\partial 0}{\partial z}
+        =
+        1.
+      </md>
+      So
+      <md>\boxed{\rho_t+\nabla\cdot\mathbf J=0.}</md>
+    </p>
+
+    <p>
+      The global balance
+      <md>A'(t)=-3</md>
+      was not a coincidence. Inside every tiny box, the density decreases at rate <m>1</m>,
+      while the outward spreading of the flux contributes divergence <m>1</m>. The two effects
+      balance locally.
+    </p>
+
+    <p>
+      This suggests the general local law:
+      <md>\boxed{\rho_t+\nabla\cdot\mathbf J=s.}</md>
+      When there is no source,
+      <md>\boxed{\rho_t+\nabla\cdot\mathbf J=0.}</md>
+    </p>
+
+    <figure xml:id="c19s2-fig-local-continuity">
+      <caption>
+        The local continuity equation. If more material leaves a tiny neighborhood than enters
+        it (<m>\nabla \cdot \mathbf{J} \gt 0</m>), the local density must drop
+        (<m>\rho_t \lt 0</m>) to balance the loss.
+      </caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            % Coordinates for the differential box
+            \coordinate (O) at (0,0);
+            \coordinate (A) at (3.6,0);
+            \coordinate (B) at (4.6,0.8);
+            \coordinate (C) at (1.0,0.8);
+            \coordinate (D) at (0,1.7);
+            \coordinate (E) at (3.6,1.7);
+            \coordinate (F) at (4.6,2.5);
+            \coordinate (G) at (1.0,2.5);
+
+            % Draw the "differential" box (shifted to purple to imply a tiny local volume)
+            \draw[fill=purple!5, thick] (O)--(A)--(B)--(C)--cycle;
+            \draw[fill=purple!10, thick] (D)--(E)--(F)--(G)--cycle;
+            \draw[thick] (O)--(D);
+            \draw[thick] (A)--(E);
+            \draw[thick] (B)--(F);
+            \draw[thick] (C)--(G);
+
+            % Interior state showing a local drop in density
+            \node at (2.1,1.3) {\textbf{Tiny box}};
+            \node[purple!80!black] at (2.1,0.8) {\(\rho_t \lt 0\)};
+            \node[purple!80!black, font=\small] at (2.1,0.4) {(density drops)};
+
+            % Small inward flux (left face)
+            \draw[-&gt;, thick, blue!65!black] (-0.8,1.45) -- ++(0.7,0);
+            \draw[-&gt;, thick, blue!65!black] (-0.8,1.05) -- ++(0.7,0);
+            \node[blue!65!black, align=right, font=\small, anchor=east] at (-0.9, 1.25) {Small \\ inward flux};
+
+            % Large outward flux (right face)
+            \draw[-&gt;, ultra thick, red!65!black] (4.1,1.45) -- ++(1.4,0);
+            \draw[-&gt;, ultra thick, red!65!black] (4.1,1.05) -- ++(1.4,0);
+            \node[red!65!black, font=\small, anchor=west, align=left] at (5.6,1.25) {Large \\ outward flux};
+
+            % Divergence explanation above the box
+            \node at (2.4, 3.2) {\textbf{Positive Divergence:} \(\nabla \cdot \mathbf{J} \gt 0\) (net spreading)};
+
+            % The local continuity equation
+            \node at (2.4,-1.2)
+                {\(\displaystyle \underbrace{\rho_t}_{\text{Local drop}}
+                + \underbrace{\nabla \cdot \mathbf{J}}_{\text{Net spreading}} = 0\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c19s2-deriving-the-local-balance-law">
+    <title>Deriving the local balance law</title>
+
+    <p>
+      Assume <m>E</m> is fixed. Then, as in single-variable calculus with a parameter, the time
+      derivative can pass inside the integral:
+      <md>
+        \frac{d}{dt}\iiint_E \rho\,dV
+        =
+        \iiint_E \rho_t\,dV.
+      </md>
+      The divergence theorem gives
+      <md>
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E \nabla\cdot\mathbf J\,dV.
+      </md>
+      Substitute both into the integral balance law:
+      <md>
+        \iiint_E \rho_t\,dV
+        +
+        \iiint_E \nabla\cdot\mathbf J\,dV
+        =
+        \iiint_E s\,dV.
+      </md>
+      Combine the integrals:
+      <md>
+        \boxed{
+        \iiint_E
+        \left(
+            \rho_t+\nabla\cdot\mathbf J-s
+        \right)
+        dV
+        =
+        0.
+        }
+      </md>
+    </p>
+
+    <p>
+      If this holds for every small solid region <m>E</m>, and the integrand is continuous,
+      then the integrand must be zero everywhere:
+      <md>\boxed{\rho_t+\nabla\cdot\mathbf J-s=0.}</md>
+      Thus
+      <md>\boxed{\rho_t+\nabla\cdot\mathbf J=s.}</md>
+    </p>
+
+    <theorem xml:id="c19s2-thm-local-balance-law">
+      <title>Local balance law</title>
+      <statement>
+        <p>
+          Let <m>\rho</m>, <m>\mathbf J</m>, and <m>s</m> be sufficiently smooth fields on a
+          region of space, and suppose that the integral balance law
+          <md>
+            \frac{d}{dt}\iiint_E \rho\,dV
+            +
+            \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+            =
+            \iiint_E s\,dV
+          </md>
+          holds for every fixed solid region <m>E</m> inside that space. Then
+          <md>\boxed{\rho_t+\nabla\cdot\mathbf J=s.}</md>
+          If <m>s=0</m>, then
+          <md>\boxed{\rho_t+\nabla\cdot\mathbf J=0.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>The proof is the calculation above, with one final observation.</p>
+      <p>
+        Let
+        <md>g=\rho_t+\nabla\cdot\mathbf J-s.</md>
+        The integral balance law and the divergence theorem imply
+        <md>\iiint_E g\,dV=0</md>
+        for every fixed solid region <m>E</m>.
+      </p>
+      <p>
+        If <m>g(\mathbf p)\gt 0</m> at some point <m>\mathbf p</m>, then by continuity <m>g</m>
+        is still positive in a small box around <m>\mathbf p</m>. The integral over that box
+        would be positive, not zero. Similarly, <m>g(\mathbf p)\lt 0</m> would give a small box
+        with negative integral.
+      </p>
+      <p>
+        So <m>g</m> must be zero at every point:
+        <md>\rho_t+\nabla\cdot\mathbf J-s=0.</md>
+      </p>
+    </proof>
+  </subsection>
+
+  <subsection xml:id="c19s2-why-the-hypotheses-matter">
+    <title>Why the hypotheses matter</title>
+
+    <p>Two small warnings prevent a common mistake.</p>
+
+    <p>First, an integral over one region being zero does not force the integrand to be zero.</p>
+
+    <p>
+      For example,
+      <md>\int_{-1}^{1} x\,dx=0,</md>
+      but
+      <md>x</md>
+      is certainly not the zero function. The positive and negative parts cancel. That is why
+      the theorem needs the balance law to hold for every small region, not merely for one large
+      symmetric region.
+    </p>
+
+    <p>
+      Second, continuity matters if we want a pointwise equation. Define
+      <md>
+        g(x,y,z)=
+        \begin{cases}
+        1, &amp; (x,y,z)=(0,0,0),\\
+        0, &amp; \text{otherwise}.
+        \end{cases}
+      </md>
+      Then the ordinary triple integral of <m>g</m> over any solid region is <m>0</m>, but
+      <md>g(0,0,0)=1.</md>
+      A single point is invisible to volume integration.
+    </p>
+
+    <p>
+      Continuity rules out this kind of hidden spike. In more advanced courses, weak or
+      distributional versions of conservation laws handle discontinuities such as shocks. In
+      this book, the smooth case is the right first model.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s2-the-continuity-equation-for-moving-material">
+    <title>The continuity equation for moving material</title>
+
+    <p>
+      For a conserved quantity with no source,
+      <md>s=0,</md>
+      the local law is
+      <md>\boxed{\rho_t+\nabla\cdot\mathbf J=0.}</md>
+      If the material moves with velocity field
+      <md>\mathbf v,</md>
+      then
+      <md>\mathbf J=\rho\mathbf v.</md>
+      So the conservation law becomes
+      <md>\boxed{\rho_t+\nabla\cdot(\rho\mathbf v)=0.}</md>
+    </p>
+
+    <p>This is called the <term>continuity equation</term>.</p>
+
+    <definition xml:id="c19s2-def-continuity-equation">
+      <title>Continuity equation</title>
+      <statement>
+        <p>
+          Let <m>\rho(x,y,z,t)</m> be a density transported by a velocity field
+          <md>\mathbf v(x,y,z,t).</md>
+          If the quantity is conserved and has no sources or sinks, then
+          <md>\boxed{\rho_t+\nabla\cdot(\rho\mathbf v)=0.}</md>
+          In coordinates, if
+          <md>\mathbf v=(v_1,v_2,v_3),</md>
+          then
+          <md>\boxed{\rho_t+(\rho v_1)_x+(\rho v_2)_y+(\rho v_3)_z=0.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In the plane, the same equation is
+      <md>\boxed{\rho_t+(\rho v_1)_x+(\rho v_2)_y=0.}</md>
+    </p>
+
+    <p>
+      The equation says:
+      <md>
+        \boxed{
+        \text{time change of density}
+        +
+        \text{outflow per unit volume}
+        =
+        0.
+        }
+      </md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s2-a-density-profile-moving-down-a-pipe">
+    <title>A density profile moving down a pipe</title>
+
+    <p>
+      In a long narrow pipe, suppose the velocity is constant:
+      <md>v=2.</md>
+      The continuity equation in one spatial dimension becomes
+      <md>\rho_t+(\rho v)_x=0,</md>
+      so
+      <md>\rho_t+(2\rho)_x=0.</md>
+      Since <m>2</m> is constant,
+      <md>\boxed{\rho_t+2\rho_x=0.}</md>
+    </p>
+
+    <p>
+      Let <m>f</m> be any differentiable one-variable function, and define
+      <md>\rho(x,t)=f(x-2t).</md>
+      Then
+      <md>\rho_t=-2f'(x-2t),</md>
+      and
+      <md>\rho_x=f'(x-2t).</md>
+      Therefore
+      <md>
+        \rho_t+2\rho_x
+        =
+        -2f'(x-2t)+2f'(x-2t)
+        =
+        0.
+      </md>
+    </p>
+
+    <p>
+      So every density profile of the form
+      <md>f(x-2t)</md>
+      solves the equation. The shape moves to the right at speed <m>2</m>, without changing.
+    </p>
+
+    <figure xml:id="c19s2-fig-density-profile-pipe">
+      <caption>The solution <m>\rho(x,t)=f(x-2t)</m> moves to the right with speed <m>2</m>.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.92, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (7.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.25) -- (0,3.0) node[above] {\(\rho\)};
+
+            \draw[thick, blue!65!black, domain=0.4:3.8, samples=120, smooth]
+                plot (\x,{0.45+1.65*exp(-(\x-2)^2)});
+            \node[blue!65!black] at (2.0,2.55) {\(t=0\)};
+
+            \draw[thick, red!65!black, domain=2.0:5.4, samples=120, smooth]
+                plot (\x,{0.45+1.65*exp(-(\x-3.6)^2)});
+            \node[red!65!black] at (4.25,2.25) {later};
+
+            \draw[-&gt;, thick] (2.65,1.35) -- (3.25,1.35);
+            \node at (3.1,-0.65) {constant velocity transports the density profile};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      A fixed sensor at one <m>x</m>-value may see the density rise and fall as the profile
+      passes. But a tiny observer moving with speed <m>2</m> sees the same density value stay
+      with it.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s2-expansion-compression-and-the-material-derivative">
+    <title>Expansion, compression, and the material derivative</title>
+
+    <p>
+      The compact equation
+      <md>\rho_t+\nabla\cdot(\rho\mathbf v)=0</md>
+      has another useful form. Expand the divergence using the product rule:
+      <md>
+        \nabla\cdot(\rho\mathbf v)
+        =
+        \mathbf v\cdot\nabla\rho
+        +
+        \rho\,\nabla\cdot\mathbf v.
+      </md>
+      Thus
+      <md>\boxed{\rho_t+\mathbf v\cdot\nabla\rho+\rho\,\nabla\cdot\mathbf v=0.}</md>
+    </p>
+
+    <p>
+      The first two terms are grouped together:
+      <md>
+        \boxed{
+        \frac{D\rho}{Dt}
+        =
+        \rho_t+\mathbf v\cdot\nabla\rho.
+        }
+      </md>
+      This is the <term>material derivative</term>. It measures how <m>\rho</m> changes for an
+      observer moving with the flow.
+    </p>
+
+    <p>
+      So the continuity equation can be written as
+      <md>\boxed{\frac{D\rho}{Dt}+\rho\,\nabla\cdot\mathbf v=0.}</md>
+    </p>
+
+    <p>
+      This separates two effects:
+      <md>
+        \begin{array}{c|l}
+        \text{Term} &amp; \text{Meaning} \\ \hline
+        \dfrac{D\rho}{Dt} &amp; \text{density change seen by a moving particle}\\[3mm]
+        \rho\,\nabla\cdot\mathbf v &amp; \text{density change forced by expansion or compression}
+        \end{array}
+      </md>
+    </p>
+
+    <example xml:id="c19s2-ex-expansion-lowers-density">
+      <title>Expansion lowers a uniform density</title>
+      <statement>
+        <p>
+          In the plane, take
+          <md>\mathbf v(x,y)=(x,y).</md>
+          This field pushes points away from the origin. Its divergence is
+          <md>\nabla\cdot\mathbf v=1+1=2.</md>
+        </p>
+        <p>
+          Suppose the density is uniform in space:
+          <md>\rho(x,y,t)=a(t).</md>
+          Then
+          <md>\nabla\rho=\mathbf 0,</md>
+          and the continuity equation becomes
+          <md>a'(t)+2a(t)=0.</md>
+          Hence
+          <md>\boxed{a(t)=Ce^{-2t}.}</md>
+          The material is conserved, but the flow expands area, so the density decreases.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c19s2-ex-compression-raises-density">
+      <title>Compression raises a uniform density</title>
+      <statement>
+        <p>
+          Now take
+          <md>\mathbf v(x,y)=(-x,-y).</md>
+          Then
+          <md>\nabla\cdot\mathbf v=-1-1=-2.</md>
+          For a spatially uniform density
+          <md>\rho(x,y,t)=a(t),</md>
+          the continuity equation gives
+          <md>a'(t)-2a(t)=0.</md>
+          Therefore
+          <md>\boxed{a(t)=Ce^{2t}.}</md>
+          The flow compresses material toward the origin, so density rises.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Divergence is not just a symbolic derivative. It measures local expansion or compression
+      of the flow.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s2-incompressible-flow-and-divergence-free-fields">
+    <title>Incompressible flow and divergence-free fields</title>
+
+    <p>
+      A flow is called <term>incompressible</term> when tiny moving blobs keep the same volume
+      in space, or the same area in the plane.
+    </p>
+
+    <p>
+      For a smooth velocity field, incompressibility is expressed by
+      <md>\boxed{\nabla\cdot\mathbf v=0.}</md>
+      A vector field with zero divergence is called <term>divergence-free</term>.
+    </p>
+
+    <p>
+      If
+      <md>\nabla\cdot\mathbf v=0,</md>
+      then the continuity equation becomes
+      <md>\boxed{\rho_t+\mathbf v\cdot\nabla\rho=0.}</md>
+      Equivalently,
+      <md>\boxed{\frac{D\rho}{Dt}=0.}</md>
+      The density is constant along the path of each moving particle.
+    </p>
+
+    <example xml:id="c19s2-ex-rotating-incompressible-flow">
+      <title>A rotating incompressible flow</title>
+      <statement>
+        <p>
+          The swirling velocity field
+          <md>\mathbf v(x,y)=(-y,x)</md>
+          has divergence
+          <md>
+            \nabla\cdot\mathbf v
+            =
+            \frac{\partial(-y)}{\partial x}
+            +
+            \frac{\partial x}{\partial y}
+            =
+            0+0
+            =
+            0.
+          </md>
+          So the flow is incompressible.
+        </p>
+        <p>
+          A small blob rotates around the origin. Its shape may turn, but to first order its
+          area does not grow or shrink.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c19s2-ex-shear-flow-zero-divergence">
+      <title>A shear flow with zero divergence</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf v(x,y)=(y,0).</md>
+          Then
+          <md>
+            \nabla\cdot\mathbf v
+            =
+            \frac{\partial y}{\partial x}
+            +
+            \frac{\partial 0}{\partial y}
+            =
+            0.
+          </md>
+          This flow is also incompressible.
+        </p>
+        <p>
+          Horizontal speed depends on height. A small square is sheared into a slanted
+          parallelogram. Its shape changes, but its area does not.
+        </p>
+        <figure xml:id="c19s2-fig-shear-flow">
+          <caption>
+            Zero divergence does not mean no motion. It means no local area or volume change.
+          </caption>
+          <image width="70%">
+            <latex-image>
+            \begin{tikzpicture}[scale=0.95, &gt;=stealth]
+                \draw[-&gt;] (-0.4,0) -- (6.0,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.4) -- (0,3.8) node[above] {\(y\)};
+
+                \draw[fill=gray!12, thick] (0.8,0.8) rectangle (2.0,2.0);
+                \node at (1.4,0.35) {before};
+
+                \begin{scope}[shift={(2.7,0)}]
+                    \draw[fill=gray!12, thick]
+                        (0.8,0.8) -- (2.0,0.8) -- (2.45,2.0) -- (1.25,2.0) -- cycle;
+                    \node at (1.55,0.35) {after};
+                \end{scope}
+
+                \foreach \yy in {0.7,1.2,1.7,2.2,2.7} {
+                    \draw[-&gt;, blue!65!black, thick] (0.25,\yy) -- ++({0.35*\yy},0);
+                }
+
+                \node at (3.1,-0.7) {shear changes shape while preserving area};
+            \end{tikzpicture}
+            </latex-image>
+          </image>
+        </figure>
+      </statement>
+    </example>
+
+    <p>
+      Divergence-free motion can still rotate, shear, fold, and stir. It simply does not create
+      local expansion or compression.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s2-the-forms-version-of-the-continuity-equation">
+    <title>The forms version of the continuity equation</title>
+
+    <p>The forms language shows the structure without extra words.</p>
+
+    <p>
+      In space, the stored density is the <m>3</m>-form
+      <md>\rho\,dx\wedge dy\wedge dz.</md>
+      The flux density
+      <md>\mathbf J=(J_1,J_2,J_3)</md>
+      has flux <m>2</m>-form
+      <md>
+        \Phi_{\mathbf J}
+        =
+        J_1\,dy\wedge dz
+        +
+        J_2\,dz\wedge dx
+        +
+        J_3\,dx\wedge dy.
+      </md>
+      Its exterior derivative is
+      <md>
+        d\Phi_{\mathbf J}
+        =
+        (\nabla\cdot\mathbf J)\,dx\wedge dy\wedge dz.
+      </md>
+      The local balance law
+      <md>\rho_t+\nabla\cdot\mathbf J=s</md>
+      is therefore the form equation
+      <md>
+        \boxed{
+        \frac{\partial}{\partial t}
+        \bigl(\rho\,dx\wedge dy\wedge dz\bigr)
+        +
+        d\Phi_{\mathbf J}
+        =
+        s\,dx\wedge dy\wedge dz.
+        }
+      </md>
+    </p>
+
+    <p>
+      When <m>s=0</m>,
+      <md>
+        \boxed{
+        \frac{\partial}{\partial t}
+        \bigl(\rho\,dx\wedge dy\wedge dz\bigr)
+        +
+        d\Phi_{\mathbf J}
+        =
+        0.
+        }
+      </md>
+    </p>
+
+    <p>
+      This is the same conservation sentence again:
+      <md>
+        \boxed{
+        \text{time-change of stored amount}
+        +
+        \text{spatial derivative of flux}
+        =
+        \text{source}.
+        }
+      </md>
+    </p>
+
+    <p>
+      The continuity equation gives the shape of a conservation law, but it does not yet tell us
+      what the flux <m>\mathbf J</m> should be. That choice comes from physics. Heat flows from
+      hot to cold, so its flux is tied to the gradient of temperature. Waves carry tension and
+      acceleration. Equilibrium removes time and leaves a condition with no sources. Different
+      stories will now begin producing equations with the same skeleton: heat, wave, and Laplace
+      equations.
+    </p>
+  </subsection>
+</section>

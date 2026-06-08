@@ -1,0 +1,1648 @@
+% =====================================================================
+%  Appendix G: Computational Labs Quick Reference
+% =====================================================================
+
+\chapter{Computational Labs Quick Reference}
+\label{app:computational-labs}
+
+Computers are useful in multivariable calculus for three jobs:
+
+\[
+\begin{array}{c|c}
+\text{Job} & \text{Use} \\ \hline
+\text{visualize} & \text{surfaces, contours, vector fields, flows}\\[1mm]
+\text{approximate} & \text{derivatives, integrals, differential equations}\\[1mm]
+\text{check algebra} & \text{symbolic derivatives, Jacobians, line and surface integrals}
+\end{array}
+\]
+
+This appendix gives compact lab recipes.  It uses Python-style notation, with
+\texttt{NumPy}, \texttt{Matplotlib}, \texttt{SciPy}, and \texttt{SymPy}.  The mathematics
+does not depend on the software.
+
+\[
+\begin{array}{c|c}
+\text{Mathematical task} & \text{Computational tool} \\ \hline
+z=f(x,y) & \text{surface plot}\\[1mm]
+f(x,y)=c & \text{contour plot}\\[1mm]
+\mathbf F(x,y) & \text{quiver or stream plot}\\[1mm]
+DF(\mathbf p) & \text{finite differences or symbolic Jacobian}\\[1mm]
+\iint_R f\,dA & \text{iterated integral, midpoint rule, Monte Carlo}\\[1mm]
+\int_C \omega & \text{parametrize and substitute}\\[1mm]
+\iint_S \Phi & \text{parametrize and use }\mathbf r_u\times\mathbf r_v\\[1mm]
+\mathbf r'=\mathbf F(\mathbf r) & \text{ODE solver}
+\end{array}
+\]
+
+% ---------------------------------------------------------------------
+\section{Plotting surfaces and contour maps}
+\label{app:G.1}
+
+\subsection*{Standard imports}
+
+\begin{verbatim}
+import numpy as np
+import matplotlib.pyplot as plt
+\end{verbatim}
+
+For symbolic work:
+\[
+\boxed{
+    \texttt{import sympy as sp}
+}
+\]
+
+For numerical integration and ODEs:
+\[
+\boxed{
+    \texttt{from scipy.integrate import dblquad, tplquad, solve\_ivp}
+}
+\]
+
+\subsection*{Grid for a function of two variables}
+
+For
+\[
+    z=f(x,y),
+\]
+make arrays of \(x\)- and \(y\)-values:
+
+\begin{verbatim}
+x = np.linspace(a, b, 200)
+y = np.linspace(c, d, 200)
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)
+\end{verbatim}
+
+Here \(X\), \(Y\), and \(Z\) are arrays.  The function \(f\) must accept arrays.
+
+\subsection*{Surface plot}
+
+\begin{verbatim}
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_surface(X, Y, Z)
+
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("z")
+plt.show()
+\end{verbatim}
+
+\subsection*{Wireframe plot}
+
+\begin{verbatim}
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_wireframe(X, Y, Z)
+
+plt.show()
+\end{verbatim}
+
+A wireframe is often easier to read than a solid surface.
+
+\subsection*{Contour plot}
+
+A contour plot shows level curves:
+\[
+\boxed{
+    f(x,y)=c.
+}
+\]
+
+\begin{verbatim}
+plt.contour(X, Y, Z, levels=20)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.axis("equal")
+plt.show()
+\end{verbatim}
+
+Filled contour plot:
+\[
+\boxed{
+    \texttt{contourf}
+}
+\]
+
+\begin{verbatim}
+plt.contourf(X, Y, Z, levels=30)
+plt.colorbar()
+plt.axis("equal")
+plt.show()
+\end{verbatim}
+
+\subsection*{Implicit curves}
+
+To plot
+\[
+    F(x,y)=0,
+\]
+plot the zero contour:
+
+\begin{verbatim}
+Z = F(X, Y)
+plt.contour(X, Y, Z, levels=[0])
+plt.axis("equal")
+plt.show()
+\end{verbatim}
+
+To plot
+\[
+    F(x,y)=c,
+\]
+use:
+
+\begin{verbatim}
+plt.contour(X, Y, Z, levels=[c])
+\end{verbatim}
+
+\subsection*{Common examples}
+
+Plane:
+\[
+\boxed{
+    z=ax+by+c.
+}
+\]
+
+Bowl:
+\[
+\boxed{
+    z=x^2+y^2.
+}
+\]
+
+Saddle:
+\[
+\boxed{
+    z=x^2-y^2.
+}
+\]
+
+Hill:
+\[
+\boxed{
+    z=e^{-(x^2+y^2)}.
+}
+\]
+
+Radial wave:
+\[
+\boxed{
+    z=\sin\sqrt{x^2+y^2}.
+}
+\]
+
+\subsection*{Plotting a parametrized surface}
+
+For
+\[
+    \mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)),
+\]
+use a parameter grid:
+
+\begin{verbatim}
+u = np.linspace(u0, u1, 150)
+v = np.linspace(v0, v1, 150)
+U, V = np.meshgrid(u, v)
+
+X = x(U, V)
+Y = y(U, V)
+Z = z(U, V)
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+ax.plot_surface(X, Y, Z)
+plt.show()
+\end{verbatim}
+
+\subsection*{Cylinder}
+
+\[
+    \mathbf r(\theta,z)=(R\cos\theta,R\sin\theta,z).
+\]
+
+\begin{verbatim}
+theta = np.linspace(0, 2*np.pi, 150)
+z = np.linspace(z0, z1, 100)
+Theta, Z = np.meshgrid(theta, z)
+
+X = R*np.cos(Theta)
+Y = R*np.sin(Theta)
+
+ax.plot_surface(X, Y, Z)
+\end{verbatim}
+
+\subsection*{Sphere}
+
+\[
+    \mathbf r(\phi,\theta)
+    =
+    (R\sin\phi\cos\theta,\ R\sin\phi\sin\theta,\ R\cos\phi).
+\]
+
+\begin{verbatim}
+phi = np.linspace(0, np.pi, 150)
+theta = np.linspace(0, 2*np.pi, 150)
+Phi, Theta = np.meshgrid(phi, theta)
+
+X = R*np.sin(Phi)*np.cos(Theta)
+Y = R*np.sin(Phi)*np.sin(Theta)
+Z = R*np.cos(Phi)
+
+ax.plot_surface(X, Y, Z)
+\end{verbatim}
+
+\subsection*{Plotting checklist}
+
+\[
+\begin{array}{ll}
+1. & \text{Choose a domain large enough to show the important feature.}\\[1mm]
+2. & \text{Use enough grid points to avoid jagged artifacts.}\\[1mm]
+3. & \text{Use }\texttt{axis("equal")}\text{ for planar geometry.}\\[1mm]
+4. & \text{Label axes.}\\[1mm]
+5. & \text{Check whether the plot hides singularities or holes.}
+\end{array}
+\]
+
+\subsection*{Common warnings}
+
+A computer plot is a sample, not a proof.
+
+A surface may look smooth because the grid is too coarse.
+
+A contour may disappear if the requested level is outside the range of plotted values.
+
+A \(3\)-D plot may distort scale unless the axes are adjusted.
+
+% ---------------------------------------------------------------------
+\section{Visualizing vector fields}
+\label{app:G.2}
+
+\subsection*{Vector field in the plane}
+
+A vector field in the plane has the form
+\[
+\boxed{
+    \mathbf F(x,y)=(P(x,y),Q(x,y)).
+}
+\]
+
+On a grid:
+
+\begin{verbatim}
+x = np.linspace(a, b, 25)
+y = np.linspace(c, d, 25)
+X, Y = np.meshgrid(x, y)
+
+P = Pfun(X, Y)
+Q = Qfun(X, Y)
+\end{verbatim}
+
+\subsection*{Quiver plot}
+
+\begin{verbatim}
+plt.quiver(X, Y, P, Q)
+plt.axis("equal")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+\end{verbatim}
+
+\subsection*{Normalized arrows}
+
+Sometimes large arrows hide the pattern.  Normalize arrows:
+
+\begin{verbatim}
+speed = np.sqrt(P**2 + Q**2)
+P0 = P / (speed + 1e-12)
+Q0 = Q / (speed + 1e-12)
+
+plt.quiver(X, Y, P0, Q0)
+plt.axis("equal")
+plt.show()
+\end{verbatim}
+
+This shows direction but not magnitude.
+
+\subsection*{Stream plot}
+
+Streamlines solve
+\[
+\boxed{
+    \mathbf r'(t)=\mathbf F(\mathbf r(t)).
+}
+\]
+
+\begin{verbatim}
+plt.streamplot(X, Y, P, Q)
+plt.axis("equal")
+plt.show()
+\end{verbatim}
+
+\subsection*{Common vector fields}
+
+Constant field:
+\[
+\boxed{
+    \mathbf F(x,y)=(1,0).
+}
+\]
+
+Radial source:
+\[
+\boxed{
+    \mathbf F(x,y)=(x,y).
+}
+\]
+
+Radial sink:
+\[
+\boxed{
+    \mathbf F(x,y)=(-x,-y).
+}
+\]
+
+Rotation:
+\[
+\boxed{
+    \mathbf F(x,y)=(-y,x).
+}
+\]
+
+Saddle field:
+\[
+\boxed{
+    \mathbf F(x,y)=(x,-y).
+}
+\]
+
+Inverse radial field:
+\[
+\boxed{
+    \mathbf F(x,y)=\frac{(x,y)}{x^2+y^2}.
+}
+\]
+
+\subsection*{Gradient field}
+
+For
+\[
+    f=f(x,y),
+\]
+\[
+\boxed{
+    \nabla f=(f_x,f_y).
+}
+\]
+
+Numerically, use \texttt{np.gradient} if \(f\) is sampled on a grid:
+
+\begin{verbatim}
+Z = f(X, Y)
+
+dy = y[1] - y[0]
+dx = x[1] - x[0]
+
+Z_y, Z_x = np.gradient(Z, dy, dx)
+
+plt.quiver(X, Y, Z_x, Z_y)
+plt.contour(X, Y, Z, levels=20)
+plt.axis("equal")
+plt.show()
+\end{verbatim}
+
+The order is important:
+\[
+\boxed{
+    \texttt{np.gradient(Z, dy, dx)}
+}
+\]
+returns derivatives in the array-axis order, usually \(y\) first, then \(x\).
+
+\subsection*{Vector field in space}
+
+A vector field in space has the form
+\[
+\boxed{
+    \mathbf F(x,y,z)=(P,Q,R).
+}
+\]
+
+A \(3\)-D quiver plot:
+
+\begin{verbatim}
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.quiver(X, Y, Z, P, Q, R)
+
+plt.show()
+\end{verbatim}
+
+Use fewer grid points in \(3\)-D.  Too many arrows quickly become unreadable.
+
+\subsection*{Field line through one point}
+
+For
+\[
+    \mathbf r'(t)=\mathbf F(\mathbf r(t)),
+\]
+use an ODE solver:
+
+\begin{verbatim}
+from scipy.integrate import solve_ivp
+
+def ode(t, r):
+    x, y = r
+    return [Pfun(x, y), Qfun(x, y)]
+
+sol = solve_ivp(ode, [t0, t1], [x0, y0], max_step=0.02)
+
+plt.plot(sol.y[0], sol.y[1])
+plt.axis("equal")
+plt.show()
+\end{verbatim}
+
+\subsection*{Common warnings}
+
+Arrow length in a plot may be automatically rescaled.
+
+A normalized quiver plot hides speed.
+
+A stream plot may hide sources, sinks, or singularities.
+
+A vector field with a hole in its domain should not be plotted as if the hole were
+ordinary.
+
+% ---------------------------------------------------------------------
+\section{Numerical differentiation and the Jacobian}
+\label{app:G.3}
+
+\subsection*{Forward difference}
+
+For a one-variable function,
+\[
+\boxed{
+    f'(a)\approx \frac{f(a+h)-f(a)}{h}.
+}
+\]
+
+This is simple but less accurate.
+
+\subsection*{Central difference}
+
+\[
+\boxed{
+    f'(a)\approx
+    \frac{f(a+h)-f(a-h)}{2h}.
+}
+\]
+
+This is usually better.
+
+\subsection*{Second derivative}
+
+\[
+\boxed{
+    f''(a)\approx
+    \frac{f(a+h)-2f(a)+f(a-h)}{h^2}.
+}
+\]
+
+\subsection*{Partial derivatives}
+
+For
+\[
+    f=f(x,y),
+\]
+\[
+\boxed{
+    f_x(a,b)
+    \approx
+    \frac{f(a+h,b)-f(a-h,b)}{2h}.
+}
+\]
+
+\[
+\boxed{
+    f_y(a,b)
+    \approx
+    \frac{f(a,b+h)-f(a,b-h)}{2h}.
+}
+\]
+
+\subsection*{Gradient by central differences}
+
+\begin{verbatim}
+def grad2(f, x, y, h=1e-5):
+    fx = (f(x+h, y) - f(x-h, y)) / (2*h)
+    fy = (f(x, y+h) - f(x, y-h)) / (2*h)
+    return np.array([fx, fy])
+\end{verbatim}
+
+\subsection*{Jacobian matrix}
+
+For
+\[
+    F:\mathbb R^n\to\mathbb R^m,
+\]
+the Jacobian matrix is
+\[
+\boxed{
+    J_F(\mathbf p)
+    =
+    \begin{pmatrix}
+    \dfrac{\partial F_1}{\partial x_1} & \cdots & \dfrac{\partial F_1}{\partial x_n}\\[2mm]
+    \vdots & \ddots & \vdots\\[2mm]
+    \dfrac{\partial F_m}{\partial x_1} & \cdots & \dfrac{\partial F_m}{\partial x_n}
+    \end{pmatrix}_{\mathbf p}.
+}
+\]
+
+\subsection*{Numerical Jacobian}
+
+\begin{verbatim}
+def jacobian(F, p, h=1e-5):
+    p = np.array(p, dtype=float)
+    m = len(F(p))
+    n = len(p)
+    J = np.zeros((m, n))
+
+    for j in range(n):
+        e = np.zeros(n)
+        e[j] = 1.0
+        J[:, j] = (F(p + h*e) - F(p - h*e)) / (2*h)
+
+    return J
+\end{verbatim}
+
+\subsection*{Numerical Hessian}
+
+For
+\[
+    f=f(x,y),
+\]
+\[
+\boxed{
+    f_{xx}\approx
+    \frac{f(x+h,y)-2f(x,y)+f(x-h,y)}{h^2}.
+}
+\]
+
+\[
+\boxed{
+    f_{yy}\approx
+    \frac{f(x,y+h)-2f(x,y)+f(x,y-h)}{h^2}.
+}
+\]
+
+\[
+\boxed{
+    f_{xy}\approx
+    \frac{
+    f(x+h,y+h)-f(x+h,y-h)-f(x-h,y+h)+f(x-h,y-h)
+    }{4h^2}.
+}
+\]
+
+\subsection*{Symbolic Jacobian}
+
+Using \texttt{SymPy}:
+
+\begin{verbatim}
+import sympy as sp
+
+x, y = sp.symbols("x y")
+
+F = sp.Matrix([
+    x**2 + y,
+    sp.sin(x*y)
+])
+
+J = F.jacobian([x, y])
+\end{verbatim}
+
+\subsection*{Symbolic Hessian}
+
+\begin{verbatim}
+f = x**3 + x*y + y**2
+H = sp.hessian(f, (x, y))
+\end{verbatim}
+
+\subsection*{Step-size warning}
+
+If \(h\) is too large, the approximation error is large.
+
+If \(h\) is too small, roundoff error can dominate.
+
+A typical starting value is
+\[
+\boxed{
+    h=10^{-5}
+}
+\]
+for central differences, but this is not universal.
+
+\subsection*{Differentiability warning}
+
+Numerical derivatives can produce misleading numbers near:
+
+\[
+\begin{array}{ll}
+1. & \text{corners,}\\
+2. & \text{cusps,}\\
+3. & \text{jumps,}\\
+4. & \text{singularities,}\\
+5. & \text{rapid oscillations.}
+\end{array}
+\]
+
+A finite-difference approximation does not prove differentiability.
+
+% ---------------------------------------------------------------------
+\section{Numerical double and triple integration}
+\label{app:G.4}
+
+\subsection*{Midpoint rule in one variable}
+
+\[
+\boxed{
+    \int_a^b f(x)\,dx
+    \approx
+    \sum_{i=1}^{N} f(x_i^*)\,\Delta x.
+}
+\]
+
+Here
+\[
+    \Delta x=\frac{b-a}{N},
+\]
+and \(x_i^*\) is the midpoint of the \(i\)th subinterval.
+
+\subsection*{Midpoint rule over a rectangle}
+
+For
+\[
+    R=[a,b]\times[c,d],
+\]
+\[
+\boxed{
+    \iint_R f(x,y)\,dA
+    \approx
+    \sum_{i=1}^{M}\sum_{j=1}^{N}
+    f(x_i^*,y_j^*)\,\Delta x\,\Delta y.
+}
+\]
+
+\subsection*{Code for rectangular midpoint rule}
+
+\begin{verbatim}
+def midpoint_double(f, a, b, c, d, M=200, N=200):
+    dx = (b - a) / M
+    dy = (d - c) / N
+
+    x = a + (np.arange(M) + 0.5)*dx
+    y = c + (np.arange(N) + 0.5)*dy
+
+    X, Y = np.meshgrid(x, y)
+    return np.sum(f(X, Y))*dx*dy
+\end{verbatim}
+
+\subsection*{Region under variable bounds}
+
+For
+\[
+    a\le x\le b,
+    \qquad
+    g_1(x)\le y\le g_2(x),
+\]
+\[
+\boxed{
+    \iint_R f\,dA
+    =
+    \int_a^b\int_{g_1(x)}^{g_2(x)}f(x,y)\,dy\,dx.
+}
+\]
+
+Using \texttt{dblquad}:
+
+\begin{verbatim}
+from scipy.integrate import dblquad
+
+value, error = dblquad(
+    lambda y, x: f(x, y),
+    a, b,
+    lambda x: g1(x),
+    lambda x: g2(x)
+)
+\end{verbatim}
+
+Notice the order in the function:
+\[
+\boxed{
+    \texttt{lambda y, x}
+}
+\]
+because \texttt{dblquad} uses the inner variable first.
+
+\subsection*{Polar numerical integration}
+
+If
+\[
+    x=r\cos\theta,
+    \qquad
+    y=r\sin\theta,
+\]
+then
+\[
+\boxed{
+    dA=r\,dr\,d\theta.
+}
+\]
+
+So
+\[
+\boxed{
+    \iint_R f(x,y)\,dA
+    =
+    \iint_{\widetilde R}
+    f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta.
+}
+\]
+
+Code pattern:
+
+\begin{verbatim}
+value, error = dblquad(
+    lambda r, theta: f(r*np.cos(theta), r*np.sin(theta))*r,
+    theta0, theta1,
+    lambda theta: r0(theta),
+    lambda theta: r1(theta)
+)
+\end{verbatim}
+
+\subsection*{Triple integral over a box}
+
+For
+\[
+    B=[a,b]\times[c,d]\times[e,f],
+\]
+\[
+\boxed{
+    \iiint_B F(x,y,z)\,dV
+    \approx
+    \sum F(x_i^*,y_j^*,z_k^*)\,\Delta x\,\Delta y\,\Delta z.
+}
+\]
+
+\subsection*{Triple integral with variable bounds}
+
+For
+\[
+    a\le x\le b,
+\]
+\[
+    g_1(x)\le y\le g_2(x),
+\]
+\[
+    h_1(x,y)\le z\le h_2(x,y),
+\]
+\[
+\boxed{
+    \iiint_E F\,dV
+    =
+    \int_a^b\int_{g_1(x)}^{g_2(x)}
+    \int_{h_1(x,y)}^{h_2(x,y)}
+    F(x,y,z)\,dz\,dy\,dx.
+}
+\]
+
+Using \texttt{tplquad}:
+
+\begin{verbatim}
+from scipy.integrate import tplquad
+
+value, error = tplquad(
+    lambda z, y, x: F(x, y, z),
+    a, b,
+    lambda x: g1(x),
+    lambda x: g2(x),
+    lambda x, y: h1(x, y),
+    lambda x, y: h2(x, y)
+)
+\end{verbatim}
+
+Again, the innermost variable comes first.
+
+\subsection*{Cylindrical numerical integration}
+
+\[
+\boxed{
+    dV=r\,dr\,d\theta\,dz.
+}
+\]
+
+\[
+\boxed{
+    F(x,y,z)
+    =
+    F(r\cos\theta,r\sin\theta,z).
+}
+\]
+
+Use the integrand
+\[
+\boxed{
+    F(r\cos\theta,r\sin\theta,z)\,r.
+}
+\]
+
+\subsection*{Spherical numerical integration}
+
+\[
+\boxed{
+    dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.
+}
+\]
+
+Use the integrand
+\[
+\boxed{
+    F(\rho\sin\phi\cos\theta,\rho\sin\phi\sin\theta,\rho\cos\phi)
+    \rho^2\sin\phi.
+}
+\]
+
+\subsection*{Monte Carlo estimate}
+
+For a region \(R\) inside a box \(B\):
+
+\[
+\boxed{
+    \iint_R f\,dA
+    \approx
+    \operatorname{Area}(B)
+    \cdot
+    \frac1N
+    \sum_{i=1}^N f(x_i,y_i)\mathbf 1_R(x_i,y_i).
+}
+\]
+
+Code pattern:
+
+\begin{verbatim}
+def monte_carlo_double(f, inside, a, b, c, d, N=100000):
+    x = np.random.uniform(a, b, N)
+    y = np.random.uniform(c, d, N)
+
+    mask = inside(x, y)
+    box_area = (b - a)*(d - c)
+
+    return box_area*np.mean(f(x, y)*mask)
+\end{verbatim}
+
+Monte Carlo is usually slow but useful in irregular regions or high dimensions.
+
+\subsection*{Common warnings}
+
+Numerical integration returns an approximation and often an error estimate.
+
+Singularities require special care.
+
+Highly oscillatory functions require finer sampling.
+
+Coordinate changes require Jacobian factors.
+
+Improper integrals may appear finite on a finite sample but still diverge.
+
+% ---------------------------------------------------------------------
+\section{Symbolic line and surface integrals}
+\label{app:G.5}
+
+\subsection*{Symbolic setup}
+
+\begin{verbatim}
+import sympy as sp
+\end{verbatim}
+
+Define variables:
+\[
+\boxed{
+    \texttt{x, y, z, t, u, v = sp.symbols("x y z t u v")}
+}
+\]
+
+\subsection*{Line integral of a \texorpdfstring{\(1\)}{1}-form}
+
+Let
+\[
+    \omega=P\,dx+Q\,dy+R\,dz.
+\]
+
+Let
+\[
+    \mathbf r(t)=(x(t),y(t),z(t)),
+    \qquad
+    a\le t\le b.
+\]
+
+Then
+\[
+\boxed{
+    \int_C\omega
+    =
+    \int_a^b
+    \left[
+    P(\mathbf r(t))x'(t)
+    +
+    Q(\mathbf r(t))y'(t)
+    +
+    R(\mathbf r(t))z'(t)
+    \right]\,dt.
+}
+\]
+
+\subsection*{SymPy line integral pattern}
+
+\begin{verbatim}
+x, y, z, t = sp.symbols("x y z t")
+
+P = ...
+Q = ...
+R = ...
+
+xt = ...
+yt = ...
+zt = ...
+
+integrand = (
+    P.subs({x: xt, y: yt, z: zt})*sp.diff(xt, t)
+    + Q.subs({x: xt, y: yt, z: zt})*sp.diff(yt, t)
+    + R.subs({x: xt, y: yt, z: zt})*sp.diff(zt, t)
+)
+
+value = sp.integrate(integrand, (t, a, b))
+\end{verbatim}
+
+\subsection*{Line integral of a vector field}
+
+For
+\[
+    \mathbf F=(P,Q,R),
+\]
+\[
+\boxed{
+    \int_C\mathbf F\cdot d\mathbf r
+}
+\]
+uses the same formula as the \(1\)-form
+\[
+    P\,dx+Q\,dy+R\,dz.
+\]
+
+\subsection*{Surface flux integral}
+
+Let
+\[
+    \mathbf F=(P,Q,R).
+\]
+
+Let
+\[
+    \mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)).
+\]
+
+Then
+\[
+\boxed{
+    \iint_S\mathbf F\cdot\widehat{\mathbf n}\,dS
+    =
+    \iint_D
+    \mathbf F(\mathbf r(u,v))
+    \cdot
+    (\mathbf r_u\times\mathbf r_v)
+    \,du\,dv.
+}
+\]
+
+\subsection*{SymPy surface flux pattern}
+
+\begin{verbatim}
+x, y, z, u, v = sp.symbols("x y z u v")
+
+P = ...
+Q = ...
+R = ...
+
+xu = ...
+yu = ...
+zu = ...
+
+r = sp.Matrix([xu, yu, zu])
+ru = r.diff(u)
+rv = r.diff(v)
+
+normal = ru.cross(rv)
+
+F = sp.Matrix([
+    P.subs({x: xu, y: yu, z: zu}),
+    Q.subs({x: xu, y: yu, z: zu}),
+    R.subs({x: xu, y: yu, z: zu})
+])
+
+integrand = sp.simplify(F.dot(normal))
+
+value = sp.integrate(
+    integrand,
+    (u, u0, u1),
+    (v, v0, v1)
+)
+\end{verbatim}
+
+The order of \((u,v)\) bounds must match the expression.
+
+\subsection*{Surface area}
+
+\[
+\boxed{
+    \operatorname{Area}(S)
+    =
+    \iint_D
+    |\mathbf r_u\times\mathbf r_v|
+    \,du\,dv.
+}
+\]
+
+Symbolic pattern:
+
+\begin{verbatim}
+area_integrand = sp.sqrt(normal.dot(normal))
+area = sp.integrate(area_integrand, (u, u0, u1), (v, v0, v1))
+\end{verbatim}
+
+\subsection*{Curl}
+
+For
+\[
+    \mathbf F=(P,Q,R),
+\]
+\[
+\boxed{
+    \nabla\times\mathbf F
+    =
+    (R_y-Q_z,\ P_z-R_x,\ Q_x-P_y).
+}
+\]
+
+SymPy pattern:
+
+\begin{verbatim}
+curlF = sp.Matrix([
+    sp.diff(R, y) - sp.diff(Q, z),
+    sp.diff(P, z) - sp.diff(R, x),
+    sp.diff(Q, x) - sp.diff(P, y)
+])
+\end{verbatim}
+
+\subsection*{Divergence}
+
+\[
+\boxed{
+    \nabla\cdot\mathbf F=P_x+Q_y+R_z.
+}
+\]
+
+SymPy pattern:
+
+\begin{verbatim}
+divF = sp.diff(P, x) + sp.diff(Q, y) + sp.diff(R, z)
+\end{verbatim}
+
+\subsection*{Gradient}
+
+\[
+\boxed{
+    \nabla f=(f_x,f_y,f_z).
+}
+\]
+
+SymPy pattern:
+
+\begin{verbatim}
+gradf = sp.Matrix([
+    sp.diff(f, x),
+    sp.diff(f, y),
+    sp.diff(f, z)
+])
+\end{verbatim}
+
+\subsection*{Jacobian}
+
+For
+\[
+    F=(F_1,\ldots,F_m),
+\]
+\[
+\boxed{
+    J_F=\left(\frac{\partial F_i}{\partial x_j}\right).
+}
+\]
+
+SymPy pattern:
+
+\begin{verbatim}
+F = sp.Matrix([F1, F2, F3])
+J = F.jacobian([x, y, z])
+\end{verbatim}
+
+\subsection*{Green's theorem check}
+
+For
+\[
+    \omega=P\,dx+Q\,dy,
+\]
+\[
+\boxed{
+    d\omega=(Q_x-P_y)\,dx\wedge dy.
+}
+\]
+
+Symbolic scalar curl:
+
+\begin{verbatim}
+scalar_curl = sp.diff(Q, x) - sp.diff(P, y)
+\end{verbatim}
+
+\subsection*{Orientation warnings}
+
+For a curve, reversing the parametrization changes the sign of a \(1\)-form integral.
+
+For a surface, switching \(u\) and \(v\) changes
+\[
+    \mathbf r_u\times\mathbf r_v
+\]
+to
+\[
+    -\mathbf r_u\times\mathbf r_v.
+\]
+
+Flux changes sign when orientation reverses.
+
+Surface area does not.
+
+\subsection*{Symbolic warnings}
+
+A symbolic answer may be correct but hard to read.
+
+Use:
+\[
+\boxed{
+    \texttt{sp.simplify}
+}
+\]
+
+\[
+\boxed{
+    \texttt{sp.factor}
+}
+\]
+
+\[
+\boxed{
+    \texttt{sp.expand}
+}
+\]
+
+Always check assumptions, especially signs and parameter ranges.
+
+% ---------------------------------------------------------------------
+\section{Simulating flows and conservation laws}
+\label{app:G.6}
+
+\subsection*{Flow lines}
+
+A flow line of a vector field
+\[
+    \mathbf F
+\]
+solves the differential equation
+\[
+\boxed{
+    \frac{d\mathbf r}{dt}=\mathbf F(\mathbf r(t)).
+}
+\]
+
+In the plane:
+\[
+\boxed{
+    x'=P(x,y),
+    \qquad
+    y'=Q(x,y).
+}
+\]
+
+In space:
+\[
+\boxed{
+    x'=P(x,y,z),
+    \qquad
+    y'=Q(x,y,z),
+    \qquad
+    z'=R(x,y,z).
+}
+\]
+
+\subsection*{Euler method}
+
+For
+\[
+    \mathbf r'=\mathbf F(\mathbf r),
+\]
+Euler's method is
+\[
+\boxed{
+    \mathbf r_{n+1}
+    =
+    \mathbf r_n+\Delta t\,\mathbf F(\mathbf r_n).
+}
+\]
+
+It is simple but not very accurate.
+
+\subsection*{Euler method code}
+
+\begin{verbatim}
+def euler_flow(F, r0, dt, steps):
+    r = np.array(r0, dtype=float)
+    points = [r.copy()]
+
+    for _ in range(steps):
+        r = r + dt*np.array(F(r))
+        points.append(r.copy())
+
+    return np.array(points)
+\end{verbatim}
+
+\subsection*{Using an ODE solver}
+
+\begin{verbatim}
+from scipy.integrate import solve_ivp
+
+def ode(t, r):
+    x, y = r
+    return [Pfun(x, y), Qfun(x, y)]
+
+sol = solve_ivp(
+    ode,
+    [t0, t1],
+    [x0, y0],
+    max_step=0.02
+)
+
+plt.plot(sol.y[0], sol.y[1])
+plt.axis("equal")
+plt.show()
+\end{verbatim}
+
+\subsection*{Several initial points}
+
+\begin{verbatim}
+for r0 in initial_points:
+    sol = solve_ivp(ode, [t0, t1], r0, max_step=0.02)
+    plt.plot(sol.y[0], sol.y[1])
+
+plt.axis("equal")
+plt.show()
+\end{verbatim}
+
+\subsection*{Equilibrium points}
+
+Equilibrium points satisfy
+\[
+\boxed{
+    \mathbf F(\mathbf p)=\mathbf 0.
+}
+\]
+
+In the plane:
+\[
+\boxed{
+    P(x,y)=0,
+    \qquad
+    Q(x,y)=0.
+}
+\]
+
+Use symbolic solving:
+
+\begin{verbatim}
+solutions = sp.solve([P, Q], [x, y])
+\end{verbatim}
+
+Or numerical root finding if symbolic solving is too hard.
+
+\subsection*{Linearization near an equilibrium}
+
+If
+\[
+    \mathbf F(\mathbf p)=\mathbf 0,
+\]
+then near \(\mathbf p\),
+\[
+\boxed{
+    \mathbf r'
+    \approx
+    J_{\mathbf F}(\mathbf p)(\mathbf r-\mathbf p).
+}
+\]
+
+The eigenvalues of
+\[
+    J_{\mathbf F}(\mathbf p)
+\]
+help classify the local behavior.
+
+\[
+\begin{array}{c|c}
+\text{Eigenvalue pattern} & \text{Typical behavior} \\ \hline
+\text{both negative real parts} & \text{sink}\\[1mm]
+\text{both positive real parts} & \text{source}\\[1mm]
+\text{opposite signs} & \text{saddle}\\[1mm]
+\text{pure imaginary} & \text{center or rotation-type behavior}\\[1mm]
+\text{complex with negative real part} & \text{spiral sink}\\[1mm]
+\text{complex with positive real part} & \text{spiral source}
+\end{array}
+\]
+
+\subsection*{Conservation law}
+
+A conservation law has the form
+\[
+\boxed{
+    \frac{\partial \rho}{\partial t}
+    +
+    \nabla\cdot\mathbf J
+    =
+    s.
+}
+\]
+
+Here:
+
+\[
+\begin{array}{c|c}
+\rho & \text{density}\\[1mm]
+\mathbf J & \text{flux density}\\[1mm]
+s & \text{source rate}
+\end{array}
+\]
+
+If there are no sources or sinks:
+\[
+\boxed{
+    \rho_t+\nabla\cdot\mathbf J=0.
+}
+\]
+
+\subsection*{Integral balance law}
+
+For a fixed region \(E\),
+\[
+\boxed{
+    \frac{d}{dt}\iiint_E \rho\,dV
+    =
+    -\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+    +
+    \iiint_E s\,dV.
+}
+\]
+
+In words:
+
+\[
+\boxed{
+    \text{rate of stored amount}
+    =
+    -\text{outward flux}
+    +
+    \text{source production}.
+}
+\]
+
+\subsection*{Numerical balance check}
+
+At two nearby times,
+\[
+\boxed{
+    \frac{A(t+\Delta t)-A(t)}{\Delta t}
+}
+\]
+approximates
+\[
+    \frac{dA}{dt}.
+\]
+
+Compare it to
+\[
+\boxed{
+    -\text{outward flux}+\text{source integral}.
+}
+\]
+
+This is a useful diagnostic for simulations.
+
+\subsection*{Discrete divergence in two dimensions}
+
+On a grid with spacing \(\Delta x,\Delta y\), for
+\[
+    \mathbf J=(M,N),
+\]
+a central-difference approximation is
+\[
+\boxed{
+    \nabla\cdot\mathbf J
+    \approx
+    \frac{M(x+\Delta x,y)-M(x-\Delta x,y)}{2\Delta x}
+    +
+    \frac{N(x,y+\Delta y)-N(x,y-\Delta y)}{2\Delta y}.
+}
+\]
+
+\subsection*{Discrete divergence code}
+
+\begin{verbatim}
+def divergence2(M, N, dx, dy):
+    M_y, M_x = np.gradient(M, dy, dx)
+    N_y, N_x = np.gradient(N, dy, dx)
+    return M_x + N_y
+\end{verbatim}
+
+Array-axis warning:
+\[
+\boxed{
+    \texttt{np.gradient} \text{ usually returns } y\text{-derivatives first.}
+}
+\]
+
+\subsection*{Advection by a velocity field}
+
+If density moves with velocity
+\[
+    \mathbf v,
+\]
+then the flux density is
+\[
+\boxed{
+    \mathbf J=\rho\mathbf v.
+}
+\]
+
+With no sources:
+\[
+\boxed{
+    \rho_t+\nabla\cdot(\rho\mathbf v)=0.
+}
+\]
+
+If
+\[
+    \nabla\cdot\mathbf v=0
+\]
+and \(\rho\) is constant along moving particles, the flow is incompressible.
+
+\subsection*{Common simulation warnings}
+
+Euler's method can be unstable for large time steps.
+
+A good-looking picture may violate conservation.
+
+Numerical diffusion can smear sharp features.
+
+Boundary conditions matter.
+
+A vector field with a singularity should not be simulated through the singular point.
+
+Always test a simulation on a case with a known answer.
+
+% ---------------------------------------------------------------------
+\section*{One-page computational summary}
+
+\[
+\boxed{
+    \texttt{X, Y = np.meshgrid(x, y)}
+}
+\]
+
+\[
+\boxed{
+    \texttt{ax.plot\_surface(X, Y, Z)}
+}
+\]
+
+\[
+\boxed{
+    \texttt{plt.contour(X, Y, Z)}
+}
+\]
+
+\[
+\boxed{
+    \texttt{plt.quiver(X, Y, P, Q)}
+}
+\]
+
+\[
+\boxed{
+    \texttt{plt.streamplot(X, Y, P, Q)}
+}
+\]
+
+\[
+\boxed{
+    f'(a)\approx\frac{f(a+h)-f(a-h)}{2h}
+}
+\]
+
+\[
+\boxed{
+    f_x(a,b)\approx\frac{f(a+h,b)-f(a-h,b)}{2h}
+}
+\]
+
+\[
+\boxed{
+    J_F(\mathbf p)_{ij}
+    \approx
+    \frac{F_i(\mathbf p+h\mathbf e_j)-F_i(\mathbf p-h\mathbf e_j)}{2h}
+}
+\]
+
+\[
+\boxed{
+    \iint_R f\,dA
+    \approx
+    \sum f(x_i^*,y_j^*)\,\Delta x\,\Delta y
+}
+\]
+
+\[
+\boxed{
+    dA=r\,dr\,d\theta
+}
+\]
+
+\[
+\boxed{
+    dV=r\,dr\,d\theta\,dz
+}
+\]
+
+\[
+\boxed{
+    dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta
+}
+\]
+
+\[
+\boxed{
+    \int_C P\,dx+Q\,dy+R\,dz
+    =
+    \int_a^b(Px'+Qy'+Rz')\,dt
+}
+\]
+
+\[
+\boxed{
+    \iint_S\mathbf F\cdot\widehat{\mathbf n}\,dS
+    =
+    \iint_D
+    \mathbf F(\mathbf r(u,v))\cdot(\mathbf r_u\times\mathbf r_v)
+    \,du\,dv
+}
+\]
+
+\[
+\boxed{
+    \mathbf r'=\mathbf F(\mathbf r)
+}
+\]
+
+\[
+\boxed{
+    \rho_t+\nabla\cdot\mathbf J=s
+}
+\]
+
+\[
+\boxed{
+    \frac{d}{dt}\int_E\rho\,dV
+    =
+    -\int_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+    +
+    \int_E s\,dV
+}
+\]

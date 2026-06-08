@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch02-vector-products.tex, Section "Alternating products: a first glimpse of forms".
+     Status: CONVERTED. -->
+<section xml:id="sec-2-alternating-products-a-first-glimpse-of-forms" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Alternating products: a first glimpse of forms</title>
+
+  <p>
+    The determinant gave us signed area and signed volume. That sign was not decoration.
+    It was the whole point. When we swapped two directions, the parallelogram stayed the
+    same, but its orientation reversed:
+    <md>\det[\mathbf u\ \mathbf v]=-\det[\mathbf v\ \mathbf u].</md>
+    Now we give that sign-changing behavior a name. It is the first step toward
+    differential forms.
+  </p>
+
+  <subsection xml:id="c2s7-subsec-area-bilinear-alternating">
+    <title>Area as a bilinear alternating measurement</title>
+
+    <p>
+      A carpenter lays a small slanted tile on the floor. One side of the tile follows the
+      vector
+      <md>\mathbf u=(3,1),</md>
+      and the adjacent side follows
+      <md>\mathbf v=(1,2).</md>
+      The signed area of the parallelogram is
+      <md>\det[\mathbf u\ \mathbf v]=\begin{vmatrix}3&amp;1\\1&amp;2\end{vmatrix}=3\cdot2-1\cdot1=5.</md>
+    </p>
+
+    <p>
+      The tile has ordinary area <m>5</m>. It also has positive orientation because the
+      ordered pair
+      <md>\mathbf u,\mathbf v</md>
+      turns counterclockwise.
+    </p>
+
+    <p>
+      If we walk around the same tile in the opposite order, the signed area becomes
+      <md>\det[\mathbf v\ \mathbf u]=\begin{vmatrix}1&amp;3\\2&amp;1\end{vmatrix}=1\cdot1-2\cdot3=-5.</md>
+      The tile did not shrink. Only the orientation changed.
+    </p>
+
+    <figure xml:id="c2s7-fig-signed-area-orientation">
+      <caption>The same parallelogram has opposite signed area when the order is reversed.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-0.4,0) -- (4.8,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.4) -- (0,3.8) node[above] {\(y\)};
+                \coordinate (O) at (0,0);
+                \coordinate (U) at (3,1);
+                \coordinate (V) at (1,2);
+                \coordinate (UV) at (4,3);
+
+                \draw[fill=gray!12] (O) -- (U) -- (UV) -- (V) -- cycle;
+                \draw[-&gt;, very thick] (O) -- (U) node[midway, below] {\(\mathbf u\)};
+                \draw[-&gt;, very thick] (O) -- (V) node[midway, left] {\(\mathbf v\)};
+                \draw[thick, dashed] (U) -- (UV);
+                \draw[thick, dashed] (V) -- (UV);
+                \node at (2.35,1.65) {\(+5\)};
+                \node at (2.2,-0.85) {\(\det[\mathbf u\ \mathbf v]\)};
+            \end{scope}
+
+            \begin{scope}[shift={(7,0)}]
+                \draw[-&gt;] (-0.4,0) -- (4.8,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.4) -- (0,3.8) node[above] {\(y\)};
+                \coordinate (O) at (0,0);
+                \coordinate (U) at (3,1);
+                \coordinate (V) at (1,2);
+                \coordinate (UV) at (4,3);
+
+                \draw[fill=gray!12] (O) -- (V) -- (UV) -- (U) -- cycle;
+                \draw[-&gt;, very thick] (O) -- (V) node[midway, left] {\(\mathbf v\)};
+                \draw[-&gt;, very thick] (O) -- (U) node[midway, below] {\(\mathbf u\)};
+                \draw[thick, dashed] (U) -- (UV);
+                \draw[thick, dashed] (V) -- (UV);
+                \node at (2.35,1.65) {\(-5\)};
+                \node at (2.2,-0.85) {\(\det[\mathbf v\ \mathbf u]\)};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The determinant also behaves linearly in each input. For example, split
+      <md>\mathbf u=(3,1)</md>
+      into
+      <md>\mathbf u=(3,0)+(0,1).</md>
+      Then
+      <md>
+        <mrow>\det[(3,1)\ \mathbf v]\amp=\det[(3,0)\ \mathbf v]+\det[(0,1)\ \mathbf v].</mrow>
+      </md>
+      With <m>\mathbf v=(1,2)</m>, this says
+      <md>5=\begin{vmatrix}3&amp;1\\0&amp;2\end{vmatrix}+\begin{vmatrix}0&amp;1\\1&amp;2\end{vmatrix}=6+(-1).</md>
+      So signed area is additive in the first vector. It is also additive in the second
+      vector. Stretch one side by a factor of <m>c</m>, and the signed area is stretched by
+      the same factor.
+    </p>
+
+    <p>This is the pattern.</p>
+
+    <definition xml:id="c2s7-def-bilinear-alternating">
+      <title>Bilinear and alternating</title>
+      <statement>
+        <p>
+          A function <m>B(\mathbf u,\mathbf v)</m> that takes two vectors and returns a
+          number is called <term>bilinear</term> if it is linear in each input separately:
+          <md>B(a\mathbf u+b\mathbf w,\mathbf v)=aB(\mathbf u,\mathbf v)+bB(\mathbf w,\mathbf v),</md>
+          and
+          <md>B(\mathbf u,a\mathbf v+b\mathbf w)=aB(\mathbf u,\mathbf v)+bB(\mathbf u,\mathbf w).</md>
+        </p>
+        <p>
+          It is called <term>alternating</term> if swapping the two inputs changes the sign:
+          <md>B(\mathbf v,\mathbf u)=-B(\mathbf u,\mathbf v).</md>
+          In particular,
+          <md>B(\mathbf u,\mathbf u)=0.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The determinant in the plane is bilinear and alternating:
+      <md>\det[\mathbf u\ \mathbf v]=u_1v_2-u_2v_1.</md>
+    </p>
+
+    <theorem xml:id="c2s7-thm-planar-alternating-bilinear">
+      <title>Every planar alternating bilinear measurement is area times a constant</title>
+      <statement>
+        <p>
+          Let <m>B</m> be a bilinear alternating function of two vectors in
+          <m>\mathbb R^2</m>. Then there is a constant <m>c</m> such that
+          <md>\boxed{B(\mathbf u,\mathbf v)=c(u_1v_2-u_2v_1)}</md>
+          for all
+          <md>\mathbf u=(u_1,u_2),\qquad \mathbf v=(v_1,v_2).</md>
+          In other words, every bilinear alternating measurement in the plane is a constant
+          multiple of signed area.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Let
+          <md>\mathbf e_1=(1,0),\qquad \mathbf e_2=(0,1).</md>
+          Write
+          <md>\mathbf u=u_1\mathbf e_1+u_2\mathbf e_2,\qquad \mathbf v=v_1\mathbf e_1+v_2\mathbf e_2.</md>
+          By bilinearity,
+          <md>
+            <mrow>B(\mathbf u,\mathbf v)\amp=B(u_1\mathbf e_1+u_2\mathbf e_2,\, v_1\mathbf e_1+v_2\mathbf e_2)</mrow>
+            <mrow>\amp=u_1v_1B(\mathbf e_1,\mathbf e_1)+u_1v_2B(\mathbf e_1,\mathbf e_2)</mrow>
+            <mrow>\amp\qquad +u_2v_1B(\mathbf e_2,\mathbf e_1)+u_2v_2B(\mathbf e_2,\mathbf e_2).</mrow>
+          </md>
+          Because <m>B</m> is alternating,
+          <md>B(\mathbf e_1,\mathbf e_1)=0,\qquad B(\mathbf e_2,\mathbf e_2)=0,</md>
+          and
+          <md>B(\mathbf e_2,\mathbf e_1)=-B(\mathbf e_1,\mathbf e_2).</md>
+          Let
+          <md>c=B(\mathbf e_1,\mathbf e_2).</md>
+          Then
+          <md>
+            <mrow>B(\mathbf u,\mathbf v)\amp=u_1v_2c-u_2v_1c</mrow>
+            <mrow>\amp=c(u_1v_2-u_2v_1).</mrow>
+          </md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The two hypotheses are real hypotheses.</p>
+
+    <p>
+      First, bilinearity matters. Define
+      <md>B(\mathbf u,\mathbf v)=(u_1v_2-u_2v_1)^3.</md>
+      Swapping <m>\mathbf u</m> and <m>\mathbf v</m> changes the sign, so this function is
+      alternating. But it is not bilinear. For example,
+      <md>B(\mathbf e_1,\mathbf e_2)=1,</md>
+      while
+      <md>B(2\mathbf e_1,\mathbf e_2)=8.</md>
+      A bilinear function would have given <m>2</m>, not <m>8</m>. So this is not a constant
+      multiple of signed area.
+    </p>
+
+    <p>
+      Second, alternating matters. The dot product
+      <md>D(\mathbf u,\mathbf v)=\mathbf u\cdot\mathbf v</md>
+      is bilinear, but it is not alternating. Indeed,
+      <md>D(\mathbf e_1,\mathbf e_1)=1,</md>
+      while an alternating measurement must give
+      <md>B(\mathbf e_1,\mathbf e_1)=0.</md>
+      The dot product measures alignment, not oriented area.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s7-subsec-coordinate-measurements">
+    <title>The coordinate measurements <m>dx</m>, <m>dy</m>, and <m>dz</m></title>
+
+    <p>
+      The determinant formula
+      <md>u_1v_2-u_2v_1</md>
+      has two parts. It uses the <m>x</m>-component of one vector and the <m>y</m>-component
+      of the other, then subtracts the same measurement with the roles reversed.
+    </p>
+
+    <p>
+      To name those component measurements, we write
+      <md>dx(a,b)=a,\qquad dy(a,b)=b.</md>
+      So <m>dx</m> reads the <m>x</m>-component of a vector, and <m>dy</m> reads the
+      <m>y</m>-component.
+    </p>
+
+    <p>
+      For example, if
+      <md>\mathbf u=(3,1),\qquad \mathbf v=(1,2),</md>
+      then
+      <md>dx(\mathbf u)=3,\qquad dy(\mathbf u)=1,</md>
+      and
+      <md>dx(\mathbf v)=1,\qquad dy(\mathbf v)=2.</md>
+    </p>
+
+    <p>
+      These are the first examples of <term>1-forms</term>: objects that take one vector and
+      return one number. Later, a 1-form like
+      <md>P\,dx+Q\,dy</md>
+      will be the kind of object we integrate along a curve. For now, <m>dx</m> and
+      <m>dy</m> are simply coordinate-measuring devices.
+    </p>
+
+    <p>
+      In space we also have
+      <md>dz(a,b,c)=c.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s7-subsec-why-dxdy-not-multiplication">
+    <title>Why <m>dx\,dy</m> should not mean ordinary multiplication</title>
+
+    <p>
+      A parallelogram has two side vectors. So an area measurement must take two vector
+      inputs, not one.
+    </p>
+
+    <p>
+      If
+      <md>\mathbf u=(3,1),\qquad \mathbf v=(1,2),</md>
+      then ordinary multiplication might tempt us to write
+      <md>dx(\mathbf u)\,dy(\mathbf v)=3\cdot2=6.</md>
+      But the signed area is not <m>6</m>. It is
+      <md>3\cdot2-1\cdot1=5.</md>
+      The missing piece is the swapped product:
+      <md>dy(\mathbf u)\,dx(\mathbf v)=1\cdot1=1.</md>
+      Signed area is the difference:
+      <md>dx(\mathbf u)\,dy(\mathbf v)-dy(\mathbf u)\,dx(\mathbf v).</md>
+    </p>
+
+    <p>This difference is important enough to get its own symbol.</p>
+
+    <definition xml:id="c2s7-def-wedge-product-dx-dy">
+      <title>The wedge product <m>dx\wedge dy</m></title>
+      <statement>
+        <p>
+          The wedge product <m>dx\wedge dy</m> is the signed area measurement defined by
+          <md>\boxed{(dx\wedge dy)(\mathbf u,\mathbf v)=dx(\mathbf u)dy(\mathbf v)-dy(\mathbf u)dx(\mathbf v).}</md>
+          If
+          <md>\mathbf u=(u_1,u_2),\qquad \mathbf v=(v_1,v_2),</md>
+          then
+          <md>\boxed{(dx\wedge dy)(\mathbf u,\mathbf v)=u_1v_2-u_2v_1.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      So
+      <md>dx\wedge dy</md>
+      is not ordinary multiplication. The wedge symbol <m>\wedge</m> is a warning:
+      <md>\text{measure the ordered area, and subtract the swapped order.}</md>
+    </p>
+
+    <p>
+      The sign rule is immediate:
+      <md>\boxed{dx\wedge dy=-dy\wedge dx.}</md>
+      Also,
+      <md>\boxed{dx\wedge dx=0,\qquad dy\wedge dy=0.}</md>
+      A vector and itself span no area.
+    </p>
+
+    <p>
+      This is why the notation <m>dx\,dy</m> is too quiet when orientation matters. In
+      ordinary double integrals, <m>dA</m> often means unsigned little area. But the form
+      <md>dx\wedge dy</md>
+      remembers orientation. Reversing the order reverses the sign.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s7-subsec-coordinate-shadows">
+    <title>Coordinate shadows in space</title>
+
+    <p>
+      A parallelogram in space casts shadows onto the coordinate planes. Each shadow has a
+      signed area.
+    </p>
+
+    <p>
+      Let
+      <md>\mathbf u=(2,1,3),\qquad \mathbf v=(1,4,0).</md>
+      The signed area of the shadow on the <m>xy</m>-plane is
+      <md>
+        <mrow>(dx\wedge dy)(\mathbf u,\mathbf v)\amp=\begin{vmatrix}2&amp;1\\1&amp;4\end{vmatrix}</mrow>
+        <mrow>\amp=2\cdot4-1\cdot1</mrow>
+        <mrow>\amp=7.</mrow>
+      </md>
+    </p>
+
+    <p>
+      The signed area of the shadow on the <m>yz</m>-plane is
+      <md>
+        <mrow>(dy\wedge dz)(\mathbf u,\mathbf v)\amp=\begin{vmatrix}1&amp;4\\3&amp;0\end{vmatrix}</mrow>
+        <mrow>\amp=1\cdot0-3\cdot4</mrow>
+        <mrow>\amp=-12.</mrow>
+      </md>
+    </p>
+
+    <p>
+      The signed area of the shadow on the <m>zx</m>-plane is
+      <md>
+        <mrow>(dz\wedge dx)(\mathbf u,\mathbf v)\amp=\begin{vmatrix}3&amp;0\\2&amp;1\end{vmatrix}</mrow>
+        <mrow>\amp=3\cdot1-2\cdot0</mrow>
+        <mrow>\amp=3.</mrow>
+      </md>
+    </p>
+
+    <p>
+      Now compute the cross product:
+      <md>
+        <mrow>\mathbf u\times\mathbf v\amp=(2,1,3)\times(1,4,0)</mrow>
+        <mrow>\amp=(1\cdot0-3\cdot4,\;3\cdot1-2\cdot0,\;2\cdot4-1\cdot1)</mrow>
+        <mrow>\amp=(-12,3,7).</mrow>
+      </md>
+      So the cross product has been secretly collecting the three signed shadow areas:
+      <md>\boxed{\mathbf u\times\mathbf v=\bigl((dy\wedge dz)(\mathbf u,\mathbf v),\,(dz\wedge dx)(\mathbf u,\mathbf v),\,(dx\wedge dy)(\mathbf u,\mathbf v)\bigr).}</md>
+    </p>
+
+    <p>
+      This is a beautiful fact. The cross product packages three coordinate area
+      measurements into one vector. But the area measurements themselves are the wedge
+      products.
+    </p>
+
+    <p>
+      That is why the wedge product survives in every dimension, while the cross product is
+      special to three dimensions.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s7-subsec-signed-volume">
+    <title>Signed volume as <m>dx\wedge dy\wedge dz</m></title>
+
+    <p>The same idea works for volume.</p>
+
+    <p>
+      A signed volume measurement takes three vectors. It is linear in each input and
+      changes sign whenever two inputs are swapped.
+    </p>
+
+    <p>
+      The basic signed volume measurement in space is
+      <md>dx\wedge dy\wedge dz.</md>
+    </p>
+
+    <definition xml:id="c2s7-def-volume-form-dx-dy-dz">
+      <title>The volume form <m>dx\wedge dy\wedge dz</m></title>
+      <statement>
+        <p>
+          For vectors
+          <md>\mathbf u,\mathbf v,\mathbf w\in\mathbb R^3,</md>
+          the form <m>dx\wedge dy\wedge dz</m> is defined by
+          <md>\boxed{(dx\wedge dy\wedge dz)(\mathbf u,\mathbf v,\mathbf w)=\det[\mathbf u\ \mathbf v\ \mathbf w].}</md>
+          It measures the signed volume of the parallelepiped spanned by the ordered triple
+          <md>\mathbf u,\mathbf v,\mathbf w.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For example, let
+      <md>\mathbf u=(1,2,0),\qquad \mathbf v=(0,1,3),\qquad \mathbf w=(2,0,1).</md>
+      Then
+      <md>
+        <mrow>(dx\wedge dy\wedge dz)(\mathbf u,\mathbf v,\mathbf w)\amp=\begin{vmatrix}1&amp;0&amp;2\\2&amp;1&amp;0\\0&amp;3&amp;1\end{vmatrix}</mrow>
+        <mrow>\amp=13.</mrow>
+      </md>
+      So the ordered triple spans signed volume <m>13</m>.
+    </p>
+
+    <p>
+      If we swap the first two vectors, the sign flips:
+      <md>(dx\wedge dy\wedge dz)(\mathbf v,\mathbf u,\mathbf w)=-13.</md>
+      Again, the box is the same. The orientation is not.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s7-subsec-forms-future-integrands">
+    <title>Forms as future integrands</title>
+
+    <p>
+      The word <term>form</term> may sound abstract, but at this stage it means something
+      very concrete.
+    </p>
+
+    <p>
+      A 1-form measures a vector:
+      <md>dx,\qquad dy,\qquad P\,dx+Q\,dy.</md>
+      Later, 1-forms will be integrated along curves.
+    </p>
+
+    <p>
+      A 2-form measures oriented area:
+      <md>dx\wedge dy,\qquad dy\wedge dz,\qquad dz\wedge dx.</md>
+      Later, 2-forms will be integrated over surfaces and regions.
+    </p>
+
+    <p>
+      A 3-form measures oriented volume:
+      <md>dx\wedge dy\wedge dz.</md>
+      Later, 3-forms will be integrated over solids.
+    </p>
+
+    <p>
+      So the wedge product is not a new trick for multiplying symbols. It is a way to keep
+      track of oriented geometry:
+      <md>\text{length, area, volume, and the signs that come from order.}</md>
+    </p>
+
+    <p>
+      This chapter began with Hamilton trying to multiply directions. It ends with a
+      different kind of product, one that does not try to turn area into a vector. It lets
+      area be area. Before these forms become integrals, one more piece of machinery has to
+      arrive. We need rules that move every vector in a grid at once. Those rules are linear
+      maps, and their bookkeeping devices are matrices.
+    </p>
+  </subsection>
+</section>

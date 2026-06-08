@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/appendices/appG-computational-labs.tex, Section G.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-appG-numerical-differentiation-and-the-jacobian" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Numerical differentiation and the Jacobian</title>
+
+  <subsection xml:id="appG-numdiff-forward-difference">
+    <title>Forward difference</title>
+
+    <p>
+      For a one-variable function,
+      <md>f'(a)\approx \frac{f(a+h)-f(a)}{h}.</md>
+    </p>
+
+    <p>This is simple but less accurate.</p>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-central-difference">
+    <title>Central difference</title>
+
+    <p>
+      <md>f'(a)\approx \frac{f(a+h)-f(a-h)}{2h}.</md>
+    </p>
+
+    <p>This is usually better.</p>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-second-derivative">
+    <title>Second derivative</title>
+
+    <p>
+      <md>f''(a)\approx \frac{f(a+h)-2f(a)+f(a-h)}{h^2}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-partial-derivatives">
+    <title>Partial derivatives</title>
+
+    <p>
+      For
+      <md>f=f(x,y),</md>
+      <md>f_x(a,b) \approx \frac{f(a+h,b)-f(a-h,b)}{2h}.</md>
+      <md>f_y(a,b) \approx \frac{f(a,b+h)-f(a,b-h)}{2h}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-gradient-by-central-differences">
+    <title>Gradient by central differences</title>
+
+    <program language="python">
+      <input>
+def grad2(f, x, y, h=1e-5):
+    fx = (f(x+h, y) - f(x-h, y)) / (2*h)
+    fy = (f(x, y+h) - f(x, y-h)) / (2*h)
+    return np.array([fx, fy])
+</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-jacobian-matrix">
+    <title>Jacobian matrix</title>
+
+    <p>
+      For
+      <md>F:\mathbb R^n\to\mathbb R^m,</md>
+      the Jacobian matrix is
+      <md>
+        J_F(\mathbf p)
+        =
+        \begin{pmatrix}
+        \dfrac{\partial F_1}{\partial x_1} \amp \cdots \amp \dfrac{\partial F_1}{\partial x_n}\\[2mm]
+        \vdots \amp \ddots \amp \vdots\\[2mm]
+        \dfrac{\partial F_m}{\partial x_1} \amp \cdots \amp \dfrac{\partial F_m}{\partial x_n}
+        \end{pmatrix}_{\mathbf p}.
+      </md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-numerical-jacobian">
+    <title>Numerical Jacobian</title>
+
+    <program language="python">
+      <input>
+def jacobian(F, p, h=1e-5):
+    p = np.array(p, dtype=float)
+    m = len(F(p))
+    n = len(p)
+    J = np.zeros((m, n))
+
+    for j in range(n):
+        e = np.zeros(n)
+        e[j] = 1.0
+        J[:, j] = (F(p + h*e) - F(p - h*e)) / (2*h)
+
+    return J
+</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-numerical-hessian">
+    <title>Numerical Hessian</title>
+
+    <p>
+      For
+      <md>f=f(x,y),</md>
+      <md>f_{xx}\approx \frac{f(x+h,y)-2f(x,y)+f(x-h,y)}{h^2}.</md>
+      <md>f_{yy}\approx \frac{f(x,y+h)-2f(x,y)+f(x,y-h)}{h^2}.</md>
+      <md>f_{xy}\approx \frac{f(x+h,y+h)-f(x+h,y-h)-f(x-h,y+h)+f(x-h,y-h)}{4h^2}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-symbolic-jacobian">
+    <title>Symbolic Jacobian</title>
+
+    <p>
+      Using <c>SymPy</c>:
+    </p>
+
+    <program language="python">
+      <input>
+import sympy as sp
+
+x, y = sp.symbols("x y")
+
+F = sp.Matrix([
+    x**2 + y,
+    sp.sin(x*y)
+])
+
+J = F.jacobian([x, y])
+</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-symbolic-hessian">
+    <title>Symbolic Hessian</title>
+
+    <program language="python">
+      <input>
+f = x**3 + x*y + y**2
+H = sp.hessian(f, (x, y))
+</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-step-size-warning">
+    <title>Step-size warning</title>
+
+    <warning>
+      <p>
+        If <m>h</m> is too large, the approximation error is large.
+      </p>
+
+      <p>
+        If <m>h</m> is too small, roundoff error can dominate.
+      </p>
+
+      <p>
+        A typical starting value is
+        <md>h=10^{-5}</md>
+        for central differences, but this is not universal.
+      </p>
+    </warning>
+  </subsection>
+
+  <subsection xml:id="appG-numdiff-differentiability-warning">
+    <title>Differentiability warning</title>
+
+    <warning>
+      <p>
+        Numerical derivatives can produce misleading numbers near:
+      </p>
+
+      <ol>
+        <li>corners,</li>
+        <li>cusps,</li>
+        <li>jumps,</li>
+        <li>singularities,</li>
+        <li>rapid oscillations.</li>
+      </ol>
+
+      <p>
+        A finite-difference approximation does not prove differentiability.
+      </p>
+    </warning>
+  </subsection>
+</section>

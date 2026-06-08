@@ -1,0 +1,1182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch20-capstone-projects.tex, Section 20.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-20-integration-projects" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Integration projects</title>
+
+  <introduction>
+    <p>
+      Optimization chose best points. Integration asks a different question:
+    </p>
+    <md>
+      \text{How much is spread over the whole region?}
+    </md>
+    <p>
+      That region may be a plate, a room, a pond, a solid object, or a distorted image. The
+      same idea keeps returning. Cut the region into small pieces. Estimate the contribution
+      from each piece. Add.
+    </p>
+    <md>
+      \text{small contribution}
+      =
+      \text{value on the piece}\times \text{size of the piece}.
+    </md>
+    <p>
+      These projects turn that sentence into measurements.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c20s3-proj-mass-from-density">
+    <title>Project 1: estimate mass from measured density data</title>
+
+    <p>
+      A formula is not always available. Sometimes the density is known only from
+      measurements.
+    </p>
+    <p>
+      A lab technician may test a metal plate at several points. A geologist may sample soil
+      density at grid locations. A medical scan may give density values one voxel at a time.
+      The integral is still the right idea, but the integral has to be estimated from data.
+    </p>
+
+    <p>
+      <em>A seed example: a nonuniform plate.</em>
+      A thin rectangular plate occupies
+    </p>
+    <md>
+      0\le x\le6,
+      \qquad
+      0\le y\le4,
+    </md>
+    <p>
+      where <m>x</m> and <m>y</m> are measured in centimeters.
+    </p>
+    <p>
+      The plate is divided into <m>3</m> columns and <m>2</m> rows. Each small rectangle has
+      width <m>2</m> and height <m>2</m>, so
+    </p>
+    <md>
+      \Delta A=4\text{ cm}^2.
+    </md>
+    <p>
+      The density, measured in grams per square centimeter, is sampled at the center of each
+      small rectangle:
+    </p>
+    <md>
+      \begin{array}{c|ccc}
+       \amp x=1 \amp x=3 \amp x=5 \\ \hline
+      y=3 \amp 2.4 \amp 2.8 \amp 3.1\\
+      y=1 \amp 2.0 \amp 2.3 \amp 2.6
+      \end{array}
+    </md>
+    <p>
+      The mass is
+    </p>
+    <md>
+      M=\iint_R \rho(x,y)\,dA.
+    </md>
+    <p>
+      Using the midpoint rule, we estimate
+    </p>
+    <md>
+      \begin{aligned}
+      M
+      \amp\approx
+      \sum \rho(x_i^*,y_j^*)\,\Delta A\\
+      \amp=
+      4(2.0+2.3+2.6+2.4+2.8+3.1)\\
+      \amp=
+      4(15.2)\\
+      \amp=
+      60.8.
+      \end{aligned}
+    </md>
+    <p>
+      So the estimated mass is
+    </p>
+    <md>
+      \boxed{
+          M\approx 60.8\text{ g}.
+      }
+    </md>
+    <p>
+      The area of the plate is
+    </p>
+    <md>
+      6\cdot4=24\text{ cm}^2.
+    </md>
+    <p>
+      So the estimated average density is
+    </p>
+    <md>
+      \boxed{
+          \overline{\rho}
+          =
+          \frac{M}{\operatorname{Area}(R)}
+          \approx
+          \frac{60.8}{24}
+          \approx
+          2.53\text{ g/cm}^2.
+      }
+    </md>
+
+    <figure xml:id="c20s3-fig-density-grid">
+      <caption>Measured density data can be turned into a mass estimate by a Riemann sum.</caption>
+      <image xml:id="c20s3-img-density-grid">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.8, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (6.8,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,4.8) node[above] {\(y\)};
+
+            \draw[thick] (0,0) rectangle (6,4);
+            \draw[gray!45] (2,0) -- (2,4);
+            \draw[gray!45] (4,0) -- (4,4);
+            \draw[gray!45] (0,2) -- (6,2);
+
+            \foreach \x/\y/\d in {
+                1/1/2.0,
+                3/1/2.3,
+                5/1/2.6,
+                1/3/2.4,
+                3/3/2.8,
+                5/3/3.1
+            } {
+                \fill (\x,\y) circle (2pt);
+                \node[above] at (\x,\y) {\(\d\)};
+            }
+
+            \node at (3,-0.85) {density samples at cell centers};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      Choose one of the following.
+    </p>
+
+    <p>
+      <em>Option A. Plate from tabulated data.</em>
+      Use the density table from the seed example, or create your own <m>4\times4</m> or
+      <m>5\times5</m> grid of density values. Estimate the mass of the plate.
+    </p>
+    <p>
+      <em>Option B. Temperature or pollution on a map.</em>
+      Use a rectangular map region. Let the data values represent temperature, pollution
+      concentration, or rainfall. Estimate the total amount and the average value over the
+      region.
+    </p>
+    <p>
+      <em>Option C. Three-dimensional density data.</em>
+      A box is divided into small rectangular boxes. At the center of each box, a density
+      value is measured. Estimate
+    </p>
+    <md>
+      M=\iiint_E \rho(x,y,z)\,dV.
+    </md>
+    <p>
+      For a simple version, use a <m>2\times2\times2</m> grid.
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Draw the region and the sampling grid.</p>
+      </li>
+      <li>
+        <p>State the units of the density.</p>
+      </li>
+      <li>
+        <p>State the area or volume of each small piece:</p>
+        <md>
+          \Delta A
+          \qquad\text{or}\qquad
+          \Delta V.
+        </md>
+      </li>
+      <li>
+        <p>Write the Riemann sum:</p>
+        <md>
+          \sum \rho(x_i^*,y_i^*)\,\Delta A
+        </md>
+        <p>or</p>
+        <md>
+          \sum \rho(x_i^*,y_i^*,z_i^*)\,\Delta V.
+        </md>
+      </li>
+      <li>
+        <p>Estimate the total mass or total amount.</p>
+      </li>
+      <li>
+        <p>Estimate the average density:</p>
+        <md>
+          \overline{\rho}
+          =
+          \frac{\text{total amount}}{\text{area or volume}}.
+        </md>
+      </li>
+      <li>
+        <p>Discuss whether the estimate should improve with a finer grid.</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Which parts of the region have the largest density?</p>
+      </li>
+      <li>
+        <p>Does the data suggest a smooth density field or a sharp jump?</p>
+      </li>
+      <li>
+        <p>If one measurement were wrong, which one would most affect the estimate?</p>
+      </li>
+      <li>
+        <p>What changes if the data are sampled at corners instead of centers?</p>
+      </li>
+      <li>
+        <p>How would your estimate change if the grid cells had unequal sizes?</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>the data table,</p>
+      </li>
+      <li>
+        <p>a grid drawing,</p>
+      </li>
+      <li>
+        <p>the Riemann sum,</p>
+      </li>
+      <li>
+        <p>the estimated total amount,</p>
+      </li>
+      <li>
+        <p>the estimated average value,</p>
+      </li>
+      <li>
+        <p>one paragraph explaining the main source of error.</p>
+      </li>
+    </ol>
+
+    <p>
+      The main point is that an integral can survive without a formula. A formula is one way
+      to know a field. Measurements are another.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s3-proj-moments-of-inertia">
+    <title>Project 2: moments of inertia of real objects</title>
+
+    <p>
+      Mass tells how much material an object has. Moment of inertia tells how that mass is
+      spread around an axis.
+    </p>
+    <p>
+      A heavy object is harder to spin if more of its mass is far from the axis. That is why a
+      figure skater spins faster when pulling in her arms. The mass has not changed, but the
+      mass has moved closer to the rotation axis.
+    </p>
+    <p>
+      The integral measures this spreading.
+    </p>
+    <md>
+      \boxed{
+          I=\int (\text{distance to axis})^2\,dm.
+      }
+    </md>
+    <p>
+      For a thin plate with density <m>\delta(x,y)</m>, this becomes
+    </p>
+    <md>
+      \boxed{
+          I=\iint_R (\text{distance to axis})^2\,\delta(x,y)\,dA.
+      }
+    </md>
+
+    <p>
+      <em>A seed example: a rectangular tray.</em>
+      A rectangular tray is <m>4</m> meters long and <m>2</m> meters wide. Put its center at
+      the origin, so the tray occupies
+    </p>
+    <md>
+      -2\le x\le2,
+      \qquad
+      -1\le y\le1.
+    </md>
+    <p>
+      Suppose the tray has constant areal density
+    </p>
+    <md>
+      \delta=0.5\text{ kg/m}^2.
+    </md>
+    <p>
+      Find the moment of inertia about the vertical axis through its center.
+    </p>
+    <p>
+      The distance from the point <m>(x,y)</m> to the vertical axis is
+    </p>
+    <md>
+      r=\sqrt{x^2+y^2}.
+    </md>
+    <p>
+      So
+    </p>
+    <md>
+      r^2=x^2+y^2.
+    </md>
+    <p>
+      Thus
+    </p>
+    <md>
+      \begin{aligned}
+      I_z
+      \amp=
+      \iint_R (x^2+y^2)\delta\,dA\\
+      \amp=
+      0.5\int_{-2}^{2}\int_{-1}^{1}(x^2+y^2)\,dy\,dx.
+      \end{aligned}
+    </md>
+    <p>
+      Separate the integral:
+    </p>
+    <md>
+      \begin{aligned}
+      I_z
+      \amp=
+      0.5\left(
+      \int_{-2}^{2}\int_{-1}^{1}x^2\,dy\,dx
+      +
+      \int_{-2}^{2}\int_{-1}^{1}y^2\,dy\,dx
+      \right)\\
+      \amp=
+      0.5\left(
+      \int_{-2}^{2}2x^2\,dx
+      +
+      \int_{-2}^{2}\frac{2}{3}\,dx
+      \right)\\
+      \amp=
+      0.5\left(
+      2\cdot\frac{16}{3}
+      +
+      \frac{2}{3}\cdot4
+      \right)\\
+      \amp=
+      0.5\left(
+      \frac{32}{3}+\frac{8}{3}
+      \right)\\
+      \amp=
+      \frac{20}{3}.
+      \end{aligned}
+    </md>
+    <p>
+      So
+    </p>
+    <md>
+      \boxed{
+          I_z=\frac{20}{3}\text{ kg}\cdot\text{m}^2.
+      }
+    </md>
+    <p>
+      The tray's mass is
+    </p>
+    <md>
+      M=0.5(4)(2)=4\text{ kg}.
+    </md>
+    <p>
+      The radius of gyration is the distance <m>R_g</m> that would give the same moment of
+      inertia if all the mass were concentrated on a circle:
+    </p>
+    <md>
+      I_z=MR_g^2.
+    </md>
+    <p>
+      Thus
+    </p>
+    <md>
+      R_g=\sqrt{\frac{I_z}{M}}
+      =
+      \sqrt{\frac{20/3}{4}}
+      =
+      \sqrt{\frac53}.
+    </md>
+    <p>
+      This number is not the physical radius of the tray. It is a weighted average distance
+      from the axis.
+    </p>
+
+    <figure xml:id="c20s3-fig-tray-axis">
+      <caption>Mass farther from the axis contributes more to moment of inertia.</caption>
+      <image xml:id="c20s3-img-tray-axis">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-2.8,0) -- (2.9,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-1.8) -- (0,1.9) node[above] {\(y\)};
+
+            \draw[fill=gray!10, thick] (-2,-1) rectangle (2,1);
+
+            \draw[very thick, blue!65!black] (0,-1.35) -- (0,1.35);
+            \node[blue!65!black, right] at (0,1.35) {axis};
+
+            \fill (1.35,0.65) circle (2pt);
+            \draw[dashed] (0,0) -- (1.35,0.65);
+            \node[above right] at (0.7,0.35) {\(r\)};
+
+            \node at (0,-2.35) {moment of inertia weights each mass piece by \(r^2\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      Choose one object or model.
+    </p>
+
+    <p>
+      <em>Option A. Uniform rectangular plate.</em>
+      Compute the moment of inertia of a rectangular plate about one of its symmetry axes
+      and about the axis perpendicular to the plate through its center.
+    </p>
+    <p>
+      <em>Option B. Disk or annulus.</em>
+      Use polar coordinates to compute the moment of inertia of a uniform disk or annulus
+      about its central axis.
+    </p>
+    <p>
+      <em>Option C. Triangular lamina.</em>
+      Choose a triangular region in the plane. Compute its mass and moment of inertia using
+      double integrals.
+    </p>
+    <p>
+      <em>Option D. Measured object.</em>
+      Approximate a real flat object by dividing it into small pieces. Estimate each piece's
+      mass and distance from the chosen axis. Use the discrete approximation
+    </p>
+    <md>
+      I\approx \sum r_i^2\,\Delta m_i.
+    </md>
+    <p>
+      <em>Option E. Solid object.</em>
+      Compute or estimate the moment of inertia of a solid cylinder, rectangular box, or ball
+      using a triple integral.
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Draw the object and the rotation axis.</p>
+      </li>
+      <li>
+        <p>State whether the density is constant or variable.</p>
+      </li>
+      <li>
+        <p>Write the distance squared to the axis.</p>
+      </li>
+      <li>
+        <p>Set up the integral:</p>
+        <md>
+          I=\iint_R r^2\delta\,dA
+        </md>
+        <p>or</p>
+        <md>
+          I=\iiint_E r^2\rho\,dV.
+        </md>
+      </li>
+      <li>
+        <p>Choose coordinates that make the integral simpler.</p>
+      </li>
+      <li>
+        <p>Compute the mass.</p>
+      </li>
+      <li>
+        <p>Compute the moment of inertia.</p>
+      </li>
+      <li>
+        <p>Interpret the answer physically.</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Which parts of the object contribute most to <m>I</m>?</p>
+      </li>
+      <li>
+        <p>What happens if the same mass is moved farther from the axis?</p>
+      </li>
+      <li>
+        <p>Does symmetry simplify the integral?</p>
+      </li>
+      <li>
+        <p>
+          Can you verify your answer using the perpendicular-axis theorem or the
+          parallel-axis theorem, where appropriate?
+        </p>
+      </li>
+      <li>
+        <p>How would the answer change if the density were larger near the edge?</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>a labeled diagram,</p>
+      </li>
+      <li>
+        <p>the density model,</p>
+      </li>
+      <li>
+        <p>the chosen axis,</p>
+      </li>
+      <li>
+        <p>the moment-of-inertia integral,</p>
+      </li>
+      <li>
+        <p>the calculation,</p>
+      </li>
+      <li>
+        <p>the final value with units,</p>
+      </li>
+      <li>
+        <p>a physical explanation of why the answer is reasonable.</p>
+      </li>
+    </ol>
+
+    <p>
+      Moment of inertia is an integral with a memory of distance. A mass piece does not
+      only count by how much mass it has. It counts by where it sits.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s3-proj-change-of-variables">
+    <title>Project 3: change of variables in image warping</title>
+
+    <p>
+      A change of variables is a controlled distortion.
+    </p>
+    <p>
+      In <xref ref="ch12-change-of-variables"/>, a coordinate map sent tiny squares in one
+      coordinate plane to tiny parallelograms in another. The determinant measured how the
+      area changed. The same idea appears in image warping. A square image may be stretched,
+      sheared, wrapped, or bent. If we want to compute area, brightness, or ink after the
+      warp, the Jacobian must be included.
+    </p>
+
+    <p>
+      <em>A seed example: a square stretched into a trapezoid.</em>
+      Start with the unit square
+    </p>
+    <md>
+      0\le u\le1,
+      \qquad
+      0\le v\le1.
+    </md>
+    <p>
+      Define a map
+    </p>
+    <md>
+      T(u,v)=(x,y)=\bigl(u,\,(1+u)v\bigr).
+    </md>
+    <p>
+      When <m>u=0</m>, the vertical height is <m>1</m>. When <m>u=1</m>, the vertical height
+      is <m>2</m>. So the square is warped into a trapezoid.
+    </p>
+    <p>
+      The tangent vectors are
+    </p>
+    <md>
+      T_u=(1,v),
+      \qquad
+      T_v=(0,1+u).
+    </md>
+    <p>
+      The Jacobian determinant is
+    </p>
+    <md>
+      \begin{aligned}
+      J(u,v)
+      \amp=
+      \det
+      \begin{pmatrix}
+      x_u \amp x_v\\
+      y_u \amp y_v
+      \end{pmatrix}       \\
+      \amp=
+      \det
+      \begin{pmatrix}
+      1\amp0\\
+      v\amp1+u
+      \end{pmatrix}\\
+      \amp=
+      1+u.
+      \end{aligned}
+    </md>
+    <p>
+      So a tiny square of area <m>du\,dv</m> becomes a tiny region of area approximately
+    </p>
+    <md>
+      (1+u)\,du\,dv.
+    </md>
+    <p>
+      The area of the warped image is
+    </p>
+    <md>
+      \begin{aligned}
+      \operatorname{Area}
+      \amp=
+      \int_0^1\int_0^1 (1+u)\,dv\,du\\
+      \amp=
+      \int_0^1(1+u)\,du\\
+      \amp=
+      \frac32.
+      \end{aligned}
+    </md>
+    <p>
+      That matches the ordinary trapezoid formula:
+    </p>
+    <md>
+      \frac12(1+2)(1)=\frac32.
+    </md>
+    <p>
+      Now suppose the brightness of the warped image is
+    </p>
+    <md>
+      B(x,y)=x+y.
+    </md>
+    <p>
+      Then the total brightness is
+    </p>
+    <md>
+      \iint_{\text{warped image}} B(x,y)\,dA.
+    </md>
+    <p>
+      Using the change of variables,
+    </p>
+    <md>
+      \begin{aligned}
+      \iint_{\text{warped image}} B\,dA
+      \amp=
+      \int_0^1\int_0^1
+      B(T(u,v))\,|J(u,v)|\,dv\,du\\
+      \amp=
+      \int_0^1\int_0^1
+      \bigl(u+(1+u)v\bigr)(1+u)\,dv\,du.
+      \end{aligned}
+    </md>
+    <p>
+      Compute the inner integral:
+    </p>
+    <md>
+      \begin{aligned}
+      \int_0^1
+      \bigl(u+(1+u)v\bigr)(1+u)\,dv
+      \amp=
+      u(1+u)+\frac12(1+u)^2.
+      \end{aligned}
+    </md>
+    <p>
+      Then
+    </p>
+    <md>
+      \begin{aligned}
+      \int_0^1
+      \left[
+      u(1+u)+\frac12(1+u)^2
+      \right]du
+      \amp=
+      \int_0^1
+      \left(
+      \frac12+2u+\frac32u^2
+      \right)du\\
+      \amp=
+      \frac12+1+\frac12\\
+      \amp=
+      2.
+      \end{aligned}
+    </md>
+    <p>
+      So
+    </p>
+    <md>
+      \boxed{
+          \iint_{\text{warped image}}(x+y)\,dA=2.
+      }
+    </md>
+
+    <figure xml:id="c20s3-fig-image-warp">
+      <caption>A coordinate warp changes the area of small grid cells. The Jacobian records
+      the local area scale.</caption>
+      <image xml:id="c20s3-img-image-warp">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-0.3,0) -- (2.1,0) node[right] {\(u\)};
+                \draw[-&gt;] (0,-0.3) -- (0,2.1) node[above] {\(v\)};
+
+                \draw[fill=gray!10, thick] (0,0) rectangle (1.5,1.5);
+
+                \foreach \x in {0.3,0.6,0.9,1.2} {
+                    \draw[gray!45] (\x,0) -- (\x,1.5);
+                }
+                \foreach \y in {0.3,0.6,0.9,1.2} {
+                    \draw[gray!45] (0,\y) -- (1.5,\y);
+                }
+
+                \node at (0.75,-0.75) {unit square};
+            \end{scope}
+
+            \draw[-&gt;, thick] (2.6,0.8) -- (4.1,0.8);
+            \node[above] at (3.35,0.8) {\(T\)};
+
+            \begin{scope}[shift={(5.0,0)}]
+                \draw[-&gt;] (-0.3,0) -- (2.3,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.3) -- (0,3.4) node[above] {\(y\)};
+
+                \draw[fill=blue!8, thick] (0,0) -- (1.5,0) -- (1.5,3.0) -- (0,1.5) -- cycle;
+
+                \foreach \u in {0.3,0.6,0.9,1.2} {
+                    \draw[gray!45] (\u,0) -- (\u,{1.5*(1+\u/1.5)});
+                }
+
+                \foreach \v in {0.3,0.6,0.9,1.2} {
+                    \draw[gray!45] (0,\v) -- (1.5,{2*\v});
+                }
+
+                \node at (0.85,-0.75) {warped trapezoid};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      Choose one map <m>T</m> from the list or create your own.
+    </p>
+    <md>
+      \begin{array}{c|c}
+      \text{Name} \amp T(u,v)=(x,y) \\ \hline
+      \text{shear} \amp (u+av,\ v)\\[1mm]
+      \text{stretch} \amp (au,\ bv)\\[1mm]
+      \text{trapezoid warp} \amp (u,\ (1+u)v)\\[1mm]
+      \text{fold warning} \amp (u^2,\ v)\\[1mm]
+      \text{polar annulus} \amp ((1+r)\cos\theta,\ (1+r)\sin\theta)
+      \end{array}
+    </md>
+    <p>
+      For the polar annulus, use
+    </p>
+    <md>
+      0\le r\le1,
+      \qquad
+      0\le\theta\le2\pi.
+    </md>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Draw the parameter region.</p>
+      </li>
+      <li>
+        <p>Draw or plot the warped image.</p>
+      </li>
+      <li>
+        <p>Compute the tangent vectors:</p>
+        <md>
+          T_u,\qquad T_v.
+        </md>
+      </li>
+      <li>
+        <p>Compute the Jacobian determinant:</p>
+        <md>
+          J=\det
+          \begin{pmatrix}
+          x_u \amp x_v\\
+          y_u \amp y_v
+          \end{pmatrix}.
+        </md>
+      </li>
+      <li>
+        <p>
+          Decide whether the map preserves orientation, reverses orientation, or changes
+          sign somewhere.
+        </p>
+      </li>
+      <li>
+        <p>Compute the area of the image:</p>
+        <md>
+          \iint_D |J|\,du\,dv.
+        </md>
+      </li>
+      <li>
+        <p>Choose a simple brightness function <m>B(x,y)</m>, such as</p>
+        <md>
+          B(x,y)=1,\qquad B(x,y)=x,\qquad B(x,y)=x+y,
+        </md>
+        <p>and compute</p>
+        <md>
+          \iint_{\text{image}}B(x,y)\,dA
+        </md>
+        <p>using the pullback:</p>
+        <md>
+          \iint_D B(T(u,v))\,|J(u,v)|\,du\,dv.
+        </md>
+      </li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Where does the map stretch area the most?</p>
+      </li>
+      <li>
+        <p>Where does it shrink area?</p>
+      </li>
+      <li>
+        <p>Does the map ever collapse a two-dimensional region into a curve?</p>
+      </li>
+      <li>
+        <p>Does the sign of <m>J</m> matter for ordinary area?</p>
+      </li>
+      <li>
+        <p>Where would the sign of <m>J</m> matter for an oriented integral such as</p>
+        <md>
+          \iint f\,dx\wedge dy?
+        </md>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>the coordinate map,</p>
+      </li>
+      <li>
+        <p>a picture of the parameter grid and the warped grid,</p>
+      </li>
+      <li>
+        <p>the Jacobian calculation,</p>
+      </li>
+      <li>
+        <p>the area calculation,</p>
+      </li>
+      <li>
+        <p>one pulled-back integral,</p>
+      </li>
+      <li>
+        <p>a paragraph explaining what the Jacobian means geometrically.</p>
+      </li>
+    </ol>
+
+    <p>
+      A warped image is a friendly place to see the change-of-variables formula. The picture
+      changes shape, but the integral stays honest because the Jacobian keeps track of the
+      stretching.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s3-proj-monte-carlo">
+    <title>Project 4: Monte Carlo integration in two and three dimensions</title>
+
+    <p>
+      Some regions are too irregular for clean limits. Some functions are known only through
+      simulation. Some dimensions are too high for ordinary grid methods to be practical.
+    </p>
+    <p>
+      Monte Carlo integration uses random samples instead of a regular grid.
+    </p>
+    <p>
+      The idea is simple: average many random values, then multiply by the size of the
+      sampling box.
+    </p>
+
+    <p>
+      <em>A seed example: estimating water volume in a circular pond.</em>
+      A shallow circular pond has radius <m>2</m>. Its depth is modeled by
+    </p>
+    <md>
+      d(x,y)=5-x^2-y^2
+    </md>
+    <p>
+      inside the disk
+    </p>
+    <md>
+      D=\{(x,y):x^2+y^2\le4\}.
+    </md>
+    <p>
+      The volume of water is
+    </p>
+    <md>
+      V=\iint_D (5-x^2-y^2)\,dA.
+    </md>
+    <p>
+      We could use polar coordinates:
+    </p>
+    <md>
+      \begin{aligned}
+      V
+      \amp=
+      \int_0^{2\pi}\int_0^2(5-r^2)r\,dr\,d\theta\\
+      \amp=
+      2\pi
+      \left[
+      \frac52r^2-\frac14r^4
+      \right]_0^2\\
+      \amp=
+      2\pi(10-4)\\
+      \amp=
+      12\pi.
+      \end{aligned}
+    </md>
+    <p>
+      So the exact volume is approximately
+    </p>
+    <md>
+      37.70.
+    </md>
+    <p>
+      Now estimate the same integral by Monte Carlo sampling. Put the pond inside the square
+    </p>
+    <md>
+      B=[-2,2]\times[-2,2].
+    </md>
+    <p>
+      The square has area <m>16</m>.
+    </p>
+    <p>
+      Define
+    </p>
+    <md>
+      g(x,y)=
+      \begin{cases}
+      5-x^2-y^2, \amp x^2+y^2\le4,\\
+      0, \amp x^2+y^2&gt;4.
+      \end{cases}
+    </md>
+    <p>
+      Then
+    </p>
+    <md>
+      \iint_D(5-x^2-y^2)\,dA
+      =
+      \iint_B g(x,y)\,dA.
+    </md>
+    <p>
+      Suppose five random points in <m>B</m> give the following values:
+    </p>
+    <md>
+      \begin{array}{c|c|c}
+      (x,y) \amp x^2+y^2 \amp g(x,y) \\ \hline
+      (0.4,-1.1) \amp 1.37 \amp 3.63\\
+      (-1.8,0.6) \amp 3.60 \amp 1.40\\
+      (1.7,1.5) \amp 5.14 \amp 0\\
+      (-0.2,0.3) \amp 0.13 \amp 4.87\\
+      (1.1,-0.7) \amp 1.70 \amp 3.30
+      \end{array}
+    </md>
+    <p>
+      The sample average is
+    </p>
+    <md>
+      \frac{3.63+1.40+0+4.87+3.30}{5}=2.64.
+    </md>
+    <p>
+      So the Monte Carlo estimate is
+    </p>
+    <md>
+      \boxed{
+          V\approx 16(2.64)=42.24.
+      }
+    </md>
+    <p>
+      That is rough, because <m>N=5</m> is tiny. With hundreds or thousands of samples, the
+      estimate should settle closer to <m>12\pi</m>.
+    </p>
+
+    <p>
+      <em>The general Monte Carlo formula.</em>
+      Let <m>E</m> be a region inside a box <m>B</m>. Define
+    </p>
+    <md>
+      g(\mathbf x)=
+      \begin{cases}
+      f(\mathbf x), \amp \mathbf x\in E,\\
+      0, \amp \mathbf x\notin E.
+      \end{cases}
+    </md>
+    <p>
+      If
+    </p>
+    <md>
+      \mathbf X_1,\mathbf X_2,\ldots,\mathbf X_N
+    </md>
+    <p>
+      are random points chosen uniformly in <m>B</m>, then
+    </p>
+    <md>
+      \boxed{
+          \int_E f
+          \approx
+          \operatorname{size}(B)\,
+          \frac{1}{N}
+          \sum_{i=1}^{N} g(\mathbf X_i).
+      }
+    </md>
+    <p>
+      Here <m>\operatorname{size}(B)</m> means area in two dimensions and volume in three
+      dimensions.
+    </p>
+
+    <p>
+      <em>Your task.</em>
+      Choose one integral.
+    </p>
+
+    <p>
+      <em>Option A. Area of an irregular region.</em>
+      Estimate the area of a region <m>E</m> by taking
+    </p>
+    <md>
+      f=1.
+    </md>
+    <p>
+      <em>Option B. Volume under a surface.</em>
+      Estimate
+    </p>
+    <md>
+      \iint_E f(x,y)\,dA
+    </md>
+    <p>
+      for a region <m>E</m> inside a rectangle.
+    </p>
+    <p>
+      <em>Option C. Mass inside a solid.</em>
+      Estimate
+    </p>
+    <md>
+      \iiint_E \rho(x,y,z)\,dV
+    </md>
+    <p>
+      for a solid <m>E</m> inside a box.
+    </p>
+    <p>
+      <em>Option D. Compare Monte Carlo with an exact answer.</em>
+      Choose an integral that can also be computed exactly, such as a disk, ball, cylinder, or
+      box. Compare the Monte Carlo estimate with the exact value.
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li>
+        <p>State the region <m>E</m>.</p>
+      </li>
+      <li>
+        <p>Choose a sampling box <m>B</m>.</p>
+      </li>
+      <li>
+        <p>Define the function <m>g</m> on the whole box.</p>
+      </li>
+      <li>
+        <p>Generate random sample points.</p>
+      </li>
+      <li>
+        <p>Compute the estimate for several values of <m>N</m>, such as</p>
+        <md>
+          N=100,\quad 500,\quad 1000,\quad 5000.
+        </md>
+      </li>
+      <li>
+        <p>Plot or tabulate the estimates as <m>N</m> grows.</p>
+      </li>
+      <li>
+        <p>Compare with an exact or high-resolution numerical answer, if available.</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Does the estimate appear to converge?</p>
+      </li>
+      <li>
+        <p>How much does the answer change when you run the experiment again?</p>
+      </li>
+      <li>
+        <p>What happens if the sampling box is much larger than the region <m>E</m>?</p>
+      </li>
+      <li>
+        <p>Why are points outside <m>E</m> assigned value <m>0</m>?</p>
+      </li>
+      <li>
+        <p>What advantage does random sampling have in three dimensions?</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>the integral being estimated,</p>
+      </li>
+      <li>
+        <p>the sampling box,</p>
+      </li>
+      <li>
+        <p>the Monte Carlo formula used,</p>
+      </li>
+      <li>
+        <p>a table of estimates for increasing <m>N</m>,</p>
+      </li>
+      <li>
+        <p>a plot of the estimates, if possible,</p>
+      </li>
+      <li>
+        <p>a comparison with an exact or more accurate value,</p>
+      </li>
+      <li>
+        <p>a paragraph about reliability and error.</p>
+      </li>
+    </ol>
+  </subsection>
+
+  <conclusion>
+    <p>
+      The integration projects mostly add scalar quantities: density, brightness, mass,
+      volume, and moment. Vector calculus adds direction. A force pushes along a path. A
+      fluid crosses a surface. A boundary can reveal an area, and a flux balance can reveal a
+      source. The next projects return to the book's boundary theme.
+    </p>
+  </conclusion>
+</section>

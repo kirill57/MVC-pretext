@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch03-linear-functions-matrices.tex, Section 3.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-3-solving-linear-systems" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Solving linear systems</title>
+
+  <p>
+    <xref ref="sec-3-determinants-of-linear-transformations"/> ended with the equation
+    <md>A\mathbf x=\mathbf b.</md>
+    The determinant told us whether the linear machine <m>A</m> collapses area or volume.
+    Now we use that information in the most practical way: if we know the output
+    <m>\mathbf b</m>, can we recover the input <m>\mathbf x</m>?
+  </p>
+
+  <subsection xml:id="c3s5-two-equations-two-unknowns">
+    <title>Two equations and two unknowns</title>
+
+    <p>
+      Imagine a small control panel with two knobs. Turning the first knob by <m>x</m> units
+      adds
+      <md>x(2,1)</md>
+      to the two sensor readings. Turning the second knob by <m>y</m> units adds
+      <md>y(1,3).</md>
+      We want the final reading to be
+      <md>(7,8).</md>
+      So we need
+      <md>x(2,1)+y(1,3)=(7,8).</md>
+      In matrix form,
+      <md>
+        \begin{pmatrix}
+            2&amp;1\\
+            1&amp;3
+        \end{pmatrix}
+        \begin{pmatrix}
+            x\\y
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            7\\8
+        \end{pmatrix}.
+      </md>
+      Written as equations, this is
+      <md>
+        \begin{cases}
+        2x+y=7,\\
+        x+3y=8.
+        \end{cases}
+      </md>
+    </p>
+
+    <p>Each equation is a line. A solution is a point <m>(x,y)</m> that lies on both lines.</p>
+
+    <figure xml:id="c3s5-fig-two-lines">
+      <caption>Two independent linear equations in two unknowns meet at one point.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \draw[-&gt;] (-0.5,0) -- (5.6,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-1.2) -- (0,5.5) node[above] {\(y\)};
+
+            \draw[step=1, gray!18, very thin] (0,-1) grid (5,5);
+
+            \draw[thick] (1,5) -- (4,-1) node[below right] {\(2x+y=7\)};
+            \draw[thick] (0,{8/3}) -- (5,1) node[right] {\(x+3y=8\)};
+
+            \fill ({13/5},{9/5}) circle (2.5pt);
+            \node[above right] at ({13/5},{9/5}) {\(\left(\frac{13}{5},\frac95\right)\)};
+
+            \node[below left] at (0,0) {\(0\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      We can solve by ordinary elimination. From
+      <md>2x+y=7</md>
+      we get
+      <md>y=7-2x.</md>
+      Substitute into the second equation:
+      <md>
+        <mrow>x+3(7-2x) \amp =8,</mrow>
+        <mrow>x+21-6x \amp =8,</mrow>
+        <mrow>-5x \amp =-13,</mrow>
+      </md>
+      so
+      <md>x=\frac{13}{5}.</md>
+      Then
+      <md>y=7-2\left(\frac{13}{5}\right)=\frac95.</md>
+      Thus
+      <md>
+        \boxed{
+            (x,y)=\left(\frac{13}{5},\frac95\right).
+        }
+      </md>
+    </p>
+
+    <p>
+      There is also a column picture. The two columns
+      <md>\mathbf a_1=(2,1),\qquad \mathbf a_2=(1,3)</md>
+      span a parallelogram with signed area
+      <md>
+        \det
+        \begin{pmatrix}
+            2&amp;1\\
+            1&amp;3
+        \end{pmatrix}
+        =
+        5.
+      </md>
+      Since this determinant is not zero, the columns are not on one line. They form a
+      basis of the plane. So every output <m>\mathbf b\in\mathbb R^2</m> has exactly one
+      description
+      <md>\mathbf b=x\mathbf a_1+y\mathbf a_2.</md>
+    </p>
+
+    <definition xml:id="c3s5-def-linear-system">
+      <title>Linear system</title>
+      <statement>
+        <p>
+          A <term>linear system</term> is a collection of linear equations in the same
+          unknowns. For example,
+          <md>
+            \begin{cases}
+            2x+y=7,\\
+            x+3y=8
+            \end{cases}
+          </md>
+          is a linear system in the unknowns <m>x</m> and <m>y</m>.
+        </p>
+        <p>
+          A <term>solution</term> is a choice of the unknowns that satisfies every equation
+          in the system.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The matrix
+      <md>
+        A=
+        \begin{pmatrix}
+            2&amp;1\\
+            1&amp;3
+        \end{pmatrix}
+      </md>
+      is called the coefficient matrix. The vector
+      <md>
+        \mathbf b=
+        \begin{pmatrix}
+            7\\8
+        \end{pmatrix}
+      </md>
+      is the right-hand side.
+    </p>
+
+    <p>
+      The system is the equation
+      <md>A\mathbf x=\mathbf b,</md>
+      where
+      <md>
+        \mathbf x=
+        \begin{pmatrix}
+            x\\y
+        \end{pmatrix}.
+      </md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s5-three-equations-three-unknowns">
+    <title>Three equations and three unknowns</title>
+
+    <p>
+      In three dimensions, each linear equation usually describes a plane. A solution of
+      three equations is a point that lies on all three planes.
+    </p>
+
+    <p>
+      Consider
+      <md>
+        \begin{cases}
+        x+y+z=6,\\
+        2x-y+z=3,\\
+        x+2y-z=2.
+        \end{cases}
+      </md>
+      We solve by eliminating variables.
+    </p>
+
+    <p>
+      Start with the augmented matrix:
+      <md>
+        \left[
+        \begin{array}{ccc|c}
+        1&amp;1&amp;1&amp;6\\
+        2&amp;-1&amp;1&amp;3\\
+        1&amp;2&amp;-1&amp;2
+        \end{array}
+        \right].
+      </md>
+      The vertical line separates the coefficient matrix from the right-hand side.
+    </p>
+
+    <p>
+      Subtract <m>2</m> times the first row from the second row:
+      <md>R_2\leftarrow R_2-2R_1.</md>
+      Subtract the first row from the third row:
+      <md>R_3\leftarrow R_3-R_1.</md>
+      This gives
+      <md>
+        \left[
+        \begin{array}{ccc|c}
+        1&amp;1&amp;1&amp;6\\
+        0&amp;-3&amp;-1&amp;-9\\
+        0&amp;1&amp;-2&amp;-4
+        \end{array}
+        \right].
+      </md>
+      Now swap the second and third rows:
+      <md>
+        \left[
+        \begin{array}{ccc|c}
+        1&amp;1&amp;1&amp;6\\
+        0&amp;1&amp;-2&amp;-4\\
+        0&amp;-3&amp;-1&amp;-9
+        \end{array}
+        \right].
+      </md>
+      Add <m>3</m> times the second row to the third:
+      <md>R_3\leftarrow R_3+3R_2.</md>
+      Then
+      <md>
+        \left[
+        \begin{array}{ccc|c}
+        1&amp;1&amp;1&amp;6\\
+        0&amp;1&amp;-2&amp;-4\\
+        0&amp;0&amp;-7&amp;-21
+        \end{array}
+        \right].
+      </md>
+      The last row says
+      <md>-7z=-21,</md>
+      so
+      <md>z=3.</md>
+      The second row says
+      <md>y-2z=-4.</md>
+      Using <m>z=3</m>,
+      <md>y-6=-4,</md>
+      so
+      <md>y=2.</md>
+      The first row says
+      <md>x+y+z=6.</md>
+      Thus
+      <md>x+2+3=6,</md>
+      so
+      <md>x=1.</md>
+      Therefore
+      <md>
+        \boxed{
+            (x,y,z)=(1,2,3).
+        }
+      </md>
+    </p>
+
+    <p>Geometrically, the three planes meet in one point.</p>
+  </subsection>
+
+  <subsection xml:id="c3s5-row-reduction">
+    <title>Row reduction as organized elimination</title>
+
+    <p>
+      The previous computation used a simple idea: replace the equations by new equations
+      with the same solutions but fewer variables.
+    </p>
+
+    <p>There are three safe moves.</p>
+
+    <definition xml:id="c3s5-def-elementary-row-operations">
+      <title>Elementary row operations</title>
+      <statement>
+        <p>The following operations are called <term>elementary row operations</term>:</p>
+        <ol>
+          <li><p>Swap two rows.</p></li>
+          <li><p>Multiply a row by a nonzero number.</p></li>
+          <li><p>Add a multiple of one row to another row.</p></li>
+        </ol>
+      </statement>
+    </definition>
+
+    <p>
+      These operations do not change the solution set. They only rewrite the same
+      information in a more useful form.
+    </p>
+
+    <theorem xml:id="c3s5-thm-row-ops-preserve-solutions">
+      <title>Elementary row operations preserve solutions</title>
+      <statement>
+        <p>
+          If one augmented matrix is obtained from another by elementary row operations, then
+          the two linear systems have the same solutions.
+        </p>
+      </statement>
+      <proof>
+        <p>Each row is an equation. Swapping rows only changes the order of the equations.</p>
+        <p>
+          Multiplying a row by a nonzero number does not change the set of points satisfying
+          that equation. For example,
+          <md>x+2y=5</md>
+          and
+          <md>3x+6y=15</md>
+          have the same solutions.
+        </p>
+        <p>
+          Adding a multiple of one equation to another is reversible. If we replace
+          <md>R_2</md>
+          by
+          <md>R_2+cR_1,</md>
+          then we can recover the old row by replacing the new row by
+          <md>R_2-cR_1.</md>
+          So no information is lost.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The word <em>nonzero</em> is necessary. If we multiply an equation by <m>0</m>, we
+      destroy information. For example,
+      <md>x+y=1</md>
+      has many solutions, but
+      <md>0=0</md>
+      is satisfied by every point in the plane. Multiplying by zero has erased the equation.
+    </p>
+
+    <p>
+      Row reduction tries to produce a staircase shape. The first nonzero entry in a row is
+      called a <term>pivot</term>. Pivots mark variables that are determined by the equations.
+      Variables without pivots are free to vary.
+    </p>
+
+    <p>
+      For the system
+      <md>
+        \begin{cases}
+        x+y+z=6,\\
+        2x-y+z=3,\\
+        x+2y-z=2,
+        \end{cases}
+      </md>
+      the row-reduced form can be pushed all the way to
+      <md>
+        \left[
+        \begin{array}{ccc|c}
+        1&amp;0&amp;0&amp;1\\
+        0&amp;1&amp;0&amp;2\\
+        0&amp;0&amp;1&amp;3
+        \end{array}
+        \right].
+      </md>
+      This means
+      <md>x=1,\qquad y=2,\qquad z=3.</md>
+      Every variable has a pivot, so the solution is a single point.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s5-cramers-rule">
+    <title>Cramer's rule as a geometric formula</title>
+
+    <p>
+      Row reduction is efficient. But determinants give another formula, one that explains
+      the geometry.
+    </p>
+
+    <p>
+      Return to the two-dimensional system
+      <md>x(2,1)+y(1,3)=(7,8).</md>
+      Let
+      <md>\mathbf a_1=(2,1),\qquad \mathbf a_2=(1,3),\qquad \mathbf b=(7,8).</md>
+      The equation is
+      <md>x\mathbf a_1+y\mathbf a_2=\mathbf b.</md>
+    </p>
+
+    <p>
+      Take the determinant with <m>\mathbf a_2</m> as the second column:
+      <md>\det[\mathbf b\ \mathbf a_2].</md>
+      Since
+      <md>\mathbf b=x\mathbf a_1+y\mathbf a_2,</md>
+      we get
+      <md>
+        <mrow>\det[\mathbf b\ \mathbf a_2] \amp = \det[x\mathbf a_1+y\mathbf a_2\ \ \mathbf a_2]</mrow>
+        <mrow>\amp = x\det[\mathbf a_1\ \mathbf a_2] + y\det[\mathbf a_2\ \mathbf a_2].</mrow>
+      </md>
+      But
+      <md>\det[\mathbf a_2\ \mathbf a_2]=0</md>
+      because a parallelogram with two equal sides has zero area. Therefore
+      <md>\det[\mathbf b\ \mathbf a_2]=x\det[\mathbf a_1\ \mathbf a_2].</md>
+      So
+      <md>
+        \boxed{
+            x=
+            \frac{\det[\mathbf b\ \mathbf a_2]}
+                 {\det[\mathbf a_1\ \mathbf a_2]}.
+        }
+      </md>
+    </p>
+
+    <p>
+      Similarly,
+      <md>
+        \boxed{
+            y=
+            \frac{\det[\mathbf a_1\ \mathbf b]}
+                 {\det[\mathbf a_1\ \mathbf a_2]}.
+        }
+      </md>
+    </p>
+
+    <p>
+      In our example,
+      <md>
+        \det[\mathbf a_1\ \mathbf a_2]
+        =
+        \det
+        \begin{pmatrix}
+            2&amp;1\\
+            1&amp;3
+        \end{pmatrix}
+        =
+        5.
+      </md>
+      Then
+      <md>
+        x
+        =
+        \frac{
+        \det
+        \begin{pmatrix}
+            7&amp;1\\
+            8&amp;3
+        \end{pmatrix}}
+        {5}
+        =
+        \frac{21-8}{5}
+        =
+        \frac{13}{5},
+      </md>
+      and
+      <md>
+        y
+        =
+        \frac{
+        \det
+        \begin{pmatrix}
+            2&amp;7\\
+            1&amp;8
+        \end{pmatrix}}
+        {5}
+        =
+        \frac{16-7}{5}
+        =
+        \frac95.
+      </md>
+    </p>
+
+    <theorem xml:id="c3s5-thm-cramers-rule-plane">
+      <title>Cramer's rule in the plane</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            A=
+            \begin{pmatrix}
+                a&amp;b\\
+                c&amp;d
+            \end{pmatrix},
+            \qquad
+            \mathbf b=
+            \begin{pmatrix}
+                r\\s
+            \end{pmatrix}.
+          </md>
+          If
+          <md>\det A\neq0,</md>
+          then the system
+          <md>
+            A
+            \begin{pmatrix}
+                x\\y
+            \end{pmatrix}
+            =
+            \mathbf b
+          </md>
+          has the unique solution
+          <md>
+            \boxed{
+                x=
+                \frac{
+                \det
+                \begin{pmatrix}
+                    r&amp;b\\
+                    s&amp;d
+                \end{pmatrix}}
+                {\det A},
+                \qquad
+                y=
+                \frac{
+                \det
+                \begin{pmatrix}
+                    a&amp;r\\
+                    c&amp;s
+                \end{pmatrix}}
+                {\det A}.
+            }
+          </md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      Cramer's rule also works in space. If
+      <md>\mathbf b=x\mathbf a_1+y\mathbf a_2+z\mathbf a_3,</md>
+      then
+      <md>
+        \boxed{
+            x=
+            \frac{\det[\mathbf b\ \mathbf a_2\ \mathbf a_3]}
+                 {\det[\mathbf a_1\ \mathbf a_2\ \mathbf a_3]},
+        }
+      </md>
+      <md>
+        \boxed{
+            y=
+            \frac{\det[\mathbf a_1\ \mathbf b\ \mathbf a_3]}
+                 {\det[\mathbf a_1\ \mathbf a_2\ \mathbf a_3]},
+        }
+      </md>
+      and
+      <md>
+        \boxed{
+            z=
+            \frac{\det[\mathbf a_1\ \mathbf a_2\ \mathbf b]}
+                 {\det[\mathbf a_1\ \mathbf a_2\ \mathbf a_3]}.
+        }
+      </md>
+      The proof is the same, with signed volume replacing signed area.
+    </p>
+
+    <p>
+      Cramer's rule is not usually the fastest way to solve a large system. Row reduction is
+      better for computation. But Cramer's rule reveals the geometry: the coefficient of a
+      column is found by comparing signed areas or signed volumes.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s5-no-one-many-solutions">
+    <title>When there is no solution, one solution, or many solutions</title>
+
+    <p>
+      A linear system has only three possible behaviors:
+      <md>
+        \text{no solution},\qquad
+        \text{one solution},\qquad
+        \text{many solutions}.
+      </md>
+      There is no fourth option.
+    </p>
+
+    <p>Two lines in the plane show all three possibilities.</p>
+
+    <example xml:id="c3s5-ex-one-solution">
+      <title>One solution</title>
+      <statement>
+        <p>
+          The system
+          <md>
+            \begin{cases}
+            2x+y=7,\\
+            x+3y=8
+            \end{cases}
+          </md>
+          has one solution:
+          <md>(x,y)=\left(\frac{13}{5},\frac95\right).</md>
+          The two lines cross in one point. The coefficient determinant is nonzero:
+          <md>
+            \det
+            \begin{pmatrix}
+                2&amp;1\\
+                1&amp;3
+            \end{pmatrix}
+            =
+            5.
+          </md>
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c3s5-ex-no-solution">
+      <title>No solution</title>
+      <statement>
+        <p>
+          The system
+          <md>
+            \begin{cases}
+            x+y=1,\\
+            2x+2y=5
+            \end{cases}
+          </md>
+          has no solution.
+        </p>
+        <p>
+          The second left-hand side is twice the first:
+          <md>2x+2y=2(x+y).</md>
+          If <m>x+y=1</m>, then <m>2x+2y=2</m>, not <m>5</m>. Row reduction shows the
+          contradiction:
+          <md>
+            \left[
+            \begin{array}{cc|c}
+            1&amp;1&amp;1\\
+            2&amp;2&amp;5
+            \end{array}
+            \right]
+            \longrightarrow
+            \left[
+            \begin{array}{cc|c}
+            1&amp;1&amp;1\\
+            0&amp;0&amp;3
+            \end{array}
+            \right].
+          </md>
+          The last row says
+          <md>0=3,</md>
+          which is impossible.
+        </p>
+        <p>Geometrically, the two lines are parallel and distinct.</p>
+      </statement>
+    </example>
+
+    <example xml:id="c3s5-ex-many-solutions">
+      <title>Many solutions</title>
+      <statement>
+        <p>
+          The system
+          <md>
+            \begin{cases}
+            x+y=1,\\
+            2x+2y=2
+            \end{cases}
+          </md>
+          has many solutions.
+        </p>
+        <p>
+          The second equation is just twice the first. Row reduction gives
+          <md>
+            \left[
+            \begin{array}{cc|c}
+            1&amp;1&amp;1\\
+            2&amp;2&amp;2
+            \end{array}
+            \right]
+            \longrightarrow
+            \left[
+            \begin{array}{cc|c}
+            1&amp;1&amp;1\\
+            0&amp;0&amp;0
+            \end{array}
+            \right].
+          </md>
+          Only one real equation remains:
+          <md>x+y=1.</md>
+          Let
+          <md>y=t.</md>
+          Then
+          <md>x=1-t.</md>
+          So all solutions are
+          <md>
+            \boxed{
+                (x,y)=(1-t,t),\qquad t\in\mathbb R.
+            }
+          </md>
+          Geometrically, the two equations describe the same line.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The same pattern appears in space. Three planes can meet in a point, miss each other,
+      or share a line or plane.
+    </p>
+
+    <example xml:id="c3s5-ex-line-of-solutions">
+      <title>A line of solutions in space</title>
+      <statement>
+        <p>
+          Consider
+          <md>
+            \begin{cases}
+            x+y+z=4,\\
+            x-y+z=2.
+            \end{cases}
+          </md>
+          Subtract the second equation from the first:
+          <md>2y=2,</md>
+          so
+          <md>y=1.</md>
+          Then
+          <md>x+z=3.</md>
+          Let
+          <md>z=t.</md>
+          Then
+          <md>x=3-t.</md>
+          The solutions are
+          <md>
+            \boxed{
+                (x,y,z)=(3-t,1,t),\qquad t\in\mathbb R.
+            }
+          </md>
+          This is a line. Geometrically, two nonparallel planes in space usually intersect in
+          a line.
+        </p>
+      </statement>
+    </example>
+
+    <p>The determinant gives the cleanest test for square systems.</p>
+
+    <theorem xml:id="c3s5-thm-nonzero-det-one-solution">
+      <title>Nonzero determinant gives one solution</title>
+      <statement>
+        <p>
+          Let <m>A</m> be an <m>n\times n</m> matrix, with <m>n=2</m> or <m>n=3</m>. If
+          <md>\det A\neq0,</md>
+          then for every right-hand side <m>\mathbf b</m>, the system
+          <md>A\mathbf x=\mathbf b</md>
+          has exactly one solution.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          When <m>\det A\neq0</m>, the linear transformation
+          <md>\mathbf x\longmapsto A\mathbf x</md>
+          does not collapse area in the plane or volume in space. Its columns form a basis of
+          the output space. Therefore every output <m>\mathbf b</m> has a unique coordinate
+          description in those columns:
+          <md>\mathbf b=x_1\mathbf a_1+\cdots+x_n\mathbf a_n.</md>
+          Those coordinates are the unique solution of
+          <md>A\mathbf x=\mathbf b.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The hypothesis
+      <md>\det A\neq0</md>
+      is essential.
+    </p>
+
+    <p>
+      For example, let
+      <md>
+        A=
+        \begin{pmatrix}
+            1&amp;1\\
+            2&amp;2
+        \end{pmatrix}.
+      </md>
+      Then
+      <md>\det A=0.</md>
+      The system
+      <md>
+        A
+        \begin{pmatrix}
+            x\\y
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            1\\2
+        \end{pmatrix}
+      </md>
+      has many solutions, because it is just
+      <md>x+y=1.</md>
+      But the system
+      <md>
+        A
+        \begin{pmatrix}
+            x\\y
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            1\\5
+        \end{pmatrix}
+      </md>
+      has no solution, because it says
+      <md>x+y=1</md>
+      and
+      <md>2x+2y=5</md>
+      at the same time.
+    </p>
+
+    <p>
+      So determinant zero does not mean one specific failure. It means collapse. Once a
+      machine collapses the plane or space, some outputs are unreachable and some reachable
+      outputs come from many inputs.
+    </p>
+
+    <p>
+      Linear systems are about flat objects: lines, planes, and hyperplanes. But calculus will
+      soon ask about curved objects. Near a point, a curved surface first looks like a plane;
+      that is the linear part. When the plane becomes horizontal and the first-order change
+      vanishes, the next visible shape is quadratic. A bowl, a dome, and a saddle all begin
+      with expressions like
+      <md>ax^2+bxy+cy^2.</md>
+      To read those shapes, we need one more matrix idea.
+    </p>
+  </subsection>
+</section>

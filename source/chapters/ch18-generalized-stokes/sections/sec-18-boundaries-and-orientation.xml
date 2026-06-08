@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch18-generalized-stokes.tex, Section 1.
+     Status: CONVERTED. -->
+<section xml:id="sec-18-boundaries-and-orientation" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Boundaries and orientation</title>
+
+  <p>
+    A form changes sign when orientation reverses. So before we state the theorem, we must make
+    the signs automatic. The boundary of an interval, a region, a surface, or a solid should
+    inherit its orientation from the object it bounds.
+  </p>
+
+  <subsection xml:id="c18s1-subsec-oriented-intervals-and-endpoints">
+    <title>Oriented intervals and endpoints</title>
+
+    <p>Start with the old one-dimensional picture.</p>
+
+    <p>
+      The interval
+      <md>I=[a,b]</md>
+      is oriented from left to right. Its boundary consists of two endpoints, but the endpoints
+      do not have the same sign:
+      <md>\boxed{\partial[a,b]=\{b\}-\{a\}.}</md>
+      The right endpoint is positive. The left endpoint is negative.
+    </p>
+
+    <p>
+      This is exactly the sign pattern in the Fundamental Theorem of Calculus:
+      <md>\int_a^b f'(x)\,dx=f(b)-f(a).</md>
+      In forms language, <m>f</m> is a <m>0</m>-form and
+      <md>\int_{\partial[a,b]} f=f(b)-f(a).</md>
+    </p>
+
+    <example xml:id="c18s1-ex-boundary-of-an-interval">
+      <title>The boundary of an interval</title>
+      <statement>
+        <p>
+          Let
+          <md>I=[2,5]</md>
+          with the usual left-to-right orientation, and let
+          <md>f(x)=x^2+1.</md>
+          Then
+          <md>\partial I=\{5\}-\{2\}.</md>
+          So
+          <md>
+            <mrow>\int_{\partial I} f \amp = f(5)-f(2)</mrow>
+            <mrow>\amp = 26-5</mrow>
+            <mrow>\amp = 21.</mrow>
+          </md>
+        </p>
+        <p>
+          If the same interval is given the opposite orientation, then its boundary becomes
+          <md>\{2\}-\{5\},</md>
+          and the integral becomes
+          <md>-21.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A point by itself has no direction to walk. Its orientation is only a sign:
+      <md>+P \qquad\text{or}\qquad -P.</md>
+      That is enough for <m>0</m>-forms.
+    </p>
+
+    <definition xml:id="c18s1-def-oriented-boundary-of-an-interval">
+      <title>Oriented boundary of an interval</title>
+      <statement>
+        <p>
+          If the interval <m>[a,b]</m> is oriented from <m>a</m> to <m>b</m>, then
+          <md>\boxed{\partial[a,b]=\{b\}-\{a\}.}</md>
+          Reversing the orientation reverses the signs of the endpoints.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The sign convention can be remembered by the word <q>outward.</q> At the right endpoint,
+      the outward direction points in the positive direction of the interval. At the left
+      endpoint, the outward direction points in the negative direction. So the right endpoint
+      gets <m>+</m>, and the left endpoint gets <m>-</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s1-subsec-oriented-plane-regions-and-boundary-curves">
+    <title>Oriented plane regions and boundary curves</title>
+
+    <p>
+      A region in the <m>xy</m>-plane has the standard orientation
+      <md>dx\wedge dy.</md>
+      This means that the ordered pair of directions
+      <md>\text{positive }x\text{-direction first, positive }y\text{-direction second}</md>
+      is positive.
+    </p>
+
+    <p>
+      The boundary of such a region is oriented so that the region stays on your left as you
+      walk along the boundary.
+    </p>
+
+    <p>For a region without holes, this means counterclockwise.</p>
+
+    <figure xml:id="c18s1-fig-positive-plane-boundary">
+      <caption>A positively oriented plane boundary keeps the region on the left.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (5.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,3.8) node[above] {\(y\)};
+
+            \draw[fill=gray!10, thick] (1,0.7) rectangle (4.4,2.8);
+
+            \draw[-&gt;, very thick, red!65!black] (1,0.7) -- (2.2,0.7);
+            \draw[-&gt;, very thick, red!65!black] (4.4,0.7) -- (4.4,1.7);
+            \draw[-&gt;, very thick, red!65!black] (4.4,2.8) -- (3.2,2.8);
+            \draw[-&gt;, very thick, red!65!black] (1,2.8) -- (1,1.8);
+
+            \node at (2.7,1.75) {\(R\)};
+            \node[below] at (2.7,0.7) {positive boundary direction};
+
+            \node at (2.7,-0.9) {the region stays on the left};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <example xml:id="c18s1-ex-rectangle-positive-boundary">
+      <title>A rectangle and its positive boundary</title>
+      <statement>
+        <p>
+          Let
+          <md>R=[0,4]\times[0,3],</md>
+          oriented by
+          <md>dx\wedge dy.</md>
+          Then <m>\partial R</m> is the rectangle walked counterclockwise:
+          <md>(0,0)\to(4,0)\to(4,3)\to(0,3)\to(0,0).</md>
+        </p>
+        <p>
+          If
+          <md>\omega=x\,dy,</md>
+          then the bottom and top edges contribute <m>0</m>, because <m>dy=0</m> there. The
+          right edge has
+          <md>x=4,\qquad 0\le y\le3,</md>
+          so
+          <md>\int_{\text{right edge}}x\,dy=\int_0^3 4\,dy=12.</md>
+          The left edge has
+          <md>x=0,</md>
+          so it contributes <m>0</m>. Therefore
+          <md>\boxed{\int_{\partial R} x\,dy=12.}</md>
+          If we walk the rectangle clockwise, the answer becomes
+          <md>-12.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      For a region with a hole, the same <q>region on the left</q> rule gives two
+      different-looking directions.
+    </p>
+
+    <p>The outer boundary is counterclockwise. The inner boundary is clockwise.</p>
+
+    <figure xml:id="c18s1-fig-annulus-orientation">
+      <caption>The inner boundary of a positively oriented annulus is walked clockwise.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.95, &gt;=stealth]
+            \draw[fill=gray!12, even odd rule]
+                (0,0) circle (2.6)
+                (0,0) circle (1.0);
+
+            \draw[very thick, red!65!black] (0,0) circle (2.6);
+            \draw[-&gt;, very thick, red!65!black]
+                (2.6,0) arc[start angle=0,end angle=35,radius=2.6];
+
+            \draw[very thick, blue!65!black] (0,0) circle (1.0);
+            \draw[-&gt;, very thick, blue!65!black]
+                (1,0) arc[start angle=0,end angle=-45,radius=1.0];
+
+            \node at (0,1.75) {region};
+            \node[red!65!black] at (3.6,0.6) {outer boundary};
+            \node[blue!65!black] at (2.4,-0.8) {inner boundary};
+
+            \node at (0,-3.35) {positive orientation keeps the gray region on the left};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This is not a special exception. It is the same rule. If you walk around the hole
+      clockwise, the material of the annulus stays on your left.
+    </p>
+
+    <definition xml:id="c18s1-def-positive-boundary-orientation-plane">
+      <title>Positive boundary orientation in the plane</title>
+      <statement>
+        <p>
+          Let <m>R</m> be a plane region oriented by <m>dx\wedge dy</m>. The positive
+          orientation of <m>\partial R</m> is the one for which the region stays on the left as
+          the boundary is traveled.
+        </p>
+        <p>
+          For a region without holes, this is counterclockwise. For an inner boundary around a
+          hole, this is clockwise.
+        </p>
+      </statement>
+    </definition>
+  </subsection>
+
+  <subsection xml:id="c18s1-subsec-oriented-surfaces-and-boundary-curves">
+    <title>Oriented surfaces and boundary curves</title>
+
+    <p>
+      A surface in space is oriented by choosing one of its two sides. Equivalently, we choose a
+      continuous unit normal vector field
+      <md>\mathbf n</md>
+      on the surface.
+    </p>
+
+    <p>
+      For a parametrized surface
+      <md>\mathbf r(u,v),</md>
+      the normal direction attached to the parameter order <m>(u,v)</m> is
+      <md>\mathbf r_u\times \mathbf r_v.</md>
+      Swapping the parameters reverses the orientation:
+      <md>\mathbf r_v\times \mathbf r_u = -\mathbf r_u\times \mathbf r_v.</md>
+    </p>
+
+    <p>Once the surface orientation is chosen, the boundary curve orientation is forced.</p>
+
+    <example xml:id="c18s1-ex-disk-two-orientations">
+      <title>A disk with two possible orientations</title>
+      <statement>
+        <p>
+          Let <m>D</m> be the unit disk in the <m>xy</m>-plane:
+          <md>x^2+y^2\le1.</md>
+        </p>
+        <p>
+          If <m>D</m> is oriented by the upward normal
+          <md>\mathbf n=\mathbf k,</md>
+          then its boundary circle is oriented counterclockwise when viewed from above:
+          <md>\mathbf r(t)=(\cos t,\sin t,0), \qquad 0\le t\le2\pi.</md>
+        </p>
+        <p>
+          If <m>D</m> is oriented by the downward normal
+          <md>\mathbf n=-\mathbf k,</md>
+          then the same boundary circle is oriented clockwise when viewed from above:
+          <md>\mathbf r(t)=(\cos t,-\sin t,0), \qquad 0\le t\le2\pi.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>The rule is the right-hand rule.</p>
+
+    <p>
+      Point your right thumb in the chosen normal direction. Your fingers curl in the positive
+      boundary direction.
+    </p>
+
+    <figure xml:id="c18s1-fig-surface-normal-boundary">
+      <caption>Changing the surface normal reverses the boundary orientation.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \begin{scope}
+                \draw[fill=gray!10, thick] (0,0) circle (1.6);
+                \draw[-&gt;, very thick, red!65!black]
+                    (1.6,0) arc[start angle=0,end angle=65,radius=1.6];
+
+                \draw[-&gt;, very thick, blue!65!black] (0,0) -- (0,2.4)
+                    node[above] {\(\mathbf n=\mathbf k\)};
+
+                \node at (0,-2.2) {upward normal};
+                \node at (0,-2.65) {counterclockwise boundary};
+            \end{scope}
+
+            \begin{scope}[shift={(5.5,0)}]
+                \draw[fill=gray!10, thick] (0,0) circle (1.6);
+                \draw[-&gt;, very thick, red!65!black]
+                    (1.6,0) arc[start angle=0,end angle=-65,radius=1.6];
+
+                \draw[-&gt;, very thick, blue!65!black] (0,0) -- (0,-2.4)
+                    node[below] {\(\mathbf n=-\mathbf k\)};
+
+                \node at (0,-3.1) {downward normal};
+                \node  at (0,-3.55) {clockwise boundary};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>There is also a version of the <q>region on the left</q> rule for surfaces.</p>
+
+    <p>
+      Imagine standing on the surface with your head pointing in the chosen normal direction.
+      Walk along the boundary in the positive direction. The surface should stay on your left.
+    </p>
+
+    <definition xml:id="c18s1-def-boundary-orientation-of-a-surface">
+      <title>Boundary orientation of an oriented surface</title>
+      <statement>
+        <p>
+          Let <m>S</m> be an oriented surface with chosen normal direction <m>\mathbf n</m>. The
+          positive orientation of <m>\partial S</m> is the direction given by the right-hand
+          rule: the thumb points in the direction of <m>\mathbf n</m>, and the fingers curl in
+          the positive boundary direction.
+        </p>
+        <p>
+          Equivalently, when walking along the boundary with head in the normal direction, the
+          surface stays on the left.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      This is the orientation used in Stokes' theorem:
+      <md>\int_{\partial S}\omega=\int_S d\omega.</md>
+      The sign of the boundary integral depends on the side of the surface we chose.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s1-subsec-oriented-solids-and-boundary-surfaces">
+    <title>Oriented solids and boundary surfaces</title>
+
+    <p>
+      A solid region in ordinary space has the standard orientation
+      <md>dx\wedge dy\wedge dz.</md>
+      The boundary of a solid is a surface, and its positive orientation is the outward one.
+    </p>
+
+    <p>
+      This is the orientation used for flux. A flux integral over the boundary of a solid uses
+      the outward normal.
+    </p>
+
+    <example xml:id="c18s1-ex-boundary-orientation-of-a-box">
+      <title>The boundary orientation of a box</title>
+      <statement>
+        <p>
+          Let
+          <md>E=[0,2]\times[0,3]\times[0,4].</md>
+          The boundary <m>\partial E</m> has six faces. Each face is oriented by its outward
+          normal.
+          <md>
+          \begin{array}{c|c|c}
+          \text{Face} \amp \text{Outward normal} \amp \text{Positive area form on the face} \\ \hline
+          x=2 \amp \mathbf i \amp dy\wedge dz\\[1mm]
+          x=0 \amp -\mathbf i \amp dz\wedge dy\\[1mm]
+          y=3 \amp \mathbf j \amp dz\wedge dx\\[1mm]
+          y=0 \amp -\mathbf j \amp dx\wedge dz\\[1mm]
+          z=4 \amp \mathbf k \amp dx\wedge dy\\[1mm]
+          z=0 \amp -\mathbf k \amp dy\wedge dx
+          \end{array}
+          </md>
+        </p>
+        <p>
+          For instance, the top face <m>z=4</m> has outward normal <m>\mathbf k</m>, so its
+          positive surface orientation is <m>dx\wedge dy</m>. The bottom face <m>z=0</m> has
+          outward normal <m>-\mathbf k</m>, so its positive surface orientation is
+          <m>dy\wedge dx=-dx\wedge dy</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This sign pattern is not arbitrary. It comes from the same <q>outward first</q> rule that
+      worked for intervals and plane regions.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s1-subsec-the-outward-first-convention">
+    <title>The outward-first convention</title>
+
+    <p>All boundary orientations in this book come from one convention.</p>
+
+    <definition xml:id="c18s1-def-outward-first-convention">
+      <title>Outward-first convention</title>
+      <statement>
+        <p>
+          Let <m>M</m> be an oriented <m>k</m>-dimensional object, where <m>k=1,2,</m> or
+          <m>3</m>. At a smooth boundary point, let
+          <md>\nu_{\text{out}}</md>
+          be the outward direction normal to the boundary but tangent to <m>M</m>.
+        </p>
+        <p>
+          A list of boundary tangent vectors
+          <md>\mathbf v_1,\ldots,\mathbf v_{k-1}</md>
+          is positively oriented on <m>\partial M</m> if the list
+          <md>\boxed{\nu_{\text{out}},\mathbf v_1,\ldots,\mathbf v_{k-1}}</md>
+          is positively oriented in <m>M</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>This convention may look abstract, so let us test it in the three familiar cases.</p>
+
+    <md>
+    \begin{array}{c|c|c}
+    M \amp \nu_{\text{out}} \amp \text{Resulting boundary orientation} \\ \hline
+    [a,b] \amp
+    \begin{array}{c}
+    - \text{ direction at }a\\
+    + \text{ direction at }b
+    \end{array}
+    \amp
+    \partial[a,b]=\{b\}-\{a\}
+    \\[5mm]
+    \text{plane region with }dx\wedge dy \amp
+    \text{outward direction in the plane} \amp
+    \text{region stays on the left}
+    \\[2mm]
+    \text{surface with normal }\mathbf n \amp
+    \text{outward direction along the surface} \amp
+    \text{right-hand rule around the boundary}
+    \\[2mm]
+    \text{solid with }dx\wedge dy\wedge dz \amp
+    \text{outward normal in space} \amp
+    \text{outward-oriented boundary surface}
+    \end{array}
+    </md>
+
+    <p>
+      The theorem needs exactly these signs. If one sign is reversed, the two sides of Stokes'
+      theorem disagree by a minus sign.
+    </p>
+
+    <p>
+      The boundary has now become a signed object. That is the missing piece. A form lives on
+      the boundary, its derivative lives inside, and the orientations are ready to make the two
+      integrals comparable.
+    </p>
+
+    <p>
+      The next step is to state the theorem that has been hiding behind the Fundamental Theorem
+      of Calculus, Green's theorem, Stokes' theorem, and the divergence theorem.
+    </p>
+  </subsection>
+</section>

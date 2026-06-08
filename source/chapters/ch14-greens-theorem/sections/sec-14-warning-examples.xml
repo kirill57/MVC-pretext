@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch14-greens-theorem.tex, Section 14.6.
+     Status: CONVERTED. -->
+<section xml:id="sec-14-warning-examples" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Warning examples</title>
+
+  <p>
+    The proof in <xref ref="sec-14-why-green-s-theorem-is-true"/> was
+    built from rectangles, cancellation, and limiting curved boundaries. Each hypothesis in
+    Green's theorem protects one of those steps. The warnings below are not exceptions to the
+    theorem. They are examples where the theorem's words have been changed.
+  </p>
+
+  <subsection xml:id="c14s6-reversing-orientation-changes-the-sign">
+    <title>Reversing orientation changes the sign</title>
+
+    <p>
+      Take the unit square
+      <md>R=[0,1]\times[0,1],</md>
+      and the form
+      <md>\omega=x\,dy.</md>
+      Then
+      <md>d\omega=dx\wedge dy,</md>
+      so
+      <md>\int_R d\omega=\operatorname{Area}(R)=1.</md>
+    </p>
+
+    <p>
+      Now compute the boundary integral with positive orientation. The bottom and top edges have
+      <m>dy=0</m>. The left edge has <m>x=0</m>. Only the right edge contributes. There,
+      <md>x=1, \qquad 0\le y\le1.</md>
+      So
+      <md>\oint_{\partial R}x\,dy = \int_0^1 1\,dy = 1.</md>
+      This matches Green's theorem.
+    </p>
+
+    <p>
+      If we walk the same boundary clockwise, the right edge is walked downward:
+      <md>1\ge y\ge0.</md>
+      The integral becomes
+      <md>\int_1^0 1\,dy=-1.</md>
+      The interior integral is still
+      <md>\int_R dx\wedge dy=1.</md>
+      So the clockwise boundary gives the wrong sign:
+      <md>\boxed{\int_{-\partial R}\omega=-\int_{\partial R}\omega.}</md>
+    </p>
+
+    <p>
+      The theorem did not fail. Its orientation condition was ignored. Positive orientation means
+      the region stays on the left.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s6-a-singularity-inside-cannot-be-hidden">
+    <title>A singularity inside the region cannot be hidden</title>
+
+    <p>
+      Now return to the angle form
+      <md>\alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}.</md>
+      It is defined on the punctured plane
+      <md>\mathbb R^2\setminus\{(0,0)\},</md>
+      but not at the origin.
+    </p>
+
+    <p>
+      Where it is defined, write
+      <md>P(x,y)=\frac{-y}{x^2+y^2}, \qquad Q(x,y)=\frac{x}{x^2+y^2}.</md>
+      A direct calculation gives
+      <md>Q_x=\frac{y^2-x^2}{(x^2+y^2)^2}</md>
+      and
+      <md>P_y=\frac{y^2-x^2}{(x^2+y^2)^2}.</md>
+      Thus
+      <md>Q_x-P_y=0</md>
+      away from the origin, so
+      <md>d\alpha=0</md>
+      on the punctured plane.
+    </p>
+
+    <p>
+      Now integrate around the unit circle
+      <md>C:\quad x=\cos t,\qquad y=\sin t,\qquad 0\le t\le2\pi,</md>
+      oriented counterclockwise. Then
+      <md>dx=-\sin t\,dt, \qquad dy=\cos t\,dt.</md>
+      The numerator becomes
+      <md>
+        <mrow>-y\,dx+x\,dy \amp= -(\sin t)(-\sin t\,dt)+(\cos t)(\cos t\,dt)</mrow>
+        <mrow>\amp= \sin^2t\,dt+\cos^2t\,dt</mrow>
+        <mrow>\amp= dt.</mrow>
+      </md>
+      The denominator is
+      <md>x^2+y^2=1.</md>
+      Therefore
+      <md>\boxed{\oint_C\alpha = \int_0^{2\pi}dt = 2\pi.}</md>
+    </p>
+
+    <p>
+      If we tried to apply Green's theorem to the disk bounded by <m>C</m>, we would be tempted to
+      write
+      <md>\oint_C\alpha = \iint_{\text{disk}}0\,dA = 0.</md>
+      But the boundary integral is <m>2\pi</m>.
+    </p>
+
+    <p>
+      The missing hypothesis is not small. Green's theorem requires the form to be defined with
+      continuous first partial derivatives on an open region containing the whole disk. The origin
+      is inside the disk, and <m>\alpha</m> is not defined there. The circulation is hiding at that
+      missing point.
+    </p>
+
+    <figure xml:id="c14s6-fig-singularity-circulation">
+      <caption>
+        A singularity inside the region can carry circulation even when <m>d\alpha=0</m> away from
+        it.
+      </caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-3.0,0) -- (3.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-3.0) -- (0,3.2) node[above] {\(y\)};
+
+            \draw[thick, fill=gray!8] (0,0) circle (2);
+            \draw[-&gt;, very thick, red!65!black] (2,0) arc[start angle=0,end angle=55,radius=2];
+
+            \fill[white] (0,0) circle (4pt);
+            \draw[thick] (0,0) circle (4pt);
+            \node[below right] at (0,0) {singularity};
+
+            \foreach \ang in {25,70,115,160,205,250,295,340} {
+                \draw[-&gt;, blue!65!black, thick]
+                    ({1.2*cos(\ang)},{1.2*sin(\ang)})
+                    -- ++({-0.35*sin(\ang)},{0.35*cos(\ang)});
+            }
+
+            \node at (0,-3.55) {the origin is inside the curve but outside the domain of \(\alpha\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c14s6-a-hole-must-be-included-in-the-boundary">
+    <title>A hole must be included in the boundary</title>
+
+    <p>A hole is not only missing area. It is also an extra boundary curve.</p>
+
+    <p>
+      Let <m>A</m> be the annulus
+      <md>1\le x^2+y^2\le4.</md>
+      Use the area form
+      <md>\omega=x\,dy.</md>
+      Since
+      <md>d\omega=dx\wedge dy,</md>
+      Green's theorem predicts
+      <md>\oint_{\partial A}x\,dy = \operatorname{Area}(A) = 4\pi-\pi = 3\pi.</md>
+    </p>
+
+    <p>The boundary of <m>A</m> has two pieces:</p>
+
+    <table xml:id="c14s6-tab-annulus-boundary">
+      <title>The two boundary components of the annulus.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>piece</cell>
+          <cell>radius</cell>
+          <cell>positive orientation</cell>
+        </row>
+        <row>
+          <cell><m>C_{\mathrm{out}}</m></cell>
+          <cell><m>2</m></cell>
+          <cell>counterclockwise</cell>
+        </row>
+        <row>
+          <cell><m>C_{\mathrm{in}}</m></cell>
+          <cell><m>1</m></cell>
+          <cell>clockwise</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      For the outer circle,
+      <md>x=2\cos t, \qquad y=2\sin t, \qquad 0\le t\le2\pi.</md>
+      Then
+      <md>dy=2\cos t\,dt,</md>
+      so
+      <md>
+        <mrow>\int_{C_{\mathrm{out}}}x\,dy \amp= \int_0^{2\pi}(2\cos t)(2\cos t)\,dt</mrow>
+        <mrow>\amp= 4\int_0^{2\pi}\cos^2t\,dt</mrow>
+        <mrow>\amp= 4\pi.</mrow>
+      </md>
+    </p>
+
+    <p>
+      For the inner boundary, positive orientation is clockwise. Use
+      <md>x=\cos t, \qquad y=-\sin t, \qquad 0\le t\le2\pi.</md>
+      Then
+      <md>dy=-\cos t\,dt,</md>
+      and
+      <md>
+        <mrow>\int_{C_{\mathrm{in}}}x\,dy \amp= \int_0^{2\pi}(\cos t)(-\cos t)\,dt</mrow>
+        <mrow>\amp= -\pi.</mrow>
+      </md>
+    </p>
+
+    <p>
+      Therefore
+      <md>\boxed{\oint_{\partial A}x\,dy = 4\pi-\pi = 3\pi.}</md>
+      This matches the area of the annulus.
+    </p>
+
+    <p>
+      If we used only the outer circle, we would get
+      <md>4\pi,</md>
+      the area of the filled disk of radius <m>2</m>, not the area of the annulus. The inner
+      boundary subtracts the missing disk.
+    </p>
+
+    <figure xml:id="c14s6-fig-annulus-boundary">
+      <caption>
+        The boundary of an annulus has two components. The inner one is oriented clockwise.
+      </caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[fill=gray!10, even odd rule]
+                (0,0) circle (2.4)
+                (0,0) circle (1.1);
+
+            \draw[very thick, red!65!black] (0,0) circle (2.4);
+            \draw[-&gt;, very thick, red!65!black] (2.4,0) arc[start angle=0,end angle=45,radius=2.4];
+
+            \draw[very thick, blue!65!black] (0,0) circle (1.1);
+            \draw[-&gt;, very thick, blue!65!black] (1.1,0) arc[start angle=0,end angle=-55,radius=1.1];
+
+            \node[red!65!black] at (0,-3.0) {outer boundary contributes \(4\pi\)};
+            \node[blue!65!black] at (0,3.0) {inner boundary contributes \(-\pi\)};
+            \node at (0,0) {hole};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This is the same cancellation idea from the proof. A hole creates a boundary that does not
+      cancel with a neighboring piece. It must be counted.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s6-a-jump-inside-is-a-hidden-edge">
+    <title>A jump inside the region is a hidden edge</title>
+
+    <p>
+      Green's theorem also requires <m>P</m> and <m>Q</m> to have continuous first partial
+      derivatives. A jump inside the region behaves like a boundary we forgot to draw.
+    </p>
+
+    <p>
+      Let
+      <md>R=[-1,1]\times[0,1],</md>
+      and define
+      <md>\omega=Q(x,y)\,dy, \qquad Q(x,y)= \begin{cases} 0, \amp x\le0,\\ 1, \amp x\gt0. \end{cases}</md>
+      The form jumps across the vertical line
+      <md>x=0.</md>
+      It is not <m>C^1</m>.
+    </p>
+
+    <p>
+      Compute the boundary integral. On the bottom and top edges, <m>dy=0</m>. On the left edge,
+      <m>Q=0</m>. On the right edge, <m>Q=1</m>, and <m>y</m> goes from <m>0</m> to <m>1</m>. Thus
+      <md>\boxed{\oint_{\partial R}\omega=1.}</md>
+    </p>
+
+    <p>
+      Away from the jump line,
+      <md>Q_x=0.</md>
+      If we illegally pretended that
+      <md>d\omega=0</md>
+      everywhere, then the interior integral would be
+      <md>\iint_R 0\,dA=0.</md>
+      That is not the boundary integral.
+    </p>
+
+    <p>
+      The missing contribution lives on the internal jump line. Smoothness prevents a hidden edge
+      from appearing inside the region.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s6-a-boundary-too-rough-for-the-theorem">
+    <title>A boundary can be too rough for the theorem as stated</title>
+
+    <p>
+      The boundary condition also matters. Green's theorem in this chapter is stated for boundaries
+      made from finitely many piecewise smooth simple closed curves. That condition guarantees that
+      <md>\int_{\partial R}\omega</md>
+      is a finite sum of ordinary line integrals.
+    </p>
+
+    <p>
+      Consider a square pond from which infinitely many tiny circular islands have been removed. Let
+      the outer square be
+      <md>S=[0,1]\times[0,1],</md>
+      and remove disjoint disks
+      <md>D_1,D_2,D_3,\ldots</md>
+      lying inside the square. Suppose their areas add to a finite number:
+      <md>\sum_{n=1}^{\infty}\operatorname{Area}(D_n)\lt 1.</md>
+      The remaining region is
+      <md>R=S\setminus\bigcup_{n=1}^{\infty}D_n.</md>
+    </p>
+
+    <p>
+      For the form
+      <md>\omega=x\,dy,</md>
+      we have
+      <md>d\omega=dx\wedge dy.</md>
+      For a finite number of removed disks, Green's theorem says
+      <md>\oint_{\partial R_N}x\,dy = 1-\sum_{n=1}^{N}\operatorname{Area}(D_n),</md>
+      because the outer square contributes <m>1</m>, and each clockwise inner circle subtracts the
+      area of its disk.
+    </p>
+
+    <p>
+      If there are infinitely many islands, the expected answer would be
+      <md>1-\sum_{n=1}^{\infty}\operatorname{Area}(D_n).</md>
+      But now the boundary is not a finite collection of curves. It has infinitely many components:
+      <md>\partial S,\quad \partial D_1,\quad \partial D_2,\quad \partial D_3,\ldots</md>
+      The boundary integral is no longer a finite sum of line integrals. It needs an infinite series
+      of boundary contributions, and convergence has to be checked.
+    </p>
+
+    <p>
+      So the elementary theorem stops before this example. The formula may still be true under extra
+      assumptions, but it is no longer covered by the statement we proved. The word <q>finitely</q>
+      is protecting us from an infinite boundary sum hidden in the notation
+      <md>\int_{\partial R}.</md>
+    </p>
+
+    <p>
+      An even rougher boundary, such as a snowflake-shaped curve with infinite length and no ordinary
+      tangent at most points, creates a different problem: the line integral along the boundary may
+      not be defined by the piecewise smooth parametrizations introduced in
+      <xref ref="ch13-vector-fields-line-integrals"/>. Again, Green's theorem has not failed. Its
+      hypotheses have not been met.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s6-what-the-warnings-have-in-common">
+    <title>What the warnings have in common</title>
+
+    <p>Each warning points back to the proof.</p>
+
+    <table xml:id="c14s6-tab-warnings-summary">
+      <title>Each warning traced back to the step it breaks.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>What goes wrong</cell>
+          <cell>Where the proof breaks</cell>
+        </row>
+        <row>
+          <cell>orientation is reversed</cell>
+          <cell>the surviving boundary has the wrong sign</cell>
+        </row>
+        <row>
+          <cell>a singularity lies inside</cell>
+          <cell>the form is not defined on the region</cell>
+        </row>
+        <row>
+          <cell>a hole is ignored</cell>
+          <cell>an uncanceled boundary component is missing</cell>
+        </row>
+        <row>
+          <cell>the coefficients jump</cell>
+          <cell>there is a hidden internal edge</cell>
+        </row>
+        <row>
+          <cell>the boundary is too rough</cell>
+          <cell>the boundary integral is not a finite smooth sum</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The proof was not only a justification. It was a diagnostic tool. It tells us what to check
+      before trusting the formula.
+    </p>
+
+    <p>
+      Green's theorem is a theorem about flat regions. But its real message is larger: boundary
+      measurements can equal interior measurements of a derivative. The next time that pattern
+      appears, the inside will not be a plane region. It will be a surface in space. Then even the
+      word <q>boundary</q> will need care, because a surface has two sides, and choosing one side
+      will decide the sign of everything that crosses it.
+    </p>
+  </subsection>
+</section>

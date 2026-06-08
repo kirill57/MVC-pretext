@@ -1,0 +1,975 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch20-capstone-projects.tex, Section 20.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-20-vector-calculus-projects" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Vector calculus projects</title>
+
+  <introduction>
+    <p>
+      The previous projects added quantities over regions. Vector calculus asks what happens
+      along boundaries and through surfaces. Work follows curves. Flux crosses surfaces.
+      Green's theorem, Stokes' theorem, and the divergence theorem say that boundary
+      measurements can reveal interior information.
+    </p>
+    <p>
+      The projects below are meant to make that principle measurable.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c20s4-project-work-around-closed-curves">
+    <title>Project 1: work around closed curves</title>
+
+    <p>
+      A closed curve returns to where it started. A conservative field does no net work
+      around such a curve. A rotating field may do positive or negative work, depending on
+      the direction of travel.
+    </p>
+    <p>
+      The line integral detects the difference.
+    </p>
+
+    <p>
+      <em>A seed example: a field that measures area.</em> Let
+      <md>
+        \mathbf F(x,y)=\left(-\frac y2,\frac x2\right),
+      </md>
+      and let
+      <md>
+        \omega=-\frac y2\,dx+\frac x2\,dy
+      </md>
+      be its work <m>1</m>-form.
+    </p>
+    <p>
+      Walk counterclockwise around the rectangle
+      <md>
+        R=[0,4]\times[0,3].
+      </md>
+      We compute the work around the four sides.
+    </p>
+
+    <p>
+      <em>Bottom side.</em> Here <m>y=0</m> and <m>dy=0</m>. So
+      <md>
+        \omega=0.
+      </md>
+      The bottom contributes <m>0</m>.
+    </p>
+
+    <p>
+      <em>Right side.</em> Here <m>x=4</m>, <m>dx=0</m>, and <m>y</m> goes from <m>0</m> to <m>3</m>. Thus
+      <md>
+        <mrow>\int_{\text{right}}\omega \amp = \int_0^3 \frac{4}{2}\,dy</mrow>
+        <mrow>\amp = 6.</mrow>
+      </md>
+    </p>
+
+    <p>
+      <em>Top side.</em> Here <m>y=3</m>, <m>dy=0</m>, and <m>x</m> goes from <m>4</m> back to <m>0</m>. Thus
+      <md>
+        <mrow>\int_{\text{top}}\omega \amp = \int_4^0 -\frac32\,dx</mrow>
+        <mrow>\amp = 6.</mrow>
+      </md>
+    </p>
+
+    <p>
+      <em>Left side.</em> Here <m>x=0</m>, <m>dx=0</m>, and <m>y</m> goes downward. Thus
+      <md>
+        \omega=0.
+      </md>
+      The left side contributes <m>0</m>.
+    </p>
+
+    <p>
+      So
+      <md>
+        \boxed{
+        \oint_{\partial R}\omega=12.
+        }
+      </md>
+      The rectangle has area
+      <md>
+        4\cdot3=12.
+      </md>
+      This is not a coincidence. Compute the exterior derivative:
+      <md>
+        <mrow>d\omega \amp = d\left(-\frac y2\,dx+\frac x2\,dy\right)</mrow>
+        <mrow>\amp = \left(\frac{\partial}{\partial x}\frac x2 - \frac{\partial}{\partial y}\left(-\frac y2\right) \right)dx\wedge dy</mrow>
+        <mrow>\amp = \left(\frac12+\frac12\right)dx\wedge dy</mrow>
+        <mrow>\amp = dx\wedge dy.</mrow>
+      </md>
+    </p>
+    <p>
+      Green's theorem gives
+      <md>
+        \boxed{
+        \oint_{\partial R}\omega
+        =
+        \iint_R d\omega
+        =
+        \iint_R dx\wedge dy
+        =
+        \operatorname{Area}(R).
+        }
+      </md>
+      The work form is secretly an area-measuring instrument.
+    </p>
+
+    <figure xml:id="c20s4-fig-rotational-work-rectangle">
+      <caption>A rotational field can do positive work around a closed curve.</caption>
+      <image xml:id="c20s4-img-rotational-work-rectangle">
+        <latex-image>
+\begin{tikzpicture}[scale=0.8, >=stealth]
+    \draw[-&gt;] (-0.5,0) -- (5.2,0) node[right] {\(x\)};
+    \draw[-&gt;] (0,-0.5) -- (0,4.2) node[above] {\(y\)};
+
+    \draw[fill=gray!10, thick] (0,0) rectangle (4,3);
+
+    \draw[-&gt;, very thick, red!65!black] (0,0) -- (1.4,0);
+    \draw[-&gt;, very thick, red!65!black] (4,0) -- (4,1.2);
+    \draw[-&gt;, very thick, red!65!black] (4,3) -- (2.6,3);
+    \draw[-&gt;, very thick, red!65!black] (0,3) -- (0,1.8);
+
+    \foreach \x in {0.8,1.6,2.4,3.2} {
+        \foreach \y in {0.7,1.5,2.3} {
+            \draw[-&gt;, blue!65!black, thick]
+                (\x,\y) -- ++({-0.14*\y},{0.14*\x});
+        }
+    }
+
+    \node at (2,-0.85) {counterclockwise work equals area for this field};
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em> Choose one field and one closed curve.
+      <md>
+        \begin{array}{c|c}
+        \text{Field} \amp \text{Feature} \\ \hline
+        \mathbf F=(-y,x) \amp \text{constant positive scalar curl }2\\[1mm]
+        \mathbf F=\left(-\dfrac y2,\dfrac x2\right) \amp \text{work equals area}\\[4mm]
+        \mathbf F=(2x,2y) \amp \text{gradient field}\\[1mm]
+        \mathbf F=(y^2,x) \amp \text{nonconstant scalar curl}\\[1mm]
+        \mathbf F=\left(\dfrac{-y}{x^2+y^2},\dfrac{x}{x^2+y^2}\right)
+        \amp \text{punctured-plane warning}
+        \end{array}
+      </md>
+      For curves, use a circle, ellipse, rectangle, triangle, or a piecewise smooth curve of
+      your own.
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Draw the vector field and the closed curve.</p>
+      </li>
+      <li>
+        <p>Choose an orientation for the curve.</p>
+      </li>
+      <li>
+        <p>
+          Write the work form
+          <md>
+            \omega=P\,dx+Q\,dy.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>Compute the line integral directly, if possible.</p>
+      </li>
+      <li>
+        <p>
+          Compute
+          <md>
+            d\omega=(Q_x-P_y)\,dx\wedge dy.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>Use Green's theorem if the field is defined on the region enclosed by the curve.</p>
+      </li>
+      <li>
+        <p>Compare the direct calculation with the theorem calculation.</p>
+      </li>
+      <li>
+        <p>Reverse the curve orientation and state what changes.</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Is the work positive, negative, or zero?</p>
+      </li>
+      <li>
+        <p>Does the field help the chosen direction of travel?</p>
+      </li>
+      <li>
+        <p>Is the field a gradient field?</p>
+      </li>
+      <li>
+        <p>
+          If the field has zero curl away from a missing point, can the closed integral still
+          be nonzero?
+        </p>
+      </li>
+      <li>
+        <p>What does the answer say about the domain?</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em> Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>the chosen field and curve,</p>
+      </li>
+      <li>
+        <p>the parametrization of the curve,</p>
+      </li>
+      <li>
+        <p>the line integral,</p>
+      </li>
+      <li>
+        <p>the exterior derivative <m>d\omega</m>,</p>
+      </li>
+      <li>
+        <p>the Green's theorem calculation, when allowed,</p>
+      </li>
+      <li>
+        <p>a paragraph explaining the role of orientation and domain holes.</p>
+      </li>
+    </ol>
+
+    <p>
+      A closed curve can hide a surprise. Even if every local test looks harmless, a missing
+      point inside the loop can change the answer.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s4-project-flux-through-complicated-surfaces">
+    <title>Project 2: flux through complicated surfaces</title>
+
+    <p>
+      Flux measures how much a vector field crosses a surface. A flat disk is friendly. A
+      curved dome is less friendly. A surface made of several pieces can look intimidating.
+    </p>
+    <p>
+      The divergence theorem offers a shortcut, but only after the surface is closed.
+    </p>
+
+    <p>
+      <em>A seed example: flux through a paraboloid dome.</em> Let <m>S</m> be the dome
+      <md>
+        z=4-x^2-y^2,
+        \qquad
+        x^2+y^2\le4,
+      </md>
+      oriented upward. Together with the disk
+      <md>
+        D:\quad z=0,\qquad x^2+y^2\le4,
+      </md>
+      the dome bounds a solid <m>E</m>.
+    </p>
+    <p>
+      Let
+      <md>
+        \mathbf F(x,y,z)=(x,y,z).
+      </md>
+      We want the flux through the dome <m>S</m>.
+    </p>
+    <p>
+      The closed surface is
+      <md>
+        \partial E=S\cup D,
+      </md>
+      with outward orientation. On the dome, outward means upward and outward. On the
+      bottom disk, outward means downward.
+    </p>
+    <p>
+      The divergence is
+      <md>
+        \nabla\cdot\mathbf F
+        =
+        1+1+1
+        =
+        3.
+      </md>
+      By the divergence theorem,
+      <md>
+        \iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E 3\,dV
+        =
+        3\operatorname{Volume}(E).
+      </md>
+    </p>
+    <p>
+      Find the volume of <m>E</m>:
+      <md>
+        <mrow>\operatorname{Volume}(E) \amp = \int_0^{2\pi}\int_0^2(4-r^2)r\,dr\,d\theta</mrow>
+        <mrow>\amp = 2\pi\left[ 2r^2-\frac14r^4 \right]_0^2</mrow>
+        <mrow>\amp = 2\pi(8-4)</mrow>
+        <mrow>\amp = 8\pi.</mrow>
+      </md>
+      So the total outward flux through the closed surface is
+      <md>
+        3(8\pi)=24\pi.
+      </md>
+    </p>
+    <p>
+      Now check the bottom disk. On <m>D</m>,
+      <md>
+        z=0,
+        \qquad
+        \widehat{\mathbf n}=(0,0,-1).
+      </md>
+      Thus
+      <md>
+        \mathbf F\cdot\widehat{\mathbf n}
+        =
+        (x,y,0)\cdot(0,0,-1)
+        =
+        0.
+      </md>
+      So the bottom disk contributes <m>0</m>. Therefore the flux through the dome is
+      <md>
+        \boxed{
+        \iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS=24\pi.
+        }
+      </md>
+    </p>
+    <p>
+      In forms language, the flux form is
+      <md>
+        \Phi_{\mathbf F}
+        =
+        x\,dy\wedge dz
+        +
+        y\,dz\wedge dx
+        +
+        z\,dx\wedge dy,
+      </md>
+      and
+      <md>
+        d\Phi_{\mathbf F}
+        =
+        3\,dx\wedge dy\wedge dz.
+      </md>
+      The same computation says
+      <md>
+        \int_{\partial E}\Phi_{\mathbf F}
+        =
+        \int_E d\Phi_{\mathbf F}.
+      </md>
+    </p>
+
+    <p>
+      <em>Your task.</em> Choose one surface.
+      <md>
+        \begin{array}{c|c}
+        \text{Surface} \amp \text{Suggested field} \\ \hline
+        \text{paraboloid cap} \amp (x,y,z)\\[1mm]
+        \text{hemisphere with disk base} \amp (0,0,z)\\[1mm]
+        \text{cylinder side plus caps} \amp (x,y,1)\\[1mm]
+        \text{box with one face removed} \amp (x^2,y,z)\\[1mm]
+        \text{triangulated surface or mesh} \amp \text{constant or radial field}
+        \end{array}
+      </md>
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Draw the surface and state its orientation.</p>
+      </li>
+      <li>
+        <p>Decide whether the surface is closed.</p>
+      </li>
+      <li>
+        <p>If it is not closed, add simple pieces to close it.</p>
+      </li>
+      <li>
+        <p>
+          Compute the flux through the closed surface using the divergence theorem, if
+          possible.
+        </p>
+      </li>
+      <li>
+        <p>Compute or subtract the flux through the added pieces.</p>
+      </li>
+      <li>
+        <p>State the flux through the original surface.</p>
+      </li>
+      <li>
+        <p>
+          Translate the flux integral into a <m>2</m>-form:
+          <md>
+            \Phi_{\mathbf F}
+            =
+            F_1\,dy\wedge dz
+            +
+            F_2\,dz\wedge dx
+            +
+            F_3\,dx\wedge dy.
+          </md>
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Is the surface open or closed?</p>
+      </li>
+      <li>
+        <p>What does <q>outward</q> mean for each piece?</p>
+      </li>
+      <li>
+        <p>Which pieces contribute zero flux by symmetry or by the direction of the field?</p>
+      </li>
+      <li>
+        <p>Is the divergence theorem faster than a direct surface integral?</p>
+      </li>
+      <li>
+        <p>What would change if the orientation were reversed?</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em> Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>a drawing of the surface,</p>
+      </li>
+      <li>
+        <p>the vector field,</p>
+      </li>
+      <li>
+        <p>the orientation,</p>
+      </li>
+      <li>
+        <p>the closed-surface construction,</p>
+      </li>
+      <li>
+        <p>the divergence calculation,</p>
+      </li>
+      <li>
+        <p>the flux through any added pieces,</p>
+      </li>
+      <li>
+        <p>the final flux through the requested surface.</p>
+      </li>
+    </ol>
+
+    <p>
+      A surface integral can be hard because the surface is curved. The divergence theorem
+      moves the difficulty into the solid it bounds. Sometimes the inside is easier than the
+      skin.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s4-project-greens-theorem-area-from-gps">
+    <title>Project 3: Green's theorem and area from GPS boundary data</title>
+
+    <p>
+      A region's area can be found without filling the region with a grid. It can be found by
+      walking around the boundary.
+    </p>
+    <p>
+      Green's theorem explains why.
+    </p>
+    <p>
+      Let
+      <md>
+        \eta=\frac12(x\,dy-y\,dx).
+      </md>
+      Then
+      <md>
+        <mrow>d\eta \amp = \frac12(dx\wedge dy-dy\wedge dx)</mrow>
+        <mrow>\amp = dx\wedge dy.</mrow>
+      </md>
+      So, for a positively oriented boundary,
+      <md>
+        \boxed{
+        \operatorname{Area}(R)
+        =
+        \oint_{\partial R}\frac12(x\,dy-y\,dx).
+        }
+      </md>
+      This formula is the continuous version of the shoelace formula for polygons.
+    </p>
+
+    <p>
+      <em>A seed example: four boundary points.</em> Suppose a surveyor records four boundary
+      points of a small field, measured in meters from a local reference point:
+      <md>
+        \begin{array}{c|cc}
+        \text{Point} \amp x \amp y \\ \hline
+        P_0 \amp 0 \amp 0\\
+        P_1 \amp 5 \amp 1\\
+        P_2 \amp 4 \amp 4\\
+        P_3 \amp 1 \amp 3
+        \end{array}
+      </md>
+      Assume the points are listed counterclockwise and connected by straight segments.
+    </p>
+    <p>
+      On a line segment from
+      <md>
+        (x_i,y_i)
+      </md>
+      to
+      <md>
+        (x_{i+1},y_{i+1}),
+      </md>
+      the integral of <m>\eta</m> is
+      <md>
+        \boxed{
+        \frac12(x_i y_{i+1}-y_i x_{i+1}).
+        }
+      </md>
+      Therefore
+      <md>
+        <mrow>\operatorname{Area} \amp = \frac12\sum_{i=0}^{3} (x_i y_{i+1}-y_i x_{i+1})</mrow>
+        <mrow>\amp = \frac12\Bigl[ (0\cdot1-0\cdot5) + (5\cdot4-1\cdot4)</mrow>
+        <mrow>\amp \qquad + (4\cdot3-4\cdot1) + (1\cdot0-3\cdot0) \Bigr]</mrow>
+        <mrow>\amp = \frac12(0+16+8+0)</mrow>
+        <mrow>\amp = 12.</mrow>
+      </md>
+      So the field has area
+      <md>
+        \boxed{
+        12\text{ m}^2.
+        }
+      </md>
+    </p>
+    <p>
+      If the points were listed clockwise, the same calculation would give
+      <md>
+        -12.
+      </md>
+      The negative sign would not mean negative physical area. It would mean the boundary
+      orientation was reversed.
+    </p>
+
+    <figure xml:id="c20s4-fig-shoelace-boundary">
+      <caption>Green's theorem turns a boundary walk into an area calculation.</caption>
+      <image xml:id="c20s4-img-shoelace-boundary">
+        <latex-image>
+\begin{tikzpicture}[scale=0.75, >=stealth]
+    \draw[-&gt;] (-0.5,0) -- (6.2,0) node[right] {\(x\)};
+    \draw[-&gt;] (0,-0.5) -- (0,5.2) node[above] {\(y\)};
+
+    \draw[gray!20, step=1] (0,0) grid (6,5);
+
+    \draw[fill=green!10, thick] (0,0) -- (5,1) -- (4,4) -- (1,3) -- cycle;
+
+    \draw[-&gt;, very thick, red!65!black] (0,0) -- (2.3,0.46);
+    \draw[-&gt;, very thick, red!65!black] (5,1) -- (4.55,2.35);
+    \draw[-&gt;, very thick, red!65!black] (4,4) -- (2.55,3.55);
+    \draw[-&gt;, very thick, red!65!black] (1,3) -- (0.45,1.35);
+
+    \foreach \p/\name in {(0,0)/P_0,(5,1)/P_1,(4,4)/P_2,(1,3)/P_3} {
+        \fill \p circle (2.5pt);
+        \node[above right] at \p {\(\name\)};
+    }
+
+    \node at (3,-0.9) {area from boundary data};
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em> Choose one boundary data set.
+    </p>
+
+    <p>
+      <em>Option A. Use provided data.</em> Use the four-point data from the seed example. Then
+      add more points to create a six-point or eight-point polygon and compute its area.
+    </p>
+
+    <p>
+      <em>Option B. Create a boundary.</em> Draw an irregular region on graph paper. Record its
+      boundary points in order. Compute the area using the shoelace formula.
+    </p>
+
+    <p>
+      <em>Option C. Use local GPS-style data.</em> Record boundary points of a small region.
+      Convert the locations to local planar coordinates measured in meters before using the
+      formula. Latitude and longitude degrees are not distances.
+    </p>
+
+    <p>
+      <em>Option D. Region with a hole.</em> Use an outer boundary and an inner boundary. Orient
+      the outer boundary counterclockwise and the inner boundary clockwise. Compute the area
+      of the region with the hole removed.
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li>
+        <p>List the boundary points in order.</p>
+      </li>
+      <li>
+        <p>Plot the polygon.</p>
+      </li>
+      <li>
+        <p>Check the orientation.</p>
+      </li>
+      <li>
+        <p>
+          Compute
+          <md>
+            \frac12\sum_i (x_i y_{i+1}-y_i x_{i+1}).
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>Interpret the sign.</p>
+      </li>
+      <li>
+        <p>Compare with a rough grid-counting estimate.</p>
+      </li>
+      <li>
+        <p>
+          Explain how this formula comes from Green's theorem:
+          <md>
+            \oint_{\partial R}\frac12(x\,dy-y\,dx)
+            =
+            \iint_R dx\wedge dy.
+          </md>
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li>
+        <p>What happens if two boundary points are listed in the wrong order?</p>
+      </li>
+      <li>
+        <p>What happens if the boundary crosses itself?</p>
+      </li>
+      <li>
+        <p>How does the sign detect clockwise versus counterclockwise order?</p>
+      </li>
+      <li>
+        <p>Why must an inner boundary be oriented clockwise?</p>
+      </li>
+      <li>
+        <p>How accurate is the polygon area if the true boundary is curved?</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em> Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>a table of boundary points,</p>
+      </li>
+      <li>
+        <p>a plot of the boundary,</p>
+      </li>
+      <li>
+        <p>the shoelace computation,</p>
+      </li>
+      <li>
+        <p>the area with units,</p>
+      </li>
+      <li>
+        <p>a Green's theorem explanation,</p>
+      </li>
+      <li>
+        <p>a short error discussion.</p>
+      </li>
+    </ol>
+
+    <p>
+      This project is a good example of the book's main theme. The area lies inside the
+      region, but the calculation only walks around the edge.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s4-project-divergence-theorem-flux-balance">
+    <title>Project 4: divergence theorem and numerical flux balance</title>
+
+    <p>
+      The divergence theorem says that outward flux through a closed surface equals total
+      divergence inside:
+      <md>
+        \boxed{
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E \nabla\cdot\mathbf J\,dV.
+        }
+      </md>
+    </p>
+    <p>
+      In <xref ref="ch19-conservation-laws"/>, this became a conservation law. If <m>\mathbf J</m> is a flux
+      density, then outward flux is loss from the region unless sources replace it.
+    </p>
+    <p>
+      This project checks that balance numerically.
+    </p>
+
+    <p>
+      <em>A seed example: flux through a unit cube.</em> Let
+      <md>
+        E=[0,1]\times[0,1]\times[0,1],
+      </md>
+      and let
+      <md>
+        \mathbf J(x,y,z)=(x^2,y,z).
+      </md>
+      First compute the divergence:
+      <md>
+        \nabla\cdot\mathbf J
+        =
+        2x+1+1
+        =
+        2x+2.
+      </md>
+      The volume integral is
+      <md>
+        <mrow>\iiint_E(2x+2)\,dV \amp = \int_0^1\int_0^1\int_0^1(2x+2)\,dz\,dy\,dx</mrow>
+        <mrow>\amp = \int_0^1(2x+2)\,dx</mrow>
+        <mrow>\amp = \left[x^2+2x\right]_0^1</mrow>
+        <mrow>\amp = 3.</mrow>
+      </md>
+    </p>
+    <p>
+      Now compute the outward flux through the six faces.
+      <md>
+        \begin{array}{c|c|c|c}
+        \text{Face} \amp \widehat{\mathbf n} \amp \mathbf J\cdot\widehat{\mathbf n}
+        \amp \text{Flux} \\ \hline
+        x=1 \amp (1,0,0) \amp 1 \amp 1\\
+        x=0 \amp (-1,0,0) \amp 0 \amp 0\\
+        y=1 \amp (0,1,0) \amp 1 \amp 1\\
+        y=0 \amp (0,-1,0) \amp 0 \amp 0\\
+        z=1 \amp (0,0,1) \amp 1 \amp 1\\
+        z=0 \amp (0,0,-1) \amp 0 \amp 0
+        \end{array}
+      </md>
+      So the total outward flux is
+      <md>
+        1+0+1+0+1+0=3.
+      </md>
+      The two sides match:
+      <md>
+        \boxed{
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E\nabla\cdot\mathbf J\,dV
+        =
+        3.
+        }
+      </md>
+    </p>
+
+    <p>
+      <em>Numerical flux balance.</em> In a numerical calculation, the two sides may not match
+      exactly. We can measure the error by the residual
+      <md>
+        \boxed{
+        \mathcal R
+        =
+        \left(
+        \text{estimated outward boundary flux}
+        \right)
+        -
+        \left(
+        \text{estimated interior divergence}
+        \right).
+        }
+      </md>
+      For an exact calculation,
+      <md>
+        \mathcal R=0.
+      </md>
+      For a numerical calculation, a small residual means the discretization is respecting the
+      balance law well. A large residual means that the grid, the data, or the orientation may
+      be wrong.
+    </p>
+
+    <p>
+      <em>Your task.</em> Choose one version.
+    </p>
+
+    <p>
+      <em>Option A. Exact cube check.</em> Use a rectangular box and a polynomial field. Compute
+      both sides exactly.
+    </p>
+
+    <p>
+      <em>Option B. Numerical cube check.</em> Use midpoint or trapezoid sums on the six faces
+      and inside the box. Estimate both sides and compute the residual.
+    </p>
+
+    <p>
+      <em>Option C. Incompressible flow.</em> Choose a divergence-free field, such as
+      <md>
+        \mathbf J=(-y,x,0)
+      </md>
+      or
+      <md>
+        \mathbf J=(yz,xz,xy)
+      </md>
+      after checking its divergence. Estimate the outward flux through a closed surface and
+      explain why it should be close to <m>0</m>.
+    </p>
+
+    <p>
+      <em>Option D. Flux balance with sources.</em> Use a source function <m>s(x,y,z)</m>. Compare
+      the conservation law
+      <md>
+        \frac{d}{dt}\iiint_E\rho\,dV
+        +
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E s\,dV.
+      </md>
+      Use simple functions so the terms can be computed by hand or by a small program.
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li>
+        <p>State the region <m>E</m>.</p>
+      </li>
+      <li>
+        <p>Draw or describe the boundary orientation.</p>
+      </li>
+      <li>
+        <p>State the vector field <m>\mathbf J</m>.</p>
+      </li>
+      <li>
+        <p>
+          Compute
+          <md>
+            \nabla\cdot\mathbf J.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Estimate or compute the volume integral:
+          <md>
+            \iiint_E\nabla\cdot\mathbf J\,dV.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Estimate or compute the boundary flux:
+          <md>
+            \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Compute the residual:
+          <md>
+            \mathcal R
+            =
+            \text{boundary flux}
+            -
+            \text{interior divergence}.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>Explain the sign convention.</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li>
+        <p>Which faces contribute positive flux?</p>
+      </li>
+      <li>
+        <p>Which faces contribute negative flux?</p>
+      </li>
+      <li>
+        <p>Which faces contribute zero flux?</p>
+      </li>
+      <li>
+        <p>Does the residual shrink when the grid is refined?</p>
+      </li>
+      <li>
+        <p>
+          If the residual is large, is the likely problem numerical error, orientation error, or
+          a wrong formula?
+        </p>
+      </li>
+      <li>
+        <p>
+          How does this project connect to the continuity equation
+          <md>
+            \rho_t+\nabla\cdot\mathbf J=s?
+          </md>
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em> Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>the region and vector field,</p>
+      </li>
+      <li>
+        <p>the divergence calculation,</p>
+      </li>
+      <li>
+        <p>the boundary flux calculation,</p>
+      </li>
+      <li>
+        <p>a table of face contributions,</p>
+      </li>
+      <li>
+        <p>the residual,</p>
+      </li>
+      <li>
+        <p>a short paragraph explaining what the balance law means.</p>
+      </li>
+    </ol>
+  </subsection>
+
+  <conclusion>
+    <p>
+      Vector calculus has two dialects. One uses gradients, curls, divergences, dot products,
+      and normal vectors. The other uses <m>1</m>-forms, <m>2</m>-forms, <m>3</m>-forms, and the single
+      operator <m>d</m>. The next group of projects asks you to translate between those dialects
+      and to check, by examples, that the theorem underneath them is the same:
+      <md>
+        \int_{\partial M}\omega=\int_M d\omega.
+      </md>
+    </p>
+  </conclusion>
+</section>

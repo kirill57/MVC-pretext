@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch17-exterior-derivatives.tex, Section 17.2.
+     Status: CONVERTED. -->
+<section xml:id="sec-17-the-exterior-derivative-of-a-1-form" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The exterior derivative of a <m>1</m>-form</title>
+
+  <p>
+    <xref ref="sec-17-the-exterior-derivative-of-a-0-form"/> turned a function into a
+    <m>1</m>-form:
+    <md>f\longmapsto df.</md>
+    Now we ask what <m>d</m> does to a <m>1</m>-form. The answer should be a <m>2</m>-form,
+    because the exterior derivative raises degree by one:
+    <md>1\text{-form}\longrightarrow 2\text{-form}.</md>
+  </p>
+
+  <p>
+    Green's theorem already told us what to expect. A <m>1</m>-form can be integrated around a
+    closed curve. Its derivative should measure the circulation density inside the loop.
+  </p>
+
+  <subsection xml:id="c17s2-subsec-computing-d-pdx-qdy-plane">
+    <title>Computing <m>d(P\,dx+Q\,dy)</m> in the plane</title>
+
+    <p>
+      Recall the form from <xref ref="ch14-greens-theorem"/>:
+      <md>\omega=(3-y)\,dx+2x\,dy.</md>
+      Around any small positively oriented rectangle, its circulation was
+      <md>3\cdot\text{area}.</md>
+      So the derivative of <m>\omega</m> should be the <m>2</m>-form
+      <md>3\,dx\wedge dy.</md>
+    </p>
+
+    <p>
+      The exterior derivative finds that number by differentiating the coefficient functions and
+      wedging with the coordinate forms.
+    </p>
+
+    <p>
+      The first term is
+      <md>(3-y)\,dx.</md>
+      The coefficient has differential
+      <md>d(3-y)=-dy.</md>
+      So
+      <md>d\bigl((3-y)\,dx\bigr)=d(3-y)\wedge dx=(-dy)\wedge dx.</md>
+      Using
+      <md>dy\wedge dx=-dx\wedge dy,</md>
+      we get
+      <md>(-dy)\wedge dx=dx\wedge dy.</md>
+    </p>
+
+    <p>
+      The second term is
+      <md>2x\,dy.</md>
+      The coefficient has differential
+      <md>d(2x)=2\,dx.</md>
+      So
+      <md>d(2x\,dy)=d(2x)\wedge dy=2\,dx\wedge dy.</md>
+    </p>
+
+    <p>
+      Add the two pieces:
+      <md>
+        <mrow>d\omega \amp= d\bigl((3-y)\,dx\bigr)+d(2x\,dy)</mrow>
+        <mrow>\amp= dx\wedge dy+2\,dx\wedge dy</mrow>
+        <mrow>\amp= 3\,dx\wedge dy.</mrow>
+      </md>
+      This matches the rectangle calculation:
+      <md>\oint_{\partial R}\omega=\iint_R 3\,dx\wedge dy.</md>
+    </p>
+
+    <figure xml:id="c17s2-fig-circulation-density">
+      <caption>The exterior derivative of a plane <m>1</m>-form measures circulation density.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (5.4,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,4.2) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (0,0) grid (5,4);
+
+            \draw[fill=gray!8, thick] (1.2,0.9) rectangle (4.2,3.0);
+
+            \draw[-&gt;, very thick, red!65!black] (1.2,0.9) -- (2.6,0.9);
+            \draw[-&gt;, very thick, red!65!black] (4.2,0.9) -- (4.2,2.1);
+            \draw[-&gt;, very thick, red!65!black] (4.2,3.0) -- (2.8,3.0);
+            \draw[-&gt;, very thick, red!65!black] (1.2,3.0) -- (1.2,1.8);
+
+            \node at (2.7,-0.85)
+                {\(\displaystyle d\omega=(Q_x-P_y)\,dx\wedge dy\) measures circulation per area};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The same computation works for every plane <m>1</m>-form
+      <md>\omega=P\,dx+Q\,dy.</md>
+    </p>
+
+    <p>
+      Since
+      <md>dP=P_x\,dx+P_y\,dy</md>
+      and
+      <md>dQ=Q_x\,dx+Q_y\,dy,</md>
+      we get
+      <md>
+        <mrow>d\omega \amp= dP\wedge dx+dQ\wedge dy</mrow>
+        <mrow>\amp= (P_x\,dx+P_y\,dy)\wedge dx+(Q_x\,dx+Q_y\,dy)\wedge dy.</mrow>
+      </md>
+      Now use
+      <md>dx\wedge dx=0,\qquad dy\wedge dy=0,</md>
+      and
+      <md>dy\wedge dx=-dx\wedge dy.</md>
+      Then
+      <md>
+        <mrow>d\omega \amp= P_y\,dy\wedge dx+Q_x\,dx\wedge dy</mrow>
+        <mrow>\amp= -P_y\,dx\wedge dy+Q_x\,dx\wedge dy</mrow>
+        <mrow>\amp= (Q_x-P_y)\,dx\wedge dy.</mrow>
+      </md>
+    </p>
+
+    <definition xml:id="c17s2-def-exterior-derivative-plane-1-form">
+      <title>Exterior derivative of a plane <m>1</m>-form</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=P(x,y)\,dx+Q(x,y)\,dy</md>
+          be a <m>1</m>-form with <m>C^1</m> coefficient functions. Its exterior derivative is
+          the <m>2</m>-form
+          <md>\boxed{d\omega=(Q_x-P_y)\,dx\wedge dy.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The coefficient
+      <md>Q_x-P_y</md>
+      is the scalar curl from <xref ref="ch14-greens-theorem"/>. So in the plane,
+      <md>\boxed{d(P\,dx+Q\,dy)=\operatorname{curl}_{\mathrm{plane}}(P,Q)\,dx\wedge dy.}</md>
+    </p>
+
+    <example xml:id="c17s2-ex-zero-exterior-derivative">
+      <title>A zero exterior derivative</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=(2x+y)\,dx+(x-3y)\,dy.</md>
+          Here
+          <md>P=2x+y,\qquad Q=x-3y.</md>
+          Then
+          <md>P_y=1,\qquad Q_x=1.</md>
+          Therefore
+          <md>d\omega=(1-1)\,dx\wedge dy=0.</md>
+        </p>
+        <p>
+          This does not mean <m>\omega</m> itself is zero. For example, at <m>(1,0)</m>,
+          <md>\omega=2\,dx+dy.</md>
+          It means the local circulation density is zero. Around very small loops, the leading
+          circulation cancels.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c17s2-subsec-computing-d-pdx-qdy-rdz-space">
+    <title>Computing <m>d(P\,dx+Q\,dy+R\,dz)</m> in space</title>
+
+    <p>
+      In space, a <m>1</m>-form has the shape
+      <md>\omega=P\,dx+Q\,dy+R\,dz.</md>
+      Its exterior derivative should be a <m>2</m>-form. Since <m>2</m>-forms in space have three
+      basic pieces,
+      <md>dy\wedge dz,\qquad dz\wedge dx,\qquad dx\wedge dy,</md>
+      we should expect three coefficients.
+    </p>
+
+    <p>Work through one example first.</p>
+
+    <p>
+      Let
+      <md>\omega=z^2\,dx+xz\,dy+y^2\,dz.</md>
+      Then
+      <md>P=z^2,\qquad Q=xz,\qquad R=y^2.</md>
+      Differentiate the coefficients:
+      <md>dP=2z\,dz,</md>
+      <md>dQ=z\,dx+x\,dz,</md>
+      and
+      <md>dR=2y\,dy.</md>
+      Now wedge each differential with its coordinate form:
+      <md>
+        <mrow>d\omega \amp= dP\wedge dx+dQ\wedge dy+dR\wedge dz</mrow>
+        <mrow>\amp= (2z\,dz)\wedge dx+(z\,dx+x\,dz)\wedge dy+(2y\,dy)\wedge dz.</mrow>
+      </md>
+      Rewrite in the standard order
+      <md>dy\wedge dz,\qquad dz\wedge dx,\qquad dx\wedge dy.</md>
+      We get
+      <md>
+        <mrow>d\omega \amp= 2z\,dz\wedge dx+z\,dx\wedge dy+x\,dz\wedge dy+2y\,dy\wedge dz</mrow>
+        <mrow>\amp= (2y-x)\,dy\wedge dz+2z\,dz\wedge dx+z\,dx\wedge dy.</mrow>
+      </md>
+      So
+      <md>\boxed{d\omega=(2y-x)\,dy\wedge dz+2z\,dz\wedge dx+z\,dx\wedge dy.}</md>
+    </p>
+
+    <p>The same pattern gives the general formula.</p>
+
+    <p>
+      Let
+      <md>\omega=P\,dx+Q\,dy+R\,dz.</md>
+      Then
+      <md>d\omega=dP\wedge dx+dQ\wedge dy+dR\wedge dz.</md>
+      Use
+      <md>dP=P_x\,dx+P_y\,dy+P_z\,dz,</md>
+      <md>dQ=Q_x\,dx+Q_y\,dy+Q_z\,dz,</md>
+      and
+      <md>dR=R_x\,dx+R_y\,dy+R_z\,dz.</md>
+      After deleting repeated wedges and reordering signs, we get
+      <md>\boxed{d\omega=(R_y-Q_z)\,dy\wedge dz+(P_z-R_x)\,dz\wedge dx+(Q_x-P_y)\,dx\wedge dy.}</md>
+    </p>
+
+    <definition xml:id="c17s2-def-exterior-derivative-space-1-form">
+      <title>Exterior derivative of a space <m>1</m>-form</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+          be a <m>1</m>-form in space with <m>C^1</m> coefficient functions. Its exterior
+          derivative is
+          <md>\boxed{d\omega=(R_y-Q_z)\,dy\wedge dz+(P_z-R_x)\,dz\wedge dx+(Q_x-P_y)\,dx\wedge dy.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The coordinate forms themselves have zero exterior derivative:
+      <md>d(dx)=d(dy)=d(dz)=0.</md>
+      The variation comes from the coefficient functions <m>P,Q,R</m>, not from the constant
+      coordinate measuring rules.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c17s2-subsec-curl-hidden-inside-domega">
+    <title>Curl hidden inside <m>d\omega</m></title>
+
+    <p>The formula for <m>d\omega</m> looks familiar if we compare it with curl.</p>
+
+    <p>
+      For a vector field
+      <md>\mathbf F=(P,Q,R),</md>
+      the classical curl is
+      <md>\boxed{\nabla\times\mathbf F=(R_y-Q_z,\ P_z-R_x,\ Q_x-P_y).}</md>
+      The exterior derivative of the work form
+      <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+      is
+      <md>\boxed{d\omega=(R_y-Q_z)\,dy\wedge dz+(P_z-R_x)\,dz\wedge dx+(Q_x-P_y)\,dx\wedge dy.}</md>
+    </p>
+
+    <p>
+      So <m>d\omega</m> is the flux <m>2</m>-form associated with the curl vector field:
+      <md>\boxed{d\omega=\Phi_{\nabla\times\mathbf F}.}</md>
+      Here
+      <md>\Phi_{\mathbf G}=G_1\,dy\wedge dz+G_2\,dz\wedge dx+G_3\,dx\wedge dy</md>
+      is the flux form of a vector field <m>\mathbf G=(G_1,G_2,G_3)</m>.
+    </p>
+
+    <theorem xml:id="c17s2-thm-exterior-derivative-work-form-is-curl">
+      <title>Exterior derivative of a work form is curl as a flux form</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F=(P,Q,R)</md>
+          be a <m>C^1</m> vector field in space, and let
+          <md>\omega_{\mathbf F}=P\,dx+Q\,dy+R\,dz</md>
+          be its work <m>1</m>-form. Then
+          <md>\boxed{d\omega_{\mathbf F}=\Phi_{\nabla\times\mathbf F}.}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          The flux form of
+          <md>\nabla\times\mathbf F=(R_y-Q_z,\ P_z-R_x,\ Q_x-P_y)</md>
+          is
+          <md>(R_y-Q_z)\,dy\wedge dz+(P_z-R_x)\,dz\wedge dx+(Q_x-P_y)\,dx\wedge dy.</md>
+          This is exactly the formula for
+          <md>d(P\,dx+Q\,dy+R\,dz).</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      This theorem explains the word <em>curl</em> in a clean way. The curl is not a separate
+      mystery operation. It is the exterior derivative of a <m>1</m>-form, read through the
+      three-dimensional flux-form dictionary.
+    </p>
+
+    <example xml:id="c17s2-ex-rotating-air-flow-in-space">
+      <title>A rotating air flow in space</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F=(-y,\ x,\ z).</md>
+          Its work form is
+          <md>\omega=-y\,dx+x\,dy+z\,dz.</md>
+          Compute <m>d\omega</m>:
+          <md>P=-y,\qquad Q=x,\qquad R=z.</md>
+          Then
+          <md>R_y-Q_z=0-0=0,</md>
+          <md>P_z-R_x=0-0=0,</md>
+          and
+          <md>Q_x-P_y=1-(-1)=2.</md>
+          Therefore
+          <md>\boxed{d\omega=2\,dx\wedge dy.}</md>
+          The curl vector is
+          <md>\nabla\times\mathbf F=(0,0,2).</md>
+          The field rotates around the <m>z</m>-axis, and the exterior derivative records that
+          rotation as a <m>2</m>-form measuring <m>xy</m>-oriented surface pieces.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c17s2-subsec-greens-and-stokes-previewed-again">
+    <title>Green's and Stokes' theorem previewed again</title>
+
+    <p>
+      In the plane, the formula
+      <md>d(P\,dx+Q\,dy)=(Q_x-P_y)\,dx\wedge dy</md>
+      turns Green's theorem into the short statement
+      <md>\boxed{\int_{\partial R}\omega=\int_R d\omega.}</md>
+      The left side is circulation around the boundary. The right side is circulation density
+      added over the inside.
+    </p>
+
+    <p>
+      For example, with
+      <md>\omega=(3-y)\,dx+2x\,dy,</md>
+      we found
+      <md>d\omega=3\,dx\wedge dy.</md>
+      So Green's theorem says
+      <md>\boxed{\int_{\partial R}\omega=\int_R 3\,dx\wedge dy=3\,\operatorname{Area}(R)}</md>
+      for every positively oriented plane region <m>R</m> to which the theorem applies.
+    </p>
+
+    <p>
+      In space, the same statement becomes Stokes' theorem:
+      <md>\boxed{\int_{\partial S}\omega=\int_S d\omega.}</md>
+      Now <m>S</m> is an oriented surface, and <m>\partial S</m> is its oriented boundary curve.
+      The exterior derivative <m>d\omega</m> is the curl <m>2</m>-form.
+    </p>
+
+    <example xml:id="c17s2-ex-same-boundary-curved-surface">
+      <title>The same boundary with a curved surface</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=-y\,dx+x\,dy+z\,dz,</md>
+          so
+          <md>d\omega=2\,dx\wedge dy.</md>
+          Let <m>S</m> be the upper hemisphere
+          <md>x^2+y^2+z^2=1,\qquad z\ge0,</md>
+          oriented upward. Its boundary is the unit circle in the <m>xy</m>-plane, oriented
+          counterclockwise as seen from above.
+        </p>
+        <p>
+          Stokes' theorem predicts
+          <md>\int_{\partial S}\omega=\int_S 2\,dx\wedge dy.</md>
+          The form <m>dx\wedge dy</m> measures the signed <m>xy</m>-shadow of the surface. The
+          upward-oriented upper hemisphere casts the unit disk as its positive shadow. Therefore
+          <md>\int_S 2\,dx\wedge dy=2\pi.</md>
+        </p>
+        <p>
+          Check the boundary integral directly. Parametrize the boundary by
+          <md>\mathbf r(t)=(\cos t,\sin t,0),\qquad 0\le t\le2\pi.</md>
+          Then
+          <md>dx=-\sin t\,dt,\qquad dy=\cos t\,dt,\qquad dz=0.</md>
+          So
+          <md>
+            <mrow>\mathbf r^*\omega \amp= -\sin t(-\sin t\,dt)+\cos t(\cos t\,dt)+0</mrow>
+            <mrow>\amp= dt.</mrow>
+          </md>
+          Hence
+          <md>\boxed{\int_{\partial S}\omega=\int_0^{2\pi}dt=2\pi.}</md>
+          The curved surface and the flat disk have the same boundary, and the same
+          <m>d\omega</m> accounts for the boundary circulation.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The hypotheses behind Green's and Stokes' theorem matter. The form must be defined and
+      smooth on a region containing the surface or plane region we integrate over. A missing
+      point can break the conclusion.
+    </p>
+
+    <example xml:id="c17s2-ex-hidden-singularity-breaks-theorem">
+      <title>A hidden singularity breaks the theorem</title>
+      <statement>
+        <p>
+          Consider the <m>1</m>-form
+          <md>\omega_0=\frac{-y}{x^2+y^2}\,dx+\frac{x}{x^2+y^2}\,dy.</md>
+          It is defined on
+          <md>\mathbb R^2\setminus\{(0,0)\},</md>
+          not at the origin.
+        </p>
+        <p>
+          Away from the origin,
+          <md>P=\frac{-y}{x^2+y^2},\qquad Q=\frac{x}{x^2+y^2}.</md>
+          A direct calculation gives
+          <md>Q_x-P_y=0,</md>
+          so
+          <md>d\omega_0=0</md>
+          wherever the form is defined.
+        </p>
+        <p>
+          Now integrate around the unit circle
+          <md>C:\quad \mathbf r(t)=(\cos t,\sin t),\qquad 0\le t\le2\pi.</md>
+          On this circle,
+          <md>x^2+y^2=1,</md>
+          so
+          <md>\omega_0=-y\,dx+x\,dy.</md>
+          As before,
+          <md>\mathbf r^*\omega_0=dt.</md>
+          Therefore
+          <md>\boxed{\int_C\omega_0=2\pi.}</md>
+        </p>
+        <p>
+          If we pretended Green's theorem applied to the whole disk, we would get
+          <md>\int_C\omega_0=\int_{\text{disk}}d\omega_0=0,</md>
+          which is false. The problem is the missing origin. The form is not defined on the disk
+          bounded by <m>C</m>.
+        </p>
+        <p>
+          So the condition <q>defined and smooth on the whole region</q> is not a technical
+          detail. It prevents a singularity from hiding inside the boundary.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The exterior derivative has now turned functions into <m>1</m>-forms and <m>1</m>-forms
+      into <m>2</m>-forms:
+      <md>f\longmapsto df,\qquad \omega\longmapsto d\omega.</md>
+      The next step is forced by the divergence theorem. A flux <m>2</m>-form measures flow
+      through a surface. Its derivative should measure source density inside a volume. That will
+      be a <m>3</m>-form, and the old vector name for its coefficient is divergence.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch03-linear-functions-matrices.tex, Section 1.
+     Status: CONVERTED. -->
+<section xml:id="sec-3-linear-functions-r-n-r" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Linear functions <m>\mathbb R^n\to\mathbb R</m></title>
+
+  <p>
+    Recall from Chapter 2 that
+    <md>dx(x,y)=x,\qquad dy(x,y)=y,</md>
+    and in space,
+    <md>dz(x,y,z)=z.</md>
+    Each of these rules measures one part of a vector. If we double the vector, the
+    measurement doubles. If we add two vectors, the measurements add.
+  </p>
+
+  <p>That is the behavior we now want to name.</p>
+
+  <subsection xml:id="c3s1-subsec-steady-ramp">
+    <title>A steady ramp</title>
+
+    <p>
+      Imagine a flat metal ramp in a warehouse. Moving one meter east raises you <m>3</m> cm.
+      Moving one meter north raises you <m>2</m> cm.
+    </p>
+
+    <p>
+      If your displacement along the floor is
+      <md>\mathbf v=(x,y),</md>
+      then your change in height is
+      <md>L(x,y)=3x+2y.</md>
+      For example,
+      <md>L(4,-1)=3\cdot4+2(-1)=10.</md>
+      So moving <m>4</m> meters east and <m>1</m> meter south raises you <m>10</m> cm.
+    </p>
+
+    <p>This rule has two very natural properties.</p>
+
+    <p>
+      First, if you break a trip into two pieces,
+      <md>\mathbf u=(x_1,y_1), \qquad \mathbf v=(x_2,y_2),</md>
+      then
+      <md>
+        <mrow>L(\mathbf u+\mathbf v) \amp= L(x_1+x_2,y_1+y_2)</mrow>
+        <mrow>\amp= 3(x_1+x_2)+2(y_1+y_2)</mrow>
+        <mrow>\amp= (3x_1+2y_1)+(3x_2+2y_2)</mrow>
+        <mrow>\amp= L(\mathbf u)+L(\mathbf v).</mrow>
+      </md>
+      The height gained on the whole trip is the sum of the height gains on the pieces.
+    </p>
+
+    <p>
+      Second, if you stretch a displacement by a factor <m>c</m>, the height change stretches by
+      the same factor:
+      <md>
+        <mrow>L(c\mathbf u) \amp= L(cx_1,cy_1)</mrow>
+        <mrow>\amp= 3cx_1+2cy_1</mrow>
+        <mrow>\amp= c(3x_1+2y_1)</mrow>
+        <mrow>\amp= cL(\mathbf u).</mrow>
+      </md>
+    </p>
+
+    <p>These two properties are what linearity means.</p>
+
+    <definition xml:id="c3s1-def-linear-function">
+      <title>Linear function</title>
+      <statement>
+        <p>
+          A function
+          <md>\ell:\mathbb R^n\to\mathbb R</md>
+          is called <term>linear</term> if, for all vectors <m>\mathbf u,\mathbf v\in\mathbb R^n</m>
+          and all scalars <m>c</m>,
+          <md>\ell(\mathbf u+\mathbf v)=\ell(\mathbf u)+\ell(\mathbf v),</md>
+          and
+          <md>\ell(c\mathbf u)=c\ell(\mathbf u).</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The two rules can be combined. If <m>\ell</m> is linear, then
+      <md>\ell(a\mathbf u+b\mathbf v) = a\ell(\mathbf u)+b\ell(\mathbf v).</md>
+      More generally,
+      <md>\ell(c_1\mathbf v_1+\cdots+c_k\mathbf v_k) = c_1\ell(\mathbf v_1)+\cdots+c_k\ell(\mathbf v_k).</md>
+    </p>
+
+    <p>
+      A linear function must also send the zero vector to zero:
+      <md>\ell(\mathbf 0)=0.</md>
+      Indeed,
+      <md>\ell(\mathbf 0)=\ell(0\mathbf u)=0\ell(\mathbf u)=0.</md>
+    </p>
+
+    <p>This small fact is a useful warning.</p>
+
+    <example xml:id="c3s1-ex-almost-linear">
+      <title>A rule that is almost linear but not linear</title>
+      <statement>
+        <p>
+          The rule
+          <md>A(x,y)=3x+2y+10</md>
+          looks very much like the ramp rule, but it is not linear. It does not send the zero
+          vector to zero:
+          <md>A(0,0)=10.</md>
+          It describes a flat ramp whose height at the origin is already <m>10</m> cm. Such rules are
+          called <term>affine</term>. They will matter later, especially for tangent planes. But they
+          are not linear.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c3s1-ex-rule-that-bends">
+      <title>A rule that bends</title>
+      <statement>
+        <p>
+          The rule
+          <md>Q(x,y)=x^2+y</md>
+          is not linear. For instance,
+          <md>Q(2,0)=4,</md>
+          but
+          <md>2Q(1,0)=2.</md>
+          Doubling the input did not double the output. The square term bends the rule.
+        </p>
+      </statement>
+    </example>
+
+    <p>Linear functions are the rules that do not bend and do not shift the origin.</p>
+  </subsection>
+
+  <subsection xml:id="c3s1-subsec-values-on-basis">
+    <title>Values on basis vectors determine the whole function</title>
+
+    <p>
+      The ramp rule
+      <md>L(x,y)=3x+2y</md>
+      is completely determined by what it does to the two standard basis vectors:
+      <md>\mathbf e_1=(1,0), \qquad \mathbf e_2=(0,1).</md>
+      Indeed,
+      <md>L(\mathbf e_1)=3, \qquad L(\mathbf e_2)=2.</md>
+      Since every vector in <m>\mathbb R^2</m> can be written as
+      <md>(x,y)=x\mathbf e_1+y\mathbf e_2,</md>
+      linearity forces
+      <md>
+        <mrow>L(x,y) \amp= L(x\mathbf e_1+y\mathbf e_2)</mrow>
+        <mrow>\amp= xL(\mathbf e_1)+yL(\mathbf e_2)</mrow>
+        <mrow>\amp= 3x+2y.</mrow>
+      </md>
+    </p>
+
+    <p>
+      So once we know the two numbers
+      <md>L(\mathbf e_1),\qquad L(\mathbf e_2),</md>
+      we know <m>L</m> everywhere.
+    </p>
+
+    <p>The same idea works in every dimension.</p>
+
+    <theorem xml:id="c3s1-thm-determined-by-basis">
+      <title>A linear function is determined by its values on the standard basis</title>
+      <statement>
+        <p>
+          Let
+          <md>\ell:\mathbb R^n\to\mathbb R</md>
+          be linear. If
+          <md>\mathbf e_1,\mathbf e_2,\ldots,\mathbf e_n</md>
+          are the standard basis vectors, then every vector
+          <md>\mathbf x=(x_1,x_2,\ldots,x_n)</md>
+          satisfies
+          <md>\boxed{ \ell(\mathbf x) = x_1\ell(\mathbf e_1)+x_2\ell(\mathbf e_2)+\cdots+x_n\ell(\mathbf e_n). }</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>
+        Every vector in <m>\mathbb R^n</m> can be written as
+        <md>\mathbf x=x_1\mathbf e_1+x_2\mathbf e_2+\cdots+x_n\mathbf e_n.</md>
+        Using linearity,
+        <md>
+          <mrow>\ell(\mathbf x) \amp= \ell(x_1\mathbf e_1+x_2\mathbf e_2+\cdots+x_n\mathbf e_n)</mrow>
+          <mrow>\amp= x_1\ell(\mathbf e_1)+x_2\ell(\mathbf e_2)+\cdots+x_n\ell(\mathbf e_n).</mrow>
+        </md>
+      </p>
+    </proof>
+
+    <p>
+      This theorem is one of the main reasons basis vectors are useful. To understand a
+      linear rule, we do not have to test every vector. We only test the basic directions.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s1-subsec-dot-products">
+    <title>Linear functions as dot products with fixed vectors</title>
+
+    <p>
+      Suppose a small cart moves through space by
+      <md>\mathbf x=(x,y,z)</md>
+      meters, and a constant force
+      <md>\mathbf F=(6,-2,4)</md>
+      newtons acts on it. The work done by the force is
+      <md>W(x,y,z)=6x-2y+4z.</md>
+      This is a linear function:
+      <md>W:\mathbb R^3\to\mathbb R.</md>
+      It is also a dot product:
+      <md>W(\mathbf x)=\mathbf F\cdot\mathbf x.</md>
+    </p>
+
+    <p>
+      This was the first physical reason for the dot product in Chapter 2. Now it becomes a
+      general algebraic fact: every linear function is a dot product with one fixed vector.
+    </p>
+
+    <p>
+      For vectors in <m>\mathbb R^n</m>, we use the same dot product formula:
+      <md>\mathbf a\cdot\mathbf x = a_1x_1+a_2x_2+\cdots+a_nx_n.</md>
+    </p>
+
+    <theorem xml:id="c3s1-thm-every-linear-is-dot-product">
+      <title>Every linear function is a dot product</title>
+      <statement>
+        <p>
+          Let
+          <md>\ell:\mathbb R^n\to\mathbb R</md>
+          be linear. Then there is a unique vector
+          <md>\mathbf a=(a_1,a_2,\ldots,a_n)</md>
+          such that
+          <md>\boxed{ \ell(\mathbf x)=\mathbf a\cdot\mathbf x }</md>
+          for every <m>\mathbf x\in\mathbb R^n</m>.
+        </p>
+        <p>
+          The vector is
+          <md>\boxed{ \mathbf a= \bigl(\ell(\mathbf e_1),\ell(\mathbf e_2),\ldots,\ell(\mathbf e_n)\bigr). }</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>
+        Set
+        <md>a_1=\ell(\mathbf e_1),\quad a_2=\ell(\mathbf e_2),\quad \ldots,\quad a_n=\ell(\mathbf e_n).</md>
+        For
+        <md>\mathbf x=(x_1,\ldots,x_n),</md>
+        the previous theorem gives
+        <md>
+          <mrow>\ell(\mathbf x) \amp= x_1\ell(\mathbf e_1)+\cdots+x_n\ell(\mathbf e_n)</mrow>
+          <mrow>\amp= a_1x_1+\cdots+a_nx_n</mrow>
+          <mrow>\amp= \mathbf a\cdot\mathbf x.</mrow>
+        </md>
+      </p>
+      <p>
+        The vector <m>\mathbf a</m> is unique because its components are forced:
+        <md>a_j=\mathbf a\cdot\mathbf e_j=\ell(\mathbf e_j).</md>
+      </p>
+    </proof>
+
+    <example xml:id="c3s1-ex-finding-fixed-vector">
+      <title>Finding the fixed vector</title>
+      <statement>
+        <p>
+          Let
+          <md>\ell:\mathbb R^3\to\mathbb R</md>
+          be linear, and suppose
+          <md>\ell(\mathbf e_1)=5,\qquad \ell(\mathbf e_2)=-1,\qquad \ell(\mathbf e_3)=4.</md>
+          Then
+          <md>\ell(x,y,z)=5x-y+4z.</md>
+          Equivalently,
+          <md>\ell(\mathbf x)=(5,-1,4)\cdot\mathbf x.</md>
+        </p>
+        <p>
+          For example,
+          <md>\ell(2,3,-1) = 5\cdot2-3+4(-1) = 3.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The fixed vector
+      <md>\mathbf a</md>
+      is the coefficient vector of the linear function. It tells us how strongly the function
+      measures each coordinate direction.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s1-subsec-level-sets">
+    <title>Level sets of linear functions</title>
+
+    <p>
+      Return to the ramp
+      <md>L(x,y)=3x+2y.</md>
+      The set of all displacements that produce height change <m>12</m> cm is
+      <md>3x+2y=12.</md>
+      This is a line.
+    </p>
+
+    <p>
+      The set of all displacements that produce height change <m>0</m> is
+      <md>3x+2y=0.</md>
+      This is the line of level motion along the ramp. Walking in such a direction does not
+      raise or lower you.
+    </p>
+
+    <figure xml:id="c3s1-fig-level-sets">
+      <caption>The level sets of <m>L(x,y)=3x+2y</m> are parallel lines. The vector <m>(3,2)</m>
+      is perpendicular to them.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.65, &gt;=stealth]
+            \draw[-&gt;] (-4.5,0) -- (5.5,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-4.5) -- (0,5.5) node[above] {\(y\)};
+
+            \foreach \c/\lab in {-12/{-12}, -6/{-6}, 0/{0}, 6/{6}, 12/{12}} {
+                \draw[thick] (-4,{(\c-3*(-4))/2}) -- (5,{(\c-3*5)/2});
+                \node[fill=white, inner sep=1pt] at (4.3,{(\c-3*4.3)/2}) {\(\lab\)};
+            }
+
+            \draw[-&gt;, very thick] (0,0) -- (3,2) node[above right] {\((3,2)\)};
+            \node at (-2.9,4.4) {\(3x+2y=c\)};
+            \node[below right] at (0,0) {\(0\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The coefficient vector
+      <md>\mathbf a=(3,2)</md>
+      is perpendicular to these level lines. To see why, take two points <m>\mathbf p</m> and
+      <m>\mathbf q</m> on the same level set:
+      <md>\mathbf a\cdot\mathbf p=c, \qquad \mathbf a\cdot\mathbf q=c.</md>
+      Subtract:
+      <md>\mathbf a\cdot(\mathbf p-\mathbf q)=0.</md>
+      So every displacement <m>\mathbf p-\mathbf q</m> along the level set is orthogonal to
+      <m>\mathbf a</m>.
+    </p>
+
+    <p>
+      The same idea works in space. A linear function
+      <md>\ell(x,y,z)=ax+by+cz</md>
+      has level sets
+      <md>ax+by+cz=d.</md>
+      When <m>(a,b,c)\neq(0,0,0)</m>, these are planes. The vector
+      <md>(a,b,c)</md>
+      is normal to the planes.
+    </p>
+
+    <theorem xml:id="c3s1-thm-level-sets-nonzero">
+      <title>Level sets of a nonzero linear function</title>
+      <statement>
+        <p>
+          Let
+          <md>\ell(\mathbf x)=\mathbf a\cdot\mathbf x</md>
+          be a linear function on <m>\mathbb R^n</m>, with
+          <md>\mathbf a\neq\mathbf 0.</md>
+          For each number <m>c</m>, the level set
+          <md>\ell(\mathbf x)=c</md>
+          is an affine hyperplane. Its direction vectors are precisely the vectors
+          <md>\mathbf w</md>
+          that satisfy
+          <md>\mathbf a\cdot\mathbf w=0.</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>
+        Because <m>\mathbf a\neq\mathbf 0</m>, the point
+        <md>\mathbf p=\frac{c}{\|\mathbf a\|^2}\mathbf a</md>
+        satisfies
+        <md>\mathbf a\cdot\mathbf p = \mathbf a\cdot\left(\frac{c}{\|\mathbf a\|^2}\mathbf a\right) = \frac{c}{\|\mathbf a\|^2}(\mathbf a\cdot\mathbf a) = c.</md>
+        So the level set is not empty.
+      </p>
+      <p>
+        Now a point <m>\mathbf x</m> lies on the same level set exactly when
+        <md>\mathbf a\cdot\mathbf x=c.</md>
+        Since
+        <md>\mathbf a\cdot\mathbf p=c,</md>
+        this is equivalent to
+        <md>\mathbf a\cdot(\mathbf x-\mathbf p)=0.</md>
+        Thus
+        <md>\mathbf x=\mathbf p+\mathbf w, \qquad \text{where } \mathbf a\cdot\mathbf w=0.</md>
+        That is an affine hyperplane through <m>\mathbf p</m>, with direction space perpendicular
+        to <m>\mathbf a</m>.
+      </p>
+    </proof>
+
+    <p>
+      The hypothesis
+      <md>\mathbf a\neq\mathbf 0</md>
+      is necessary. If
+      <md>\mathbf a=\mathbf 0,</md>
+      then
+      <md>\ell(\mathbf x)=0</md>
+      for every <m>\mathbf x</m>. The level set
+      <md>\ell(\mathbf x)=0</md>
+      is all of <m>\mathbb R^n</m>, not a hyperplane. And the level set
+      <md>\ell(\mathbf x)=5</md>
+      is empty.
+    </p>
+
+    <p>
+      So a nonzero coefficient vector is what gives a genuine linear equation:
+      <md>a_1x_1+a_2x_2+\cdots+a_nx_n=c.</md>
+      In two dimensions this equation describes a line. In three dimensions it describes a
+      plane. In <m>\mathbb R^n</m> it describes a hyperplane.
+    </p>
+
+    <p>
+      A linear function measures one number from a vector. But many real machines do more
+      than measure one number. A camera turns a point in space into two screen coordinates.
+      A robot command turns a joystick displacement into a new displacement. A grid can be
+      stretched, sheared, rotated, or projected. Each output coordinate is a linear function,
+      and when we stack those coordinate measurements together, a new object appears:
+      a linear transformation.
+    </p>
+  </subsection>
+</section>

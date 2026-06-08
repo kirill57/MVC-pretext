@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch06-functions-limits-continuity.tex, Section 1.
+     Status: CONVERTED. -->
+<section xml:id="sec-6-functions-from-rn-to-rm" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Functions from <m>\mathbb R^n</m> to <m>\mathbb R^m</m></title>
+
+  <p>
+    <xref ref="ch05-vector-valued-functions"/> followed a moving point:
+    <md>\mathbf r(t).</md>
+    The input was time, and the output was a vector. Now the input will often be a point
+    in the plane or in space. A room temperature depends on where you stand. A pressure
+    inside a tank depends on position. A wind velocity assigns an arrow to each point on a
+    map.
+  </p>
+
+  <p>
+    The word <em>function</em> stays the same. What changes is the shape of the input and
+    the shape of the output.
+  </p>
+
+  <subsection xml:id="c6s1-subsec-temperature-field-room-floor">
+    <title>A temperature field on a room floor</title>
+
+    <p>
+      Picture a rectangular room. The floor coordinates are measured in meters, with
+      <md>0\le x\le 6, \qquad 0\le y\le 4.</md>
+      A heater sits near <m>(2,1)</m>, and a cold window runs along the north wall. A simple
+      model for the temperature on the floor is
+      <md>T(x,y)=20+\frac{6}{1+(x-2)^2+(y-1)^2}-\frac{y}{2}.</md>
+      The input is a point
+      <md>(x,y)</md>
+      on the floor. The output is one number,
+      <md>T(x,y),</md>
+      the temperature in degrees Celsius.
+    </p>
+
+    <p>
+      At the heater location,
+      <md>T(2,1)=20+\frac{6}{1+0+0}-\frac12=25.5.</md>
+      Near the far cold corner,
+      <md>T(5,4)=20+\frac{6}{1+9+9}-2=18+\frac{6}{19}\approx 18.32.</md>
+    </p>
+
+    <p>
+      So <m>T</m> takes a point in the floor and returns a number. That is a scalar-valued
+      function of two variables.
+    </p>
+
+    <figure xml:id="c6s1-fig-temperature-field">
+      <caption>A scalar-valued function can assign one number, such as temperature, to each
+      point in a region.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.8, &gt;=stealth]
+            \draw[fill=gray!8] (0,0) rectangle (6,4);
+
+            \draw[-&gt;] (-0.4,0) -- (6.6,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,4.6) node[above] {\(y\)};
+
+            \draw[step=1, gray!25, very thin] (0,0) grid (6,4);
+
+            \fill[red!70!black] (2,1) circle (3pt);
+            \node[below right] at (2,1) {heater};
+
+            \draw[blue!60!black, very thick] (0,4) -- (6,4);
+            \node[above] at (3,4) {cold window};
+
+            \fill (5,4) circle (2pt);
+            \node[below right] at (5,4) {\((5,4)\)};
+
+            \node at (3,-0.9) {domain: \(0\le x\le 6,\ 0\le y\le 4\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The same input region could also carry arrows. Suppose the air in the room slowly
+      circulates around a ceiling fan. A simple two-dimensional model for the horizontal air
+      velocity is
+      <md>\mathbf W(x,y)=\left(-\frac{y-2}{5},\frac{x-3}{5}\right).</md>
+      At the point <m>(3,0)</m>,
+      <md>\mathbf W(3,0)=\left(\frac25,0\right),</md>
+      so the air is moving to the right. At the point <m>(6,2)</m>,
+      <md>\mathbf W(6,2)=\left(0,\frac35\right),</md>
+      so the air is moving upward.
+    </p>
+
+    <p>
+      Now the input is still a point <m>(x,y)</m>, but the output is a vector. This is a
+      vector-valued function of two variables.
+    </p>
+
+    <definition xml:id="c6s1-def-function-rn-rm">
+      <title>Function from <m>\mathbb R^n</m> to <m>\mathbb R^m</m></title>
+      <statement>
+        <p>
+          A function
+          <md>F:D\subseteq \mathbb R^n\to \mathbb R^m</md>
+          assigns to each input
+          <md>\mathbf x\in D</md>
+          exactly one output
+          <md>F(\mathbf x)\in \mathbb R^m.</md>
+        </p>
+        <p>
+          The set <m>D</m> is called the <term>domain</term>. The set of all possible outputs
+          is called the <term>range</term>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      If <m>m=1</m>, the output is a number. We call the function <term>scalar-valued</term>.
+      If <m>m&gt;1</m>, the output is a vector. We call the function <term>vector-valued</term>.
+    </p>
+
+    <definition xml:id="c6s1-def-scalar-vector-field">
+      <title>Scalar field and vector field</title>
+      <statement>
+        <p>
+          A scalar-valued function on a region in the plane or in space is often called a
+          <term>scalar field</term>.
+        </p>
+        <p>
+          A vector-valued function on a region in the plane or in space is often called a
+          <term>vector field</term>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      A temperature field is a scalar field. A wind field is a vector field. Later, line
+      integrals and surface integrals will live inside this language.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s1-subsec-scalar-vector-valued">
+    <title>Scalar-valued and vector-valued functions</title>
+
+    <p>Here are several common shapes of functions.</p>
+
+    <table xml:id="c6s1-tab-shapes-of-functions">
+      <title>Common shapes of functions of one and several variables.</title>
+      <tabular>
+        <col right="minor"/>
+        <col right="minor"/>
+        <col right="minor"/>
+        <col/>
+        <row header="yes" bottom="medium">
+          <cell>Situation</cell>
+          <cell>Notation</cell>
+          <cell>Input</cell>
+          <cell>Output</cell>
+        </row>
+        <row>
+          <cell>temperature on a floor</cell>
+          <cell><m>T(x,y)</m></cell>
+          <cell><m>(x,y)\in\mathbb R^2</m></cell>
+          <cell>number</cell>
+        </row>
+        <row>
+          <cell>height of a hill</cell>
+          <cell><m>h(x,y)</m></cell>
+          <cell><m>(x,y)\in\mathbb R^2</m></cell>
+          <cell>number</cell>
+        </row>
+        <row>
+          <cell>pressure in a tank</cell>
+          <cell><m>p(x,y,z)</m></cell>
+          <cell><m>(x,y,z)\in\mathbb R^3</m></cell>
+          <cell>number</cell>
+        </row>
+        <row>
+          <cell>motion of a firefly</cell>
+          <cell><m>\mathbf r(t)</m></cell>
+          <cell><m>t\in\mathbb R</m></cell>
+          <cell>vector in <m>\mathbb R^3</m></cell>
+        </row>
+        <row>
+          <cell>wind on a map</cell>
+          <cell><m>\mathbf W(x,y)</m></cell>
+          <cell><m>(x,y)\in\mathbb R^2</m></cell>
+          <cell>vector in <m>\mathbb R^2</m></cell>
+        </row>
+        <row>
+          <cell>surface patch</cell>
+          <cell><m>\mathbf s(u,v)</m></cell>
+          <cell><m>(u,v)\in\mathbb R^2</m></cell>
+          <cell>vector in <m>\mathbb R^3</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The notation
+      <md>F:\mathbb R^n\to\mathbb R^m</md>
+      does not mean that the domain must be all of <m>\mathbb R^n</m>. It means that the
+      inputs live in <m>n</m>-dimensional space and the outputs live in <m>m</m>-dimensional
+      space. The actual domain may be a smaller region.
+    </p>
+
+    <p>
+      For example, the temperature model above is not meant for all of <m>\mathbb R^2</m>.
+      It is meant for the rectangle
+      <md>D=\{(x,y):0\le x\le 6,\ 0\le y\le 4\}.</md>
+      Outside the room, the formula may still produce a number, but the model no longer
+      describes the room.
+    </p>
+
+    <example xml:id="c6s1-ex-vector-valued-from-ch5">
+      <title>A vector-valued function from <xref ref="ch05-vector-valued-functions"/></title>
+      <statement>
+        <p>
+          The helix
+          <md>\mathbf r(t)=(2\cos t,2\sin t,t)</md>
+          is a function
+          <md>\mathbf r:\mathbb R\to\mathbb R^3.</md>
+          It has one input and three output components. It is vector-valued, but it is not a
+          function of several variables. The input is still one-dimensional.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s1-ex-parametrized-surface">
+      <title>A parametrized surface</title>
+      <statement>
+        <p>
+          A circular cylinder of radius <m>2</m> can be parametrized by
+          <md>\mathbf s(\theta,z)=(2\cos\theta,2\sin\theta,z).</md>
+          Here
+          <md>\mathbf s:\mathbb R^2\to\mathbb R^3.</md>
+          The input has two variables, <m>\theta</m> and <m>z</m>. The output is a point in
+          space.
+        </p>
+        <p>
+          If we restrict
+          <md>0\le \theta\le 2\pi,\qquad 0\le z\le 5,</md>
+          then the domain is a rectangle in the <m>(\theta,z)</m>-plane, and the image is the
+          side of a cylinder of height <m>5</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The same notation covers scalar fields, vector fields, motion, and parametrized
+      surfaces. The input dimension tells us how many independent variables we choose.
+      The output dimension tells us what kind of object the function returns.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s1-subsec-domains-plane-space">
+    <title>Domains in the plane and in space</title>
+
+    <p>
+      Sometimes a domain comes from a physical situation. Sometimes it comes from the
+      formula itself.
+    </p>
+
+    <example xml:id="c6s1-ex-dome-circular-floor">
+      <title>A dome over a circular floor</title>
+      <statement>
+        <p>
+          A glass dome over a circular courtyard has height
+          <md>h(x,y)=\sqrt{16-x^2-y^2}.</md>
+          The square root requires
+          <md>16-x^2-y^2\ge 0.</md>
+          Therefore
+          <md>x^2+y^2\le 16.</md>
+          The natural domain is the disk
+          <md>D=\{(x,y):x^2+y^2\le 16\}.</md>
+          The formula describes the upper half of a sphere of radius <m>4</m>.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s1-ex-missing-plane">
+      <title>A formula with a missing plane</title>
+      <statement>
+        <p>
+          Let
+          <md>g(x,y,z)=\frac{1}{z-y}.</md>
+          The denominator cannot be zero, so
+          <md>z-y\ne0.</md>
+          The domain is
+          <md>D=\{(x,y,z):z\ne y\}.</md>
+          This is all of space except the plane
+          <md>z=y.</md>
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s1-ex-logarithm-in-space">
+      <title>A logarithm in space</title>
+      <statement>
+        <p>
+          Let
+          <md>q(x,y,z)=\ln(8-z).</md>
+          The logarithm requires
+          <md>8-z&gt;0,</md>
+          so
+          <md>z&lt;8.</md>
+          The domain is the open half-space below the plane <m>z=8</m>:
+          <md>D=\{(x,y,z):z&lt;8\}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s1-ex-swirling-field-missing-point">
+      <title>A swirling field with a missing point</title>
+      <statement>
+        <p>
+          The vector field
+          <md>\mathbf V(x,y)=\frac{1}{x^2+y^2}(-y,x)</md>
+          is defined whenever
+          <md>x^2+y^2\ne0.</md>
+          So its domain is
+          <md>\mathbb R^2\setminus\{(0,0)\}.</md>
+          The origin is missing. This small hole will matter later: fields defined on regions
+          with holes can behave in surprising ways.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The word <em>domain</em> is therefore not a decoration. It is part of the function.
+      Changing the domain can change the meaning of the problem.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s1-subsec-examples-temperature-pressure-cost-motion">
+    <title>Examples from temperature, pressure, cost, and motion</title>
+
+    <p>A function of several variables often begins as a story before it becomes a formula.</p>
+
+    <example xml:id="c6s1-ex-pressure-in-tank">
+      <title>Pressure in a tank</title>
+      <statement>
+        <p>
+          Suppose <m>z</m> measures height in meters, and pressure decreases linearly as height
+          increases:
+          <md>p(x,y,z)=120-3z.</md>
+          This is a scalar field in space. It does not depend on <m>x</m> or <m>y</m>, only on
+          height. All points with the same <m>z</m>-coordinate have the same pressure.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s1-ex-cost-function-two-inputs">
+      <title>A cost function with two inputs</title>
+      <statement>
+        <p>
+          A bakery makes two kinds of loaves. Let <m>u</m> be the number of sourdough loaves
+          and <m>v</m> the number of rye loaves made in one day. A simplified cost model is
+          <md>C(u,v)=400+3u+4v+0.01uv.</md>
+          The term <m>400</m> is a fixed daily cost. The terms <m>3u</m> and <m>4v</m> are
+          direct production costs. The mixed term <m>0.01uv</m> models the extra scheduling
+          cost of producing both types in the same day.
+        </p>
+        <p>
+          The physical domain is
+          <md>u\ge0,\qquad v\ge0.</md>
+          Strictly speaking, <m>u</m> and <m>v</m> should be whole numbers. Calculus treats
+          them as continuous variables because that approximation lets us study rates of
+          change.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s1-ex-deformation-of-plane">
+      <title>A deformation of the plane</title>
+      <statement>
+        <p>
+          A flexible sheet is pulled so that each point <m>(x,y)</m> moves to
+          <md>F(x,y)=(x+0.2y,\ y).</md>
+          This is a vector-valued function
+          <md>F:\mathbb R^2\to\mathbb R^2.</md>
+          It shears the plane: points higher up move farther to the right.
+        </p>
+        <p>
+          This example is also a linear transformation, so it belongs to <xref ref="ch03-linear-functions-matrices"/>. The new
+          point is that transformations are functions too. They take points or vectors as
+          inputs and return points or vectors as outputs.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c6s1-subsec-functions-as-fields-of-values">
+    <title>Functions as fields of values</title>
+
+    <p>
+      A scalar field covers a region with numbers. A vector field covers a region with arrows.
+    </p>
+
+    <p>
+      For example, the vector field
+      <md>\mathbf W(x,y)=(-y,x)</md>
+      assigns an arrow to every point in the plane. At <m>(1,0)</m>,
+      <md>\mathbf W(1,0)=(0,1).</md>
+      At <m>(0,1)</m>,
+      <md>\mathbf W(0,1)=(-1,0).</md>
+      The arrows circulate counterclockwise around the origin.
+    </p>
+
+    <figure xml:id="c6s1-fig-rotational-vector-field">
+      <caption>A vector field assigns an arrow to each point.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \draw[-&gt;] (-3.2,0) -- (3.4,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-3.2) -- (0,3.4) node[above] {\(y\)};
+
+            \foreach \x in {-2,-1,0,1,2} {
+                \foreach \y in {-2,-1,0,1,2} {
+                    \pgfmathsetmacro{\u}{-0.18*\y}
+                    \pgfmathsetmacro{\v}{0.18*\x}
+                    \draw[-&gt;, thick] (\x,\y) -- ++(\u,\v);
+                }
+            }
+
+            \node at (0,-4) {\(\mathbf W(x,y)=(-y,x)\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This field will return later when we study circulation. For now, it gives a clear
+      contrast:
+    </p>
+
+    <table xml:id="c6s1-tab-scalar-vs-vector-field">
+      <title>Scalar fields versus vector fields.</title>
+      <tabular>
+        <col right="minor"/>
+        <col/>
+        <row><cell>scalar field</cell><cell>one number at each point</cell></row>
+        <row><cell>vector field</cell><cell>one vector at each point</cell></row>
+      </tabular>
+    </table>
+
+    <p>
+      A scalar field can be visualized in several ways. We can make a graph, if the input is
+      two-dimensional. We can draw a contour map, like a topographic map. We can draw
+      level surfaces, if the input is three-dimensional. Each picture shows the same function
+      from a different angle.
+    </p>
+
+    <p>
+      A formula gives exact values, but a picture tells us how those values are arranged.
+      That arrangement is what we look at next.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch08-chain-rule-coordinate-changes.tex, Section 6.
+     Status: CONVERTED. -->
+<section xml:id="sec-8-implicit-functions" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Implicit functions</title>
+
+  <p>
+    An inverse function solves for all inputs from all outputs. A constraint usually asks for
+    something smaller. It gives an equation and asks which points satisfy it.
+  </p>
+
+  <p>
+    The unit circle is not usually introduced as
+    <md>y=\sqrt{1-x^2}</md>
+    or
+    <md>y=-\sqrt{1-x^2}.</md>
+    It is introduced as
+    <md>x^2+y^2=1.</md>
+    That equation does not solve for <m>y</m>. It describes the curve implicitly.
+  </p>
+
+  <p>
+    The question is local:
+    <md>\text{Near a chosen point, can the equation be solved for one variable?}</md>
+  </p>
+
+  <subsection xml:id="c8s6-curves-given-by-f-x-y">
+    <title>Curves given by <m>F(x,y)=0</m></title>
+
+    <p>
+      A pond has an oval shoreline modeled by
+      <md>F(x,y)=\frac{x^2}{9}+\frac{y^2}{4}-1=0.</md>
+      This equation does not choose the upper shore or the lower shore. It describes both at
+      once.
+    </p>
+
+    <p>
+      Near the top point
+      <md>(0,2),</md>
+      the shoreline is the graph of a function
+      <md>y=g(x).</md>
+      Indeed, solving the equation gives the upper branch
+      <md>y=2\sqrt{1-\frac{x^2}{9}}.</md>
+      Near the bottom point
+      <md>(0,-2),</md>
+      the shoreline is also a graph over <m>x</m>, but with the lower branch
+      <md>y=-2\sqrt{1-\frac{x^2}{9}}.</md>
+    </p>
+
+    <p>
+      At the rightmost point
+      <md>(3,0),</md>
+      the situation changes. The shoreline has a vertical tangent. Near this point, it is not
+      the graph of <m>y</m> as a function of <m>x</m>. For <m>x</m> slightly less than <m>3</m>,
+      there are two nearby <m>y</m>-values, one above and one below the <m>x</m>-axis.
+    </p>
+
+    <p>
+      But it is the graph of <m>x</m> as a function of <m>y</m>:
+      <md>x=3\sqrt{1-\frac{y^2}{4}}.</md>
+    </p>
+
+    <p>So the same implicit curve may be solved for different variables at different points.</p>
+
+    <figure xml:id="c8s6-fig-implicit-curve">
+      <caption>An implicit curve can be solved for different variables at different points.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-4,0) -- (4.4,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-3) -- (0,3.4) node[above] {\(y\)};
+
+            \draw[thick, domain=0:360, samples=220, smooth, variable=\t]
+                plot ({3*cos(\t)}, {2*sin(\t)});
+
+            \fill (0,2) circle (2.5pt);
+            \node[above right] at (0,2) {\((0,2)\)};
+
+            \fill (3,0) circle (2.5pt);
+            \node[above right] at (3,0) {\((3,0)\)};
+
+            \draw[very thick, blue!60!black] (-1.2,{2*sqrt(1-1.44/9)})
+                arc[start angle=113.6,end angle=66.4,x radius=3,y radius=2];
+            \node[blue!60!black] at (0,2.75) {locally \(y=g(x)\)};
+
+            \draw[very thick, red!65!black] ({3*sqrt(1-0.64/4)},-0.8)
+                arc[start angle=-23.6,end angle=23.6,x radius=3,y radius=2];
+            \node[red!65!black, right] at (3.25,0.8) {locally \(x=h(y)\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>The partial derivatives of <m>F</m> predict which variable can be solved for.</p>
+
+    <p>
+      For
+      <md>F(x,y)=\frac{x^2}{9}+\frac{y^2}{4}-1,</md>
+      we have
+      <md>F_x=\frac{2x}{9}, \qquad F_y=\frac{y}{2}.</md>
+      At the top point <m>(0,2)</m>,
+      <md>F_y(0,2)=1\ne0.</md>
+      That is why we can solve locally for <m>y</m> as a function of <m>x</m>.
+    </p>
+
+    <p>
+      At the rightmost point <m>(3,0)</m>,
+      <md>F_y(3,0)=0,</md>
+      so solving for <m>y</m> is not supported there. But
+      <md>F_x(3,0)=\frac23\ne0,</md>
+      so solving for <m>x</m> as a function of <m>y</m> is supported.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s6-implicit-differentiation-plane">
+    <title>Implicit differentiation in the plane</title>
+
+    <p>
+      Suppose a curve is given by
+      <md>F(x,y)=0</md>
+      and, near a point, we can write
+      <md>y=g(x).</md>
+      Then along the curve,
+      <md>F(x,g(x))=0.</md>
+      Differentiate with respect to <m>x</m>:
+      <md>F_x(x,g(x))+F_y(x,g(x))g'(x)=0.</md>
+      So, if
+      <md>F_y\ne0,</md>
+      then
+      <md>\boxed{\frac{dy}{dx}=-\frac{F_x}{F_y}.}</md>
+    </p>
+
+    <p>
+      The same formula appears even more cleanly with differentials. Along the curve,
+      <md>dF=0.</md>
+      But
+      <md>dF=F_x\,dx+F_y\,dy.</md>
+      If <m>y</m> is a function of <m>x</m>, then
+      <md>dy=\frac{dy}{dx}\,dx.</md>
+      Substitute:
+      <md>0=F_x\,dx+F_y\frac{dy}{dx}\,dx.</md>
+      After factoring out <m>dx</m>,
+      <md>F_x+F_y\frac{dy}{dx}=0.</md>
+      Thus
+      <md>\frac{dy}{dx}=-\frac{F_x}{F_y}.</md>
+    </p>
+
+    <example xml:id="c8s6-ex-slope-oval-shoreline">
+      <title>Slope of the oval shoreline</title>
+      <statement>
+        <p>
+          For the oval
+          <md>F(x,y)=\frac{x^2}{9}+\frac{y^2}{4}-1=0,</md>
+          we found
+          <md>F_x=\frac{2x}{9}, \qquad F_y=\frac{y}{2}.</md>
+          When <m>y\ne0</m>,
+          <md>\frac{dy}{dx}=-\frac{F_x}{F_y}=-\frac{2x/9}{y/2}=-\frac{4x}{9y}.</md>
+          At the top point <m>(0,2)</m>,
+          <md>\frac{dy}{dx}=0.</md>
+          At a point on the upper-right part of the shore, such as
+          <md>\left(\frac32,\sqrt3\right),</md>
+          the slope is
+          <md>\frac{dy}{dx}=-\frac{4(3/2)}{9\sqrt3}=-\frac{2}{3\sqrt3}.</md>
+          The upper-right shoreline slopes downward as <m>x</m> increases.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c8s6-ex-nonlinear-balance-curve">
+      <title>A nonlinear balance curve</title>
+      <statement>
+        <p>
+          A chemical balance curve is modeled by
+          <md>F(x,y)=xe^y+y-3=0.</md>
+          The point
+          <md>(3,0)</md>
+          lies on the curve because
+          <md>3e^0+0-3=0.</md>
+          Compute
+          <md>F_x=e^y,</md>
+          and
+          <md>F_y=xe^y+1.</md>
+          At <m>(3,0)</m>,
+          <md>F_x(3,0)=1, \qquad F_y(3,0)=4.</md>
+          Since
+          <md>F_y(3,0)\ne0,</md>
+          the curve can be solved locally as
+          <md>y=g(x).</md>
+          Its slope at <m>(3,0)</m> is
+          <md>g'(3)=-\frac{F_x(3,0)}{F_y(3,0)}=-\frac14.</md>
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c8s6-surfaces-given-by-f-x-y-z">
+    <title>Surfaces given by <m>F(x,y,z)=0</m></title>
+
+    <p>
+      In space, one equation usually describes a surface. For example,
+      <md>x^2+y^2+z^2=25</md>
+      describes a sphere of radius <m>5</m>. The same surface can be written implicitly as
+      <md>F(x,y,z)=x^2+y^2+z^2-25=0.</md>
+    </p>
+
+    <p>
+      Near a point on the upper hemisphere, where <m>z\gt0</m>, we can solve for
+      <md>z</md>
+      as a function of <m>x</m> and <m>y</m>:
+      <md>z=\sqrt{25-x^2-y^2}.</md>
+      Near a point on the lower hemisphere, where <m>z\lt0</m>, we can also solve for <m>z</m>,
+      but with the negative branch:
+      <md>z=-\sqrt{25-x^2-y^2}.</md>
+      At the equator, where
+      <md>z=0,</md>
+      we cannot solve the sphere locally as a single graph
+      <md>z=g(x,y).</md>
+      For points <m>(x,y)</m> just inside the equator, there are two nearby <m>z</m>-values: one
+      above and one below.
+    </p>
+
+    <p>
+      The derivative test sees this. For
+      <md>F(x,y,z)=x^2+y^2+z^2-25,</md>
+      we have
+      <md>F_z=2z.</md>
+      On the upper and lower hemispheres,
+      <md>F_z\ne0.</md>
+      At the equator,
+      <md>F_z=0.</md>
+      So <m>F_z\ne0</m> is the condition that supports solving for <m>z</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s6-implicit-differentiation-several-variables">
+    <title>Implicit differentiation in several variables</title>
+
+    <p>
+      Suppose
+      <md>F(x,y,z)=0</md>
+      and near a point we can write
+      <md>z=g(x,y).</md>
+      Then
+      <md>F(x,y,g(x,y))=0.</md>
+      Differentiate with respect to <m>x</m>, holding <m>y</m> fixed:
+      <md>F_x+F_z\,g_x=0.</md>
+      So
+      <md>\boxed{z_x=g_x=-\frac{F_x}{F_z}.}</md>
+      Differentiate with respect to <m>y</m>, holding <m>x</m> fixed:
+      <md>F_y+F_z\,g_y=0.</md>
+      So
+      <md>\boxed{z_y=g_y=-\frac{F_y}{F_z}.}</md>
+      All partial derivatives of <m>F</m> are evaluated at
+      <md>(x,y,z)=(x,y,g(x,y)).</md>
+    </p>
+
+    <p>
+      The differential form is shorter. Along the surface,
+      <md>dF=0.</md>
+      But
+      <md>dF=F_x\,dx+F_y\,dy+F_z\,dz.</md>
+      If
+      <md>z=g(x,y),</md>
+      then
+      <md>dz=z_x\,dx+z_y\,dy.</md>
+      Substitute:
+      <md>0=F_x\,dx+F_y\,dy+F_z(z_x\,dx+z_y\,dy).</md>
+      Group the <m>dx</m> and <m>dy</m> terms:
+      <md>0=(F_x+F_z z_x)\,dx+(F_y+F_z z_y)\,dy.</md>
+      Since <m>dx</m> and <m>dy</m> are independent coordinate changes, both coefficients must
+      vanish:
+      <md>F_x+F_z z_x=0, \qquad F_y+F_z z_y=0.</md>
+    </p>
+
+    <example xml:id="c8s6-ex-surface-mixed-term">
+      <title>A surface with a mixed term</title>
+      <statement>
+        <p>
+          Consider the surface
+          <md>F(x,y,z)=x^2+y^2+z+xyz-4=0.</md>
+          The point
+          <md>(1,1,1)</md>
+          lies on the surface because
+          <md>1+1+1+1-4=0.</md>
+          Compute the partial derivatives:
+          <md>F_x=2x+yz,</md>
+          <md>F_y=2y+xz,</md>
+          and
+          <md>F_z=1+xy.</md>
+          At <m>(1,1,1)</m>,
+          <md>F_x=3, \qquad F_y=3, \qquad F_z=2.</md>
+          Since
+          <md>F_z\ne0,</md>
+          the surface can be solved locally as
+          <md>z=g(x,y).</md>
+          The partial derivatives of <m>g</m> at <m>(1,1)</m> are
+          <md>g_x(1,1)=-\frac{F_x}{F_z}=-\frac32,</md>
+          and
+          <md>g_y(1,1)=-\frac{F_y}{F_z}=-\frac32.</md>
+          So near <m>(1,1,1)</m>, the surface has the linear approximation
+          <md>z-1=-\frac32(x-1)-\frac32(y-1).</md>
+          Equivalently,
+          <md>\boxed{3(x-1)+3(y-1)+2(z-1)=0.}</md>
+          This is the tangent plane.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The tangent plane formula is not a separate trick. It is the equation
+      <md>dF=0</md>
+      applied to a displacement
+      <md>(dx,dy,dz)</md>
+      tangent to the surface:
+      <md>F_x\,dx+F_y\,dy+F_z\,dz=0.</md>
+      At <m>(a,b,c)</m>, this becomes
+      <md>\boxed{F_x(a,b,c)(x-a)+F_y(a,b,c)(y-b)+F_z(a,b,c)(z-c)=0.}</md>
+      The coefficient vector
+      <md>\nabla F(a,b,c)=(F_x,F_y,F_z)</md>
+      is normal to the tangent plane. This observation will become central in
+      <xref ref="ch09-gradient-optimization"/>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s6-implicit-function-theorem-geometric">
+    <title>The implicit function theorem, stated geometrically</title>
+
+    <p>The examples point to the theorem.</p>
+
+    <p>
+      For curves, the rule is:
+      <md>F_y\ne0 \quad\Longrightarrow\quad \text{solve locally for }y.</md>
+    </p>
+
+    <p>
+      For surfaces, the rule is:
+      <md>F_z\ne0 \quad\Longrightarrow\quad \text{solve locally for }z.</md>
+    </p>
+
+    <theorem xml:id="c8s6-thm-ift-plane-curve">
+      <title>Implicit function theorem for a plane curve</title>
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)</md>
+          have continuous first partial derivatives near <m>(a,b)</m>. Suppose
+          <md>F(a,b)=0</md>
+          and
+          <md>F_y(a,b)\ne0.</md>
+          Then, near <m>(a,b)</m>, the equation
+          <md>F(x,y)=0</md>
+          can be solved uniquely as
+          <md>y=g(x),</md>
+          with
+          <md>g(a)=b.</md>
+          The function <m>g</m> has continuous first derivative, and
+          <md>\boxed{g'(x)=-\frac{F_x(x,g(x))}{F_y(x,g(x))}.}</md>
+          In particular,
+          <md>\boxed{g'(a)=-\frac{F_x(a,b)}{F_y(a,b)}.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      If instead
+      <md>F_x(a,b)\ne0,</md>
+      then the equation can be solved locally as
+      <md>x=h(y).</md>
+    </p>
+
+    <theorem xml:id="c8s6-thm-ift-surface">
+      <title>Implicit function theorem for a surface</title>
+      <statement>
+        <p>
+          Let
+          <md>F(x,y,z)</md>
+          have continuous first partial derivatives near <m>(a,b,c)</m>. Suppose
+          <md>F(a,b,c)=0</md>
+          and
+          <md>F_z(a,b,c)\ne0.</md>
+          Then, near <m>(a,b,c)</m>, the equation
+          <md>F(x,y,z)=0</md>
+          can be solved uniquely as
+          <md>z=g(x,y),</md>
+          with
+          <md>g(a,b)=c.</md>
+          The function <m>g</m> has continuous first partial derivatives, and
+          <md>\boxed{g_x=-\frac{F_x}{F_z}, \qquad g_y=-\frac{F_y}{F_z}.}</md>
+          The partial derivatives on the right are evaluated at
+          <md>(x,y,g(x,y)).</md>
+        </p>
+      </statement>
+      <proof>
+        <title>Why this follows from the inverse function theorem</title>
+        <p>
+          For the plane curve theorem, build the map
+          <md>\Phi(x,y)=(x,F(x,y)).</md>
+          Its Jacobian matrix is
+          <md>J_\Phi(x,y)=\begin{pmatrix} 1 &amp; 0\\ F_x &amp; F_y \end{pmatrix}.</md>
+          So
+          <md>\det J_\Phi(a,b)=F_y(a,b).</md>
+          If
+          <md>F_y(a,b)\ne0,</md>
+          then <m>\Phi</m> has a local inverse near <m>(a,F(a,b))=(a,0)</m>.
+        </p>
+        <p>
+          That means the pair
+          <md>(x,F(x,y))</md>
+          can be used as local coordinates near <m>(a,b)</m>. If we set the second coordinate
+          equal to <m>0</m>, we are looking exactly at points satisfying
+          <md>F(x,y)=0.</md>
+          The inverse of <m>\Phi</m> then gives
+          <md>y=g(x).</md>
+          The derivative formula comes from differentiating
+          <md>F(x,g(x))=0.</md>
+        </p>
+        <p>
+          For the surface theorem, use
+          <md>\Phi(x,y,z)=(x,y,F(x,y,z)).</md>
+          Its Jacobian determinant is
+          <md>F_z(x,y,z).</md>
+          If
+          <md>F_z(a,b,c)\ne0,</md>
+          the inverse function theorem gives local coordinates
+          <md>(x,y,F).</md>
+          Setting
+          <md>F=0</md>
+          solves the surface locally as
+          <md>z=g(x,y).</md>
+        </p>
+      </proof>
+    </theorem>
+  </subsection>
+
+  <subsection xml:id="c8s6-why-the-hypotheses-matter">
+    <title>Why the hypotheses matter</title>
+
+    <p>
+      We required the partial derivative with respect to the variable being solved for to be
+      nonzero. Without that condition, uniqueness can fail.
+    </p>
+
+    <example xml:id="c8s6-ex-fy-zero-not-function">
+      <title>When <m>F_y=0</m>, <m>y</m> may not be a function of <m>x</m></title>
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=y^2-x.</md>
+          The curve
+          <md>F(x,y)=0</md>
+          is
+          <md>x=y^2.</md>
+          At the origin,
+          <md>F(0,0)=0,</md>
+          and
+          <md>F_y(x,y)=2y,</md>
+          so
+          <md>F_y(0,0)=0.</md>
+        </p>
+        <p>
+          For every small positive <m>x</m>, there are two nearby <m>y</m>-values:
+          <md>y=\sqrt{x} \qquad\text{and}\qquad y=-\sqrt{x}.</md>
+          So near the origin, the curve is not the graph of one function <m>y=g(x)</m>.
+        </p>
+        <p>
+          But
+          <md>F_x=-1\ne0,</md>
+          so the same curve can be solved for <m>x</m> as a function of <m>y</m>:
+          <md>x=y^2.</md>
+          The nonzero partial tells us which variable can be solved for.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      We also required smoothness of <m>F</m>. Without it, the level set may have a corner, and
+      implicit differentiation may fail.
+    </p>
+
+    <example xml:id="c8s6-ex-nonsmooth-corner">
+      <title>A nonsmooth constraint gives a corner</title>
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=y-|x|.</md>
+          Then
+          <md>F(x,y)=0</md>
+          is the V-shaped curve
+          <md>y=|x|.</md>
+          At <m>(0,0)</m>, this curve is a graph of <m>y</m> as a function of <m>x</m>, but it
+          is not differentiable there. It has a corner.
+        </p>
+        <p>
+          The partial derivative <m>F_x</m> does not exist at the origin, because
+          <md>|x|</md>
+          has no derivative at <m>0</m>. So the formula
+          <md>\frac{dy}{dx}=-\frac{F_x}{F_y}</md>
+          cannot even be formed at the corner.
+        </p>
+        <p>The smoothness of <m>F</m> is what prevents this kind of hidden sharp point.</p>
+      </statement>
+    </example>
+
+    <p>
+      The theorem is also local. Even when an equation can be solved near a point, it may not be
+      solvable as one graph over the whole curve.
+    </p>
+
+    <example xml:id="c8s6-ex-one-oval-two-branches">
+      <title>One oval, two branches</title>
+      <statement>
+        <p>
+          For
+          <md>\frac{x^2}{9}+\frac{y^2}{4}=1,</md>
+          the top half is
+          <md>y=2\sqrt{1-\frac{x^2}{9}},</md>
+          and the bottom half is
+          <md>y=-2\sqrt{1-\frac{x^2}{9}}.</md>
+          Most <m>x</m>-values between <m>-3</m> and <m>3</m> give two points on the oval. So the
+          whole oval is not one graph <m>y=g(x)</m>, even though each non-vertical part of it is
+          locally a graph.
+        </p>
+        <p>Local solvability is the promise. Global simplicity is not.</p>
+      </statement>
+    </example>
+
+    <p>The same warning appears for surfaces.</p>
+
+    <example xml:id="c8s6-ex-sphere-no-global-height">
+      <title>A sphere cannot be one global height function</title>
+      <statement>
+        <p>
+          The sphere
+          <md>x^2+y^2+z^2=25</md>
+          has upper and lower halves:
+          <md>z=\sqrt{25-x^2-y^2}</md>
+          and
+          <md>z=-\sqrt{25-x^2-y^2}.</md>
+          Near a point on the upper hemisphere, it is a graph <m>z=g(x,y)</m>. Near a point on
+          the lower hemisphere, it is also a graph <m>z=g(x,y)</m>. At the equator, it is not a
+          single graph over the <m>xy</m>-plane, because nearby <m>(x,y)</m>-values inside the
+          equator give two nearby <m>z</m>-values.
+        </p>
+        <p>
+          The equation is smooth. The failure is caused by
+          <md>F_z=2z=0</md>
+          at the equator.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Implicit equations are not less precise than explicit ones. They are often more natural.
+      They describe constraints without choosing a coordinate direction too early. The
+      differential
+      <md>dF</md>
+      then tells us the allowed first-order motions:
+      <md>dF=0.</md>
+      That sentence will return soon. On a constraint, not every direction is available. A point
+      may be a maximum or minimum not because all motion stops, but because every
+      <em>allowed</em> first-order motion fails to improve the quantity. That idea leads directly
+      to gradients, tangent spaces, and constrained optimization.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch15-surfaces-flux-curl-divergence.tex, Section 15.2.
+     Status: CONVERTED. -->
+<section xml:id="sec-15-surface-area-and-scalar-surface-integrals" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Surface area and scalar surface integrals</title>
+
+  <p>
+    <xref ref="sec-15-parametric-surfaces-and-tangent-planes"/> gave us the two tangent
+    vectors
+    <md>\mathbf r_u,\qquad \mathbf r_v.</md>
+    Their cross product points normal to the surface. Its length has another meaning: it
+    measures the area of the tiny parallelogram made by those two tangent vectors.
+  </p>
+
+  <p>That is how surface area becomes a double integral.</p>
+
+  <subsection xml:id="c15s2-subsec-rectangle-to-parallelogram">
+    <title>A small parameter rectangle becomes a small parallelogram</title>
+
+    <p>
+      Let
+      <md>\mathbf r(u,v)</md>
+      be a smooth surface patch. Take a tiny rectangle in the <m>(u,v)</m>-plane with side
+      lengths
+      <md>\Delta u,\qquad \Delta v.</md>
+      Near a point <m>(u_0,v_0)</m>, the two sides of its image are approximately
+      <md>\mathbf r_u(u_0,v_0)\,\Delta u</md>
+      and
+      <md>\mathbf r_v(u_0,v_0)\,\Delta v.</md>
+      So the tiny surface patch is approximately a parallelogram.
+    </p>
+
+    <p>
+      The area of a parallelogram spanned by vectors <m>\mathbf a</m> and <m>\mathbf b</m>
+      is
+      <md>\|\mathbf a\times\mathbf b\|.</md>
+      Therefore the tiny surface area is approximately
+      <md>\boxed{\Delta S\approx\|\mathbf r_u\times\mathbf r_v\|\,\Delta u\,\Delta v.}</md>
+      In differential notation,
+      <md>\boxed{dS=\|\mathbf r_u\times\mathbf r_v\|\,du\,dv.}</md>
+    </p>
+
+    <figure xml:id="c15s2-fig-area-scale-factor">
+      <caption>The area scale factor is <m>\|\mathbf r_u\times\mathbf r_v\|</m>. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="70%">
+        <asymptote>
+        // 3-D interactive (WebGL) figure.
+        import graph3; size(9cm); currentprojection=orthographic(5,2.6,3);
+        real f(pair p){return 1+0.35*sin(1.1*p.x)-0.12*(p.y-1.5)^2;}
+        surface s=surface(f,(0,0),(3,3),24,24);
+        draw(s, rgb(0.6,0.78,0.95)+opacity(0.55), meshpen=rgb(0.4,0.5,0.7)+linewidth(0.15pt));
+        real u0=1.2,v0=1.1; triple P=(u0,v0,f((u0,v0)));
+        triple ru=(1,0,0.385*cos(1.1*u0)), rv=(0,1,-0.24*(v0-1.5));
+        real a=0.95;
+        path3 par=P--(P+a*ru)--(P+a*ru+a*rv)--(P+a*rv)--cycle;
+        draw(surface(par), rgb(0.95,0.8,0.4)+opacity(0.6)); draw(par, black+0.4pt);
+        draw(P--(P+a*ru), blue+linewidth(1.4pt), Arrow3); label("$\mathbf r_u$", P+a*ru, S);
+        draw(P--(P+a*rv), heavygreen+linewidth(1.4pt), Arrow3); label("$\mathbf r_v$", P+a*rv, E);
+        triple n=cross(ru,rv); n=0.9*n/abs(n);
+        draw(P--(P+n), red+linewidth(1.4pt), Arrow3); label("$\mathbf r_u\times\mathbf r_v$", P+n, N);
+        dot(P);
+        draw(O--(3.4,0,0),gray,Arrow3); draw(O--(0,3.4,0),gray,Arrow3); draw(O--(0,0,2.2),gray,Arrow3);
+        label("$x$",(3.4,0,0),S); label("$y$",(0,3.4,0),E); label("$z$",(0,0,2.2),N);
+        </asymptote>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c15s2-subsec-surface-area-from-parametrization">
+    <title>Surface area from a parametrization</title>
+
+    <p>
+      If we add all the tiny surface pieces, we get surface area:
+      <md>\sum \Delta S\approx\sum \|\mathbf r_u\times\mathbf r_v\|\,\Delta u\,\Delta v.</md>
+      Taking the limit gives the formula
+      <md>\boxed{\operatorname{Area}(S)=\iint_D \|\mathbf r_u\times\mathbf r_v\|\,du\,dv.}</md>
+    </p>
+
+    <example xml:id="c15s2-ex-cylinder-side-area">
+      <title>The side area of a cylinder</title>
+      <statement>
+        <p>
+          The side of a cylinder of radius <m>2</m> and height <m>5</m> is parametrized by
+          <md>\mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),</md>
+          where
+          <md>0\le\theta\le2\pi,\qquad 0\le z\le5.</md>
+          We already computed
+          <md>\mathbf r_\theta=(-2\sin\theta,2\cos\theta,0),\qquad \mathbf r_z=(0,0,1).</md>
+          Thus
+          <md>\mathbf r_\theta\times\mathbf r_z=(2\cos\theta,2\sin\theta,0),</md>
+          and
+          <md>\|\mathbf r_\theta\times\mathbf r_z\|=2.</md>
+          So
+          <md>
+            <mrow>\operatorname{Area}(S) \amp= \int_0^{2\pi}\int_0^5 2\,dz\,d\theta</mrow>
+            <mrow>\amp= \int_0^{2\pi}10\,d\theta</mrow>
+            <mrow>\amp= 20\pi.</mrow>
+          </md>
+          This matches the familiar formula
+          <md>\text{circumference}\times\text{height}=(4\pi)(5)=20\pi.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The formula did not need us to remember the cylinder area formula. It found the same
+      answer by measuring the stretching of the parameter rectangle.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s2-subsec-scalar-surface-integrals">
+    <title>Scalar surface integrals</title>
+
+    <p>
+      Surface area adds
+      <md>1\,dS</md>
+      over the surface. If a quantity varies across the surface, we multiply by its value
+      before adding.
+    </p>
+
+    <p>
+      Suppose a thin shell has surface density
+      <md>\sigma(x,y,z)</md>
+      in kilograms per square meter. A small surface patch has mass approximately
+      <md>\sigma(x,y,z)\,\Delta S.</md>
+      Adding gives
+      <md>M=\iint_S \sigma\,dS.</md>
+    </p>
+
+    <definition xml:id="c15s2-def-scalar-surface-integral">
+      <title>Scalar surface integral</title>
+      <statement>
+        <p>
+          Let <m>S</m> be parametrized by a smooth regular map
+          <md>\mathbf r:D\to\mathbb R^3</md>
+          that covers the surface once, except possibly along boundary curves. For a scalar
+          function <m>f</m> on <m>S</m>, the <term>scalar surface integral</term> of
+          <m>f</m> over <m>S</m> is
+          <md>\boxed{\iint_S f\,dS=\iint_D f(\mathbf r(u,v))\,\|\mathbf r_u(u,v)\times\mathbf r_v(u,v)\|\,du\,dv.}</md>
+          When <m>f=1</m>, this gives the surface area of <m>S</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c15s2-ex-cylindrical-shell-mass">
+      <title>Mass of a cylindrical shell</title>
+      <statement>
+        <p>
+          A thin cylindrical shell has radius <m>2</m> and height <m>5</m>. Its density
+          depends on height:
+          <md>\sigma(x,y,z)=1+\frac{z}{10}\qquad \text{kg/m}^2.</md>
+          Using
+          <md>\mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),</md>
+          we have
+          <md>dS=2\,d\theta\,dz.</md>
+          Therefore
+          <md>
+            <mrow>M \amp= \int_0^{2\pi}\int_0^5 \left(1+\frac{z}{10}\right)2\,dz\,d\theta</mrow>
+            <mrow>\amp= \int_0^{2\pi}\left[2z+\frac{z^2}{10}\right]_0^5\,d\theta</mrow>
+            <mrow>\amp= \int_0^{2\pi}\frac{25}{2}\,d\theta</mrow>
+            <mrow>\amp= 25\pi.</mrow>
+          </md>
+          So the total mass is
+          <md>\boxed{M=25\pi\text{ kg}.}</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A scalar surface integral does not care which side of the surface is chosen. It uses
+      positive area. That is why
+      <md>\|\mathbf r_u\times\mathbf r_v\|</md>
+      appears, not the vector <m>\mathbf r_u\times\mathbf r_v</m> itself.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s2-subsec-surface-area-of-graphs">
+    <title>Surface area of graphs</title>
+
+    <p>
+      For a graph
+      <md>z=g(x,y),</md>
+      use the parametrization
+      <md>\mathbf r(x,y)=(x,y,g(x,y)).</md>
+      Then
+      <md>\mathbf r_x=(1,0,g_x),\qquad \mathbf r_y=(0,1,g_y).</md>
+      Their cross product is
+      <md>\mathbf r_x\times \mathbf r_y=(-g_x,-g_y,1),</md>
+      so
+      <md>\|\mathbf r_x\times \mathbf r_y\|=\sqrt{1+g_x^2+g_y^2}.</md>
+      Thus
+      <md>\boxed{dS=\sqrt{1+g_x^2+g_y^2}\,dx\,dy.}</md>
+      For a graph over a region <m>R</m> in the <m>xy</m>-plane,
+      <md>\boxed{\operatorname{Area}(S)=\iint_R \sqrt{1+g_x^2+g_y^2}\,dA.}</md>
+    </p>
+
+    <example xml:id="c15s2-ex-slanted-roof-area">
+      <title>Area of a slanted roof</title>
+      <statement>
+        <p>
+          A flat roof over the rectangle
+          <md>0\le x\le6,\qquad 0\le y\le4</md>
+          has height
+          <md>z=2+\frac{x}{3}-\frac{y}{4}.</md>
+          Here
+          <md>g_x=\frac13,\qquad g_y=-\frac14.</md>
+          So
+          <md>\sqrt{1+g_x^2+g_y^2}=\sqrt{1+\frac19+\frac1{16}}=\sqrt{\frac{169}{144}}=\frac{13}{12}.</md>
+          Therefore the roof area is
+          <md>
+            <mrow>\operatorname{Area} \amp= \int_0^6\int_0^4 \frac{13}{12}\,dy\,dx</mrow>
+            <mrow>\amp= \frac{13}{12}\cdot24</mrow>
+            <mrow>\amp= 26.</mrow>
+          </md>
+          The flat floor area is <m>24</m>. The roof area is larger because the roof is
+          tilted.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The formula
+      <md>\sqrt{1+g_x^2+g_y^2}</md>
+      is the local stretching factor from the floor to the graph. When the graph is nearly
+      flat, this factor is close to <m>1</m>. When the graph is steep, the surface uses more
+      area over the same floor region.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s2-subsec-area-cylindrical-spherical">
+    <title>Surface area in cylindrical and spherical coordinates</title>
+
+    <p>Many surfaces are easiest to describe with cylindrical or spherical coordinates.</p>
+
+    <subsubsection xml:id="c15s2-subsubsec-horizontal-disk">
+      <title>A horizontal disk</title>
+
+      <p>
+        A horizontal disk of radius <m>a</m> at height <m>z=c</m> can be parametrized by
+        <md>\mathbf r(s,\theta)=(s\cos\theta,s\sin\theta,c),</md>
+        where
+        <md>0\le s\le a,\qquad 0\le\theta\le2\pi.</md>
+        Then
+        <md>\mathbf r_s=(\cos\theta,\sin\theta,0),</md>
+        and
+        <md>\mathbf r_\theta=(-s\sin\theta,s\cos\theta,0).</md>
+        So
+        <md>\|\mathbf r_s\times\mathbf r_\theta\|=s.</md>
+        Thus
+        <md>\boxed{dS=s\,ds\,d\theta.}</md>
+        This is the same area element used for polar coordinates in the plane.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c15s2-subsubsec-side-of-cylinder">
+      <title>The side of a cylinder</title>
+
+      <p>
+        A cylinder of radius <m>a</m> has parametrization
+        <md>\mathbf r(\theta,z)=(a\cos\theta,a\sin\theta,z).</md>
+        Then
+        <md>\|\mathbf r_\theta\times\mathbf r_z\|=a,</md>
+        so
+        <md>\boxed{dS=a\,d\theta\,dz.}</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c15s2-subsubsec-sphere">
+      <title>A sphere</title>
+
+      <p>
+        A sphere of radius <m>a</m> can be parametrized by
+        <md>\mathbf r(\phi,\theta)=(a\sin\phi\cos\theta,\,a\sin\phi\sin\theta,\,a\cos\phi),</md>
+        where
+        <md>0\le \phi\le\pi,\qquad 0\le \theta\le2\pi.</md>
+        Here <m>\phi</m> is the angle down from the positive <m>z</m>-axis.
+      </p>
+
+      <p>
+        Compute:
+        <md>\mathbf r_\phi=(a\cos\phi\cos\theta,\,a\cos\phi\sin\theta,\,-a\sin\phi),</md>
+        and
+        <md>\mathbf r_\theta=(-a\sin\phi\sin\theta,\,a\sin\phi\cos\theta,\,0).</md>
+        A direct cross product gives
+        <md>\|\mathbf r_\phi\times\mathbf r_\theta\|=a^2\sin\phi.</md>
+        Therefore
+        <md>\boxed{dS=a^2\sin\phi\,d\phi\,d\theta.}</md>
+      </p>
+
+      <p>
+        The area of the sphere is then
+        <md>
+          <mrow>\operatorname{Area} \amp= \int_0^{2\pi}\int_0^\pi a^2\sin\phi\,d\phi\,d\theta</mrow>
+          <mrow>\amp= \int_0^{2\pi}\left[-a^2\cos\phi\right]_0^\pi d\theta</mrow>
+          <mrow>\amp= \int_0^{2\pi}2a^2\,d\theta</mrow>
+          <mrow>\amp= 4\pi a^2.</mrow>
+        </md>
+      </p>
+
+      <p>
+        At the poles, where <m>\phi=0</m> or <m>\phi=\pi</m>, the factor
+        <md>\sin\phi</md>
+        is <m>0</m>. The longitude lines all meet there, so the parametrization collapses in
+        the <m>\theta</m>-direction. This is not a problem for the area integral because the
+        collapse happens only along the boundary of the parameter rectangle. It would be a
+        problem if we tried to use one smooth regular patch containing the pole as an interior
+        point.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="c15s2-subsec-parametrizations-count-too-much">
+    <title>When parametrizations count too much</title>
+
+    <p>The surface integral formula counts what the parametrization covers.</p>
+
+    <p>
+      For the cylinder, if we used
+      <md>0\le\theta\le4\pi</md>
+      instead of
+      <md>0\le\theta\le2\pi,</md>
+      then the parametrization would wrap around the same cylinder twice. The formula would
+      give
+      <md>40\pi</md>
+      instead of
+      <md>20\pi.</md>
+      The calculation is not broken. It has computed the area with multiplicity.
+    </p>
+
+    <p>
+      This is why the definition said that the parametrization should cover the surface once,
+      except possibly along boundary curves. When the same physical sheet is covered twice by
+      the parameter region, the integral counts it twice.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s2-subsec-scalar-versus-oriented-area">
+    <title>Scalar area versus oriented area</title>
+
+    <p>
+      The scalar surface integral uses
+      <md>dS=\|\mathbf r_u\times\mathbf r_v\|\,du\,dv.</md>
+      The norm removes the sign. If we swap the order of the parameters, then
+      <md>\mathbf r_v\times\mathbf r_u=-\mathbf r_u\times\mathbf r_v,</md>
+      but
+      <md>\|\mathbf r_v\times\mathbf r_u\|=\|\mathbf r_u\times\mathbf r_v\|.</md>
+      So surface area and mass do not depend on which side of the surface we call positive.
+    </p>
+
+    <p>That will change for flux.</p>
+
+    <p>
+      If water flows through a net, it matters whether we count flow through the net upward as
+      positive or downward as positive. The scalar area element <m>dS</m> cannot remember that
+      choice. The full vector
+      <md>\mathbf r_u\times\mathbf r_v</md>
+      can.
+    </p>
+
+    <p>
+      The same cross product that measured area has been quietly carrying orientation all
+      along. Once we decide which side of a surface is positive, a surface integral can count
+      flow through the surface with a sign. That signed quantity is called flux.
+    </p>
+  </subsection>
+</section>

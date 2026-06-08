@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch02-vector-products.tex, Section "The cross product".
+     Status: CONVERTED. -->
+<section xml:id="sec-2-the-cross-product" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The cross product</title>
+
+  <p>
+    The dot product measured agreement:
+    <md>\mathbf u\cdot\mathbf v=\|\mathbf u\|\,\|\mathbf v\|\cos\theta.</md>
+    It told us how much one vector points along another. But the quaternion product had
+    another half:
+    <md>UV=-\mathbf u\cdot\mathbf v+\mathbf u\times\mathbf v.</md>
+    The vector part is the cross product. It does not measure agreement. It measures
+    oriented area.
+  </p>
+
+  <subsection xml:id="c2s5-subsec-a-first-cross-product">
+    <title>A first cross product</title>
+
+    <p>
+      Picture a small rectangular metal plate lying flat on a workbench. One edge points
+      <m>2</m> units in the <m>x</m>-direction, and the adjacent edge points <m>3</m> units
+      in the <m>y</m>-direction:
+      <md>\mathbf u=2\mathbf i,\qquad \mathbf v=3\mathbf j.</md>
+      The area of the rectangle is
+      <md>2\cdot 3=6.</md>
+      But the rectangle also has an orientation. If we walk first along <m>\mathbf u</m> and
+      then along <m>\mathbf v</m>, the right-hand rule points upward, in the
+      <m>\mathbf k</m>-direction.
+    </p>
+
+    <p>
+      The cross product records both pieces:
+      <md>\mathbf u\times\mathbf v=(2\mathbf i)\times(3\mathbf j)=6\mathbf k.</md>
+      Its length is the area:
+      <md>\|\mathbf u\times\mathbf v\|=6.</md>
+      Its direction is perpendicular to the plate.
+    </p>
+
+    <p>
+      If we reverse the order, the same plate gets the opposite orientation:
+      <md>\mathbf v\times\mathbf u=(3\mathbf j)\times(2\mathbf i)=-6\mathbf k.</md>
+      The area is still <m>6</m>, but the sign has flipped.
+    </p>
+
+    <figure xml:id="c2s5-fig-first-cross-product">
+      <caption>The cross product points perpendicular to the oriented rectangle.
+      Here <m>\mathbf u=2\mathbf i</m> and <m>\mathbf v=3\mathbf j</m> lie in the
+      <m>xy</m>-plane, and <m>\mathbf u\times\mathbf v=6\mathbf k</m> rises straight
+      up the <m>z</m>-axis, perpendicular to both.</caption>
+      <image width="65%">
+        <asymptote>
+        // 3-D: PreTeXt renders this to an interactive WebGL figure for the web target.
+        import three;
+        size(11cm);
+        currentprojection=orthographic(4.2,3.4,2.6);
+
+        triple o=(0,0,0);
+        triple ai=(2,0,0);
+        triple bj=(0,3,0);
+        triple ck=(0,0,6);
+
+        // oriented rectangle u x v in the xy-plane
+        path3 rect=o--ai--(ai+bj)--bj--cycle;
+        draw(surface(rect), gray(0.7)+opacity(0.55));
+        draw(rect, black+linewidth(0.5pt));
+
+        // faint coordinate axes
+        draw(o--(3.0,0,0), gray(0.6), Arrow3);
+        draw(o--(0,4.0,0), gray(0.6), Arrow3);
+        draw(o--(0,0,6.8), gray(0.6), Arrow3);
+        label("$x$", (3.0,0,0), 2S);
+        label("$y$", (0,4.0,0), 2E);
+        label("$z$", (0,0,6.8), 2W);
+
+        // right-angle markers: k is perpendicular to i and to j
+        real s=0.45;
+        draw((s,0,0)--(s,0,s)--(0,0,s), black+linewidth(0.4pt));
+        draw((0,s,0)--(0,s,s)--(0,0,s), black+linewidth(0.4pt));
+
+        // the two edge vectors and their cross product
+        draw(o--ai, blue+linewidth(1.6pt), Arrow3);
+        draw(o--bj, blue+linewidth(1.6pt), Arrow3);
+        draw(o--ck, red+linewidth(1.8pt),  Arrow3);
+
+        label("$2\mathbf i$", ai, 2S);
+        label("$3\mathbf j$", bj, 2E);
+        label("$6\mathbf k=\mathbf u\times\mathbf v$", ck, N+3E);
+        label("area $=6$", (ai+bj)/3.2, NW);
+        dot(o);
+        </asymptote>
+      </image>
+    </figure>
+
+    <p>
+      This first example already shows the main idea:
+      <md>\mathbf u\times\mathbf v=\text{oriented area vector}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s5-subsec-algebraic-definition-right-hand-rule">
+    <title>Algebraic definition and the right-hand rule</title>
+
+    <p>
+      The cross product is defined only for vectors in three-dimensional space. If
+      <md>\mathbf u=(u_1,u_2,u_3),\qquad \mathbf v=(v_1,v_2,v_3),</md>
+      then
+      <md>
+        <mrow>\mathbf u\times\mathbf v \amp= (u_2v_3-u_3v_2)\mathbf i</mrow>
+        <mrow>\amp\quad +(u_3v_1-u_1v_3)\mathbf j</mrow>
+        <mrow>\amp\quad +(u_1v_2-u_2v_1)\mathbf k.</mrow>
+      </md>
+    </p>
+
+    <p>
+      This is exactly the vector part of the quaternion product from
+      <xref ref="sec-2-the-scalar-and-vector-parts-of-a"/>.
+    </p>
+
+    <p>
+      The basic products are
+      <md>\mathbf i\times\mathbf j=\mathbf k,\qquad \mathbf j\times\mathbf k=\mathbf i,\qquad \mathbf k\times\mathbf i=\mathbf j.</md>
+      These follow the cyclic order
+      <md>\mathbf i\to \mathbf j\to \mathbf k\to \mathbf i.</md>
+      Reversing the order changes the sign:
+      <md>\mathbf j\times\mathbf i=-\mathbf k,\qquad \mathbf k\times\mathbf j=-\mathbf i,\qquad \mathbf i\times\mathbf k=-\mathbf j.</md>
+    </p>
+
+    <figure xml:id="c2s5-fig-right-hand-rule">
+      <caption>The right-hand rule is the orientation rule for the cross product.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=1.0, &gt;=stealth]
+            \draw[-&gt;, thick] (0,0) -- (2.4,0) node[right] {\(\mathbf i\)};
+            \draw[-&gt;, thick] (0,0) -- (0,2.4) node[above] {\(\mathbf j\)};
+            \draw[-&gt;, thick] (0,0) -- (-1.4,-1.4) node[below left] {\(\mathbf k\)};
+
+            \draw[-&gt;] (0.75,0.15) arc (10:80:0.8);
+            \node at (1.1,0.85) {\(\mathbf i\to\mathbf j\)};
+
+            \node[right] at (2.7,1.4) {\(\mathbf i\times\mathbf j=\mathbf k\)};
+            \node[right] at (2.7,0.8) {\(\mathbf j\times\mathbf i=-\mathbf k\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>Here is a full computation.</p>
+
+    <example xml:id="c2s5-ex-cross-product-in-space">
+      <title>A cross product in space</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf u=(2,-1,3),\qquad \mathbf v=(1,4,2).</md>
+          Then
+          <md>
+            <mrow>\mathbf u\times\mathbf v \amp= ((-1)(2)-3(4))\mathbf i</mrow>
+            <mrow>\amp\quad +(3(1)-2(2))\mathbf j</mrow>
+            <mrow>\amp\quad +(2(4)-(-1)(1))\mathbf k</mrow>
+            <mrow>\amp= (-2-12)\mathbf i+(3-4)\mathbf j+(8+1)\mathbf k</mrow>
+            <mrow>\amp= -14\mathbf i-\mathbf j+9\mathbf k.</mrow>
+          </md>
+          So
+          <md>(2,-1,3)\times(1,4,2)=(-14,-1,9).</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>The formula is not beautiful by itself. The geometry makes it worth remembering.</p>
+  </subsection>
+
+  <subsection xml:id="c2s5-subsec-perpendicular-to-both-inputs">
+    <title>The cross product is perpendicular to both inputs</title>
+
+    <p>
+      Take
+      <md>\mathbf u=(2,-1,3),\qquad \mathbf v=(1,4,2),</md>
+      from the previous example. We found
+      <md>\mathbf u\times\mathbf v=(-14,-1,9).</md>
+      Now dot this result with <m>\mathbf u</m>:
+      <md>
+        <mrow>\mathbf u\cdot(\mathbf u\times\mathbf v) \amp= (2,-1,3)\cdot(-14,-1,9)</mrow>
+        <mrow>\amp= 2(-14)+(-1)(-1)+3(9)</mrow>
+        <mrow>\amp= -28+1+27</mrow>
+        <mrow>\amp= 0.</mrow>
+      </md>
+      So <m>\mathbf u\times\mathbf v</m> is perpendicular to <m>\mathbf u</m>.
+    </p>
+
+    <p>
+      Dot it with <m>\mathbf v</m>:
+      <md>
+        <mrow>\mathbf v\cdot(\mathbf u\times\mathbf v) \amp= (1,4,2)\cdot(-14,-1,9)</mrow>
+        <mrow>\amp= -14-4+18</mrow>
+        <mrow>\amp= 0.</mrow>
+      </md>
+      So it is also perpendicular to <m>\mathbf v</m>.
+    </p>
+
+    <theorem xml:id="c2s5-thm-basic-algebra-cross-product">
+      <title>Basic algebra of the cross product</title>
+      <statement>
+        <p>
+          For vectors <m>\mathbf u,\mathbf v,\mathbf w\in\mathbb R^3</m> and a scalar
+          <m>c</m>,
+          <md>\mathbf u\times\mathbf v=-(\mathbf v\times\mathbf u),</md>
+          <md>\mathbf u\times(\mathbf v+\mathbf w)=\mathbf u\times\mathbf v+\mathbf u\times\mathbf w,</md>
+          <md>(c\mathbf u)\times\mathbf v=c(\mathbf u\times\mathbf v),</md>
+          and
+          <md>\mathbf u\times\mathbf u=\mathbf 0.</md>
+          Also,
+          <md>\mathbf u\cdot(\mathbf u\times\mathbf v)=0,\qquad \mathbf v\cdot(\mathbf u\times\mathbf v)=0.</md>
+          Thus <m>\mathbf u\times\mathbf v</m> is perpendicular to both <m>\mathbf u</m> and
+          <m>\mathbf v</m>.
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>
+        The first four identities follow by substituting components into the formula for the
+        cross product and simplifying.
+      </p>
+      <p>
+        For perpendicularity, write
+        <md>\mathbf u\times\mathbf v=(u_2v_3-u_3v_2,\,u_3v_1-u_1v_3,\,u_1v_2-u_2v_1).</md>
+        Then
+        <md>
+          <mrow>\mathbf u\cdot(\mathbf u\times\mathbf v) \amp= u_1(u_2v_3-u_3v_2)+u_2(u_3v_1-u_1v_3)+u_3(u_1v_2-u_2v_1)</mrow>
+          <mrow>\amp= u_1u_2v_3-u_1u_3v_2+u_2u_3v_1-u_1u_2v_3+u_1u_3v_2-u_2u_3v_1</mrow>
+          <mrow>\amp= 0.</mrow>
+        </md>
+        The proof that
+        <md>\mathbf v\cdot(\mathbf u\times\mathbf v)=0</md>
+        is the same cancellation with the roles arranged differently.
+      </p>
+    </proof>
+
+    <p>
+      The identity
+      <md>\mathbf u\times\mathbf v=-(\mathbf v\times\mathbf u)</md>
+      is worth pausing over. The cross product is not commutative. This is not a defect.
+      It is exactly what oriented area demands.
+    </p>
+
+    <p>
+      For example,
+      <md>\mathbf i\times\mathbf j=\mathbf k,</md>
+      but
+      <md>\mathbf j\times\mathbf i=-\mathbf k.</md>
+      The two ordered pairs make the same parallelogram, but with opposite orientation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s5-subsec-cross-product-as-oriented-area">
+    <title>Cross product as oriented area</title>
+
+    <p>
+      A tilted parallelogram has area
+      <md>\text{base}\times\text{height}.</md>
+      If two vectors <m>\mathbf u</m> and <m>\mathbf v</m> meet at angle <m>\theta</m>, then
+      the base is
+      <md>\|\mathbf u\|,</md>
+      and the height is
+      <md>\|\mathbf v\|\sin\theta.</md>
+      So the area is
+      <md>\|\mathbf u\|\,\|\mathbf v\|\sin\theta.</md>
+    </p>
+
+    <p>The cross product has exactly this length.</p>
+
+    <example xml:id="c2s5-ex-area-slanted-parallelogram">
+      <title>Area of a slanted parallelogram</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf u=(3,0,0),\qquad \mathbf v=(1,2,0).</md>
+          These vectors lie in the <m>xy</m>-plane. Their cross product is
+          <md>
+            <mrow>\mathbf u\times\mathbf v \amp= (3\mathbf i)\times(\mathbf i+2\mathbf j)</mrow>
+            <mrow>\amp= 3(\mathbf i\times\mathbf i)+6(\mathbf i\times\mathbf j)</mrow>
+            <mrow>\amp= 0+6\mathbf k</mrow>
+            <mrow>\amp= 6\mathbf k.</mrow>
+          </md>
+          The parallelogram has base <m>3</m> and height <m>2</m>, so its area is <m>6</m>.
+          The cross product says the same thing:
+          <md>\|\mathbf u\times\mathbf v\|=6.</md>
+          The positive <m>\mathbf k</m>-direction records that the ordered pair
+          <md>\mathbf u,\mathbf v</md>
+          turns counterclockwise in the <m>xy</m>-plane.
+        </p>
+      </statement>
+    </example>
+
+    <theorem xml:id="c2s5-thm-length-of-cross-product">
+      <title>Length of the cross product</title>
+      <statement>
+        <p>
+          Let <m>\mathbf u</m> and <m>\mathbf v</m> be nonzero vectors in
+          <m>\mathbb R^3</m>, and let <m>\theta</m> be the angle between them, with
+          <md>0\leq \theta\leq \pi.</md>
+          Then
+          <md>\boxed{\|\mathbf u\times\mathbf v\|=\|\mathbf u\|\,\|\mathbf v\|\sin\theta.}</md>
+          Therefore <m>\|\mathbf u\times\mathbf v\|</m> is the area of the parallelogram
+          spanned by <m>\mathbf u</m> and <m>\mathbf v</m>.
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>
+        A direct component calculation gives the identity
+        <md>\|\mathbf u\times\mathbf v\|^2=\|\mathbf u\|^2\|\mathbf v\|^2-(\mathbf u\cdot\mathbf v)^2.</md>
+        Using the dot product formula
+        <md>\mathbf u\cdot\mathbf v=\|\mathbf u\|\,\|\mathbf v\|\cos\theta,</md>
+        we get
+        <md>
+          <mrow>\|\mathbf u\times\mathbf v\|^2 \amp= \|\mathbf u\|^2\|\mathbf v\|^2-\|\mathbf u\|^2\|\mathbf v\|^2\cos^2\theta</mrow>
+          <mrow>\amp= \|\mathbf u\|^2\|\mathbf v\|^2(1-\cos^2\theta)</mrow>
+          <mrow>\amp= \|\mathbf u\|^2\|\mathbf v\|^2\sin^2\theta.</mrow>
+        </md>
+        Since <m>0\leq \theta\leq \pi</m>, we have <m>\sin\theta\geq0</m>. Taking square
+        roots gives
+        <md>\|\mathbf u\times\mathbf v\|=\|\mathbf u\|\,\|\mathbf v\|\sin\theta.</md>
+      </p>
+    </proof>
+
+    <p>
+      The nonzero condition is needed for the angle <m>\theta</m>. The zero vector has no
+      direction, so there is no well-defined angle between
+      <md>\mathbf 0</md>
+      and
+      <md>(1,0,0).</md>
+      The cross product itself still makes sense:
+      <md>\mathbf 0\times(1,0,0)=\mathbf 0.</md>
+      The area of the collapsed parallelogram is <m>0</m>. But the angle formula should not
+      be used with a zero vector.
+    </p>
+
+    <p>
+      There is another warning. The cross product gives a <em>direction</em> only when the
+      parallelogram has positive area. If
+      <md>\mathbf u=(1,0,0),\qquad \mathbf v=(2,0,0),</md>
+      then the two vectors are parallel, and
+      <md>\mathbf u\times\mathbf v=\mathbf 0.</md>
+      The parallelogram has collapsed to a line segment. It has no preferred normal
+      direction. So the zero cross product is not pointing in some mysterious direction. It
+      is telling us that there is no oriented area vector to point anywhere.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s5-subsec-normal-vectors-to-planes">
+    <title>Normal vectors to planes</title>
+
+    <p>
+      A plane can be described by directions lying inside it, or by a vector perpendicular
+      to it. The cross product turns the first description into the second.
+    </p>
+
+    <p>
+      Suppose a wooden sign is supported by a flat metal plate. The plate passes through the
+      point
+      <md>P=(1,0,2)</md>
+      and contains the two direction vectors
+      <md>\mathbf a=(2,1,0),\qquad \mathbf b=(0,1,3).</md>
+      A vector perpendicular to the plate is
+      <md>
+        <mrow>\mathbf n \amp= \mathbf a\times\mathbf b</mrow>
+        <mrow>\amp= (2,1,0)\times(0,1,3)</mrow>
+        <mrow>\amp= (1\cdot3-0\cdot1)\mathbf i+(0\cdot0-2\cdot3)\mathbf j+(2\cdot1-1\cdot0)\mathbf k</mrow>
+        <mrow>\amp= 3\mathbf i-6\mathbf j+2\mathbf k.</mrow>
+      </md>
+      So
+      <md>\mathbf n=(3,-6,2)</md>
+      is normal to the plate.
+    </p>
+
+    <p>
+      Any point
+      <md>(x,y,z)</md>
+      on the plane has displacement from <m>P</m>
+      <md>(x,y,z)-(1,0,2)=(x-1,y,z-2).</md>
+      This displacement lies in the plane, so it is perpendicular to <m>\mathbf n</m>:
+      <md>(3,-6,2)\cdot(x-1,y,z-2)=0.</md>
+      Thus
+      <md>3(x-1)-6y+2(z-2)=0.</md>
+      Simplifying,
+      <md>\boxed{3x-6y+2z=7.}</md>
+    </p>
+
+    <theorem xml:id="c2s5-thm-cross-product-normal-to-plane">
+      <title>Cross product normal to a plane</title>
+      <statement>
+        <p>
+          If <m>\mathbf a</m> and <m>\mathbf b</m> are nonparallel direction vectors in a
+          plane, then
+          <md>\mathbf a\times\mathbf b</md>
+          is a nonzero normal vector to that plane.
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>
+        The cross product <m>\mathbf a\times\mathbf b</m> is perpendicular to
+        <m>\mathbf a</m> and to <m>\mathbf b</m>. Since <m>\mathbf a</m> and
+        <m>\mathbf b</m> are nonparallel, they span the directions in the plane. A vector
+        perpendicular to both spanning directions is perpendicular to every direction in the
+        plane.
+      </p>
+    </proof>
+
+    <p>
+      The nonparallel condition matters. If
+      <md>\mathbf a=(1,2,3),\qquad \mathbf b=(2,4,6),</md>
+      then
+      <md>\mathbf b=2\mathbf a.</md>
+      These are not two genuine plane directions. Their cross product is
+      <md>\mathbf a\times\mathbf b=\mathbf 0.</md>
+      The zero vector is not a useful normal vector. A single line direction lies in many
+      different planes, so it cannot determine one plane normal.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s5-subsec-torque">
+    <title>Torque: when a force turns something</title>
+
+    <p>A force can push. It can also turn.</p>
+
+    <p>
+      A wrench is attached to a bolt. The vector
+      <md>\mathbf r</md>
+      points from the bolt to the place where the force is applied. The force is
+      <md>\mathbf F.</md>
+      The turning effect is called torque:
+      <md>\boldsymbol\tau=\mathbf r\times\mathbf F.</md>
+    </p>
+
+    <definition xml:id="c2s5-def-torque">
+      <title>Torque</title>
+      <statement>
+        <p>
+          If a force <m>\mathbf F</m> is applied at position vector <m>\mathbf r</m> from a
+          pivot point, then the <term>torque</term> about the pivot is
+          <md>\boxed{\boldsymbol\tau=\mathbf r\times\mathbf F.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For example, suppose a wrench extends <m>0.30</m> meters in the positive
+      <m>x</m>-direction:
+      <md>\mathbf r=(0.30,0,0).</md>
+      A force of <m>20</m> newtons is applied in the positive <m>y</m>-direction:
+      <md>\mathbf F=(0,20,0).</md>
+      Then
+      <md>
+        <mrow>\boldsymbol\tau \amp= (0.30,0,0)\times(0,20,0)</mrow>
+        <mrow>\amp= (0,0,6).</mrow>
+      </md>
+      The torque has magnitude
+      <md>6\ \text{newton-meters},</md>
+      and it points in the positive <m>z</m>-direction.
+    </p>
+
+    <p>
+      If the force is applied along the wrench instead, say
+      <md>\mathbf F=(20,0,0),</md>
+      then
+      <md>\mathbf r\times\mathbf F=\mathbf 0.</md>
+      The force may be large, but it produces no turning around the bolt. It is trying to
+      pull or push along the wrench, not rotate it.
+    </p>
+
+    <p>
+      This is exactly what the formula
+      <md>\|\mathbf r\times\mathbf F\|=\|\mathbf r\|\,\|\mathbf F\|\sin\theta</md>
+      says. Only the perpendicular part of the force contributes to torque.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s5-subsec-angular-velocity">
+    <title>Angular velocity</title>
+
+    <p>The cross product also describes rigid rotation.</p>
+
+    <p>
+      Suppose a disk rotates around the <m>z</m>-axis with angular velocity
+      <md>\boldsymbol\omega=4\mathbf k.</md>
+      This means <m>4</m> radians per second around the vertical axis.
+    </p>
+
+    <p>
+      A point on the disk is located at
+      <md>\mathbf r=2\mathbf i.</md>
+      Its velocity is
+      <md>\mathbf v=\boldsymbol\omega\times\mathbf r.</md>
+      Compute:
+      <md>
+        <mrow>\mathbf v \amp= (4\mathbf k)\times(2\mathbf i)</mrow>
+        <mrow>\amp= 8(\mathbf k\times\mathbf i)</mrow>
+        <mrow>\amp= 8\mathbf j.</mrow>
+      </md>
+      So the point at <m>2\mathbf i</m> moves in the positive <m>y</m>-direction with speed
+      <m>8</m>.
+    </p>
+
+    <p>
+      <md>\text{angular velocity} \times \text{position}=\text{ordinary velocity}.</md>
+    </p>
+
+    <p>
+      The direction is not an arbitrary convention. It is the same right-hand rule that
+      tells us
+      <md>\mathbf k\times\mathbf i=\mathbf j.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s5-subsec-special-to-three-dimensions">
+    <title>Why the cross product is special to three dimensions</title>
+
+    <p>
+      The cross product turns an oriented area into a vector perpendicular to that area.
+      This is possible in three dimensions because a plane has one perpendicular direction
+      line.
+    </p>
+
+    <p>
+      In the plane, two vectors already fill the whole space. There is no perpendicular
+      direction inside the plane. The best we can do is assign a signed area number:
+      <md>u_1v_2-u_2v_1.</md>
+      That number says whether the ordered pair turns counterclockwise or clockwise.
+    </p>
+
+    <p>
+      In four-dimensional space, the opposite problem appears. A two-dimensional plane has
+      too many perpendicular directions.
+    </p>
+
+    <p>
+      For example, in <m>\mathbb R^4</m>, the plane spanned by
+      <md>\mathbf e_1=(1,0,0,0),\qquad \mathbf e_2=(0,1,0,0)</md>
+      has both
+      <md>\mathbf e_3=(0,0,1,0)</md>
+      and
+      <md>\mathbf e_4=(0,0,0,1)</md>
+      perpendicular to it. There is not one preferred normal direction. So an oriented area
+      cannot be honestly represented by a single normal vector.
+    </p>
+
+    <p>
+      Three dimensions sit in the lucky middle. A plane has exactly one perpendicular line,
+      so the area can be encoded as a vector.
+    </p>
+
+    <p>
+      But the area itself is the deeper object. The cross product is one three-dimensional
+      way to package it. The next section will strip away the packaging and look directly at
+      the numbers that measure signed area and signed volume. Those numbers are
+      determinants.
+    </p>
+  </subsection>
+</section>

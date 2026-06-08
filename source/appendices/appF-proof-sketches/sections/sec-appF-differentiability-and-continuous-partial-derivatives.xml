@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-appF-differentiability-and-continuous-partial-derivatives" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Differentiability and continuous partial derivatives</title>
+
+  <subsection xml:id="appF-diff-statement">
+    <title>Statement</title>
+
+    <p>
+      Let
+      <md>f:\mathbb R^n\to\mathbb R.</md>
+      If the first partial derivatives of <m>f</m> exist in a neighborhood of <m>\mathbf p</m>
+      and are continuous at <m>\mathbf p</m>, then <m>f</m> is differentiable at
+      <m>\mathbf p</m>.
+    </p>
+
+    <p>
+      In two variables:
+      <md>\boxed{
+    f(a+h,b+k)
+    =
+    f(a,b)
+    +
+    f_x(a,b)h
+    +
+    f_y(a,b)k
+    +
+    \text{error}
+}</md>
+      where
+      <md>\boxed{
+    \frac{\text{error}}{\sqrt{h^2+k^2}}\to0
+    \quad\text{as }(h,k)\to(0,0).
+}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appF-diff-differential-form">
+    <title>Differential form</title>
+
+    <p>
+      <md>\boxed{
+    df_{\mathbf p}
+    =
+    f_{x_1}(\mathbf p)\,dx_1+\cdots+f_{x_n}(\mathbf p)\,dx_n.
+}</md>
+    </p>
+
+    <p>
+      In two variables:
+      <md>\boxed{
+    df_{(a,b)}=f_x(a,b)\,dx+f_y(a,b)\,dy.
+}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appF-diff-hypotheses">
+    <title>Hypotheses</title>
+
+    <p>
+      <md>
+        <mrow>1. \amp \text{The partial derivatives exist near the point.}</mrow>
+        <mrow>2. \amp \text{The partial derivatives are continuous at the point.}</mrow>
+      </md>
+    </p>
+
+    <p>
+      The theorem is a sufficient condition, not a necessary condition.
+    </p>
+
+    <p>
+      A function can be differentiable even if its partial derivatives are not continuous.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appF-diff-proof-idea-two-variables">
+    <title>Proof idea in two variables</title>
+
+    <p>
+      Move from
+      <md>(a,b)</md>
+      to
+      <md>(a+h,b+k)</md>
+      in two coordinate steps:
+      <md>(a,b)\to(a+h,b)\to(a+h,b+k).</md>
+    </p>
+
+    <p>
+      Then
+      <md>
+        <mrow>f(a+h,b+k)-f(a,b)
+        \amp=
+        \bigl[f(a+h,b+k)-f(a+h,b)\bigr]</mrow>
+        <mrow>\amp\quad+
+        \bigl[f(a+h,b)-f(a,b)\bigr].</mrow>
+      </md>
+    </p>
+
+    <p>
+      Apply the one-variable Mean Value Theorem or Fundamental Theorem of Calculus to each
+      coordinate slice:
+      <md>f(a+h,b)-f(a,b)
+    \approx
+    f_x(a,b)h,</md>
+      <md>f(a+h,b+k)-f(a+h,b)
+    \approx
+    f_y(a,b)k.</md>
+    </p>
+
+    <p>
+      Continuity of <m>f_x</m> and <m>f_y</m> makes the approximation uniform as
+      <md>(h,k)\to(0,0).</md>
+    </p>
+
+    <p>
+      So the first-order part is
+      <md>\boxed{
+    f_x(a,b)h+f_y(a,b)k.
+}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appF-diff-dependencies">
+    <title>Dependencies</title>
+
+    <p>
+      <md>
+        <mrow>1. \amp \text{Single-variable Mean Value Theorem or FTC.}</mrow>
+        <mrow>2. \amp \text{Continuity of partial derivatives.}</mrow>
+        <mrow>3. \amp \text{Linear approximation in one variable.}</mrow>
+      </md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appF-diff-what-can-fail">
+    <title>What can fail</title>
+
+    <p>
+      Partial derivatives can exist without differentiability.
+    </p>
+
+    <p>
+      Define
+      <md>f(x,y)=
+    \begin{cases}
+    \dfrac{xy}{\sqrt{x^2+y^2}}, \amp (x,y)\ne(0,0),\\
+    0, \amp (x,y)=(0,0).
+    \end{cases}</md>
+    </p>
+
+    <p>
+      At the origin,
+      <md>f_x(0,0)=0,
+    \qquad
+    f_y(0,0)=0.</md>
+    </p>
+
+    <p>
+      If these partial derivatives gave a true differential, the linear approximation would be
+      zero.
+    </p>
+
+    <p>
+      But along the path
+      <md>(x,y)=(t,t),</md>
+      we get
+      <md>f(t,t)=\frac{t^2}{\sqrt{2t^2}}=\frac{|t|}{\sqrt2}.</md>
+    </p>
+
+    <p>
+      The distance to the origin is
+      <md>\sqrt{t^2+t^2}=\sqrt2\,|t|.</md>
+    </p>
+
+    <p>
+      The ratio is
+      <md>\frac{|t|/\sqrt2}{\sqrt2\,|t|}=\frac12,</md>
+      which does not go to <m>0</m>.
+    </p>
+
+    <p>
+      So <m>f</m> is not differentiable at the origin.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appF-diff-moral">
+    <title>Moral</title>
+
+    <p>
+      Coordinate slopes alone do not guarantee a true tangent plane. Continuous partial
+      derivatives stitch the coordinate information into one linear approximation.
+    </p>
+  </subsection>
+</section>

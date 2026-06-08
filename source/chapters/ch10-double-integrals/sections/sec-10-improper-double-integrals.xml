@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch10-double-integrals.tex, Section 7.
+     Status: CONVERTED. -->
+<section xml:id="sec-10-improper-double-integrals" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Improper double integrals</title>
+
+  <p>
+    <xref ref="sec-10-applications-of-double-integrals"/> used double integrals to add mass,
+    moments, probability, rainfall, temperature, and elevation over finite regions. The pieces
+    were tiny, but the region itself was bounded, and the function stayed finite.
+  </p>
+
+  <p>
+    Some real quantities refuse to be that polite. Smoke can spread across a whole plain. A
+    gravitational field can become very large near a point. A probability density may live on the
+    entire plane. To handle these cases, we keep the same idea of adding tiny pieces, but the
+    final answer now comes from a limit.
+  </p>
+
+  <subsection xml:id="c10s7-subsec-unbounded-regions">
+    <title>Unbounded regions</title>
+
+    <p>
+      Imagine a thin layer of dust settling on a flat desert after a volcanic eruption. The dust
+      is thickest near the source and thinner farther away. A simple radial model is
+      <md>\rho(x,y)=e^{-\sqrt{x^2+y^2}},</md>
+      measured in grams per square meter.
+    </p>
+
+    <p>
+      The dust has no sharp edge in the model. It covers the whole plane. Still, the total mass
+      might be finite because the density decreases fast.
+    </p>
+
+    <p>
+      Use polar coordinates:
+      <md>r=\sqrt{x^2+y^2}.</md>
+      Then
+      <md>\rho=e^{-r}, \qquad dA=r\,dr\,d\theta.</md>
+      The mass inside a disk of radius <m>A</m> is
+      <md>
+        <mrow>M(A) \amp= \int_0^{2\pi}\int_0^A e^{-r}r\,dr\,d\theta</mrow>
+        <mrow>\amp= 2\pi\int_0^A re^{-r}\,dr.</mrow>
+      </md>
+      Integrate by parts:
+      <md>\int re^{-r}\,dr=-re^{-r}-e^{-r}.</md>
+      So
+      <md>
+        <mrow>M(A) \amp= 2\pi\left[-re^{-r}-e^{-r}\right]_0^A</mrow>
+        <mrow>\amp= 2\pi\left(1-(A+1)e^{-A}\right).</mrow>
+      </md>
+      As
+      <md>A\to\infty,</md>
+      we have
+      <md>(A+1)e^{-A}\to0.</md>
+      Therefore
+      <md>\boxed{M=\lim_{A\to\infty}M(A)=2\pi.}</md>
+    </p>
+
+    <p>The dust covers an infinite plane, but its total mass is finite.</p>
+
+    <definition xml:id="c10s7-def-improper-unbounded-region">
+      <title>Improper double integral over an unbounded region</title>
+      <statement>
+        <p>
+          Let <m>R</m> be an unbounded region in the plane. For <m>A\gt 0</m>, let
+          <md>R_A=R\cap\{(x,y):x^2+y^2\le A^2\}.</md>
+          If the limit
+          <md>\boxed{\lim_{A\to\infty}\iint_{R_A} f\,dA}</md>
+          exists, then we call it the <term>improper double integral</term> of <m>f</m> over
+          <m>R</m>, and we write
+          <md>\boxed{\iint_R f\,dA.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For nonnegative functions, this definition matches the physical picture: measure more and
+      more of the region, then see whether the accumulated total settles to a finite number.
+    </p>
+
+    <figure xml:id="c10s7-fig-improper-limits">
+      <caption>
+        Improper integrals use limits. For an unbounded region, the outer boundary moves outward.
+        For a singular point, a small excluded disk shrinks inward.
+      </caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-3.4,0) -- (3.7,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-3.4) -- (0,3.7) node[above] {\(y\)};
+
+                \foreach \r in {1,2,3} {
+                    \draw[gray!45] (0,0) circle (\r);
+                }
+
+                \draw[-&gt;, thick] (2.2,2.2) -- (3.0,3.0);
+                \node at (0,-4.0) {expand the disk: \(A\to\infty\)};
+            \end{scope}
+
+            \begin{scope}[shift={(8,0)}]
+                \draw[-&gt;] (-3.2,0) -- (3.5,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-3.2) -- (0,3.5) node[above] {\(y\)};
+
+                \draw[fill=green!8, thick] (0,0) circle (2.7);
+                \draw[fill=white, thick] (0,0) circle (0.65);
+
+                \draw[-&gt;, thick] (0.65,0.65) -- (0.25,0.25);
+                \node at (0,-4.0) {shrink the missing disk: \(\varepsilon\to0\)};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The infinite size of the region does not automatically make the integral diverge. What
+      matters is the balance between area growth and decay of the function.
+    </p>
+
+    <p>Here is the simplest failure.</p>
+
+    <example xml:id="c10s7-ex-infinite-area">
+      <title>Infinite area gives infinite integral</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=1</md>
+          on the whole plane. The integral over the disk of radius <m>A</m> is
+          <md>\iint_{x^2+y^2\le A^2}1\,dA=\pi A^2.</md>
+          As
+          <md>A\to\infty,</md>
+          this grows without bound. So
+          <md>\boxed{\iint_{\mathbb R^2}1\,dA}</md>
+          does not converge to a finite number.
+        </p>
+        <p>
+          The plane has infinite area, so adding <m>1</m> over the whole plane gives an infinite
+          total.
+        </p>
+      </statement>
+    </example>
+
+    <p>A function can tend to <m>0</m> and still have infinite total.</p>
+
+    <example xml:id="c10s7-ex-decay-too-slow">
+      <title>Decay that is too slow</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=\frac{1}{1+x^2+y^2}</md>
+          on the whole plane. In polar coordinates,
+          <md>f=\frac{1}{1+r^2}.</md>
+          The integral over the disk of radius <m>A</m> is
+          <md>
+            <mrow>\int_0^{2\pi}\int_0^A \frac{1}{1+r^2}r\,dr\,d\theta \amp= 2\pi\int_0^A \frac{r}{1+r^2}\,dr</mrow>
+            <mrow>\amp= \pi\ln(1+A^2).</mrow>
+          </md>
+          As
+          <md>A\to\infty,</md>
+          the logarithm grows without bound. Therefore
+          <md>\boxed{\iint_{\mathbb R^2}\frac{1}{1+x^2+y^2}\,dA}</md>
+          diverges.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The density
+      <md>\frac{1}{1+r^2}</md>
+      goes to <m>0</m>, but not fast enough. The rings farther and farther away have larger
+      circumference, and their combined contribution never settles down.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s7-subsec-unbounded-functions">
+    <title>Unbounded functions</title>
+
+    <p>
+      A different problem happens when the region is bounded, but the function becomes infinite at
+      a point.
+    </p>
+
+    <p>
+      Imagine heat concentrated near the center of a thin circular plate. Let the plate be the
+      unit disk
+      <md>D=\{(x,y):x^2+y^2\le1\}.</md>
+      Suppose the heat density is modeled by
+      <md>h(x,y)=\frac{1}{\sqrt{x^2+y^2}}.</md>
+      This function is unbounded at the origin. But the origin is only one point, so the total
+      heat may still be finite.
+    </p>
+
+    <p>
+      In polar coordinates,
+      <md>h=\frac1r, \qquad dA=r\,dr\,d\theta.</md>
+      The product is simple:
+      <md>h\,dA=\frac1r\cdot r\,dr\,d\theta=dr\,d\theta.</md>
+      To avoid the singularity at first, remove a tiny disk of radius <m>\varepsilon</m>. Then
+      <md>
+        <mrow>\iint_{\varepsilon\le r\le1}\frac1r\,dA \amp= \int_0^{2\pi}\int_\varepsilon^1 1\,dr\,d\theta</mrow>
+        <mrow>\amp= 2\pi(1-\varepsilon).</mrow>
+      </md>
+      Let
+      <md>\varepsilon\to0^+.</md>
+      Then
+      <md>\boxed{\iint_D\frac{1}{\sqrt{x^2+y^2}}\,dA=2\pi.}</md>
+      The function blows up at the center, but the total is finite.
+    </p>
+
+    <definition xml:id="c10s7-def-improper-singular-point">
+      <title>Improper double integral near a singular point</title>
+      <statement>
+        <p>
+          Let <m>R</m> be a bounded region, and suppose <m>f</m> is unbounded at a point
+          <md>\mathbf p\in R.</md>
+          Let
+          <md>R_\varepsilon=R\setminus B_\varepsilon(\mathbf p),</md>
+          where <m>B_\varepsilon(\mathbf p)</m> is the disk of radius <m>\varepsilon</m> centered
+          at <m>\mathbf p</m>. If the limit
+          <md>\boxed{\lim_{\varepsilon\to0^+}\iint_{R_\varepsilon} f\,dA}</md>
+          exists, then it is called the improper double integral of <m>f</m> over <m>R</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The power of <m>r</m> decides many singularities. Compare the previous example with
+      <md>k(x,y)=\frac{1}{x^2+y^2}.</md>
+      In polar coordinates,
+      <md>k=\frac1{r^2}.</md>
+      On the punctured disk,
+      <md>
+        <mrow>\iint_{\varepsilon\le r\le1}\frac1{r^2}\,dA \amp= \int_0^{2\pi}\int_\varepsilon^1 \frac1{r^2}r\,dr\,d\theta</mrow>
+        <mrow>\amp= 2\pi\int_\varepsilon^1\frac1r\,dr</mrow>
+        <mrow>\amp= 2\pi\ln\frac1{\varepsilon}.</mrow>
+      </md>
+      As
+      <md>\varepsilon\to0^+,</md>
+      this grows without bound. So
+      <md>\boxed{\iint_D\frac{1}{x^2+y^2}\,dA}</md>
+      diverges.
+    </p>
+
+    <p>
+      The difference between
+      <md>\frac1r \qquad\text{and}\qquad \frac1{r^2}</md>
+      is not small. The area element contributes a factor of <m>r</m>, and that factor saves
+      <md>\frac1r</md>
+      but not
+      <md>\frac1{r^2}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s7-subsec-convergence-comparison">
+    <title>Convergence and comparison</title>
+
+    <p>
+      Most improper double integrals are not computed exactly. We often only need to know whether
+      the total is finite.
+    </p>
+
+    <p>
+      Suppose a chemical concentration on the whole plane satisfies
+      <md>0\le c(x,y)\le \frac{3}{(1+x^2+y^2)^2}.</md>
+      The upper bound is easier to integrate. In polar coordinates,
+      <md>\iint_{\mathbb R^2}\frac{3}{(1+x^2+y^2)^2}\,dA = \int_0^{2\pi}\int_0^\infty \frac{3r}{(1+r^2)^2}\,dr\,d\theta.</md>
+      Use
+      <md>u=1+r^2, \qquad du=2r\,dr.</md>
+      Then
+      <md>
+        <mrow>\int_0^\infty \frac{3r}{(1+r^2)^2}\,dr \amp= \frac32\int_1^\infty u^{-2}\,du</mrow>
+        <mrow>\amp= \frac32.</mrow>
+      </md>
+      Therefore
+      <md>\iint_{\mathbb R^2}\frac{3}{(1+x^2+y^2)^2}\,dA = 3\pi.</md>
+      Since <m>c</m> is squeezed below a function with finite integral, the total amount of
+      chemical is also finite.
+    </p>
+
+    <theorem xml:id="c10s7-thm-comparison-test">
+      <title>Comparison test for nonnegative double integrals</title>
+      <statement>
+        <p>
+          Let
+          <md>0\le f(x,y)\le g(x,y)</md>
+          on a region <m>R</m>, except possibly at boundary points or singular points handled by
+          improper limits.
+        </p>
+        <ol>
+          <li>
+            <p>
+              If
+              <md>\iint_R g\,dA</md>
+              converges, then
+              <md>\iint_R f\,dA</md>
+              also converges.
+            </p>
+          </li>
+          <li>
+            <p>
+              If
+              <md>0\le g(x,y)\le f(x,y)</md>
+              and
+              <md>\iint_R g\,dA</md>
+              diverges, then
+              <md>\iint_R f\,dA</md>
+              also diverges.
+            </p>
+          </li>
+        </ol>
+      </statement>
+      <proof>
+        <title>Idea of proof</title>
+        <p>
+          For nonnegative functions, the accumulated integral over larger and larger pieces can
+          only increase. If it is always bounded above by a finite number, it must settle to a
+          finite limit. If it is always at least as large as a quantity that grows without bound,
+          then it must also grow without bound.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The nonnegative condition is there because signed functions can cancel. Cancellation may be
+      real, but it can also hide size.
+    </p>
+
+    <p>
+      For example, over the exterior region <m>r\ge1</m>, the radial function
+      <md>f(r,\theta)=\frac{\cos r}{r}</md>
+      has annular integral
+      <md>\int_0^{2\pi}\int_1^A \frac{\cos r}{r}\,r\,dr\,d\theta = 2\pi\int_1^A \cos r\,dr = 2\pi(\sin A-\sin 1).</md>
+      This has no limit as <m>A\to\infty</m>. It keeps oscillating. Positive comparison tests are
+      designed for totals that do not cancel.
+    </p>
+
+    <p>A useful rule of thumb comes from powers of <m>r</m>.</p>
+
+    <p>
+      Near the origin, on a disk,
+      <md>\frac1{r^p}</md>
+      has integral like
+      <md>\int_0^1 r^{1-p}\,dr.</md>
+      This converges exactly when
+      <md>p\lt 2.</md>
+    </p>
+
+    <p>
+      Far from the origin, on the outside of a large disk,
+      <md>\frac1{r^p}</md>
+      has integral like
+      <md>\int_1^\infty r^{1-p}\,dr.</md>
+      This converges exactly when
+      <md>p\gt 2.</md>
+    </p>
+
+    <p>
+      So in two dimensions:
+      <md>
+        \begin{array}{c|c}
+        \text{place} \amp \dfrac1{r^p}\text{ is integrable when} \\ \hline
+        \text{near }r=0 \amp p\lt 2\\[2mm]
+        \text{near }r=\infty \amp p\gt 2
+        \end{array}
+      </md>
+    </p>
+
+    <p>
+      The number <m>2</m> appears because area in polar coordinates carries the extra factor
+      <md>r.</md>
+      In three dimensions, that number will change.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s7-subsec-gaussian-integral">
+    <title>The Gaussian integral</title>
+
+    <p>
+      One of the most famous single-variable integrals has no elementary antiderivative:
+      <md>\int e^{-x^2}\,dx.</md>
+      But its improper integral over the whole real line has an exact value. The surprise is that
+      a one-dimensional integral becomes easier after we square it and turn it into a double
+      integral.
+    </p>
+
+    <p>
+      Let
+      <md>I=\int_{-\infty}^{\infty}e^{-x^2}\,dx.</md>
+      Since the integrand is positive, we may write
+      <md>
+        <mrow>I^2 \amp= \left(\int_{-\infty}^{\infty}e^{-x^2}\,dx\right) \left(\int_{-\infty}^{\infty}e^{-y^2}\,dy\right)</mrow>
+        <mrow>\amp= \iint_{\mathbb R^2} e^{-x^2}e^{-y^2}\,dA</mrow>
+        <mrow>\amp= \iint_{\mathbb R^2} e^{-(x^2+y^2)}\,dA.</mrow>
+      </md>
+      Now use polar coordinates:
+      <md>x^2+y^2=r^2, \qquad dA=r\,dr\,d\theta.</md>
+      Then
+      <md>
+        <mrow>I^2 \amp= \int_0^{2\pi}\int_0^\infty e^{-r^2}r\,dr\,d\theta</mrow>
+        <mrow>\amp= 2\pi\int_0^\infty e^{-r^2}r\,dr.</mrow>
+      </md>
+      Use
+      <md>u=r^2, \qquad du=2r\,dr.</md>
+      Then
+      <md>
+        <mrow>2\pi\int_0^\infty e^{-r^2}r\,dr \amp= 2\pi\cdot\frac12\int_0^\infty e^{-u}\,du</mrow>
+        <mrow>\amp= \pi.</mrow>
+      </md>
+      Therefore
+      <md>I^2=\pi.</md>
+      Since <m>I\gt 0</m>,
+      <md>\boxed{\int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt{\pi}.}</md>
+    </p>
+
+    <p>
+      A single-variable antiderivative was missing, but the double integral found the value. The
+      plane gave the problem a symmetry that the line could not show.
+    </p>
+
+    <p>
+      That is a fitting ending for double integrals. They began as volume under a surface, then
+      became a way to add density, probability, and mass across a region. Even a one-dimensional
+      integral can become clearer after we let it spread into the plane. Before moving to space,
+      it is worth gathering the whole chapter into one map.
+    </p>
+  </subsection>
+</section>

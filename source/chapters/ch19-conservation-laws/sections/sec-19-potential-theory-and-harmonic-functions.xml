@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch19-conservation-laws.tex, Section 5.
+     Status: CONVERTED. -->
+<section xml:id="sec-19-potential-theory-and-harmonic-functions" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Potential theory and harmonic functions</title>
+
+  <p>
+    Maxwell's equations were the broad capstone: fields, flux, circulation, sources,
+    boundaries, and the identity <m>d^2=0</m> all appeared together. This section is a quieter
+    coda. It returns to one scalar field
+    <md>u(x,y,z),</md>
+    but now we read it with the whole book behind us.
+  </p>
+
+  <p>
+    A scalar field can be a temperature, an electric potential, a height, or a pressure.
+    When its gradient field has no source inside a region, the field satisfies
+    <md>\Delta u=0.</md>
+    Those functions are called harmonic. They are the steady states of heat flow, the
+    potentials of source-free fields, and the energy-minimizing shapes among all functions
+    with the same boundary values.
+  </p>
+
+  <subsection xml:id="c19s5-subsec-laplacian-divergence-gradient">
+    <title>The Laplacian as divergence of the gradient</title>
+
+    <p>
+      Start with steady heat in a thin metal plate. Let
+      <md>u(x,y)</md>
+      be the temperature. Fourier's law says heat flows down the temperature gradient:
+      <md>\mathbf J=-k\nabla u,</md>
+      where <m>k&gt;0</m> is constant.
+    </p>
+
+    <p>
+      If there are no heat sources inside the plate and the temperature is no longer changing,
+      then the local balance law from <xref ref="sec-19-the-continuity-equation"/> becomes
+      <md>\nabla\cdot\mathbf J=0.</md>
+      Substitute the flux law:
+      <md>\nabla\cdot(-k\nabla u)=0.</md>
+      Since <m>k</m> is constant,
+      <md>-k\nabla\cdot(\nabla u)=0.</md>
+      So
+      <md>\boxed{\nabla\cdot(\nabla u)=0.}</md>
+    </p>
+
+    <p>
+      This expression is the Laplacian:
+      <md>\boxed{\Delta u=\nabla\cdot(\nabla u).}</md>
+    </p>
+
+    <p>
+      In coordinates,
+      <md>\boxed{\Delta u=u_{xx}+u_{yy}}</md>
+      in the plane, and
+      <md>\boxed{\Delta u=u_{xx}+u_{yy}+u_{zz}}</md>
+      in space.
+    </p>
+
+    <definition xml:id="c19s5-def-laplacian">
+      <title>Laplacian</title>
+      <statement>
+        <p>
+          For a twice differentiable scalar field <m>u</m>, the <term>Laplacian</term> of <m>u</m> is
+          <md>\boxed{\Delta u=\nabla\cdot(\nabla u).}</md>
+          In <m>\mathbb R^2</m>,
+          <md>\Delta u=u_{xx}+u_{yy}.</md>
+          In <m>\mathbb R^3</m>,
+          <md>\Delta u=u_{xx}+u_{yy}+u_{zz}.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c19s5-ex-source-free-temperature">
+      <title>A source-free temperature pattern</title>
+      <statement>
+        <p>
+          Let
+          <md>u(x,y)=e^x\cos y.</md>
+          Then
+          <md>u_{xx}=e^x\cos y,</md>
+          while
+          <md>u_{yy}=-e^x\cos y.</md>
+          Therefore
+          <md>\Delta u=u_{xx}+u_{yy}=0.</md>
+          This field can describe a steady temperature pattern with no internal heat sources,
+          provided the boundary temperatures are chosen to match it.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      There is also a forms version. In the plane, the flux form of the gradient field
+      <md>\nabla u=(u_x,u_y)</md>
+      is
+      <md>\boxed{\phi_{\nabla u}=u_x\,dy-u_y\,dx.}</md>
+      Then
+      <md>
+        <mrow>d\phi_{\nabla u} \amp= d(u_x\,dy-u_y\,dx)</mrow>
+        <mrow>\amp= u_{xx}\,dx\wedge dy-u_{yy}\,dy\wedge dx</mrow>
+        <mrow>\amp= (u_{xx}+u_{yy})\,dx\wedge dy</mrow>
+        <mrow>\amp= \Delta u\,dx\wedge dy.</mrow>
+      </md>
+      So
+      <md>\boxed{d\phi_{\nabla u}=\Delta u\,dx\wedge dy.}</md>
+    </p>
+
+    <p>
+      In space, the flux form of <m>\nabla u</m> is
+      <md>\boxed{\Phi_{\nabla u}=u_x\,dy\wedge dz+u_y\,dz\wedge dx+u_z\,dx\wedge dy.}</md>
+      Its exterior derivative is
+      <md>\boxed{d\Phi_{\nabla u}=\Delta u\,dx\wedge dy\wedge dz.}</md>
+    </p>
+
+    <p>
+      So the Laplacian is the coefficient of the exterior derivative of the gradient flux form.
+      It measures the source strength of the gradient field.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s5-subsec-harmonic-functions">
+    <title>Harmonic functions</title>
+
+    <p>A function with zero Laplacian gets its own name.</p>
+
+    <definition xml:id="c19s5-def-harmonic-function">
+      <title>Harmonic function</title>
+      <statement>
+        <p>
+          A twice differentiable function <m>u</m> is called <term>harmonic</term> on a region <m>D</m> if
+          <md>\boxed{\Delta u=0}</md>
+          at every point of <m>D</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      A harmonic function has a gradient field with no source inside the region:
+      <md>\nabla\cdot(\nabla u)=0.</md>
+      Equivalently,
+      <md>d\Phi_{\nabla u}=0</md>
+      in space, or
+      <md>d\phi_{\nabla u}=0</md>
+      in the plane.
+    </p>
+
+    <example xml:id="c19s5-ex-saddle-in-balance">
+      <title>A saddle in balance</title>
+      <statement>
+        <p>
+          Let
+          <md>u(x,y)=x^2-y^2.</md>
+          Then
+          <md>u_{xx}=2,\qquad u_{yy}=-2.</md>
+          So
+          <md>\Delta u=2-2=0.</md>
+          The graph is a saddle. Harmonic does not mean flat. It means that the upward bending
+          in one direction balances the downward bending in another.
+        </p>
+      </statement>
+    </example>
+
+    <theorem xml:id="c19s5-thm-zero-gradient-flux">
+      <title>Harmonic functions have zero gradient flux through small boundaries</title>
+      <statement>
+        <p>
+          Let <m>u</m> be <m>C^2</m> on a region <m>D</m>. Then <m>u</m> is harmonic on <m>D</m> if and only if,
+          for every small solid region <m>E\subset D</m>,
+          <md>\boxed{\int_{\partial E}\Phi_{\nabla u}=0.}</md>
+          In the plane, the corresponding statement is
+          <md>\boxed{\int_{\partial R}\phi_{\nabla u}=0}</md>
+          for every small plane region <m>R\subset D</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          In space, Stokes' theorem gives
+          <md>\int_{\partial E}\Phi_{\nabla u}=\int_E d\Phi_{\nabla u}=\int_E \Delta u\,dx\wedge dy\wedge dz.</md>
+          If <m>\Delta u=0</m>, every such boundary flux is <m>0</m>.
+        </p>
+        <p>
+          Conversely, if the boundary flux is <m>0</m> for every small <m>E</m>, then
+          <md>\int_E \Delta u\,dV=0</md>
+          for every small <m>E</m>. Since <m>\Delta u</m> is continuous, the same argument used in
+          <xref ref="sec-19-the-continuity-equation"/> forces
+          <md>\Delta u=0</md>
+          pointwise.
+        </p>
+        <p>The plane proof is the same, with <m>dA</m> replacing <m>dV</m>.</p>
+      </proof>
+    </theorem>
+
+    <p>
+      The hypotheses matter. The function must be defined and smooth on the whole region
+      where we apply the theorem.
+    </p>
+
+    <example xml:id="c19s5-ex-hidden-source-missing-point">
+      <title>A hidden source at a missing point</title>
+      <statement>
+        <p>
+          On the punctured plane
+          <md>\mathbb R^2\setminus\{(0,0)\},</md>
+          define
+          <md>u(x,y)=\log r,\qquad r=\sqrt{x^2+y^2}.</md>
+          Away from the origin, <m>u</m> is harmonic:
+          <md>\Delta u=0.</md>
+          But its gradient is
+          <md>\nabla u=\left(\frac{x}{r^2},\frac{y}{r^2}\right).</md>
+        </p>
+        <p>
+          On the circle <m>r=a</m>, the outward unit normal is
+          <md>\widehat{\mathbf n}=\left(\frac{x}{a},\frac{y}{a}\right),</md>
+          and
+          <md>\nabla u\cdot\widehat{\mathbf n}=\frac{1}{a}.</md>
+          Since <m>ds=a\,d\theta</m>,
+          <md>
+            <mrow>\int_{r=a}\nabla u\cdot\widehat{\mathbf n}\,ds \amp= \int_0^{2\pi}\frac1a(a\,d\theta)</mrow>
+            <mrow>\amp= 2\pi.</mrow>
+          </md>
+        </p>
+        <p>
+          This does not contradict the theorem. The disk <m>r\le a</m> contains the origin, where
+          <m>\log r</m> is not defined. The missing point behaves like a hidden source. A theorem
+          about smooth functions on a whole region cannot be applied across a hole in the
+          domain.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This example is the same kind of warning we saw for closed but non-exact forms. A
+      puncture in the region can carry information that no local derivative sees away from
+      the puncture.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s5-subsec-mean-value-ideas">
+    <title>Mean value ideas</title>
+
+    <p>
+      Harmonic functions have a surprising averaging property: the value at the center of a
+      circle is the average value on the circle.
+    </p>
+
+    <p>
+      First see it in a concrete example. Let
+      <md>u(x,y)=x^2-y^2.</md>
+      Take a circle of radius <m>r</m> centered at <m>(a,b)</m>:
+      <md>x=a+r\cos\theta,\qquad y=b+r\sin\theta.</md>
+      Then
+      <md>
+        <mrow>u(a+r\cos\theta,b+r\sin\theta) \amp= (a+r\cos\theta)^2-(b+r\sin\theta)^2</mrow>
+        <mrow>\amp= a^2-b^2+2ar\cos\theta-2br\sin\theta</mrow>
+        <mrow>\amp\qquad +r^2(\cos^2\theta-\sin^2\theta).</mrow>
+      </md>
+      Average from <m>0</m> to <m>2\pi</m>. The average of <m>\cos\theta</m> is <m>0</m>, the average of
+      <m>\sin\theta</m> is <m>0</m>, and the average of
+      <md>\cos^2\theta-\sin^2\theta=\cos(2\theta)</md>
+      is also <m>0</m>. So the circular average is
+      <md>a^2-b^2.</md>
+      But
+      <md>u(a,b)=a^2-b^2.</md>
+      Thus
+      <md>\boxed{\text{average of }u\text{ on the circle}=u\text{ at the center.}}</md>
+    </p>
+
+    <figure xml:id="c19s5-fig-mean-value-circle">
+      <caption>A harmonic function is balanced: its center value equals its circular average.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[-&gt;] (-0.5,0) -- (5.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.5) -- (0,4.3) node[above] {\(y\)};
+
+            \coordinate (C) at (2.7,2.0);
+            \draw[thick, blue!60!black] (C) circle (1.25);
+
+            \fill (C) circle (2.5pt);
+            \node[below left] at (C) {\((a,b)\)};
+
+            \draw[-&gt;, thick] (C) -- ++(0.9,0.87)
+                node[midway, above left] {\(r\)};
+
+            \node at (2.7,-0.9)
+                {\(\displaystyle u(a,b)=\frac1{2\pi}\int_0^{2\pi}
+                u(a+r\cos\theta,b+r\sin\theta)\,d\theta\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>The example is not a coincidence.</p>
+
+    <theorem xml:id="c19s5-thm-mean-value-property">
+      <title>Mean value property</title>
+      <statement>
+        <p>
+          Let <m>u</m> be harmonic on a disk containing the closed disk
+          <md>(x-a)^2+(y-b)^2\le r^2.</md>
+          Then
+          <md>\boxed{u(a,b)=\frac1{2\pi}\int_0^{2\pi}u(a+r\cos\theta,b+r\sin\theta)\,d\theta.}</md>
+          That is, the value at the center equals the average value on every circle around it,
+          as long as the whole closed disk lies inside the domain.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Let
+          <md>A(r)=\frac1{2\pi}\int_0^{2\pi}u(a+r\cos\theta,b+r\sin\theta)\,d\theta.</md>
+          Differentiate with respect to <m>r</m>:
+          <md>A'(r)=\frac1{2\pi}\int_0^{2\pi}\nabla u\cdot(\cos\theta,\sin\theta)\,d\theta.</md>
+          On the circle of radius <m>r</m>, the outward unit normal is
+          <md>\widehat{\mathbf n}=(\cos\theta,\sin\theta),</md>
+          and
+          <md>ds=r\,d\theta.</md>
+          So
+          <md>A'(r)=\frac1{2\pi r}\int_{C_r}\nabla u\cdot\widehat{\mathbf n}\,ds.</md>
+          By the divergence theorem in the plane,
+          <md>\int_{C_r}\nabla u\cdot\widehat{\mathbf n}\,ds=\iint_{D_r}\Delta u\,dA.</md>
+          Since <m>u</m> is harmonic,
+          <md>\Delta u=0,</md>
+          so
+          <md>A'(r)=0.</md>
+          Thus <m>A(r)</m> is constant as <m>r</m> changes. As <m>r\to0</m>, the circle shrinks to the
+          point <m>(a,b)</m>, and by continuity
+          <md>A(r)\to u(a,b).</md>
+          Therefore every <m>A(r)</m> equals <m>u(a,b)</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>Again the hypotheses are real. The function must be harmonic on the whole disk.</p>
+
+    <example xml:id="c19s5-ex-why-harmonicity-needed">
+      <title>Why harmonicity is needed</title>
+      <statement>
+        <p>
+          Let
+          <md>u(x,y)=x^2+y^2.</md>
+          On the circle
+          <md>x=r\cos\theta,\qquad y=r\sin\theta,</md>
+          we have
+          <md>u=r^2.</md>
+          So the average value on that circle is
+          <md>r^2.</md>
+          But
+          <md>u(0,0)=0.</md>
+          The mean value property fails. The reason is visible in the Laplacian:
+          <md>\Delta u=2+2=4.</md>
+          This function has positive source strength everywhere.
+        </p>
+      </statement>
+    </example>
+
+    <p>The mean value property has a powerful consequence.</p>
+
+    <theorem xml:id="c19s5-thm-no-interior-maximum">
+      <title>No interior maximum unless constant</title>
+      <statement>
+        <p>
+          Let <m>u</m> be harmonic and continuous on a closed, bounded region, and harmonic in its
+          interior. If <m>u</m> reaches a maximum at an interior point, then <m>u</m> is constant on the
+          connected component containing that point.
+        </p>
+        <p>The same statement holds for an interior minimum.</p>
+      </statement>
+      <proof>
+        <title>Proof idea</title>
+        <p>
+          If <m>u(a,b)</m> is a maximum, every value on a small circle around <m>(a,b)</m> is at most
+          <m>u(a,b)</m>. But the average around that circle must equal <m>u(a,b)</m>. The only way an
+          average of numbers all no larger than <m>u(a,b)</m> can equal <m>u(a,b)</m> is if all those
+          numbers equal <m>u(a,b)</m>.
+        </p>
+        <p>
+          So <m>u</m> is constant on every small circle around the point. Repeating this argument
+          pushes the constancy through the connected region.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      A steady temperature with no internal heat sources cannot have a lonely hot spot inside.
+      Its hottest and coldest values must come from the boundary, unless the whole plate is
+      already at one temperature.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s5-subsec-gradient-fields-energy-minimization">
+    <title>Gradient fields and energy minimization</title>
+
+    <p>Harmonic functions also arise from an energy principle.</p>
+
+    <p>
+      Imagine a flexible membrane stretched over a wire frame. The boundary wire fixes the
+      height of the membrane along the edge. Among all surfaces with that boundary height,
+      the physical membrane chooses the one with least stretching energy. In the small-slope
+      model, that energy is
+      <md>\boxed{\mathcal E[u]=\frac12\iint_R |\nabla u|^2\,dA.}</md>
+      This is called the Dirichlet energy.
+    </p>
+
+    <definition xml:id="c19s5-def-dirichlet-energy">
+      <title>Dirichlet energy</title>
+      <statement>
+        <p>
+          For a differentiable function <m>u</m> on a plane region <m>R</m>, the <term>Dirichlet energy</term>
+          of <m>u</m> is
+          <md>\boxed{\mathcal E[u]=\frac12\iint_R |\nabla u|^2\,dA.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>The energy is small when <m>u</m> changes gently, and large when <m>u</m> changes sharply.</p>
+
+    <p>A simple example shows the minimization idea.</p>
+
+    <example xml:id="c19s5-ex-straight-ramp-minimizes-energy">
+      <title>The straight ramp minimizes energy</title>
+      <statement>
+        <p>
+          Let
+          <md>R=[0,1]\times[0,1],</md>
+          and consider
+          <md>u(x,y)=x.</md>
+          Now perturb <m>u</m> by a smooth function <m>\eta</m> that vanishes on the boundary:
+          <md>u_\varepsilon=u+\varepsilon\eta=x+\varepsilon\eta.</md>
+          The boundary values do not change, because <m>\eta=0</m> on <m>\partial R</m>.
+        </p>
+        <p>
+          Compute the energy:
+          <md>
+            <mrow>\mathcal E[u_\varepsilon] \amp= \frac12\iint_R\left|(1,0)+\varepsilon\nabla\eta\right|^2\,dA</mrow>
+            <mrow>\amp= \frac12\iint_R\left(1+2\varepsilon\eta_x+\varepsilon^2|\nabla\eta|^2\right)\,dA.</mrow>
+          </md>
+          The middle term is
+          <md>\iint_R \eta_x\,dA.</md>
+          Integrate in <m>x</m>:
+          <md>
+            <mrow>\iint_R \eta_x\,dA \amp= \int_0^1\int_0^1 \eta_x(x,y)\,dx\,dy</mrow>
+            <mrow>\amp= \int_0^1\bigl[\eta(1,y)-\eta(0,y)\bigr]\,dy</mrow>
+            <mrow>\amp= 0,</mrow>
+          </md>
+          because <m>\eta</m> is zero on the boundary.
+        </p>
+        <p>
+          Therefore
+          <md>\boxed{\mathcal E[u_\varepsilon]=\mathcal E[u]+\frac{\varepsilon^2}{2}\iint_R|\nabla\eta|^2\,dA.}</md>
+          The added term is always nonnegative. So the ramp <m>u=x</m> has the smallest energy
+          among these boundary-preserving perturbations.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The example works because
+      <md>\Delta x=0.</md>
+      The same principle holds for every harmonic function.
+    </p>
+
+    <theorem xml:id="c19s5-thm-harmonic-minimize-dirichlet">
+      <title>Harmonic functions minimize Dirichlet energy</title>
+      <statement>
+        <p>
+          Let <m>u</m> be harmonic on a smooth bounded region <m>R</m>, and let <m>w</m> be another
+          function with the same boundary values as <m>u</m>. Write
+          <md>w=u+\eta,</md>
+          where
+          <md>\eta=0\quad\text{on }\partial R.</md>
+          Then
+          <md>\boxed{\mathcal E[w]\ge \mathcal E[u].}</md>
+          More precisely,
+          <md>\boxed{\mathcal E[u+\eta]=\mathcal E[u]+\frac12\iint_R|\nabla\eta|^2\,dA.}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Expand:
+          <md>
+            <mrow>\mathcal E[u+\eta] \amp= \frac12\iint_R|\nabla u+\nabla\eta|^2\,dA</mrow>
+            <mrow>\amp= \frac12\iint_R|\nabla u|^2\,dA+\iint_R\nabla u\cdot\nabla\eta\,dA+\frac12\iint_R|\nabla\eta|^2\,dA.</mrow>
+          </md>
+          So
+          <md>\mathcal E[u+\eta]=\mathcal E[u]+\iint_R\nabla u\cdot\nabla\eta\,dA+\frac12\iint_R|\nabla\eta|^2\,dA.</md>
+        </p>
+        <p>
+          Green's identity gives
+          <md>\iint_R\nabla u\cdot\nabla\eta\,dA=\int_{\partial R}\eta\,\frac{\partial u}{\partial n}\,ds-\iint_R\eta\,\Delta u\,dA.</md>
+          The boundary term is zero because
+          <md>\eta=0\quad\text{on }\partial R.</md>
+          The interior term is zero because
+          <md>\Delta u=0.</md>
+          Thus
+          <md>\iint_R\nabla u\cdot\nabla\eta\,dA=0.</md>
+          Therefore
+          <md>\mathcal E[u+\eta]=\mathcal E[u]+\frac12\iint_R|\nabla\eta|^2\,dA\ge \mathcal E[u].</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The boundary condition is part of the theorem, not a technical afterthought.</p>
+
+    <example xml:id="c19s5-ex-same-boundary-values-matter">
+      <title>Why the same boundary values matter</title>
+      <statement>
+        <p>
+          On the unit square, the function
+          <md>u(x,y)=x</md>
+          has positive energy:
+          <md>\mathcal E[u]=\frac12\iint_R 1\,dA=\frac12.</md>
+          The function
+          <md>w(x,y)=0</md>
+          has energy
+          <md>\mathcal E[w]=0.</md>
+          So <m>w</m> has smaller energy.
+        </p>
+        <p>
+          But <m>w</m> does not have the same boundary values as <m>u</m>. Along the right edge,
+          <md>u(1,y)=1,</md>
+          while
+          <md>w(1,y)=0.</md>
+          The minimization theorem compares only functions attached to the same boundary
+          data.
+        </p>
+      </statement>
+    </example>
+
+    <p>A harmonic function can now be seen in several equivalent ways:</p>
+
+    <md>
+      \begin{array}{c|l}
+      \text{View} &amp; \text{Meaning} \\ \hline
+      \Delta u=0 &amp; \text{no local source for the gradient field}\\[1mm]
+      \displaystyle \int_{\partial R}\phi_{\nabla u}=0
+      &amp; \text{zero gradient flux through every small boundary}\\[3mm]
+      u(a,b)=\text{circle average} &amp; \text{perfect local balance}\\[1mm]
+      \mathcal E[u]\text{ is minimal} &amp; \text{least energy among fixed boundary values}
+      \end{array}
+    </md>
+
+    <p>
+      The same equation has become a statement about sources, averages, and energy. That is
+      a good place for the chapter to end. What remains is not another new theorem, but a
+      set of projects that lets the whole chapter work as a modeling language.
+    </p>
+  </subsection>
+</section>

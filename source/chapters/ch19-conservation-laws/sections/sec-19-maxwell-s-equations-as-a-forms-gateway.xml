@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch19-conservation-laws.tex, Section 19.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-19-maxwell-s-equations-as-a-forms-gateway" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Maxwell's equations as a forms gateway</title>
+
+  <p>This section is the main capstone of the book.</p>
+
+  <p>
+    It is not an electromagnetism course. We will not derive every physical constant or solve
+    realistic engineering problems. The goal is different: to see why the language of forms is
+    not decoration.
+  </p>
+
+  <p>
+    Maxwell's equations are the place where the main ideas of the book meet:
+  </p>
+
+  <ul>
+    <li><p>fields attached to space,</p></li>
+    <li><p>circulation along curves,</p></li>
+    <li><p>flux through surfaces,</p></li>
+    <li><p>sources inside volumes,</p></li>
+    <li><p>the exterior derivative <m>d</m>,</p></li>
+    <li><p>the identity <m>d^2=0</m>,</p></li>
+    <li><p>and conservation laws.</p></li>
+  </ul>
+
+  <p>
+    Standard vector calculus treats these as four distinct formulas. The language of forms strips
+    that away, unifying them into simple rules about boundaries and derivatives. The math doesn't
+    obscure the physics; it reveals the underlying structure.
+  </p>
+
+  <subsection xml:id="c19s4-subsec-electric-and-magnetic-fields">
+    <title>Electric and magnetic fields</title>
+
+    <p>Electric and magnetic fields do different kinds of measuring.</p>
+
+    <p>
+      An electric field measures work per unit charge along a small displacement. That makes it
+      naturally a <m>1</m>-form:
+      <md>\boxed{\mathcal E=E_1\,dx+E_2\,dy+E_3\,dz.}</md>
+      If a unit positive charge moves by a tiny vector, <m>\mathcal E</m> measures the electric
+      work along that tiny motion.
+    </p>
+
+    <p>
+      A magnetic field is naturally measured by flux through an oriented surface. So we write the
+      magnetic field as a <m>2</m>-form:
+      <md>\boxed{\mathcal B=B_1\,dy\wedge dz+B_2\,dz\wedge dx+B_3\,dx\wedge dy.}</md>
+      This form measures magnetic flux through small oriented area pieces.
+    </p>
+
+    <p>
+      Two related fields are also useful. The electric displacement field is a flux
+      <m>2</m>-form:
+      <md>\boxed{\mathcal D=D_1\,dy\wedge dz+D_2\,dz\wedge dx+D_3\,dx\wedge dy.}</md>
+      The magnetic intensity field is a circulation <m>1</m>-form:
+      <md>\boxed{\mathcal H=H_1\,dx+H_2\,dy+H_3\,dz.}</md>
+    </p>
+
+    <p>
+      In vacuum, the pairs are related by physical constants:
+      <md>\mathbf D=\varepsilon_0\mathbf E,\qquad \mathbf B=\mu_0\mathbf H.</md>
+      In materials, the relations can be more complicated. Those relations belong to physics. The
+      forms structure of Maxwell's equations does not depend on their simplest vacuum form.
+    </p>
+
+    <p>
+      Charge density is stored in volume, so it is a <m>3</m>-form:
+      <md>\boxed{\mathcal Q=\rho_{\mathrm e}\,dx\wedge dy\wedge dz.}</md>
+      Current density is flux of charge through surfaces, so it is a <m>2</m>-form:
+      <md>\boxed{\mathcal J=J_1\,dy\wedge dz+J_2\,dz\wedge dx+J_3\,dx\wedge dy.}</md>
+    </p>
+
+    <p>The roles are summarized below.</p>
+
+    <table xml:id="c19s4-tab-form-roles">
+      <title>The field forms and what they measure.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Object</cell><cell>Form degree</cell><cell>What it measures</cell>
+        </row>
+        <row><cell><m>\mathcal E</m></cell><cell><m>1</m></cell><cell>electric work/circulation along curves</cell></row>
+        <row><cell><m>\mathcal B</m></cell><cell><m>2</m></cell><cell>magnetic flux through surfaces</cell></row>
+        <row><cell><m>\mathcal D</m></cell><cell><m>2</m></cell><cell>electric flux through surfaces</cell></row>
+        <row><cell><m>\mathcal H</m></cell><cell><m>1</m></cell><cell>magnetic circulation along curves</cell></row>
+        <row><cell><m>\mathcal Q</m></cell><cell><m>3</m></cell><cell>charge stored in volumes</cell></row>
+        <row><cell><m>\mathcal J</m></cell><cell><m>2</m></cell><cell>charge current through surfaces</cell></row>
+      </tabular>
+    </table>
+
+    <p>
+      This table is already half the story. The degree of each form tells us what kind of
+      geometric object it belongs to.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-four-equations-in-forms-language">
+    <title>The four equations in forms language</title>
+
+    <p>
+      At each fixed time, Maxwell's equations can be written as
+      <md>\boxed{d\mathcal D=\mathcal Q,}</md>
+      <md>\boxed{d\mathcal B=0,}</md>
+      <md>\boxed{d\mathcal E+\frac{\partial\mathcal B}{\partial t}=0,}</md>
+      and
+      <md>\boxed{d\mathcal H-\frac{\partial\mathcal D}{\partial t}=\mathcal J.}</md>
+    </p>
+
+    <p>
+      These are Maxwell's equations in three-dimensional space, written with spatial forms.
+    </p>
+
+    <p>Here is the translation into vector notation:</p>
+
+    <table xml:id="c19s4-tab-forms-vs-vector">
+      <title>Maxwell's equations in forms and vector notation.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Name</cell><cell>Forms version</cell><cell>Vector version</cell>
+        </row>
+        <row><cell>Gauss for electricity</cell><cell><m>d\mathcal D=\mathcal Q</m></cell><cell><m>\nabla\cdot\mathbf D=\rho_{\mathrm e}</m></cell></row>
+        <row><cell>Gauss for magnetism</cell><cell><m>d\mathcal B=0</m></cell><cell><m>\nabla\cdot\mathbf B=0</m></cell></row>
+        <row><cell>Faraday's law</cell><cell><m>d\mathcal E+\mathcal B_t=0</m></cell><cell><m>\nabla\times\mathbf E+\mathbf B_t=0</m></cell></row>
+        <row><cell>Ampere--Maxwell law</cell><cell><m>d\mathcal H-\mathcal D_t=\mathcal J</m></cell><cell><m>\nabla\times\mathbf H-\mathbf D_t=\mathbf J</m></cell></row>
+      </tabular>
+    </table>
+
+    <p>
+      The forms equations are not shorter only because of notation. They say which kind of
+      integral each law wants.
+    </p>
+
+    <table xml:id="c19s4-tab-natural-integral-forms">
+      <title>The natural integral form of each equation.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Equation</cell><cell>Natural integral form</cell>
+        </row>
+        <row><cell><m>d\mathcal D=\mathcal Q</m></cell><cell><m>\int_{\partial E}\mathcal D=\int_E\mathcal Q</m></cell></row>
+        <row><cell><m>d\mathcal B=0</m></cell><cell><m>\int_{\partial E}\mathcal B=0</m></cell></row>
+        <row><cell><m>d\mathcal E+\mathcal B_t=0</m></cell><cell><m>\int_{\partial S}\mathcal E=-\frac{d}{dt}\int_S\mathcal B</m></cell></row>
+        <row><cell><m>d\mathcal H-\mathcal D_t=\mathcal J</m></cell><cell><m>\int_{\partial S}\mathcal H=\int_S\mathcal J+\frac{d}{dt}\int_S\mathcal D</m></cell></row>
+      </tabular>
+    </table>
+
+    <p>These integral forms are where the equations become physical.</p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-gauss-law">
+    <title>Gauss's law: charge is detected by electric flux</title>
+
+    <p>
+      The equation
+      <md>d\mathcal D=\mathcal Q</md>
+      says that the exterior derivative of the electric flux form is the charge density
+      <m>3</m>-form.
+    </p>
+
+    <p>
+      Let <m>E</m> be a solid region. Stokes' theorem gives
+      <md>\int_{\partial E}\mathcal D=\int_E d\mathcal D=\int_E\mathcal Q.</md>
+      So
+      <md>\boxed{\int_{\partial E}\mathcal D=\int_E \rho_{\mathrm e}\,dV.}</md>
+      In words:
+      <md>\boxed{\text{electric flux through a closed surface}=\text{charge enclosed.}}</md>
+    </p>
+
+    <p>The boundary surface detects what is stored inside.</p>
+
+    <example xml:id="c19s4-ex-point-charge-from-outside">
+      <title>A point charge, seen from outside</title>
+      <statement>
+        <p>
+          A positive point charge at the origin creates electric flux through every sphere around
+          it. In a fully realistic treatment, the charge density is concentrated at a point, so it
+          is not an ordinary continuous function. The smooth version of Stokes' theorem in this
+          book does not directly handle that singularity.
+        </p>
+        <p>
+          But the moral is exactly the same as the warning examples in
+          <xref ref="ch18-generalized-stokes"/>: a closed surface can detect something inside. If a
+          field is singular at a missing point, we cannot apply the ordinary smooth theorem across
+          that point as though nothing were there.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      For smooth charge density, there is no singularity. The law simply says that charge is the
+      source of electric flux.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-no-magnetic-monopoles">
+    <title>No magnetic monopoles: magnetic flux has no source</title>
+
+    <p>
+      The magnetic equation
+      <md>d\mathcal B=0</md>
+      says that magnetic flux has no volume source.
+    </p>
+
+    <p>
+      Let <m>E</m> be a solid region. Then
+      <md>\int_{\partial E}\mathcal B=\int_E d\mathcal B=0.</md>
+      Thus
+      <md>\boxed{\int_{\partial E}\mathcal B=0.}</md>
+      In vector language,
+      <md>\boxed{\iint_{\partial E}\mathbf B\cdot\widehat{\mathbf n}\,dS=0.}</md>
+    </p>
+
+    <p>
+      Magnetic field lines may pass through a closed surface, but as much flux enters as leaves.
+      There is no isolated magnetic charge inside the region.
+    </p>
+
+    <example xml:id="c19s4-ex-uniform-field-through-box">
+      <title>A uniform magnetic field through a box</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf B=(0,0,B_0),</md>
+          so
+          <md>\mathcal B=B_0\,dx\wedge dy.</md>
+          For a rectangular box, the top face has upward orientation and contributes positive flux
+          <md>B_0(\text{area of top}).</md>
+          The bottom face has downward orientation and contributes the negative of the same amount.
+          The side faces contribute <m>0</m>, because the field is tangent to them.
+        </p>
+        <p>
+          The total magnetic flux through the closed box is
+          <md>0.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Again the sign is not decoration. Flux through a closed surface is an oriented sum. Entering
+      and leaving must be counted with opposite signs.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-faradays-law">
+    <title>Faraday's law: changing magnetic flux creates electric circulation</title>
+
+    <p>
+      Faraday's law is
+      <md>\boxed{d\mathcal E+\frac{\partial\mathcal B}{\partial t}=0.}</md>
+      Let <m>S</m> be an oriented surface with boundary <m>\partial S</m>. Integrate over
+      <m>S</m>:
+      <md>\int_S d\mathcal E+\int_S \frac{\partial\mathcal B}{\partial t}=0.</md>
+      By Stokes' theorem,
+      <md>\int_S d\mathcal E=\int_{\partial S}\mathcal E.</md>
+      So
+      <md>\boxed{\int_{\partial S}\mathcal E=-\frac{d}{dt}\int_S\mathcal B.}</md>
+      In words:
+      <md>\boxed{\text{electric circulation around a loop}=-\text{rate of change of magnetic flux through the loop.}}</md>
+    </p>
+
+    <p>
+      This is one of the cleanest places to see why a <m>1</m>-form and a <m>2</m>-form belong in
+      the same theorem. The electric field is integrated around a boundary curve. The magnetic
+      field is integrated through a surface spanning that curve.
+    </p>
+
+    <example xml:id="c19s4-ex-changing-field-circular-loop">
+      <title>A changing magnetic field through a circular loop</title>
+      <statement>
+        <p>
+          Let <m>S</m> be the disk
+          <md>x^2+y^2\le R^2,\qquad z=0,</md>
+          oriented upward. Its boundary circle is oriented counterclockwise as viewed from above.
+        </p>
+        <p>
+          Suppose the magnetic field is vertical and spatially uniform:
+          <md>\mathcal B=b(t)\,dx\wedge dy.</md>
+          Then
+          <md>\int_S\mathcal B=b(t)\pi R^2.</md>
+          Faraday's law gives
+          <md>\boxed{\int_{\partial S}\mathcal E=-b'(t)\pi R^2.}</md>
+        </p>
+        <p>
+          If <m>b'(t)\gt 0</m>, then the upward magnetic flux is increasing, and the induced
+          electric circulation is negative relative to the counterclockwise orientation. That means
+          the electric circulation is clockwise when viewed from above.
+        </p>
+        <p>
+          The minus sign is the mathematical form of Lenz's law: the induced circulation opposes
+          the change in magnetic flux.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      We can even find one possible electric form in this symmetric example. Recall that
+      <md>d(-y\,dx+x\,dy)=2\,dx\wedge dy.</md>
+      If
+      <md>\mathcal E=-\frac{b'(t)}{2}(-y\,dx+x\,dy),</md>
+      then
+      <md>d\mathcal E=-b'(t)\,dx\wedge dy.</md>
+      Since
+      <md>\mathcal B_t=b'(t)\,dx\wedge dy,</md>
+      we get
+      <md>d\mathcal E+\mathcal B_t=0.</md>
+      So this <m>\mathcal E</m> satisfies Faraday's law.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-ampere-maxwell-law">
+    <title>Ampere--Maxwell law: current and changing electric flux create magnetic circulation</title>
+
+    <p>
+      The fourth equation is
+      <md>\boxed{d\mathcal H-\frac{\partial\mathcal D}{\partial t}=\mathcal J.}</md>
+      Equivalently,
+      <md>\boxed{d\mathcal H=\mathcal J+\frac{\partial\mathcal D}{\partial t}.}</md>
+    </p>
+
+    <p>
+      Integrate over an oriented surface <m>S</m>:
+      <md>\int_S d\mathcal H=\int_S\mathcal J+\frac{d}{dt}\int_S\mathcal D.</md>
+      By Stokes' theorem,
+      <md>\int_S d\mathcal H=\int_{\partial S}\mathcal H.</md>
+      Therefore
+      <md>\boxed{\int_{\partial S}\mathcal H=\int_S\mathcal J+\frac{d}{dt}\int_S\mathcal D.}</md>
+      In words:
+      <md>\boxed{\text{magnetic circulation around a loop}=\text{current through the loop}+\text{changing electric flux through the loop.}}</md>
+    </p>
+
+    <p>
+      The second term,
+      <md>\frac{\partial\mathcal D}{\partial t},</md>
+      is Maxwell's displacement-current term. It is not a decorative correction. It is the term
+      that makes the equation compatible with conservation of charge.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-one-loop-two-surfaces">
+    <title>One loop, two surfaces: why Maxwell's correction is necessary</title>
+
+    <p>This example is the heart of the capstone.</p>
+
+    <p>
+      Picture a wire charging a parallel-plate capacitor. A current flows through the wire toward
+      one plate. Between the plates there is no conduction current crossing the gap, but the
+      electric field between the plates is changing.
+    </p>
+
+    <p>
+      Let <m>C</m> be a loop around the wire. The loop can be spanned by many different surfaces.
+    </p>
+
+    <p>
+      One surface, call it <m>S_1</m>, cuts through the wire. The current flux through <m>S_1</m>
+      is
+      <md>\int_{S_1}\mathcal J=I.</md>
+    </p>
+
+    <p>
+      Another surface, call it <m>S_2</m>, bulges out between the capacitor plates and crosses the
+      gap instead of cutting the wire. No conduction current crosses this surface:
+      <md>\int_{S_2}\mathcal J=0.</md>
+    </p>
+
+    <p>
+      If the law were only
+      <md>d\mathcal H=\mathcal J,</md>
+      then Stokes' theorem would give
+      <md>\int_C\mathcal H=\int_{S_1}\mathcal J=I</md>
+      using <m>S_1</m>, but
+      <md>\int_C\mathcal H=\int_{S_2}\mathcal J=0</md>
+      using <m>S_2</m>.
+    </p>
+
+    <p>
+      That is impossible. The same boundary loop <m>C</m> cannot have two different magnetic
+      circulations.
+    </p>
+
+    <p>
+      Maxwell's corrected law says
+      <md>d\mathcal H=\mathcal J+\mathcal D_t.</md>
+      Now the two surfaces agree.
+    </p>
+
+    <p>
+      For <m>S_1</m>, the conduction current contributes
+      <md>\int_{S_1}\mathcal J=I.</md>
+      For <m>S_2</m>, the changing electric flux contributes
+      <md>\frac{d}{dt}\int_{S_2}\mathcal D=I.</md>
+      So both surfaces give
+      <md>\boxed{\int_C\mathcal H=I.}</md>
+    </p>
+
+    <figure xml:id="c19s4-fig-loop-two-surfaces">
+      <caption>
+        The same loop can bound different surfaces. Maxwell's displacement-current term makes the
+        answer independent of the spanning surface.
+      </caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            % plates
+            \draw[fill=gray!20, thick] (3.0,1.0) rectangle (3.25,3.2);
+            \draw[fill=gray!20, thick] (4.6,1.0) rectangle (4.85,3.2);
+            \node at (3.12,3.45) {plate};
+            \node at (4.72,3.45) {plate};
+
+            % wires
+            \draw[thick] (0.2,2.1) -- (3.0,2.1);
+            \draw[thick] (4.85,2.1) -- (6.4,2.1);
+
+            \draw[-&gt;, very thick, blue!65!black] (1.0,2.1) -- (1.8,2.1);
+            \node[blue!65!black] at (1.2,2.45) {current \(I\)};
+
+            % loop C
+            \draw[red!65!black, very thick] (1.7,2.1) ellipse (0.55 and 1.0);
+            \node[red!65!black] at (2.0,0.85) {\(C\)};
+
+            % surface S1
+            \draw[fill=red!12, opacity=0.55, thick] (1.7,2.1) ellipse (0.48 and 0.86);
+            \node[red!65!black] at (0.6,1.0) {\(S_1\) cuts wire};
+
+            % surface S2 schematic (adjusted to arc wider and avoid text)
+            \draw[green!45!black, very thick, dashed]
+                (1.7,3.1) .. controls (2.2,4.4) and (3.9,4.4) .. (3.9,3.2)
+                .. controls (3.9,2.6) and (3.9,1.6) .. (3.9,1.0)
+                .. controls (3.9,-0.2) and (2.2,-0.2) .. (1.7,1.1);
+
+            % label for S2 (moved below the bottom arc)
+            \node[green!45!black] at (2.8,-0.4) {\(S_2\) crosses gap};
+
+            % electric flux between plates
+            \foreach \y in {1.35,1.75,2.15,2.55,2.95} {
+                \draw[-&gt;, purple!70!black, thick] (3.35,\y) -- (4.5,\y);
+            }
+
+            % flux label (stacked and placed safely below the gap)
+            \node[purple!70!black, align=center, font=\small] at (3.92,0.45)
+                {changing \\ electric flux};
+
+            % formula (shifted further down to clear the S2 label)
+            \node at (3.3,-1.4)
+                {\(\displaystyle \int_C\mathcal H
+                =
+                \int_S\mathcal J+\frac{d}{dt}\int_S\mathcal D\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This example shows the power of the forms viewpoint. A boundary integral should not depend
+      on which spanning surface we use, unless something singular or omitted lies between the
+      surfaces. The displacement-current term is exactly what restores that surface independence
+      during charging.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-charge-conservation-d-squared">
+    <title>Charge conservation from <m>d^2=0</m></title>
+
+    <p>Now the continuity equation returns.</p>
+
+    <p>
+      Start with Ampere--Maxwell:
+      <md>d\mathcal H-\mathcal D_t=\mathcal J.</md>
+      Apply <m>d</m> to both sides:
+      <md>d(d\mathcal H)-d(\mathcal D_t)=d\mathcal J.</md>
+      Since
+      <md>d^2=0,</md>
+      we have
+      <md>d(d\mathcal H)=0.</md>
+      Also, time differentiation commutes with the spatial exterior derivative:
+      <md>d(\mathcal D_t)=(d\mathcal D)_t.</md>
+      By Gauss's law,
+      <md>d\mathcal D=\mathcal Q.</md>
+      Therefore
+      <md>-\mathcal Q_t=d\mathcal J.</md>
+      So
+      <md>\boxed{\mathcal Q_t+d\mathcal J=0.}</md>
+    </p>
+
+    <p>This is charge conservation.</p>
+
+    <p>
+      In vector notation,
+      <md>\mathcal Q=\rho_{\mathrm e}\,dx\wedge dy\wedge dz,</md>
+      and
+      <md>d\mathcal J=(\nabla\cdot\mathbf J)\,dx\wedge dy\wedge dz.</md>
+      Thus
+      <md>\boxed{\rho_{\mathrm e,t}+\nabla\cdot\mathbf J=0.}</md>
+    </p>
+
+    <p>
+      This is the continuity equation from <xref ref="sec-19-the-continuity-equation"/>, now forced
+      by Maxwell's equations.
+    </p>
+
+    <p>The logic is worth pausing over:</p>
+
+    <md>
+      \boxed{\begin{aligned}
+      &amp;\text{Ampere--Maxwell law}\\
+      +\ &amp;\text{Gauss's law}\\
+      +\ &amp;d^2=0
+      \end{aligned}\quad\Longrightarrow\quad \text{conservation of charge.}}
+    </md>
+
+    <p>
+      This is one of the deepest payoffs of the notation. Conservation is not pasted onto the
+      equations afterward. It is built into their differential-form structure.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-homogeneous-equations-and-potentials">
+    <title>The homogeneous equations and potentials</title>
+
+    <p>
+      Two of Maxwell's equations have no source terms:
+      <md>d\mathcal B=0,</md>
+      and
+      <md>d\mathcal E+\mathcal B_t=0.</md>
+      They are called the homogeneous equations.
+    </p>
+
+    <p>
+      The first says that <m>\mathcal B</m> is closed:
+      <md>d\mathcal B=0.</md>
+      On a simple enough region, closed forms are locally exact. So locally we can write
+      <md>\boxed{\mathcal B=d\mathcal A}</md>
+      for some <m>1</m>-form <m>\mathcal A</m>, called the magnetic vector potential.
+    </p>
+
+    <p>
+      Then Faraday's law becomes
+      <md>d\mathcal E+\frac{\partial}{\partial t}(d\mathcal A)=0.</md>
+      Because <m>d</m> and <m>\partial/\partial t</m> commute,
+      <md>d(\mathcal E+\mathcal A_t)=0.</md>
+      Again, locally a closed <m>1</m>-form is exact. So we can write
+      <md>\mathcal E+\mathcal A_t=-d\varphi,</md>
+      or
+      <md>\boxed{\mathcal E=-d\varphi-\mathcal A_t.}</md>
+      The function <m>\varphi</m> is the electric scalar potential.
+    </p>
+
+    <p>
+      These formulas are not needed to use Maxwell's equations, but they show another place where
+      the identity
+      <md>d^2=0</md>
+      organizes the theory.
+    </p>
+
+    <p>
+      There is a warning from <xref ref="ch17-exterior-derivatives"/>: closed does not always mean
+      globally exact. Missing points, holes, and topology can matter. The equation
+      <md>d\mathcal B=0</md>
+      is local. Writing
+      <md>\mathcal B=d\mathcal A</md>
+      globally may require assumptions about the region.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-what-changes-in-space-time">
+    <title>What changes in space-time</title>
+
+    <p>
+      So far, time has been a parameter. At each time <m>t</m>, we wrote forms on ordinary space:
+      <md>\mathcal E,\quad \mathcal B,\quad \mathcal D,\quad \mathcal H.</md>
+    </p>
+
+    <p>
+      But Maxwell's equations are really space-time equations. Time is not merely a label outside
+      the geometry. It joins the coordinates:
+      <md>(t,x,y,z).</md>
+    </p>
+
+    <p>
+      Let <m>d_4</m> denote the exterior derivative in space-time. It differentiates with respect
+      to <m>t</m>, <m>x</m>, <m>y</m>, and <m>z</m>.
+    </p>
+
+    <p>
+      With one sign convention, define the electromagnetic field <m>2</m>-form
+      <md>\boxed{F=\mathcal B+\mathcal E\wedge dt.}</md>
+      Then
+      <md>\begin{aligned} d_4F &amp;= d\mathcal B+dt\wedge\left(\mathcal B_t+d\mathcal E\right). \end{aligned}</md>
+      Therefore
+      <md>\boxed{d_4F=0}</md>
+      is exactly the pair
+      <md>d\mathcal B=0,</md>
+      <md>d\mathcal E+\mathcal B_t=0.</md>
+      So the no-magnetic-monopoles law and Faraday's law combine into one space-time equation:
+      <md>\boxed{d_4F=0.}</md>
+    </p>
+
+    <p>
+      The other pair also combines. Define
+      <md>\boxed{G=\mathcal D-\mathcal H\wedge dt.}</md>
+      Then
+      <md>\begin{aligned} d_4G &amp;= d\mathcal D+dt\wedge(\mathcal D_t-d\mathcal H). \end{aligned}</md>
+      Using
+      <md>d\mathcal D=\mathcal Q</md>
+      and
+      <md>d\mathcal H-\mathcal D_t=\mathcal J,</md>
+      we get
+      <md>\boxed{d_4G=\mathcal Q-dt\wedge\mathcal J.}</md>
+      The right side is the space-time current <m>3</m>-form:
+      <md>\boxed{\mathscr J=\mathcal Q-dt\wedge\mathcal J.}</md>
+      So the second pair becomes
+      <md>\boxed{d_4G=\mathscr J.}</md>
+    </p>
+
+    <p>
+      Now apply <m>d_4</m> again:
+      <md>d_4(d_4G)=d_4\mathscr J.</md>
+      Since
+      <md>d_4^2=0,</md>
+      we get
+      <md>\boxed{d_4\mathscr J=0.}</md>
+      That is charge conservation in space-time.
+    </p>
+
+    <p>
+      The space-time form of Maxwell's equations is therefore
+      <md>\boxed{d_4F=0,}</md>
+      <md>\boxed{d_4G=\mathscr J.}</md>
+    </p>
+
+    <p>This is the gateway.</p>
+
+    <p>
+      Electric and magnetic fields are no longer two unrelated vector fields. They are pieces of
+      space-time forms. The equations are no longer four separate vector identities. They are two
+      exterior-derivative equations, with conservation following from
+      <md>d_4^2=0.</md>
+    </p>
+
+    <p>
+      A later course explains how the geometry of space-time relates <m>F</m> and <m>G</m>. That
+      relationship uses the metric of space-time, and the operation that appears there is the
+      Hodge star. We do not need it here. The point for this book is simpler and more important:
+      <md>\boxed{\text{the language of forms is the natural language of Maxwell's equations.}}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s4-subsec-main-arc-from-the-end">
+    <title>The book's main arc, seen from the end</title>
+
+    <p>
+      The book began with a displacement:
+      <md>(3,4).</md>
+      It was only an instruction to move.
+    </p>
+
+    <p>
+      Then we learned that vectors could measure length, area, and volume. The wedge product
+      remembered orientation:
+      <md>dx\wedge dy,\qquad dx\wedge dy\wedge dz.</md>
+      Functions became <m>0</m>-forms. Work integrands became <m>1</m>-forms. Flux integrands
+      became <m>2</m>-forms. Densities became <m>3</m>-forms.
+    </p>
+
+    <p>
+      The exterior derivative connected them:
+      <md>0\text{-forms}\xrightarrow{d}1\text{-forms}\xrightarrow{d}2\text{-forms}\xrightarrow{d}3\text{-forms}.</md>
+      In vector language, those arrows became
+      <md>\nabla,\qquad \nabla\times,\qquad \nabla\cdot.</md>
+      The identity
+      <md>d^2=0</md>
+      became the quiet reason behind
+      <md>\nabla\times\nabla f=\mathbf 0</md>
+      and
+      <md>\nabla\cdot(\nabla\times\mathbf F)=0.</md>
+    </p>
+
+    <p>
+      Stokes' theorem then said:
+      <md>\int_{\partial M}\omega=\int_M d\omega.</md>
+      Boundary measurements and interior derivatives were two views of the same thing.
+    </p>
+
+    <p>
+      Finally, conservation laws added time. The continuity equation said:
+      <md>\text{time change of stored amount}+\text{spatial derivative of flux}=\text{source}.</md>
+      Heat, waves, and equilibrium showed how physical assumptions choose fluxes and forces.
+    </p>
+
+    <p>
+      Maxwell's equations show the whole structure at once. Electric circulation, magnetic flux,
+      charge density, current flux, Stokes' theorem, <m>d</m>, and <m>d^2=0</m> all appear in one
+      system.
+    </p>
+
+    <p>So the final lesson is not a formula. It is a way of seeing.</p>
+
+    <md>
+      \boxed{\begin{aligned}
+      &amp;\text{Local derivatives describe what happens inside.}\\
+      &amp;\text{Boundary integrals record what crosses or circulates outside.}\\
+      &amp;\text{Differential forms keep the dimensions and orientations honest.}
+      \end{aligned}}
+    </md>
+
+    <p>
+      That is the promise of multivariable calculus fulfilled: from tiny changes near one point to
+      global laws over curves, surfaces, solids, and finally space-time.
+    </p>
+  </subsection>
+</section>

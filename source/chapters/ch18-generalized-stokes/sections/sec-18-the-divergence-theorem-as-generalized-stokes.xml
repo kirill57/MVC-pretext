@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch18-generalized-stokes.tex, Section 6.
+     Status: CONVERTED. -->
+<section xml:id="sec-18-the-divergence-theorem-as-generalized-stokes" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The divergence theorem as generalized Stokes</title>
+
+  <p>
+    <xref ref="sec-18-classical-stokes-theorem-as-generalized-stokes"/> used
+    <md>M=S,</md>
+    where <m>S</m> was a surface and <m>\partial S</m> was a curve. A <m>1</m>-form lived on the
+    boundary curve, and its exterior derivative lived on the surface:
+    <md>\int_{\partial S}\omega=\int_S d\omega.</md>
+  </p>
+
+  <p>
+    Now move up one dimension. Let
+    <md>M=E</md>
+    be a solid region. Its boundary is a surface. So the boundary integrand must be a
+    <m>2</m>-form.
+  </p>
+
+  <p>That is the divergence theorem.</p>
+
+  <subsection xml:id="c18s6-subsec-two-form-on-a-box">
+    <title>A <m>2</m>-form on a box</title>
+
+    <p>
+      Let
+      <md>E=[0,2]\times[0,1]\times[0,3]</md>
+      with the standard orientation
+      <md>dx\wedge dy\wedge dz.</md>
+      The boundary <m>\partial E</m> is oriented outward.
+    </p>
+
+    <p>
+      Take the <m>2</m>-form
+      <md>\boxed{\Phi=x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy.}</md>
+      This is the flux <m>2</m>-form of the vector field
+      <md>\mathbf F=(x,y,z).</md>
+    </p>
+
+    <p>Compute the boundary integral face by face.</p>
+
+    <p>
+      On the face <m>x=2</m>, the outward normal is <m>\mathbf i</m>, and the positive surface
+      form is
+      <md>dy\wedge dz.</md>
+      There,
+      <md>x=2,</md>
+      so the contribution is
+      <md>\int_{x=2}2\,dy\wedge dz=2(1)(3)=6.</md>
+    </p>
+
+    <p>
+      On the face <m>x=0</m>, the coefficient <m>x</m> is zero, so the contribution is
+      <md>0.</md>
+    </p>
+
+    <p>
+      On the face <m>y=1</m>, the outward normal is <m>\mathbf j</m>, and the positive surface
+      form is
+      <md>dz\wedge dx.</md>
+      There,
+      <md>y=1,</md>
+      so the contribution is
+      <md>\int_{y=1}1\,dz\wedge dx=1(3)(2)=6.</md>
+    </p>
+
+    <p>
+      On the face <m>y=0</m>, the contribution is
+      <md>0.</md>
+    </p>
+
+    <p>
+      On the face <m>z=3</m>, the outward normal is <m>\mathbf k</m>, and the positive surface
+      form is
+      <md>dx\wedge dy.</md>
+      There,
+      <md>z=3,</md>
+      so the contribution is
+      <md>\int_{z=3}3\,dx\wedge dy=3(2)(1)=6.</md>
+    </p>
+
+    <p>
+      On the face <m>z=0</m>, the contribution is
+      <md>0.</md>
+    </p>
+
+    <p>
+      Adding the six faces gives
+      <md>\boxed{\int_{\partial E}\Phi=6+6+6=18.}</md>
+    </p>
+
+    <p>
+      Now compute the interior side. Since
+      <md>\Phi=x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy,</md>
+      we have
+      <md>
+        <mrow>d\Phi \amp= dx\wedge dy\wedge dz + dy\wedge dz\wedge dx + dz\wedge dx\wedge dy</mrow>
+        <mrow>\amp= 3\,dx\wedge dy\wedge dz.</mrow>
+      </md>
+      Therefore
+      <md>
+        <mrow>\int_E d\Phi \amp= \int_E 3\,dx\wedge dy\wedge dz</mrow>
+        <mrow>\amp= 3\operatorname{Volume}(E)</mrow>
+        <mrow>\amp= 3(2)(1)(3)</mrow>
+        <mrow>\amp= 18.</mrow>
+      </md>
+      So
+      <md>\boxed{\int_{\partial E}\Phi=\int_E d\Phi.}</md>
+    </p>
+
+    <figure xml:id="c18s6-fig-outward-box-faces">
+      <caption>For a solid, the boundary is a surface. A <m>2</m>-form is the correct boundary integrand.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            % Coordinates for the box
+            \coordinate (O) at (0,0);
+            \coordinate (A) at (3.2,0);
+            \coordinate (B) at (4.3,1.0);
+            \coordinate (C) at (1.1,1.0);
+            \coordinate (D) at (0,2.2);
+            \coordinate (E) at (3.2,2.2);
+            \coordinate (F) at (4.3,3.2);
+            \coordinate (G) at (1.1,3.2);
+
+            % Draw the box
+            \draw[fill=gray!8, thick] (O)--(A)--(B)--(C)--cycle;
+            \draw[fill=gray!5, thick] (D)--(E)--(F)--(G)--cycle;
+            \draw[thick] (O)--(D);
+            \draw[thick] (A)--(E);
+            \draw[thick] (B)--(F);
+            \draw[thick] (C)--(G);
+
+            % +i direction: Center of the front face (O-A-E-D)
+            % Center = (1.6, 1.1). Points out of the page (down-left).
+            \draw[-&gt;, very thick, red!70!black] (1.6,1.1) -- (0.6,0.19)
+                node[left] {\(+\mathbf{i}\)};
+
+            % +j direction: Center of the right face (A-B-F-E)
+            % Center = (3.75, 1.6). Points right.
+            \draw[-&gt;, very thick, blue!70!black] (3.75,1.6) -- (4.85,1.6)
+                node[right] {\(+\mathbf{j}\)};
+
+            % +k direction: Center of the top face (D-E-F-G)
+            % Center = (2.15, 2.7). Points up.
+            \draw[-&gt;, very thick, green!45!black] (2.15,2.7) -- (2.15,3.8)
+                node[above] {\(+\mathbf{k}\)};
+
+            \node at (2.15,-1.2) {outward-oriented boundary faces};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The example has the same shape as every version of Stokes:
+      <md>\text{form on the boundary} \qquad\longleftrightarrow\qquad \text{derivative of the form inside}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s6-subsec-exterior-derivative-and-divergence">
+    <title>Exterior derivative and divergence</title>
+
+    <p>
+      Let
+      <md>\mathbf F=(P,Q,R)</md>
+      be a vector field in space. Its flux <m>2</m>-form is
+      <md>\boxed{\Phi_{\mathbf F} = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy.}</md>
+      Taking the exterior derivative gives
+      <md>
+        <mrow>d\Phi_{\mathbf F} \amp= dP\wedge dy\wedge dz + dQ\wedge dz\wedge dx + dR\wedge dx\wedge dy</mrow>
+        <mrow>\amp= P_x\,dx\wedge dy\wedge dz</mrow>
+        <mrow>\amp\quad+ Q_y\,dy\wedge dz\wedge dx</mrow>
+        <mrow>\amp\quad+ R_z\,dz\wedge dx\wedge dy</mrow>
+        <mrow>\amp= (P_x+Q_y+R_z)\,dx\wedge dy\wedge dz.</mrow>
+      </md>
+      The coefficient is the divergence:
+      <md>\boxed{\nabla\cdot\mathbf F=P_x+Q_y+R_z.}</md>
+      So
+      <md>\boxed{d\Phi_{\mathbf F} = (\nabla\cdot\mathbf F)\,dx\wedge dy\wedge dz.}</md>
+    </p>
+
+    <p>
+      In words:
+      <md>\boxed{\text{the exterior derivative of the flux form is the divergence volume form.}}</md>
+    </p>
+
+    <p>
+      A <m>2</m>-form measures oriented surface pieces. Its derivative is a <m>3</m>-form, which
+      measures oriented volume pieces. That is exactly the movement from boundary flux to
+      interior source.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s6-subsec-boundary-flux-equals-interior-source">
+    <title>Boundary flux equals interior source</title>
+
+    <p>The divergence theorem is the generalized Stokes theorem in dimension <m>3</m>.</p>
+
+    <theorem xml:id="c18s6-thm-divergence-theorem-as-generalized-stokes">
+      <title>Divergence theorem as generalized Stokes</title>
+      <statement>
+        <p>
+          Let <m>E</m> be an oriented compact solid region in space with piecewise smooth
+          boundary <m>\partial E</m>. Give <m>\partial E</m> the outward boundary orientation.
+        </p>
+        <p>
+          Let
+          <md>\Phi=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy</md>
+          be a <m>C^1</m> <m>2</m>-form on an open set containing <m>E</m>. Then
+          <md>\boxed{\int_{\partial E}\Phi=\int_E d\Phi.}</md>
+          Equivalently, for the vector field
+          <md>\mathbf F=(P,Q,R),</md>
+          <md>\boxed{\iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}_{\mathrm{out}}\,dS = \iiint_E \nabla\cdot\mathbf F\,dV.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      The forms statement is
+      <md>\int_{\partial M}\omega=\int_M d\omega</md>
+      with
+      <md>M=E, \qquad \omega=\Phi.</md>
+    </p>
+
+    <p>
+      The vector statement says:
+      <md>\boxed{\text{net outward flux through the boundary} = \text{total source strength inside}.}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s6-subsec-flux-out-of-a-spherical-tank">
+    <title>Flux out of a spherical tank</title>
+
+    <p>
+      Let <m>E</m> be the ball of radius <m>a</m> centered at the origin:
+      <md>x^2+y^2+z^2\le a^2.</md>
+      Let
+      <md>\mathbf F=(x,y,z),</md>
+      with flux form
+      <md>\Phi=x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy.</md>
+      As above,
+      <md>d\Phi=3\,dx\wedge dy\wedge dz.</md>
+      Therefore
+      <md>
+        <mrow>\int_{\partial E}\Phi \amp= \int_E d\Phi</mrow>
+        <mrow>\amp= \int_E 3\,dx\wedge dy\wedge dz</mrow>
+        <mrow>\amp= 3\operatorname{Volume}(E)</mrow>
+        <mrow>\amp= 3\left(\frac43\pi a^3\right)</mrow>
+        <mrow>\amp= 4\pi a^3.</mrow>
+      </md>
+      So
+      <md>\boxed{\iint_{\partial E}(x,y,z)\cdot\widehat{\mathbf n}_{\mathrm{out}}\,dS = 4\pi a^3.}</md>
+    </p>
+
+    <p>
+      The direct surface calculation says the same thing. On the sphere,
+      <md>\widehat{\mathbf n}_{\mathrm{out}}=\frac{(x,y,z)}{a}.</md>
+      Thus
+      <md>(x,y,z)\cdot\widehat{\mathbf n}_{\mathrm{out}} = \frac{x^2+y^2+z^2}{a} = a.</md>
+      So the outward flux is
+      <md>a\cdot 4\pi a^2=4\pi a^3.</md>
+    </p>
+
+    <p>
+      The divergence theorem turned a surface integral into the volume of the ball. The surface
+      was curved, but the interior source density was constant:
+      <md>\nabla\cdot(x,y,z)=3.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s6-subsec-why-the-hypotheses-matter">
+    <title>Why the hypotheses matter</title>
+
+    <p>
+      The divergence theorem is often misused in three ways: the surface is not closed, the
+      orientation is not outward, or the field is not defined inside. A fourth warning is
+      smoothness: jumps can hide internal sources.
+    </p>
+
+    <paragraphs>
+      <title>The boundary surface must be closed</title>
+
+      <p>
+        Let <m>D</m> be the unit disk
+        <md>x^2+y^2\le1, \qquad z=0,</md>
+        oriented upward. Take the constant field
+        <md>\mathbf F=(0,0,1),</md>
+        with flux form
+        <md>\Phi=dx\wedge dy.</md>
+        Then
+        <md>\int_D\Phi=\pi.</md>
+        But
+        <md>d\Phi=d(dx\wedge dy)=0.</md>
+      </p>
+
+      <p>
+        This does not contradict the divergence theorem. The disk is not the full boundary of a
+        solid. It has a boundary curve:
+        <md>x^2+y^2=1,\qquad z=0.</md>
+        The divergence theorem applies to closed surfaces such as spheres, boxes, and the full
+        boundary of a cylinder, not to one open cap by itself.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>The orientation must be outward</title>
+
+      <p>
+        Take the unit cube
+        <md>E=[0,1]\times[0,1]\times[0,1],</md>
+        and the <m>2</m>-form
+        <md>\Phi=x\,dy\wedge dz.</md>
+        Then
+        <md>d\Phi=dx\wedge dy\wedge dz.</md>
+        So
+        <md>\int_E d\Phi=1.</md>
+      </p>
+
+      <p>
+        With outward orientation, only the face <m>x=1</m> contributes:
+        <md>\int_{\partial E}\Phi=1.</md>
+        If every face is oriented inward instead, the boundary integral becomes
+        <md>-1.</md>
+        The theorem uses the boundary orientation induced from the solid. For a solid in ordinary
+        space, that means outward.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>The form must be defined throughout the solid</title>
+
+      <p>
+        Let
+        <md>r=\sqrt{x^2+y^2+z^2}</md>
+        and consider the inverse-square radial field
+        <md>\mathbf G=\frac{(x,y,z)}{r^3}.</md>
+        Its flux form is
+        <md>\Psi= \frac{x}{r^3}\,dy\wedge dz + \frac{y}{r^3}\,dz\wedge dx + \frac{z}{r^3}\,dx\wedge dy.</md>
+        This form is not defined at the origin.
+      </p>
+
+      <p>
+        Away from the origin,
+        <md>\nabla\cdot\mathbf G=0,</md>
+        so
+        <md>d\Psi=0</md>
+        wherever <m>\Psi</m> is defined.
+      </p>
+
+      <p>
+        Now integrate over the sphere <m>S_a</m> of radius <m>a</m>, oriented outward. On the
+        sphere,
+        <md>\widehat{\mathbf n}_{\mathrm{out}}=\frac{(x,y,z)}{a},</md>
+        and
+        <md>\mathbf G=\frac{(x,y,z)}{a^3}.</md>
+        Thus
+        <md>
+          <mrow>\mathbf G\cdot\widehat{\mathbf n}_{\mathrm{out}} \amp= \frac{(x,y,z)}{a^3}\cdot\frac{(x,y,z)}{a}</mrow>
+          <mrow>\amp= \frac{x^2+y^2+z^2}{a^4}</mrow>
+          <mrow>\amp= \frac1{a^2}.</mrow>
+        </md>
+        Therefore
+        <md>\boxed{\int_{S_a}\Psi = \iint_{S_a}\mathbf G\cdot\widehat{\mathbf n}_{\mathrm{out}}\,dS = \frac1{a^2}(4\pi a^2) = 4\pi.}</md>
+      </p>
+
+      <p>
+        It would be wrong to say:
+        <md>d\Psi=0, \qquad \text{so } \int_{S_a}\Psi=0.</md>
+        The form is not defined at the origin, and the origin lies inside the sphere. The
+        divergence theorem cannot be applied to the whole ball.
+      </p>
+
+      <p>
+        If we remove the origin, the theorem works. Let
+        <md>E=\{(x,y,z):b\le r\le a\}, \qquad 0\lt b\lt a.</md>
+        Then
+        <md>d\Psi=0</md>
+        on <m>E</m>. The boundary has two spheres. The outer sphere contributes
+        <md>4\pi.</md>
+        The inner sphere has the orientation outward from the shell, which points toward the
+        origin, so it contributes
+        <md>-4\pi.</md>
+        The total boundary integral is
+        <md>4\pi-4\pi=0,</md>
+        matching
+        <md>\int_E d\Psi=0.</md>
+      </p>
+
+      <p>The missing point was acting like a source.</p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>The form must be smooth enough</title>
+
+      <p>
+        Let
+        <md>E=[-1,1]\times[-1,1]\times[-1,1],</md>
+        and define
+        <md>H(x)= \begin{cases} 0, &amp; x\lt 0,\\ 1, &amp; x\gt 0. \end{cases}</md>
+        Consider the flux form
+        <md>\Phi=H(x)\,dy\wedge dz.</md>
+        This form jumps across the plane
+        <md>x=0.</md>
+        It is not <m>C^1</m> on <m>E</m>.
+      </p>
+
+      <p>
+        If we ignore the jump and only look on the two sides, then <m>H</m> is constant on each
+        side, so a careless computation would say
+        <md>d\Phi=0.</md>
+        But the outward flux through the boundary is not zero. On the face <m>x=1</m>,
+        <md>H(1)=1,</md>
+        so the contribution is
+        <md>\int_{x=1}dy\wedge dz=4.</md>
+        On the face <m>x=-1</m>,
+        <md>H(-1)=0,</md>
+        so there is no contribution. The other faces do not contribute to <m>dy\wedge dz</m>.
+        Thus
+        <md>\boxed{\int_{\partial E}\Phi=4.}</md>
+      </p>
+
+      <p>
+        The jump across <m>x=0</m> is hiding an internal source sheet. The <m>C^1</m> theorem is
+        not designed to handle that sheet. More advanced versions can treat it, but then the jump
+        must be counted honestly.
+      </p>
+    </paragraphs>
+  </subsection>
+
+  <subsection xml:id="c18s6-subsec-why-closed-surfaces-have-no-boundary-curve">
+    <title>Why closed surfaces have no boundary curve</title>
+
+    <p>
+      A sphere has no boundary curve. A cube surface looks as if it has edges, but as an oriented
+      surface it has no boundary curve. Each edge is shared by two faces, and the two induced edge
+      orientations cancel.
+    </p>
+
+    <p>
+      This is the geometric meaning of
+      <md>\boxed{\partial(\partial E)=\emptyset.}</md>
+      A boundary has no boundary.
+    </p>
+
+    <p>
+      For a solid <m>E</m>,
+      <md>\partial E</md>
+      is a closed surface. It is the right kind of object for integrating a <m>2</m>-form. It is
+      not, by itself, the right kind of boundary for a <m>1</m>-form line integral, because there
+      is no outer rim to walk around.
+    </p>
+
+    <p>
+      This explains a useful consequence. A closed surface can have nonzero flux:
+      <md>\int_{\partial E}\Phi</md>
+      may be positive or negative. The sphere with the radial field <m>(x,y,z)</m> is an example.
+    </p>
+
+    <p>
+      But if the <m>2</m>-form on a closed surface happens to be the exterior derivative of a
+      globally defined <m>1</m>-form,
+      <md>\Phi=d\omega,</md>
+      then
+      <md>\int_{\partial E}\Phi = \int_{\partial E}d\omega.</md>
+      Using generalized Stokes on the closed surface <m>\partial E</m>,
+      <md>\int_{\partial E}d\omega = \int_{\partial(\partial E)}\omega = 0.</md>
+      So
+      <md>\boxed{\int_{\partial E}d\omega=0.}</md>
+    </p>
+
+    <p>
+      In vector language, this says:
+      <md>\boxed{\iint_{\partial E}(\nabla\times\mathbf F)\cdot\widehat{\mathbf n}_{\mathrm{out}}\,dS=0,}</md>
+      as long as <m>\mathbf F</m> is defined on a region containing <m>E</m>.
+    </p>
+
+    <p>
+      Flux through a closed surface can be nonzero. Flux of a curl through a closed surface is
+      zero. The difference is whether the <m>2</m>-form is arbitrary or is already the derivative
+      of a <m>1</m>-form.
+    </p>
+
+    <p>
+      At this point the four old theorems have become one sentence:
+      <md>\int_{\partial M}\omega=\int_M d\omega.</md>
+      The sentence is short, but it is not magic. The next section opens the mechanism. On
+      rectangles and boxes, the theorem is just the one-variable Fundamental Theorem of Calculus
+      used several times. On larger shapes, interior boundary pieces cancel in pairs. That
+      cancellation is the engine behind the whole chapter.
+    </p>
+  </subsection>
+</section>

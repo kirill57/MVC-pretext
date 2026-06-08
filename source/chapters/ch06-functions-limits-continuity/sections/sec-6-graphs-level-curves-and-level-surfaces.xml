@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch06-functions-limits-continuity.tex, Section 6.2.
+     Status: CONVERTED. -->
+<section xml:id="sec-6-graphs-level-curves-and-level-surfaces" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Graphs, level curves, and level surfaces</title>
+
+  <p>
+    <xref ref="sec-6-functions-from-rn-to-rm"/> gave us scalar fields and vector fields. Vector
+    fields are best drawn with arrows. Scalar fields need a different kind of picture.
+  </p>
+
+  <p>
+    For a scalar-valued function
+    <md>f(x,y),</md>
+    the input lives in the plane and the output is a number. We can use the output as a height.
+    That turns the function into a surface in space.
+  </p>
+
+  <subsection xml:id="c6s2-subsec-graphs-of-functions">
+    <title>Graphs of functions <m>z=f(x,y)</m></title>
+
+    <p>
+      A market stall has a flat rectangular floor,
+      <md>0\le x\le 4,\qquad 0\le y\le 3.</md>
+      A slanted canopy above it has height
+      <md>f(x,y)=2+\frac{x}{4}+\frac{y}{6}.</md>
+      At the corner <m>(0,0)</m>,
+      <md>f(0,0)=2.</md>
+      At the corner <m>(4,3)</m>,
+      <md>f(4,3)=2+1+\frac12=3.5.</md>
+      The canopy is higher as we move in the positive <m>x</m>-direction and also higher as we
+      move in the positive <m>y</m>-direction.
+    </p>
+
+    <p>
+      To draw the graph, we place the point
+      <md>(x,y,f(x,y))</md>
+      above each floor point <m>(x,y)</m>.
+    </p>
+
+    <figure xml:id="c6s2-fig-graph-canopy">
+      <caption>The graph of <m>z=f(x,y)</m> is made by placing height <m>f(x,y)</m> above each
+      input point <m>(x,y)</m>.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.95, &gt;=stealth]
+            % projected floor coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (4,0);
+            \coordinate (C) at (5.35,0.75);
+            \coordinate (D) at (1.35,0.75);
+
+            % projected surface coordinates
+            \coordinate (Ap) at (0,2);
+            \coordinate (Bp) at (4,3);
+            \coordinate (Cp) at (5.35,4.25);
+            \coordinate (Dp) at (1.35,3.25);
+
+            \draw[-&gt;] (-0.4,0) -- (6,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.3) -- (0,4.8) node[above] {\(z\)};
+            \draw[-&gt;] (0,0) -- (1.6,0.9) node[above right] {\(y\)};
+
+            \draw[fill=gray!10] (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw[dashed] (A) -- (Ap);
+            \draw[dashed] (B) -- (Bp);
+            \draw[dashed] (C) -- (Cp);
+            \draw[dashed] (D) -- (Dp);
+
+            \draw[fill=blue!12, thick] (Ap) -- (Bp) -- (Cp) -- (Dp) -- cycle;
+
+            \node[left] at (Ap) {\(2\)};
+            \node[right] at (Cp) {\(3.5\)};
+            \node at (3,4.8) {\(z=2+\dfrac{x}{4}+\dfrac{y}{6}\)};
+            \node at (3,-0.8) {floor domain in the \(xy\)-plane};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <definition xml:id="c6s2-def-graph-two-variables">
+      <title>Graph of a function of two variables</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^2\to\mathbb R.</md>
+          The <term>graph</term> of <m>f</m> is the set of points in <m>\mathbb R^3</m>
+          <md>\boxed{\{(x,y,z): (x,y)\in D,\ z=f(x,y)\}.}</md>
+          Equivalently, the graph is the surface
+          <md>z=f(x,y).</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      This definition is the direct descendant of the graph of a single-variable function. For
+      <md>y=f(x),</md>
+      we placed the output <m>y</m> above the input <m>x</m>. Now we place the output <m>z</m>
+      above the input point <m>(x,y)</m>.
+    </p>
+
+    <example xml:id="c6s2-ex-dome-as-graph">
+      <title>A dome as a graph</title>
+      <statement>
+        <p>
+          The function
+          <md>h(x,y)=\sqrt{16-x^2-y^2}</md>
+          has domain
+          <md>x^2+y^2\le 16.</md>
+          Its graph is
+          <md>z=\sqrt{16-x^2-y^2}.</md>
+          Squaring gives
+          <md>x^2+y^2+z^2=16,</md>
+          with
+          <md>z\ge0.</md>
+          So the graph is the upper half of a sphere of radius <m>4</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Graphs are useful, but they have limits. A function of three variables
+      <md>f(x,y,z)</md>
+      would have a graph made of points
+      <md>(x,y,z,f(x,y,z)).</md>
+      That graph lives in four-dimensional space. We cannot draw it in the same direct way.
+    </p>
+
+    <p>
+      For scalar fields in the plane, there is another picture that is often even more useful
+      than the graph: the contour map.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s2-subsec-contour-maps-level-curves">
+    <title>Contour maps and level curves</title>
+
+    <p>
+      A hiker does not need a three-dimensional plastic model of a mountain to plan a route. A
+      topographic map is usually better. It joins points of equal height.
+    </p>
+
+    <p>
+      Consider a hill whose height is
+      <md>H(x,y)=120-x^2-4y^2,</md>
+      where height is measured in meters. The highest point is at
+      <md>(0,0),</md>
+      where
+      <md>H(0,0)=120.</md>
+      The set of points at height <m>116</m> satisfies
+      <md>120-x^2-4y^2=116,</md>
+      so
+      <md>x^2+4y^2=4.</md>
+      This is an ellipse.
+    </p>
+
+    <p>
+      The set of points at height <m>104</m> satisfies
+      <md>x^2+4y^2=16.</md>
+      The set of points at height <m>84</m> satisfies
+      <md>x^2+4y^2=36.</md>
+      Each height gives an ellipse around the summit.
+    </p>
+
+    <figure xml:id="c6s2-fig-level-curves-hill">
+      <caption>Level curves of a stretched hill. The long direction of the ellipses shows that
+      the hill changes more slowly east-west than north-south.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.72, &gt;=stealth]
+            \draw[-&gt;] (-7,0) -- (7.4,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-3.8) -- (0,3.9) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-6,-3) grid (6,3);
+
+            \draw[thick] (0,0) ellipse (2 and 1);
+            \draw[thick] (0,0) ellipse (4 and 2);
+            \draw[thick] (0,0) ellipse (6 and 3);
+
+            \node[fill=white, inner sep=1pt] at (2.2,0.7) {\(116\)};
+            \node[fill=white, inner sep=1pt] at (4.2,1.55) {\(104\)};
+            \node[fill=white, inner sep=1pt] at (5.8,2.7) {\(84\)};
+
+            \fill (0,0) circle (2pt);
+            \node[above right] at (0,0) {summit \(120\)};
+
+            \node at (0,-4.7) {level curves of \(H(x,y)=120-x^2-4y^2\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The picture tells a story. To lose the same amount of height, you can travel farther in
+      the <m>x</m>-direction than in the <m>y</m>-direction. So the hill is gentler east-west and
+      steeper north-south.
+    </p>
+
+    <p>Now we name the idea.</p>
+
+    <definition xml:id="c6s2-def-level-curve">
+      <title>Level curve</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^2\to\mathbb R.</md>
+          For a constant <m>c</m>, the <term>level curve</term> of <m>f</m> at level <m>c</m> is
+          the set
+          <md>\boxed{\{(x,y)\in D:f(x,y)=c\}.}</md>
+          A contour map is a drawing of several level curves, usually labeled by their values of
+          <m>c</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The word <q>curve</q> is traditional, but it comes with a warning. A level set may be a
+      curve, several curves, a point, or even empty.
+    </p>
+
+    <example xml:id="c6s2-ex-level-curve-shrinks">
+      <title>A level curve can shrink to a point or disappear</title>
+      <statement>
+        <p>
+          For
+          <md>H(x,y)=120-x^2-4y^2,</md>
+          the level <m>c=120</m> gives
+          <md>x^2+4y^2=0.</md>
+          The only solution is
+          <md>(0,0).</md>
+          So this level set is just one point.
+        </p>
+        <p>
+          The level <m>c=130</m> gives
+          <md>120-x^2-4y^2=130,</md>
+          or
+          <md>x^2+4y^2=-10.</md>
+          There are no real solutions. So this level set is empty.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s2-ex-level-curves-plane">
+      <title>Level curves of a plane</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=6-3x-2y.</md>
+          The level curve at height <m>c</m> is
+          <md>6-3x-2y=c.</md>
+          Rearranging,
+          <md>3x+2y=6-c.</md>
+          So the level curves are parallel lines.
+        </p>
+        <p>
+          This makes sense: the graph of <m>f</m> is a plane. Slicing a tilted plane by
+          horizontal planes gives parallel lines.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s2-ex-saddle-from-above">
+      <title>A saddle seen from above</title>
+      <statement>
+        <p>
+          Let
+          <md>S(x,y)=y^2-x^2.</md>
+          The level curve <m>S(x,y)=0</m> is
+          <md>y^2-x^2=0,</md>
+          so
+          <md>(y-x)(y+x)=0.</md>
+          Thus
+          <md>y=x \qquad\text{or}\qquad y=-x.</md>
+          The zero level set is two crossing lines.
+        </p>
+        <p>
+          For <m>c&gt;0</m>, the curves
+          <md>y^2-x^2=c</md>
+          are hyperbolas opening upward and downward. For <m>c&lt;0</m>, they open left and
+          right. This crossing pattern is a top-down signal of a saddle surface.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Level curves are not merely flat drawings. They are the shadows of horizontal slices of
+      the graph.
+    </p>
+
+    <theorem xml:id="c6s2-thm-level-curves-horizontal-slices">
+      <title>Level curves are horizontal slices of the graph</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^2\to\mathbb R.</md>
+          The intersection of the graph
+          <md>z=f(x,y)</md>
+          with the horizontal plane
+          <md>z=c</md>
+          is
+          <md>\{(x,y,c):(x,y)\in D,\ f(x,y)=c\}.</md>
+          Thus it is the level curve <m>f(x,y)=c</m>, lifted to height <m>c</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          A point <m>(x,y,z)</m> lies on the graph exactly when
+          <md>z=f(x,y).</md>
+          It also lies in the horizontal plane <m>z=c</m> exactly when
+          <md>z=c.</md>
+          Both conditions hold exactly when
+          <md>f(x,y)=c</md>
+          and
+          <md>z=c.</md>
+          So the intersection is the level curve <m>f(x,y)=c</m>, placed in the plane <m>z=c</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      This is why a contour map can help us imagine a surface. Draw several level curves, then
+      imagine each one lifted to its labeled height.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s2-subsec-level-surfaces">
+    <title>Level surfaces</title>
+
+    <p>
+      For a function of three variables,
+      <md>f(x,y,z),</md>
+      the graph would live in four dimensions. But the level sets live in ordinary
+      three-dimensional space.
+    </p>
+
+    <example xml:id="c6s2-ex-pressure-levels-tank">
+      <title>Pressure levels in a tank</title>
+      <statement>
+        <p>
+          Let
+          <md>p(x,y,z)=120-3z.</md>
+          The level surface
+          <md>p(x,y,z)=90</md>
+          satisfies
+          <md>120-3z=90.</md>
+          So
+          <md>z=10.</md>
+          That level surface is a horizontal plane.
+        </p>
+        <p>
+          More generally,
+          <md>p(x,y,z)=c</md>
+          gives
+          <md>z=\frac{120-c}{3}.</md>
+          So the pressure levels are horizontal planes stacked above one another.
+        </p>
+      </statement>
+    </example>
+
+    <definition xml:id="c6s2-def-level-surface">
+      <title>Level surface</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^3\to\mathbb R.</md>
+          For a constant <m>c</m>, the <term>level surface</term> of <m>f</m> at level <m>c</m>
+          is the set
+          <md>\boxed{\{(x,y,z)\in D:f(x,y,z)=c\}.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c6s2-ex-distance-radio-beacon">
+      <title>Distance from a radio beacon</title>
+      <statement>
+        <p>
+          A radio beacon is located at
+          <md>B=(1,-2,3).</md>
+          The squared distance from the beacon is
+          <md>R(x,y,z)=(x-1)^2+(y+2)^2+(z-3)^2.</md>
+          The level surface
+          <md>R(x,y,z)=9</md>
+          is
+          <md>(x-1)^2+(y+2)^2+(z-3)^2=9.</md>
+          This is a sphere centered at <m>(1,-2,3)</m> with radius <m>3</m>.
+        </p>
+        <p>
+          More generally,
+          <md>R(x,y,z)=c</md>
+          is a sphere of radius <m>\sqrt c</m> when <m>c&gt;0</m>, a single point when
+          <m>c=0</m>, and empty when <m>c&lt;0</m>.
+        </p>
+      </statement>
+    </example>
+
+    <figure xml:id="c6s2-fig-level-surfaces-spheres">
+      <caption>Level surfaces of squared distance are spheres centered at the source.</caption>
+      <image width="65%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.8, &gt;=stealth]
+            \draw[-&gt;] (-4,0) -- (4.5,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-3.2) -- (0,3.8) node[above] {\(z\)};
+
+            \draw[gray!25] (-3,-2.5) -- (3,2.5);
+            \draw[gray!25] (-3,2.5) -- (3,-2.5);
+
+            \fill (0,0) circle (2pt);
+            \node[below right] at (0,0) {beacon};
+
+            \draw[thick] (0,0) ellipse (1.2 and 0.75);
+            \draw[thick] (0,0) ellipse (2.2 and 1.4);
+            \draw[thick] (0,0) ellipse (3.2 and 2.05);
+
+            \node[fill=white, inner sep=1pt] at (1.15,0.55) {\(R=1\)};
+            \node[fill=white, inner sep=1pt] at (2.15,1.1) {\(R=4\)};
+            \node[fill=white, inner sep=1pt] at (3.15,1.7) {\(R=9\)};
+
+            \node at (0,-4) {a two-dimensional sketch of nested spherical level surfaces};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      Level surfaces are the three-dimensional version of contour lines. Instead of drawing
+      curves of equal height on a map, we draw surfaces on which a quantity stays constant.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s2-subsec-reading-geometry-level-sets">
+    <title>Reading geometry from level sets</title>
+
+    <p>Level sets let us read geometry without always drawing the graph.</p>
+
+    <p>Here are three important habits.</p>
+
+    <p>
+      First, level curves that are close together indicate rapid change. On a topographic map,
+      tightly packed contour lines mean a steep slope. Widely spaced contour lines mean a gentle
+      slope.
+    </p>
+
+    <p>
+      Second, the shape of a level curve tells us which directions change slowly. For
+      <md>H(x,y)=120-x^2-4y^2,</md>
+      the level curves are long in the <m>x</m>-direction and short in the <m>y</m>-direction.
+      That means the hill changes more slowly east-west and more quickly north-south.
+    </p>
+
+    <p>
+      Third, different level curves of the same function cannot cross. If one point lay on both
+      <md>f(x,y)=10</md>
+      and
+      <md>f(x,y)=12,</md>
+      then the same input <m>(x,y)</m> would have two outputs. That is not a function.
+    </p>
+
+    <p>
+      The warning is that one level set can have several pieces. For
+      <md>S(x,y)=y^2-x^2,</md>
+      the level set <m>S=0</m> is the pair of lines
+      <md>y=x \qquad\text{and}\qquad y=-x.</md>
+      Those two lines meet, but they belong to the same level value. There is no contradiction.
+    </p>
+
+    <p>
+      A graph, a contour map, and a formula are three ways of seeing the same scalar field. Each
+      has strengths. The formula computes. The graph shows height. The level curves show how
+      height is arranged across the input region.
+    </p>
+
+    <p>
+      But pictures can also hide danger. A surface can look calm from several straight-line
+      approaches to a point and still behave badly along a curved approach. Once inputs can
+      approach a point from infinitely many directions, the old one-dimensional idea of a limit
+      needs a sharper eye. That is the next problem.
+    </p>
+  </subsection>
+</section>

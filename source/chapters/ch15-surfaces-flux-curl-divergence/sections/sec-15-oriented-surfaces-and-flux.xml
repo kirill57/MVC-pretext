@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch15-surfaces-flux-curl-divergence.tex, Section 15.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-15-oriented-surfaces-and-flux" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Oriented surfaces and flux</title>
+
+  <p>
+    <xref ref="sec-15-surface-area-and-scalar-surface-integrals"/> measured surface area with
+    <md>dS=\|\mathbf r_u\times\mathbf r_v\|\,du\,dv.</md>
+    That formula deliberately forgot the sign of
+    <md>\mathbf r_u\times\mathbf r_v.</md>
+    For mass and area, forgetting the sign was right. But for flow through a surface, the sign
+    is the point.
+  </p>
+
+  <p>
+    A screen has two sides. Water can pass through it one way or the other. Air can move from
+    outside to inside or from inside to outside. The same surface area is involved, but the sign
+    changes when we change which side we call positive.
+  </p>
+
+  <subsection xml:id="c15s3-subsec-two-normal-directions">
+    <title>A surface has two normal directions</title>
+
+    <p>
+      Start with the simplest possible screen:
+      <md>S=\{(x,y,1):0\le x\le2,\ 0\le y\le3\}.</md>
+      This is a horizontal rectangle at height <m>z=1</m>. Suppose air moves upward with constant
+      velocity
+      <md>\mathbf F=(0,0,5).</md>
+      The surface has area
+      <md>2\cdot3=6.</md>
+      If we choose the upward normal
+      <md>\widehat{\mathbf n}=(0,0,1),</md>
+      then the air passes through the positive side of the screen at a rate
+      <md>\mathbf F\cdot\widehat{\mathbf n}=5.</md>
+      So the total flow through the screen is
+      <md>5\cdot6=30.</md>
+    </p>
+
+    <p>
+      If instead we choose the downward normal
+      <md>\widehat{\mathbf n}=(0,0,-1),</md>
+      then
+      <md>\mathbf F\cdot\widehat{\mathbf n}=-5,</md>
+      and the total flow is
+      <md>-30.</md>
+    </p>
+
+    <p>The physical motion did not change. Only our choice of positive side changed.</p>
+
+    <figure xml:id="c15s3-fig-flux-signed">
+      <caption>Flux is signed. Reversing the chosen normal reverses the sign.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (4,0.5);
+            \coordinate (C) at (5.2,2.6);
+            \coordinate (D) at (1.2,2.1);
+
+            \draw[fill=gray!10, thick] (A)--(B)--(C)--(D)--cycle;
+
+            \foreach \x/\y in {0.8/0.35,1.8/0.48,2.8/0.60,3.8/0.72,1.25/1.35,2.25/1.48,3.25/1.60,4.25/1.72} {
+                \draw[-&gt;, blue!65!black, very thick] (\x,\y-1.0) -- (\x,\y-0.15);
+                \draw[-&gt;, blue!65!black, very thick] (\x,\y+0.25) -- (\x,\y+1.1);
+            }
+
+            \draw[-&gt;, red!70!black, very thick] (2.6,1.1) -- (2.6,2.5)
+                node[right] {\(\widehat{\mathbf n}\)};
+            \draw[-&gt;, red!70!black, very thick] (3.5,1.25) -- (3.5,0.05)
+                node[right] {\(-\widehat{\mathbf n}\)};
+
+            \node at (2.6,-0.85) {the same screen, two possible choices of positive side};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <definition xml:id="c15s3-def-orientation-surface">
+      <title>Orientation of a surface</title>
+      <statement>
+        <p>
+          An <term>orientation</term> of a smooth surface is a continuous choice of unit normal
+          vector
+          <md>\widehat{\mathbf n}</md>
+          at each point of the surface.
+        </p>
+        <p>
+          A surface with such a continuous choice is called <term>orientable</term>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For a parametrized surface
+      <md>\mathbf r(u,v),</md>
+      the cross product
+      <md>\mathbf r_u\times\mathbf r_v</md>
+      chooses a normal direction wherever it is nonzero. The corresponding unit normal is
+      <md>\boxed{\widehat{\mathbf n}=\frac{\mathbf r_u\times\mathbf r_v}{\|\mathbf r_u\times\mathbf r_v\|}.}</md>
+      If we swap the order of the parameters, the normal reverses:
+      <md>\mathbf r_v\times\mathbf r_u=-\mathbf r_u\times\mathbf r_v.</md>
+    </p>
+
+    <p>
+      Not every surface can be oriented. A M&#246;bius strip has only one side. If you carry a
+      normal vector once around the strip, it comes back pointing the opposite way. So there is no
+      continuous global choice of positive side. We will return to this warning in
+      <xref ref="sec-15-warning-examples"/>. For now, the surfaces we use will be orientable.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s3-subsec-flux-signed-flow">
+    <title>Flux as signed flow through a surface</title>
+
+    <p>
+      Let
+      <md>\mathbf F(x,y,z)</md>
+      be a vector field. If <m>\mathbf F</m> is a fluid velocity field, then
+      <md>\mathbf F\cdot\widehat{\mathbf n}</md>
+      measures the normal component of the velocity.
+    </p>
+
+    <p>
+      There are three possibilities:
+      <md>\begin{array}{c|c}
+      \mathbf F\cdot\widehat{\mathbf n}\gt0
+      \amp
+      \text{flow crosses in the positive normal direction}
+      \\[1mm]
+      \mathbf F\cdot\widehat{\mathbf n}\lt0
+      \amp
+      \text{flow crosses against the positive normal direction}
+      \\[1mm]
+      \mathbf F\cdot\widehat{\mathbf n}=0
+      \amp
+      \text{flow is tangent to the surface}
+      \end{array}</md>
+    </p>
+
+    <p>
+      A small surface patch has area approximately <m>\Delta S</m>. The amount of fluid crossing
+      it per unit time is approximately
+      <md>\mathbf F\cdot\widehat{\mathbf n}\,\Delta S.</md>
+      Adding all patches gives the flux.
+    </p>
+
+    <definition xml:id="c15s3-def-flux-integral">
+      <title>Flux integral</title>
+      <statement>
+        <p>
+          Let <m>S</m> be an oriented smooth surface with chosen unit normal
+          <md>\widehat{\mathbf n}.</md>
+          The <term>flux</term> of a vector field <m>\mathbf F</m> through <m>S</m> is
+          <md>\boxed{\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      If <m>\mathbf F</m> is velocity measured in meters per second and <m>dS</m> is measured in
+      square meters, then flux has units
+      <md>\frac{\text{m}}{\text{s}}\cdot \text{m}^2=\frac{\text{m}^3}{\text{s}}.</md>
+      So flux is volume per time.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s3-subsec-vector-area-element">
+    <title>The vector area element</title>
+
+    <p>
+      The parametrization formula for flux comes from combining two things we already know:
+      <md>dS=\|\mathbf r_u\times\mathbf r_v\|\,du\,dv</md>
+      and
+      <md>\widehat{\mathbf n}=\frac{\mathbf r_u\times\mathbf r_v}{\|\mathbf r_u\times\mathbf r_v\|}.</md>
+      Multiplying them gives
+      <md>\widehat{\mathbf n}\,dS=(\mathbf r_u\times\mathbf r_v)\,du\,dv.</md>
+      This vector
+      <md>\widehat{\mathbf n}\,dS</md>
+      is called the <term>oriented surface area element</term>. It is area with a direction
+      attached.
+    </p>
+
+    <p>
+      So, if the parametrization
+      <md>\mathbf r(u,v)</md>
+      has the chosen orientation, then
+      <md>\boxed{\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS=\iint_D \mathbf F(\mathbf r(u,v))\cdot\bigl(\mathbf r_u\times\mathbf r_v\bigr)\,du\,dv.}</md>
+      If <m>\mathbf r_u\times\mathbf r_v</m> points opposite to the chosen orientation, then the
+      right-hand side gives the negative of the desired flux.
+    </p>
+
+    <theorem xml:id="c15s3-thm-flux-parametrized-surface">
+      <title>Flux through a parametrized surface</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r:D\to\mathbb R^3</md>
+          be a smooth regular parametrization that covers an oriented surface <m>S</m> once,
+          except possibly along boundary curves. Suppose the chosen orientation is the one
+          determined by
+          <md>\mathbf r_u\times\mathbf r_v.</md>
+          Then
+          <md>\boxed{\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS=\iint_D \mathbf F(\mathbf r(u,v))\cdot\bigl(\mathbf r_u\times\mathbf r_v\bigr)\,du\,dv.}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          On a tiny parameter rectangle,
+          <md>\Delta u\,\Delta v,</md>
+          the surface patch is approximately the parallelogram spanned by
+          <md>\mathbf r_u\,\Delta u \qquad\text{and}\qquad \mathbf r_v\,\Delta v.</md>
+          Its oriented area vector is approximately
+          <md>(\mathbf r_u\times\mathbf r_v)\,\Delta u\,\Delta v.</md>
+          The flux across that tiny patch is therefore approximately
+          <md>\mathbf F(\mathbf r(u,v))\cdot(\mathbf r_u\times\mathbf r_v)\,\Delta u\,\Delta v.</md>
+          Adding these contributions and taking the limit gives the formula.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The phrase <q>covers once</q> matters. If a parametrization wraps around the same surface
+      twice, the flux integral counts the surface twice. The calculation is not wrong; it is
+      computing flux with multiplicity.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s3-subsec-slanted-skylight">
+    <title>A slanted skylight in a steady wind</title>
+
+    <p>
+      A rectangular skylight lies in the plane
+      <md>z=1+\frac{x}{2},</md>
+      above the rectangle
+      <md>0\le x\le2,\qquad 0\le y\le3.</md>
+      Choose the upward orientation. A steady wind is modeled by
+      <md>\mathbf F=(2,1,5).</md>
+      Find the flux through the skylight.
+    </p>
+
+    <p>
+      Use the parametrization
+      <md>\mathbf r(u,v)=\left(u,v,1+\frac u2\right), \qquad 0\le u\le2,\quad 0\le v\le3.</md>
+      Then
+      <md>\mathbf r_u=\left(1,0,\frac12\right), \qquad \mathbf r_v=(0,1,0).</md>
+      So
+      <md>
+        <mrow>\mathbf r_u\times\mathbf r_v \amp= \begin{vmatrix} \mathbf i\amp\mathbf j\amp\mathbf k\\ 1\amp0\amp1/2\\ 0\amp1\amp0 \end{vmatrix}</mrow>
+        <mrow>\amp= \left(-\frac12,0,1\right).</mrow>
+      </md>
+      This vector has positive <m>z</m>-component, so it gives the upward orientation.
+    </p>
+
+    <p>
+      The dot product is
+      <md>\mathbf F\cdot(\mathbf r_u\times\mathbf r_v)=(2,1,5)\cdot\left(-\frac12,0,1\right)=-1+5=4.</md>
+      Therefore
+      <md>
+        <mrow>\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS \amp= \int_0^2\int_0^3 4\,dv\,du</mrow>
+        <mrow>\amp= 24.</mrow>
+      </md>
+      So the upward flux through the skylight is
+      <md>\boxed{24.}</md>
+    </p>
+
+    <p>
+      The <m>z</m>-component of the wind contributes positively. The <m>x</m>-component reduces
+      the flux because the upward normal leans slightly in the negative <m>x</m>-direction.
+    </p>
+
+    <p>
+      If we choose the downward orientation, the flux is
+      <md>-24.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s3-subsec-flux-side-cylinder">
+    <title>Flux through the side of a cylinder</title>
+
+    <p>
+      The side of a cylinder of radius <m>a</m> and height <m>h</m> is parametrized by
+      <md>\mathbf r(\theta,z)=(a\cos\theta,a\sin\theta,z), \qquad 0\le\theta\le2\pi,\quad 0\le z\le h.</md>
+      Then
+      <md>\mathbf r_\theta=(-a\sin\theta,a\cos\theta,0), \qquad \mathbf r_z=(0,0,1).</md>
+      Their cross product is
+      <md>\mathbf r_\theta\times\mathbf r_z=(a\cos\theta,a\sin\theta,0).</md>
+      This points outward.
+    </p>
+
+    <p>
+      Let
+      <md>\mathbf F(x,y,z)=(x,y,0).</md>
+      On the cylinder,
+      <md>\mathbf F(\mathbf r(\theta,z))=(a\cos\theta,a\sin\theta,0).</md>
+      Therefore
+      <md>
+        <mrow>\mathbf F(\mathbf r(\theta,z))\cdot(\mathbf r_\theta\times\mathbf r_z) \amp= (a\cos\theta,a\sin\theta,0)\cdot(a\cos\theta,a\sin\theta,0)</mrow>
+        <mrow>\amp= a^2.</mrow>
+      </md>
+      So the outward flux through the side is
+      <md>
+        <mrow>\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS \amp= \int_0^{2\pi}\int_0^h a^2\,dz\,d\theta</mrow>
+        <mrow>\amp= 2\pi a^2h.</mrow>
+      </md>
+      For the cylinder of radius <m>2</m> and height <m>5</m>,
+      <md>\boxed{\text{outward flux}=40\pi.}</md>
+    </p>
+
+    <p>
+      Now compare this with the swirling field
+      <md>\mathbf G(x,y,z)=(-y,x,0).</md>
+      On the cylinder,
+      <md>\mathbf G(\mathbf r(\theta,z))=(-a\sin\theta,a\cos\theta,0).</md>
+      This is tangent to the cylinder. Its dot product with the outward normal is
+      <md>(-a\sin\theta,a\cos\theta,0)\cdot(a\cos\theta,a\sin\theta,0)=0.</md>
+      So
+      <md>\boxed{\iint_S \mathbf G\cdot\widehat{\mathbf n}\,dS=0.}</md>
+      The field moves around the cylinder, not through it.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s3-subsec-closed-surfaces-outward">
+    <title>Closed surfaces and outward orientation</title>
+
+    <p>
+      A surface with no boundary is called a <term>closed surface</term>. A sphere is closed. The
+      boundary of a solid box is closed. The side of a cylinder alone is not closed, because it
+      has two circular boundary curves.
+    </p>
+
+    <p>
+      For a closed surface, the standard orientation is the <term>outward</term> orientation.
+    </p>
+
+    <definition xml:id="c15s3-def-outward-orientation">
+      <title>Outward orientation</title>
+      <statement>
+        <p>
+          If <m>S</m> is the boundary of a solid region <m>E</m>, the
+          <term>outward orientation</term> chooses the normal direction that points away from the
+          inside of <m>E</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Flux through a closed surface measures net flow out of the region. Flow leaving counts
+      positive. Flow entering counts negative.
+    </p>
+
+    <example xml:id="c15s3-ex-constant-field-closed-box">
+      <title>A constant vertical field through a closed box</title>
+      <statement>
+        <p>
+          Let <m>B</m> be a rectangular box, and let
+          <md>\mathbf F=(0,0,5).</md>
+          The outward flux through the top face is positive. The outward flux through the bottom
+          face is negative with the same magnitude. The side faces have zero flux because the
+          field is tangent to them.
+        </p>
+        <p>
+          So the total outward flux is
+          <md>\boxed{0.}</md>
+          The field passes through the box, but it does not create fluid inside the box. Whatever
+          enters through the bottom leaves through the top.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c15s3-ex-outward-flux-sphere">
+      <title>Outward flux through a sphere</title>
+      <statement>
+        <p>
+          Let <m>S</m> be the sphere of radius <m>a</m> centered at the origin, with outward
+          orientation. Let
+          <md>\mathbf F(x,y,z)=(x,y,z).</md>
+          At every point on the sphere,
+          <md>\widehat{\mathbf n}=\frac{1}{a}(x,y,z).</md>
+          Thus
+          <md>\mathbf F\cdot\widehat{\mathbf n}=(x,y,z)\cdot\frac{1}{a}(x,y,z)=\frac{x^2+y^2+z^2}{a}=a.</md>
+          Therefore
+          <md>
+            <mrow>\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS \amp= \iint_S a\,dS</mrow>
+            <mrow>\amp= a\cdot 4\pi a^2</mrow>
+            <mrow>\amp= 4\pi a^3.</mrow>
+          </md>
+          So
+          <md>\boxed{\iint_S (x,y,z)\cdot\widehat{\mathbf n}\,dS=4\pi a^3.}</md>
+          The field points outward everywhere, and its strength grows with radius.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Flux is now a surface integral with a sign. But the formula
+      <md>\mathbf F\cdot(\mathbf r_u\times\mathbf r_v)</md>
+      still hides something. The cross product has three components:
+      <md>y_u z_v-y_v z_u, \qquad z_u x_v-z_v x_u, \qquad x_u y_v-x_v y_u.</md>
+      Each one is a signed area of a shadow on a coordinate plane. That is exactly the kind of
+      measurement that wedge products were built to remember. The next step is to write flux
+      without hiding those signed areas inside a cross product.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch18-generalized-stokes.tex, Section 2 (lines 461-961).
+     Status: CONVERTED. -->
+<section xml:id="sec-18-the-theorem" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The theorem</title>
+
+  <p>
+    <xref ref="sec-18-boundaries-and-orientation"/> fixed the signs on boundaries.
+    <xref ref="ch17-exterior-derivatives"/> fixed the meaning of <m>d</m>. The generalized
+    Stokes theorem simply puts those two pieces in one sentence.
+  </p>
+
+  <p>Before stating it, let us watch it work in one familiar rectangle.</p>
+
+  <subsection xml:id="c18s2-subsec-rectangle-already-knows">
+    <title>A rectangle that already knows the theorem</title>
+
+    <p>
+      Let
+      <md>R=[0,4]\times[0,3]</md>
+      with its standard orientation
+      <md>dx\wedge dy.</md>
+      Its boundary is oriented counterclockwise.
+    </p>
+
+    <p>
+      Take the <m>1</m>-form
+      <md>\omega=x\,dy.</md>
+      We computed in <xref ref="sec-18-boundaries-and-orientation"/> that
+      <md>\int_{\partial R} x\,dy=12.</md>
+    </p>
+
+    <p>
+      Now compute the exterior derivative:
+      <md>d\omega=d(x\,dy).</md>
+      Since
+      <md>dx\wedge dy</md>
+      is the area form,
+      <md>d(x\,dy)=dx\wedge dy.</md>
+      Therefore
+      <md>
+        <mrow>\int_R d\omega \amp= \int_R dx\wedge dy</mrow>
+        <mrow>\amp= \operatorname{Area}(R)</mrow>
+        <mrow>\amp= 12.</mrow>
+      </md>
+    </p>
+
+    <p>
+      So
+      <md>\boxed{\int_{\partial R}\omega=\int_R d\omega.}</md>
+    </p>
+
+    <p>
+      The boundary integral added <m>x\,dy</m> around the edge. The interior integral added
+      <m>dx\wedge dy</m> across the rectangle. They gave the same number.
+    </p>
+
+    <p>
+      Nothing in this calculation depended on a hidden trick. The right edge of the rectangle
+      carried all the boundary contribution, and the interior area had the same total size.
+      For a more complicated <m>1</m>-form, the same comparison happens locally on tiny
+      rectangles. The exterior derivative measures the boundary circulation per unit area.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s2-subsec-the-statement">
+    <title>The statement</title>
+
+    <p>Here is the theorem in the form we will use.</p>
+
+    <theorem xml:id="c18s2-thm-generalized-stokes">
+      <title>Generalized Stokes theorem, dimensions <m>1</m>, <m>2</m>, and <m>3</m></title>
+      <statement>
+        <p>
+          Let <m>M</m> be an oriented, compact, piecewise smooth <m>k</m>-dimensional object,
+          with <m>k=1,2,</m> or <m>3</m>. Give <m>\partial M</m> the induced boundary
+          orientation from <xref ref="sec-18-boundaries-and-orientation"/>.
+        </p>
+        <p>
+          Let <m>\omega</m> be a <m>C^1</m> differential form of degree <m>k-1</m>, defined on
+          an open set containing <m>M</m>. Then
+          <md>\boxed{\int_{\partial M}\omega=\int_M d\omega.}</md>
+          If
+          <md>\partial M=\emptyset,</md>
+          then the left side is defined to be <m>0</m>.
+        </p>
+      </statement>
+    </theorem>
+
+    <p>The theorem is short, but every word is doing work.</p>
+
+    <table xml:id="c18s2-tab-phrase-meaning">
+      <title>What each word means.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Phrase</cell><cell>Meaning in this book</cell>
+        </row>
+        <row><cell><m>\text{oriented}</m></cell><cell>directions or sides have been chosen</cell></row>
+        <row><cell><m>\text{compact}</m></cell><cell>finite, closed, bounded pieces in our examples</cell></row>
+        <row><cell><m>\text{piecewise smooth}</m></cell><cell>smooth pieces are allowed to meet at corners</cell></row>
+        <row><cell><m>\omega\text{ has degree }k-1</m></cell><cell><m>\omega</m> can be integrated over <m>\partial M</m></cell></row>
+        <row><cell><m>d\omega\text{ has degree }k</m></cell><cell><m>d\omega</m> can be integrated over <m>M</m></cell></row>
+        <row><cell><m>\omega\text{ is defined near }M</m></cell><cell>there are no hidden singularities inside</cell></row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <subsection xml:id="c18s2-subsec-what-kind-of-object-m">
+    <title>What kind of object <m>M</m> is</title>
+
+    <p>
+      The letter <m>M</m> is a common name for the object being integrated over. It does not
+      force us into a new abstract world. In this book, <m>M</m> will be one of the following
+      kinds of pieces.
+    </p>
+
+    <table xml:id="c18s2-tab-kinds-of-m">
+      <title>The kinds of object <m>M</m> and their boundaries.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell><m>k</m></cell><cell><m>M</m></cell><cell><m>\partial M</m></cell>
+        </row>
+        <row><cell><m>1</m></cell><cell>oriented interval or curve segment</cell><cell>signed endpoints</cell></row>
+        <row><cell><m>2</m></cell><cell>oriented plane region</cell><cell>oriented boundary curves</cell></row>
+        <row><cell><m>2</m></cell><cell>oriented surface in space</cell><cell>oriented boundary curves</cell></row>
+        <row><cell><m>3</m></cell><cell>oriented solid region in space</cell><cell>oriented boundary surfaces</cell></row>
+      </tabular>
+    </table>
+
+    <p>
+      A rectangle, a disk, an annulus, a cylinder side, a hemisphere, a box, and a solid ball
+      all fit this language.
+    </p>
+
+    <p>
+      Corners are allowed. A rectangle is not smooth at its four corners, but it is made of
+      smooth sides. A box is not smooth along its edges, but it is made of smooth faces. That
+      is what <q>piecewise smooth</q> means here.
+    </p>
+
+    <p>
+      A sphere considered as a surface has no boundary curve:
+      <md>\partial S=\emptyset.</md>
+      A solid ball has boundary:
+      <md>\partial E=\text{the sphere}.</md>
+      The same sphere can appear in two different roles, and the theorem reads it differently
+      depending on the dimension of <m>M</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s2-subsec-what-kind-of-object-omega">
+    <title>What kind of object <m>\omega</m> is</title>
+
+    <p>The form <m>\omega</m> always has one degree less than <m>M</m>.</p>
+
+    <p>
+      If <m>M</m> is one-dimensional, then <m>\omega</m> is a <m>0</m>-form, which means a
+      function. If <m>M</m> is two-dimensional, then <m>\omega</m> is a <m>1</m>-form. If
+      <m>M</m> is three-dimensional, then <m>\omega</m> is a <m>2</m>-form.
+    </p>
+
+    <table xml:id="c18s2-tab-omega-domega-classical">
+      <title>Each row is a classical theorem in disguise.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell><m>\dim M</m></cell><cell><m>\omega</m></cell><cell><m>d\omega</m></cell><cell>Classical name</cell>
+        </row>
+        <row>
+          <cell><m>1</m></cell>
+          <cell><m>f</m></cell>
+          <cell><m>df</m></cell>
+          <cell>Fundamental Theorem of Calculus</cell>
+        </row>
+        <row>
+          <cell><m>2</m></cell>
+          <cell><m>P\,dx+Q\,dy</m></cell>
+          <cell><m>(Q_x-P_y)\,dx\wedge dy</m></cell>
+          <cell>Green's theorem in the plane</cell>
+        </row>
+        <row>
+          <cell><m>2</m></cell>
+          <cell><m>P\,dx+Q\,dy+R\,dz</m></cell>
+          <cell><m>d\omega</m></cell>
+          <cell>Stokes' theorem on a surface</cell>
+        </row>
+        <row>
+          <cell><m>3</m></cell>
+          <cell><m>P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy</m></cell>
+          <cell><m>(P_x+Q_y+R_z)\,dx\wedge dy\wedge dz</m></cell>
+          <cell>Divergence theorem</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      This table is the whole chapter in compressed form. The next sections will unpack each
+      row.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s2-subsec-why-dimensions-match">
+    <title>Why the dimensions match</title>
+
+    <p>
+      The theorem says
+      <md>\int_{\partial M}\omega=\int_M d\omega.</md>
+      The two integrals live in different places, but their dimensions match perfectly.
+    </p>
+
+    <p>
+      If
+      <md>\dim M=k,</md>
+      then
+      <md>\dim(\partial M)=k-1.</md>
+      The form <m>\omega</m> has degree <m>k-1</m>, so it can be integrated over
+      <m>\partial M</m>. The exterior derivative <m>d\omega</m> has degree <m>k</m>, so it can
+      be integrated over <m>M</m>.
+    </p>
+
+    <p>
+      <md>\boxed{\begin{array}{ccc}
+        \omega \amp \text{lives on} \amp \partial M\\[1mm]
+        d\omega \amp \text{lives on} \amp M
+      \end{array}}</md>
+    </p>
+
+    <p>
+      That is the reason <m>d</m> raises degree by one. The derivative inside the region must
+      be one dimension higher than the form on the boundary.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s2-subsec-why-hypotheses-needed">
+    <title>Why the hypotheses are needed</title>
+
+    <p>
+      The theorem is powerful because it is precise. If we drop its conditions carelessly, the
+      formula can lose meaning or give the wrong sign.
+    </p>
+
+    <p>
+      <term>The boundary orientation must be induced.</term>
+      Take the unit square
+      <md>R=[0,1]\times[0,1]</md>
+      with the usual orientation <m>dx\wedge dy</m>, and take
+      <md>\omega=x\,dy.</md>
+      Then
+      <md>d\omega=dx\wedge dy,</md>
+      so
+      <md>\int_R d\omega=1.</md>
+    </p>
+
+    <p>
+      With the induced boundary orientation, <m>\partial R</m> is counterclockwise and
+      <md>\int_{\partial R}\omega=1.</md>
+      But if we walk the boundary clockwise, then
+      <md>\int_{-\partial R}\omega=-1.</md>
+      So the formula would say
+      <md>-1=1,</md>
+      which is false.
+    </p>
+
+    <p>The theorem did not fail. We used the wrong boundary orientation.</p>
+
+    <p>
+      <term>Every boundary component must be included.</term>
+      Let
+      <md>A=\{(x,y):1\le x^2+y^2\le4\}</md>
+      be the annulus between the circles of radius <m>1</m> and <m>2</m>. Use the standard
+      orientation <m>dx\wedge dy</m>, and again take
+      <md>\omega=x\,dy.</md>
+      Then
+      <md>d\omega=dx\wedge dy,</md>
+      so
+      <md>\int_A d\omega=\operatorname{Area}(A)=4\pi-\pi=3\pi.</md>
+    </p>
+
+    <p>
+      Now compute the boundary integral. The outer circle is counterclockwise, and the inner
+      circle is clockwise.
+    </p>
+
+    <p>
+      On a counterclockwise circle of radius <m>r</m>,
+      <md>x=r\cos t,\qquad y=r\sin t,</md>
+      so
+      <md>dy=r\cos t\,dt.</md>
+      Thus
+      <md>
+        <mrow>\int x\,dy \amp= \int_0^{2\pi} r^2\cos^2 t\,dt</mrow>
+        <mrow>\amp= \pi r^2.</mrow>
+      </md>
+      The outer circle contributes
+      <md>4\pi.</md>
+      The inner circle is oriented clockwise, so it contributes
+      <md>-\pi.</md>
+      Therefore
+      <md>\int_{\partial A}\omega=4\pi-\pi=3\pi.</md>
+    </p>
+
+    <p>
+      If we forgot the inner boundary, we would get
+      <md>4\pi,</md>
+      which is wrong. Holes have boundary curves too, and their orientations matter.
+    </p>
+
+    <p>
+      <term>The form must be defined on the whole region.</term>
+      Consider the <m>1</m>-form on the punctured plane
+      <md>\eta=\frac{-y}{x^2+y^2}\,dx+\frac{x}{x^2+y^2}\,dy.</md>
+      <xref ref="ch17-exterior-derivatives"/> showed that this form is closed where it is
+      defined:
+      <md>d\eta=0\qquad\text{on }\mathbb R^2\setminus\{(0,0)\}.</md>
+    </p>
+
+    <p>
+      On the unit circle
+      <md>x=\cos t,\qquad y=\sin t,</md>
+      we have
+      <md>dx=-\sin t\,dt,\qquad dy=\cos t\,dt.</md>
+      So
+      <md>
+        <mrow>\eta \amp= (-\sin t)(-\sin t\,dt)+(\cos t)(\cos t\,dt)</mrow>
+        <mrow>\amp= dt.</mrow>
+      </md>
+      Therefore
+      <md>\int_{x^2+y^2=1}\eta=\int_0^{2\pi}dt=2\pi.</md>
+    </p>
+
+    <p>
+      A careless use of Stokes' theorem on the unit disk would say
+      <md>\int_{\partial D}\eta=\int_D d\eta=0.</md>
+      But this is not allowed. The form <m>\eta</m> is not defined at the origin, and the
+      origin lies inside the disk.
+    </p>
+
+    <p>The missing point is not harmless. The boundary circle detects it.</p>
+
+    <p>
+      <term>The smoothness assumptions keep the integrals meaningful.</term>
+      The theorem asks for <m>\omega</m> to be <m>C^1</m>. This guarantees that <m>d\omega</m>
+      exists and is continuous.
+    </p>
+
+    <p>
+      For example,
+      <md>\omega=|x|\,dy</md>
+      is not <m>C^1</m> on any region crossing the line <m>x=0</m>. The derivative of
+      <m>|x|</m> is not defined at <m>x=0</m>, so the expression
+      <md>d\omega</md>
+      is not defined by the rules of this book on that line.
+    </p>
+
+    <p>
+      Some rough cases can be handled by more advanced versions of Stokes' theorem. But the
+      theorem stated here is a theorem for the objects we know how to integrate.
+    </p>
+
+    <p>
+      The same warning applies to the boundary. A polygon is fine, because it is made from
+      smooth pieces. A cube is fine, because it is made from smooth faces. A wildly jagged
+      fractal boundary has no tangent direction at most points, so our line integral along it
+      has not been defined.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s2-subsec-why-believable">
+    <title>Why the theorem is believable</title>
+
+    <p>The proof idea is already visible in a grid.</p>
+
+    <p>
+      Cut a plane region into many small rectangles. On each small rectangle,
+      <md>\int_{\partial(\text{small rectangle})}\omega</md>
+      measures the local boundary circulation. The exterior derivative <m>d\omega</m> measures
+      the same local circulation per unit area, so
+      <md>\int_{\partial(\text{small rectangle})}\omega=\int_{\text{small rectangle}}d\omega</md>
+      for the ideal small piece.
+    </p>
+
+    <p>Now add all small rectangles.</p>
+
+    <p>
+      Every interior edge is walked twice, once in each direction. A <m>1</m>-form changes sign
+      when direction reverses, so the two contributions cancel. Only the outside boundary
+      remains.
+    </p>
+
+    <figure xml:id="c18s2-fig-interior-edges-cancel">
+      <caption>When small pieces are added, interior boundary contributions cancel.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.82, &gt;=stealth]
+            \draw[step=1, gray!35, very thin] (0,0) grid (5,3);
+
+            \draw[very thick] (0,0) rectangle (5,3);
+
+            % Outer boundary arrows
+            \draw[-&gt;, very thick, red!65!black] (0,0) -- (1.2,0);
+            \draw[-&gt;, very thick, red!65!black] (5,0) -- (5,1.2);
+            \draw[-&gt;, very thick, red!65!black] (5,3) -- (3.8,3);
+            \draw[-&gt;, very thick, red!65!black] (0,3) -- (0,1.8);
+
+            % Central square (thick, semi-transparent), oriented counterclockwise
+            \draw[-&gt;, line width=4pt, blue!50, opacity=0.6] (2,1) -- (3,1);
+            \draw[-&gt;, line width=4pt, blue!50, opacity=0.6] (3,1) -- (3,2);
+            \draw[-&gt;, line width=4pt, blue!50, opacity=0.6] (3,2) -- (2,2);
+            \draw[-&gt;, line width=4pt, blue!50, opacity=0.6] (2,2) -- (2,1);
+
+            % Four adjacent squares (dashed arrows, oriented counterclockwise)
+
+            % Bottom neighbor
+            \draw[-&gt;, thick, dashed, blue!65!black] (2,0) -- (3,0);
+            \draw[-&gt;, thick, dashed, blue!65!black] (3,0) -- (3,1);
+            \draw[-&gt;, thick, dashed, blue!65!black] (3,1) -- (2,1);
+            \draw[-&gt;, thick, dashed, blue!65!black] (2,1) -- (2,0);
+
+            % Right neighbor
+            \draw[-&gt;, thick, dashed, blue!65!black] (3,1) -- (4,1);
+            \draw[-&gt;, thick, dashed, blue!65!black] (4,1) -- (4,2);
+            \draw[-&gt;, thick, dashed, blue!65!black] (4,2) -- (3,2);
+            \draw[-&gt;, thick, dashed, blue!65!black] (3,2) -- (3,1);
+
+            % Top neighbor
+            \draw[-&gt;, thick, dashed, blue!65!black] (2,2) -- (3,2);
+            \draw[-&gt;, thick, dashed, blue!65!black] (3,2) -- (3,3);
+            \draw[-&gt;, thick, dashed, blue!65!black] (3,3) -- (2,3);
+            \draw[-&gt;, thick, dashed, blue!65!black] (2,3) -- (2,2);
+
+            % Left neighbor
+            \draw[-&gt;, thick, dashed, blue!65!black] (1,1) -- (2,1);
+            \draw[-&gt;, thick, dashed, blue!65!black] (2,1) -- (2,2);
+            \draw[-&gt;, thick, dashed, blue!65!black] (2,2) -- (1,2);
+            \draw[-&gt;, thick, dashed, blue!65!black] (1,2) -- (1,1);
+
+            % Red crosses to mark the cancellations on the 4 shared edges
+            \foreach \x/\y in {2.5/1, 3/1.5, 2.5/2, 2/1.5} {
+                \draw[red, thick, line cap=round] (\x-0.12, \y-0.12) -- (\x+0.12, \y+0.12);
+                \draw[red, thick, line cap=round] (\x-0.12, \y+0.12) -- (\x+0.12, \y-0.12);
+            }
+
+            \node[red!65!black] at (2.5,-0.65) {outside boundary survives};
+            \node[blue!65!black] at (2.5,3.6) {interior edges cancel in pairs};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>The same cancellation happens for intervals, surfaces, and solids.</p>
+
+    <p>
+      For intervals, the interior endpoints cancel:
+      <md>(f(x_1)-f(x_0))+(f(x_2)-f(x_1))+\cdots+(f(x_n)-f(x_{n-1}))=f(x_n)-f(x_0).</md>
+    </p>
+
+    <p>
+      For surfaces, interior curves cancel. For solids, interior faces cancel. Boundary is what
+      remains after all interior cancellations.
+    </p>
+
+    <p>That is the heart of the generalized Stokes theorem.</p>
+
+    <p>
+      The next sections will open the theorem one disguise at a time. The first disguise is the
+      oldest one: a function on an interval, whose derivative adds up to
+      <md>f(b)-f(a).</md>
+      The Fundamental Theorem of Calculus was already Stokes' theorem. We just did not yet have
+      the language to say so.
+    </p>
+  </subsection>
+</section>

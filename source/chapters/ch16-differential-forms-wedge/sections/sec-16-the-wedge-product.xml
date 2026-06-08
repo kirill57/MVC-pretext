@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch16-differential-forms-wedge.tex, Section 16.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-16-the-wedge-product" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The wedge product</title>
+
+  <p>
+    <xref ref="sec-16-covectors-and-differentials"/> ended with covectors. A covector
+    measures one tangent vector. But a surface patch gives two tangent vectors, and a
+    tiny box gives three. To measure oriented area and oriented volume, we need a way to
+    combine covectors.
+  </p>
+
+  <p>That way is the wedge product.</p>
+
+  <subsection xml:id="c16s3-oriented-area-from-two-covectors">
+    <title>Oriented area from two covectors</title>
+
+    <p>
+      Start with a small parallelogram in the plane. Its first edge is
+      <md>\mathbf u=(3,1),</md>
+      and its second edge is
+      <md>\mathbf v=(1,4).</md>
+      The ordered pair
+      <md>(\mathbf u,\mathbf v)</md>
+      means that we travel first in the <m>\mathbf u</m>-direction and then in the
+      <m>\mathbf v</m>-direction. That order gives the parallelogram an orientation.
+    </p>
+
+    <figure xml:id="c16s3-fig-signed-area-parallelogram">
+      <caption>The signed area of a parallelogram depends on the order of its two edge vectors.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.65, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (6.3,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,6.0) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (0,0) grid (6,5);
+
+            \coordinate (O) at (0,0);
+            \coordinate (U) at (3,1);
+            \coordinate (V) at (1,4);
+            \coordinate (UV) at (4,5);
+
+            \draw[fill=gray!12, thick] (O)--(U)--(UV)--(V)--cycle;
+
+            \draw[-&gt;, very thick, blue!65!black] (O)--(U)
+                node[midway, below right] {\(\mathbf u=(3,1)\)};
+            \draw[-&gt;, very thick, red!65!black] (O)--(V)
+                node[midway, left] {\(\mathbf v=(1,4)\)};
+
+            \draw[dashed] (U)--(UV);
+            \draw[dashed] (V)--(UV);
+
+            \draw[-&gt;, thick] (0.65,0.25) arc[start angle=20,end angle=70,radius=0.8];
+            \node at (1.15,0.9) {\(+\)};
+
+            \node at (3,-1.0) {the ordered pair \((\mathbf u,\mathbf v)\) gives positive orientation};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The signed area is the determinant
+      <md>
+        \begin{vmatrix}
+            3\amp1\\
+            1\amp4
+        \end{vmatrix}
+        =
+        3\cdot4-1\cdot1
+        =
+        11.
+      </md>
+      Now write the same computation using the coordinate covectors
+      <md>dx,\qquad dy.</md>
+      They read components:
+      <md>
+        dx(\mathbf u)=3,
+        \qquad
+        dy(\mathbf u)=1,
+      </md>
+      and
+      <md>
+        dx(\mathbf v)=1,
+        \qquad
+        dy(\mathbf v)=4.
+      </md>
+      The signed area is
+      <md>dx(\mathbf u)dy(\mathbf v)-dx(\mathbf v)dy(\mathbf u).</md>
+      For our two vectors, this gives
+      <md>3\cdot4-1\cdot1=11.</md>
+    </p>
+
+    <p>
+      This expression is so common that we give it its own symbol:
+      <md>
+        \boxed{
+            (dx\wedge dy)(\mathbf u,\mathbf v)
+            =
+            dx(\mathbf u)dy(\mathbf v)-dx(\mathbf v)dy(\mathbf u).
+        }
+      </md>
+    </p>
+
+    <p>
+      The symbol
+      <md>dx\wedge dy</md>
+      is the basic oriented area form in the <m>xy</m>-plane. It eats two tangent vectors
+      and returns their signed <m>xy</m>-area.
+    </p>
+
+    <example xml:id="c16s3-ex-reversed-order">
+      <title>The same parallelogram with reversed order</title>
+      <statement>
+        <p>
+          Use the same vectors
+          <md>
+            \mathbf u=(3,1),
+            \qquad
+            \mathbf v=(1,4),
+          </md>
+          but feed them to <m>dx\wedge dy</m> in the opposite order:
+          <md>
+            <mrow>(dx\wedge dy)(\mathbf v,\mathbf u) \amp= dx(\mathbf v)dy(\mathbf u)-dx(\mathbf u)dy(\mathbf v)</mrow>
+            <mrow>\amp= 1\cdot1-3\cdot4</mrow>
+            <mrow>\amp= -11.</mrow>
+          </md>
+          The geometric parallelogram is the same size, but its orientation has been
+          reversed.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This example contains the whole idea. The wedge product is built to measure oriented
+      parallelograms.
+    </p>
+
+    <definition xml:id="c16s3-def-wedge-product-two-covectors">
+      <title>Wedge product of two covectors</title>
+      <statement>
+        <p>
+          Let <m>\alpha</m> and <m>\beta</m> be covectors at a point. Their wedge product
+          <md>\alpha\wedge\beta</md>
+          is the rule that takes an ordered pair of tangent vectors
+          <m>(\mathbf u,\mathbf v)</m> and returns
+          <md>
+            \boxed{
+                (\alpha\wedge\beta)(\mathbf u,\mathbf v)
+                =
+                \alpha(\mathbf u)\beta(\mathbf v)
+                -
+                \alpha(\mathbf v)\beta(\mathbf u).
+            }
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The two terms are the two possible ways to match the covectors with the two vectors.
+      The minus sign is what remembers orientation.
+    </p>
+
+    <example xml:id="c16s3-ex-slanted-coordinate-area">
+      <title>A wedge product that measures a slanted coordinate area</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            \alpha=2\,dx+dy,
+            \qquad
+            \beta=dx+3\,dy.
+          </md>
+          Use the vectors
+          <md>
+            \mathbf u=(1,2),
+            \qquad
+            \mathbf v=(4,-1).
+          </md>
+          First evaluate the covectors:
+          <md>
+            \alpha(\mathbf u)=2(1)+2=4,
+            \qquad
+            \alpha(\mathbf v)=2(4)-1=7,
+          </md>
+          and
+          <md>
+            \beta(\mathbf u)=1+3(2)=7,
+            \qquad
+            \beta(\mathbf v)=4+3(-1)=1.
+          </md>
+          Therefore
+          <md>
+            <mrow>(\alpha\wedge\beta)(\mathbf u,\mathbf v) \amp= \alpha(\mathbf u)\beta(\mathbf v) - \alpha(\mathbf v)\beta(\mathbf u)</mrow>
+            <mrow>\amp= 4\cdot1-7\cdot7</mrow>
+            <mrow>\amp= -45.</mrow>
+          </md>
+          The negative sign says that the ordered measurements <m>\alpha,\beta</m> see the
+          ordered vectors <m>\mathbf u,\mathbf v</m> with the opposite orientation.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A <m>1</m>-form measures one vector. A wedge of two <m>1</m>-forms measures two
+      vectors at once. That is why it becomes a <m>2</m>-form.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s3-antisymmetry">
+    <title>Antisymmetry: <m>dx\wedge dy=-dy\wedge dx</m></title>
+
+    <p>
+      The wedge product changes sign when its factors are swapped. Check this directly:
+      <md>
+        <mrow>(\beta\wedge\alpha)(\mathbf u,\mathbf v) \amp= \beta(\mathbf u)\alpha(\mathbf v) - \beta(\mathbf v)\alpha(\mathbf u)</mrow>
+        <mrow>\amp= -\left[ \alpha(\mathbf u)\beta(\mathbf v) - \alpha(\mathbf v)\beta(\mathbf u) \right].</mrow>
+      </md>
+      So
+      <md>
+        \boxed{
+            \beta\wedge\alpha=-\alpha\wedge\beta.
+        }
+      </md>
+    </p>
+
+    <p>
+      For the coordinate covectors, this gives
+      <md>
+        \boxed{
+            dy\wedge dx=-dx\wedge dy.
+        }
+      </md>
+      Equivalently,
+      <md>
+        \boxed{
+            dx\wedge dy=-dy\wedge dx.
+        }
+      </md>
+    </p>
+
+    <example xml:id="c16s3-ex-area-measured-with-dy-wedge-dx">
+      <title>The same area measured with <m>dy\wedge dx</m></title>
+      <statement>
+        <p>
+          Return again to
+          <md>
+            \mathbf u=(3,1),
+            \qquad
+            \mathbf v=(1,4).
+          </md>
+          Then
+          <md>
+            <mrow>(dy\wedge dx)(\mathbf u,\mathbf v) \amp= dy(\mathbf u)dx(\mathbf v)-dy(\mathbf v)dx(\mathbf u)</mrow>
+            <mrow>\amp= 1\cdot1-4\cdot3</mrow>
+            <mrow>\amp= -11.</mrow>
+          </md>
+          But
+          <md>(dx\wedge dy)(\mathbf u,\mathbf v)=11.</md>
+          So
+          <md>dy\wedge dx</md>
+          measures the same area with the opposite orientation.
+        </p>
+      </statement>
+    </example>
+
+    <p>This is the first algebra rule of wedge products:</p>
+
+    <p>
+      <md>
+        \boxed{
+            \text{Swapping two $1$-forms changes the sign.}
+        }
+      </md>
+    </p>
+
+    <p>
+      That sign is not a bookkeeping trick. It is the algebraic form of a geometric fact:
+      swapping the two edge directions of a parallelogram reverses its orientation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s3-why-dx-wedge-dx-zero">
+    <title>Why <m>dx\wedge dx=0</m></title>
+
+    <p>
+      Now try to wedge a covector with itself:
+      <md>dx\wedge dx.</md>
+      For two tangent vectors <m>\mathbf u</m> and <m>\mathbf v</m>,
+      <md>
+        <mrow>(dx\wedge dx)(\mathbf u,\mathbf v) \amp= dx(\mathbf u)dx(\mathbf v) - dx(\mathbf v)dx(\mathbf u)</mrow>
+        <mrow>\amp= 0.</mrow>
+      </md>
+      Therefore
+      <md>
+        \boxed{
+            dx\wedge dx=0.
+        }
+      </md>
+      The same calculation gives
+      <md>
+        \boxed{
+            dy\wedge dy=0,
+            \qquad
+            dz\wedge dz=0.
+        }
+      </md>
+    </p>
+
+    <p>
+      The geometry is simple. A single coordinate reading repeated twice cannot measure
+      area. Area needs two independent directions of measurement. Measuring the
+      <m>x</m>-component twice collapses the picture onto one line.
+    </p>
+
+    <p>
+      More generally,
+      <md>
+        \boxed{
+            \alpha\wedge\alpha=0
+        }
+      </md>
+      for every covector <m>\alpha</m>.
+    </p>
+
+    <example xml:id="c16s3-ex-parallel-edges-zero-area">
+      <title>Parallel edge vectors give zero area</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            \mathbf u=(2,1),
+            \qquad
+            \mathbf v=(6,3).
+          </md>
+          The second vector is
+          <md>\mathbf v=3\mathbf u.</md>
+          The parallelogram has collapsed to a line segment, so its signed area should be
+          <m>0</m>. Indeed,
+          <md>
+            <mrow>(dx\wedge dy)(\mathbf u,\mathbf v) \amp= 2\cdot3-6\cdot1</mrow>
+            <mrow>\amp= 0.</mrow>
+          </md>
+          The wedge product automatically detects the collapse.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is one reason wedge notation is so useful. The rules
+      <md>dx\wedge dx=0</md>
+      and
+      <md>dx\wedge dy=-dy\wedge dx</md>
+      make repeated or reversed directions behave exactly as oriented area says they
+      should.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s3-building-2-and-3-forms">
+    <title>Building <m>2</m>-forms and <m>3</m>-forms</title>
+
+    <p>
+      In the plane, there is only one basic oriented area form:
+      <md>dx\wedge dy.</md>
+      So every <m>2</m>-form in the plane has the shape
+      <md>M(x,y)\,dx\wedge dy.</md>
+    </p>
+
+    <p>
+      In space, a small surface patch can cast shadows on three coordinate planes. That is
+      why three basic <m>2</m>-forms appear:
+      <md>dy\wedge dz,\qquad dz\wedge dx,\qquad dx\wedge dy.</md>
+      Each one measures a signed shadow.
+    </p>
+
+    <p>
+      Let
+      <md>
+        \mathbf u=(u_x,u_y,u_z),
+        \qquad
+        \mathbf v=(v_x,v_y,v_z).
+      </md>
+      Then
+      <md>
+        \boxed{
+            (dy\wedge dz)(\mathbf u,\mathbf v)
+            =
+            u_yv_z-v_yu_z,
+        }
+      </md>
+      <md>
+        \boxed{
+            (dz\wedge dx)(\mathbf u,\mathbf v)
+            =
+            u_zv_x-v_zu_x,
+        }
+      </md>
+      and
+      <md>
+        \boxed{
+            (dx\wedge dy)(\mathbf u,\mathbf v)
+            =
+            u_xv_y-v_xu_y.
+        }
+      </md>
+      These are the signed areas of the shadows on the <m>yz</m>-plane, the
+      <m>zx</m>-plane, and the <m>xy</m>-plane.
+    </p>
+
+    <p>
+      A general <m>2</m>-form in space is
+      <md>
+        \boxed{
+            \Phi=A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy.
+        }
+      </md>
+      It measures a weighted combination of those three signed shadows.
+    </p>
+
+    <example xml:id="c16s3-ex-tilted-surface-patch">
+      <title>A <m>2</m>-form measuring a tilted surface patch</title>
+      <statement>
+        <p>
+          Suppose a small surface patch has tangent edge vectors
+          <md>
+            \mathbf u=(1,2,0),
+            \qquad
+            \mathbf v=(0,1,3).
+          </md>
+          Compute the three coordinate shadow areas:
+          <md>
+            <mrow>(dy\wedge dz)(\mathbf u,\mathbf v) \amp= 2\cdot3-1\cdot0 = 6,</mrow>
+            <mrow>(dz\wedge dx)(\mathbf u,\mathbf v) \amp= 0\cdot0-3\cdot1 = -3,</mrow>
+            <mrow>(dx\wedge dy)(\mathbf u,\mathbf v) \amp= 1\cdot1-0\cdot2 = 1.</mrow>
+          </md>
+          Now let
+          <md>\Phi=2\,dy\wedge dz-dz\wedge dx+4\,dx\wedge dy.</md>
+          Then
+          <md>
+            <mrow>\Phi(\mathbf u,\mathbf v) \amp= 2(6)-(-3)+4(1)</mrow>
+            <mrow>\amp= 19.</mrow>
+          </md>
+          The form did not measure ordinary surface area. It measured an oriented
+          combination of coordinate-plane shadows.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A <m>3</m>-form measures an oriented box. The basic one in space is
+      <md>dx\wedge dy\wedge dz.</md>
+      It eats three tangent vectors and returns the signed volume of the parallelepiped
+      they span.
+    </p>
+
+    <p>
+      If
+      <md>\mathbf u,\qquad \mathbf v,\qquad \mathbf w</md>
+      are tangent vectors in space, then
+      <md>
+        \boxed{
+            (dx\wedge dy\wedge dz)(\mathbf u,\mathbf v,\mathbf w)
+            =
+            \det
+            \begin{pmatrix}
+                dx(\mathbf u)\amp dx(\mathbf v)\amp dx(\mathbf w)\\
+                dy(\mathbf u)\amp dy(\mathbf v)\amp dy(\mathbf w)\\
+                dz(\mathbf u)\amp dz(\mathbf v)\amp dz(\mathbf w)
+            \end{pmatrix}.
+        }
+      </md>
+      Since <m>dx,dy,dz</m> read the coordinate components, this is the usual determinant
+      with columns <m>\mathbf u,\mathbf v,\mathbf w</m>.
+    </p>
+
+    <example xml:id="c16s3-ex-3-form-measuring-volume">
+      <title>A <m>3</m>-form measuring volume</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            \mathbf u=(1,0,0),
+            \qquad
+            \mathbf v=(1,2,0),
+            \qquad
+            \mathbf w=(0,1,3).
+          </md>
+          Then
+          <md>
+            <mrow>(dx\wedge dy\wedge dz)(\mathbf u,\mathbf v,\mathbf w) \amp= \det \begin{pmatrix} 1\amp1\amp0\\ 0\amp2\amp1\\ 0\amp0\amp3 \end{pmatrix}</mrow>
+            <mrow>\amp= 6.</mrow>
+          </md>
+          So the oriented volume of the box spanned by these three ordered vectors is
+          <m>6</m>. If we swap <m>\mathbf u</m> and <m>\mathbf v</m>, the value becomes
+          <m>-6</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      In space, every <m>3</m>-form has the shape
+      <md>
+        \boxed{
+            H(x,y,z)\,dx\wedge dy\wedge dz.
+        }
+      </md>
+      There are no nonzero <m>4</m>-forms in ordinary three-dimensional space. Four tangent
+      vectors in <m>\mathbb R^3</m> must be linearly dependent, so any oriented
+      <m>4</m>-dimensional volume collapses.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s3-determinants-as-wedge-coefficients">
+    <title>Determinants as wedge-product coefficients</title>
+
+    <p>
+      The wedge product explains why determinants keep appearing in multivariable
+      calculus. They are the coefficients of oriented area and oriented volume.
+    </p>
+
+    <p>
+      Start in the plane. Let
+      <md>
+        \alpha=a\,dx+b\,dy,
+        \qquad
+        \beta=c\,dx+d\,dy.
+      </md>
+      Then
+      <md>
+        <mrow>\alpha\wedge\beta \amp= (a\,dx+b\,dy)\wedge(c\,dx+d\,dy)</mrow>
+        <mrow>\amp= ac\,dx\wedge dx +ad\,dx\wedge dy +bc\,dy\wedge dx +bd\,dy\wedge dy.</mrow>
+      </md>
+      Now use
+      <md>
+        dx\wedge dx=0,
+        \qquad
+        dy\wedge dy=0,
+      </md>
+      and
+      <md>dy\wedge dx=-dx\wedge dy.</md>
+      The result is
+      <md>
+        \boxed{
+            \alpha\wedge\beta=(ad-bc)\,dx\wedge dy.
+        }
+      </md>
+      The coefficient
+      <md>ad-bc</md>
+      is a <m>2\times2</m> determinant:
+      <md>
+        \boxed{
+            ad-bc
+            =
+            \begin{vmatrix}
+                a\amp b\\
+                c\amp d
+            \end{vmatrix}.
+        }
+      </md>
+    </p>
+
+    <example xml:id="c16s3-ex-determinant-inside-wedge">
+      <title>The determinant inside a wedge product</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            \alpha=2\,dx+dy,
+            \qquad
+            \beta=dx+4\,dy.
+          </md>
+          Then
+          <md>
+            <mrow>\alpha\wedge\beta \amp= (2\cdot4-1\cdot1)\,dx\wedge dy</mrow>
+            <mrow>\amp= 7\,dx\wedge dy.</mrow>
+          </md>
+          The number <m>7</m> is the signed area scale factor hidden in the two covectors.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      In space, wedge two <m>1</m>-forms:
+      <md>\alpha=a\,dx+b\,dy+c\,dz,</md>
+      and
+      <md>\beta=p\,dx+q\,dy+r\,dz.</md>
+      A direct expansion gives
+      <md>
+        \boxed{
+            \alpha\wedge\beta
+            =
+            (br-cq)\,dy\wedge dz
+            +
+            (cp-ar)\,dz\wedge dx
+            +
+            (aq-bp)\,dx\wedge dy.
+        }
+      </md>
+      The three coefficients are the components of the cross product of the coefficient
+      vectors:
+      <md>
+        (a,b,c)\times(p,q,r)
+        =
+        (br-cq,\ cp-ar,\ aq-bp).
+      </md>
+      So the cross product is also hiding inside the wedge product. The wedge product keeps
+      the result as a <m>2</m>-form, while the cross product turns the same coefficients
+      into a vector.
+    </p>
+
+    <p>
+      For three <m>1</m>-forms,
+      <md>\alpha=a\,dx+b\,dy+c\,dz,</md>
+      <md>\beta=p\,dx+q\,dy+r\,dz,</md>
+      and
+      <md>\gamma=m\,dx+n\,dy+s\,dz,</md>
+      the wedge product is
+      <md>
+        \boxed{
+            \alpha\wedge\beta\wedge\gamma
+            =
+            \begin{vmatrix}
+                a\amp b\amp c\\
+                p\amp q\amp r\\
+                m\amp n\amp s
+            \end{vmatrix}
+            dx\wedge dy\wedge dz.
+        }
+      </md>
+    </p>
+
+    <example xml:id="c16s3-ex-triple-wedge-product">
+      <title>A triple wedge product</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            \alpha=dx+dy,
+            \qquad
+            \beta=2\,dy+dz,
+            \qquad
+            \gamma=3\,dx-dz.
+          </md>
+          Then
+          <md>
+            \alpha\wedge\beta\wedge\gamma
+            =
+            \begin{vmatrix}
+                1\amp1\amp0\\
+                0\amp2\amp1\\
+                3\amp0\amp-1
+            \end{vmatrix}
+            dx\wedge dy\wedge dz.
+          </md>
+          Compute the determinant:
+          <md>
+            <mrow>\begin{vmatrix} 1\amp1\amp0\\ 0\amp2\amp1\\ 3\amp0\amp-1 \end{vmatrix} \amp= 1(2(-1)-1\cdot0) - 1(0(-1)-1\cdot3)</mrow>
+            <mrow>\amp= -2-(-3)</mrow>
+            <mrow>\amp= 1.</mrow>
+          </md>
+          So
+          <md>
+            \boxed{
+                \alpha\wedge\beta\wedge\gamma
+                =
+                dx\wedge dy\wedge dz.
+            }
+          </md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The wedge product has now given us the basic measuring objects. But forms in real
+      integrals do not usually have constant coefficients. They have functions attached to
+      them, and we need to add them, scale them, and multiply them without losing track of
+      degree. That is the algebra of forms.
+    </p>
+  </subsection>
+</section>

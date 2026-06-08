@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch02-vector-products.tex, Section "Determinants and signed volume".
+     Status: CONVERTED. -->
+<section xml:id="sec-2-determinants-and-signed-volume" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Determinants and signed volume</title>
+
+  <p>
+    The cross product gave us an oriented area vector. But sometimes we do not want the
+    normal vector. We only want the signed amount of area or volume. That number is a
+    determinant.
+  </p>
+
+  <subsection xml:id="c2s6-subsec-2x2-determinant-signed-area">
+    <title>The <m>2\times2</m> determinant as signed area</title>
+
+    <p>Start in the plane.</p>
+
+    <p>
+      Let
+      <md>\mathbf u=(4,1), \qquad \mathbf v=(1,3).</md>
+      These two vectors form a parallelogram. Embed them in the <m>xy</m>-plane as
+      <md>\widetilde{\mathbf u}=(4,1,0), \qquad \widetilde{\mathbf v}=(1,3,0).</md>
+      Then
+      <md>
+        <mrow>\widetilde{\mathbf u}\times\widetilde{\mathbf v} \amp= (4,1,0)\times(1,3,0)</mrow>
+        <mrow>\amp= (0,0,4\cdot3-1\cdot1)</mrow>
+        <mrow>\amp= (0,0,11).</mrow>
+      </md>
+      So the parallelogram has signed area
+      <md>11.</md>
+      The sign is positive because <m>\mathbf u</m> followed by <m>\mathbf v</m> turns
+      counterclockwise.
+    </p>
+
+    <figure xml:id="c2s6-fig-signed-area-2x2">
+      <caption>The determinant <m>4\cdot3-1\cdot1=11</m> is the signed area.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \draw[-&gt;] (-0.5,0) -- (6.5,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.5) -- (0,5.0) node[above] {\(y\)};
+            \draw[step=1, gray!18, very thin] (0,0) grid (6,4);
+
+            \coordinate (O) at (0,0);
+            \coordinate (U) at (4,1);
+            \coordinate (V) at (1,3);
+            \coordinate (UV) at (5,4);
+
+            \draw[fill=gray!12] (O) -- (U) -- (UV) -- (V) -- cycle;
+
+            \draw[-&gt;, very thick] (O) -- (U) node[midway, below] {\(\mathbf u=(4,1)\)};
+            \draw[-&gt;, very thick] (O) -- (V) node[midway, left] {\(\mathbf v=(1,3)\)};
+            \draw[thick, dashed] (U) -- (UV);
+            \draw[thick, dashed] (V) -- (UV);
+
+            \node at (3.2,2.25) {\(\text{signed area}=11\)};
+
+            \fill (O) circle (2pt);
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      That expression
+      <md>4\cdot3-1\cdot1</md>
+      is the determinant of the two vectors.
+    </p>
+
+    <definition xml:id="c2s6-def-2x2-determinant">
+      <title><m>2\times2</m> determinant</title>
+      <statement>
+        <p>
+          If
+          <md>\mathbf u=(u_1,u_2), \qquad \mathbf v=(v_1,v_2),</md>
+          then the <m>2\times2</m> determinant with columns <m>\mathbf u</m> and
+          <m>\mathbf v</m> is
+          <md>
+          \boxed{
+              \det[\mathbf u\ \mathbf v]
+              =
+              \begin{vmatrix}
+                  u_1 &amp; v_1\\
+                  u_2 &amp; v_2
+              \end{vmatrix}
+              =
+              u_1v_2-u_2v_1.
+          }
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The vertical bars in
+      <md>
+          \begin{vmatrix}
+              u_1 &amp; v_1\\
+              u_2 &amp; v_2
+          \end{vmatrix}
+      </md>
+      do not mean absolute value. They mean determinant. A determinant can be positive,
+      negative, or zero.
+    </p>
+
+    <theorem xml:id="c2s6-thm-2x2-determinant-signed-area">
+      <title><m>2\times2</m> determinant as signed area</title>
+      <statement>
+        <p>
+          For vectors
+          <md>\mathbf u=(u_1,u_2), \qquad \mathbf v=(v_1,v_2),</md>
+          the determinant
+          <md>\det[\mathbf u\ \mathbf v] = u_1v_2-u_2v_1</md>
+          is the signed area of the parallelogram spanned by <m>\mathbf u</m> and
+          <m>\mathbf v</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Embed the plane in space by adding a zero <m>z</m>-coordinate:
+          <md>\widetilde{\mathbf u}=(u_1,u_2,0), \qquad \widetilde{\mathbf v}=(v_1,v_2,0).</md>
+          Then
+          <md>\widetilde{\mathbf u}\times\widetilde{\mathbf v} = (0,0,u_1v_2-u_2v_1).</md>
+          The cross product is the oriented area vector. Its <m>z</m>-component is therefore the
+          signed area in the <m>xy</m>-plane:
+          <md>u_1v_2-u_2v_1.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The sign contains orientation.</p>
+
+    <p>
+      If
+      <md>\mathbf u=(4,1), \qquad \mathbf v=(1,3),</md>
+      then
+      <md>\det[\mathbf u\ \mathbf v]=11.</md>
+      But if we swap the order,
+      <md>
+          \det[\mathbf v\ \mathbf u]
+          =
+          \begin{vmatrix}
+              1 &amp; 4\\
+              3 &amp; 1
+          \end{vmatrix}
+          =
+          1\cdot1-3\cdot4
+          =
+          -11.
+      </md>
+      The parallelogram is the same. The orientation is opposite.
+    </p>
+
+    <p>
+      If the two vectors are parallel, the determinant is zero. For example,
+      <md>\mathbf u=(1,2), \qquad \mathbf v=(2,4).</md>
+      Then
+      <md>
+          \det[\mathbf u\ \mathbf v]
+          =
+          \begin{vmatrix}
+              1 &amp; 2\\
+              2 &amp; 4
+          \end{vmatrix}
+          =
+          1\cdot4-2\cdot2
+          =
+          0.
+      </md>
+      The parallelogram has collapsed into a line segment. Its area is zero.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s6-subsec-square-pushed-parallelogram">
+    <title>A square pushed into a parallelogram</title>
+
+    <p>The determinant becomes especially useful when a whole grid is moved.</p>
+
+    <p>
+      Suppose a machine sends the basic horizontal step
+      <md>\mathbf e_1=(1,0)</md>
+      to
+      <md>\mathbf u=(2,1),</md>
+      and sends the basic vertical step
+      <md>\mathbf e_2=(0,1)</md>
+      to
+      <md>\mathbf v=(1,3).</md>
+      The unit square becomes a parallelogram with signed area
+      <md>
+          \det[\mathbf u\ \mathbf v]
+          =
+          \begin{vmatrix}
+              2 &amp; 1\\
+              1 &amp; 3
+          \end{vmatrix}
+          =
+          6-1
+          =
+          5.
+      </md>
+      So this machine multiplies small signed areas by <m>5</m>.
+    </p>
+
+    <figure xml:id="c2s6-fig-grid-machine">
+      <caption>A linear grid machine scales area by the determinant.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-0.3,0) -- (2.2,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.3) -- (0,2.2) node[above] {\(y\)};
+                \draw[fill=gray!12] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+                \draw[-&gt;, thick] (0,0) -- (1,0) node[midway, below] {\(\mathbf e_1\)};
+                \draw[-&gt;, thick] (0,0) -- (0,1) node[midway, left] {\(\mathbf e_2\)};
+                \node at (0.5,0.5) {\(1\)};
+                \node at (1.1,-0.8) {unit square};
+            \end{scope}
+
+            \draw[-&gt;, thick] (2.8,1) -- (4.1,1);
+
+            \begin{scope}[shift={(5,0)}]
+                \draw[-&gt;] (-0.3,0) -- (4.5,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.3) -- (0,4.0) node[above] {\(y\)};
+
+                \coordinate (O) at (0,0);
+                \coordinate (U) at (2,1);
+                \coordinate (V) at (1,3);
+                \coordinate (UV) at (3,4);
+
+                \draw[fill=gray!12] (O) -- (U) -- (UV) -- (V) -- cycle;
+                \draw[-&gt;, thick] (O) -- (U) node[midway, below right] {\(\mathbf u\)};
+                \draw[-&gt;, thick] (O) -- (V) node[midway, left] {\(\mathbf v\)};
+                \draw[thick, dashed] (U) -- (UV);
+                \draw[thick, dashed] (V) -- (UV);
+                \node at (1.75,2.1) {\(5\)};
+                \node at (2.1,-0.8) {image parallelogram};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This idea will return in change of variables for double integrals. When a coordinate
+      change bends and stretches a region, the determinant tells us the local area-scaling
+      factor.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s6-subsec-3x3-determinant-signed-volume">
+    <title>The <m>3\times3</m> determinant as signed volume</title>
+
+    <p>In three dimensions, three vectors form a parallelepiped: a slanted box.</p>
+
+    <p>
+      Take the simple case
+      <md>\mathbf u=(2,0,0), \qquad \mathbf v=(0,3,0), \qquad \mathbf w=(0,0,4).</md>
+      They form a rectangular box with volume
+      <md>2\cdot3\cdot4=24.</md>
+      The determinant gives the same number:
+      <md>
+          \begin{vmatrix}
+              2 &amp; 0 &amp; 0\\
+              0 &amp; 3 &amp; 0\\
+              0 &amp; 0 &amp; 4
+          \end{vmatrix}
+          =
+          24.
+      </md>
+    </p>
+
+    <p>
+      Now tilt the box without changing its vertical height:
+      <md>\mathbf u=(2,0,0), \qquad \mathbf v=(1,3,0), \qquad \mathbf w=(1,1,4).</md>
+      The volume is still <m>24</m>. The base parallelogram in the <m>xy</m>-plane has signed area
+      <md>
+          \begin{vmatrix}
+              2 &amp; 1\\
+              0 &amp; 3
+          \end{vmatrix}
+          =
+          6,
+      </md>
+      and the height is <m>4</m>. So the volume is
+      <md>6\cdot4=24.</md>
+    </p>
+
+    <p>The determinant packages this calculation into one number.</p>
+
+    <definition xml:id="c2s6-def-3x3-determinant">
+      <title><m>3\times3</m> determinant</title>
+      <statement>
+        <p>
+          If
+          <md>\mathbf u=(u_1,u_2,u_3), \qquad \mathbf v=(v_1,v_2,v_3), \qquad \mathbf w=(w_1,w_2,w_3),</md>
+          then the <m>3\times3</m> determinant with columns <m>\mathbf u,\mathbf v,\mathbf w</m> is
+          <md>
+          \boxed{
+          \det[\mathbf u\ \mathbf v\ \mathbf w]
+          =
+          \begin{vmatrix}
+          u_1 &amp; v_1 &amp; w_1\\
+          u_2 &amp; v_2 &amp; w_2\\
+          u_3 &amp; v_3 &amp; w_3
+          \end{vmatrix}
+          =
+          \mathbf u\cdot(\mathbf v\times\mathbf w).
+          }
+          </md>
+          Expanded out,
+          <md>
+            <mrow>\det[\mathbf u\ \mathbf v\ \mathbf w] \amp= u_1(v_2w_3-v_3w_2)</mrow>
+            <mrow>\amp\qquad -v_1(u_2w_3-u_3w_2)</mrow>
+            <mrow>\amp\qquad +w_1(u_2v_3-u_3v_2).</mrow>
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c2s6-ex-slanted-box">
+      <title>A slanted box</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf u=(2,0,0), \qquad \mathbf v=(1,3,0), \qquad \mathbf w=(1,1,4).</md>
+          Then
+          <md>\det[\mathbf u\ \mathbf v\ \mathbf w] = \mathbf u\cdot(\mathbf v\times\mathbf w).</md>
+          First compute
+          <md>
+            <mrow>\mathbf v\times\mathbf w \amp= (1,3,0)\times(1,1,4)</mrow>
+            <mrow>\amp= (3\cdot4-0\cdot1,\;0\cdot1-1\cdot4,\;1\cdot1-3\cdot1)</mrow>
+            <mrow>\amp= (12,-4,-2).</mrow>
+          </md>
+          Then
+          <md>
+            <mrow>\mathbf u\cdot(\mathbf v\times\mathbf w) \amp= (2,0,0)\cdot(12,-4,-2)</mrow>
+            <mrow>\amp= 24.</mrow>
+          </md>
+          So the signed volume is
+          <md>24.</md>
+        </p>
+      </statement>
+    </example>
+
+    <figure xml:id="c2s6-fig-parallelepiped">
+      <caption>Three vectors form a parallelepiped. The determinant is its signed volume.
+      (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="65%">
+        <asymptote>
+        // 3-D: PreTeXt renders this to an interactive WebGL figure for the web target.
+        import three;
+        size(11cm);
+        currentprojection=orthographic(5,2.2,3.4);
+
+        triple o=(0,0,0), u=(2,0,0), v=(1,3,0), w=(1,1,4);
+        triple uv=u+v, uw=u+w, vw=v+w, uvw=u+v+w;
+
+        // six faces of the parallelepiped, semi-transparent
+        pen face=gray(0.6)+opacity(0.32);
+        draw(surface(o--u--uv--v--cycle), face);
+        draw(surface(w--uw--uvw--vw--cycle), face);
+        draw(surface(o--u--uw--w--cycle), face);
+        draw(surface(v--uv--uvw--vw--cycle), face);
+        draw(surface(o--v--vw--w--cycle), face);
+        draw(surface(u--uv--uvw--uw--cycle), face);
+
+        // edges
+        pen edge=black+linewidth(0.5pt);
+        draw(o--u--uv--v--cycle, edge);
+        draw(w--uw--uvw--vw--cycle, edge);
+        draw(o--w, edge); draw(u--uw, edge); draw(v--vw, edge); draw(uv--uvw, edge);
+
+        // the three spanning vectors
+        draw(o--u, blue+linewidth(1.6pt), Arrow3);
+        draw(o--v, heavygreen+linewidth(1.6pt), Arrow3);
+        draw(o--w, red+linewidth(1.6pt), Arrow3);
+        label("$\mathbf u$", u, S);
+        label("$\mathbf v$", v, S+2E);
+        label("$\mathbf w$", w, 2W);
+        label("volume $=24$", (uvw)/2, 3N);
+        dot(o);
+        </asymptote>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c2s6-subsec-scalar-triple-product">
+    <title>Scalar triple product</title>
+
+    <p>
+      The expression
+      <md>\mathbf u\cdot(\mathbf v\times\mathbf w)</md>
+      has a name.
+    </p>
+
+    <definition xml:id="c2s6-def-scalar-triple-product">
+      <title>Scalar triple product</title>
+      <statement>
+        <p>
+          The <term>scalar triple product</term> of three vectors in <m>\mathbb R^3</m> is
+          <md>
+          \boxed{
+              \mathbf u\cdot(\mathbf v\times\mathbf w).
+          }
+          </md>
+          It is equal to the determinant
+          <md>\det[\mathbf u\ \mathbf v\ \mathbf w].</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The geometry is clean. The vector
+      <md>\mathbf v\times\mathbf w</md>
+      is an oriented area vector for the base parallelogram spanned by <m>\mathbf v</m> and
+      <m>\mathbf w</m>. Dotting with <m>\mathbf u</m> takes the component of <m>\mathbf u</m> in the
+      normal direction and multiplies by that base area. That is base area times signed
+      height.
+    </p>
+
+    <theorem xml:id="c2s6-thm-scalar-triple-product-signed-volume">
+      <title>Scalar triple product as signed volume</title>
+      <statement>
+        <p>
+          The signed volume of the parallelepiped spanned by
+          <md>\mathbf u,\mathbf v,\mathbf w</md>
+          is
+          <md>
+          \boxed{
+              \mathbf u\cdot(\mathbf v\times\mathbf w).
+          }
+          </md>
+          The ordinary volume is
+          <md>
+          \boxed{
+              \left|\mathbf u\cdot(\mathbf v\times\mathbf w)\right|.
+          }
+          </md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          The vector <m>\mathbf v\times\mathbf w</m> is perpendicular to the base parallelogram
+          spanned by <m>\mathbf v</m> and <m>\mathbf w</m>, and its length is the area of that base.
+        </p>
+        <p>
+          If <m>\mathbf v\times\mathbf w\neq\mathbf 0</m>, then
+          <md>\widehat{\mathbf n} = \frac{\mathbf v\times\mathbf w}{\|\mathbf v\times\mathbf w\|}</md>
+          is a unit normal to the base. The signed height of <m>\mathbf u</m> above the base is
+          <md>\mathbf u\cdot\widehat{\mathbf n}.</md>
+          So the signed volume is
+          <md>
+            <mrow>\text{base area}\cdot\text{signed height} \amp= \|\mathbf v\times\mathbf w\| \left( \mathbf u\cdot \frac{\mathbf v\times\mathbf w}{\|\mathbf v\times\mathbf w\|} \right)</mrow>
+            <mrow>\amp= \mathbf u\cdot(\mathbf v\times\mathbf w).</mrow>
+          </md>
+        </p>
+        <p>
+          If <m>\mathbf v\times\mathbf w=\mathbf 0</m>, then <m>\mathbf v</m> and <m>\mathbf w</m> are
+          parallel, so the base has zero area. The parallelepiped has volume <m>0</m>, and the
+          formula also gives
+          <md>\mathbf u\cdot(\mathbf v\times\mathbf w) = \mathbf u\cdot\mathbf 0 = 0.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The proof divided by
+      <md>\|\mathbf v\times\mathbf w\|</md>
+      only when this number was not zero. That condition matters. If
+      <md>\mathbf v=(1,0,0), \qquad \mathbf w=(2,0,0),</md>
+      then
+      <md>\mathbf v\times\mathbf w=\mathbf 0,</md>
+      so the unit normal
+      <md>\frac{\mathbf v\times\mathbf w}{\|\mathbf v\times\mathbf w\|}</md>
+      is meaningless. But the volume formula survives:
+      <md>\mathbf u\cdot(\mathbf v\times\mathbf w)=0.</md>
+      The box has collapsed because two of its edges point along the same line.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s6-subsec-orientation-ordered-bases">
+    <title>Orientation of ordered bases</title>
+
+    <p>The sign of a determinant tells us orientation.</p>
+
+    <p>
+      The standard ordered basis in space is
+      <md>\mathbf i=(1,0,0), \qquad \mathbf j=(0,1,0), \qquad \mathbf k=(0,0,1).</md>
+      Its determinant is
+      <md>
+          \det[\mathbf i\ \mathbf j\ \mathbf k]
+          =
+          \begin{vmatrix}
+          1&amp;0&amp;0\\
+          0&amp;1&amp;0\\
+          0&amp;0&amp;1
+          \end{vmatrix}
+          =
+          1.
+      </md>
+      So
+      <md>(\mathbf i,\mathbf j,\mathbf k)</md>
+      is positively oriented.
+    </p>
+
+    <p>
+      If we swap the first two vectors, we get
+      <md>(\mathbf j,\mathbf i,\mathbf k).</md>
+      Its determinant is
+      <md>
+          \det[\mathbf j\ \mathbf i\ \mathbf k]
+          =
+          \begin{vmatrix}
+          0&amp;1&amp;0\\
+          1&amp;0&amp;0\\
+          0&amp;0&amp;1
+          \end{vmatrix}
+          =
+          -1.
+      </md>
+      The volume is still <m>1</m>, but the orientation has reversed.
+    </p>
+
+    <definition xml:id="c2s6-def-orientation-basis">
+      <title>Orientation of an ordered basis in <m>\mathbb R^3</m></title>
+      <statement>
+        <p>
+          An ordered triple of vectors
+          <md>(\mathbf u,\mathbf v,\mathbf w)</md>
+          is a <term>basis</term> of <m>\mathbb R^3</m> if the vectors are independent, so that their
+          parallelepiped has nonzero volume.
+        </p>
+        <p>
+          The basis is <term>positively oriented</term> if
+          <md>\det[\mathbf u\ \mathbf v\ \mathbf w]&gt;0.</md>
+          It is <term>negatively oriented</term> if
+          <md>\det[\mathbf u\ \mathbf v\ \mathbf w]&lt;0.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The word <em>basis</em> matters. If
+      <md>\mathbf u=(1,0,0), \qquad \mathbf v=(0,1,0), \qquad \mathbf w=(1,0,0),</md>
+      then the determinant is
+      <md>\det[\mathbf u\ \mathbf v\ \mathbf w]=0.</md>
+      These three vectors do not fill space. They lie in the same plane because
+      <md>\mathbf w=\mathbf u.</md>
+      So the triple has no positive or negative orientation as a basis. It is not a basis at all.
+    </p>
+
+    <p>
+      The same idea works in the plane. The ordered pair
+      <md>((1,0),(0,1))</md>
+      is positively oriented because
+      <md>
+          \begin{vmatrix}
+          1&amp;0\\
+          0&amp;1
+          \end{vmatrix}
+          =
+          1.
+      </md>
+      The ordered pair
+      <md>((0,1),(1,0))</md>
+      is negatively oriented because
+      <md>
+          \begin{vmatrix}
+          0&amp;1\\
+          1&amp;0
+          \end{vmatrix}
+          =
+          -1.
+      </md>
+    </p>
+
+    <p>
+      Orientation is the mathematical version of choosing clockwise versus
+      counterclockwise in the plane, or right-handed versus left-handed in space.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c2s6-subsec-determinants-volume-scaling">
+    <title>Determinants as volume-scaling factors</title>
+
+    <p>
+      A determinant does not only measure one parallelogram or one parallelepiped. It
+      measures how a linear machine scales area or volume.
+    </p>
+
+    <p>
+      Consider the plane machine
+      <md>T(x,y)=x(2,1)+y(1,3).</md>
+      It sends
+      <md>(1,0)\mapsto (2,1), \qquad (0,1)\mapsto (1,3).</md>
+      So it sends the unit square to the parallelogram spanned by
+      <md>\mathbf u=(2,1), \qquad \mathbf v=(1,3).</md>
+      The determinant is
+      <md>
+          \det[\mathbf u\ \mathbf v]
+          =
+          \begin{vmatrix}
+              2&amp;1\\
+              1&amp;3
+          \end{vmatrix}
+          =
+          5.
+      </md>
+      Therefore the machine multiplies signed area by <m>5</m>.
+    </p>
+
+    <p>
+      A tiny rectangle with side lengths
+      <md>\Delta x \qquad\text{and}\qquad \Delta y</md>
+      has area
+      <md>\Delta x\,\Delta y.</md>
+      After applying <m>T</m>, it becomes a tiny parallelogram with area
+      <md>5\,\Delta x\,\Delta y.</md>
+    </p>
+
+    <p>
+      In space, if a machine sends the coordinate steps
+      <md>\mathbf i,\mathbf j,\mathbf k</md>
+      to
+      <md>\mathbf u,\mathbf v,\mathbf w,</md>
+      then it sends the unit cube to the parallelepiped spanned by
+      <md>\mathbf u,\mathbf v,\mathbf w.</md>
+      The signed volume scaling factor is
+      <md>\det[\mathbf u\ \mathbf v\ \mathbf w].</md>
+    </p>
+
+    <example xml:id="c2s6-ex-shear-preserves-area">
+      <title>A shear preserves area</title>
+      <statement>
+        <p>
+          Let
+          <md>T(x,y)=(x+2y,y).</md>
+          Then
+          <md>T(1,0)=(1,0), \qquad T(0,1)=(2,1).</md>
+          The area scaling factor is
+          <md>
+              \begin{vmatrix}
+                  1&amp;2\\
+                  0&amp;1
+              \end{vmatrix}
+              =
+              1.
+          </md>
+          This machine slants squares into parallelograms, but it preserves area.
+        </p>
+        <p>
+          A square can be pushed sideways without changing its area. The determinant sees
+          that.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c2s6-ex-coordinate-stretch">
+      <title>A coordinate stretch changes volume</title>
+      <statement>
+        <p>
+          Let a space machine stretch <m>x</m>-distances by <m>2</m>, <m>y</m>-distances by <m>3</m>, and
+          <m>z</m>-distances by <m>4</m>:
+          <md>T(x,y,z)=(2x,3y,4z).</md>
+          Then
+          <md>T(\mathbf i)=(2,0,0), \qquad T(\mathbf j)=(0,3,0), \qquad T(\mathbf k)=(0,0,4).</md>
+          The volume scaling factor is
+          <md>
+              \begin{vmatrix}
+              2&amp;0&amp;0\\
+              0&amp;3&amp;0\\
+              0&amp;0&amp;4
+              \end{vmatrix}
+              =
+              24.
+          </md>
+          So every small volume is multiplied by <m>24</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is why determinants appear in change of variables. When we later replace
+      <m>(x,y)</m> by better coordinates, the determinant will tell us how much each little area
+      piece has been stretched. In polar coordinates, that mysterious extra factor
+      <md>r</md>
+      in
+      <md>dA=r\,dr\,d\theta</md>
+      will turn out to be a determinant.
+    </p>
+
+    <p>
+      But the determinant has revealed something even more basic: area and volume change
+      sign when we swap directions. Ordinary multiplication does not behave that way:
+      <md>ab=ba.</md>
+      Oriented area does:
+      <md>\det[\mathbf u\ \mathbf v]=-\det[\mathbf v\ \mathbf u].</md>
+      That sign flip is not a technicality. It is the beginning of a new product, built for
+      oriented geometry. The next section gives it a name: the wedge product.
+    </p>
+  </subsection>
+</section>

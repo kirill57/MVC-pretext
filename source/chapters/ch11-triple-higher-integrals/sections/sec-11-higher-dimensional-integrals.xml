@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch11-triple-higher-integrals.tex, Section 6.
+     Status: CONVERTED. -->
+<section xml:id="sec-11-higher-dimensional-integrals" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Higher-dimensional integrals</title>
+
+  <p>
+    The probability example at the end of <xref ref="sec-11-applications-of-triple-integrals"/> did
+    not really care that the random point had three coordinates. A system may have many coordinates:
+    <md>x_1,x_2,\ldots,x_n.</md>
+    A triple integral is the case <m>n=3</m>. Higher-dimensional integrals follow the same adding
+    rule, but the pictures become less trustworthy.
+  </p>
+
+  <p>
+    The wedge notation in this book will stay in dimensions <m>1</m>, <m>2</m>, and <m>3</m>. In
+    this optional section, we write
+    <md>dV_n</md>
+    for positive <m>n</m>-dimensional volume.
+  </p>
+
+  <subsection xml:id="c11s6-subsec-what-changes-in-rn">
+    <title>What changes in <m>\mathbb R^n</m></title>
+
+    <p>
+      A point in <m>\mathbb R^n</m> is written
+      <md>\mathbf x=(x_1,x_2,\ldots,x_n).</md>
+      A rectangular box in <m>\mathbb R^n</m> has the form
+      <md>B=[a_1,b_1]\times[a_2,b_2]\times\cdots\times[a_n,b_n].</md>
+      Its side lengths are
+      <md>b_1-a_1,\quad b_2-a_2,\quad \ldots,\quad b_n-a_n.</md>
+      Its <m>n</m>-dimensional volume is
+      <md>\boxed{\operatorname{Vol}_n(B)=(b_1-a_1)(b_2-a_2)\cdots(b_n-a_n).}</md>
+    </p>
+
+    <p>
+      A small coordinate box has side lengths
+      <md>\Delta x_1,\Delta x_2,\ldots,\Delta x_n.</md>
+      Its small volume is
+      <md>\Delta V_n=\Delta x_1\Delta x_2\cdots\Delta x_n.</md>
+      So the Riemann sum for a function
+      <md>f(x_1,\ldots,x_n)</md>
+      has the form
+      <md>\sum f(\mathbf x_i^*)\,\Delta V_{n,i}.</md>
+      If these sums settle to a single value, we write
+      <md>\boxed{\int_E f(\mathbf x)\,dV_n.}</md>
+    </p>
+
+    <example xml:id="c11s6-ex-four-dimensional-quality-control-box">
+      <title>A four-dimensional quality-control box</title>
+      <statement>
+        <p>
+          A machine produces parts with four measured deviations:
+          <md>x_1,\quad x_2,\quad x_3,\quad x_4.</md>
+          Suppose each deviation is allowed to lie between <m>-1</m> and <m>1</m>. The acceptable
+          region is the four-dimensional box
+          <md>B=[-1,1]^4.</md>
+          Its volume is
+          <md>\operatorname{Vol}_4(B)=2\cdot2\cdot2\cdot2=16.</md>
+        </p>
+        <p>
+          If all points in <m>B</m> are equally likely, the probability density is constant:
+          <md>p=\frac1{16}.</md>
+          The probability that every deviation lies between <m>-1/2</m> and <m>1/2</m> is
+          <md>
+            <mrow>\operatorname{Prob}\left([-1/2,1/2]^4\right) \amp= \int_{[-1/2,1/2]^4}\frac1{16}\,dV_4</mrow>
+            <mrow>\amp= \frac1{16}\cdot(1\cdot1\cdot1\cdot1)</mrow>
+            <mrow>\amp= \frac1{16}.</mrow>
+          </md>
+          Each coordinate range was cut in half, but the four-dimensional volume was cut by
+          <md>\left(\frac12\right)^4.</md>
+          This is the first hint that high-dimensional size shrinks faster than our eyes expect.
+        </p>
+      </statement>
+    </example>
+
+    <definition xml:id="c11s6-def-higher-dimensional-integral">
+      <title>Higher-dimensional integral</title>
+      <statement>
+        <p>
+          Let <m>E\subseteq\mathbb R^n</m>. If Riemann sums
+          <md>\sum f(\mathbf x_i^*)\,\Delta V_{n,i}</md>
+          approach one number as the small <m>n</m>-dimensional boxes shrink, independent of the
+          sample points, then that number is the integral of <m>f</m> over <m>E</m>:
+          <md>\boxed{\int_E f(\mathbf x)\,dV_n.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For <m>n=1</m>, this is an ordinary single-variable integral. For <m>n=2</m>, it is a double
+      integral. For <m>n=3</m>, it is a triple integral.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s6-subsec-product-regions-and-fubinis-theorem">
+    <title>Product regions and Fubini's theorem</title>
+
+    <p>
+      The easiest higher-dimensional regions are boxes and product regions, because each coordinate
+      has its own interval.
+    </p>
+
+    <p>
+      For example, let
+      <md>B=[0,2]\times[0,3]\times[0,1]\times[0,4].</md>
+      Then
+      <md>\operatorname{Vol}_4(B)=2\cdot3\cdot1\cdot4=24.</md>
+    </p>
+
+    <p>
+      Now compute
+      <md>I=\int_B (x_1+x_4)\,dV_4.</md>
+      Using iterated integrals,
+      <md>I=\int_0^2\int_0^3\int_0^1\int_0^4(x_1+x_4)\,dx_4\,dx_3\,dx_2\,dx_1.</md>
+      Split the integral into two pieces:
+      <md>I=\int_B x_1\,dV_4+\int_B x_4\,dV_4.</md>
+      For the <m>x_1</m>-piece,
+      <md>
+        <mrow>\int_B x_1\,dV_4 \amp= \left(\int_0^2 x_1\,dx_1\right)\left(\int_0^3 dx_2\right)\left(\int_0^1 dx_3\right)\left(\int_0^4 dx_4\right)</mrow>
+        <mrow>\amp= 2\cdot3\cdot1\cdot4</mrow>
+        <mrow>\amp= 24.</mrow>
+      </md>
+      For the <m>x_4</m>-piece,
+      <md>
+        <mrow>\int_B x_4\,dV_4 \amp= \left(\int_0^2 dx_1\right)\left(\int_0^3 dx_2\right)\left(\int_0^1 dx_3\right)\left(\int_0^4 x_4\,dx_4\right)</mrow>
+        <mrow>\amp= 2\cdot3\cdot1\cdot8</mrow>
+        <mrow>\amp= 48.</mrow>
+      </md>
+      Thus
+      <md>\boxed{I=72.}</md>
+      The average value of <m>x_1+x_4</m> over the box is
+      <md>\frac{72}{24}=3.</md>
+      That is the average of <m>x_1</m>, which is <m>1</m>, plus the average of <m>x_4</m>, which is
+      <m>2</m>.
+    </p>
+
+    <theorem xml:id="c11s6-thm-fubini-boxes-rn">
+      <title>Fubini's theorem for boxes in <m>\mathbb R^n</m></title>
+      <statement>
+        <p>
+          Let
+          <md>B=[a_1,b_1]\times\cdots\times[a_n,b_n],</md>
+          and suppose <m>f</m> is continuous on <m>B</m>. Then
+          <md>\boxed{\int_B f(\mathbf x)\,dV_n}</md>
+          can be computed as an iterated integral in any order.
+        </p>
+        <p>
+          For example,
+          <md>\boxed{\int_B f\,dV_n=\int_{a_1}^{b_1}\cdots\int_{a_n}^{b_n}f(x_1,\ldots,x_n)\,dx_n\cdots dx_1.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      Continuity is a safe condition. It is stronger than necessary, but it keeps the adding process
+      well-behaved.
+    </p>
+
+    <example xml:id="c11s6-ex-nonintegrable-function">
+      <title>A nonintegrable function still breaks the story</title>
+      <statement>
+        <p>
+          On the unit box
+          <md>[0,1]^n,</md>
+          define
+          <md>q(x_1,\ldots,x_n)=\begin{cases}1, \amp x_1\text{ is rational},\\0, \amp x_1\text{ is irrational}.\end{cases}</md>
+          Every small <m>n</m>-dimensional box contains points with rational <m>x_1</m> and points
+          with irrational <m>x_1</m>. The upper sums are always <m>1</m>, and the lower sums are
+          always <m>0</m>.
+        </p>
+        <p>
+          So the Riemann integral does not exist. Fubini's theorem cannot rescue an integral that
+          was never there.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      There is a useful special case when the function factors. If
+      <md>f(x_1,\ldots,x_n)=g_1(x_1)g_2(x_2)\cdots g_n(x_n),</md>
+      then on a box,
+      <md>\boxed{\int_B f\,dV_n=\left(\int_{a_1}^{b_1}g_1(x_1)\,dx_1\right)\cdots\left(\int_{a_n}^{b_n}g_n(x_n)\,dx_n\right).}</md>
+      The integral separates because the variables separate.
+    </p>
+
+    <example xml:id="c11s6-ex-separated-density">
+      <title>A separated density</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x_1,x_2,x_3,x_4)=e^{-x_1}(1+x_2)x_3^2</md>
+          on
+          <md>[0,1]\times[0,2]\times[0,3]\times[0,4].</md>
+          The function does not depend on <m>x_4</m>, so the <m>x_4</m>-integral contributes a
+          factor of <m>4</m>. We get
+          <md>
+            <mrow>\int f\,dV_4 \amp= \left(\int_0^1e^{-x_1}\,dx_1\right)\left(\int_0^2(1+x_2)\,dx_2\right)\left(\int_0^3x_3^2\,dx_3\right)\left(\int_0^4 dx_4\right)</mrow>
+            <mrow>\amp= (1-e^{-1})(4)(9)(4)</mrow>
+            <mrow>\amp= 144(1-e^{-1}).</mrow>
+          </md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The arithmetic looks familiar because Fubini turns one higher-dimensional adding problem into
+      several one-dimensional ones.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s6-subsec-volumes-balls-and-boxes">
+    <title>Volumes of higher-dimensional balls and boxes</title>
+
+    <p>
+      Boxes are easy in every dimension:
+      <md>\operatorname{Vol}_n([0,L]^n)=L^n.</md>
+      Balls are subtler.
+    </p>
+
+    <p>
+      The <m>n</m>-dimensional ball of radius <m>R</m> is
+      <md>B_n(R)=\left\{(x_1,\ldots,x_n):x_1^2+\cdots+x_n^2\le R^2\right\}.</md>
+      For the first few dimensions:
+      <md>
+\begin{array}{c|c|c}
+n \amp B_n(R) \amp \operatorname{Vol}_n(B_n(R)) \\ \hline
+1 \amp \text{interval} \amp 2R\\[1mm]
+2 \amp \text{disk} \amp \pi R^2\\[1mm]
+3 \amp \text{solid ball} \amp \dfrac43\pi R^3
+\end{array}
+      </md>
+    </p>
+
+    <p>
+      The four-dimensional ball cannot be drawn, but it can be sliced.
+    </p>
+
+    <p>
+      Let
+      <md>B_4(1)=\{(x,y,z,w):x^2+y^2+z^2+w^2\le1\}.</md>
+      Fix <m>w</m>. Then the remaining variables satisfy
+      <md>x^2+y^2+z^2\le1-w^2.</md>
+      That is a three-dimensional ball of radius
+      <md>\sqrt{1-w^2}.</md>
+      Its volume is
+      <md>\frac43\pi(1-w^2)^{3/2}.</md>
+      So
+      <md>\operatorname{Vol}_4(B_4(1))=\int_{-1}^{1}\frac43\pi(1-w^2)^{3/2}\,dw.</md>
+      Use
+      <md>w=\sin u.</md>
+      Then
+      <md>dw=\cos u\,du,\qquad (1-w^2)^{3/2}=\cos^3u,</md>
+      and <m>u</m> runs from <m>-\pi/2</m> to <m>\pi/2</m>. Therefore
+      <md>\operatorname{Vol}_4(B_4(1))=\frac43\pi\int_{-\pi/2}^{\pi/2}\cos^4u\,du.</md>
+      Since
+      <md>\cos^4u=\frac{3+4\cos(2u)+\cos(4u)}{8},</md>
+      we have
+      <md>\int_{-\pi/2}^{\pi/2}\cos^4u\,du=\frac{3\pi}{8}.</md>
+      Thus
+      <md>\boxed{\operatorname{Vol}_4(B_4(1))=\frac43\pi\cdot\frac{3\pi}{8}=\frac{\pi^2}{2}.}</md>
+    </p>
+
+    <p>
+      Scaling by <m>R</m> in all four coordinates multiplies four-dimensional volume by <m>R^4</m>.
+      So
+      <md>\boxed{\operatorname{Vol}_4(B_4(R))=\frac{\pi^2}{2}R^4.}</md>
+    </p>
+
+    <p>
+      The pattern continues:
+      <md>
+\begin{array}{c|c}
+n \amp \operatorname{Vol}_n(B_n(R)) \\ \hline
+1 \amp 2R\\[1mm]
+2 \amp \pi R^2\\[1mm]
+3 \amp \dfrac43\pi R^3\\[2mm]
+4 \amp \dfrac{\pi^2}{2}R^4\\[2mm]
+5 \amp \dfrac{8\pi^2}{15}R^5
+\end{array}
+      </md>
+    </p>
+
+    <p>
+      The formula has a compact version involving the gamma function, but the main idea is already
+      visible: higher-dimensional balls can be studied by slicing them into lower-dimensional balls.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s6-subsec-why-high-dimensional-geometry-feels-surprising">
+    <title>Why high-dimensional geometry feels surprising</title>
+
+    <p>
+      High-dimensional geometry often disagrees with three-dimensional intuition. The reason is not
+      mysterious. Powers grow and shrink quickly.
+    </p>
+
+    <p>
+      For an <m>n</m>-dimensional ball, scaling the radius by <m>a</m> scales volume by
+      <md>a^n.</md>
+      So the ball of half the radius has volume fraction
+      <md>\boxed{\left(\frac12\right)^n.}</md>
+      In three dimensions, that fraction is
+      <md>\frac18.</md>
+      In ten dimensions, it is
+      <md>\frac1{1024}.</md>
+      In one hundred dimensions, it is
+      <md>2^{-100}.</md>
+      So in high dimensions, very little of a ball's volume lies near the center. Most of it sits
+      close to the outer shell.
+    </p>
+
+    <p>
+      The cube gives another surprise. The cube
+      <md>[-1,1]^n</md>
+      has volume
+      <md>2^n.</md>
+      Its corners have distance
+      <md>\sqrt{1^2+1^2+\cdots+1^2}=\sqrt n</md>
+      from the origin. As <m>n</m> grows, the corners move farther and farther away, even though
+      every coordinate still lies between <m>-1</m> and <m>1</m>.
+    </p>
+
+    <p>
+      In four dimensions, the ball of radius <m>1</m> inside the cube <m>[-1,1]^4</m> has volume
+      <md>\frac{\pi^2}{2}.</md>
+      The cube has volume
+      <md>16.</md>
+      So the fraction occupied by the ball is
+      <md>\frac{\pi^2/2}{16}=\frac{\pi^2}{32}\approx 0.31.</md>
+      Already by dimension <m>4</m>, much of the cube lies outside the inscribed ball, toward the
+      corners.
+    </p>
+
+    <p>
+      These facts matter in probability, statistics, data science, and physics. A point with many
+      coordinates does not behave like a point in a drawing. Volume migrates toward boundaries,
+      corners, and shells.
+    </p>
+
+    <p>
+      But the integral itself has not changed. It still adds tiny contributions. The hard part is
+      describing how a small coordinate box in one system becomes a small piece in another system.
+      We have already met two answers:
+      <md>dV=r\,dr\,d\theta\,dz</md>
+      and
+      <md>dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
+      Those factors were not tricks for cylinders and spheres. They are examples of a single rule.
+      <xref ref="ch12-change-of-variables"/> finds that rule by looking at how a coordinate map
+      stretches tiny boxes, and the determinant returns as the scale factor.
+    </p>
+  </subsection>
+</section>

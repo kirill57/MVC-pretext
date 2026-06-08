@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch07-partial-derivatives-jacobian.tex, Section 6.
+     Status: CONVERTED. -->
+<section xml:id="sec-7-sufficient-conditions-and-warning-examples" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Sufficient conditions and warning examples</title>
+
+  <p>
+    The Jacobian matrix in <xref ref="sec-7-the-jacobian-matrix"/> was built from partial
+    derivatives. That is natural, but it hides a danger. Partial derivatives are measured along
+    coordinate slices. The total derivative must work for every small displacement at once.
+  </p>
+
+  <p>So we need a test that says when the slices fit together.</p>
+
+  <subsection xml:id="c7s6-subsec-a-safe-example-first">
+    <title>A safe example first</title>
+
+    <p>
+      Return to the rubber sheet map
+      <md>F(x,y)=\left(x+\frac15xy,\;y+\frac1{10}x^2\right).</md>
+      Its partial derivatives are
+      <md>F_{1x}=1+\frac15y,\qquad F_{1y}=\frac15x,</md>
+      and
+      <md>F_{2x}=\frac15x,\qquad F_{2y}=1.</md>
+      These are polynomial functions. They are continuous everywhere.
+    </p>
+
+    <p>
+      That means the entries of the Jacobian matrix do not jump or oscillate near the point. A
+      nearby point has nearby coordinate slopes. The local grid is not being asked to change its
+      linear behavior abruptly at microscopic scale.
+    </p>
+
+    <p>This is the good situation. In it, the Jacobian matrix is the total derivative.</p>
+
+    <theorem xml:id="c7s6-thm-continuous-partials-imply-differentiability">
+      <title>Continuous partial derivatives imply differentiability</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^2\to\mathbb R,</md>
+          and let <m>(a,b)</m> be an interior point of <m>D</m>. Suppose <m>f_x</m> and
+          <m>f_y</m> exist in a small disk around <m>(a,b)</m>, and suppose both partial
+          derivatives are continuous at <m>(a,b)</m>. Then <m>f</m> is differentiable at
+          <m>(a,b)</m>, and
+          <md>\boxed{Df(a,b)(\Delta x,\Delta y)=f_x(a,b)\Delta x+f_y(a,b)\Delta y.}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We compare
+          <md>f(a+\Delta x,b+\Delta y)</md>
+          to
+          <md>f(a,b).</md>
+          Split the change into two coordinate moves:
+          <md>
+            <mrow>\amp f(a+\Delta x,b+\Delta y)-f(a,b)</mrow>
+            <mrow>\amp\qquad = \bigl[f(a+\Delta x,b+\Delta y)-f(a,b+\Delta y)\bigr]+\bigl[f(a,b+\Delta y)-f(a,b)\bigr].</mrow>
+          </md>
+          For the first bracket, only <m>x</m> changes. By the one-variable Mean Value Theorem,
+          there is a number <m>\theta</m> between <m>0</m> and <m>1</m> such that
+          <md>f(a+\Delta x,b+\Delta y)-f(a,b+\Delta y)=\Delta x\,f_x(a+\theta\Delta x,b+\Delta y).</md>
+          For the second bracket, only <m>y</m> changes. There is a number <m>\eta</m> between
+          <m>0</m> and <m>1</m> such that
+          <md>f(a,b+\Delta y)-f(a,b)=\Delta y\,f_y(a,b+\eta\Delta y).</md>
+          Subtract the proposed linear part:
+          <md>f_x(a,b)\Delta x+f_y(a,b)\Delta y.</md>
+          The error is
+          <md>
+            <mrow>R(\Delta x,\Delta y) \amp= \Delta x\bigl[f_x(a+\theta\Delta x,b+\Delta y)-f_x(a,b)\bigr]</mrow>
+            <mrow>\amp\qquad + \Delta y\bigl[f_y(a,b+\eta\Delta y)-f_y(a,b)\bigr].</mrow>
+          </md>
+          Let
+          <md>r=\sqrt{(\Delta x)^2+(\Delta y)^2}.</md>
+          Since
+          <md>|\Delta x|\le r,\qquad |\Delta y|\le r,</md>
+          we get
+          <md>
+            <mrow>\frac{|R(\Delta x,\Delta y)|}{r} \amp\le \left|f_x(a+\theta\Delta x,b+\Delta y)-f_x(a,b)\right|</mrow>
+            <mrow>\amp\qquad+ \left|f_y(a,b+\eta\Delta y)-f_y(a,b)\right|.</mrow>
+          </md>
+          As
+          <md>(\Delta x,\Delta y)\to(0,0),</md>
+          the points inside <m>f_x</m> and <m>f_y</m> approach <m>(a,b)</m>. Since <m>f_x</m> and
+          <m>f_y</m> are continuous at <m>(a,b)</m>, the right side approaches <m>0</m>. Therefore
+          <md>\frac{|R(\Delta x,\Delta y)|}{r}\to0,</md>
+          which is exactly differentiability.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The same test works in any finite number of variables and for vector-valued maps.</p>
+
+    <theorem xml:id="c7s6-thm-jacobian-test-for-differentiability">
+      <title>Jacobian test for differentiability</title>
+      <statement>
+        <p>
+          Let
+          <md>F:D\subseteq\mathbb R^n\to\mathbb R^m</md>
+          have component functions
+          <md>F_1,\ldots,F_m.</md>
+          Suppose all first partial derivatives
+          <md>\frac{\partial F_i}{\partial x_j}</md>
+          exist in a small ball around <m>\mathbf p</m>, and suppose all of them are continuous
+          at <m>\mathbf p</m>. Then <m>F</m> is differentiable at <m>\mathbf p</m>, and
+          <md>\boxed{DF(\mathbf p)(\mathbf h)=J_F(\mathbf p)\mathbf h.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      The proof is just the scalar theorem applied to each component. The component errors are
+      each smaller than first order, so the vector error is also smaller than first order.
+    </p>
+
+    <p>
+      This theorem is one of the most useful tests in the course. For polynomials, trigonometric
+      functions, exponentials, logarithms on their domains, and rational functions away from zero
+      denominators, the partial derivatives are continuous. In those settings, the Jacobian
+      matrix really is the derivative.
+    </p>
+
+    <p>Now come the warnings.</p>
+  </subsection>
+
+  <subsection xml:id="c7s6-subsec-sufficient-not-necessary">
+    <title>Continuous partials are sufficient, not necessary</title>
+
+    <p>
+      The theorem gives a reliable test. It is not an if-and-only-if statement. A function can be
+      differentiable even when its partial derivatives are not continuous.
+    </p>
+
+    <p>
+      Define
+      <md>f(x,y)=\begin{cases}x^2\sin\left(\dfrac1x\right), &amp; x\ne0,\\[2mm]0, &amp; x=0.\end{cases}</md>
+      This function does not depend on <m>y</m>. At the origin,
+      <md>f_x(0,0)=\lim_{h\to0}\frac{h^2\sin(1/h)-0}{h}=\lim_{h\to0}h\sin(1/h)=0,</md>
+      and
+      <md>f_y(0,0)=0.</md>
+      So the candidate total derivative at the origin is the zero linear function.
+    </p>
+
+    <p>
+      To check differentiability, estimate the error:
+      <md>|f(x,y)|=\left|x^2\sin\left(\frac1x\right)\right|\le x^2</md>
+      when <m>x\ne0</m>, and the same inequality is true when <m>x=0</m>. Since
+      <md>x^2\le x^2+y^2,</md>
+      we get
+      <md>\frac{|f(x,y)-0|}{\sqrt{x^2+y^2}}\le\sqrt{x^2+y^2}\to0.</md>
+      Therefore <m>f</m> is differentiable at the origin.
+    </p>
+
+    <p>
+      But <m>f_x</m> is not continuous at the origin. For <m>x\ne0</m>,
+      <md>f_x(x,y)=2x\sin\left(\frac1x\right)-\cos\left(\frac1x\right).</md>
+      The term
+      <md>\cos\left(\frac1x\right)</md>
+      oscillates as <m>x\to0</m>. So <m>f_x(x,y)</m> does not approach <m>f_x(0,0)=0</m>.
+    </p>
+
+    <p>The moral is one-way:</p>
+
+    <p>
+      <md>\text{continuous partial derivatives guarantee differentiability,}</md>
+      but
+      <md>\text{differentiability does not require continuous partial derivatives.}</md>
+    </p>
+
+    <p>The theorem is a safe test, not the only possible route.</p>
+  </subsection>
+
+  <subsection xml:id="c7s6-subsec-partials-without-continuity">
+    <title>Partial derivatives can exist without continuity</title>
+
+    <p>
+      A sharper warning comes from the function
+      <md>S(x,y)=\begin{cases}\dfrac{xy}{x^2+y^2}, &amp; (x,y)\ne(0,0),\\[2mm]0, &amp; (x,y)=(0,0).\end{cases}</md>
+      We met this kind of example when studying limits. Along the <m>x</m>-axis,
+      <md>S(x,0)=0.</md>
+      Along the <m>y</m>-axis,
+      <md>S(0,y)=0.</md>
+      Therefore
+      <md>S_x(0,0)=0,\qquad S_y(0,0)=0.</md>
+      Both partial derivatives exist at the origin.
+    </p>
+
+    <p>
+      But <m>S</m> is not continuous at the origin. Along the diagonal <m>y=x</m>,
+      <md>S(x,x)=\frac{x^2}{2x^2}=\frac12</md>
+      for <m>x\ne0</m>. Along the <m>x</m>-axis,
+      <md>S(x,0)=0.</md>
+      The function does not settle down to one value near the origin.
+    </p>
+
+    <p>
+      Since differentiability always implies continuity, <m>S</m> cannot be differentiable at the
+      origin.
+    </p>
+
+    <p>
+      So partial derivatives at a point do not even guarantee continuity. They only check two
+      coordinate slices.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s6-subsec-partials-without-differentiability">
+    <title>Partial derivatives can exist without differentiability</title>
+
+    <p>
+      The previous example failed because the function was not continuous. The next one is more
+      subtle: the function is continuous, and the partial derivatives exist, but the total
+      derivative still fails.
+    </p>
+
+    <p>
+      Define
+      <md>G(x,y)=\begin{cases}\dfrac{x^2y}{x^2+y^2}, &amp; (x,y)\ne(0,0),\\[2mm]0, &amp; (x,y)=(0,0).\end{cases}</md>
+      First, <m>G</m> is continuous at the origin. For <m>(x,y)\ne(0,0)</m>,
+      <md>|G(x,y)|=\frac{|x|^2|y|}{x^2+y^2}\le|y|.</md>
+      Since
+      <md>|y|\le\sqrt{x^2+y^2},</md>
+      we get
+      <md>|G(x,y)|\to0</md>
+      as <m>(x,y)\to(0,0)</m>. Thus
+      <md>G(x,y)\to G(0,0).</md>
+    </p>
+
+    <p>
+      Now compute the partial derivatives at the origin. Along the <m>x</m>-axis,
+      <md>G(h,0)=0,</md>
+      so
+      <md>G_x(0,0)=\lim_{h\to0}\frac{G(h,0)-G(0,0)}{h}=0.</md>
+      Along the <m>y</m>-axis,
+      <md>G(0,h)=0,</md>
+      so
+      <md>G_y(0,0)=0.</md>
+      If <m>G</m> were differentiable at the origin, its total derivative would have to be
+      <md>DG(0,0)(\Delta x,\Delta y)=0.</md>
+      The tangent plane formula would predict
+      <md>z=0.</md>
+    </p>
+
+    <p>
+      Now test the diagonal path
+      <md>y=x.</md>
+      For <m>x\ne0</m>,
+      <md>G(x,x)=\frac{x^3}{2x^2}=\frac{x}{2}.</md>
+      The proposed linear approximation is <m>0</m>, so the error along this path is
+      <md>R(x,x)=\frac{x}{2}.</md>
+      The input step length is
+      <md>\sqrt{x^2+x^2}=\sqrt2\,|x|.</md>
+      Therefore
+      <md>\frac{|R(x,x)|}{\sqrt{x^2+x^2}}=\frac{|x|/2}{\sqrt2\,|x|}=\frac1{2\sqrt2}.</md>
+      This does not approach <m>0</m>.
+    </p>
+
+    <p>So <m>G</m> is not differentiable at the origin.</p>
+
+    <p>
+      The function is continuous. The two coordinate partial derivatives exist. But no linear
+      approximation works in all small directions at once.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s6-subsec-tangent-plane-can-fail">
+    <title>The tangent plane formula can fail without differentiability</title>
+
+    <p>The graph of <m>G</m> gives the geometric warning.</p>
+
+    <p>
+      Since
+      <md>G_x(0,0)=0,\qquad G_y(0,0)=0,</md>
+      the formal tangent plane formula would give
+      <md>z=0.</md>
+      Along the coordinate axes, that plane looks correct:
+      <md>G(x,0)=0,\qquad G(0,y)=0.</md>
+      But along the diagonal,
+      <md>G(x,x)=\frac{x}{2}.</md>
+      The graph rises with a nonzero first-order slope along a direction that the coordinate
+      slices missed.
+    </p>
+
+    <p>
+      A tangent plane is not a plane that matches two coordinate traces. It is a plane that
+      matches the whole surface to first order. That is why differentiability is the real
+      condition behind the tangent plane.
+    </p>
+
+    <p>
+      For <m>(x,y)\ne(0,0)</m>, the partial derivatives of <m>G</m> are
+      <md>G_x(x,y)=\frac{2xy^3}{(x^2+y^2)^2},</md>
+      and
+      <md>G_y(x,y)=\frac{x^2(x^2-y^2)}{(x^2+y^2)^2}.</md>
+      These partial derivatives are not continuous at the origin. For example, along <m>y=x</m>,
+      <md>G_x(x,x)=\frac12,</md>
+      while
+      <md>G_x(0,0)=0.</md>
+      So the continuous-partials theorem did not apply, and the failure was real.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s6-subsec-what-the-test-gives-us">
+    <title>What the test gives us</title>
+
+    <p>
+      For most functions built from familiar smooth pieces, the Jacobian matrix can be trusted.
+      For example,
+      <md>F(x,y,z)=\left(e^{xy}+z,\;\sin(xz)+y^2\right)</md>
+      has continuous partial derivatives everywhere. So <m>F</m> is differentiable everywhere, and
+      <md>DF(x,y,z)(\Delta x,\Delta y,\Delta z)=J_F(x,y,z)\begin{pmatrix}\Delta x\\\Delta y\\\Delta z\end{pmatrix}.</md>
+      The Jacobian is
+      <md>\boxed{J_F(x,y,z)=\begin{pmatrix}ye^{xy} &amp; xe^{xy} &amp; 1\\z\cos(xz) &amp; 2y &amp; x\cos(xz)\end{pmatrix}.}</md>
+      This is a <m>2\times3</m> matrix because the input has three coordinates and the output has
+      two.
+    </p>
+
+    <p>
+      Near any point, this matrix gives the first-order response of the two outputs to a small
+      movement in space.
+    </p>
+
+    <p>
+      The chapter has now turned derivatives into linear maps. That viewpoint changes how the
+      chain rule looks. If a moving particle passes through a temperature field, or if one
+      coordinate change follows another, the nonlinear functions should first be replaced by their
+      local linear parts. Linear parts compose by matrix multiplication. That is the next return
+      of the single-variable chain rule, now written in the language of Jacobian matrices.
+    </p>
+  </subsection>
+</section>

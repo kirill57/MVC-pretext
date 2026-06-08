@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch18-generalized-stokes.tex, Section 18.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-18-the-fundamental-theorem-of-calculus-as-stokes" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The Fundamental Theorem of Calculus as Stokes</title>
+
+  <p>
+    The generalized Stokes theorem says
+    <md>\int_{\partial M}\omega=\int_M d\omega.</md>
+    The shortest nontrivial case happens when <m>M</m> is an interval. Then the boundary is
+    only two signed endpoints, and <m>\omega</m> is only a function.
+  </p>
+
+  <p>That case is not a new theorem. It is the Fundamental Theorem of Calculus.</p>
+
+  <subsection xml:id="c18s3-subsec-changing-temperature-rod">
+    <title>A changing temperature along a rod</title>
+
+    <p>
+      Imagine a thin metal rod lying along the <m>x</m>-axis from
+      <md>x=1 \qquad\text{to}\qquad x=4.</md>
+      The temperature along the rod is
+      <md>T(x)=x^2+2x.</md>
+      Then
+      <md>dT=T'(x)\,dx=(2x+2)\,dx.</md>
+    </p>
+
+    <p>
+      The interval
+      <md>I=[1,4]</md>
+      is oriented from left to right. Its boundary is
+      <md>\partial I=\{4\}-\{1\}.</md>
+      So the boundary integral of the <m>0</m>-form <m>T</m> is
+      <md>
+        <mrow>\int_{\partial I}T \amp= T(4)-T(1)</mrow>
+        <mrow>\amp= (16+8)-(1+2)</mrow>
+        <mrow>\amp= 21.</mrow>
+      </md>
+    </p>
+
+    <p>
+      Now integrate the derivative through the inside:
+      <md>
+        <mrow>\int_I dT \amp= \int_1^4 (2x+2)\,dx</mrow>
+        <mrow>\amp= \left[x^2+2x\right]_1^4</mrow>
+        <mrow>\amp= 21.</mrow>
+      </md>
+      Thus
+      <md>\boxed{\int_{\partial I}T=\int_I dT.}</md>
+    </p>
+
+    <p>
+      This is exactly Stokes' theorem:
+      <md>\int_{\partial M}\omega=\int_M d\omega,</md>
+      with
+      <md>M=I, \qquad \omega=T.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s3-subsec-zero-form-on-interval">
+    <title>A <m>0</m>-form on an interval</title>
+
+    <p>
+      A <m>0</m>-form is a function. On an interval,
+      <md>\omega=f(x)</md>
+      is a <m>0</m>-form, and its exterior derivative is the <m>1</m>-form
+      <md>\boxed{d\omega=df=f'(x)\,dx.}</md>
+    </p>
+
+    <p>
+      So the two sides of Stokes become
+      <md>\int_{\partial[a,b]}f</md>
+      and
+      <md>\int_{[a,b]}df.</md>
+    </p>
+
+    <p>The first one is an endpoint calculation. The second one is an ordinary integral.</p>
+
+    <p>
+      If <m>[a,b]</m> is oriented from <m>a</m> to <m>b</m>, then
+      <md>\partial[a,b]=\{b\}-\{a\}.</md>
+      Therefore
+      <md>\boxed{\int_{\partial[a,b]}f=f(b)-f(a).}</md>
+    </p>
+
+    <p>
+      Meanwhile,
+      <md>\boxed{\int_{[a,b]}df=\int_a^b f'(x)\,dx.}</md>
+    </p>
+
+    <p>
+      Putting these together gives
+      <md>\boxed{\int_{\partial[a,b]}f=\int_{[a,b]}df}</md>
+      which means
+      <md>\boxed{f(b)-f(a)=\int_a^b f'(x)\,dx.}</md>
+    </p>
+
+    <p>That is the Fundamental Theorem of Calculus.</p>
+
+    <theorem xml:id="c18s3-thm-ftc-as-stokes">
+      <title>The Fundamental Theorem of Calculus as Stokes</title>
+      <statement>
+        <p>
+          Let <m>f</m> be a <m>C^1</m> function on an open interval containing <m>[a,b]</m>. Give
+          <m>[a,b]</m> the orientation from <m>a</m> to <m>b</m>. Then
+          <md>\boxed{\int_{\partial[a,b]}f=\int_{[a,b]}df.}</md>
+          Equivalently,
+          <md>\boxed{f(b)-f(a)=\int_a^b f'(x)\,dx.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>The theorem is familiar, but the forms language shows its shape:</p>
+
+    <md>
+      \begin{array}{c|c}
+      \text{Stokes language} \amp \text{One-variable language} \\ \hline
+      M=[a,b] \amp \text{the interval of integration}\\[1mm]
+      \partial M=\{b\}-\{a\} \amp \text{right endpoint minus left endpoint}\\[1mm]
+      \omega=f \amp \text{a function}\\[1mm]
+      d\omega=df=f'(x)\,dx \amp \text{the derivative times }dx\\[1mm]
+      \displaystyle\int_{\partial M}\omega \amp f(b)-f(a)\\[3mm]
+      \displaystyle\int_M d\omega \amp \displaystyle\int_a^b f'(x)\,dx
+      \end{array}
+    </md>
+  </subsection>
+
+  <subsection xml:id="c18s3-subsec-boundary-signs-whole-point">
+    <title>The boundary signs are the whole point</title>
+
+    <p>
+      The boundary of an interval is not just the set
+      <md>\{a,b\}.</md>
+      It is the signed set
+      <md>\{b\}-\{a\}.</md>
+      Without those signs, the theorem would not know the difference between
+      <md>f(b)-f(a)</md>
+      and
+      <md>f(a)+f(b).</md>
+    </p>
+
+    <example xml:id="c18s3-ex-reversing-interval">
+      <title>Reversing the interval reverses the theorem</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x)=x^3</md>
+          on the interval
+          <md>[0,2].</md>
+          With the usual orientation,
+          <md>\partial[0,2]=\{2\}-\{0\}.</md>
+          So
+          <md>\int_{\partial[0,2]}f=f(2)-f(0)=8.</md>
+          Also
+          <md>\int_{[0,2]}df=\int_0^2 3x^2\,dx=8.</md>
+        </p>
+        <p>
+          Now reverse the orientation. The same geometric interval is now traveled from <m>2</m>
+          to <m>0</m>. Its boundary is
+          <md>\{0\}-\{2\}.</md>
+          Therefore
+          <md>\int_{\partial(-[0,2])}f=f(0)-f(2)=-8.</md>
+          The integral through the interval also reverses:
+          <md>\int_{-[0,2]}df=\int_2^0 3x^2\,dx=-8.</md>
+          Both sides change sign together.
+        </p>
+      </statement>
+    </example>
+
+    <p>This is the first lesson about orientation:</p>
+
+    <md>\boxed{\text{Reversing orientation reverses both sides of Stokes' theorem.}}</md>
+  </subsection>
+
+  <subsection xml:id="c18s3-subsec-one-dimensional-cancellation">
+    <title>A one-dimensional cancellation picture</title>
+
+    <p>
+      The Fundamental Theorem of Calculus already contains the cancellation idea behind all
+      versions of Stokes' theorem.
+    </p>
+
+    <p>
+      Cut the interval
+      <md>[a,b]</md>
+      into smaller intervals:
+      <md>a=x_0&lt;x_1&lt;x_2&lt;\cdots&lt;x_n=b.</md>
+      On each small interval,
+      <md>[x_{j-1},x_j],</md>
+      the boundary is
+      <md>\{x_j\}-\{x_{j-1}\}.</md>
+      So its boundary contribution is
+      <md>f(x_j)-f(x_{j-1}).</md>
+    </p>
+
+    <p>
+      Add all the small boundary contributions:
+      <md>
+        <mrow>\amp\bigl(f(x_1)-f(x_0)\bigr)+\bigl(f(x_2)-f(x_1)\bigr)+\cdots+\bigl(f(x_n)-f(x_{n-1})\bigr)</mrow>
+        <mrow>\amp\qquad = f(x_n)-f(x_0).</mrow>
+      </md>
+      Every interior point appears twice with opposite signs:
+      <md>+f(x_1)-f(x_1), \qquad +f(x_2)-f(x_2), \qquad \ldots</md>
+      Only the outside boundary survives.
+    </p>
+
+    <figure xml:id="c18s3-fig-one-dim-cancellation">
+      <caption>The one-dimensional cancellation behind the Fundamental Theorem of Calculus.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=1.0, &gt;=stealth]
+            \draw[thick] (0,0) -- (9,0);
+
+            \foreach \x/\lab in {0/{x_0=a},2/{x_1},4/{x_2},6/{x_3},9/{x_4=b}} {
+                \fill (\x,0) circle (2pt);
+                \node[below] at (\x,0) {\(\lab\)};
+            }
+
+            \foreach \a/\b in {0/2,2/4,4/6,6/9} {
+                \draw[-&gt;, thick, blue!65!black] (\a,0.35) -- (\b,0.35);
+            }
+
+            \node[red!65!black] at (2,0.85) {\(-\)};
+            \node[red!65!black] at (2,1.25) {\(+\)};
+
+            \node[red!65!black] at (4,0.85) {\(-\)};
+            \node[red!65!black] at (4,1.25) {\(+\)};
+
+            \node[red!65!black] at (6,0.85) {\(-\)};
+            \node[red!65!black] at (6,1.25) {\(+\)};
+
+            \node[red!65!black] at (0,0.95) {\(-\)};
+            \node[red!65!black] at (9,0.95) {\(+\)};
+
+            \node at (4.5,-1.0) {interior endpoint signs cancel};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This same cancellation will reappear in the plane. Instead of interior endpoints, we
+      will have interior edges. Instead of <m>df</m>, we will have <m>d(P\,dx+Q\,dy)</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s3-subsec-smoothness-not-decorative">
+    <title>Why the smoothness condition is not decorative</title>
+
+    <p>
+      The theorem asked for <m>f</m> to be <m>C^1</m>. That is stronger than just being a function
+      with endpoint values. The derivative <m>df</m> must exist and behave well throughout the
+      interval.
+    </p>
+
+    <p>Here is what can go wrong.</p>
+
+    <example xml:id="c18s3-ex-hidden-jump">
+      <title>A hidden jump breaks the naive formula</title>
+      <statement>
+        <p>
+          Define
+          <md>
+            f(x)=
+            \begin{cases}
+            0, &amp; x&lt;0,\\
+            1, &amp; x\ge 0.
+            \end{cases}
+          </md>
+          on the interval
+          <md>[-1,1].</md>
+          The boundary integral is
+          <md>\int_{\partial[-1,1]}f=f(1)-f(-1)=1-0=1.</md>
+        </p>
+        <p>
+          Away from <m>x=0</m>, the function is constant, so a careless person might say
+          <md>df=0</md>
+          and conclude
+          <md>\int_{[-1,1]}df=0.</md>
+          That would give
+          <md>1=0,</md>
+          which is false.
+        </p>
+        <p>
+          The problem is the jump at <m>x=0</m>. The function is not continuous there, and it is not
+          <m>C^1</m>. In our rules, <m>df</m> is not a valid continuous <m>1</m>-form on the whole interval.
+          The theorem was never allowed to be used.
+        </p>
+        <p>The missing smoothness is hiding an internal boundary.</p>
+      </statement>
+    </example>
+
+    <p>A corner is less dangerous than a jump, but it still needs care.</p>
+
+    <example xml:id="c18s3-ex-corner-splitting">
+      <title>A corner can be handled by splitting</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x)=|x|</md>
+          on
+          <md>[-1,1].</md>
+          This function is continuous, but it is not differentiable at <m>x=0</m>. So the <m>C^1</m>
+          version of the theorem does not apply directly.
+        </p>
+        <p>
+          But if we split the interval into two smooth pieces,
+          <md>[-1,0] \qquad\text{and}\qquad [0,1],</md>
+          then
+          <md>f(x)=-x \quad\text{on }[-1,0],</md>
+          and
+          <md>f(x)=x \quad\text{on }[0,1].</md>
+          Thus
+          <md>
+            <mrow>\int_{-1}^{0}(-1)\,dx+\int_0^1 1\,dx \amp= -1+1</mrow>
+            <mrow>\amp= 0.</mrow>
+          </md>
+          The endpoint difference is also
+          <md>f(1)-f(-1)=1-1=0.</md>
+        </p>
+        <p>
+          The formula survives after splitting, because the function has no jump. But the
+          single <m>C^1</m> theorem did not cover the whole interval at once.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is a useful pattern. Piecewise smooth objects are usually allowed, but the pieces
+      and their boundary signs must be accounted for honestly.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c18s3-subsec-first-stokes-theorem">
+    <title>The first Stokes theorem</title>
+
+    <p>
+      The Fundamental Theorem of Calculus is often introduced as a theorem about
+      antiderivatives. In this chapter, it is better to see it as the first boundary theorem.
+    </p>
+
+    <p>It says:</p>
+
+    <md>\boxed{\text{the total derivative inside an interval equals the signed value on the boundary.}}</md>
+
+    <p>
+      The phrase <q>signed value on the boundary</q> is the new part. Once we learn to hear it,
+      the theorem no longer feels like a one-dimensional accident.
+    </p>
+
+    <p>
+      The interval has two boundary points. A plane region has a boundary curve. When the
+      same idea moves from endpoints to curves, the derivative inside changes from
+      <md>df</md>
+      to
+      <md>d(P\,dx+Q\,dy).</md>
+      That is where Green's theorem enters the story.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch16-differential-forms-wedge.tex, Section 16.7.
+     Status: CONVERTED. -->
+<section xml:id="sec-16-chapter-review-and-translation-table" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter review and translation table</title>
+
+  <introduction>
+    <p>
+      Section <xref ref="sec-16-integrating-forms"/> gave the practical rule for integration:
+      <md>\boxed{\text{pull the form back to the parameter domain, then integrate.}}</md>
+    </p>
+    <p>
+      That rule now covers curves, surfaces, and solids. The form tells us what kind of tiny
+      object it measures. The parametrization supplies those tiny objects. The pullback turns
+      the geometric integral into an ordinary integral in the parameters.
+    </p>
+    <p>
+      This final section gathers the chapter into a translation table. The goal is not to add
+      new machinery. It is to make the language feel usable.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c16s7-classical-vs-form">
+    <title>Classical notation versus form notation</title>
+
+    <p>
+      A differential form keeps three pieces of information together:
+      <md>\boxed{\begin{array}{c}
+\text{the coefficient function,}\\
+\text{the kind of tiny geometric piece being measured,}\\
+\text{and the orientation sign.}
+\end{array}}</md>
+    </p>
+
+    <p>
+      Classical notation often separates those pieces. Forms keep them in one object.
+    </p>
+
+    <table xml:id="c16s7-tab-translation">
+      <title>Vector-calculus notation and its differential-form cousin.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Degree</cell>
+          <cell>Form notation</cell>
+          <cell>Classical cousin</cell>
+          <cell>Integrated over</cell>
+        </row>
+        <row>
+          <cell><m>0</m></cell>
+          <cell><m>f</m></cell>
+          <cell><m>f(b)-f(a)</m></cell>
+          <cell>oriented points</cell>
+        </row>
+        <row>
+          <cell><m>1</m></cell>
+          <cell><m>P\,dx+Q\,dy+R\,dz</m></cell>
+          <cell><m>\mathbf F\cdot d\mathbf r</m></cell>
+          <cell>oriented curves</cell>
+        </row>
+        <row>
+          <cell><m>2</m> in the plane</cell>
+          <cell><m>M\,dx\wedge dy</m></cell>
+          <cell><m>M\,dA</m>, with orientation remembered</cell>
+          <cell>oriented plane regions</cell>
+        </row>
+        <row>
+          <cell><m>2</m> in space</cell>
+          <cell><m>P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy</m></cell>
+          <cell><m>\mathbf F\cdot\mathbf n\,dS</m></cell>
+          <cell>oriented surfaces</cell>
+        </row>
+        <row>
+          <cell><m>3</m></cell>
+          <cell><m>H\,dx\wedge dy\wedge dz</m></cell>
+          <cell><m>H\,dV</m>, with orientation remembered</cell>
+          <cell>oriented solids</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The word <q>cousin</q> is deliberate. The expressions are closely related, but they are
+      not always identical.
+    </p>
+
+    <p>
+      The classical element <md>dA</md> is positive area. The form <md>dx\wedge dy</md> is
+      signed area.
+    </p>
+
+    <p>
+      The classical element <md>dS</md> is positive surface area. A flux form such as
+      <md>P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy</md> measures oriented surface pieces.
+    </p>
+
+    <p>
+      The classical element <md>dV</md> is positive volume. The form
+      <md>dx\wedge dy\wedge dz</md> is signed volume.
+    </p>
+
+    <p>
+      So forms are the natural language when orientation matters. That is why they fit boundary
+      theorems so well.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s7-one-field-two-forms">
+    <title>One vector field, two different forms</title>
+
+    <p>
+      A vector field in space has three components: <md>\mathbf F=(P,Q,R).</md> Those same three
+      components can be used in two different ways.
+    </p>
+
+    <p>
+      The <term>work form</term> of <m>\mathbf F</m> is the <m>1</m>-form
+      <md>\boxed{\omega_{\mathbf F}=P\,dx+Q\,dy+R\,dz.}</md> It is integrated along curves:
+      <md>\int_C \omega_{\mathbf F} = \int_C \mathbf F\cdot d\mathbf r.</md>
+    </p>
+
+    <p>
+      The <term>flux form</term> of <m>\mathbf F</m> is the <m>2</m>-form
+      <md>\boxed{\Phi_{\mathbf F} = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy.}</md>
+      It is integrated over surfaces:
+      <md>\int_S \Phi_{\mathbf F} = \iint_S \mathbf F\cdot \mathbf n\,dS.</md>
+    </p>
+
+    <p>
+      The coefficient triple is the same, but the job is different.
+    </p>
+
+    <table xml:id="c16s7-tab-two-forms">
+      <title>The same components used as a work form and as a flux form.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Object</cell>
+          <cell>Measures</cell>
+          <cell>Geometry supplied by</cell>
+        </row>
+        <row>
+          <cell><m>\omega_{\mathbf F}=P\,dx+Q\,dy+R\,dz</m></cell>
+          <cell>tangent motion</cell>
+          <cell>a curve</cell>
+        </row>
+        <row>
+          <cell><m>\Phi_{\mathbf F}=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy</m></cell>
+          <cell>oriented surface crossing</cell>
+          <cell>a surface</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      This is an important warning. A vector field is not automatically a <m>1</m>-form or a
+      <m>2</m>-form. We choose the form according to the measurement we want.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s7-work-as-one-form">
+    <title>Work integrals as <m>1</m>-form integrals</title>
+
+    <p>
+      A <m>1</m>-form measures tangent vectors. That is exactly what a work integral does.
+    </p>
+
+    <p>
+      Let <md>\mathbf F(x,y)=(2x-y,\ x+y).</md> Its work form is
+      <md>\omega=(2x-y)\,dx+(x+y)\,dy.</md> Let <m>C</m> be the parabolic path
+      <md>\mathbf r(t)=(t,t^2), \qquad 0\le t\le1.</md> Then
+      <md>x=t,\qquad y=t^2,</md> and <md>dx=dt,\qquad dy=2t\,dt.</md> Pull back the form:
+    </p>
+
+    <md>
+      <mrow>\mathbf r^*\omega \amp= (2t-t^2)\,dt+(t+t^2)(2t\,dt)</mrow>
+      <mrow>\amp= (2t-t^2+2t^2+2t^3)\,dt</mrow>
+      <mrow>\amp= (2t+t^2+2t^3)\,dt.</mrow>
+    </md>
+
+    <p>Therefore</p>
+
+    <md>
+      <mrow>\int_C \omega \amp= \int_0^1 (2t+t^2+2t^3)\,dt</mrow>
+      <mrow>\amp= \left[t^2+\frac{t^3}{3}+\frac{t^4}{2}\right]_0^1</mrow>
+      <mrow>\amp= 1+\frac13+\frac12</mrow>
+      <mrow>\amp= \frac{11}{6}.</mrow>
+    </md>
+
+    <p>
+      The classical vector-calculus computation gives the same integrand. Along the path,
+      <md>\mathbf F(\mathbf r(t))=(2t-t^2,\ t+t^2)</md> and <md>\mathbf r'(t)=(1,2t).</md> So
+    </p>
+
+    <md>
+      <mrow>\mathbf F(\mathbf r(t))\cdot\mathbf r'(t) \amp= (2t-t^2)(1)+(t+t^2)(2t)</mrow>
+      <mrow>\amp= 2t+t^2+2t^3.</mrow>
+    </md>
+
+    <p>
+      Thus <md>\int_C \mathbf F\cdot d\mathbf r = \int_C\omega.</md>
+    </p>
+
+    <p>
+      The form notation shows why this happens:
+      <md>dx \quad\text{pulls back to}\quad x'(t)\,dt,</md> and
+      <md>dy \quad\text{pulls back to}\quad y'(t)\,dt.</md> The dot product appears after the
+      pullback.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s7-flux-as-two-form">
+    <title>Flux integrals as <m>2</m>-form integrals</title>
+
+    <p>
+      A <m>2</m>-form measures oriented surface pieces. That is exactly what a flux integral
+      does.
+    </p>
+
+    <p>
+      Let <md>\mathbf F(x,y,z)=(3,1,z).</md> Its flux form is
+      <md>\Phi = 3\,dy\wedge dz + dz\wedge dx + z\,dx\wedge dy.</md> Let <m>S</m> be the tilted
+      screen <md>\mathbf r(u,v)=(u,v,1+u+2v),</md> where
+      <md>0\le u\le2, \qquad 0\le v\le1.</md> This parametrization has
+      <md>\mathbf r_u=(1,0,1), \qquad \mathbf r_v=(0,1,2),</md> so
+      <md>\mathbf r_u\times\mathbf r_v=(-1,-2,1).</md> The positive <m>z</m>-component tells us
+      this is the upward orientation.
+    </p>
+
+    <p>
+      Now pull back the form. We have
+      <md>dx=du, \qquad dy=dv, \qquad dz=du+2\,dv.</md> Therefore
+    </p>
+
+    <md>
+      <mrow>\mathbf r^*(dy\wedge dz) \amp= dv\wedge(du+2\,dv)</mrow>
+      <mrow>\amp= dv\wedge du</mrow>
+      <mrow>\amp= -du\wedge dv.</mrow>
+    </md>
+
+    <p>Also,</p>
+
+    <md>
+      <mrow>\mathbf r^*(dz\wedge dx) \amp= (du+2\,dv)\wedge du</mrow>
+      <mrow>\amp= 2\,dv\wedge du</mrow>
+      <mrow>\amp= -2\,du\wedge dv.</mrow>
+    </md>
+
+    <p>
+      Finally, <md>\mathbf r^*(z\,dx\wedge dy) = (1+u+2v)\,du\wedge dv.</md> Thus
+    </p>
+
+    <md>
+      <mrow>\mathbf r^*\Phi \amp= 3(-du\wedge dv) - 2\,du\wedge dv + (1+u+2v)\,du\wedge dv</mrow>
+      <mrow>\amp= (u+2v-4)\,du\wedge dv.</mrow>
+    </md>
+
+    <p>So</p>
+
+    <md>
+      <mrow>\int_S\Phi \amp= \int_0^2\int_0^1 (u+2v-4)\,dv\,du</mrow>
+      <mrow>\amp= \int_0^2 (u+1-4)\,du</mrow>
+      <mrow>\amp= \int_0^2 (u-3)\,du</mrow>
+      <mrow>\amp= \left[\frac{u^2}{2}-3u\right]_0^2</mrow>
+      <mrow>\amp= -4.</mrow>
+    </md>
+
+    <p>
+      The classical flux formula gives the same result:
+      <md>\mathbf F(\mathbf r(u,v))=(3,1,1+u+2v),</md> and
+      <md>\mathbf r_u\times\mathbf r_v=(-1,-2,1).</md> Then
+    </p>
+
+    <md>
+      <mrow>\mathbf F(\mathbf r(u,v))\cdot(\mathbf r_u\times\mathbf r_v) \amp= (3,1,1+u+2v)\cdot(-1,-2,1)</mrow>
+      <mrow>\amp= -3-2+1+u+2v</mrow>
+      <mrow>\amp= u+2v-4.</mrow>
+    </md>
+
+    <p>Again the pullback has produced the classical integrand.</p>
+
+    <p>
+      The negative answer means the net flow crosses the chosen surface in the opposite
+      direction from the chosen orientation. If we reversed the orientation of the screen, the
+      answer would become <md>4.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s7-volume-as-three-form">
+    <title>Volume integrals as <m>3</m>-form integrals</title>
+
+    <p>
+      A <m>3</m>-form measures oriented volume. In the standard orientation of space,
+      <md>H\,dx\wedge dy\wedge dz</md> is the oriented version of <md>H\,dV.</md>
+    </p>
+
+    <p>
+      Let <md>B=[0,1]\times[0,2]\times[0,3],</md> and let
+      <md>\Omega=(2+x+z)\,dx\wedge dy\wedge dz.</md> Using the standard orientation,
+      <md>\int_B\Omega = \int_0^1\int_0^2\int_0^3 (2+x+z)\,dz\,dy\,dx.</md>
+    </p>
+
+    <p>First integrate in <m>z</m>:</p>
+
+    <md>
+      <mrow>\int_0^3 (2+x+z)\,dz \amp= \left[(2+x)z+\frac{z^2}{2}\right]_0^3</mrow>
+      <mrow>\amp= 3(2+x)+\frac92</mrow>
+      <mrow>\amp= \frac{21}{2}+3x.</mrow>
+    </md>
+
+    <p>
+      Then <md>\int_0^2\left(\frac{21}{2}+3x\right)\,dy = 21+6x.</md> Finally,
+    </p>
+
+    <md>
+      <mrow>\int_0^1(21+6x)\,dx \amp= 21+3</mrow>
+      <mrow>\amp= 24.</mrow>
+    </md>
+
+    <p>
+      So <md>\boxed{\int_B (2+x+z)\,dx\wedge dy\wedge dz=24.}</md>
+    </p>
+
+    <p>
+      If the orientation of the box were reversed, the same form integral would be
+      <md>-24.</md> For a physical mass calculation, we would usually fix the standard
+      orientation and report the positive mass. The form integral keeps the orientation sign
+      available.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s7-pullbacks-engine">
+    <title>Pullbacks are the calculation engine</title>
+
+    <p>Every computation in this chapter used the same pattern.</p>
+
+    <p>
+      For a curve <md>\mathbf r(t)=(x(t),y(t),z(t)),</md>
+      <md>\boxed{dx=x'(t)\,dt,\qquad dy=y'(t)\,dt,\qquad dz=z'(t)\,dt.}</md> So
+      <md>\boxed{\mathbf r^*(P\,dx+Q\,dy+R\,dz) = \bigl(Px'+Qy'+Rz'\bigr)\,dt.}</md>
+    </p>
+
+    <p>
+      For a surface <md>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)),</md>
+      <md>\boxed{dx=x_u\,du+x_v\,dv,}</md> <md>\boxed{dy=y_u\,du+y_v\,dv,}</md> and
+      <md>\boxed{dz=z_u\,du+z_v\,dv.}</md> The wedge product turns these into signed shadow
+      areas: <md>\boxed{\mathbf r^*(dy\wedge dz) = (y_u z_v-y_v z_u)\,du\wedge dv,}</md>
+      <md>\boxed{\mathbf r^*(dz\wedge dx) = (z_u x_v-z_v x_u)\,du\wedge dv,}</md> and
+      <md>\boxed{\mathbf r^*(dx\wedge dy) = (x_u y_v-x_v y_u)\,du\wedge dv.}</md>
+    </p>
+
+    <p>
+      For a coordinate change <md>T(u,v,w)=(x(u,v,w),y(u,v,w),z(u,v,w)),</md>
+      <md>\boxed{T^*(dx\wedge dy\wedge dz) = \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw.}</md>
+    </p>
+
+    <p>
+      The determinant is not an extra correction factor. It is what the wedge product gives
+      when the volume form is pulled back.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s7-sign-checks">
+    <title>Common sign checks</title>
+
+    <p>
+      Most mistakes with forms are sign mistakes. The following checks catch many of them.
+    </p>
+
+    <table xml:id="c16s7-tab-sign-checks">
+      <title>Sign rules that catch most form mistakes.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Situation</cell>
+          <cell>Sign rule</cell>
+        </row>
+        <row>
+          <cell>reverse a curve</cell>
+          <cell><m>\displaystyle \int_{-C}\omega=-\int_C\omega</m></cell>
+        </row>
+        <row>
+          <cell>reverse a surface orientation</cell>
+          <cell><m>\displaystyle \int_{-S}\Phi=-\int_S\Phi</m></cell>
+        </row>
+        <row>
+          <cell>swap two <m>1</m>-form factors</cell>
+          <cell><m>dx\wedge dy=-dy\wedge dx</m></cell>
+        </row>
+        <row>
+          <cell>repeat a factor</cell>
+          <cell><m>dx\wedge dx=0</m></cell>
+        </row>
+        <row>
+          <cell>swap a <m>k</m>-form and an <m>\ell</m>-form</cell>
+          <cell><m>\beta\wedge\alpha=(-1)^{k\ell}\alpha\wedge\beta</m></cell>
+        </row>
+        <row>
+          <cell>use a coordinate change with negative Jacobian</cell>
+          <cell>oriented integral changes sign</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>For curves, the sign comes from direction of travel.</p>
+
+    <p>
+      For surfaces, the sign comes from the chosen side. In a parametrization
+      <md>\mathbf r(u,v),</md> the positive normal direction is
+      <md>\mathbf r_u\times\mathbf r_v.</md> Swapping the parameters changes the normal to
+      <md>\mathbf r_v\times\mathbf r_u = -\mathbf r_u\times\mathbf r_v.</md>
+    </p>
+
+    <p>
+      For volume, the sign comes from the orientation of ordered directions. The standard
+      orientation of space is <md>dx\wedge dy\wedge dz.</md> Changing the order changes the
+      sign according to how many swaps are needed.
+    </p>
+
+    <example xml:id="c16s7-ex-orientation-check">
+      <title>A quick orientation check</title>
+      <statement>
+        <p>
+          The form <md>dz\wedge dx\wedge dy</md> has the same orientation as
+          <md>dx\wedge dy\wedge dz.</md> Indeed,
+          <md>dz\wedge dx\wedge dy = -dx\wedge dz\wedge dy = dx\wedge dy\wedge dz.</md> Two
+          swaps were needed, so the sign is positive.
+        </p>
+        <p>
+          But <md>dy\wedge dx\wedge dz = -dx\wedge dy\wedge dz.</md> Only one swap was needed,
+          so the sign is negative.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c16s7-what-forms-dont-replace">
+    <title>What forms do not replace</title>
+
+    <p>Forms do not erase the classical tools. They organize them.</p>
+
+    <p>
+      Arc length integrals such as <md>\int_C f\,ds</md> are not <m>1</m>-form integrals of the
+      type <md>\int_C P\,dx+Q\,dy+R\,dz.</md> The element <m>ds</m> measures unsigned length.
+      It does not change sign when the curve is reversed.
+    </p>
+
+    <p>
+      Surface area integrals such as <md>\iint_S f\,dS</md> are not flux-form integrals. The
+      element <m>dS</m> measures unsigned surface area. It does not require a choice of normal
+      direction.
+    </p>
+
+    <p>So there are two kinds of geometric integration living side by side:</p>
+
+    <table xml:id="c16s7-tab-two-integrations">
+      <title>Unsigned and oriented geometric integration side by side.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Integral type</cell>
+          <cell>Orientation needed?</cell>
+          <cell>Changes sign if orientation reverses?</cell>
+        </row>
+        <row>
+          <cell><m>\displaystyle \int_C f\,ds</m></cell>
+          <cell>no</cell>
+          <cell>no</cell>
+        </row>
+        <row>
+          <cell><m>\displaystyle \int_C \omega</m></cell>
+          <cell>yes</cell>
+          <cell>yes</cell>
+        </row>
+        <row>
+          <cell><m>\displaystyle \iint_S f\,dS</m></cell>
+          <cell>no</cell>
+          <cell>no</cell>
+        </row>
+        <row>
+          <cell><m>\displaystyle \int_S \Phi</m></cell>
+          <cell>yes</cell>
+          <cell>yes</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>Neither kind is better. They answer different questions.</p>
+
+    <p>
+      If you want length, mass of a wire, or surface area, use the unsigned element
+      <md>ds \quad\text{or}\quad dS.</md> If you want work, circulation, flux, or a boundary
+      theorem, use forms.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s7-compact-map">
+    <title>A compact chapter map</title>
+
+    <p>The chapter can be compressed into one ladder.</p>
+
+    <table xml:id="c16s7-tab-chapter-map">
+      <title>The chapter as one degree ladder.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Degree</cell>
+          <cell>Basic form</cell>
+          <cell>Measures</cell>
+          <cell>Typical integral</cell>
+        </row>
+        <row>
+          <cell><m>0</m></cell>
+          <cell><m>f</m></cell>
+          <cell>signed points</cell>
+          <cell><m>\displaystyle \int_{\{b\}-\{a\}}f=f(b)-f(a)</m></cell>
+        </row>
+        <row>
+          <cell><m>1</m></cell>
+          <cell><m>P\,dx+Q\,dy+R\,dz</m></cell>
+          <cell>oriented tangent vectors</cell>
+          <cell><m>\displaystyle \int_C P\,dx+Q\,dy+R\,dz</m></cell>
+        </row>
+        <row>
+          <cell><m>2</m></cell>
+          <cell><m>A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy</m></cell>
+          <cell>oriented surface pieces</cell>
+          <cell><m>\displaystyle \int_S \Phi</m></cell>
+        </row>
+        <row>
+          <cell><m>3</m></cell>
+          <cell><m>H\,dx\wedge dy\wedge dz</m></cell>
+          <cell>oriented volume pieces</cell>
+          <cell><m>\displaystyle \int_E H\,dx\wedge dy\wedge dz</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>The degree tells us the dimension of the object the form is built to measure.</p>
+
+    <p>
+      The wedge product builds higher-degree measuring objects from <m>1</m>-forms:
+      <md>dx\wedge dy \quad\text{measures signed area},</md> and
+      <md>dx\wedge dy\wedge dz \quad\text{measures signed volume}.</md>
+    </p>
+
+    <p>
+      Pullbacks move forms from the geometric object to the parameter domain:
+      <md>\text{form in }x,y,z \quad\longmapsto\quad \text{form in }t</md> for curves,
+      <md>\text{form in }x,y,z \quad\longmapsto\quad \text{form in }u,v</md> for surfaces, and
+      <md>\text{form in }x,y,z \quad\longmapsto\quad \text{form in }u,v,w</md> for coordinate
+      changes in solids.
+    </p>
+
+    <p>That is the whole computational machine of this chapter.</p>
+  </subsection>
+
+  <subsection xml:id="c16s7-missing-derivative">
+    <title>The missing derivative</title>
+
+    <p>One operation is still missing.</p>
+
+    <p>
+      A function is a <m>0</m>-form. Its differential
+      <md>df=f_x\,dx+f_y\,dy+f_z\,dz</md> is a <m>1</m>-form. So the derivative of a
+      <m>0</m>-form raises the degree by one:
+      <md>0\text{-form} \quad\longrightarrow\quad 1\text{-form}.</md>
+    </p>
+
+    <p>
+      Green's theorem suggests the next step. A <m>1</m>-form
+      <md>\omega=P\,dx+Q\,dy</md> should have a derivative that is a <m>2</m>-form:
+      <md>d\omega=(Q_x-P_y)\,dx\wedge dy.</md> That <m>2</m>-form measures circulation density
+      over area.
+    </p>
+
+    <p>
+      The divergence theorem suggests one more step. A flux <m>2</m>-form
+      <md>\Phi=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy</md> should have a derivative that
+      is a <m>3</m>-form: <md>d\Phi=(P_x+Q_y+R_z)\,dx\wedge dy\wedge dz.</md> That
+      <m>3</m>-form measures source density inside volume.
+    </p>
+
+    <p>So the pattern is asking to be named:</p>
+
+    <md>\boxed{\begin{array}{ccccc}
+0\text{-forms} \amp \longrightarrow \amp 1\text{-forms} \amp \longrightarrow \amp 2\text{-forms} \longrightarrow 3\text{-forms} \\
+f \amp \longmapsto \amp df \amp \longmapsto \amp d\omega \longmapsto d\Phi
+\end{array}}</md>
+
+    <p>
+      The next chapter gives this degree-raising derivative its name: the
+      <term>exterior derivative</term>. Once it is in place, gradient, curl, and divergence
+      stop looking like three separate operations. They become one operation seen in three
+      degrees. That is the doorway to the single theorem that has been hiding behind the
+      Fundamental Theorem of Calculus, Green's theorem, Stokes' theorem, and the divergence
+      theorem.
+    </p>
+  </subsection>
+</section>

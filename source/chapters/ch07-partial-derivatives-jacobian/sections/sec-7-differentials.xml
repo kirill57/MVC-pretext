@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch07-partial-derivatives-jacobian.tex, Section 7.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-7-differentials" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Differentials</title>
+
+  <p>
+    <xref ref="sec-7-the-total-derivative-as-the-best-linear"/> made the total derivative into a
+    linear function:
+    <md>Df(\mathbf p)(\Delta\mathbf x).</md>
+    It takes a small displacement and returns the predicted change in <m>f</m>.
+    <xref ref="ch03-linear-functions-matrices"/> already gave us the simplest linear functions:
+    <md>dx,\qquad dy,\qquad dz.</md>
+    They read off components of a vector. Differentials combine these component-readers with the
+    partial derivatives.
+  </p>
+
+  <subsection xml:id="c7s4-subsec-differential-as-linear-function">
+    <title>The differential as a linear function of small changes</title>
+
+    <p>
+      Return to the bakery cost model from <xref ref="sec-7-partial-derivatives"/>:
+      <md>C(u,v)=400+3u+4v+0.01uv,</md>
+      where <m>u</m> is the number of sourdough loaves and <m>v</m> is the number of rye loaves.
+    </p>
+
+    <p>
+      We computed
+      <md>C_u(u,v)=3+0.01v, \qquad C_v(u,v)=4+0.01u.</md>
+      At
+      <md>(u,v)=(200,100),</md>
+      these become
+      <md>C_u(200,100)=4, \qquad C_v(200,100)=6.</md>
+      So the total derivative at this production level is
+      <md>DC(200,100)(\Delta u,\Delta v) = 4\Delta u+6\Delta v.</md>
+    </p>
+
+    <p>
+      Suppose the bakery changes production by
+      <md>\Delta u=4, \qquad \Delta v=3.</md>
+      The linear prediction is
+      <md>4(4)+6(3)=34.</md>
+      So the cost should increase by about <m>34</m> dollars.
+    </p>
+
+    <p>
+      The exact change is
+      <md>
+        <mrow>\amp C(200+\Delta u,100+\Delta v)-C(200,100)</mrow>
+        <mrow>\amp\qquad = 4\Delta u+6\Delta v+0.01\Delta u\Delta v.</mrow>
+      </md>
+      For
+      <md>\Delta u=4,\qquad \Delta v=3,</md>
+      this gives
+      <md>34+0.01(4)(3)=34.12.</md>
+      The differential predicted the first-order part. The extra
+      <md>0.12</md>
+      came from the product of the two small changes.
+    </p>
+
+    <definition xml:id="c7s4-def-differential-at-a-point">
+      <title>Differential at a point</title>
+      <statement>
+        <p>
+          If <m>f</m> is differentiable at <m>\mathbf p</m>, then the
+          <term>differential of <m>f</m> at <m>\mathbf p</m></term> is the total derivative:
+          <md>\boxed{ df_{\mathbf p}=Df(\mathbf p). }</md>
+          Thus <m>df_{\mathbf p}</m> is a linear function of a small displacement.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For the bakery,
+      <md>dC_{(200,100)}(\Delta u,\Delta v) = 4\Delta u+6\Delta v.</md>
+    </p>
+
+    <p>The letter <m>d</m> is not decoration. It means: take the first-order change.</p>
+  </subsection>
+
+  <subsection xml:id="c7s4-subsec-notation-df">
+    <title>The notation <m>df=f_x\,dx+f_y\,dy</m></title>
+
+    <p>
+      The symbols
+      <md>dx,\qquad dy</md>
+      are the coordinate-reading linear functions:
+      <md>dx(\Delta x,\Delta y)=\Delta x,</md>
+      and
+      <md>dy(\Delta x,\Delta y)=\Delta y.</md>
+      So if
+      <md>f=f(x,y),</md>
+      then
+      <md>
+        <mrow>df_{(a,b)}(\Delta x,\Delta y) \amp= f_x(a,b)\Delta x+f_y(a,b)\Delta y</mrow>
+        <mrow>\amp= f_x(a,b)\,dx(\Delta x,\Delta y) + f_y(a,b)\,dy(\Delta x,\Delta y).</mrow>
+      </md>
+      This is why we write
+      <md>\boxed{ df=f_x\,dx+f_y\,dy. }</md>
+      At a specific point,
+      <md>\boxed{ df_{(a,b)} = f_x(a,b)\,dx+f_y(a,b)\,dy. }</md>
+    </p>
+
+    <figure xml:id="c7s4-fig-dx-dy-components">
+      <caption>The linear functions <m>dx</m> and <m>dy</m> read off the components of a displacement.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[-&gt;] (-0.5,0) -- (6.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.5) -- (0,4.5) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (0,0) grid (6,4);
+
+            \coordinate (P) at (1.5,1.2);
+            \coordinate (Q) at (4.8,3.5);
+
+            \fill (P) circle (2pt);
+            \node[below left] at (P) {\(\mathbf p\)};
+
+            \draw[-&gt;, very thick] (P) -- (Q) node[midway, above left] {\(\Delta\mathbf x\)};
+
+            \draw[dashed] (P) -- (4.8,1.2);
+            \draw[dashed] (4.8,1.2) -- (Q);
+
+            \draw[&lt;-&gt;, thick] (1.5,0.75) -- (4.8,0.75)
+                node[midway, below] {\(dx(\Delta\mathbf x)=\Delta x\)};
+
+            \draw[&lt;-&gt;, thick] (5.25,1.2) -- (5.25,3.5)
+                node[midway, right] {\(dy(\Delta\mathbf x)=\Delta y\)};
+
+            \node at (3,-1.0) {\(df_{\mathbf p}\) combines the coordinate changes with the partial derivatives.};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      For functions of three variables,
+      <md>\boxed{ df=f_x\,dx+f_y\,dy+f_z\,dz. }</md>
+      At the point <m>(a,b,c)</m>,
+      <md>\boxed{ df_{(a,b,c)} = f_x(a,b,c)\,dx+f_y(a,b,c)\,dy+f_z(a,b,c)\,dz. }</md>
+    </p>
+
+    <example xml:id="c7s4-ex-hill-differential">
+      <title>The hill differential</title>
+      <statement>
+        <p>
+          For
+          <md>H(x,y)=80+3x-y-\frac14x^2-\frac12y^2,</md>
+          we have
+          <md>H_x(x,y)=3-\frac12x, \qquad H_y(x,y)=-1-y.</md>
+          At
+          <md>(2,1),</md>
+          <md>H_x(2,1)=2, \qquad H_y(2,1)=-2.</md>
+          So
+          <md>\boxed{ dH_{(2,1)}=2\,dx-2\,dy. }</md>
+        </p>
+        <p>
+          If the trail direction is
+          <md>\mathbf u=\left(\frac35,\frac45\right),</md>
+          then
+          <md>
+            <mrow>dH_{(2,1)}(\mathbf u) \amp= 2\,dx(\mathbf u)-2\,dy(\mathbf u)</mrow>
+            <mrow>\amp= 2\left(\frac35\right)-2\left(\frac45\right)</mrow>
+            <mrow>\amp= -\frac25.</mrow>
+          </md>
+          This is exactly the directional derivative found in
+          <xref ref="sec-7-directional-derivatives"/>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The gradient and the differential contain the same coefficients, but they play different
+      roles:
+      <md>\nabla f(a,b)=\bigl(f_x(a,b),f_y(a,b)\bigr)</md>
+      is a vector, while
+      <md>df_{(a,b)}=f_x(a,b)\,dx+f_y(a,b)\,dy</md>
+      is a linear function that acts on displacement vectors.
+    </p>
+
+    <p>
+      The dot product connects them:
+      <md>df_{\mathbf p}(\mathbf h)=\nabla f(\mathbf p)\cdot \mathbf h.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s4-subsec-error-estimates">
+    <title>Error estimates and small-change calculations</title>
+
+    <p>
+      The differential is useful because it is the part of the change we can compute quickly.
+      If <m>f</m> is differentiable at <m>\mathbf p</m>, then
+      <md>f(\mathbf p+\Delta\mathbf x)-f(\mathbf p) = df_{\mathbf p}(\Delta\mathbf x)+R(\Delta\mathbf x),</md>
+      where
+      <md>\frac{|R(\Delta\mathbf x)|}{\|\Delta\mathbf x\|}\to0.</md>
+      So for small changes,
+      <md>\boxed{ \Delta f\approx df. }</md>
+    </p>
+
+    <p>
+      This is the multivariable version of the single-variable estimate
+      <md>\Delta y\approx f'(a)\Delta x.</md>
+    </p>
+
+    <example xml:id="c7s4-ex-volume-storage-bin">
+      <title>Measuring the volume of a storage bin</title>
+      <statement>
+        <p>
+          A rectangular storage bin has side lengths
+          <md>x,\qquad y,\qquad z</md>
+          in meters. Its volume is
+          <md>V(x,y,z)=xyz.</md>
+          Then
+          <md>V_x=yz, \qquad V_y=xz, \qquad V_z=xy.</md>
+          At
+          <md>(x,y,z)=(2,3,5),</md>
+          we get
+          <md>V_x=15, \qquad V_y=10, \qquad V_z=6.</md>
+          So
+          <md>dV_{(2,3,5)} = 15\,dx+10\,dy+6\,dz.</md>
+        </p>
+        <p>
+          Suppose the measured side lengths change by
+          <md>dx=0.02, \qquad dy=-0.01, \qquad dz=0.03.</md>
+          Then
+          <md>
+            <mrow>dV \amp= 15(0.02)+10(-0.01)+6(0.03)</mrow>
+            <mrow>\amp= 0.30-0.10+0.18</mrow>
+            <mrow>\amp= 0.38.</mrow>
+          </md>
+          So the volume changes by about
+          <md>0.38\ \text{m}^3.</md>
+        </p>
+        <p>
+          The exact change is
+          <md>(2.02)(2.99)(5.03)-30 = 0.380194.</md>
+          The differential gives the first-order part. The missing
+          <md>0.000194</md>
+          comes from products of the small side-length changes.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Differentials are often used this way in measurements. If the inputs have small errors,
+      the differential estimates the resulting output error.
+    </p>
+
+    <example xml:id="c7s4-ex-temperature-sensitivity">
+      <title>Temperature sensitivity</title>
+      <statement>
+        <p>
+          For the storage-room temperature model
+          <md>T(x,y,z)=18+\frac{4}{1+x^2+y^2}-0.7z,</md>
+          we found at <m>(1,0,2)</m>
+          <md>dT_{(1,0,2)}=-2\,dx-0.7\,dz.</md>
+          There is no <m>dy</m> term at that point because
+          <md>T_y(1,0,2)=0.</md>
+          A small move
+          <md>dx=0.02,\qquad dy=-0.03,\qquad dz=0.10</md>
+          therefore gives
+          <md>dT=-2(0.02)-0.7(0.10)=-0.11.</md>
+          The <m>dy</m>-change does not affect the first-order estimate at this particular point.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A differential tells us which input errors matter most near the point. The coefficient
+      of <m>dx</m> measures sensitivity to <m>x</m>. The coefficient of <m>dy</m> measures
+      sensitivity to <m>y</m>. The coefficient of <m>dz</m> measures sensitivity to <m>z</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s4-subsec-differentials-as-1-forms">
+    <title>Differentials as the first examples of <m>1</m>-forms</title>
+
+    <p>
+      The expression
+      <md>df=f_x\,dx+f_y\,dy</md>
+      is a special kind of object. It is a rule that assigns, at each point, a linear function of
+      small displacements.
+    </p>
+
+    <p>That is exactly the concrete meaning of a <m>1</m>-form.</p>
+
+    <definition xml:id="c7s4-def-1-form-in-the-plane">
+      <title><m>1</m>-form in the plane</title>
+      <statement>
+        <p>
+          A <term><m>1</m>-form</term> on a region <m>D\subseteq\mathbb R^2</m> is an expression
+          <md>\boxed{ \omega=P(x,y)\,dx+Q(x,y)\,dy. }</md>
+          At a point
+          <md>\mathbf p=(x,y),</md>
+          it acts on a displacement
+          <md>\Delta\mathbf x=(\Delta x,\Delta y)</md>
+          by
+          <md>\boxed{ \omega_{\mathbf p}(\Delta\mathbf x) = P(x,y)\Delta x+Q(x,y)\Delta y. }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In space, a <m>1</m>-form has the form
+      <md>\boxed{ \omega=P(x,y,z)\,dx+Q(x,y,z)\,dy+R(x,y,z)\,dz, }</md>
+      and
+      <md>\boxed{ \omega_{\mathbf p}(\Delta x,\Delta y,\Delta z) = P(\mathbf p)\Delta x+Q(\mathbf p)\Delta y+R(\mathbf p)\Delta z. }</md>
+    </p>
+
+    <p>
+      A differential
+      <md>df</md>
+      is a <m>1</m>-form:
+      <md>\boxed{ df=f_x\,dx+f_y\,dy }</md>
+      in the plane, and
+      <md>\boxed{ df=f_x\,dx+f_y\,dy+f_z\,dz }</md>
+      in space.
+    </p>
+
+    <definition xml:id="c7s4-def-exact-1-form">
+      <title>Exact <m>1</m>-form</title>
+      <statement>
+        <p>
+          A <m>1</m>-form <m>\omega</m> is called <term>exact</term> if there is a function
+          <m>f</m> such that
+          <md>\omega=df.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For example,
+      <md>\omega=2x\,dx+2y\,dy</md>
+      is exact, because
+      <md>\omega=d(x^2+y^2).</md>
+      But a general <m>1</m>-form need not come from a function. The swirling form
+      <md>\omega=-y\,dx+x\,dy</md>
+      is built from the vector field
+      <md>\mathbf W(x,y)=(-y,x).</md>
+      At each point it measures how much a small displacement points with the swirl:
+      <md>\omega_{(x,y)}(\Delta x,\Delta y) = -y\Delta x+x\Delta y.</md>
+      Whether such a form is a differential of some scalar field is a separate question. We
+      will need line integrals and curl before we can answer it well.
+    </p>
+
+    <p>
+      For now, <m>df</m> is the bridge between ordinary functions and <m>1</m>-forms. A function
+      has values. Its differential measures first-order change. A <m>1</m>-form is ready to be
+      added along a curve.
+    </p>
+
+    <p>
+      There is one more piece in this chapter before curves return. A scalar function has one
+      differential:
+      <md>df.</md>
+      A transformation
+      <md>F=(F_1,F_2,\ldots,F_m)</md>
+      has one differential for each component:
+      <md>dF_1,\quad dF_2,\quad \ldots,\quad dF_m.</md>
+      Stacking these linear functions into rows gives the matrix of the total derivative. That
+      matrix is the Jacobian, and it tells how a nonlinear map moves small grids near a point.
+    </p>
+  </subsection>
+</section>

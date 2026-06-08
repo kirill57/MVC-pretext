@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch03-linear-functions-matrices.tex, Section 3.7.
+     Status: CONVERTED. -->
+<section xml:id="sec-3-linear-approximation-as-a-preview-of-the" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Linear approximation as a preview of the derivative</title>
+
+  <p>
+    <xref ref="sec-3-quadratic-forms-and-symmetric-matrices"/> ended with the phrase
+    <em>best linear part</em>. That phrase is the reason Chapter 3 belongs in a calculus
+    book. Matrices are not only a way to solve systems. They are the language of what a
+    curved function looks like when we zoom in close enough.
+  </p>
+
+  <p>
+    A curve may bend. A surface may bend in many directions. But at a small enough scale,
+    the first visible piece is often linear.
+  </p>
+
+  <subsection xml:id="c3s7-subsec-curved-looks-linear">
+    <title>A curved function looks linear when viewed very close</title>
+
+    <p>
+      Suppose a cyclist rides along a mountain road. Let <m>t</m> be distance along the
+      road, measured in kilometers from a marker, and let
+      <md>H(t)=20+6t-\frac12 t^2</md>
+      be the altitude in meters above some reference level.
+    </p>
+
+    <p>
+      At <m>t=4</m>,
+      <md>H(4)=20+24-8=36.</md>
+      Now move a small amount <m>h</m> farther along the road. The new altitude is
+      <md>
+        <mrow>H(4+h) \amp= 20+6(4+h)-\frac12(4+h)^2</mrow>
+        <mrow>\amp= 20+24+6h-\frac12(16+8h+h^2)</mrow>
+        <mrow>\amp= 36+2h-\frac12h^2.</mrow>
+      </md>
+      So the change in altitude is
+      <md>H(4+h)-H(4)=2h-\frac12h^2.</md>
+    </p>
+
+    <p>
+      The term
+      <md>2h</md>
+      is linear in the displacement <m>h</m>. The term
+      <md>-\frac12h^2</md>
+      is quadratic. If <m>h</m> is small, the quadratic term is much smaller than the
+      linear term.
+    </p>
+
+    <p>For example:</p>
+
+    <table xml:id="c3s7-tab-zoom-values">
+      <title>Linear and quadratic parts of the change in altitude.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell><m>h</m></cell>
+          <cell><m>2h</m></cell>
+          <cell><m>-\frac12h^2</m></cell>
+        </row>
+        <row>
+          <cell><m>0.1</m></cell>
+          <cell><m>0.2</m></cell>
+          <cell><m>-0.005</m></cell>
+        </row>
+        <row>
+          <cell><m>0.01</m></cell>
+          <cell><m>0.02</m></cell>
+          <cell><m>-0.00005</m></cell>
+        </row>
+        <row>
+          <cell><m>0.001</m></cell>
+          <cell><m>0.002</m></cell>
+          <cell><m>-0.0000005</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The closer we zoom to <m>t=4</m>, the more the change looks like
+      <md>H(4+h)-H(4)\approx 2h.</md>
+      Equivalently,
+      <md>H(4+h)\approx 36+2h.</md>
+    </p>
+
+    <figure xml:id="c3s7-fig-altitude-tangent">
+      <caption>Near <m>t=4</m>, the curved altitude graph is well approximated by a line.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[-&gt;] (0,0) -- (7.4,0) node[right] {\(t\)};
+            \draw[-&gt;] (0,0) -- (0,5.4) node[above] {height};
+
+            \draw[domain=0.6:6.8, smooth, variable=\t, thick]
+                plot ({\t},{0.12*(20+6*\t-0.5*\t*\t)});
+
+            \draw[domain=2.1:6.3, smooth, variable=\t, thick, dashed]
+                plot ({\t},{0.12*(28+2*\t)});
+
+            \fill (4,{0.12*36}) circle (2.5pt);
+            \draw[dotted] (4,0) -- (4,{0.12*36});
+            \node[below] at (4,0) {\(4\)};
+            \node[right] at (4,{0.12*36}) {\((4,36)\)};
+
+            \node at (2.0,4.45) {\(H(t)=20+6t-\frac12t^2\)};
+            \node at (5.7,3.65) {\(36+2(t-4)\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The line
+      <md>36+2h</md>
+      has two parts:
+      <md>\underbrace{36}_{\text{starting value}} + \underbrace{2h}_{\text{linear change}}.</md>
+      The derivative is the linear-change part:
+      <md>h\longmapsto 2h.</md>
+      In single-variable calculus, we often store this information as the number
+      <md>H'(4)=2.</md>
+      But for the multivariable story, it is better to think of the derivative as the
+      linear function
+      <md>L(h)=2h.</md>
+    </p>
+
+    <p>
+      This small shift in viewpoint is important. In one variable, a linear function is
+      just multiplication by a number. In several variables, a linear function or linear
+      transformation may need a whole matrix.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s7-subsec-derivative-best-linear-map">
+    <title>The derivative as the best linear map</title>
+
+    <p>
+      Now imagine a gently curved roof. Near one support beam, choose coordinates so that
+      the beam is at the origin. Suppose the height of the roof is
+      <md>f(x,y)=12+3x-2y+\frac14x^2-\frac12xy+\frac18y^2.</md>
+      At the origin,
+      <md>f(0,0)=12.</md>
+      For a small displacement
+      <md>(h,k),</md>
+      we have
+      <md>
+        <mrow>f(h,k) \amp= 12+3h-2k+\frac14h^2-\frac12hk+\frac18k^2</mrow>
+        <mrow>\amp= 12+\underbrace{(3h-2k)}_{\text{linear part}} + \underbrace{\left(\frac14h^2-\frac12hk+\frac18k^2\right)}_{\text{quadratic error}}.</mrow>
+      </md>
+      So near the origin,
+      <md>f(h,k)\approx 12+3h-2k.</md>
+      The tangent plane preview is
+      <md>z=12+3x-2y.</md>
+    </p>
+
+    <p>
+      But the derivative is not the whole affine expression
+      <md>12+3h-2k.</md>
+      The derivative is only the linear change:
+      <md>L(h,k)=3h-2k.</md>
+      In the language of Chapter 3,
+      <md>L:\mathbb R^2\to\mathbb R</md>
+      is a linear function. By <xref ref="sec-3-linear-functions-r-n-r"/>, it is a dot
+      product:
+      <md>L(h,k)=(3,-2)\cdot(h,k).</md>
+    </p>
+
+    <p>
+      Using the component-reading forms from Chapter 2, we can also write the same linear
+      function as
+      <md>L=3\,dx-2\,dy.</md>
+      This means
+      <md>L(h,k)=3\,dx(h,k)-2\,dy(h,k)=3h-2k.</md>
+      Later, this linear function will be called the <term>differential</term> of
+      <m>f</m> at the origin, and we will write
+      <md>df=3\,dx-2\,dy</md>
+      at that point.
+    </p>
+
+    <p>For now, the main idea is this:</p>
+
+    <p>
+      <md>\boxed{\text{A derivative is the best linear rule for predicting small changes.}}</md>
+    </p>
+
+    <definition xml:id="c3s7-def-best-linear-approximation">
+      <title>Best linear approximation, preview</title>
+      <statement>
+        <p>
+          Let
+          <md>F:\mathbb R^n\to\mathbb R^m</md>
+          be a function, and let <m>\mathbf a\in\mathbb R^n</m>. A linear map
+          <md>L:\mathbb R^n\to\mathbb R^m</md>
+          is the <term>best linear approximation</term> to <m>F</m> at <m>\mathbf a</m> if
+          <md>F(\mathbf a+\mathbf h) = F(\mathbf a)+L(\mathbf h)+\text{error}</md>
+          and the error becomes small compared with <m>\|\mathbf h\|</m> as
+          <md>\mathbf h\to\mathbf 0.</md>
+          In symbols,
+          <md>\frac{\|\text{error}\|}{\|\mathbf h\|}\to0.</md>
+        </p>
+        <p>
+          When such an <m>L</m> exists, it is called the <term>derivative</term> of
+          <m>F</m> at <m>\mathbf a</m>, and is written
+          <md>DF(\mathbf a).</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The phrase <q>small compared with <m>\|\mathbf h\|</m></q> is the important part. It
+      says the error is not merely small. It is smaller than first-order size.
+    </p>
+
+    <theorem xml:id="c3s7-thm-best-linear-part-unique">
+      <title>The best linear part is unique</title>
+      <statement>
+        <p>
+          If a function
+          <md>F:\mathbb R^n\to\mathbb R^m</md>
+          has a best linear approximation at <m>\mathbf a</m>, then that linear
+          approximation is unique.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Suppose two linear maps <m>L</m> and <m>M</m> both work. Then
+          <md>F(\mathbf a+\mathbf h) = F(\mathbf a)+L(\mathbf h)+\mathbf r_L(\mathbf h)</md>
+          and
+          <md>F(\mathbf a+\mathbf h) = F(\mathbf a)+M(\mathbf h)+\mathbf r_M(\mathbf h),</md>
+          where both errors are small compared with <m>\|\mathbf h\|</m>.
+        </p>
+        <p>
+          Subtract the two equations:
+          <md>(L-M)(\mathbf h)=\mathbf r_M(\mathbf h)-\mathbf r_L(\mathbf h).</md>
+          Now choose any unit vector <m>\mathbf u</m>, and set
+          <md>\mathbf h=t\mathbf u.</md>
+          Because <m>L-M</m> is linear,
+          <md>(L-M)(t\mathbf u)=t(L-M)(\mathbf u).</md>
+          Dividing by <m>|t|</m>, the left side has size
+          <md>\|(L-M)(\mathbf u)\|.</md>
+          The right side tends to <m>0</m>, because both errors are small compared with
+          <m>\|\mathbf h\|=|t|</m>. Therefore
+          <md>(L-M)(\mathbf u)=\mathbf 0.</md>
+          This holds for every unit vector <m>\mathbf u</m>, so
+          <md>L=M.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The condition on the error is necessary. If we only required the error to go to
+      zero, the zero function
+      <md>F(h)=0</md>
+      would have many <q>linear approximations</q> at the origin. For example,
+      <md>L(h)=0</md>
+      and
+      <md>M(h)=7h</md>
+      would both give errors that go to zero as <m>h\to0</m>. But <m>M</m> is not a
+      first-order approximation to the zero function, because its error
+      <md>-7h</md>
+      is the same size as <m>h</m>, not smaller.
+    </p>
+
+    <p>
+      So the derivative is not just a nearby linear rule. It is the linear rule that
+      captures all first-order change.
+    </p>
+
+    <example xml:id="c3s7-ex-cone-no-best-linear-part">
+      <title>A cone has no best linear part at its tip</title>
+      <statement>
+        <p>
+          Consider
+          <md>c(x,y)=\sqrt{x^2+y^2}.</md>
+          This is the height of a cone whose tip is at the origin.
+        </p>
+        <p>
+          The function is continuous at the origin:
+          <md>c(x,y)\to0 \qquad\text{as}\qquad (x,y)\to(0,0).</md>
+          But it has no best linear approximation there.
+        </p>
+        <p>
+          To see why, restrict to the <m>x</m>-axis. Along points <m>(h,0)</m>,
+          <md>c(h,0)=|h|.</md>
+          If <m>c</m> had a linear approximation <m>L</m> at the origin, then along the
+          <m>x</m>-axis it would look like
+          <md>L(h,0)=ah</md>
+          for some number <m>a</m>.
+        </p>
+        <p>
+          For <m>h&gt;0</m>, the approximation to <m>|h|</m> would force
+          <md>a=1.</md>
+          For <m>h&lt;0</m>, it would force
+          <md>a=-1.</md>
+          No single number <m>a</m> can do both.
+        </p>
+        <p>
+          The cone is not failing because it is discontinuous. It is failing because the
+          tip has a corner. When we zoom in, the corner remains a corner; it never becomes
+          a plane.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is the first warning for multivariable derivatives. A function can be
+      continuous and still fail to have a linear part.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s7-subsec-why-matrices-appear">
+    <title>Why matrices appear in multivariable differentiation</title>
+
+    <p>
+      Scalar-valued functions produce one linear function as their derivative.
+      Vector-valued functions produce a linear transformation, and therefore a matrix.
+    </p>
+
+    <p>
+      Consider the nonlinear transformation
+      <md>F:\mathbb R^2\to\mathbb R^2</md>
+      given by
+      <md>F(s,t)= \bigl(2s+t+s^2,\;s-3t+st\bigr).</md>
+      We study it near the point
+      <md>(1,2).</md>
+      Write a nearby input as
+      <md>(s,t)=(1+h,2+k).</md>
+      Then
+      <md>
+        <mrow>F(1+h,2+k) \amp= \bigl(2(1+h)+(2+k)+(1+h)^2,\; (1+h)-3(2+k)+(1+h)(2+k)\bigr)</mrow>
+        <mrow>\amp= \bigl(5+4h+k+h^2,\;-3+3h-2k+hk\bigr).</mrow>
+      </md>
+      So
+      <md>F(1+h,2+k) = (5,-3) + (4h+k,\;3h-2k) + (h^2,hk).</md>
+      The first term is the starting output:
+      <md>F(1,2)=(5,-3).</md>
+      The second term is linear in <m>(h,k)</m>:
+      <md>(h,k)\longmapsto (4h+k,\;3h-2k).</md>
+      The last term is quadratic error:
+      <md>(h^2,hk).</md>
+    </p>
+
+    <p>
+      The derivative is therefore the linear transformation
+      <md>DF(1,2)(h,k)=(4h+k,\;3h-2k).</md>
+      Its matrix is
+      <md>\boxed{ DF(1,2)= \begin{pmatrix} 4&amp;1\\ 3&amp;-2 \end{pmatrix}. }</md>
+    </p>
+
+    <p>
+      This matrix has the same two readings as every matrix from
+      <xref ref="sec-3-linear-transformations-r-n-r-m"/>.
+    </p>
+
+    <p>
+      The rows are the linear functions that give the output coordinates:
+      <md>4h+k, \qquad 3h-2k.</md>
+      The columns are the images of the basic small input directions:
+      <md>\begin{pmatrix}4\\3\end{pmatrix}, \qquad \begin{pmatrix}1\\-2\end{pmatrix}.</md>
+    </p>
+
+    <p>
+      So a tiny square in the input plane, placed near <m>(1,2)</m>, is sent
+      approximately to the parallelogram spanned by these two columns.
+    </p>
+
+    <figure xml:id="c3s7-fig-input-square-output-parallelogram">
+      <caption>A derivative matrix tells what a nonlinear map does to tiny displacements, to first order.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-0.3,0) -- (2.4,0) node[right] {\(h\)};
+                \draw[-&gt;] (0,-0.3) -- (0,2.4) node[above] {\(k\)};
+                \draw[fill=gray!12] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+                \draw[-&gt;, thick] (0,0) -- (1,0) node[midway, below] {\(\mathbf e_1\)};
+                \draw[-&gt;, thick] (0,0) -- (0,1) node[midway, left] {\(\mathbf e_2\)};
+                \node at (1.1,-0.8) {tiny input square};
+            \end{scope}
+
+            \begin{scope}[shift={(6.2,0)}]
+                \draw[-&gt;] (-0.4,0) -- (3.0,0) node[right] {\(X\)};
+                \draw[-&gt;] (0,-1.2) -- (0,2.2) node[above] {\(Y\)};
+
+                \coordinate (O) at (0,0);
+                \coordinate (U) at (1.4,1.05);
+                \coordinate (V) at (0.35,-0.7);
+                \coordinate (UV) at (1.75,0.35);
+
+                \draw[fill=gray!12] (O) -- (U) -- (UV) -- (V) -- cycle;
+                \draw[-&gt;, thick] (O) -- (U) node[midway, above left] {\((4,3)\)};
+                \draw[-&gt;, thick] (O) -- (V) node[midway, right] {\((1,-2)\)};
+                \draw[dashed] (U) -- (UV);
+                \draw[dashed] (V) -- (UV);
+                \node at (1.5,-1.2) {linearized output};
+            \end{scope}
+
+            \draw[-&gt;, thick] (2.9,0.9) -- (5.4,0.9) node[midway, above] {\(DF(1,2)\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The determinant of this derivative matrix is
+      <md>\det \begin{pmatrix} 4&amp;1\\ 3&amp;-2 \end{pmatrix} = 4(-2)-1(3) = -11.</md>
+      This means that, near <m>(1,2)</m>, the map reverses orientation and multiplies
+      small areas by about
+      <md>11.</md>
+      The word <em>about</em> matters because <m>F</m> is nonlinear. Larger regions bend
+      and distort. But smaller and smaller regions behave more and more like the
+      derivative matrix.
+    </p>
+
+    <p>
+      This is where the determinant from
+      <xref ref="sec-3-determinants-of-linear-transformations"/> becomes a calculus
+      object. A determinant no longer measures only the area scaling of a fixed linear
+      machine. It will measure the local area scaling of a nonlinear transformation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s7-subsec-curves-simplest">
+    <title>Curves are the simplest moving linear approximations</title>
+
+    <p>The same idea appears in its simplest form when the input is one-dimensional.</p>
+
+    <p>
+      A curve in space is a function
+      <md>\mathbf r:\mathbb R\to\mathbb R^3.</md>
+      The input is time <m>t</m>. The output is a point in space:
+      <md>\mathbf r(t)=(x(t),y(t),z(t)).</md>
+      Near a time <m>t=a</m>, the best linear approximation has the form
+      <md>\mathbf r(a+h)\approx \mathbf r(a)+h\mathbf v.</md>
+      The vector
+      <md>\mathbf v</md>
+      is the velocity. It is the derivative of the curve at that instant.
+    </p>
+
+    <p>
+      So the old single-variable derivative reappears as a linear map
+      <md>h\longmapsto h\mathbf v</md>
+      from <m>\mathbb R</m> to <m>\mathbb R^3</m>. Its matrix is a <m>3\times1</m> column:
+      <md>\begin{pmatrix} v_1\\ v_2\\ v_3 \end{pmatrix}.</md>
+    </p>
+
+    <p>
+      This is a good place to pause. Chapter 3 has built the linear machines that calculus
+      will use under a microscope:
+    </p>
+
+    <table xml:id="c3s7-tab-objects-linear-ideas">
+      <title>The linear ideas that calculus objects need.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>object</cell>
+          <cell>linear idea it needs</cell>
+        </row>
+        <row>
+          <cell>a scalar function</cell>
+          <cell>a linear function <m>\mathbb R^n\to\mathbb R</m></cell>
+        </row>
+        <row>
+          <cell>a vector-valued function</cell>
+          <cell>a linear transformation <m>\mathbb R^n\to\mathbb R^m</m></cell>
+        </row>
+        <row>
+          <cell>a change of variables</cell>
+          <cell>a determinant for local area or volume scaling</cell>
+        </row>
+        <row>
+          <cell>a critical point</cell>
+          <cell>a quadratic form for the first curved part</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      But before we begin differentiating functions of several variables, we need a better
+      supply of geometric objects to differentiate and integrate over. A curve is a moving
+      point. A surface is a moving curve. A polar grid bends the coordinate lines before
+      calculus even begins. The next chapter builds that geometry first, so that when the
+      derivative finally arrives, it has something real to act on.
+    </p>
+  </subsection>
+</section>

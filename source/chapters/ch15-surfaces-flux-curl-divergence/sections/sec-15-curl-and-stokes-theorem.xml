@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch15-surfaces-flux-curl-divergence.tex, Section 5.
+     Status: CONVERTED. -->
+<section xml:id="sec-15-curl-and-stokes-theorem" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Curl and Stokes' theorem</title>
+
+  <p>
+    <xref ref="sec-15-flux-2-forms"/> turned flux into a <m>2</m>-form:
+    <md>
+      \Phi_{\mathbf F}
+      =
+      P\,dy\wedge dz
+      +
+      Q\,dz\wedge dx
+      +
+      R\,dx\wedge dy.
+    </md>
+    At the end, a different kind of <m>2</m>-form appeared. If
+    <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+    is a work <m>1</m>-form, then <m>d\omega</m> is also a <m>2</m>-form. Its three coefficients
+    form a vector. That vector is called the <term>curl</term>.
+  </p>
+
+  <p>
+    The meaning is simple but deep: curl measures local circulation per unit area.
+  </p>
+
+  <subsection xml:id="c15s5-subsec-paddle-wheel">
+    <title>A small paddle wheel in space</title>
+
+    <p>
+      Picture a tiny paddle wheel floating in a moving fluid. If the fluid pushes harder on one
+      side than the other, the wheel spins. In the plane, <xref ref="ch14-greens-theorem"/>
+      measured this tendency with the scalar curl
+      <md>Q_x-P_y.</md>
+      In space, the paddle wheel can face many directions. A wheel lying flat in the
+      <m>xy</m>-plane detects spinning around the <m>z</m>-axis. A wheel in the <m>yz</m>-plane
+      detects spinning around the <m>x</m>-axis. A wheel in the <m>zx</m>-plane detects spinning
+      around the <m>y</m>-axis.
+    </p>
+
+    <p>So curl in space needs three components.</p>
+
+    <p>
+      Start with a vector field
+      <md>\mathbf F=(P,Q,R)</md>
+      and its work form
+      <md>\omega=P\,dx+Q\,dy+R\,dz.</md>
+    </p>
+
+    <p>
+      On a tiny rectangle in the <m>xy</m>-plane, the circulation density is
+      <md>Q_x-P_y.</md>
+      That is the <m>z</m>-component of curl.
+    </p>
+
+    <p>
+      On a tiny rectangle in the <m>yz</m>-plane, the positive normal direction is the
+      <m>x</m>-direction. The relevant work form is
+      <md>Q\,dy+R\,dz.</md>
+      By the same rectangle argument as in <xref ref="ch14-greens-theorem"/>, the circulation
+      density is
+      <md>R_y-Q_z.</md>
+      That is the <m>x</m>-component of curl.
+    </p>
+
+    <p>
+      On a tiny rectangle whose ordered area form is
+      <md>dz\wedge dx,</md>
+      the positive normal direction is the <m>y</m>-direction, because
+      <md>\mathbf k\times \mathbf i=\mathbf j.</md>
+      The relevant circulation density is
+      <md>P_z-R_x.</md>
+      That is the <m>y</m>-component of curl.
+    </p>
+
+    <md>
+      \begin{array}{c|c|c}
+      \text{oriented coordinate area} \amp \text{positive normal} \amp \text{circulation density}\\ \hline
+      dy\wedge dz \amp \mathbf i \amp R_y-Q_z\\[1mm]
+      dz\wedge dx \amp \mathbf j \amp P_z-R_x\\[1mm]
+      dx\wedge dy \amp \mathbf k \amp Q_x-P_y
+      \end{array}
+    </md>
+
+    <p>These three numbers form one vector.</p>
+
+    <definition xml:id="c15s5-def-curl">
+      <title>Curl</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F=(P,Q,R)</md>
+          be a vector field in space. The <term>curl</term> of <m>\mathbf F</m> is
+          <md>
+            \boxed{
+            \nabla\times \mathbf F
+            =
+            (R_y-Q_z,\;P_z-R_x,\;Q_x-P_y).
+            }
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The notation
+      <md>\nabla\times\mathbf F</md>
+      is classical vector notation. It is useful, but it hides the form story. The form story
+      says that curl is the vector field whose flux <m>2</m>-form is <m>d\omega</m>.
+    </p>
+
+    <p>
+      Indeed, compute:
+      <md>
+        <mrow>d(P\,dx+Q\,dy+R\,dz) \amp= dP\wedge dx+dQ\wedge dy+dR\wedge dz</mrow>
+        <mrow>\amp= (R_y-Q_z)\,dy\wedge dz</mrow>
+        <mrow>\amp\quad+ (P_z-R_x)\,dz\wedge dx</mrow>
+        <mrow>\amp\quad+ (Q_x-P_y)\,dx\wedge dy.</mrow>
+      </md>
+      So
+      <md>
+        \boxed{
+        d\omega
+        =
+        \Phi_{\nabla\times\mathbf F}.
+        }
+      </md>
+      In words:
+      <md>
+        \boxed{
+        \text{the exterior derivative of the work form is the flux form of the curl.}
+        }
+      </md>
+    </p>
+
+    <p>This is the bridge between circulation and flux.</p>
+  </subsection>
+
+  <subsection xml:id="c15s5-subsec-first-stokes-circular-wire">
+    <title>A first Stokes calculation: a circular wire</title>
+
+    <p>
+      Let
+      <md>\mathbf F(x,y,z)=\left(-\frac y2,\frac x2,0\right),</md>
+      so
+      <md>\omega=-\frac y2\,dx+\frac x2\,dy.</md>
+      The curl is
+      <md>
+        <mrow>\nabla\times\mathbf F \amp= (0-0,\;0-0,\;\tfrac12-(-\tfrac12))</mrow>
+        <mrow>\amp= (0,0,1).</mrow>
+      </md>
+      Equivalently,
+      <md>d\omega=dx\wedge dy.</md>
+    </p>
+
+    <p>
+      Let <m>C</m> be the circle of radius <m>a</m> in the plane <m>z=0</m>, oriented
+      counterclockwise as seen from above:
+      <md>\mathbf r(t)=(a\cos t,a\sin t,0),\qquad 0\le t\le 2\pi.</md>
+      Then
+      <md>dx=-a\sin t\,dt,\qquad dy=a\cos t\,dt.</md>
+      Pull back <m>\omega</m>:
+      <md>
+        <mrow>\omega \amp= -\frac{a\sin t}{2}(-a\sin t\,dt) + \frac{a\cos t}{2}(a\cos t\,dt)</mrow>
+        <mrow>\amp= \frac{a^2}{2}(\sin^2t+\cos^2t)\,dt</mrow>
+        <mrow>\amp= \frac{a^2}{2}\,dt.</mrow>
+      </md>
+      Therefore
+      <md>
+        <mrow>\oint_C \omega \amp= \int_0^{2\pi}\frac{a^2}{2}\,dt</mrow>
+        <mrow>\amp= \pi a^2.</mrow>
+      </md>
+    </p>
+
+    <p>
+      Now let <m>D</m> be the flat disk bounded by <m>C</m>, with upward orientation. Since
+      <md>d\omega=dx\wedge dy,</md>
+      we get
+      <md>
+        <mrow>\iint_D d\omega \amp= \iint_D dx\wedge dy</mrow>
+        <mrow>\amp= \operatorname{Area}(D)</mrow>
+        <mrow>\amp= \pi a^2.</mrow>
+      </md>
+      So
+      <md>
+        \boxed{
+        \oint_C \omega=\iint_D d\omega.
+        }
+      </md>
+    </p>
+
+    <p>
+      In classical vector notation, the same statement is
+      <md>
+        \boxed{
+        \oint_C \mathbf F\cdot d\mathbf r
+        =
+        \iint_D (\nabla\times\mathbf F)\cdot\widehat{\mathbf n}\,dS.
+        }
+      </md>
+    </p>
+
+    <p>
+      The left side walks around the wire. The right side measures how much curl passes through a
+      surface spanning the wire.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s5-subsec-surface-boundary-orientation">
+    <title>Surface orientation and boundary orientation</title>
+
+    <p>
+      A surface orientation chooses a normal direction. Once that normal is chosen, the positive
+      direction around the boundary is forced.
+    </p>
+
+    <p>
+      For a parametrized surface
+      <md>\mathbf r(u,v)</md>
+      whose orientation is given by
+      <md>\mathbf r_u\times\mathbf r_v,</md>
+      the boundary orientation is the image of the positive boundary orientation of the parameter
+      region. This is the most reliable rule.
+    </p>
+
+    <p>
+      There is also a hand rule. Point the thumb of your right hand in the chosen normal
+      direction. Your curled fingers show the positive boundary direction.
+    </p>
+
+    <p>
+      For a flat disk with upward normal, the boundary is counterclockwise as seen from above. If
+      the same disk is oriented downward, the positive boundary direction is clockwise.
+    </p>
+
+    <figure xml:id="c15s5-fig-orientation-boundary">
+      <caption>
+        For Stokes' theorem, the surface orientation and boundary orientation must match.
+      </caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[fill=gray!10, thick] (0,0) ellipse (2.6 and 0.8);
+            \draw[-&gt;, very thick, red!65!black] (0,0) -- (0,2.1)
+                node[above] {\(\widehat{\mathbf n}\)};
+            \draw[very thick, blue!65!black] (2.6,0) arc[start angle=0,end angle=145,x radius=2.6,y radius=0.8];
+            \draw[-&gt;, very thick, blue!65!black] (-2.12,0.46) arc[start angle=145,end angle=185,x radius=2.6,y radius=0.8];
+            \node[blue!65!black] at (0,-1.45) {positive boundary direction};
+            \node at (0,-2.25) {the normal direction chooses the boundary direction};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <definition xml:id="c15s5-def-compatible-boundary-orientation">
+      <title>Compatible boundary orientation</title>
+      <statement>
+        <p>
+          Let <m>S</m> be an oriented surface with boundary <m>\partial S</m>. The boundary is
+          given the <term>compatible orientation</term> if, near each boundary point, the surface
+          lies on the left as seen from the chosen positive side of the surface.
+        </p>
+        <p>
+          Equivalently, for a parametrized oriented surface, <m>\partial S</m> receives the
+          orientation induced from the positively oriented boundary of the parameter domain.
+        </p>
+      </statement>
+    </definition>
+
+    <p>This compatibility is not bookkeeping. It controls the sign of the theorem.</p>
+  </subsection>
+
+  <subsection xml:id="c15s5-subsec-stokes-theorem">
+    <title>Stokes' theorem</title>
+
+    <p>
+      The circle computation was not a coincidence. It is the space version of Green's theorem.
+    </p>
+
+    <theorem xml:id="c15s5-thm-stokes">
+      <title>Stokes' theorem</title>
+      <statement>
+        <p>
+          Let <m>S</m> be an oriented piecewise smooth surface with piecewise smooth boundary
+          <md>\partial S.</md>
+          Let
+          <md>\mathbf F=(P,Q,R)</md>
+          have continuous first partial derivatives on an open region containing <m>S</m>. Give
+          <m>\partial S</m> the orientation compatible with the chosen orientation of <m>S</m>.
+          Then
+          <md>
+            \boxed{
+            \oint_{\partial S}\mathbf F\cdot d\mathbf r
+            =
+            \iint_S(\nabla\times\mathbf F)\cdot\widehat{\mathbf n}\,dS.
+            }
+          </md>
+          In differential-form notation, if
+          <md>\omega=P\,dx+Q\,dy+R\,dz,</md>
+          then
+          <md>
+            \boxed{
+            \int_{\partial S}\omega
+            =
+            \int_S d\omega.
+            }
+          </md>
+        </p>
+      </statement>
+      <proof>
+        <title>Proof idea</title>
+        <p>
+          Parametrize the surface by
+          <md>\mathbf r:D\to S,</md>
+          with orientation given by
+          <md>\mathbf r_u\times\mathbf r_v.</md>
+          The boundary of <m>S</m> is the image of the boundary of <m>D</m>, with the induced
+          orientation.
+        </p>
+        <p>
+          Pull the <m>1</m>-form <m>\omega</m> back to the parameter domain:
+          <md>\mathbf r^*\omega.</md>
+          This is now a <m>1</m>-form on a region in the <m>uv</m>-plane. By Green's theorem,
+          <md>\int_{\partial D}\mathbf r^*\omega = \int_D d(\mathbf r^*\omega).</md>
+          The exterior derivative commutes with pullback:
+          <md>d(\mathbf r^*\omega)=\mathbf r^*(d\omega).</md>
+          This identity is the chain rule written in form language. Therefore
+          <md>\int_{\partial D}\mathbf r^*\omega = \int_D \mathbf r^*(d\omega).</md>
+          Translating back to the surface gives
+          <md>\int_{\partial S}\omega = \int_S d\omega.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      Stokes' theorem says that circulation around the boundary is caused by curl passing through
+      the surface.
+    </p>
+
+    <p>
+      The surprise is that the boundary is enough. The surface can bend, stretch, or sag. As long
+      as the boundary curve and orientation stay the same, the total curl flux is the same.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s5-subsec-changing-surface">
+    <title>Changing the surface but keeping the boundary</title>
+
+    <p>
+      Take again
+      <md>\mathbf F=\left(-\frac y2,\frac x2,0\right),</md>
+      so
+      <md>\nabla\times\mathbf F=(0,0,1).</md>
+    </p>
+
+    <p>
+      Let <m>C</m> be the unit circle in the plane <m>z=0</m>:
+      <md>x^2+y^2=1,\qquad z=0,</md>
+      oriented counterclockwise as seen from above.
+    </p>
+
+    <p>
+      One surface spanning <m>C</m> is the flat disk
+      <md>D:\quad z=0,\qquad x^2+y^2\le1.</md>
+      The upward curl flux is
+      <md>\iint_D (0,0,1)\cdot(0,0,1)\,dS=\pi.</md>
+    </p>
+
+    <p>
+      Now replace the flat disk by the curved cap
+      <md>S:\quad z=1-x^2-y^2,\qquad x^2+y^2\le1,</md>
+      with upward orientation. This cap has the same boundary <m>C</m>, because when
+      <m>x^2+y^2=1</m>,
+      <md>z=1-1=0.</md>
+    </p>
+
+    <p>
+      For a graph <m>z=g(x,y)</m>, the upward vector area element is
+      <md>(-g_x,-g_y,1)\,dx\,dy.</md>
+      Here
+      <md>g(x,y)=1-x^2-y^2,</md>
+      so
+      <md>(-g_x,-g_y,1)=(2x,2y,1).</md>
+      Thus
+      <md>
+        <mrow>\iint_S(\nabla\times\mathbf F)\cdot\widehat{\mathbf n}\,dS \amp= \iint_{x^2+y^2\le1} (0,0,1)\cdot(2x,2y,1)\,dx\,dy</mrow>
+        <mrow>\amp= \iint_{x^2+y^2\le1}1\,dx\,dy</mrow>
+        <mrow>\amp= \pi.</mrow>
+      </md>
+      The surface changed. The answer did not.
+    </p>
+
+    <p>
+      <md>
+        \boxed{
+        \iint_{\text{flat disk}}\nabla\times\mathbf F\cdot\widehat{\mathbf n}\,dS
+        =
+        \iint_{\text{curved cap}}\nabla\times\mathbf F\cdot\widehat{\mathbf n}\,dS
+        =
+        \oint_C \mathbf F\cdot d\mathbf r.
+        }
+      </md>
+    </p>
+
+    <p>
+      This is often the easiest way to use Stokes' theorem. If the boundary is simple, compute the
+      line integral. If the surface is annoying but another spanning surface is simpler, change
+      the surface.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s5-subsec-two-boundary-curves">
+    <title>A surface with two boundary curves</title>
+
+    <p>
+      A surface can have more than one boundary curve. Then every boundary component must be
+      included, with the correct orientation.
+    </p>
+
+    <p>
+      Let <m>A</m> be the annulus
+      <md>1\le x^2+y^2\le4,\qquad z=0,</md>
+      with upward orientation. Its boundary has two circles:
+      <md>C_{\text{outer}}:\quad x^2+y^2=4,</md>
+      and
+      <md>C_{\text{inner}}:\quad x^2+y^2=1.</md>
+      The compatible orientation is counterclockwise on the outer boundary and clockwise on the
+      inner boundary.
+    </p>
+
+    <p>
+      Use
+      <md>\omega=-\frac y2\,dx+\frac x2\,dy.</md>
+      Then
+      <md>d\omega=dx\wedge dy.</md>
+      So
+      <md>
+        <mrow>\iint_A d\omega \amp= \operatorname{Area}(A)</mrow>
+        <mrow>\amp= 4\pi-\pi</mrow>
+        <mrow>\amp= 3\pi.</mrow>
+      </md>
+    </p>
+
+    <p>
+      On a circle of radius <m>R</m>, oriented counterclockwise, we computed
+      <md>\int \omega=\pi R^2.</md>
+      Therefore
+      <md>\int_{C_{\text{outer}}}\omega=4\pi.</md>
+      The inner circle is oriented clockwise, so
+      <md>\int_{C_{\text{inner}}}\omega=-\pi.</md>
+      Adding both boundary components,
+      <md>
+        \boxed{
+        \int_{\partial A}\omega=4\pi-\pi=3\pi.
+        }
+      </md>
+      This matches
+      <md>\iint_A d\omega.</md>
+    </p>
+
+    <p>
+      If we forgot the inner boundary, we would get <m>4\pi</m>, not <m>3\pi</m>. The hole has a
+      rim, and Stokes' theorem counts every rim.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s5-subsec-why-hypotheses">
+    <title>Why the hypotheses matter</title>
+
+    <p>
+      Stokes' theorem needs more than a formula. It needs a surface, a compatible boundary
+      orientation, and a vector field that is defined and differentiable where the theorem uses
+      it.
+    </p>
+
+    <subsubsection xml:id="c15s5-subsubsec-orientation-compatible">
+      <title>Orientation must be compatible</title>
+
+      <p>
+        Use the unit disk <m>D</m>, upward orientation, and
+        <md>\omega=-\frac y2\,dx+\frac x2\,dy.</md>
+        We know
+        <md>\iint_D d\omega=\pi.</md>
+        The compatible boundary direction is counterclockwise, and then
+        <md>\oint_{\partial D}\omega=\pi.</md>
+      </p>
+
+      <p>
+        If instead we walk around the same circle clockwise, the line integral becomes
+        <md>-\pi.</md>
+        The surface integral has not changed. The sign mismatch is not a paradox. The boundary
+        orientation is no longer compatible with the surface orientation.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c15s5-subsubsec-field-defined">
+      <title>The field must be defined on the surface</title>
+
+      <p>
+        Consider the vector field
+        <md>
+          \mathbf A(x,y,z)
+          =
+          \left(
+          -\frac{y}{x^2+y^2},
+          \frac{x}{x^2+y^2},
+          0
+          \right).
+        </md>
+        It is defined away from the <m>z</m>-axis. Its work form is
+        <md>
+          \alpha=
+          -\frac{y}{x^2+y^2}\,dx
+          +
+          \frac{x}{x^2+y^2}\,dy.
+        </md>
+        Where it is defined, a direct calculation gives
+        <md>d\alpha=0.</md>
+      </p>
+
+      <p>
+        Now integrate around the unit circle
+        <md>C:\quad (x,y,z)=(\cos t,\sin t,0),\qquad 0\le t\le2\pi.</md>
+        Then
+        <md>dx=-\sin t\,dt,\qquad dy=\cos t\,dt.</md>
+        On <m>C</m>,
+        <md>x^2+y^2=1,</md>
+        and
+        <md>
+          <mrow>\alpha \amp= -\sin t(-\sin t\,dt)+\cos t(\cos t\,dt)</mrow>
+          <mrow>\amp= (\sin^2t+\cos^2t)\,dt</mrow>
+          <mrow>\amp= dt.</mrow>
+        </md>
+        So
+        <md>
+          \boxed{
+          \oint_C\alpha=2\pi.
+          }
+        </md>
+      </p>
+
+      <p>
+        It may be tempting to say:
+        <md>d\alpha=0,\qquad \text{so } \oint_C\alpha=0.</md>
+        That would be wrong. The flat disk bounded by <m>C</m> contains the origin, and the field
+        is not defined there. Stokes' theorem cannot be applied to that disk.
+      </p>
+
+      <p>
+        The missing point is not harmless. It carries circulation that the formula cannot see
+        unless the singularity is removed and the new inner boundary is counted.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="c15s5-subsec-reading-both-languages">
+    <title>Reading Stokes' theorem in both languages</title>
+
+    <p>Stokes' theorem has two faces.</p>
+
+    <p>
+      The vector-calculus face is
+      <md>
+        \boxed{
+        \oint_{\partial S}\mathbf F\cdot d\mathbf r
+        =
+        \iint_S(\nabla\times\mathbf F)\cdot\widehat{\mathbf n}\,dS.
+        }
+      </md>
+      It says:
+      <md>\text{boundary circulation} = \text{flux of curl through the surface}.</md>
+    </p>
+
+    <p>
+      The forms face is
+      <md>
+        \boxed{
+        \int_{\partial S}\omega=\int_S d\omega.
+        }
+      </md>
+      It says:
+      <md>\text{integral over the boundary} = \text{integral of the derivative over the surface}.</md>
+    </p>
+
+    <p>
+      This is the same shape as Green's theorem. It is also the same shape as the Fundamental
+      Theorem of Calculus:
+      <md>\int_a^b f'(x)\,dx=f(b)-f(a).</md>
+      The object changed, but the story did not.
+    </p>
+
+    <p>
+      An interval has two boundary points. A plane region has a boundary curve. A surface has a
+      boundary curve too. The derivative moves the integrand up by one dimension:
+      <md>0\text{-form}\to1\text{-form},\qquad 1\text{-form}\to2\text{-form}.</md>
+    </p>
+
+    <p>
+      But there is another kind of surface: a closed surface. A sphere has no boundary curve at
+      all. Stokes' theorem then predicts no boundary circulation. Yet a closed surface can still
+      have flux through it. A balloon can leak outward everywhere. A source can fill the inside.
+    </p>
+
+    <p>
+      The derivative that measures source strength is not curl. It is divergence.
+    </p>
+  </subsection>
+</section>

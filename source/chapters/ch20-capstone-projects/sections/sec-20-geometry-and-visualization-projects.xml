@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch20-capstone-projects.tex, Section 1.
+     Status: CONVERTED. -->
+<section xml:id="sec-20-geometry-and-visualization-projects" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Geometry and visualization projects</title>
+
+  <introduction>
+    <p>
+      Geometry was the first language of the book. Before derivatives, integrals, and forms,
+      we needed points, vectors, curves, surfaces, and coordinates. These projects return to
+      that beginning, but now with the whole course available.
+    </p>
+    <p>
+      The goal is not to make pretty pictures only. A picture should answer a question:
+      Where does the surface bend? Where does a parametrization collapse? Which direction
+      is normal? What does a linear approximation really approximate?
+    </p>
+  </introduction>
+
+  <subsection xml:id="c20s1-proj-quadric-surfaces">
+    <title>Project 1: build and classify quadric surfaces</title>
+
+    <p>
+      A quadric surface is described by a second-degree equation in <m>x,y,z</m>. In
+      <xref ref="ch04-curves-coordinates-surfaces"/>, we learned the main trick:
+      <md>
+        \boxed{
+            \text{To understand a quadric surface, slice it.}
+        }
+      </md>
+    </p>
+    <p>
+      A surface that looks mysterious in three dimensions often becomes clear when we set
+      one variable equal to a constant and study the resulting trace.
+    </p>
+
+    <p>
+      <em>A seed example: a shifted ellipsoid.</em>
+      Consider
+      <md>
+        \frac{(x-1)^2}{9}+\frac{y^2}{4}+(z+2)^2=1.
+      </md>
+      The shifted terms tell us the center:
+      <md>
+        (1,0,-2).
+      </md>
+      The denominators tell us the axis lengths:
+      <md>
+        3 \text{ in the }x\text{-direction},\qquad
+        2 \text{ in the }y\text{-direction},\qquad
+        1 \text{ in the }z\text{-direction}.
+      </md>
+      So the surface is an ellipsoid, stretched most in the <m>x</m>-direction and least in the
+      <m>z</m>-direction.
+    </p>
+
+    <p>A few slices confirm this.</p>
+    <p>
+      If <m>z=-2</m>, then
+      <md>
+        \frac{(x-1)^2}{9}+\frac{y^2}{4}=1,
+      </md>
+      an ellipse in the horizontal plane through the center.
+    </p>
+    <p>
+      If <m>y=0</m>, then
+      <md>
+        \frac{(x-1)^2}{9}+(z+2)^2=1,
+      </md>
+      an ellipse in the <m>xz</m>-plane.
+    </p>
+    <p>
+      If <m>x=1</m>, then
+      <md>
+        \frac{y^2}{4}+(z+2)^2=1,
+      </md>
+      an ellipse in the <m>yz</m>-plane.
+    </p>
+    <p>
+      The surface was not guessed from a memorized shape. It was read from its slices.
+    </p>
+
+    <figure xml:id="c20s1-fig-ellipsoid-traces">
+      <caption>Two traces of the same ellipsoid. The traces reveal the stretches.</caption>
+      <image width="80%">
+        <latex-image>
+\begin{tikzpicture}[scale=0.78, &gt;=stealth]
+    \begin{scope}
+        \draw[-&gt;] (-3.6,0) -- (3.8,0) node[right] {\(x\)};
+        \draw[-&gt;] (0,-2.2) -- (0,2.4) node[above] {\(y\)};
+        \draw[thick] (0,0) ellipse (2.7 and 1.55);
+        \fill (0,0) circle (2pt);
+        \node[below] at (0,0) {center};
+        \node at (0,-2.75) {slice \(z=-2\)};
+    \end{scope}
+
+    \begin{scope}[shift={(7.4,0)}]
+        \draw[-&gt;] (-3.6,0) -- (3.8,0) node[right] {\(x\)};
+        \draw[-&gt;] (0,-2.2) -- (0,2.4) node[above] {\(z\)};
+        \draw[thick] (0,0) ellipse (2.7 and 0.95);
+        \fill (0,0) circle (2pt);
+        \node[below] at (0,0) {center};
+        \node at (0,-2.75) {slice \(y=0\)};
+    \end{scope}
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      Create a visual gallery of at least six quadric surfaces.
+    </p>
+    <p>
+      Use six or more of the following:
+      <md>
+        \begin{array}{c}
+        x^2+y^2=4,\\[1mm]
+        y=x^2,\\[1mm]
+        z=x^2+y^2,\\[1mm]
+        z=x^2-y^2,\\[1mm]
+        \dfrac{x^2}{9}+\dfrac{y^2}{4}+z^2=1,\\[4mm]
+        x^2+y^2-z^2=1,\\[1mm]
+        z^2-x^2-y^2=1,\\[1mm]
+        z^2=x^2+y^2,\\[1mm]
+        \dfrac{(x-1)^2}{4}+\dfrac{(y+2)^2}{9}+\dfrac{z^2}{16}=1.
+        \end{array}
+      </md>
+    </p>
+    <p>
+      For each surface, include:
+      <md>
+        \begin{array}{ll}
+        1. &amp; \text{the equation,}\\
+        2. &amp; \text{the name of the surface,}\\
+        3. &amp; \text{three traces or cross-sections,}\\
+        4. &amp; \text{a hand sketch, physical model, or computer plot,}\\
+        5. &amp; \text{one sentence explaining how signs, coefficients, or missing variables shape it.}
+        \end{array}
+      </md>
+    </p>
+
+    <p><em>Questions to answer.</em></p>
+    <ol>
+      <li>
+        <p>Which surfaces are connected? Which have two separate pieces?</p>
+      </li>
+      <li>
+        <p>
+          Which equations contain a missing variable? What geometric effect does that
+          missing variable have?
+        </p>
+      </li>
+      <li>
+        <p>
+          Which surfaces have horizontal traces that are circles? Which have horizontal
+          traces that are ellipses? Which have hyperbolas?
+        </p>
+      </li>
+      <li>
+        <p>
+          What changes when
+          <md>
+            x^2+y^2-z^2=1
+          </md>
+          is replaced by
+          <md>
+            z^2-x^2-y^2=1?
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          What changes when an equation is shifted, as in
+          <md>
+            \frac{(x-1)^2}{4}+\frac{(y+2)^2}{9}+\frac{z^2}{16}=1?
+          </md>
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Write a short illustrated report. It should include a table like this:
+      <md>
+        \begin{array}{c|c|c|c}
+        \text{Equation} &amp; \text{Name} &amp; \text{Useful traces} &amp; \text{Geometry note} \\ \hline
+        z=x^2+y^2 &amp; \text{elliptic paraboloid} &amp;
+        z=c &amp; \text{horizontal ellipses grow upward}\\[1mm]
+        z=x^2-y^2 &amp; \text{hyperbolic paraboloid} &amp;
+        x=0,\ y=0 &amp; \text{one slice bends up, one bends down}
+        \end{array}
+      </md>
+    </p>
+    <p>
+      A good gallery should make a reader feel that a quadric equation is not a code to
+      memorize. It is a set of instructions for building a shape.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s1-proj-tangent-planes">
+    <title>Project 2: visualize tangent planes and linear approximations</title>
+
+    <p>
+      <xref ref="ch07-partial-derivatives-jacobian"/> gave the tangent plane formula for a differentiable graph
+      <md>
+        z=f(x,y).
+      </md> At the point
+      <md>
+        (a,b,f(a,b)),
+      </md>
+      the tangent plane is
+      <md>
+        \boxed{
+            z=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b).
+        }
+      </md>
+      This plane is the best first-order model of the surface near the point.
+    </p>
+    <p>
+      The word <q>near</q> matters. A tangent plane is not a replacement for the whole surface.
+      It is a local microscope.
+    </p>
+
+    <p>
+      <em>A seed example: a curved roof.</em>
+      Suppose a small roof has height
+      <md>
+        f(x,y)=5+\frac12x-\frac14y+\frac18x^2-\frac1{16}y^2+\frac18xy.
+      </md>
+      At
+      <md>
+        (a,b)=(2,1),
+      </md>
+      the height is
+      <md>
+        \begin{aligned}
+            f(2,1)
+            &amp;=
+            5+1-\frac14+\frac12-\frac1{16}+\frac14\\
+            &amp;=
+            \frac{103}{16}.
+        \end{aligned}
+      </md>
+      The partial derivatives are
+      <md>
+        f_x(x,y)=\frac12+\frac14x+\frac18y,
+      </md>
+      and
+      <md>
+        f_y(x,y)=-\frac14-\frac18y+\frac18x.
+      </md>
+      So
+      <md>
+        f_x(2,1)=\frac98,
+        \qquad
+        f_y(2,1)=-\frac18.
+      </md>
+      The tangent plane is
+      <md>
+        \boxed{
+            z=\frac{103}{16}+\frac98(x-2)-\frac18(y-1).
+        }
+      </md>
+    </p>
+    <p>
+      Now compare the true height with the plane at a nearby point, say
+      <md>
+        (2.2,0.9).
+      </md>
+      The tangent plane predicts
+      <md>
+        L(2.2,0.9)
+        =
+        \frac{103}{16}
+        +
+        \frac98(0.2)
+        -
+        \frac18(-0.1).
+      </md>
+      The actual error is
+      <md>
+        f(2.2,0.9)-L(2.2,0.9).
+      </md>
+      If we move the point twice as close to <m>(2,1)</m>, the error should become much smaller.
+      That is what differentiability means: the linear model wins at small scales.
+    </p>
+
+    <figure xml:id="c20s1-fig-tangent-slice">
+      <caption>A tangent plane is seen in every slice as a tangent line.</caption>
+      <image width="60%">
+        <latex-image>
+\begin{tikzpicture}[scale=0.82, &gt;=stealth]
+    \draw[-&gt;] (-0.5,0) -- (5.4,0) node[right] {\(x\)};
+    \draw[-&gt;] (0,-0.5) -- (0,4.5) node[above] {\(z\)};
+
+    \draw[thick, domain=0.2:4.7, samples=80, smooth, variable=\x]
+        plot ({\x},{1.3+0.8*\x-0.10*\x*\x});
+
+    % Corrected tangent line based on z = 0.28x + 1.976
+    \draw[blue!60!black, very thick] (1.0,2.256) -- (4.2,3.152);
+    \node[blue!60!black, right] at (4.2,3.152) {tangent line in one slice};
+
+    % Corrected point coordinates
+    \fill (2.6,2.704) circle (2.5pt);
+    \node[above left] at (2.6,2.704) {point};
+
+    % Corrected dashed line height
+    \draw[dashed] (2.6,0) -- (2.6,2.704);
+    \node at (2.7,-0.8) {one slice of a tangent-plane picture};
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      Choose one smooth surface and one nonsmooth surface.
+    </p>
+    <p>
+      For the smooth surface, use one of these or choose your own:
+      <md>
+        \begin{array}{c}
+        f_1(x,y)=4+x-\frac12y-\frac14x^2-\frac18y^2,\\[1mm]
+        f_2(x,y)=5+\frac12x-\frac14y+\frac18x^2-\frac1{16}y^2+\frac18xy,\\[1mm]
+        f_3(x,y)=\sin x\cos y.
+        \end{array}
+      </md>
+    </p>
+    <p>
+      For the nonsmooth surface, use one of these:
+      <md>
+        \begin{array}{c}
+        g_1(x,y)=\sqrt{x^2+y^2},\\[1mm]
+        g_2(x,y)=|x|+|y|.
+        \end{array}
+      </md>
+    </p>
+
+    <p>
+      <em>Part A. The smooth surface.</em>
+      Pick a point <m>(a,b)</m>. Then:
+    </p>
+    <ol>
+      <li>
+        <p>
+          Compute
+          <md>
+            f(a,b),\qquad f_x(a,b),\qquad f_y(a,b).
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Write the linear approximation
+          <md>
+            \boxed{
+                L(x,y)=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b).
+            }
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Plot the surface
+          <md>
+            z=f(x,y)
+          </md>
+          and the tangent plane
+          <md>
+            z=L(x,y)
+          </md>
+          on the same axes.
+        </p>
+      </li>
+      <li>
+        <p>
+          Choose several nearby displacement vectors
+          <md>
+            \mathbf h=(h,k).
+          </md>
+          For each one, compute the error
+          <md>
+            E(\mathbf h)=f(a+h,b+k)-L(a+h,b+k).
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Make a table containing
+          <md>
+            \|\mathbf h\|,
+            \qquad
+            |E(\mathbf h)|,
+            \qquad
+            \frac{|E(\mathbf h)|}{\|\mathbf h\|},
+            \qquad
+            \frac{|E(\mathbf h)|}{\|\mathbf h\|^2}.
+          </md>
+        </p>
+      </li>
+    </ol>
+    <p>
+      The first ratio should get small as
+      <md>
+        \|\mathbf h\|\to0.
+      </md>
+      That is the signature of differentiability.
+    </p>
+
+    <p>
+      <em>Part B. The nonsmooth surface.</em>
+      At the origin, draw or plot
+      <md>
+        z=\sqrt{x^2+y^2}
+      </md>
+      or
+      <md>
+        z=|x|+|y|.
+      </md>
+    </p>
+    <p>Then answer:</p>
+    <ol>
+      <li>
+        <p>Does the surface look like it has one tangent plane at the origin?</p>
+      </li>
+      <li>
+        <p>What do the slices along the <m>x</m>-axis and <m>y</m>-axis look like?</p>
+      </li>
+      <li>
+        <p>Why is a tangent plane not the same thing as matching a few coordinate slices?</p>
+      </li>
+      <li>
+        <p>
+          How does the picture explain the warning from <xref ref="ch07-partial-derivatives-jacobian"/>: partial
+          information in some directions does not guarantee a true linear approximation in all
+          directions?
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>the smooth surface and point you chose,</p>
+      </li>
+      <li>
+        <p>the tangent plane calculation,</p>
+      </li>
+      <li>
+        <p>one plot or hand sketch showing the surface and tangent plane together,</p>
+      </li>
+      <li>
+        <p>an error table,</p>
+      </li>
+      <li>
+        <p>one plot or hand sketch of the nonsmooth surface,</p>
+      </li>
+      <li>
+        <p>
+          a paragraph explaining why the smooth surface has a local linear model and the
+          nonsmooth surface does not.
+        </p>
+      </li>
+    </ol>
+    <p>
+      The main lesson is visual: differentiability means that the graph becomes flatter and
+      flatter under a microscope. A corner, cusp, or cone tip refuses to become one plane.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s1-proj-gradient-fields">
+    <title>Project 3: plot gradient fields and contour maps together</title>
+
+    <p>
+      A contour map shows level sets:
+      <md>
+        f(x,y)=c.
+      </md>
+      A gradient field shows vectors:
+      <md>
+        \nabla f(x,y).
+      </md>
+      <xref ref="ch09-gradient-optimization"/> connected them:
+      <md>
+        \boxed{
+            \nabla f \text{ is perpendicular to the level curves of } f.
+        }
+      </md>
+    </p>
+    <p>This project asks you to draw both at once.</p>
+
+    <p>
+      <em>A seed example: temperature on a plate.</em>
+      Let
+      <md>
+        T(x,y)=20+4x-y-x^2-\frac12y^2.
+      </md>
+      Then
+      <md>
+        \nabla T(x,y)=(4-2x,\,-1-y).
+      </md>
+      At the point
+      <md>
+        (1,-1),
+      </md>
+      we get
+      <md>
+        \nabla T(1,-1)=(2,0).
+      </md>
+      So the temperature rises fastest toward the positive <m>x</m>-direction.
+    </p>
+    <p>
+      The level curve through <m>(1,-1)</m> has tangent directions <m>(u,v)</m> satisfying
+      <md>
+        \nabla T(1,-1)\cdot(u,v)=0.
+      </md>
+      Thus
+      <md>
+        (2,0)\cdot(u,v)=0,
+      </md>
+      so
+      <md>
+        u=0.
+      </md>
+      The tangent direction is vertical. The gradient is horizontal. They are perpendicular.
+    </p>
+
+    <figure xml:id="c20s1-fig-gradient-contours">
+      <caption>Contours and gradient arrows carry different information, but they fit
+      together geometrically.</caption>
+      <image width="60%">
+        <latex-image>
+\begin{tikzpicture}[scale=0.78, &gt;=stealth]
+    \draw[-&gt;] (-1.2,0) -- (5.2,0) node[right] {\(x\)};
+    \draw[-&gt;] (0,-4.0) -- (0,2.5) node[above] {\(y\)};
+
+    \foreach \r in {0.8,1.4,2.0,2.6} {
+        \draw[gray!45, thick] (2,-1) ellipse ({1.35*\r} and {0.95*\r});
+    }
+
+    % Corrected gradient field: y-component scales twice as fast as x-component
+    \foreach \x/\y in {0/0,1/0,2/0,3/0,4/0,0/-1,1/-1,2/-1,3/-1,4/-1,0/-2,1/-2,2/-2,3/-2,4/-2} {
+        \draw[-&gt;, blue!65!black, thick]
+            (\x,\y) -- ++({0.2*(2-\x)},{0.4*(-1-\y)});
+    }
+
+    \fill (1,-1) circle (2.4pt);
+    \draw[-&gt;, red!70!black, very thick] (1,-1) -- (2.3,-1)
+        node[above] {\(\nabla T(1,-1)\)};
+
+    \node at (2,-4.55) {gradient arrows cross contour curves at right angles};
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      Choose two scalar fields from the list below:
+      <md>
+        \begin{array}{c}
+        f_1(x,y)=4-\dfrac{x^2}{4}-y^2,\\[3mm]
+        f_2(x,y)=xy,\\[1mm]
+        f_3(x,y)=6+2x-y-\dfrac14x^2-\dfrac12y^2,\\[3mm]
+        f_4(x,y)=\sin x+\cos y,\\[1mm]
+        f_5(x,y)=\ln\sqrt{x^2+y^2}\quad\text{on }\mathbb R^2\setminus\{(0,0)\}.
+        \end{array}
+      </md>
+    </p>
+    <p>For each chosen field:</p>
+    <ol>
+      <li>
+        <p>
+          Compute
+          <md>
+            \nabla f.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Draw several level curves
+          <md>
+            f(x,y)=c.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>Draw gradient arrows on the same picture.</p>
+      </li>
+      <li>
+        <p>
+          Pick three points on three different level curves. At each point, show that the
+          gradient is perpendicular to the level curve. You may do this by using
+          <md>
+            f_x\,dx+f_y\,dy=0
+          </md>
+          for tangent directions.
+        </p>
+      </li>
+      <li>
+        <p>
+          Find the critical points, if any:
+          <md>
+            \nabla f=\mathbf 0.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Where possible, use the Hessian from <xref ref="ch09-gradient-optimization"/> to classify the critical
+          points.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      <em>Extra exploration: following the arrows.</em>
+      A path
+      <md>
+        \mathbf r(t)
+      </md>
+      that follows the gradient field satisfies
+      <md>
+        \mathbf r'(t)=\nabla f(\mathbf r(t)).
+      </md>
+      Such a path climbs the scalar field as quickly as possible at each point.
+    </p>
+    <p>
+      For one of your chosen fields, sketch a few paths that follow the gradient arrows.
+    </p>
+    <p>Then answer:</p>
+    <ol>
+      <li>
+        <p>Do the paths cross level curves at right angles?</p>
+      </li>
+      <li>
+        <p>Do they move toward a maximum, away from a minimum, or through a saddle?</p>
+      </li>
+      <li>
+        <p>What happens near a critical point?</p>
+      </li>
+      <li>
+        <p>
+          If your field is
+          <md>
+            f_5(x,y)=\ln\sqrt{x^2+y^2},
+          </md>
+          what role does the missing origin play?
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li>
+        <p>two combined contour-gradient plots,</p>
+      </li>
+      <li>
+        <p>the gradient formulas,</p>
+      </li>
+      <li>
+        <p>at least three perpendicularity checks,</p>
+      </li>
+      <li>
+        <p>critical point calculations,</p>
+      </li>
+      <li>
+        <p>Hessian classifications where possible,</p>
+      </li>
+      <li>
+        <p>
+          a paragraph comparing the two fields. Which one looks like a bowl, a hill, a
+          saddle, a wave, or a singular field?
+        </p>
+      </li>
+    </ol>
+    <p>
+      The goal is to make the gradient feel less like a formula and more like a geometric
+      compass.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s1-proj-parameter-grids">
+    <title>Project 4: compare parameter grids on a sphere, torus, and cone</title>
+
+    <p>
+      A parametrization is a coordinate system on a surface. It does more than draw the
+      surface. It creates a grid, gives tangent directions, chooses an orientation, and
+      supplies the area scale factor
+      <md>
+        \|\mathbf r_u\times \mathbf r_v\|.
+      </md>
+    </p>
+    <p>
+      Different parametrizations reveal different parts of the geometry. They also hide
+      different parts.
+    </p>
+
+    <p>
+      <em>The three surfaces.</em>
+      Use the following parametrizations.
+    </p>
+
+    <p>
+      <em>1. Sphere of radius <m>a</m>.</em>
+      <md>
+        \mathbf r_S(\theta,\phi)
+        =
+        (a\sin\phi\cos\theta,\,
+         a\sin\phi\sin\theta,\,
+         a\cos\phi),
+      </md>
+      where
+      <md>
+        0\le\theta\le2\pi,
+        \qquad
+        0\le\phi\le\pi.
+      </md>
+    </p>
+
+    <p>
+      <em>2. Torus.</em>
+      Let <m>R&gt;r&gt;0</m>. The torus with major radius <m>R</m> and minor radius <m>r</m> is
+      <md>
+        \mathbf r_T(\theta,\phi)
+        =
+        \bigl((R+r\cos\phi)\cos\theta,\,
+              (R+r\cos\phi)\sin\theta,\,
+              r\sin\phi\bigr),
+      </md>
+      where
+      <md>
+        0\le\theta\le2\pi,
+        \qquad
+        0\le\phi\le2\pi.
+      </md>
+    </p>
+
+    <p>
+      <em>3. Upper cone.</em>
+      <md>
+        \mathbf r_C(\theta,s)
+        =
+        (s\cos\theta,\,
+         s\sin\theta,\,
+         s),
+      </md>
+      where
+      <md>
+        0\le\theta\le2\pi,
+        \qquad
+        0\le s\le a.
+      </md>
+    </p>
+
+    <figure xml:id="c20s1-fig-surface-gallery">
+      <caption>The same two-parameter idea produces very different surface grids. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <sidebyside widths="31% 31% 31%" valign="middle">
+      <figure xml:id="c20s1-fig-sphere">
+        <caption>sphere</caption>
+        <image width="100%">
+        <asymptote>
+        // 3-D interactive (WebGL) surface.
+import graph3;
+        size(6cm);
+        currentprojection=orthographic(5,4,3);
+        surface s=surface(new triple(pair t){real u=t.x, v=t.y; return (sin(v)*cos(u), sin(v)*sin(u), cos(v));},(0,0),(2pi,pi),32,16);
+        draw(s, rgb(0.55,0.75,0.95)+opacity(0.9), meshpen=rgb(0.15,0.35,0.55)+linewidth(0.2pt));
+        </asymptote>
+        </image>
+      </figure>
+      <figure xml:id="c20s1-fig-torus">
+        <caption>torus</caption>
+        <image width="100%">
+        <asymptote>
+        // 3-D interactive (WebGL) surface.
+import graph3;
+        size(6cm);
+        currentprojection=orthographic(5,4,3);
+        surface s=surface(new triple(pair t){real u=t.x, v=t.y; return ((2+0.7*cos(v))*cos(u), (2+0.7*cos(v))*sin(u), 0.7*sin(v));},(0,0),(2pi,2pi),40,20);
+        draw(s, rgb(0.95,0.70,0.40)+opacity(0.9), meshpen=rgb(0.55,0.35,0.10)+linewidth(0.2pt));
+        </asymptote>
+        </image>
+      </figure>
+      <figure xml:id="c20s1-fig-cone">
+        <caption>cone <m>z=r</m></caption>
+        <image width="100%">
+        <asymptote>
+        // 3-D interactive (WebGL) surface.
+import graph3;
+        size(6cm);
+        currentprojection=orthographic(5,4,3);
+        surface s=surface(new triple(pair t){real u=t.x, s=t.y; return (s*cos(u), s*sin(u), s);},(0,0),(2pi,2.5),32,12);
+        draw(s, rgb(0.70,0.55,0.90)+opacity(0.9), meshpen=rgb(0.35,0.20,0.55)+linewidth(0.2pt));
+        </asymptote>
+        </image>
+      </figure>
+      </sidebyside>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      For each surface:
+    </p>
+    <ol>
+      <li>
+        <p>Draw the parameter domain.</p>
+      </li>
+      <li>
+        <p>
+          Draw the two families of parameter curves:
+          <md>
+            \theta=\text{constant},
+            \qquad
+            \phi=\text{constant}
+          </md>
+          or
+          <md>
+            \theta=\text{constant},
+            \qquad
+            s=\text{constant}.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>Compute the two tangent vectors.</p>
+      </li>
+      <li>
+        <p>
+          Compute the magnitude of the cross product:
+          <md>
+            \|\mathbf r_u\times\mathbf r_v\|.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>Find where the parametrization repeats points.</p>
+      </li>
+      <li>
+        <p>
+          Find where the parametrization collapses or becomes nonregular:
+          <md>
+            \mathbf r_u\times\mathbf r_v=\mathbf 0.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>Describe how the parameter grid stretches or crowds on the surface.</p>
+      </li>
+    </ol>
+
+    <p>
+      <em>Useful checkpoints.</em>
+      For the sphere,
+      <md>
+        \boxed{
+            \|\mathbf r_{S,\theta}\times\mathbf r_{S,\phi}\|
+            =
+            a^2\sin\phi.
+        }
+      </md>
+      The factor vanishes at the poles
+      <md>
+        \phi=0,\qquad \phi=\pi.
+      </md>
+      All longitude lines meet there.
+    </p>
+    <p>
+      For the torus,
+      <md>
+        \boxed{
+            \|\mathbf r_{T,\theta}\times\mathbf r_{T,\phi}\|
+            =
+            r(R+r\cos\phi).
+        }
+      </md>
+      Since <m>R&gt;r</m>, this never vanishes. The grid is regular, but the outer side of the
+      torus has larger area scale than the inner side.
+    </p>
+    <p>
+      For the cone,
+      <md>
+        \mathbf r_{C,\theta}=(-s\sin\theta,s\cos\theta,0),
+      </md>
+      and
+      <md>
+        \mathbf r_{C,s}=(\cos\theta,\sin\theta,1).
+      </md>
+      Thus
+      <md>
+        \boxed{
+            \mathbf r_{C,\theta}\times\mathbf r_{C,s}
+            =
+            (s\cos\theta,s\sin\theta,-s),
+        }
+      </md>
+      so
+      <md>
+        \boxed{
+            \|\mathbf r_{C,\theta}\times\mathbf r_{C,s}\|=s\sqrt2.
+        }
+      </md>
+      The factor vanishes at
+      <md>
+        s=0.
+      </md>
+      That is the cone tip.
+    </p>
+
+    <p>
+      <em>What to hand in.</em>
+      Make one comparison table:
+      <md>
+        \begin{array}{c|c|c|c}
+        \text{Surface} &amp; \text{Area scale} &amp; \text{Repeats?} &amp; \text{Collapses?} \\ \hline
+        \text{sphere} &amp; a^2\sin\phi &amp; \theta=0,2\pi &amp; \text{poles}\\[1mm]
+        \text{torus} &amp; r(R+r\cos\phi) &amp; \theta,\phi \text{ periodic} &amp; \text{no, if }R&gt;r\\[1mm]
+        \text{cone} &amp; s\sqrt2 &amp; \theta=0,2\pi &amp; \text{tip}
+        \end{array}
+      </md>
+    </p>
+    <p>
+      Then write a short explanation of this sentence:
+      <md>
+        \boxed{
+            \text{A parametrization is not just a drawing; it is a measurement system.}
+        }
+      </md>
+    </p>
+  </subsection>
+
+  <conclusion>
+    <p>
+      The geometry projects end with pictures, but the next question is already present in
+      the pictures. Once a surface has shape, it is natural to ask where it is highest, where
+      it is lowest, where it balances, and how to choose the best point under restrictions.
+      That question pulls us back into optimization.
+    </p>
+  </conclusion>
+</section>

@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch07-partial-derivatives-jacobian.tex, Section 1.
+     Status: CONVERTED. -->
+<section xml:id="sec-7-partial-derivatives" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Partial derivatives</title>
+
+  <p>
+    A contour map tells us where a function has the same value. It does not tell us, by
+    itself, how fast the function changes when we step east or north. To measure that,
+    we return to the single-variable derivative, but we use it on one slice at a time.
+  </p>
+
+  <subsection xml:id="c7s1-subsec-slicing-a-surface">
+    <title>Slicing a surface by holding variables fixed</title>
+
+    <p>
+      Picture a grassy hill behind an observatory. Let <m>x</m> measure distance east and
+      <m>y</m> measure distance north, and suppose the height of the hill is modeled by
+      <md>H(x,y)=80+3x-y-\frac14 x^2-\frac12 y^2.</md>
+      The height is measured in meters. The input point <m>(x,y)</m> is a point on the map.
+    </p>
+
+    <p>
+      At the point
+      <md>P=(2,1),</md>
+      the height is
+      <md>H(2,1)=80+6-1-1-\frac12=\frac{169}{2}=84.5.</md>
+    </p>
+
+    <p>
+      Now stand at <m>P</m> and walk directly east. That means <m>y</m> stays fixed at
+      <m>1</m>, while <m>x</m> changes. Along this east-west slice, the height becomes the
+      one-variable function
+      <md>g(x)=H(x,1).</md>
+      Compute:
+      <md>
+        <mrow>g(x) \amp= 80+3x-1-\frac14 x^2-\frac12</mrow>
+        <mrow>\amp= \frac{157}{2}+3x-\frac14 x^2.</mrow>
+      </md>
+      The slope of this slice at <m>x=2</m> is
+      <md>g'(x)=3-\frac12 x,</md>
+      so
+      <md>g'(2)=3-1=2.</md>
+      At <m>P</m>, walking east raises the height at a rate of
+      <md>2</md>
+      meters per unit of eastward distance.
+    </p>
+
+    <p>
+      Now stand at the same point and walk directly north. This time <m>x</m> stays fixed at
+      <m>2</m>, while <m>y</m> changes. Along this north-south slice,
+      <md>k(y)=H(2,y).</md>
+      Compute:
+      <md>
+        <mrow>k(y) \amp= 80+6-y-1-\frac12y^2</mrow>
+        <mrow>\amp= 85-y-\frac12y^2.</mrow>
+      </md>
+      Thus
+      <md>k'(y)=-1-y,</md>
+      and
+      <md>k'(1)=-2.</md>
+      At <m>P</m>, walking north lowers the height at a rate of
+      <md>2</md>
+      meters per unit of northward distance.
+    </p>
+
+    <p>
+      The same point has two different coordinate slopes:
+      <md>\text{east slope}=2, \qquad \text{north slope}=-2.</md>
+    </p>
+
+    <figure xml:id="c7s1-fig-coordinate-slices">
+      <caption>To measure coordinate slopes, freeze one coordinate and let the other move.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (6.2,0) node[right] {\(x\) east};
+            \draw[-&gt;] (0,-0.4) -- (0,4.6) node[above] {\(y\) north};
+
+            \draw[gray!20, step=1] (0,0) grid (6,4);
+
+            \fill (2,1) circle (2.5pt);
+            \node[above right] at (2,1) {\(P=(2,1)\)};
+
+            \draw[very thick, blue!60!black] (0.4,1) -- (5.7,1);
+            \node[blue!60!black, below] at (5.0,1) {\(y=1\) slice};
+
+            \draw[very thick, red!65!black] (2,0.25) -- (2,4.25);
+            \node[red!65!black, left] at (2,3.6) {\(x=2\) slice};
+
+            \draw[-&gt;, thick] (2,1) -- (3.2,1) node[midway, below] {east};
+            \draw[-&gt;, thick] (2,1) -- (2,2.2) node[above, right] {north};
+
+            \node at (3,-0.9) {coordinate slices through one point};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This is the whole idea of a partial derivative. We do not try to measure all possible
+      directions at once. We take one coordinate direction and use the ordinary derivative
+      there.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s1-subsec-meanings-fx-fy-fz">
+    <title>The meanings of <m>f_x</m>, <m>f_y</m>, and <m>f_z</m></title>
+
+    <p>
+      The east slope of <m>H</m> at <m>(2,1)</m> came from differentiating with respect to
+      <m>x</m>, while treating <m>y</m> as constant:
+      <md>\frac{\partial H}{\partial x}(2,1)=2.</md>
+      The north slope came from differentiating with respect to <m>y</m>, while treating
+      <m>x</m> as constant:
+      <md>\frac{\partial H}{\partial y}(2,1)=-2.</md>
+    </p>
+
+    <p>
+      The symbol <m>\partial</m> reminds us that only part of the input is allowed to move.
+    </p>
+
+    <definition xml:id="c7s1-def-partial-derivatives-two-variables">
+      <title>Partial derivatives in two variables</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^2\to\mathbb R.</md>
+          The partial derivative of <m>f</m> with respect to <m>x</m> at <m>(a,b)</m> is
+          <md>\boxed{ f_x(a,b) = \frac{\partial f}{\partial x}(a,b) = \lim_{h\to0}\frac{f(a+h,b)-f(a,b)}{h}, }</md>
+          when this limit exists.
+        </p>
+        <p>
+          The partial derivative of <m>f</m> with respect to <m>y</m> at <m>(a,b)</m> is
+          <md>\boxed{ f_y(a,b) = \frac{\partial f}{\partial y}(a,b) = \lim_{h\to0}\frac{f(a,b+h)-f(a,b)}{h}, }</md>
+          when this limit exists.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      These are ordinary derivatives hidden inside a two-variable function.
+    </p>
+
+    <p>
+      For the hill
+      <md>H(x,y)=80+3x-y-\frac14 x^2-\frac12 y^2,</md>
+      we compute
+      <md>H_x(x,y)=3-\frac12x,</md>
+      because <m>y</m> is treated as constant. Also,
+      <md>H_y(x,y)=-1-y,</md>
+      because <m>x</m> is treated as constant.
+    </p>
+
+    <p>
+      At <m>(2,1)</m>,
+      <md>H_x(2,1)=2, \qquad H_y(2,1)=-2.</md>
+    </p>
+
+    <example xml:id="c7s1-ex-canopy-two-coordinate-slopes">
+      <title>A canopy with two coordinate slopes</title>
+      <statement>
+        <p>
+          A slanted fabric canopy over a market stall has height
+          <md>C(x,y)=2+\frac{x}{4}+\frac{y}{6}.</md>
+          Then
+          <md>C_x(x,y)=\frac14, \qquad C_y(x,y)=\frac16.</md>
+          So moving one meter east raises the canopy by <m>\frac14</m> meter, while moving
+          one meter north raises it by <m>\frac16</m> meter.
+        </p>
+        <p>
+          This canopy is a plane, so the coordinate slopes are the same at every point.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c7s1-ex-curved-surface-changing-slopes">
+      <title>A curved surface has slopes that change from point to point</title>
+      <statement>
+        <p>
+          Let
+          <md>B(x,y)=10-\frac{x^2}{4}-y^2.</md>
+          Then
+          <md>B_x(x,y)=-\frac{x}{2}, \qquad B_y(x,y)=-2y.</md>
+          At the top point <m>(0,0)</m>,
+          <md>B_x(0,0)=0, \qquad B_y(0,0)=0.</md>
+          The surface is level in both coordinate directions.
+        </p>
+        <p>
+          At the point <m>(2,1)</m>,
+          <md>B_x(2,1)=-1, \qquad B_y(2,1)=-2.</md>
+          There, the surface is descending eastward and descending more steeply northward.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c7s1-subsec-units-and-interpretation">
+    <title>Units and interpretation in applications</title>
+
+    <p>
+      A partial derivative is a rate. Its units tell the story.
+    </p>
+
+    <p>
+      Recall the bakery cost model from <xref ref="ch06-functions-limits-continuity"/>:
+      <md>C(u,v)=400+3u+4v+0.01uv,</md>
+      where <m>u</m> is the number of sourdough loaves and <m>v</m> is the number of rye
+      loaves. The output <m>C(u,v)</m> is measured in dollars.
+    </p>
+
+    <p>
+      Differentiate with respect to <m>u</m>:
+      <md>C_u(u,v)=3+0.01v.</md>
+      This means:
+      <md>C_u(u,v) = \text{approximate extra cost per additional sourdough loaf,}</md>
+      while the number of rye loaves is held fixed.
+    </p>
+
+    <p>
+      Differentiate with respect to <m>v</m>:
+      <md>C_v(u,v)=4+0.01u.</md>
+      This means:
+      <md>C_v(u,v) = \text{approximate extra cost per additional rye loaf,}</md>
+      while the number of sourdough loaves is held fixed.
+    </p>
+
+    <p>
+      At
+      <md>(u,v)=(200,100),</md>
+      we get
+      <md>C_u(200,100)=3+1=4,</md>
+      and
+      <md>C_v(200,100)=4+2=6.</md>
+      Near that production level, one more sourdough loaf costs about <m>4</m> dollars, while
+      one more rye loaf costs about <m>6</m> dollars.
+    </p>
+
+    <p>
+      The phrase <q>holding the other variable fixed</q> is not decoration. It is part of the
+      meaning of the derivative.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s1-subsec-partial-derivatives-three-variables">
+    <title>Partial derivatives in three variables</title>
+
+    <p>
+      For a function of three variables,
+      <md>f(x,y,z),</md>
+      there are three coordinate partial derivatives:
+      <md>f_x,\qquad f_y,\qquad f_z.</md>
+      Each one measures the rate of change when one coordinate moves and the other two stay
+      fixed.
+    </p>
+
+    <definition xml:id="c7s1-def-partial-derivatives-three-variables">
+      <title>Partial derivatives in three variables</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^3\to\mathbb R.</md>
+          At a point <m>(a,b,c)</m>,
+          <md>\boxed{ f_x(a,b,c) = \lim_{h\to0} \frac{f(a+h,b,c)-f(a,b,c)}{h}, }</md>
+          <md>\boxed{ f_y(a,b,c) = \lim_{h\to0} \frac{f(a,b+h,c)-f(a,b,c)}{h}, }</md>
+          and
+          <md>\boxed{ f_z(a,b,c) = \lim_{h\to0} \frac{f(a,b,c+h)-f(a,b,c)}{h}, }</md>
+          when the limits exist.
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c7s1-ex-temperature-storage-room">
+      <title>Temperature in a storage room</title>
+      <statement>
+        <p>
+          Let
+          <md>T(x,y,z)=18+\frac{4}{1+x^2+y^2}-0.7z,</md>
+          where <m>z</m> is height above the floor in meters. The last term says that higher
+          shelves are cooler.
+        </p>
+        <p>
+          The partial derivative with respect to <m>z</m> is
+          <md>T_z(x,y,z)=-0.7.</md>
+          So, at every point, increasing height by one meter lowers the temperature by about
+          <m>0.7^\circ</m>C.
+        </p>
+        <p>
+          The <m>x</m>-partial derivative is
+          <md>T_x(x,y,z) = -\frac{8x}{(1+x^2+y^2)^2}.</md>
+          The <m>y</m>-partial derivative is
+          <md>T_y(x,y,z) = -\frac{8y}{(1+x^2+y^2)^2}.</md>
+          Those rates depend on where you are horizontally.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A vector-valued function can also have partial derivatives. We differentiate each
+      component.
+    </p>
+
+    <example xml:id="c7s1-ex-partial-derivatives-vector-field">
+      <title>Partial derivatives of a vector field</title>
+      <statement>
+        <p>
+          The swirling field
+          <md>\mathbf W(x,y)=(-y,x)</md>
+          has two components:
+          <md>W_1(x,y)=-y, \qquad W_2(x,y)=x.</md>
+          So
+          <md>\mathbf W_x(x,y) = \left(\frac{\partial}{\partial x}(-y),\frac{\partial}{\partial x}x\right) = (0,1),</md>
+          and
+          <md>\mathbf W_y(x,y) = \left(\frac{\partial}{\partial y}(-y),\frac{\partial}{\partial y}x\right) = (-1,0).</md>
+          These vector partial derivatives tell us how the output arrow changes as the input
+          point moves east or north.
+        </p>
+        <p>
+          Later, in <xref ref="sec-7-the-jacobian-matrix"/>, we will arrange these component
+          derivatives into a matrix. That matrix is the Jacobian.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c7s1-subsec-warning-coordinate-slopes">
+    <title>A warning: coordinate slopes are not the whole surface</title>
+
+    <p>
+      It is tempting to believe that if the two coordinate slopes exist, then the function
+      must behave nicely near the point. That is false.
+    </p>
+
+    <p>
+      Define
+      <md>
+        S(x,y)=
+        \begin{cases}
+        \dfrac{xy}{x^2+y^2}, &amp; (x,y)\ne(0,0),\\[2mm]
+        0, &amp; (x,y)=(0,0).
+        \end{cases}
+      </md>
+      Compute the partial derivatives at the origin.
+    </p>
+
+    <p>
+      For the <m>x</m>-partial,
+      <md>S_x(0,0) = \lim_{h\to0}\frac{S(h,0)-S(0,0)}{h}.</md>
+      But
+      <md>S(h,0)=0</md>
+      for <m>h\ne0</m>. Therefore
+      <md>S_x(0,0)=\lim_{h\to0}\frac{0-0}{h}=0.</md>
+    </p>
+
+    <p>
+      Similarly,
+      <md>S_y(0,0) = \lim_{h\to0}\frac{S(0,h)-S(0,0)}{h} = 0.</md>
+    </p>
+
+    <p>
+      So both partial derivatives exist at the origin, and both are <m>0</m>.
+    </p>
+
+    <p>
+      But the function is not continuous at the origin. Along the line <m>y=x</m>,
+      <md>S(x,x)=\frac{x^2}{2x^2}=\frac12</md>
+      for <m>x\ne0</m>. Along the <m>x</m>-axis,
+      <md>S(x,0)=0.</md>
+      The two path limits disagree.
+    </p>
+
+    <p>
+      So the coordinate slices missed the problem. The function looks flat along the two
+      axes, but it does not settle down near the origin.
+    </p>
+
+    <p>
+      This is the derivative version of the warning from
+      <xref ref="sec-6-warning-examples"/>: checking only coordinate
+      directions does not check the whole plane.
+    </p>
+
+    <p>
+      Partial derivatives give the east and north slopes. But a hiker is not limited to east
+      and north. If the trail points northeast, the slope along the trail mixes the two
+      coordinate slopes. The next question is how to measure the rate of change in a chosen
+      direction.
+    </p>
+  </subsection>
+</section>

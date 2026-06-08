@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch01-points-vectors-space.tex, Section 1.
+     Status: CONVERTED (proof-of-concept / reference template). -->
+<section xml:id="sec-1-why-multivariable-calculus-begins-with-geometry" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Why multivariable calculus begins with geometry</title>
+
+  <p>
+    Single-variable calculus lived on a line. A point was described by one number, and
+    there were only two directions to move: left or right. But many real-life questions do
+    not live on a real line. A storm moves across a map, a satellite moves through space,
+    and the temperature in a room depends on where you stand.
+  </p>
+
+  <subsection xml:id="subsec-from-one-input-to-many">
+    <title>From one input to many inputs</title>
+
+    <p>
+      Imagine a small weather station on the coast. A radar image says that the center of a
+      storm cell is
+      <md>12 \text{ km east}, \qquad 5 \text{ km north}</md>
+      of the station. The location is naturally written as the ordered pair
+      <md>P=(12,5).</md>
+      A helicopter hovering above the same point needs a third number. If it is <m>0.8</m> km
+      above the ground, its position is
+      <md>H=(12,5,0.8).</md>
+    </p>
+
+    <p>
+      The numbers in these lists do not all have the same meaning. The first two numbers
+      locate a point on a flat map. The third number locates height. But the idea is the
+      same: a position is described by several coordinates.
+    </p>
+
+    <figure xml:id="fig-storm-grid">
+      <caption>The storm moves from <m>P</m> to <m>Q</m>, requiring a larger coordinate grid.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.5, &gt;=stealth]
+          % axes
+          \draw[-&gt;] (-0.3,0) -- (18,0) node[right] {east};
+          \draw[-&gt;] (0,-0.3) -- (0,11) node[above] {north};
+          % grid
+          \draw[step=1, gray!20, very thin] (0,0) grid (17,10);
+          % Point P
+          \fill (12,5) circle (3pt);
+          \node[below right] at (12,5) {\(P=(12,5)\)};
+          \draw[dashed] (12,0) -- (12,5);
+          \draw[dashed] (0,5) -- (12,5);
+          \node[below] at (12,0) {\(12\)};
+          \node[left] at (0,5) {\(5\)};
+          % Point Q
+          \fill (15,9) circle (3pt);
+          \node[above right] at (15,9) {\(Q=(15,9)\)};
+          \draw[dashed] (15,0) -- (15,9);
+          \draw[dashed] (0,9) -- (15,9);
+          \node[below] at (15,0) {\(15\)};
+          \node[left] at (0,9) {\(9\)};
+          % displacement vector
+          \draw[-&gt;, thick, blue] (12,5) -- (15,9) node[midway, above left] {\((3,4)\)};
+          \fill (0,0) circle (2pt);
+          \node[below left] at (0,0) {station};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This is the first reason multivariable calculus begins with geometry. Before we can
+      differentiate or integrate, we need to know where things are.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-position-displacement">
+    <title>Position, displacement, and measured quantities</title>
+
+    <p>
+      Now suppose the storm moves. One hour later its center is
+      <md>Q=(15,9).</md>
+      We can subtract the coordinates to find the displacement:
+      <md>Q-P=(15-12,\;9-5)=(3,4).</md>
+      That means the storm moved <m>3</m> km east and <m>4</m> km north.
+    </p>
+
+    <p>
+      If it moved in a straight line, the distance traveled is found from the same
+      Pythagorean theorem used in the plane:
+      <md>\sqrt{3^2+4^2}=5 \text{ km}.</md>
+    </p>
+
+    <example xml:id="ex-storm-displacement">
+      <title>A storm displacement</title>
+      <statement>
+        <p>
+          The point
+          <md>P=(12,5)</md>
+          is a location. The ordered pair
+          <md>(3,4)</md>
+          is a displacement. It tells us how to move from <m>P</m> to <m>Q</m>:
+          <md>(12,5)+(3,4)=(15,9).</md>
+          The same displacement could start somewhere else:
+          <md>(2,1)+(3,4)=(5,5).</md>
+          So a displacement is not tied to one fixed place. It can be applied to any point.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This distinction is small, but it will save us from confusion later.
+    </p>
+
+    <p>
+      A <term>point</term> is a location. A <term>vector</term> is a displacement.
+      Coordinates let us write both with ordered lists, but the meanings are different.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-first-story">
+    <title>A first story: locating a storm, a satellite, and a temperature reading</title>
+
+    <p>
+      The same coordinates can also be used as inputs to a function.
+    </p>
+
+    <p>
+      At the point <m>(12,5)</m>, a weather sensor might report a temperature of
+      <m>18^\circ</m>C. Then temperature is not itself a point. It is a number assigned to a
+      point:
+      <md>T(12,5)=18.</md>
+      If the temperature is measured over a whole region, we have a function
+      <md>T(x,y).</md>
+      The input is a point on a map, and the output is a number.
+    </p>
+
+    <p>
+      A satellite position is different. At time <m>t</m>, the satellite has three coordinates:
+      <md>\mathbf r(t)=(x(t),y(t),z(t)).</md>
+      Here the input is one number, time, but the output is a point in space.
+    </p>
+
+    <p>
+      So several kinds of functions will appear in this book:
+    </p>
+
+    <table xml:id="tab-kinds-of-functions">
+      <title>Kinds of functions appearing in this book.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Situation</cell>
+          <cell>Input</cell>
+          <cell>Output</cell>
+        </row>
+        <row>
+          <cell>temperature on a map</cell>
+          <cell><m>(x,y)</m></cell>
+          <cell><m>T(x,y)</m></cell>
+        </row>
+        <row>
+          <cell>height of a hill</cell>
+          <cell><m>(x,y)</m></cell>
+          <cell><m>z=f(x,y)</m></cell>
+        </row>
+        <row>
+          <cell>satellite motion</cell>
+          <cell><m>t</m></cell>
+          <cell><m>\mathbf r(t)=(x(t),y(t),z(t))</m></cell>
+        </row>
+        <row>
+          <cell>wind in the plane</cell>
+          <cell><m>(x,y)</m></cell>
+          <cell><m>\mathbf F(x,y)</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The last example is especially important. A wind field assigns an arrow to every
+      point. At one point the wind may blow east; at another, northeast; at another, not at
+      all. Later, this idea will become a <term>vector field</term>. Vector fields are the
+      natural language of fluids, force, electricity, magnetism, and many of the integral
+      theorems near the end of the book.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-what-changes">
+    <title>What changes from single-variable calculus, and what stays the same</title>
+
+    <p>
+      Single-variable calculus asked questions like these:
+      <md>\text{How fast is } f(x) \text{ changing?}</md>
+      and
+      <md>\text{How much has accumulated from } a \text{ to } b?</md>
+    </p>
+
+    <p>
+      Those questions remain. But the geometry changes.
+    </p>
+
+    <p>
+      For a function of one variable, the graph is a curve in the plane. At a point, there is
+      one main direction to move along the input line. For a function of two variables, the
+      graph is usually a surface in space. At a point in the input plane, there are infinitely
+      many directions to move.
+    </p>
+
+    <p>
+      A hiker standing on a hillside can walk north, south, east, west, or along any slanted
+      path between them. A single slope number no longer tells the whole story.
+    </p>
+
+    <p>
+      The old ideas will return in new forms:
+    </p>
+
+    <table xml:id="tab-old-ideas-new-forms">
+      <title>How single-variable ideas reappear in several variables.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Single-variable calculus</cell>
+          <cell>Multivariable calculus</cell>
+        </row>
+        <row>
+          <cell>number line</cell>
+          <cell>plane and space</cell>
+        </row>
+        <row>
+          <cell>slope of a curve</cell>
+          <cell>rates of change in many directions</cell>
+        </row>
+        <row>
+          <cell>tangent line</cell>
+          <cell>tangent planes and tangent spaces</cell>
+        </row>
+        <row>
+          <cell>area under a graph</cell>
+          <cell>area, volume, flux, and circulation</cell>
+        </row>
+        <row>
+          <cell><m>\int_a^b f'(x)\,dx=f(b)-f(a)</m></cell>
+          <cell>boundary integrals equal interior integrals</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The last line is the long story of the book. The Fundamental Theorem of Calculus will
+      not disappear. It will grow.
+    </p>
+
+    <p>
+      For now, the next step is much simpler. The difference between two locations behaves
+      like a reusable instruction:
+      <md>\text{move } 3 \text{ east and } 4 \text{ north}.</md>
+      That instruction is the first object we need to understand carefully. It is called a
+      <term>vector</term>.
+    </p>
+  </subsection>
+</section>

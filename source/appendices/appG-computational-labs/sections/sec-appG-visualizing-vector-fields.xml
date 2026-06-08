@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/appendices/appG-computational-labs.tex, Section G.2.
+     Status: CONVERTED. -->
+<section xml:id="sec-appG-visualizing-vector-fields" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Visualizing vector fields</title>
+
+  <subsection xml:id="appG-vfield-vector-field-in-the-plane">
+    <title>Vector field in the plane</title>
+
+    <p>
+      A vector field in the plane has the form
+      <md>\mathbf F(x,y)=(P(x,y),Q(x,y)).</md>
+    </p>
+
+    <p>
+      On a grid:
+    </p>
+
+    <program language="python">
+      <input>
+x = np.linspace(a, b, 25)
+y = np.linspace(c, d, 25)
+X, Y = np.meshgrid(x, y)
+
+P = Pfun(X, Y)
+Q = Qfun(X, Y)
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-vfield-quiver-plot">
+    <title>Quiver plot</title>
+
+    <program language="python">
+      <input>
+plt.quiver(X, Y, P, Q)
+plt.axis("equal")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-vfield-normalized-arrows">
+    <title>Normalized arrows</title>
+
+    <p>
+      Sometimes large arrows hide the pattern. Normalize arrows:
+    </p>
+
+    <program language="python">
+      <input>
+speed = np.sqrt(P**2 + Q**2)
+P0 = P / (speed + 1e-12)
+Q0 = Q / (speed + 1e-12)
+
+plt.quiver(X, Y, P0, Q0)
+plt.axis("equal")
+plt.show()
+      </input>
+    </program>
+
+    <p>
+      This shows direction but not magnitude.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-vfield-stream-plot">
+    <title>Stream plot</title>
+
+    <p>
+      Streamlines solve
+      <md>\mathbf r'(t)=\mathbf F(\mathbf r(t)).</md>
+    </p>
+
+    <program language="python">
+      <input>
+plt.streamplot(X, Y, P, Q)
+plt.axis("equal")
+plt.show()
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-vfield-common-vector-fields">
+    <title>Common vector fields</title>
+
+    <p>
+      Constant field:
+      <md>\mathbf F(x,y)=(1,0).</md>
+    </p>
+
+    <p>
+      Radial source:
+      <md>\mathbf F(x,y)=(x,y).</md>
+    </p>
+
+    <p>
+      Radial sink:
+      <md>\mathbf F(x,y)=(-x,-y).</md>
+    </p>
+
+    <p>
+      Rotation:
+      <md>\mathbf F(x,y)=(-y,x).</md>
+    </p>
+
+    <p>
+      Saddle field:
+      <md>\mathbf F(x,y)=(x,-y).</md>
+    </p>
+
+    <p>
+      Inverse radial field:
+      <md>\mathbf F(x,y)=\frac{(x,y)}{x^2+y^2}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-vfield-gradient-field">
+    <title>Gradient field</title>
+
+    <p>
+      For
+      <md>f=f(x,y),</md>
+      <md>\nabla f=(f_x,f_y).</md>
+    </p>
+
+    <p>
+      Numerically, use <c>np.gradient</c> if <m>f</m> is sampled on a grid:
+    </p>
+
+    <program language="python">
+      <input>
+Z = f(X, Y)
+
+dy = y[1] - y[0]
+dx = x[1] - x[0]
+
+Z_y, Z_x = np.gradient(Z, dy, dx)
+
+plt.quiver(X, Y, Z_x, Z_y)
+plt.contour(X, Y, Z, levels=20)
+plt.axis("equal")
+plt.show()
+      </input>
+    </program>
+
+    <p>
+      The order is important:
+      <md>\texttt{np.gradient(Z, dy, dx)}</md>
+      returns derivatives in the array-axis order, usually <m>y</m> first, then <m>x</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-vfield-vector-field-in-space">
+    <title>Vector field in space</title>
+
+    <p>
+      A vector field in space has the form
+      <md>\mathbf F(x,y,z)=(P,Q,R).</md>
+    </p>
+
+    <p>
+      A <m>3</m>-D quiver plot:
+    </p>
+
+    <program language="python">
+      <input>
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.quiver(X, Y, Z, P, Q, R)
+
+plt.show()
+      </input>
+    </program>
+
+    <p>
+      Use fewer grid points in <m>3</m>-D. Too many arrows quickly become unreadable.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-vfield-field-line-through-one-point">
+    <title>Field line through one point</title>
+
+    <p>
+      For
+      <md>\mathbf r'(t)=\mathbf F(\mathbf r(t)),</md>
+      use an ODE solver:
+    </p>
+
+    <program language="python">
+      <input>
+from scipy.integrate import solve_ivp
+
+def ode(t, r):
+    x, y = r
+    return [Pfun(x, y), Qfun(x, y)]
+
+sol = solve_ivp(ode, [t0, t1], [x0, y0], max_step=0.02)
+
+plt.plot(sol.y[0], sol.y[1])
+plt.axis("equal")
+plt.show()
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-vfield-common-warnings">
+    <title>Common warnings</title>
+
+    <p>
+      Arrow length in a plot may be automatically rescaled.
+    </p>
+
+    <p>
+      A normalized quiver plot hides speed.
+    </p>
+
+    <p>
+      A stream plot may hide sources, sinks, or singularities.
+    </p>
+
+    <p>
+      A vector field with a hole in its domain should not be plotted as if the hole were
+      ordinary.
+    </p>
+  </subsection>
+</section>

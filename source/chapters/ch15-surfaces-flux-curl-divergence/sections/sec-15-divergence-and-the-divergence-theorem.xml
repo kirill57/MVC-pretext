@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch15-surfaces-flux-curl-divergence.tex, Section 15.6.
+     Status: CONVERTED. -->
+<section xml:id="sec-15-divergence-and-the-divergence-theorem" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Divergence and the divergence theorem</title>
+
+  <p>
+    Stokes' theorem compares a boundary curve with a surface. Flux through a closed
+    surface asks for a different comparison. A closed surface is the boundary of a solid
+    region, so the inside is three-dimensional.
+  </p>
+
+  <p>If curl measures local spinning, divergence measures local source strength.</p>
+
+  <subsection xml:id="c15s6-subsec-flux-out-of-a-small-box">
+    <title>Flux out of a small box</title>
+
+    <p>
+      Start with a vector field whose flux through a box is easy to compute:
+      <md>\mathbf F(x,y,z)=(x,2y,3z).</md>
+      Let <m>B</m> be the rectangular box
+      <md>a\le x\le a+h, \qquad b\le y\le b+k, \qquad c\le z\le c+\ell.</md>
+      Give the boundary <m>\partial B</m> the outward orientation.
+    </p>
+
+    <p>The box has six faces.</p>
+
+    <paragraphs>
+      <title>The two <m>x</m>-faces</title>
+
+      <p>
+        On the right face,
+        <md>x=a+h, \qquad \widehat{\mathbf n}=(1,0,0).</md>
+        So
+        <md>\mathbf F\cdot\widehat{\mathbf n}=a+h.</md>
+        The face has area <m>k\ell</m>, so the outward flux through the right face is
+        <md>(a+h)k\ell.</md>
+      </p>
+
+      <p>
+        On the left face,
+        <md>x=a, \qquad \widehat{\mathbf n}=(-1,0,0).</md>
+        So
+        <md>\mathbf F\cdot\widehat{\mathbf n}=-a.</md>
+        The flux through the left face is
+        <md>-ak\ell.</md>
+        Together, the two <m>x</m>-faces contribute
+        <md>(a+h)k\ell-ak\ell=hk\ell.</md>
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>The two <m>y</m>-faces</title>
+
+      <p>
+        On the face <m>y=b+k</m>, the outward normal is <m>\mathbf j</m>, and
+        <md>\mathbf F\cdot\widehat{\mathbf n}=2(b+k).</md>
+        On the face <m>y=b</m>, the outward normal is <m>-\mathbf j</m>, and
+        <md>\mathbf F\cdot\widehat{\mathbf n}=-2b.</md>
+        The area of each face is <m>h\ell</m>. The total contribution is
+        <md>2(b+k)h\ell-2bh\ell=2hk\ell.</md>
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>The two <m>z</m>-faces</title>
+
+      <p>
+        On the face <m>z=c+\ell</m>, the outward normal is <m>\mathbf k</m>, and
+        <md>\mathbf F\cdot\widehat{\mathbf n}=3(c+\ell).</md>
+        On the face <m>z=c</m>, the outward normal is <m>-\mathbf k</m>, and
+        <md>\mathbf F\cdot\widehat{\mathbf n}=-3c.</md>
+        The area of each face is <m>hk</m>. The total contribution is
+        <md>3(c+\ell)hk-3chk=3hk\ell.</md>
+      </p>
+    </paragraphs>
+
+    <p>
+      Add all six faces:
+      <md>
+        <mrow>\iint_{\partial B}\mathbf F\cdot\widehat{\mathbf n}\,dS \amp= hk\ell+2hk\ell+3hk\ell</mrow>
+        <mrow>\amp= 6hk\ell.</mrow>
+      </md>
+      The volume of the box is
+      <md>hk\ell.</md>
+      So
+      <md>\boxed{ \iint_{\partial B}\mathbf F\cdot\widehat{\mathbf n}\,dS = 6\,\operatorname{Volume}(B). }</md>
+    </p>
+
+    <p>
+      The number <m>6</m> is not mysterious. It is
+      <md>\frac{\partial}{\partial x}(x) + \frac{\partial}{\partial y}(2y) + \frac{\partial}{\partial z}(3z) = 1+2+3.</md>
+      Each component contributes the rate at which that component spreads outward in its own
+      coordinate direction.
+    </p>
+
+    <figure xml:id="c15s6-fig-outward-flux-box">
+      <caption>Divergence measures net outward flux per unit volume.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \coordinate (O) at (0,0);
+            \coordinate (A) at (3.5,0);
+            \coordinate (B) at (4.6,1.0);
+            \coordinate (C) at (1.1,1.0);
+            \coordinate (D) at (0,2.4);
+            \coordinate (E) at (3.5,2.4);
+            \coordinate (F) at (4.6,3.4);
+            \coordinate (G) at (1.1,3.4);
+
+            \draw[fill=gray!8, thick] (O)--(A)--(B)--(C)--cycle;
+            \draw[fill=gray!5, thick] (D)--(E)--(F)--(G)--cycle;
+            \draw[thick] (O)--(D);
+            \draw[thick] (A)--(E);
+            \draw[thick] (B)--(F);
+            \draw[thick] (C)--(G);
+
+            \draw[-&gt;, very thick, red!65!black] (4.6,1.7) -- (5.8,2.0)
+                node[right] {out};
+            \draw[-&gt;, very thick, red!65!black] (-0.1,1.2) -- (-1.2,1.0)
+                node[left] {out};
+            \draw[-&gt;, very thick, red!65!black] (2.3,3.4) -- (2.3,4.5)
+                node[above] {out};
+            \draw[-&gt;, very thick, red!65!black] (2.3,-0.05) -- (2.3,-1.0)
+                node[below] {out};
+
+            \node at (2.3,-1.7) {outward flux through opposite faces compares what leaves};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c15s6-subsec-divergence-as-source-density">
+    <title>Divergence as source density</title>
+
+    <p>
+      For a general field
+      <md>\mathbf F=(P,Q,R),</md>
+      the same small-box argument gives
+      <md>\boxed{ \text{net outward flux through a tiny box} \approx (P_x+Q_y+R_z)\,\Delta V. }</md>
+      The coefficient gets its own name.
+    </p>
+
+    <definition xml:id="c15s6-def-divergence">
+      <title>Divergence</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F=(P,Q,R)</md>
+          be a vector field in space. The <term>divergence</term> of <m>\mathbf F</m> is
+          <md>\boxed{ \nabla\cdot\mathbf F = P_x+Q_y+R_z. }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      If
+      <md>\nabla\cdot\mathbf F&gt;0,</md>
+      then the field has net outward flow from a small box. It behaves like a source.
+    </p>
+
+    <p>
+      If
+      <md>\nabla\cdot\mathbf F&lt;0,</md>
+      then more flow enters a small box than leaves. It behaves like a sink.
+    </p>
+
+    <p>
+      If
+      <md>\nabla\cdot\mathbf F=0,</md>
+      then there is no net creation or loss at that point. Fluid may still move, swirl, and
+      bend, but it is not locally expanding or compressing.
+    </p>
+
+    <example xml:id="c15s6-ex-swirling-field-zero-divergence">
+      <title>A swirling field has zero divergence</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F(x,y,z)=(-y,x,0).</md>
+          Then
+          <md>P=-y,\qquad Q=x,\qquad R=0.</md>
+          So
+          <md>\nabla\cdot\mathbf F = P_x+Q_y+R_z = 0+0+0 = 0.</md>
+          This field rotates around the <m>z</m>-axis, but it does not create net outward flow from
+          small boxes.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c15s6-ex-radial-field-positive-divergence">
+      <title>A radial field has positive divergence</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F(x,y,z)=(x,y,z).</md>
+          Then
+          <md>\nabla\cdot\mathbf F=1+1+1=3.</md>
+          Every small box has net outward flux approximately
+          <md>3\,\Delta V.</md>
+          The field points away from the origin and expands space uniformly.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c15s6-subsec-divergence-in-form-language">
+    <title>Divergence in form language</title>
+
+    <p>
+      The flux <m>2</m>-form of
+      <md>\mathbf F=(P,Q,R)</md>
+      is
+      <md>\Phi_{\mathbf F} = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy.</md>
+      Take its exterior derivative:
+      <md>
+        <mrow>d\Phi_{\mathbf F} \amp= dP\wedge dy\wedge dz + dQ\wedge dz\wedge dx + dR\wedge dx\wedge dy.</mrow>
+      </md>
+      Only one term from each differential survives:
+      <md>dP\wedge dy\wedge dz = P_x\,dx\wedge dy\wedge dz,</md>
+      <md>dQ\wedge dz\wedge dx = Q_y\,dy\wedge dz\wedge dx = Q_y\,dx\wedge dy\wedge dz,</md>
+      and
+      <md>dR\wedge dx\wedge dy = R_z\,dz\wedge dx\wedge dy = R_z\,dx\wedge dy\wedge dz.</md>
+      Therefore
+      <md>\boxed{ d\Phi_{\mathbf F} = (P_x+Q_y+R_z)\,dx\wedge dy\wedge dz. }</md>
+      So
+      <md>\boxed{ d\Phi_{\mathbf F} = (\nabla\cdot\mathbf F)\,dx\wedge dy\wedge dz. }</md>
+    </p>
+
+    <p>This is the next piece of the pattern:</p>
+
+    <table xml:id="c15s6-tab-exterior-derivative-pattern">
+      <title>The exterior derivative across degrees.</title>
+      <tabular>
+        <col right="minor"/>
+        <col right="minor"/>
+        <col/>
+        <row header="yes" bottom="medium">
+          <cell>object</cell>
+          <cell>exterior derivative</cell>
+          <cell>classical name</cell>
+        </row>
+        <row>
+          <cell><m>f</m></cell>
+          <cell><m>df</m></cell>
+          <cell>gradient information</cell>
+        </row>
+        <row>
+          <cell><m>P\,dx+Q\,dy+R\,dz</m></cell>
+          <cell><m>d\omega</m></cell>
+          <cell>curl flux form</cell>
+        </row>
+        <row>
+          <cell><m>P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy</m></cell>
+          <cell><m>d\Phi</m></cell>
+          <cell>divergence volume form</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The derivative of a <m>2</m>-form is a <m>3</m>-form. Flux through a surface becomes source
+      density inside a solid.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s6-subsec-the-divergence-theorem">
+    <title>The divergence theorem</title>
+
+    <p>
+      Now tile a solid region by many small boxes. On each small box,
+      <md>\text{outward flux} \approx (\nabla\cdot\mathbf F)\Delta V.</md>
+      Add all boxes.
+    </p>
+
+    <p>
+      On the left side, flux across interior faces cancels. One small box sees the shared face
+      as outward, while the neighboring box sees the same face with the opposite normal.
+      The two contributions have opposite signs.
+    </p>
+
+    <p>Only the outer boundary remains.</p>
+
+    <p>
+      On the right side, the sums become a triple integral:
+      <md>\sum(\nabla\cdot\mathbf F)\Delta V \longrightarrow \iiint_E \nabla\cdot\mathbf F\,dV.</md>
+    </p>
+
+    <p>This gives the divergence theorem.</p>
+
+    <theorem xml:id="c15s6-thm-divergence-theorem">
+      <title>Divergence theorem</title>
+      <statement>
+        <p>
+          Let <m>E</m> be a solid region in space with piecewise smooth closed boundary
+          <md>\partial E.</md>
+          Give <m>\partial E</m> the outward orientation. Let
+          <md>\mathbf F=(P,Q,R)</md>
+          have continuous first partial derivatives on an open region containing <m>E</m>. Then
+          <md>\boxed{ \iint_{\partial E} \mathbf F\cdot\widehat{\mathbf n}\,dS = \iiint_E \nabla\cdot\mathbf F\,dV. }</md>
+          In differential-form notation,
+          <md>\boxed{ \int_{\partial E}\Phi_{\mathbf F} = \int_E d\Phi_{\mathbf F}. }</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      The theorem says:
+      <md>\boxed{ \text{net outward flux through the boundary} = \text{total source strength inside}. }</md>
+    </p>
+
+    <p>
+      This is the three-dimensional cousin of Green's theorem and Stokes' theorem. Once
+      again, an integral over a boundary equals an integral of a derivative over the inside.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s6-subsec-outward-flux-through-a-sphere">
+    <title>Outward flux through a sphere</title>
+
+    <p>
+      Let <m>S</m> be the sphere of radius <m>a</m> centered at the origin, with outward orientation.
+      Let
+      <md>\mathbf F(x,y,z)=(x,y,z).</md>
+      In <xref ref="sec-15-oriented-surfaces-and-flux"/>, we computed this flux directly and found
+      <md>4\pi a^3.</md>
+      Now the divergence theorem gives it almost immediately.
+    </p>
+
+    <p>
+      Let <m>E</m> be the ball
+      <md>x^2+y^2+z^2\le a^2.</md>
+      The divergence is
+      <md>\nabla\cdot\mathbf F=3.</md>
+      Therefore
+      <md>
+        <mrow>\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS \amp= \iiint_E 3\,dV</mrow>
+        <mrow>\amp= 3\operatorname{Volume}(E)</mrow>
+        <mrow>\amp= 3\left(\frac43\pi a^3\right)</mrow>
+        <mrow>\amp= 4\pi a^3.</mrow>
+      </md>
+      So
+      <md>\boxed{ \iint_S (x,y,z)\cdot\widehat{\mathbf n}\,dS=4\pi a^3. }</md>
+      The surface calculation became a volume calculation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s6-subsec-a-closed-cylinder">
+    <title>A closed cylinder</title>
+
+    <p>
+      Let <m>E</m> be the solid cylinder
+      <md>x^2+y^2\le a^2, \qquad 0\le z\le h.</md>
+      Its boundary has three pieces:
+    </p>
+
+    <table xml:id="c15s6-tab-cylinder-boundary-pieces">
+      <title>The three boundary pieces of the closed cylinder.</title>
+      <tabular>
+        <col right="minor"/>
+        <col/>
+        <row header="yes" bottom="medium">
+          <cell>piece</cell>
+          <cell>description</cell>
+        </row>
+        <row>
+          <cell><m>S_{\text{side}}</m></cell>
+          <cell><m>x^2+y^2=a^2,\quad 0\le z\le h</m></cell>
+        </row>
+        <row>
+          <cell><m>S_{\text{top}}</m></cell>
+          <cell><m>x^2+y^2\le a^2,\quad z=h</m></cell>
+        </row>
+        <row>
+          <cell><m>S_{\text{bottom}}</m></cell>
+          <cell><m>x^2+y^2\le a^2,\quad z=0</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Use
+      <md>\mathbf F=(x,y,z).</md>
+      Again
+      <md>\nabla\cdot\mathbf F=3.</md>
+      So the total outward flux through the closed cylinder is
+      <md>
+        <mrow>\iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS \amp= \iiint_E 3\,dV</mrow>
+        <mrow>\amp= 3\pi a^2h.</mrow>
+      </md>
+      Thus
+      <md>\boxed{ \text{total outward flux}=3\pi a^2h. }</md>
+    </p>
+
+    <p>We can see the pieces too.</p>
+
+    <p>
+      On the side, <xref ref="sec-15-oriented-surfaces-and-flux"/> showed that for
+      <md>(x,y,0)</md>
+      the outward side flux is
+      <md>2\pi a^2h.</md>
+      The <m>z</m>-component is tangent to the side, so the same side flux holds for
+      <md>(x,y,z).</md>
+    </p>
+
+    <p>
+      On the top,
+      <md>\widehat{\mathbf n}=(0,0,1),</md>
+      so
+      <md>\mathbf F\cdot\widehat{\mathbf n}=h.</md>
+      The top area is
+      <md>\pi a^2,</md>
+      so the top flux is
+      <md>h\pi a^2.</md>
+    </p>
+
+    <p>
+      On the bottom,
+      <md>\widehat{\mathbf n}=(0,0,-1),</md>
+      but
+      <md>z=0,</md>
+      so
+      <md>\mathbf F\cdot\widehat{\mathbf n}=0.</md>
+      The bottom flux is <m>0</m>.
+    </p>
+
+    <p>
+      Adding:
+      <md>2\pi a^2h+\pi a^2h+0=3\pi a^2h.</md>
+      The divergence theorem found the total at once.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s6-subsec-using-symmetry-a-paraboloid-cap">
+    <title>Using symmetry: a paraboloid cap</title>
+
+    <p>The divergence theorem is especially helpful when a surface integral would be awkward.</p>
+
+    <p>
+      Let <m>S</m> be the curved paraboloid
+      <md>z=4-x^2-y^2, \qquad x^2+y^2\le4,</md>
+      oriented upward. Together with the disk
+      <md>D:\quad z=0,\qquad x^2+y^2\le4,</md>
+      it bounds a solid region <m>E</m>.
+    </p>
+
+    <p>
+      Let
+      <md>\mathbf F=(0,0,z).</md>
+      We want the flux through the curved paraboloid <m>S</m>.
+    </p>
+
+    <p>
+      The divergence is
+      <md>\nabla\cdot\mathbf F=1.</md>
+      So the total outward flux through the closed surface
+      <md>S\cup D</md>
+      is
+      <md>\iiint_E 1\,dV=\operatorname{Volume}(E).</md>
+      The volume is
+      <md>
+        <mrow>\operatorname{Volume}(E) \amp= \int_0^{2\pi}\int_0^2(4-r^2)r\,dr\,d\theta</mrow>
+        <mrow>\amp= 2\pi\left[2r^2-\frac{r^4}{4}\right]_0^2</mrow>
+        <mrow>\amp= 2\pi(8-4)</mrow>
+        <mrow>\amp= 8\pi.</mrow>
+      </md>
+      On the bottom disk, <m>z=0</m>, so
+      <md>\mathbf F=(0,0,0).</md>
+      The bottom flux is <m>0</m>. Therefore the flux through the curved paraboloid is
+      <md>\boxed{ 8\pi. }</md>
+      The theorem let the solid volume do the work.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s6-subsec-why-the-hypotheses-matter">
+    <title>Why the hypotheses matter</title>
+
+    <p>
+      The divergence theorem has three common traps: the surface must be closed, the normal
+      must point outward, and the field must be defined throughout the solid.
+    </p>
+
+    <paragraphs>
+      <title>A single open surface is not enough</title>
+
+      <p>
+        Let <m>D</m> be the disk
+        <md>x^2+y^2\le1,\qquad z=0,</md>
+        oriented upward. Let
+        <md>\mathbf F=(0,0,1).</md>
+        The flux through the disk is
+        <md>\iint_D 1\,dS=\pi.</md>
+        But
+        <md>\nabla\cdot\mathbf F=0.</md>
+      </p>
+
+      <p>
+        This does not contradict the divergence theorem. The disk alone is not a closed
+        surface. It is not the entire boundary of a solid. To use the theorem, we would need a
+        closed surface, such as the boundary of a cylinder or a half-ball.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>Outward orientation matters</title>
+
+      <p>
+        Take the unit cube
+        <md>E=[0,1]\times[0,1]\times[0,1]</md>
+        and the field
+        <md>\mathbf F=(x,0,0).</md>
+        The divergence is
+        <md>\nabla\cdot\mathbf F=1.</md>
+        So the divergence theorem predicts outward flux
+        <md>\iiint_E 1\,dV=1.</md>
+      </p>
+
+      <p>
+        Indeed, only the two <m>x</m>-faces contribute. On <m>x=1</m>, the outward normal is
+        <m>\mathbf i</m>, and the flux is <m>1</m>. On <m>x=0</m>, the field is zero. Total outward flux:
+        <md>1.</md>
+      </p>
+
+      <p>
+        If we choose inward normals instead, every sign reverses and the flux is
+        <md>-1.</md>
+        The theorem uses outward orientation.
+      </p>
+    </paragraphs>
+
+    <paragraphs>
+      <title>The field must be defined inside</title>
+
+      <p>
+        Consider the inverse-square radial field
+        <md>\mathbf G(x,y,z) = \frac{(x,y,z)}{(x^2+y^2+z^2)^{3/2}}.</md>
+        This field is not defined at the origin.
+      </p>
+
+      <p>
+        Away from the origin, write
+        <md>r=\sqrt{x^2+y^2+z^2}.</md>
+        Then
+        <md>\mathbf G=\left(\frac{x}{r^3},\frac{y}{r^3},\frac{z}{r^3}\right).</md>
+        A direct calculation gives, for <m>r&gt;0</m>,
+        <md>
+          <mrow>\nabla\cdot\mathbf G \amp= \left(r^{-3}-3x^2r^{-5}\right) + \left(r^{-3}-3y^2r^{-5}\right) + \left(r^{-3}-3z^2r^{-5}\right)</mrow>
+          <mrow>\amp= 3r^{-3}-3(x^2+y^2+z^2)r^{-5}</mrow>
+          <mrow>\amp= 3r^{-3}-3r^2r^{-5}</mrow>
+          <mrow>\amp= 0.</mrow>
+        </md>
+      </p>
+
+      <p>
+        Now take the sphere <m>S_a</m> of radius <m>a</m>, oriented outward. On this sphere,
+        <md>\widehat{\mathbf n}=\frac{(x,y,z)}{a},</md>
+        and
+        <md>\mathbf G=\frac{(x,y,z)}{a^3}.</md>
+        Thus
+        <md>
+          <mrow>\mathbf G\cdot\widehat{\mathbf n} \amp= \frac{(x,y,z)}{a^3}\cdot \frac{(x,y,z)}{a}</mrow>
+          <mrow>\amp= \frac{x^2+y^2+z^2}{a^4}</mrow>
+          <mrow>\amp= \frac{a^2}{a^4}</mrow>
+          <mrow>\amp= \frac1{a^2}.</mrow>
+        </md>
+        Therefore
+        <md>
+          <mrow>\iint_{S_a}\mathbf G\cdot\widehat{\mathbf n}\,dS \amp= \frac1{a^2}\cdot 4\pi a^2</mrow>
+          <mrow>\amp= 4\pi.</mrow>
+        </md>
+      </p>
+
+      <p>
+        It would be wrong to say:
+        <md>\nabla\cdot\mathbf G=0, \qquad \text{so the flux through the sphere is }0.</md>
+        The field is not defined at the origin, and the origin lies inside the sphere. The
+        divergence theorem cannot be applied to the whole ball.
+      </p>
+
+      <p>
+        If we remove the singularity, the theorem works again. Let <m>E</m> be the spherical shell
+        <md>b\le r\le a, \qquad 0&lt;b&lt;a.</md>
+        On this shell,
+        <md>\nabla\cdot\mathbf G=0.</md>
+        The boundary has two pieces. The outer sphere contributes
+        <md>4\pi.</md>
+        On the inner sphere <m>r=b</m>, the outward normal for the shell points toward the center,
+        so it is
+        <md>-\widehat{\mathbf r}.</md>
+        The inner flux is
+        <md>-4\pi.</md>
+        The total flux is
+        <md>4\pi-4\pi=0,</md>
+        which matches
+        <md>\iiint_E 0\,dV=0.</md>
+      </p>
+
+      <p>The missing point was carrying the source.</p>
+    </paragraphs>
+  </subsection>
+
+  <subsection xml:id="c15s6-subsec-physical-meaning-conservation-and-balance">
+    <title>Physical meaning: conservation and balance</title>
+
+    <p>
+      If <m>\mathbf F</m> is a velocity field of a fluid, then
+      <md>\mathbf F\cdot\widehat{\mathbf n}</md>
+      measures flow rate through a unit area. The flux through a closed surface measures
+      net flow leaving the region.
+    </p>
+
+    <p>
+      The divergence theorem says that this net outflow can be computed by adding local
+      source strengths:
+      <md>\iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS = \iiint_E \nabla\cdot\mathbf F\,dV.</md>
+    </p>
+
+    <p>
+      If
+      <md>\nabla\cdot\mathbf F=0</md>
+      throughout <m>E</m>, then
+      <md>\iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS=0.</md>
+      Fluid may pass through the region, but whatever enters also leaves. There is no net
+      creation inside.
+    </p>
+
+    <p>
+      If
+      <md>\nabla\cdot\mathbf F&gt;0</md>
+      on average, more fluid leaves than enters. Something inside acts like a source.
+    </p>
+
+    <p>
+      If
+      <md>\nabla\cdot\mathbf F&lt;0</md>
+      on average, more fluid enters than leaves. Something inside acts like a sink.
+    </p>
+
+    <p>
+      This is the mathematical language behind conservation laws. To know how much
+      quantity changes inside a region, look at what crosses the boundary and what is
+      created or destroyed inside.
+    </p>
+
+    <p>
+      We now have two space derivatives of vector fields:
+      <md>\nabla\times\mathbf F \qquad\text{and}\qquad \nabla\cdot\mathbf F.</md>
+      One measures spinning; the other measures spreading. They look unrelated in vector
+      notation. But in form notation they are consecutive exterior derivatives:
+      <md>\omega \xrightarrow{\ d\ } d\omega \xrightarrow{\ d\ } d(d\omega).</md>
+      That raises a strange question. What happens if we take <m>d</m> twice? The answer is
+      always zero, and it hides two famous vector-calculus identities:
+      <md>\nabla\times(\nabla f)=\mathbf 0, \qquad \nabla\cdot(\nabla\times\mathbf F)=0.</md>
+      The next section explains why these are not two miracles. They are one fact wearing
+      two costumes.
+    </p>
+  </subsection>
+</section>

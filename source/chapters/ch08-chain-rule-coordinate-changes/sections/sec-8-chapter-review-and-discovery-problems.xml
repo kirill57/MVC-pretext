@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch08-chain-rule-coordinate-changes.tex, Section 7.
+     Status: CONVERTED. -->
+<section xml:id="sec-8-chapter-review-and-discovery-problems" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter review and discovery problems</title>
+
+  <introduction>
+    <p>
+      Chapter 8 began with one moving point passing through one scalar field:
+      <md>t\longmapsto \mathbf r(t)\longmapsto f(\mathbf r(t)).</md>
+      It ended with implicit surfaces and local coordinates. The same idea was underneath
+      all of it:
+      <md>\text{first-order changes pass through linear maps.}</md>
+    </p>
+    <p>
+      Sometimes the linear map was a row vector:
+      <md>df=f_x\,dx+f_y\,dy.</md>
+      Sometimes it was a matrix:
+      <md>J_{F\circ G}=J_FJ_G.</md>
+      Sometimes it was an inverse matrix:
+      <md>J_{F^{-1}}=\bigl(J_F\bigr)^{-1}.</md>
+      Sometimes it was hidden inside an implicit equation:
+      <md>dF=0.</md>
+    </p>
+    <p>
+      This review is meant to make those pieces feel like one machine.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c8s7-chapter-in-one-picture">
+    <title>The chapter in one picture</title>
+    <p>
+      The chain rule is a statement about small changes. A small input change goes through
+      one linear approximation, then another.
+    </p>
+    <figure xml:id="c8s7-fig-composition-diagram">
+      <caption>The derivative of a composition is the composition of the derivatives.</caption>
+      <image width="80%">
+        <latex-image>
+\begin{tikzpicture}[scale=1.0, &gt;=stealth]
+    \node (du) at (0,0) {\(\Delta\mathbf u\)};
+    \node (dx) at (3.8,0) {\(\Delta\mathbf x\)};
+    \node (dz) at (7.6,0) {\(\Delta\mathbf z\)};
+
+    \draw[-&gt;, thick] (du) -- (dx)
+        node[midway, above=2pt] {\(DG(\mathbf p)\)};
+    \draw[-&gt;, thick] (dx) -- (dz)
+        node[midway, above=2pt] {\(DF(G(\mathbf p))\)};
+
+    \draw[-&gt;, thick, bend right=30] (du) to
+        node[midway, below=3pt] {\(D(F\circ G)(\mathbf p)\)}
+        (dz);
+
+    \node at (3.8,-2.0)
+    {\(D(F\circ G)(\mathbf p)=DF(G(\mathbf p))\circ DG(\mathbf p)\)};
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+    <p>
+      In coordinates, this becomes matrix multiplication:
+      <md>J_{F\circ G}(\mathbf p)=J_F(G(\mathbf p))J_G(\mathbf p).</md>
+      In differential notation, the same idea becomes substitution:
+      <md>d(f\circ G)=G^*(df).</md>
+      The notation changes. The linear story does not.
+    </p>
+    <table xml:id="c8s7-tbl-one-machine">
+      <title>The chapter as one machine.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Situation</cell>
+          <cell>Formula</cell>
+          <cell>Meaning</cell>
+        </row>
+        <row>
+          <cell>field along a curve</cell>
+          <cell><m>\dfrac{d}{dt}f(\mathbf r(t))=\nabla f(\mathbf r(t))\cdot\mathbf r'(t)</m></cell>
+          <cell>rate seen by a moving observer</cell>
+        </row>
+        <row>
+          <cell>composition of maps</cell>
+          <cell><m>J_{F\circ G}=J_FJ_G</m></cell>
+          <cell>linearize, then compose</cell>
+        </row>
+        <row>
+          <cell>differentials</cell>
+          <cell><m>df=f_x\,dx+f_y\,dy</m></cell>
+          <cell>best linear change in <m>f</m></cell>
+        </row>
+        <row>
+          <cell>coordinate change</cell>
+          <cell><m>dx\wedge dy=\dfrac{\partial(x,y)}{\partial(u,v)}\,du\wedge dv</m></cell>
+          <cell>local signed area scaling</cell>
+        </row>
+        <row>
+          <cell>inverse map</cell>
+          <cell><m>J_{F^{-1}}=(J_F)^{-1}</m></cell>
+          <cell>reverse the linear approximation</cell>
+        </row>
+        <row>
+          <cell>implicit curve or surface</cell>
+          <cell><m>dF=0</m></cell>
+          <cell>allowed first-order motions stay on the constraint</cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <subsection xml:id="c8s7-worked-thermometer">
+    <title>Worked review example: a moving thermometer</title>
+    <p>
+      Let
+      <md>S(x,y,z)=12+xz-y^2</md>
+      be a salinity field in a tank. A probe moves along
+      <md>\mathbf r(t)=(1+t,\;2-t^2,\;3e^t).</md>
+      Find the rate of change of salinity seen by the probe at <m>t=0</m>.
+    </p>
+    <p>
+      The probe starts at
+      <md>\mathbf r(0)=(1,2,3).</md>
+      Its velocity is
+      <md>\mathbf r'(t)=(1,-2t,3e^t),</md>
+      so
+      <md>\mathbf r'(0)=(1,0,3).</md>
+      The gradient of <m>S</m> is
+      <md>\nabla S(x,y,z)=(z,-2y,x).</md>
+      At the starting point,
+      <md>\nabla S(1,2,3)=(3,-4,1).</md>
+      Therefore
+      <md>
+        <mrow>\frac{d}{dt}S(\mathbf r(t))\bigg|_{t=0} \amp= \nabla S(1,2,3)\cdot\mathbf r'(0)</mrow>
+        <mrow>\amp= (3,-4,1)\cdot(1,0,3)</mrow>
+        <mrow>\amp= 6.</mrow>
+      </md>
+      The probe sees salinity increasing at rate <m>6</m> salinity units per second.
+    </p>
+    <p>
+      The calculation can also be read as
+      <md>dS_{\mathbf r(0)}\bigl(\mathbf r'(0)\bigr)=6.</md>
+      The differential <m>dS</m> eats the velocity vector and returns the observed rate.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s7-worked-matrix-chain">
+    <title>Worked review example: a matrix chain rule calculation</title>
+    <p>
+      Let
+      <md>G(u,v)=(u^2+v,\;e^u-v),</md>
+      and let
+      <md>F(x,y)=(xy,\;x+y^2).</md>
+      Set
+      <md>H=F\circ G.</md>
+      Find
+      <md>J_H(0,1)</md>
+      without expanding <m>H</m>.
+    </p>
+    <p>
+      First compute the intermediate point:
+      <md>G(0,1)=(1,0).</md>
+      The Jacobian matrix of <m>G</m> is
+      <md>J_G(u,v)=\begin{pmatrix} 2u \amp 1\\ e^u \amp -1 \end{pmatrix},</md>
+      so
+      <md>J_G(0,1)=\begin{pmatrix} 0 \amp 1\\ 1 \amp -1 \end{pmatrix}.</md>
+    </p>
+    <p>
+      The Jacobian matrix of <m>F</m> is
+      <md>J_F(x,y)=\begin{pmatrix} y \amp x\\ 1 \amp 2y \end{pmatrix}.</md>
+      At <m>(x,y)=(1,0)</m>,
+      <md>J_F(1,0)=\begin{pmatrix} 0 \amp 1\\ 1 \amp 0 \end{pmatrix}.</md>
+      Therefore
+      <md>
+        <mrow>J_H(0,1) \amp= J_F(G(0,1))J_G(0,1)</mrow>
+        <mrow>\amp= \begin{pmatrix} 0 \amp 1\\ 1 \amp 0 \end{pmatrix}\begin{pmatrix} 0 \amp 1\\ 1 \amp -1 \end{pmatrix}</mrow>
+        <mrow>\amp= \begin{pmatrix} 1 \amp -1\\ 0 \amp 1 \end{pmatrix}.</mrow>
+      </md>
+    </p>
+    <p>
+      The order matters. A small <m>(u,v)</m>-change first passes through <m>G</m>, and only
+      then through <m>F</m>. That is why the matrix for <m>G</m> stands on the right.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s7-worked-area-scaling">
+    <title>Worked review example: area scaling from differentials</title>
+    <p>
+      Let a coordinate change be given by
+      <md>x=s^2-t,\qquad y=s+t^2.</md>
+      Find the local signed area factor.
+    </p>
+    <p>
+      Differentiate:
+      <md>dx=2s\,ds-dt,</md>
+      and
+      <md>dy=ds+2t\,dt.</md>
+      Then
+      <md>
+        <mrow>dx\wedge dy \amp= (2s\,ds-dt)\wedge(ds+2t\,dt)</mrow>
+        <mrow>\amp= 4st\,ds\wedge dt-dt\wedge ds</mrow>
+        <mrow>\amp= 4st\,ds\wedge dt+ds\wedge dt</mrow>
+        <mrow>\amp= (4st+1)\,ds\wedge dt.</mrow>
+      </md>
+      Thus
+      <md>\boxed{\frac{\partial(x,y)}{\partial(s,t)}=4st+1.}</md>
+    </p>
+    <p>
+      At points where
+      <md>4st+1\ne0,</md>
+      the coordinate change does not collapse tiny areas. The inverse function theorem says
+      that the map has a local inverse there.
+    </p>
+    <p>
+      At points where
+      <md>4st+1=0,</md>
+      tiny signed area is collapsed to first order. The theorem no longer promises a local
+      inverse.
+    </p>
+    <p>
+      The same number comes from the determinant:
+      <md>\det\begin{pmatrix} x_s \amp x_t\\ y_s \amp y_t \end{pmatrix}=\det\begin{pmatrix} 2s \amp -1\\ 1 \amp 2t \end{pmatrix}=4st+1.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s7-worked-implicit-surface">
+    <title>Worked review example: an implicit surface</title>
+    <p>
+      Consider the surface
+      <md>F(x,y,z)=x^2+yz+z^2-3=0.</md>
+      The point
+      <md>(1,1,1)</md>
+      lies on the surface because
+      <md>1+1+1-3=0.</md>
+      Can the surface be solved near this point as
+      <md>z=g(x,y)?</md>
+      If so, find <m>g_x(1,1)</m>, <m>g_y(1,1)</m>, and the tangent plane.
+    </p>
+    <p>
+      Compute
+      <md>F_x=2x,\qquad F_y=z,\qquad F_z=y+2z.</md>
+      At <m>(1,1,1)</m>,
+      <md>F_z(1,1,1)=3\ne0.</md>
+      So the implicit function theorem says that the surface can be solved locally as
+      <md>z=g(x,y).</md>
+      The partial derivatives are
+      <md>g_x=-\frac{F_x}{F_z},\qquad g_y=-\frac{F_y}{F_z}.</md>
+      Therefore
+      <md>g_x(1,1)=-\frac23,\qquad g_y(1,1)=-\frac13.</md>
+    </p>
+    <p>
+      The tangent plane is
+      <md>F_x(1,1,1)(x-1)+F_y(1,1,1)(y-1)+F_z(1,1,1)(z-1)=0.</md>
+      So
+      <md>\boxed{2(x-1)+(y-1)+3(z-1)=0.}</md>
+    </p>
+    <p>
+      The same answer comes from
+      <md>dF=0.</md>
+      At the point,
+      <md>dF=2\,dx+dy+3\,dz.</md>
+      A first-order motion tangent to the surface must satisfy
+      <md>2\,dx+dy+3\,dz=0.</md>
+    </p>
+  </subsection>
+
+  <exercises xml:id="c8s7-ex-concept-check">
+    <title>Concept check</title>
+
+    <exercise xml:id="c8s7-cc-partial-vs-total">
+      <statement>
+        <p>What is the difference between a partial derivative and a total derivative?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-gradient-evaluated">
+      <statement>
+        <p>
+          In the formula
+          <md>\frac{d}{dt}f(\mathbf r(t))=\nabla f(\mathbf r(t))\cdot\mathbf r'(t),</md>
+          where is the gradient evaluated?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-order-matters">
+      <statement>
+        <p>
+          Why is
+          <md>J_{F\circ G}=J_FJ_G</md>
+          not the same as
+          <md>J_GJ_F?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-dx-meaning">
+      <statement>
+        <p>
+          What does the formula
+          <md>dx=x_u\,du+x_v\,dv</md>
+          mean geometrically?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-pullback-substitute">
+      <statement>
+        <p>
+          When we pull back a <m>1</m>-form
+          <md>\omega=P(x,y)\,dx+Q(x,y)\,dy</md>
+          by a map
+          <md>G(u,v)=(x(u,v),y(u,v)),</md>
+          what must be substituted?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-rate-per-radian">
+      <statement>
+        <p>
+          In polar coordinates, why is
+          <md>F_\theta</md>
+          a rate per radian rather than a rate per meter?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-jacobian-determinant">
+      <statement>
+        <p>What does the Jacobian determinant measure locally?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-local-vs-global">
+      <statement>
+        <p>
+          Why does
+          <md>\det J_F(\mathbf p)\ne0</md>
+          give only a local inverse, not necessarily a global inverse?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-which-variable">
+      <statement>
+        <p>
+          If
+          <md>F(x,y)=0</md>
+          and
+          <md>F_y(a,b)\ne0,</md>
+          which variable can be solved for near <m>(a,b)</m>?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-zx-zy-formulas">
+      <statement>
+        <p>
+          If
+          <md>F(x,y,z)=0</md>
+          and
+          <md>F_z(a,b,c)\ne0,</md>
+          what are the formulas for <m>z_x</m> and <m>z_y</m>?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-dF-zero-meaning">
+      <statement>
+        <p>
+          What does the equation
+          <md>dF=0</md>
+          say about first-order motions along the constraint <m>F=0</m>?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-cc-nonzero-not-injective">
+      <statement>
+        <p>
+          Give an example of a map whose Jacobian determinant is nonzero everywhere but
+          which is not one-to-one globally.
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises xml:id="c8s7-ex-skill-problems">
+    <title>Skill problems</title>
+
+    <exercise xml:id="c8s7-sk-field-along-curve-1">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^2y+\sin y,\qquad \mathbf r(t)=\left(1+t^2,\frac{\pi}{2}-t\right).</md>
+          Find
+          <md>\frac{d}{dt}f(\mathbf r(t))\bigg|_{t=0}.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-field-along-curve-2">
+      <statement>
+        <p>
+          Let
+          <md>T(x,y,z)=xy+z^2-xz,</md>
+          and
+          <md>\mathbf r(t)=(e^t,1-t,2+t^2).</md>
+          Find the rate of change of <m>T</m> along <m>\mathbf r</m> at <m>t=0</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-gradient-velocity">
+      <statement>
+        <p>
+          A field <m>f(x,y,z)</m> has
+          <md>\nabla f(2,1,0)=(4,-1,3).</md>
+          A particle passes through <m>(2,1,0)</m> with velocity
+          <md>(1,2,-2).</md>
+          Find the rate at which the particle sees <m>f</m> change.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-chain-zu-zv">
+      <statement>
+        <p>
+          Let
+          <md>z=f(x,y),\qquad x=u^2+v,\qquad y=u-v^2.</md>
+          Write formulas for
+          <md>z_u\qquad\text{and}\qquad z_v.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-chain-wu-wv">
+      <statement>
+        <p>
+          Let
+          <md>w=f(x,y,z),</md>
+          where
+          <md>x=uv,\qquad y=u+v,\qquad z=u^2-v^2.</md>
+          Write formulas for
+          <md>w_u\qquad\text{and}\qquad w_v.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-matrix-chain-2d">
+      <statement>
+        <p>
+          Let
+          <md>G(u,v)=(u+v,\;uv),</md>
+          and
+          <md>F(x,y)=(x^2+y,\;xy).</md>
+          Find
+          <md>J_{F\circ G}(1,2)</md>
+          using the matrix chain rule.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-row-matrix-chain">
+      <statement>
+        <p>
+          Let
+          <md>G(s,t)=(s^2+t,\;s-t^2,\;st),</md>
+          and
+          <md>F(x,y,z)=x+y^2-z.</md>
+          Find the row matrix
+          <md>J_{F\circ G}(1,1).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-differentials-du-dv">
+      <statement>
+        <p>
+          Let
+          <md>u=x^2+y,\qquad v=x-y^2.</md>
+          Find
+          <md>du\qquad\text{and}\qquad dv.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-differential-composition">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=e^{xy}.</md>
+          Use differentials to compute <m>d(f\circ G)</m>, where
+          <md>G(u,v)=(u+v,\;u-v).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-pullback-1form">
+      <statement>
+        <p>
+          Pull back the <m>1</m>-form
+          <md>\omega=x\,dy-y\,dx</md>
+          by the map
+          <md>x=u^2,\qquad y=v^2.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-pullback-area-form">
+      <statement>
+        <p>
+          Pull back the area form
+          <md>dx\wedge dy</md>
+          under
+          <md>x=u+v,\qquad y=u^2-v.</md>
+          Where does the map collapse signed area to first order?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-polar-derivatives">
+      <statement>
+        <p>
+          In polar coordinates,
+          <md>x=r\cos\theta,\qquad y=r\sin\theta.</md>
+          Let
+          <md>f(x,y)=x^2-3y.</md>
+          Find
+          <md>F_r\qquad\text{and}\qquad F_\theta</md>
+          for
+          <md>F(r,\theta)=f(r\cos\theta,r\sin\theta).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-polar-tangential-rate">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=xy.</md>
+          Write <m>f</m> in polar coordinates and find the tangential rate per meter at
+          <md>r=2,\qquad \theta=\frac{\pi}{4}.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-cylindrical-derivatives">
+      <statement>
+        <p>
+          In cylindrical coordinates, write
+          <md>p(x,y,z)=x^2+y^2-z</md>
+          as a function
+          <md>P(r,\theta,z).</md>
+          Find
+          <md>P_r,\qquad P_\theta,\qquad P_z.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-spherical-radius">
+      <statement>
+        <p>
+          In spherical coordinates,
+          <md>x=\rho\sin\phi\cos\theta,\qquad y=\rho\sin\phi\sin\theta,\qquad z=\rho\cos\phi.</md>
+          Write
+          <md>x^2+y^2+z^2</md>
+          in spherical coordinates, and explain why its <m>\theta</m>- and <m>\phi</m>-derivatives vanish.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-det-jacobian-1">
+      <statement>
+        <p>
+          Let
+          <md>F(u,v)=(u+v^2,\;v-u^2).</md>
+          Find
+          <md>\det J_F(u,v).</md>
+          At which points does the inverse function theorem guarantee a local inverse?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-det-jacobian-exp">
+      <statement>
+        <p>
+          Let
+          <md>F(u,v)=(e^u\cos v,e^u\sin v).</md>
+          Find
+          <md>\det J_F(u,v).</md>
+          Explain why <m>F</m> has local inverses everywhere but no global inverse on all of
+          <m>\mathbb R^2</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-inverse-jacobian">
+      <statement>
+        <p>
+          Suppose
+          <md>F(1,2)=(4,5)</md>
+          and
+          <md>J_F(1,2)=\begin{pmatrix} 2 \amp 1\\ 1 \amp 1 \end{pmatrix}.</md>
+          If <m>G=F^{-1}</m> locally near <m>(4,5)</m>, find
+          <md>J_G(4,5).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-implicit-curve-1">
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=x^3+y^3-6xy.</md>
+          At the point <m>(3,3)</m>, can the curve <m>F(x,y)=0</m> be solved locally as
+          <md>y=g(x)?</md>
+          If so, find <m>g'(3)</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-implicit-curve-fail">
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=x^2-y^2.</md>
+          At <m>(0,0)</m>, can the equation <m>F(x,y)=0</m> be solved locally as one function
+          <m>y=g(x)</m>? Explain.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-implicit-sphere">
+      <statement>
+        <p>
+          Let
+          <md>F(x,y,z)=x^2+y^2+z^2-9.</md>
+          Find where the sphere can be solved locally as
+          <md>z=g(x,y).</md>
+          At such points, find <m>z_x</m> and <m>z_y</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-implicit-surface-2">
+      <statement>
+        <p>
+          Let
+          <md>F(x,y,z)=x+y+z+xyz-4.</md>
+          At <m>(1,1,1)</m>, solve locally for <m>z=g(x,y)</m> and find
+          <md>g_x(1,1),\qquad g_y(1,1).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-tangent-plane">
+      <statement>
+        <p>
+          Find the tangent plane to
+          <md>x^2+2y^2+3z^2=12</md>
+          at
+          <md>(1,2,1).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-system-solvable">
+      <statement>
+        <p>
+          Let
+          <md>F(x,y,u,v)=x+u^2+v-3,</md>
+          and
+          <md>G(x,y,u,v)=y+u-v^2-1.</md>
+          At
+          <md>(x,y,u,v)=(1,1,1,1),</md>
+          show that the system
+          <md>F=0,\qquad G=0</md>
+          can be solved locally for <m>u</m> and <m>v</m> as functions of <m>x</m> and <m>y</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-system-partials">
+      <statement>
+        <p>
+          For the system in the previous problem, find
+          <md>\frac{\partial u}{\partial x}\qquad\text{and}\qquad\frac{\partial v}{\partial x}</md>
+          at <m>(x,y)=(1,1)</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c8s7-sk-partials-not-differentiable">
+      <statement>
+        <p>
+          Give an example of a function whose partial derivatives exist at a point but which
+          is not differentiable there. Explain why the chain rule cannot be trusted at that point.
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <subsection xml:id="c8s7-discovery-project">
+    <title>Discovery project: local invertibility of a nonlinear map</title>
+    <p>
+      A rubber sheet is marked with coordinates <m>(u,v)</m>. A machine sends each marked
+      point to a new point
+      <md>F(u,v)=(x,y)</md>
+      according to
+      <md>\boxed{x=u+v^2,\qquad y=v+u^2.}</md>
+      This map is close to the identity near the origin, but it folds near another point.
+    </p>
+    <p>
+      The goal of the project is to locate the fold and connect it to the Jacobian determinant.
+    </p>
+
+    <subsubsection xml:id="c8s7-discovery-part1">
+      <title>Part 1. The first-order test</title>
+      <p>
+        Compute the Jacobian matrix:
+        <md>J_F(u,v)=\begin{pmatrix} x_u \amp x_v\\ y_u \amp y_v \end{pmatrix}.</md>
+        Show that
+        <md>\boxed{J_F(u,v)=\begin{pmatrix} 1 \amp 2v\\ 2u \amp 1 \end{pmatrix}}</md>
+        and
+        <md>\boxed{\det J_F(u,v)=1-4uv.}</md>
+      </p>
+      <p>
+        The inverse function theorem says that <m>F</m> has a local inverse at every point where
+        <md>1-4uv\ne0.</md>
+        So the only possible trouble occurs on the hyperbola
+        <md>uv=\frac14.</md>
+      </p>
+      <figure xml:id="c8s7-fig-fold-curve">
+        <caption>The curve <m>uv=\frac14</m> is where the linear approximation collapses area.</caption>
+        <image width="60%">
+          <latex-image>
+\begin{tikzpicture}[scale=1.0, &gt;=stealth]
+    \draw[-&gt;] (-3.2,0) -- (3.3,0) node[right] {\(u\)};
+    \draw[-&gt;] (0,-3.2) -- (0,3.3) node[above] {\(v\)};
+
+    \draw[domain=0.12:3, samples=120, smooth, thick, blue!60!black]
+        plot (\x,{1/(4*\x)});
+    \draw[domain=-3:-0.12, samples=120, smooth, thick, blue!60!black]
+        plot (\x,{1/(4*\x)});
+
+    \fill (0.5,0.5) circle (2.5pt);
+    \node[above right] at (0.5,0.5) {\(\left(\frac12,\frac12\right)\)};
+
+    \node[blue!60!black] at (2.1,0.8) {\(uv=\frac14\)};
+    \node at (0,-3.8) {The determinant vanishes on the fold curve.};
+\end{tikzpicture}
+          </latex-image>
+        </image>
+      </figure>
+    </subsubsection>
+
+    <subsubsection xml:id="c8s7-discovery-part2">
+      <title>Part 2. The wedge-product version</title>
+      <p>
+        Use
+        <md>x=u+v^2,\qquad y=v+u^2</md>
+        to compute
+        <md>dx\qquad\text{and}\qquad dy.</md>
+        Then show that
+        <md>\boxed{dx\wedge dy=(1-4uv)\,du\wedge dv.}</md>
+        This says that the determinant is not only a matrix number. It is the coefficient that
+        tells how signed area forms transform.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c8s7-discovery-part3">
+      <title>Part 3. Near the origin</title>
+      <p>
+        At the origin,
+        <md>J_F(0,0)=\begin{pmatrix} 1 \amp 0\\ 0 \amp 1 \end{pmatrix}.</md>
+        So near the origin,
+        <md>F(u,v)</md>
+        looks like the identity map.
+      </p>
+      <p>
+        The inverse function theorem gives a local inverse near
+        <md>F(0,0)=(0,0).</md>
+        To first order,
+        <md>u\approx x,\qquad v\approx y.</md>
+      </p>
+      <p>
+        A better second-order approximation can be guessed from the equations
+        <md>x=u+v^2,\qquad y=v+u^2.</md>
+        Since near the origin <m>u\approx x</m> and <m>v\approx y</m>, substitute those first guesses
+        into the squared terms:
+        <md>u\approx x-y^2,\qquad v\approx y-x^2.</md>
+        Check this approximation by substituting
+        <md>u=x-y^2,\qquad v=y-x^2</md>
+        back into <m>F</m>, and keep only terms up to second degree.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c8s7-discovery-part4">
+      <title>Part 4. The fold at <m>\left(\frac12,\frac12\right)</m></title>
+      <p>
+        At
+        <md>\left(\frac12,\frac12\right),</md>
+        the Jacobian matrix is
+        <md>J_F\left(\frac12,\frac12\right)=\begin{pmatrix} 1 \amp 1\\ 1 \amp 1 \end{pmatrix}.</md>
+        This matrix sends
+        <md>(1,-1)</md>
+        to
+        <md>(0,0).</md>
+        So, to first order, motion in the direction <m>(1,-1)</m> is invisible.
+      </p>
+      <p>
+        Now look at this line through the point:
+        <md>(u,v)=\left(\frac12+s,\frac12-s\right).</md>
+        Compute:
+        <md>
+          <mrow>F\left(\frac12+s,\frac12-s\right) \amp= \left(\frac12+s+\left(\frac12-s\right)^2,\;\frac12-s+\left(\frac12+s\right)^2\right)</mrow>
+          <mrow>\amp= \left(\frac34+s^2,\;\frac34+s^2\right).</mrow>
+        </md>
+        The same formula holds for <m>-s</m>:
+        <md>F\left(\frac12+s,\frac12-s\right)=F\left(\frac12-s,\frac12+s\right).</md>
+        So every tiny neighborhood of
+        <md>\left(\frac12,\frac12\right)</md>
+        contains two different points that map to the same output. There is no local inverse
+        there.
+      </p>
+      <p>
+        This is the nonlinear fold that the zero determinant was warning us about.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c8s7-discovery-handin">
+      <title>What to hand in</title>
+      <p>
+        Write a short report with the following pieces.
+      </p>
+      <ol>
+        <li>
+          <p>The Jacobian matrix and determinant of <m>F</m>.</p>
+        </li>
+        <li>
+          <p>
+            The wedge-product computation
+            <md>dx\wedge dy=(1-4uv)\,du\wedge dv.</md>
+          </p>
+        </li>
+        <li>
+          <p>
+            A drawing of the curve
+            <md>uv=\frac14</md>
+            in the <m>(u,v)</m>-plane.
+          </p>
+        </li>
+        <li>
+          <p>
+            A paragraph explaining why the inverse function theorem applies away from that
+            curve.
+          </p>
+        </li>
+        <li>
+          <p>
+            The exact calculation showing that the two points
+            <md>\left(\frac12+s,\frac12-s\right)\quad\text{and}\quad\left(\frac12-s,\frac12+s\right)</md>
+            have the same image.
+          </p>
+        </li>
+        <li>
+          <p>
+            A short explanation of how the determinant, the area form, and the visible fold are
+            three views of the same event.
+          </p>
+        </li>
+      </ol>
+    </subsubsection>
+  </subsection>
+
+  <conclusion>
+    <title>End-of-chapter hook: where first-order motion goes silent</title>
+    <p>
+      The chapter kept asking what a function does to first-order changes. A curve feeds a
+      velocity into a differential. A coordinate change feeds one area form into another. An
+      implicit surface keeps only the motions that satisfy
+      <md>dF=0.</md>
+    </p>
+    <p>
+      Now imagine a new question. A hiker stands on a hill and wants the highest nearby
+      point. If every tiny step in some direction changes the height to first order, then one of
+      those steps must improve the height. So at an interior maximum or minimum, something
+      strange has to happen:
+      <md>df</md>
+      must vanish on every possible first-order motion.
+    </p>
+    <p>
+      For a free point in the plane, that becomes
+      <md>\nabla f=\mathbf 0.</md>
+      For a point constrained to a curve or surface, only some motions are allowed, and the
+      same sentence becomes more subtle. The steepest direction may point off the constraint
+      entirely.
+    </p>
+    <p>
+      That is where optimization begins: not with a formula for the largest value, but with the
+      silence of all first-order changes.
+    </p>
+  </conclusion>
+</section>

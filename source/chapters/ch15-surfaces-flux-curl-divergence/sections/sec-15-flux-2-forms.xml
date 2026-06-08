@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch15-surfaces-flux-curl-divergence.tex, Section 15.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-15-flux-2-forms" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Flux <m>2</m>-forms</title>
+
+  <p>
+    The flux formula from <xref ref="sec-15-oriented-surfaces-and-flux"/> is
+    <md>
+      \iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS
+      =
+      \iint_D
+      \mathbf F(\mathbf r(u,v))\cdot
+      \bigl(\mathbf r_u\times\mathbf r_v\bigr)\,du\,dv.
+    </md>
+    This is efficient, but it hides the signed-area pieces. In
+    <xref ref="ch14-greens-theorem"/>, the form
+    <md>dx\wedge dy</md>
+    measured oriented area in the <m>xy</m>-plane. A surface in space has three coordinate
+    shadows, so flux needs three oriented area forms:
+    <md>dy\wedge dz,\qquad dz\wedge dx,\qquad dx\wedge dy.</md>
+  </p>
+
+  <subsection xml:id="c15s4-wall-perpendicular-x-axis">
+    <title>A wall perpendicular to the <m>x</m>-axis</title>
+
+    <p>
+      Take a flat wall
+      <md>x=2,\qquad 0\le y\le3,\qquad 0\le z\le4.</md>
+      Orient it in the positive <m>x</m>-direction. A natural parametrization is
+      <md>\mathbf r(y,z)=(2,y,z).</md>
+      Then
+      <md>
+        \mathbf r_y=(0,1,0),
+        \qquad
+        \mathbf r_z=(0,0,1),
+      </md>
+      so
+      <md>\mathbf r_y\times\mathbf r_z=(1,0,0).</md>
+      For a vector field
+      <md>\mathbf F=(P,Q,R),</md>
+      the flux through this wall is
+      <md>
+        <mrow>\iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS \amp= \int_0^3\int_0^4 \mathbf F(2,y,z)\cdot(1,0,0)\,dz\,dy</mrow>
+        <mrow>\amp= \int_0^3\int_0^4 P(2,y,z)\,dz\,dy.</mrow>
+      </md>
+      Only the <m>x</m>-component of the field crosses a wall whose positive normal points in
+      the <m>x</m>-direction.
+    </p>
+
+    <p>
+      The area element on this wall is
+      <md>dy\wedge dz.</md>
+      So the flux integrand is
+      <md>P\,dy\wedge dz.</md>
+    </p>
+
+    <p>The other coordinate walls follow the same pattern.</p>
+
+    <md>
+      \begin{array}{c|c|c}
+      \text{positive normal direction} \amp \text{ordered tangent directions} \amp \text{oriented area form}\\ \hline
+      \mathbf i \amp \mathbf j,\mathbf k \amp dy\wedge dz\\[1mm]
+      \mathbf j \amp \mathbf k,\mathbf i \amp dz\wedge dx\\[1mm]
+      \mathbf k \amp \mathbf i,\mathbf j \amp dx\wedge dy
+      \end{array}
+    </md>
+
+    <p>
+      The middle entry
+      <md>dz\wedge dx</md>
+      is not a typo. The ordered directions
+      <md>\mathbf k,\mathbf i</md>
+      have cross product
+      <md>\mathbf k\times\mathbf i=\mathbf j.</md>
+      That is the positive <m>y</m>-normal.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s4-flux-form-of-vector-field">
+    <title>The flux form of a vector field</title>
+
+    <p>The coordinate-wall computation suggests the right <m>2</m>-form.</p>
+
+    <definition xml:id="c15s4-def-flux-2-form">
+      <title>Flux <m>2</m>-form</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F=(P,Q,R)</md>
+          be a vector field in space. The <term>flux <m>2</m>-form</term> associated to
+          <m>\mathbf F</m> is
+          <md>
+            \boxed{
+            \Phi_{\mathbf F}
+            =
+            P\,dy\wedge dz
+            +
+            Q\,dz\wedge dx
+            +
+            R\,dx\wedge dy.
+            }
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>This form packages the three possible coordinate fluxes:</p>
+
+    <md>
+      \begin{array}{c|c}
+      \text{field component} \amp \text{oriented coordinate area it crosses} \\ \hline
+      P \amp dy\wedge dz\\[1mm]
+      Q \amp dz\wedge dx\\[1mm]
+      R \amp dx\wedge dy
+      \end{array}
+    </md>
+
+    <p>
+      So the vector field
+      <md>\mathbf F=(P,Q,R)</md>
+      and the <m>2</m>-form
+      <md>\Phi_{\mathbf F}</md>
+      carry the same flux information.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s4-shadows-of-surface-patch">
+    <title>The shadows of a surface patch</title>
+
+    <p>
+      The formula
+      <md>
+        P\,dy\wedge dz
+        +
+        Q\,dz\wedge dx
+        +
+        R\,dx\wedge dy
+      </md>
+      is easier to trust after seeing what it does to one tiny surface patch.
+    </p>
+
+    <p>
+      Let
+      <md>
+        \mathbf a=(a_1,a_2,a_3),
+        \qquad
+        \mathbf b=(b_1,b_2,b_3)
+      </md>
+      be two tangent vectors spanning a tiny oriented parallelogram. The form
+      <md>dy\wedge dz</md>
+      measures the signed area of the shadow of this parallelogram on the <m>yz</m>-plane:
+      <md>
+        (dy\wedge dz)(\mathbf a,\mathbf b)
+        =
+        \begin{vmatrix}
+        a_2\amp b_2\\
+        a_3\amp b_3
+        \end{vmatrix}
+        =
+        a_2b_3-a_3b_2.
+      </md>
+      Similarly,
+      <md>
+        (dz\wedge dx)(\mathbf a,\mathbf b)
+        =
+        a_3b_1-a_1b_3,
+      </md>
+      and
+      <md>
+        (dx\wedge dy)(\mathbf a,\mathbf b)
+        =
+        a_1b_2-a_2b_1.
+      </md>
+      But these three numbers are exactly the components of the cross product:
+      <md>
+        \boxed{
+        \mathbf a\times\mathbf b
+        =
+        \bigl(
+        (dy\wedge dz)(\mathbf a,\mathbf b),\,
+        (dz\wedge dx)(\mathbf a,\mathbf b),\,
+        (dx\wedge dy)(\mathbf a,\mathbf b)
+        \bigr).
+        }
+      </md>
+      Therefore
+      <md>
+        <mrow>\Phi_{\mathbf F}(\mathbf a,\mathbf b) \amp= P(dy\wedge dz)(\mathbf a,\mathbf b) + Q(dz\wedge dx)(\mathbf a,\mathbf b)</mrow>
+        <mrow>\amp\qquad + R(dx\wedge dy)(\mathbf a,\mathbf b)</mrow>
+        <mrow>\amp= (P,Q,R)\cdot(\mathbf a\times\mathbf b)</mrow>
+        <mrow>\amp= \mathbf F\cdot(\mathbf a\times\mathbf b).</mrow>
+      </md>
+      So the flux <m>2</m>-form is not a new kind of flux. It is the same flux, written as a
+      signed-area measurement.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s4-pullback-to-parameter-domain">
+    <title>Pulling a <m>2</m>-form back to a parameter domain</title>
+
+    <p>
+      Let
+      <md>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v))</md>
+      parametrize an oriented surface. To integrate a <m>2</m>-form over this surface, we
+      rewrite the form in terms of <m>du</m> and <m>dv</m>. This substitution is called a
+      <term>pullback</term>.
+    </p>
+
+    <p>
+      The coordinate differentials become
+      <md>dx=x_u\,du+x_v\,dv,</md>
+      <md>dy=y_u\,du+y_v\,dv,</md>
+      and
+      <md>dz=z_u\,du+z_v\,dv.</md>
+      Now compute:
+      <md>
+        <mrow>dy\wedge dz \amp= (y_u\,du+y_v\,dv)\wedge(z_u\,du+z_v\,dv)</mrow>
+        <mrow>\amp= (y_u z_v-y_v z_u)\,du\wedge dv.</mrow>
+      </md>
+      Similarly,
+      <md>
+        dz\wedge dx
+        =
+        (z_u x_v-z_v x_u)\,du\wedge dv,
+      </md>
+      and
+      <md>
+        dx\wedge dy
+        =
+        (x_u y_v-x_v y_u)\,du\wedge dv.
+      </md>
+    </p>
+
+    <p>
+      Thus the flux form pulls back to
+      <md>
+        \boxed{
+        \begin{aligned}
+        \mathbf r^*\Phi_{\mathbf F}
+        \amp=
+        \Bigl[
+        P(\mathbf r)(y_u z_v-y_v z_u)
+        +
+        Q(\mathbf r)(z_u x_v-z_v x_u)\\
+        \amp\qquad
+        +
+        R(\mathbf r)(x_u y_v-x_v y_u)
+        \Bigr]\,du\wedge dv.
+        \end{aligned}
+        }
+      </md>
+      The coefficient in brackets is exactly
+      <md>
+        \mathbf F(\mathbf r(u,v))\cdot
+        \bigl(\mathbf r_u\times\mathbf r_v\bigr).
+      </md>
+    </p>
+
+    <definition xml:id="c15s4-def-surface-integral-2-form">
+      <title>Surface integral of a <m>2</m>-form</title>
+      <statement>
+        <p>
+          Let <m>S</m> be an oriented surface parametrized by
+          <md>\mathbf r:D\to\mathbb R^3</md>
+          with the orientation determined by <m>\mathbf r_u\times\mathbf r_v</m>. If
+          <md>\mathbf r^*\Phi=A(u,v)\,du\wedge dv,</md>
+          then
+          <md>
+            \boxed{
+            \iint_S \Phi
+            =
+            \iint_D A(u,v)\,du\,dv.
+            }
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For a flux form,
+      <md>
+        \boxed{
+        \iint_S \Phi_{\mathbf F}
+        =
+        \iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS.
+        }
+      </md>
+      The two notations describe the same signed surface integral.
+    </p>
+
+    <p>
+      Reversing the orientation reverses the sign. Covering the same surface twice doubles the
+      integral. These are not defects of the formula; they are reminders that <m>2</m>-form
+      integrals are integrals over oriented surfaces.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s4-slanted-skylight-again">
+    <title>The slanted skylight again</title>
+
+    <p>
+      Return to the skylight
+      <md>
+        z=1+\frac{x}{2},
+        \qquad
+        0\le x\le2,\quad 0\le y\le3,
+      </md>
+      with upward orientation, and the vector field
+      <md>\mathbf F=(2,1,5).</md>
+      The flux form is
+      <md>
+        \Phi_{\mathbf F}
+        =
+        2\,dy\wedge dz
+        +
+        dz\wedge dx
+        +
+        5\,dx\wedge dy.
+      </md>
+    </p>
+
+    <p>
+      Use the parametrization
+      <md>\mathbf r(u,v)=\left(u,v,1+\frac u2\right).</md>
+      Then
+      <md>dx=du,\qquad dy=dv,\qquad dz=\frac12\,du.</md>
+      Pull back each term:
+      <md>
+        dy\wedge dz
+        =
+        dv\wedge\frac12du
+        =
+        -\frac12\,du\wedge dv,
+      </md>
+      <md>
+        dz\wedge dx
+        =
+        \frac12du\wedge du
+        =
+        0,
+      </md>
+      and
+      <md>
+        dx\wedge dy
+        =
+        du\wedge dv.
+      </md>
+      Therefore
+      <md>
+        <mrow>\mathbf r^*\Phi_{\mathbf F} \amp= 2\left(-\frac12\,du\wedge dv\right) + 0 + 5\,du\wedge dv</mrow>
+        <mrow>\amp= 4\,du\wedge dv.</mrow>
+      </md>
+      So
+      <md>
+        <mrow>\iint_S \Phi_{\mathbf F} \amp= \int_0^2\int_0^3 4\,dv\,du</mrow>
+        <mrow>\amp= 24.</mrow>
+      </md>
+      This matches the cross-product computation from
+      <xref ref="sec-15-oriented-surfaces-and-flux"/>.
+    </p>
+
+    <p>
+      The form calculation shows where the number <m>4</m> came from:
+      <md>5\,dx\wedge dy</md>
+      gave the upward contribution, while
+      <md>2\,dy\wedge dz</md>
+      subtracted <m>1</m> because the skylight has a <m>yz</m>-shadow with the opposite sign.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s4-graphs-and-flux-formula">
+    <title>Graphs and a useful flux formula</title>
+
+    <p>
+      For a graph
+      <md>z=g(x,y),</md>
+      use the upward orientation and the parametrization
+      <md>\mathbf r(x,y)=(x,y,g(x,y)).</md>
+      Then
+      <md>dz=g_x\,dx+g_y\,dy.</md>
+      Pull back the flux form
+      <md>
+        \Phi_{\mathbf F}
+        =
+        P\,dy\wedge dz
+        +
+        Q\,dz\wedge dx
+        +
+        R\,dx\wedge dy.
+      </md>
+      We get
+      <md>
+        dy\wedge dz
+        =
+        dy\wedge(g_x\,dx+g_y\,dy)
+        =
+        -g_x\,dx\wedge dy,
+      </md>
+      and
+      <md>
+        dz\wedge dx
+        =
+        (g_x\,dx+g_y\,dy)\wedge dx
+        =
+        -g_y\,dx\wedge dy.
+      </md>
+      Therefore
+      <md>
+        \boxed{
+        \mathbf r^*\Phi_{\mathbf F}
+        =
+        \bigl(-P g_x-Q g_y+R\bigr)\,dx\wedge dy,
+        }
+      </md>
+      where <m>P,Q,R</m> are evaluated at
+      <md>(x,y,g(x,y)).</md>
+      So the upward flux through a graph is
+      <md>
+        \boxed{
+        \iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS
+        =
+        \iint_R
+        \bigl(-P(x,y,g)g_x-Q(x,y,g)g_y+R(x,y,g)\bigr)\,dx\,dy.
+        }
+      </md>
+    </p>
+
+    <p>
+      This is the same as the cross-product formula, because
+      <md>\mathbf r_x\times\mathbf r_y=(-g_x,-g_y,1).</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s4-cylinder-in-flux-form-language">
+    <title>A cylinder in flux-form language</title>
+
+    <p>
+      Let
+      <md>\mathbf F(x,y,z)=(x,y,0).</md>
+      Then
+      <md>
+        \Phi_{\mathbf F}
+        =
+        x\,dy\wedge dz
+        +
+        y\,dz\wedge dx.
+      </md>
+      Parametrize the outward-oriented side of the cylinder of radius <m>a</m> and height
+      <m>h</m> by
+      <md>
+        \mathbf r(\theta,z)=(a\cos\theta,a\sin\theta,z),
+        \qquad
+        0\le\theta\le2\pi,\quad 0\le z\le h.
+      </md>
+      Then
+      <md>
+        x=a\cos\theta,
+        \qquad
+        y=a\sin\theta,
+      </md>
+      and
+      <md>
+        dx=-a\sin\theta\,d\theta,
+        \qquad
+        dy=a\cos\theta\,d\theta.
+      </md>
+      So
+      <md>
+        dy\wedge dz
+        =
+        a\cos\theta\,d\theta\wedge dz,
+      </md>
+      and
+      <md>
+        <mrow>dz\wedge dx \amp= dz\wedge(-a\sin\theta\,d\theta)</mrow>
+        <mrow>\amp= a\sin\theta\,d\theta\wedge dz.</mrow>
+      </md>
+      Pull back the flux form:
+      <md>
+        <mrow>\mathbf r^*\Phi_{\mathbf F} \amp= a\cos\theta \bigl(a\cos\theta\,d\theta\wedge dz\bigr) + a\sin\theta \bigl(a\sin\theta\,d\theta\wedge dz\bigr)</mrow>
+        <mrow>\amp= a^2(\cos^2\theta+\sin^2\theta)\,d\theta\wedge dz</mrow>
+        <mrow>\amp= a^2\,d\theta\wedge dz.</mrow>
+      </md>
+      Thus
+      <md>
+        <mrow>\iint_S \Phi_{\mathbf F} \amp= \int_0^{2\pi}\int_0^h a^2\,dz\,d\theta</mrow>
+        <mrow>\amp= 2\pi a^2h.</mrow>
+      </md>
+      Again, this matches the classical flux calculation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s4-why-2-form-notation-matters">
+    <title>Why the <m>2</m>-form notation matters</title>
+
+    <p>
+      The cross product is fast in <m>\mathbb R^3</m>. The flux <m>2</m>-form is more revealing.
+    </p>
+
+    <p>
+      It says that flux is built from three signed shadows:
+      <md>
+        \boxed{
+        \Phi_{\mathbf F}
+        =
+        P\,dy\wedge dz
+        +
+        Q\,dz\wedge dx
+        +
+        R\,dx\wedge dy.
+        }
+      </md>
+      The <m>P</m>-component crosses <m>yz</m>-area, the <m>Q</m>-component crosses
+      <m>zx</m>-area, and the <m>R</m>-component crosses <m>xy</m>-area.
+    </p>
+
+    <p>
+      This form notation also prepares the next theorem. In the plane, Green's theorem said
+      <md>\int_{\partial R}\omega=\int_R d\omega.</md>
+      The derivative of a plane <m>1</m>-form became a <m>2</m>-form:
+      <md>d(P\,dx+Q\,dy)=(Q_x-P_y)\,dx\wedge dy.</md>
+      In space, the derivative of a <m>1</m>-form also becomes a <m>2</m>-form, but now it has
+      three pieces:
+      <md>
+        <mrow>d(P\,dx+Q\,dy+R\,dz) \amp= (R_y-Q_z)\,dy\wedge dz</mrow>
+        <mrow>\amp\quad+ (P_z-R_x)\,dz\wedge dx</mrow>
+        <mrow>\amp\quad+ (Q_x-P_y)\,dx\wedge dy.</mrow>
+      </md>
+      Those three coefficients form a vector. That vector is called the curl.
+    </p>
+
+    <p>
+      So the next surface integral will look like flux, but it will come from circulation around
+      a boundary curve. A wire loop can bound many different surfaces, and the same boundary
+      integral will know how much curl passes through any one of them.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch09-gradient-optimization.tex, Section 9.6.
+     Status: CONVERTED. -->
+<section xml:id="sec-9-warning-examples" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Warning examples</title>
+
+  <p>
+    The tests in this chapter are powerful because they are conditional. They say:
+    <md>\text{if the hypotheses hold, then the conclusion follows.}</md>
+    A warning example shows what can happen when one of the hypotheses is missing, or when a
+    test is used beyond what it says.
+  </p>
+
+  <subsection xml:id="c9s6-critical-point-not-extremum">
+    <title>A critical point that is not an extremum</title>
+
+    <p>
+      The equation
+      <md>\nabla f=\mathbf 0</md>
+      does not mean maximum or minimum. It means first-order silence.
+    </p>
+
+    <p>
+      Let
+      <md>f(x,y)=x^2-y^2.</md>
+      Then
+      <md>f_x=2x,\qquad f_y=-2y.</md>
+      So
+      <md>\nabla f(0,0)=\mathbf 0.</md>
+      The origin is a critical point.
+    </p>
+
+    <p>
+      But along the <m>x</m>-axis,
+      <md>f(x,0)=x^2\gt0</md>
+      for <m>x\ne0</m>. Along the <m>y</m>-axis,
+      <md>f(0,y)=-y^2\lt0</md>
+      for <m>y\ne0</m>.
+    </p>
+
+    <p>
+      Thus every small disk around the origin contains points where <m>f</m> is larger than
+      <m>f(0,0)</m> and points where <m>f</m> is smaller. The origin is a saddle point.
+    </p>
+
+    <p>The gradient equation finds candidates. It does not classify them.</p>
+  </subsection>
+
+  <subsection xml:id="c9s6-degenerate-hessian-minimum">
+    <title>A degenerate Hessian with a minimum</title>
+
+    <p>
+      The second derivative test also has limits. If the Hessian is degenerate, second-order
+      information may not decide the shape.
+    </p>
+
+    <p>
+      Let
+      <md>f(x,y)=x^4+y^4.</md>
+      Then
+      <md>\nabla f(x,y)=(4x^3,4y^3),</md>
+      so
+      <md>\nabla f(0,0)=\mathbf 0.</md>
+      The Hessian is
+      <md>H_f(x,y)=\begin{pmatrix}12x^2 \amp 0\\ 0 \amp 12y^2\end{pmatrix}.</md>
+      At the origin,
+      <md>H_f(0,0)=\begin{pmatrix}0\amp0\\ 0\amp0\end{pmatrix}.</md>
+      So
+      <md>\Delta=0.</md>
+      The second derivative test gives no conclusion.
+    </p>
+
+    <p>
+      But
+      <md>x^4+y^4\ge0</md>
+      for all <m>(x,y)</m>, with equality only at
+      <md>(0,0).</md>
+      Therefore the origin is a local minimum.
+    </p>
+
+    <p>Here the first nonzero visible terms are fourth order, not second order.</p>
+  </subsection>
+
+  <subsection xml:id="c9s6-degenerate-hessian-saddle">
+    <title>A degenerate Hessian with a saddle point</title>
+
+    <p>
+      Now change only one sign:
+      <md>g(x,y)=x^4-y^4.</md>
+      Again
+      <md>\nabla g(0,0)=\mathbf 0,</md>
+      and again
+      <md>H_g(0,0)=\begin{pmatrix}0\amp0\\ 0\amp0\end{pmatrix}.</md>
+      The Hessian at the origin is exactly the same as in the previous example.
+    </p>
+
+    <p>
+      But along the <m>x</m>-axis,
+      <md>g(t,0)=t^4\gt0</md>
+      for <m>t\ne0</m>, while along the <m>y</m>-axis,
+      <md>g(0,t)=-t^4\lt0</md>
+      for <m>t\ne0</m>.
+    </p>
+
+    <p>So the origin is a saddle point.</p>
+
+    <p>
+      The same degenerate Hessian led to a minimum in one example and a saddle point in the
+      other. When
+      <md>\Delta=0,</md>
+      the second derivative test is not weak. It is honest: second-order information is not
+      enough.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s6-multiplier-misses-endpoint">
+    <title>A constrained problem where the multiplier method misses an endpoint</title>
+
+    <p>
+      Lagrange multipliers are for smooth constraint pieces. They do not automatically find
+      endpoints or corners.
+    </p>
+
+    <p>
+      Find the maximum and minimum of
+      <md>f(x,y)=x</md>
+      on the line segment
+      <md>-1\le x\le1,\qquad y=0.</md>
+      The smooth constraint is
+      <md>g(x,y)=y=0.</md>
+      Then
+      <md>\nabla f=(1,0),\qquad \nabla g=(0,1).</md>
+      The multiplier equation would be
+      <md>(1,0)=\lambda(0,1),</md>
+      which has no solution.
+    </p>
+
+    <p>
+      That does not mean the problem has no extrema. The domain is the closed line segment. The
+      maximum occurs at
+      <md>(1,0),</md>
+      and the minimum occurs at
+      <md>(-1,0).</md>
+    </p>
+
+    <p>
+      The multiplier method found no interior point of the segment because the function is
+      increasing all along the segment. The extrema live at the endpoints, where the allowed set
+      stops.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s6-mixed-partials-fail">
+    <title>Mixed partials can fail to agree without regularity</title>
+
+    <p>
+      For smooth functions, the mixed partials agree:
+      <md>f_{xy}=f_{yx}.</md>
+      But the continuity hypothesis in the mixed-partials theorem is not optional.
+    </p>
+
+    <p>
+      Define
+      <md>F(x,y)=\begin{cases}\dfrac{xy(x^2-y^2)}{x^2+y^2}, \amp (x,y)\ne(0,0),\\ 0, \amp (x,y)=(0,0).\end{cases}</md>
+      At the origin, compute the mixed partials by looking along the axes.
+    </p>
+
+    <p>
+      First, for <m>y\ne0</m>,
+      <md>
+        <mrow>F_x(0,y) \amp= \lim_{h\to0}\frac{F(h,y)-F(0,y)}{h}</mrow>
+        <mrow>\amp= \lim_{h\to0}\frac{hy(h^2-y^2)}{h(h^2+y^2)}</mrow>
+        <mrow>\amp= \lim_{h\to0}\frac{y(h^2-y^2)}{h^2+y^2}</mrow>
+        <mrow>\amp= -y.</mrow>
+      </md>
+      Also <m>F_x(0,0)=0</m>, so near the origin along the <m>y</m>-axis,
+      <md>F_x(0,y)=-y.</md>
+      Therefore
+      <md>F_{xy}(0,0)=\lim_{k\to0}\frac{F_x(0,k)-F_x(0,0)}{k}=\lim_{k\to0}\frac{-k}{k}=-1.</md>
+    </p>
+
+    <p>
+      Now reverse the order. For <m>x\ne0</m>,
+      <md>
+        <mrow>F_y(x,0) \amp= \lim_{k\to0}\frac{F(x,k)-F(x,0)}{k}</mrow>
+        <mrow>\amp= \lim_{k\to0}\frac{xk(x^2-k^2)}{k(x^2+k^2)}</mrow>
+        <mrow>\amp= \lim_{k\to0}\frac{x(x^2-k^2)}{x^2+k^2}</mrow>
+        <mrow>\amp= x.</mrow>
+      </md>
+      Also <m>F_y(0,0)=0</m>, so near the origin along the <m>x</m>-axis,
+      <md>F_y(x,0)=x.</md>
+      Therefore
+      <md>F_{yx}(0,0)=\lim_{h\to0}\frac{F_y(h,0)-F_y(0,0)}{h}=\lim_{h\to0}\frac{h}{h}=1.</md>
+    </p>
+
+    <p>
+      So
+      <md>\boxed{F_{xy}(0,0)=-1,\qquad F_{yx}(0,0)=1.}</md>
+      Both mixed partials exist at the origin, but they are not equal. The missing condition is
+      regularity near the point, such as continuity of the mixed partials.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s6-the-common-lesson">
+    <title>The common lesson</title>
+
+    <p>The warnings are different, but they share one pattern.</p>
+
+    <table xml:id="c9s6-tab-common-lesson">
+      <title>What each tool does not do.</title>
+      <tabular>
+        <row header="yes" bottom="medium"><cell>Tool</cell><cell>What it does not do</cell></row>
+        <row><cell><m>\nabla f=\mathbf 0</m></cell><cell>does not guarantee an extremum</cell></row>
+        <row><cell>second derivative test</cell><cell>does not classify degenerate Hessians</cell></row>
+        <row><cell>Lagrange multipliers</cell><cell>does not check endpoints, corners, or singular constraints</cell></row>
+        <row><cell><m>f_{xy}=f_{yx}</m></cell><cell>does not hold without enough regularity</cell></row>
+      </tabular>
+    </table>
+
+    <p>
+      This chapter has been about special points: peaks, valleys, saddles, and constrained
+      extrema. The next chapter changes the question. Instead of asking where a function is
+      largest or smallest, we will ask how to add its values over a whole region. A hill will no
+      longer be judged by its highest point, but by the total amount of earth under it. That new
+      operation is the double integral.
+    </p>
+  </subsection>
+</section>

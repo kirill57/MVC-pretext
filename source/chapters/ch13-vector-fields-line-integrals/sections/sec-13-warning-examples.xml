@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch13-vector-fields-line-integrals.tex, Section 13.7.
+     Status: CONVERTED. -->
+<section xml:id="sec-13-warning-examples" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Warning examples</title>
+
+  <p>
+    <xref ref="sec-13-curl-tests-in-the-plane-and-in"/> gave a useful test:
+    <md>P_y=Q_x</md>
+    in the plane, or
+    <md>\nabla\times\mathbf F=\mathbf 0</md>
+    in space. But it also gave a warning: this test is local. It checks tiny rotation near
+    each point. It does not, by itself, know the shape of the whole domain.
+  </p>
+
+  <p>
+    This section collects the traps in one place. They are worth seeing slowly, because most
+    mistakes with conservative fields come from forgetting one of them.
+  </p>
+
+  <subsection xml:id="c13s7-subsec-curl-zero-no-global-potential">
+    <title>Curl zero but no global potential on a punctured plane</title>
+
+    <p>
+      Consider the <m>1</m>-form
+      <md>\alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}</md>
+      on the punctured plane
+      <md>D=\mathbb R^2\setminus\{(0,0)\}.</md>
+      The origin is missing, so the denominator is never zero on <m>D</m>.
+    </p>
+
+    <p>
+      Write
+      <md>\alpha=P\,dx+Q\,dy,</md>
+      where
+      <md>P(x,y)=\frac{-y}{x^2+y^2}, \qquad Q(x,y)=\frac{x}{x^2+y^2}.</md>
+      Compute:
+      <md>
+        <mrow>P_y \amp= \frac{-(x^2+y^2)+2y^2}{(x^2+y^2)^2}</mrow>
+        <mrow>\amp= \frac{y^2-x^2}{(x^2+y^2)^2},</mrow>
+      </md>
+      and
+      <md>
+        <mrow>Q_x \amp= \frac{(x^2+y^2)-2x^2}{(x^2+y^2)^2}</mrow>
+        <mrow>\amp= \frac{y^2-x^2}{(x^2+y^2)^2}.</mrow>
+      </md>
+      Thus
+      <md>P_y=Q_x</md>
+      everywhere on <m>D</m>.
+    </p>
+
+    <p>So the local curl test passes.</p>
+
+    <p>
+      Now integrate around the unit circle
+      <md>C:\quad \mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi.</md>
+      Along this circle,
+      <md>x=\cos t,\qquad y=\sin t,</md>
+      so
+      <md>dx=-\sin t\,dt, \qquad dy=\cos t\,dt.</md>
+      Then
+      <md>
+        <mrow>\alpha \amp= \frac{-(\sin t)(-\sin t\,dt)+(\cos t)(\cos t\,dt)}{\cos^2t+\sin^2t}</mrow>
+        <mrow>\amp= dt.</mrow>
+      </md>
+      Therefore
+      <md>\boxed{\oint_C \alpha=2\pi.}</md>
+    </p>
+
+    <p>
+      If <m>\alpha</m> were exact on all of <m>D</m>, then
+      <md>\alpha=d\phi</md>
+      for some potential <m>\phi</m>, and every closed-curve integral would be zero:
+      <md>\oint_C d\phi=0.</md>
+      But this closed-curve integral is <m>2\pi</m>. So <m>\alpha</m> is not exact on the
+      punctured plane.
+    </p>
+
+    <figure xml:id="c13s7-fig-punctured-plane-circulation">
+      <caption>The form <m>\alpha</m> has zero curl away from the origin, but a loop around the
+      missing origin has integral <m>2\pi</m>.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-3.2,0) -- (3.4,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-3.2) -- (0,3.4) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-3,-3) grid (3,3);
+
+            \foreach \a in {0,30,...,330} {
+                \pgfmathsetmacro{\x}{2*cos(\a)}
+                \pgfmathsetmacro{\y}{2*sin(\a)}
+                \draw[-&gt;, blue!65!black, thick]
+                    (\x,\y) -- ++({-0.35*sin(\a)},{0.35*cos(\a)});
+            }
+
+            \draw[very thick, red!65!black] (0,0) circle (2);
+            \draw[-&gt;, very thick, red!65!black] (2,0) arc[start angle=0,end angle=45,radius=2];
+
+            \fill[white] (0,0) circle (6pt);
+            \draw[thick] (0,0) circle (6pt);
+            \node[below right] at (0.15,-0.15) {missing};
+
+            \node at (0,-4.0) {\(\alpha=\dfrac{-y\,dx+x\,dy}{x^2+y^2}\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The moral is not that the curl test is wrong. The moral is that the curl test is local.
+      A loop can detect a hole that no tiny derivative sees.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c13s7-subsec-path-dependent-same-endpoints">
+    <title>A path-dependent integral with the same endpoints</title>
+
+    <p>
+      Path independence is a strong property. It says that every path from <m>A</m> to <m>B</m>
+      gives the same integral. Here is a simple field where that fails.
+    </p>
+
+    <p>
+      Let
+      <md>\eta=-y\,dx+x\,dy.</md>
+      Move from
+      <md>A=(0,0)</md>
+      to
+      <md>B=(1,1).</md>
+    </p>
+
+    <p>
+      First take the straight path
+      <md>C_1:\quad \mathbf r(t)=(t,t), \qquad 0\le t\le1.</md>
+      Then
+      <md>x=t,\qquad y=t,\qquad dx=dt,\qquad dy=dt.</md>
+      So
+      <md>\eta=-t\,dt+t\,dt=0.</md>
+      Therefore
+      <md>\boxed{\int_{C_1}\eta=0.}</md>
+    </p>
+
+    <p>
+      Now take the broken path <m>C_2</m>: first go east from <m>(0,0)</m> to <m>(1,0)</m>, then
+      go north from <m>(1,0)</m> to <m>(1,1)</m>.
+    </p>
+
+    <p>
+      On the eastward segment,
+      <md>y=0,\qquad dy=0,</md>
+      so
+      <md>-y\,dx+x\,dy=0.</md>
+      On the northward segment,
+      <md>x=1,\qquad dx=0,</md>
+      so
+      <md>-y\,dx+x\,dy=dy.</md>
+      Thus
+      <md>\int_{C_2}\eta = \int_0^1 dy = 1.</md>
+      So
+      <md>\boxed{\int_{C_2}\eta=1.}</md>
+    </p>
+
+    <p>
+      The endpoints are the same, but the integrals are different:
+      <md>\int_{C_1}\eta=0, \qquad \int_{C_2}\eta=1.</md>
+      So <m>\eta</m> is not exact, and its integral is not path independent.
+    </p>
+
+    <p>
+      The curl test sees the problem immediately:
+      <md>P=-y,\qquad Q=x,</md>
+      so
+      <md>Q_x-P_y=1-(-1)=2.</md>
+      This form carries rotation everywhere.
+    </p>
+
+    <figure xml:id="c13s7-fig-path-dependence-endpoints">
+      <caption>The same endpoints can give different work when the field is not conservative.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=2.2, &gt;=stealth]
+            \draw[-&gt;] (-0.15,0) -- (1.35,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.15) -- (0,1.35) node[above] {\(y\)};
+
+            \draw[gray!25, step=0.5] (0,0) grid (1,1);
+
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (1,1);
+            \coordinate (M) at (1,0);
+
+            \draw[very thick, blue!65!black] (A) -- (B);
+            \draw[-&gt;, very thick, blue!65!black] (0.42,0.42) -- (0.58,0.58);
+            \node[blue!65!black, left] at (0.58,0.7) {\(C_1\)};
+
+            \draw[very thick, red!65!black] (A) -- (M) -- (B);
+            \draw[-&gt;, very thick, red!65!black] (0.35,0) -- (0.65,0);
+            \draw[-&gt;, very thick, red!65!black] (1,0.35) -- (1,0.65);
+            \node[red!65!black, right] at (1,0.55) {\(C_2\)};
+
+            \fill (A) circle (1.2pt);
+            \fill (B) circle (1.2pt);
+
+            \node[below left] at (A) {\(A\)};
+            \node[above right] at (B) {\(B\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>A conservative field has no memory of the route. This one does.</p>
+  </subsection>
+
+  <subsection xml:id="c13s7-subsec-singularity-hidden-at-origin">
+    <title>A vector field with a singularity hidden at the origin</title>
+
+    <p>
+      The most dangerous mistake is to compute a curl on the points where a field is defined
+      and then silently pretend the field is defined everywhere.
+    </p>
+
+    <p>
+      Return to
+      <md>\mathbf A(x,y)= \left( \frac{-y}{x^2+y^2}, \frac{x}{x^2+y^2} \right).</md>
+      This is the vector field associated with
+      <md>\alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}.</md>
+      It is not defined at the origin.
+    </p>
+
+    <p>
+      Around a circle of radius <m>R\gt 0</m>,
+      <md>\mathbf r(t)=(R\cos t,R\sin t), \qquad 0\le t\le2\pi,</md>
+      we have
+      <md>dx=-R\sin t\,dt, \qquad dy=R\cos t\,dt.</md>
+      The numerator becomes
+      <md>
+        <mrow>-y\,dx+x\,dy \amp= -(R\sin t)(-R\sin t\,dt)+(R\cos t)(R\cos t\,dt)</mrow>
+        <mrow>\amp= R^2\,dt.</mrow>
+      </md>
+      The denominator is
+      <md>x^2+y^2=R^2.</md>
+      So
+      <md>\alpha=dt,</md>
+      and therefore
+      <md>\boxed{\oint_{C_R}\alpha=2\pi}</md>
+      for every radius <m>R\gt 0</m>.
+    </p>
+
+    <p>
+      This is strange at first. The circle can be tiny:
+      <md>R=10^{-6}.</md>
+      The circulation is still
+      <md>2\pi.</md>
+    </p>
+
+    <p>
+      The reason is that the field gets stronger near the missing point. Its length is
+      <md>\|\mathbf A(x,y)\| = \frac{1}{\sqrt{x^2+y^2}}.</md>
+      On a circle of radius <m>R</m>, the field has size <m>1/R</m>. The circumference is
+      <m>2\pi R</m>. Their product stays roughly
+      <md>\frac1R\cdot 2\pi R=2\pi.</md>
+    </p>
+
+    <p>The origin is not a harmless missing point. It is where the circulation is hiding.</p>
+
+    <p>
+      So the statement
+      <md>\nabla\times\mathbf A=\mathbf 0</md>
+      is true only on the punctured plane. It is not a statement about the whole disk
+      containing the origin, because <m>\mathbf A</m> is not a vector field there.
+      <md>\boxed{\text{Before applying any theorem, check the domain of the field.}}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c13s7-subsec-domain-matters-as-much-as-formula">
+    <title>Why the domain matters as much as the formula</title>
+
+    <p>The same formula can behave differently on different domains.</p>
+
+    <p>
+      Again take
+      <md>\alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}.</md>
+    </p>
+
+    <p>
+      On the right half-plane
+      <md>D_+=\{(x,y):x\gt 0\},</md>
+      define
+      <md>\theta(x,y)=\arctan\left(\frac{y}{x}\right).</md>
+      Then
+      <md>\theta_x= \frac{-y}{x^2+y^2}, \qquad \theta_y= \frac{x}{x^2+y^2}.</md>
+      So
+      <md>\boxed{d\theta=\alpha}</md>
+      on <m>D_+</m>. On the right half-plane, the form is exact.
+    </p>
+
+    <p>
+      But on the punctured plane
+      <md>D=\mathbb R^2\setminus\{(0,0)\},</md>
+      the same formula is not exact, because
+      <md>\oint_{\text{unit circle}}\alpha=2\pi.</md>
+    </p>
+
+    <p>
+      And on the whole plane
+      <md>\mathbb R^2,</md>
+      the same formula does not even define a <m>1</m>-form, because it is undefined at
+      <m>(0,0)</m>.
+    </p>
+
+    <table xml:id="c13s7-tab-domain-status-of-alpha">
+      <title>The status of <m>\alpha</m> depends on its domain.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Domain</cell>
+          <cell>Status of <m>\alpha</m></cell>
+          <cell>Reason</cell>
+        </row>
+        <row>
+          <cell><m>x\gt 0</m></cell>
+          <cell>exact</cell>
+          <cell><m>\alpha=d\arctan(y/x)</m></cell>
+        </row>
+        <row>
+          <cell><m>\mathbb R^2\setminus\{(0,0)\}</m></cell>
+          <cell>closed but not exact</cell>
+          <cell><m>\oint \alpha=2\pi</m></cell>
+        </row>
+        <row>
+          <cell><m>\mathbb R^2</m></cell>
+          <cell>not defined</cell>
+          <cell>denominator is <m>0</m> at the origin</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      This is why we never say only
+      <md>\omega=P\,dx+Q\,dy.</md>
+      We say:
+      <md>\omega=P\,dx+Q\,dy \quad\text{on a domain }D.</md>
+    </p>
+
+    <p>
+      The formula tells us the local measuring rule. The domain tells us which paths are
+      allowed, which loops can shrink, and which singularities have been removed. A
+      potential function is not just a formula. It is a formula that works continuously and
+      single-valuedly on the whole domain.
+    </p>
+
+    <p>
+      These warnings look like exceptions, but they are really pointing toward a theorem.
+      The form
+      <md>\alpha</md>
+      has no local curl away from the origin, yet a loop around the origin detects something
+      global. To connect local curl with boundary circulation, we need a theorem that adds
+      curl over a whole region. That theorem is Green's theorem.
+    </p>
+  </subsection>
+</section>

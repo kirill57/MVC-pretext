@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch17-exterior-derivatives.tex, Section 17.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-17-the-rule-d-squared-equals-zero" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The rule <m>d^2=0</m></title>
+
+  <p>
+    The exterior derivative raises degree by one:
+    <md>
+      0\text{-forms}
+      \xrightarrow{\ d\ }
+      1\text{-forms}
+      \xrightarrow{\ d\ }
+      2\text{-forms}
+      \xrightarrow{\ d\ }
+      3\text{-forms}.
+    </md>
+    The next fact is one of the cleanest in the whole subject:
+    <md>\boxed{ d^2=0. }</md>
+    It says that if a form is already an exterior derivative, then taking one more exterior
+    derivative gives zero.
+  </p>
+
+  <subsection xml:id="c17s4-subsec-why-second-derivatives-vanish">
+    <title>Why second exterior derivatives vanish</title>
+
+    <p>
+      Start with a function. Let
+      <md>f(x,y,z)=x^2z+xy.</md>
+      Then
+      <md>df=(2xz+y)\,dx+x\,dy+x^2\,dz.</md>
+      Now take <m>d</m> again:
+      <md>
+        <mrow>d(df) \amp= d(2xz+y)\wedge dx + d(x)\wedge dy + d(x^2)\wedge dz.</mrow>
+      </md>
+      Compute the coefficient differentials:
+      <md>d(2xz+y)=2z\,dx+dy+2x\,dz,</md>
+      <md>d(x)=dx, \qquad d(x^2)=2x\,dx.</md>
+      So
+      <md>
+        <mrow>d(df) \amp= (2z\,dx+dy+2x\,dz)\wedge dx + dx\wedge dy + 2x\,dx\wedge dz.</mrow>
+      </md>
+      The repeated wedge <m>dx\wedge dx</m> vanishes:
+      <md>
+        <mrow>d(df) \amp= dy\wedge dx+2x\,dz\wedge dx + dx\wedge dy + 2x\,dx\wedge dz.</mrow>
+      </md>
+      Now pair the terms:
+      <md>dy\wedge dx=-dx\wedge dy,</md>
+      and
+      <md>dz\wedge dx=-dx\wedge dz.</md>
+      Thus
+      <md>
+        <mrow>d(df) \amp= -dx\wedge dy-2x\,dx\wedge dz + dx\wedge dy + 2x\,dx\wedge dz</mrow>
+        <mrow>\amp= 0.</mrow>
+      </md>
+    </p>
+
+    <p>
+      The cancellation came from two facts:
+      <md>dx\wedge dx=0</md>
+      and
+      <md>dx\wedge dy=-dy\wedge dx.</md>
+      The wedge product supplies the signs that make the second derivative cancel.
+    </p>
+
+    <p>The same thing happens to every sufficiently smooth function.</p>
+
+    <theorem xml:id="c17s4-thm-d-df-zero">
+      <title><m>d(df)=0</m></title>
+      <statement>
+        <p>
+          Let <m>f(x,y,z)</m> have continuous second partial derivatives on an open region. Then
+          <md>\boxed{ d(df)=0. }</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Write
+          <md>df=f_x\,dx+f_y\,dy+f_z\,dz.</md>
+          Then
+          <md>
+            <mrow>d(df) \amp= d(f_x)\wedge dx+d(f_y)\wedge dy+d(f_z)\wedge dz.</mrow>
+          </md>
+          Expand:
+          <md>
+            <mrow>d(df) \amp= (f_{xx}\,dx+f_{xy}\,dy+f_{xz}\,dz)\wedge dx</mrow>
+            <mrow>\amp\quad+ (f_{yx}\,dx+f_{yy}\,dy+f_{yz}\,dz)\wedge dy</mrow>
+            <mrow>\amp\quad+ (f_{zx}\,dx+f_{zy}\,dy+f_{zz}\,dz)\wedge dz.</mrow>
+          </md>
+          All repeated wedges vanish. The remaining terms are
+          <md>
+            <mrow>d(df) \amp= (f_{yx}-f_{xy})\,dx\wedge dy</mrow>
+            <mrow>\amp\quad+ (f_{xz}-f_{zx})\,dz\wedge dx</mrow>
+            <mrow>\amp\quad+ (f_{zy}-f_{yz})\,dy\wedge dz.</mrow>
+          </md>
+          Since the second partial derivatives are continuous, the mixed partials agree:
+          <md>f_{xy}=f_{yx}, \qquad f_{xz}=f_{zx}, \qquad f_{yz}=f_{zy}.</md>
+          Therefore
+          <md>d(df)=0.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The smoothness condition is doing real work. It lets us trade the order of mixed partials.
+    </p>
+
+    <example xml:id="c17s4-ex-c2-hypothesis">
+      <title>Why the <m>C^2</m> hypothesis matters</title>
+      <statement>
+        <p>
+          Define
+          <md>
+            g(x,y)=
+            \begin{cases}
+            \dfrac{xy(x^2-y^2)}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+            0, \amp (x,y)=(0,0).
+            \end{cases}
+          </md>
+          This function has second mixed partial derivatives at the origin, but they are not
+          equal.
+        </p>
+        <p>
+          First compute <m>g_x(0,y)</m>. For <m>y\ne0</m>,
+          <md>
+            <mrow>g_x(0,y) \amp= \lim_{h\to0} \frac{g(h,y)-g(0,y)}{h}</mrow>
+            <mrow>\amp= \lim_{h\to0} y\frac{h^2-y^2}{h^2+y^2}</mrow>
+            <mrow>\amp= -y.</mrow>
+          </md>
+          Also <m>g_x(0,0)=0</m>. Therefore
+          <md>g_{xy}(0,0) = \lim_{y\to0}\frac{g_x(0,y)-g_x(0,0)}{y} = \lim_{y\to0}\frac{-y}{y} = -1.</md>
+        </p>
+        <p>
+          Now compute <m>g_y(x,0)</m>. For <m>x\ne0</m>,
+          <md>
+            <mrow>g_y(x,0) \amp= \lim_{h\to0} \frac{g(x,h)-g(x,0)}{h}</mrow>
+            <mrow>\amp= \lim_{h\to0} x\frac{x^2-h^2}{x^2+h^2}</mrow>
+            <mrow>\amp= x.</mrow>
+          </md>
+          Also <m>g_y(0,0)=0</m>. Therefore
+          <md>g_{yx}(0,0) = \lim_{x\to0}\frac{g_y(x,0)-g_y(0,0)}{x} = 1.</md>
+          So
+          <md>\boxed{ g_{xy}(0,0)=-1, \qquad g_{yx}(0,0)=1. }</md>
+        </p>
+        <p>
+          If we try to run the formula
+          <md>d(dg)=(g_{yx}-g_{xy})\,dx\wedge dy</md>
+          at the origin using these existing second partials, we get
+          <md>d(dg)=2\,dx\wedge dy</md>
+          there, not zero.
+        </p>
+        <p>
+          The theorem did not fail. Its hypothesis failed. The function is not <m>C^2</m> at the
+          origin, and the mixed partials are not forced to agree.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c17s4-subsec-curl-grad-zero">
+    <title><m>d(df)=0</m> and <m>\nabla\times\nabla f=\mathbf 0</m></title>
+
+    <p>
+      The identity
+      <md>d(df)=0</md>
+      is the differential-form version of a classical vector identity.
+    </p>
+
+    <p>
+      For a function
+      <md>f(x,y,z),</md>
+      the differential is
+      <md>df=f_x\,dx+f_y\,dy+f_z\,dz.</md>
+      This is the work <m>1</m>-form associated with the gradient vector field
+      <md>\nabla f=(f_x,f_y,f_z).</md>
+      From <xref ref="sec-17-the-exterior-derivative-of-a-1-form"/>, the exterior derivative of a
+      work form is the flux form of the curl:
+      <md>d(df)=\Phi_{\nabla\times\nabla f}.</md>
+      But
+      <md>d(df)=0.</md>
+      Therefore
+      <md>\boxed{ \nabla\times(\nabla f)=\mathbf 0 }</md>
+      whenever <m>f</m> has continuous second partial derivatives.
+    </p>
+
+    <p>
+      This says a gradient field has no local rotation. It can push a particle uphill or
+      downhill, but it does not create first-order spinning.
+    </p>
+
+    <example xml:id="c17s4-ex-temperature-gradient-zero-curl">
+      <title>A temperature gradient has zero curl</title>
+      <statement>
+        <p>
+          Let
+          <md>T(x,y,z)=20+xy+yz+xz^2.</md>
+          Then
+          <md>\nabla T=(y+z^2,\ x+z,\ y+2xz).</md>
+          Compute the curl:
+          <md>
+            <mrow>\nabla\times\nabla T \amp= \left( \frac{\partial}{\partial y}(y+2xz) - \frac{\partial}{\partial z}(x+z), \right.</mrow>
+            <mrow>\amp\qquad \frac{\partial}{\partial z}(y+z^2) - \frac{\partial}{\partial x}(y+2xz),</mrow>
+            <mrow>\amp\qquad\left. \frac{\partial}{\partial x}(x+z) - \frac{\partial}{\partial y}(y+z^2) \right)</mrow>
+            <mrow>\amp= (1-1,\ 2z-2z,\ 1-1)</mrow>
+            <mrow>\amp= \mathbf 0.</mrow>
+          </md>
+          The cancellations are mixed partials in disguise.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c17s4-subsec-div-curl-zero">
+    <title><m>d(d\omega)=0</m> and <m>\nabla\cdot(\nabla\times\mathbf F)=0</m></title>
+
+    <p>Now start with a <m>1</m>-form instead of a function.</p>
+
+    <p>
+      Use the example from <xref ref="sec-17-the-exterior-derivative-of-a-1-form"/>:
+      <md>\omega=z^2\,dx+xz\,dy+y^2\,dz.</md>
+      We found
+      <md>d\omega = (2y-x)\,dy\wedge dz + 2z\,dz\wedge dx + z\,dx\wedge dy.</md>
+      Now take <m>d</m> again:
+      <md>
+        <mrow>d(d\omega) \amp= d(2y-x)\wedge dy\wedge dz + d(2z)\wedge dz\wedge dx + d(z)\wedge dx\wedge dy.</mrow>
+      </md>
+      Compute:
+      <md>d(2y-x)=2\,dy-dx, \qquad d(2z)=2\,dz, \qquad d(z)=dz.</md>
+      So
+      <md>
+        <mrow>d(d\omega) \amp= (2\,dy-dx)\wedge dy\wedge dz + 2\,dz\wedge dz\wedge dx + dz\wedge dx\wedge dy.</mrow>
+      </md>
+      Repeated wedges vanish:
+      <md>dy\wedge dy=0, \qquad dz\wedge dz=0.</md>
+      Therefore
+      <md>
+        <mrow>d(d\omega) \amp= -dx\wedge dy\wedge dz + dz\wedge dx\wedge dy.</mrow>
+      </md>
+      But
+      <md>dz\wedge dx\wedge dy=dx\wedge dy\wedge dz,</md>
+      so
+      <md>\boxed{ d(d\omega)=0. }</md>
+    </p>
+
+    <p>The general identity is the <m>1</m>-form case of <m>d^2=0</m>.</p>
+
+    <theorem xml:id="c17s4-thm-d-domega-zero">
+      <title><m>d(d\omega)=0</m> for <m>1</m>-forms</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+          have <m>C^2</m> coefficient functions on an open region. Then
+          <md>\boxed{ d(d\omega)=0. }</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          From <xref ref="sec-17-the-exterior-derivative-of-a-1-form"/>,
+          <md>d\omega = (R_y-Q_z)\,dy\wedge dz + (P_z-R_x)\,dz\wedge dx + (Q_x-P_y)\,dx\wedge dy.</md>
+          Now apply <m>d</m> to this <m>2</m>-form:
+          <md>
+            <mrow>d(d\omega) \amp= \Bigl((R_y-Q_z)_x+(P_z-R_x)_y+(Q_x-P_y)_z\Bigr) \,dx\wedge dy\wedge dz.</mrow>
+          </md>
+          The coefficient is
+          <md>R_{yx}-Q_{zx}+P_{zy}-R_{xy}+Q_{xz}-P_{yz}.</md>
+          Group the matching mixed partials:
+          <md>(R_{yx}-R_{xy}) + (P_{zy}-P_{yz}) + (Q_{xz}-Q_{zx}).</md>
+          Since the coefficient functions are <m>C^2</m>, each pair cancels. Hence
+          <md>d(d\omega)=0.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      Now translate this into vector notation. If
+      <md>\mathbf F=(P,Q,R)</md>
+      and
+      <md>\omega_{\mathbf F}=P\,dx+Q\,dy+R\,dz,</md>
+      then
+      <md>d\omega_{\mathbf F}=\Phi_{\nabla\times\mathbf F}.</md>
+      Applying <m>d</m> again gives
+      <md>d(d\omega_{\mathbf F}) = d\Phi_{\nabla\times\mathbf F} = \bigl(\nabla\cdot(\nabla\times\mathbf F)\bigr) \,dx\wedge dy\wedge dz.</md>
+      But
+      <md>d(d\omega_{\mathbf F})=0.</md>
+      Therefore
+      <md>\boxed{ \nabla\cdot(\nabla\times\mathbf F)=0. }</md>
+    </p>
+
+    <p>
+      A curl field has no source strength. It can circulate, but it cannot be the whole story of
+      a source.
+    </p>
+
+    <example xml:id="c17s4-ex-curl-zero-divergence">
+      <title>A curl with zero divergence</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F(x,y,z)=(0,xz,0).</md>
+          Then
+          <md>\nabla\times\mathbf F=(-x,0,z).</md>
+          Its divergence is
+          <md>\nabla\cdot(-x,0,z) = -1+0+1 = 0.</md>
+          The two surviving rates cancel. This cancellation is <m>d^2=0</m> written in vector
+          language.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      There is one last degree to check. If
+      <md>\Theta=H\,dx\wedge dy\wedge dz</md>
+      is a <m>3</m>-form in ordinary space, then
+      <md>
+        <mrow>d\Theta \amp= dH\wedge dx\wedge dy\wedge dz</mrow>
+        <mrow>\amp= (H_x\,dx+H_y\,dy+H_z\,dz)\wedge dx\wedge dy\wedge dz.</mrow>
+      </md>
+      Every term repeats one of
+      <md>dx,\qquad dy,\qquad dz.</md>
+      So
+      <md>\boxed{ d\Theta=0. }</md>
+      In three-dimensional space, there is no nonzero <m>4</m>-form waiting after a <m>3</m>-form.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c17s4-subsec-boundary-of-boundary">
+    <title>Boundary of a boundary is zero</title>
+
+    <p>
+      The algebraic rule
+      <md>d^2=0</md>
+      has a geometric twin:
+      <md>\boxed{ \partial(\partial M)=0. }</md>
+      In words:
+      <md>\boxed{ \text{the boundary of a boundary is zero.} }</md>
+    </p>
+
+    <p>
+      Start in one dimension. For an interval
+      <md>I=[a,b],</md>
+      the oriented boundary is
+      <md>\partial I=\{b\}-\{a\}.</md>
+      A point has no boundary, so
+      <md>\partial(\partial I)=0.</md>
+    </p>
+
+    <p>
+      Now look at a rectangle with vertices <m>A,B,C,D</m>, oriented counterclockwise:
+      <md>\partial R=[A,B]+[B,C]+[C,D]+[D,A].</md>
+      Take the boundary of each edge:
+      <md>
+        <mrow>\partial(\partial R) \amp= (B-A)+(C-B)+(D-C)+(A-D)</mrow>
+        <mrow>\amp= 0.</mrow>
+      </md>
+      Every vertex appears once with a plus sign and once with a minus sign.
+    </p>
+
+    <figure xml:id="c17s4-fig-boundary-of-rectangle">
+      <caption>
+        The boundary of a rectangle is a closed curve. Its boundary cancels at the corners.
+      </caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (4,0);
+            \coordinate (C) at (4,2.5);
+            \coordinate (D) at (0,2.5);
+
+            \draw[fill=gray!8, thick] (A)--(B)--(C)--(D)--cycle;
+
+            \draw[-&gt;, very thick, red!65!black] (0.4,0) -- (2.0,0);
+            \draw[-&gt;, very thick, red!65!black] (4,0.4) -- (4,1.7);
+            \draw[-&gt;, very thick, red!65!black] (3.6,2.5) -- (2.0,2.5);
+            \draw[-&gt;, very thick, red!65!black] (0,2.1) -- (0,0.8);
+
+            \fill (A) circle (2pt);
+            \fill (B) circle (2pt);
+            \fill (C) circle (2pt);
+            \fill (D) circle (2pt);
+
+            \node[below left] at (A) {\(A\)};
+            \node[below right] at (B) {\(B\)};
+            \node[above right] at (C) {\(C\)};
+            \node[above left] at (D) {\(D\)};
+
+            \node at (2,-0.9)
+                {\((B-A)+(C-B)+(D-C)+(A-D)=0\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      For a solid box, the same cancellation happens one dimension higher. The boundary of the
+      box is made of faces. The boundary of those faces is made of edges. Every edge belongs to
+      two neighboring faces, and the two induced orientations are opposite. So all edges cancel.
+    </p>
+
+    <p>
+      This explains why <m>d^2=0</m> belongs with Stokes-type theorems. The general pattern is
+      <md>\int_{\partial M}\alpha=\int_M d\alpha.</md>
+      Apply the same idea one more time:
+      <md>\int_{\partial(\partial M)}\alpha = \int_{\partial M}d\alpha = \int_M d(d\alpha).</md>
+      The left side is zero because
+      <md>\partial(\partial M)=0.</md>
+      The right side is zero because
+      <md>d(d\alpha)=0.</md>
+    </p>
+
+    <p>
+      So the algebra and the geometry say the same thing:
+      <md>
+        \boxed{
+        \begin{aligned}
+        \amp\text{algebra: } d^2=0,\\[1mm]
+        \amp\text{geometry: } \partial^2=0.
+        \end{aligned}
+        }
+      </md>
+    </p>
+
+    <p>
+      That is a small sentence with a large reach. It says every exact form has zero exterior
+      derivative:
+      <md>\alpha=d\beta \quad\Longrightarrow\quad d\alpha=0.</md>
+      But it does not answer the reverse question. If a form has zero exterior derivative, must
+      it come from another form? On a region with no holes, often yes. Around a missing point or
+      a missing axis, sometimes no. The next names are short, but they open the door to the
+      topology hiding inside vector calculus: <term>closed</term> and <term>exact</term>.
+    </p>
+  </subsection>
+</section>

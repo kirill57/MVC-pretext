@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch03-linear-functions-matrices.tex, Section 6.
+     Status: CONVERTED. -->
+<section xml:id="sec-3-quadratic-forms-and-symmetric-matrices" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Quadratic forms and symmetric matrices</title>
+
+  <p>
+    Linear equations gave us flat geometry. A line, a plane, and a hyperplane all come from
+    first powers of the variables. The next layer of geometry comes from second powers:
+    <md>x^2,\qquad xy,\qquad y^2.</md>
+    This is where bowls, domes, ellipses, hyperbolas, and saddle points first appear.
+  </p>
+
+  <subsection xml:id="c3s6-subsec-form-to-matrices">
+    <title>From <m>ax^2+bxy+cy^2</m> to matrices</title>
+
+    <p>
+      Picture a shallow metal dish whose height above a flat table is
+      <md>q(x,y)=5x^2+4xy+2y^2.</md>
+      The cross term
+      <md>4xy</md>
+      means the dish is not aligned with the <m>x</m>- and <m>y</m>-axes. It is tilted relative
+      to the coordinate grid.
+    </p>
+
+    <p>
+      The expression can be written with a matrix:
+      <md>
+        <mrow>q(x,y) \amp= \begin{pmatrix}x\amp y\end{pmatrix}\begin{pmatrix}5\amp 2\\2\amp 2\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}.</mrow>
+      </md>
+      Check the multiplication:
+      <md>\begin{pmatrix}5\amp 2\\2\amp 2\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}5x+2y\\2x+2y\end{pmatrix}.</md>
+      Then
+      <md>
+        <mrow>\begin{pmatrix}x\amp y\end{pmatrix}\begin{pmatrix}5x+2y\\2x+2y\end{pmatrix} \amp= x(5x+2y)+y(2x+2y)\\</mrow>
+        <mrow>\amp= 5x^2+4xy+2y^2.</mrow>
+      </md>
+      The off-diagonal entries both contribute to the <m>xy</m>-term:
+      <md>2xy+2xy=4xy.</md>
+    </p>
+
+    <definition xml:id="c3s6-def-quadratic-form-two-variables">
+      <title>Quadratic form in two variables</title>
+      <statement>
+        <p>
+          A <term>quadratic form</term> in two variables is a function
+          <md>q:\mathbb R^2\to\mathbb R</md>
+          of the form
+          <md>q(x,y)=ax^2+bxy+cy^2.</md>
+          It can be written as
+          <md>\boxed{q(x,y)=\begin{pmatrix}x\amp y\end{pmatrix}\begin{pmatrix}a\amp b/2\\b/2\amp c\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The matrix
+      <md>\begin{pmatrix}a\amp b/2\\b/2\amp c\end{pmatrix}</md>
+      is symmetric: its entries mirror across the diagonal.
+    </p>
+
+    <definition xml:id="c3s6-def-symmetric-matrix">
+      <title>Symmetric matrix</title>
+      <statement>
+        <p>
+          A square matrix <m>A</m> is <term>symmetric</term> if
+          <md>A^T=A.</md>
+          For a <m>2\times2</m> matrix, this means
+          <md>A=\begin{pmatrix}a\amp b\\b\amp c\end{pmatrix}.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Symmetric matrices are the natural matrices for quadratic forms. To see why, try a matrix
+      that is not symmetric:
+      <md>M=\begin{pmatrix}5\amp 4\\0\amp 2\end{pmatrix}.</md>
+      Then
+      <md>
+        <mrow>\begin{pmatrix}x\amp y\end{pmatrix}M\begin{pmatrix}x\\y\end{pmatrix} \amp= \begin{pmatrix}x\amp y\end{pmatrix}\begin{pmatrix}5x+4y\\2y\end{pmatrix}\\</mrow>
+        <mrow>\amp= 5x^2+4xy+2y^2.</mrow>
+      </md>
+      This is the same quadratic form as before. The nonsymmetric matrix <m>M</m> did not add a
+      new quadratic form.
+    </p>
+
+    <p>
+      Its symmetric part is
+      <md>\frac12(M+M^T)=\frac12\left(\begin{pmatrix}5\amp 4\\0\amp 2\end{pmatrix}+\begin{pmatrix}5\amp 0\\4\amp 2\end{pmatrix}\right)=\begin{pmatrix}5\amp 2\\2\amp 2\end{pmatrix}.</md>
+    </p>
+
+    <theorem xml:id="c3s6-thm-only-symmetric-part-matters">
+      <title>Only the symmetric part matters</title>
+      <statement>
+        <p>
+          For any square matrix <m>M</m> and any vector <m>\mathbf x</m>,
+          <md>\boxed{\mathbf x^T M\mathbf x=\mathbf x^T\left(\frac{M+M^T}{2}\right)\mathbf x.}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Split <m>M</m> into two pieces:
+          <md>M=\frac{M+M^T}{2}+\frac{M-M^T}{2}.</md>
+          The first piece is symmetric. The second piece is skew-symmetric, meaning its
+          transpose is its negative.
+        </p>
+        <p>
+          Let
+          <md>K=\frac{M-M^T}{2}.</md>
+          Then
+          <md>K^T=-K.</md>
+          The number
+          <md>\mathbf x^TK\mathbf x</md>
+          is a <m>1\times1</m> matrix, so it equals its own transpose:
+          <md>\mathbf x^TK\mathbf x=(\mathbf x^TK\mathbf x)^T=\mathbf x^TK^T\mathbf x=-\mathbf x^TK\mathbf x.</md>
+          Therefore
+          <md>\mathbf x^TK\mathbf x=0.</md>
+          So only the symmetric part contributes.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The hypothesis that we use the symmetric part is not cosmetic. For example,
+      <md>K=\begin{pmatrix}0\amp 10\\-10\amp 0\end{pmatrix}</md>
+      has determinant <m>100</m>, but
+      <md>\begin{pmatrix}x\amp y\end{pmatrix}K\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}x\amp y\end{pmatrix}\begin{pmatrix}10y\\-10x\end{pmatrix}=10xy-10xy=0</md>
+      for every <m>(x,y)</m>. As a linear transformation, <m>K</m> rotates and scales. As a
+      quadratic form, it contributes nothing. That is why quadratic forms belong to symmetric
+      matrices.
+    </p>
+
+    <p>
+      Despite the name, a quadratic form is not the same thing as a differential form. A
+      quadratic form takes one vector and returns a number that scales like the square of the
+      input:
+      <md>q(c\mathbf v)=c^2q(\mathbf v).</md>
+      Differential forms later will be linear, alternating measuring rules used as integrands.
+      The shared word <em>form</em> means <q>a rule with algebraic structure,</q> but the
+      structures are different.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s6-subsec-ellipses-hyperbolas">
+    <title>Ellipses, hyperbolas, and rotated axes</title>
+
+    <p>
+      The quadratic form
+      <md>q(x,y)=5x^2+4xy+2y^2</md>
+      is always positive except at the origin. One way to see this is to complete the square:
+      <md>
+        <mrow>q(x,y) \amp= 5x^2+4xy+2y^2\\</mrow>
+        <mrow>\amp= 5\left(x+\frac25y\right)^2+\frac65y^2.</mrow>
+      </md>
+      Both terms are nonnegative, and both are zero only when
+      <md>x=0,\qquad y=0.</md>
+      So the graph
+      <md>z=q(x,y)</md>
+      is a bowl.
+    </p>
+
+    <p>
+      The level curves
+      <md>q(x,y)=c</md>
+      for <m>c&gt;0</m> are ellipses. But they are rotated ellipses, because of the cross term
+      <m>4xy</m>.
+    </p>
+
+    <p>
+      A better coordinate system reveals the shape. Let
+      <md>\mathbf p=\frac1{\sqrt5}(2,1),\qquad \mathbf r=\frac1{\sqrt5}(1,-2).</md>
+      These are perpendicular unit vectors. Use them as new axes:
+      <md>(x,y)=u\mathbf p+v\mathbf r.</md>
+      That means
+      <md>x=\frac{2u+v}{\sqrt5},\qquad y=\frac{u-2v}{\sqrt5}.</md>
+      Substituting into <m>q</m> gives
+      <md>\boxed{q(x,y)=6u^2+v^2.}</md>
+      In the rotated coordinates, the cross term disappears. The level curve
+      <md>q(x,y)=1</md>
+      becomes
+      <md>6u^2+v^2=1,</md>
+      which is an ellipse aligned with the <m>u</m>- and <m>v</m>-axes.
+    </p>
+
+    <figure xml:id="c3s6-fig-rotated-ellipse">
+      <caption>
+        The cross term <m>4xy</m> rotates the ellipse. In the right axes, it becomes
+        <m>6u^2+v^2=1</m>.
+      </caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=2.0, &gt;=stealth]
+            \draw[-&gt;] (-1.7,0) -- (1.7,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-1.5) -- (0,1.5) node[above] {\(y\)};
+
+            \draw[step=0.5, gray!15, very thin] (-1.5,-1.5) grid (1.5,1.5);
+
+            \draw[thick, domain=0:360, samples=160, variable=\t]
+                plot ({(2*(cos(\t)/sqrt(6))+sin(\t))/sqrt(5)},
+                      {((cos(\t)/sqrt(6))-2*sin(\t))/sqrt(5)});
+
+            \draw[-&gt;, very thick] (0,0) -- ({2/sqrt(5)},{1/sqrt(5)}) node[above right] {\(\mathbf p\)};
+            \draw[-&gt;, very thick] (0,0) -- ({1/sqrt(5)},{-2/sqrt(5)}) node[below right] {\(\mathbf r\)};
+
+            \node at (-1.0,1.25) {\(5x^2+4xy+2y^2=1\)};
+            \node[below left] at (0,0) {\(0\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The same idea explains hyperbolas. Consider
+      <md>q(x,y)=2xy.</md>
+      This has only a cross term. Use the rotated coordinates
+      <md>u=\frac{x+y}{\sqrt2},\qquad v=\frac{x-y}{\sqrt2}.</md>
+      Solving for <m>x</m> and <m>y</m>,
+      <md>x=\frac{u+v}{\sqrt2},\qquad y=\frac{u-v}{\sqrt2}.</md>
+      Then
+      <md>
+        <mrow>2xy \amp= 2\left(\frac{u+v}{\sqrt2}\right)\left(\frac{u-v}{\sqrt2}\right)\\</mrow>
+        <mrow>\amp= u^2-v^2.</mrow>
+      </md>
+      So
+      <md>2xy=1</md>
+      is the rotated version of
+      <md>u^2-v^2=1,</md>
+      a hyperbola.
+    </p>
+
+    <p>
+      The graph
+      <md>z=2xy</md>
+      is a saddle. Along the line <m>y=x</m>,
+      <md>z=2x^2,</md>
+      so the surface curves upward. Along the line <m>y=-x</m>,
+      <md>z=-2x^2,</md>
+      so the surface curves downward.
+    </p>
+
+    <p>The same point is both valley-like and ridge-like, depending on the direction.</p>
+  </subsection>
+
+  <subsection xml:id="c3s6-subsec-definite-indefinite">
+    <title>Positive definite, negative definite, and indefinite forms</title>
+
+    <p>A quadratic form can have different sign patterns.</p>
+
+    <definition xml:id="c3s6-def-definite-indefinite">
+      <title>Definite and indefinite quadratic forms</title>
+      <statement>
+        <p>
+          Let
+          <md>q(\mathbf x)=\mathbf x^TA\mathbf x</md>
+          be a quadratic form.
+        </p>
+        <p>
+          <tabular>
+            <row>
+              <cell><m>q</m> is positive definite</cell>
+              <cell>if <m>q(\mathbf x)&gt;0</m> for every <m>\mathbf x\neq\mathbf 0</m>.</cell>
+            </row>
+            <row>
+              <cell><m>q</m> is negative definite</cell>
+              <cell>if <m>q(\mathbf x)&lt;0</m> for every <m>\mathbf x\neq\mathbf 0</m>.</cell>
+            </row>
+            <row>
+              <cell><m>q</m> is indefinite</cell>
+              <cell>if <m>q</m> takes both positive and negative values.</cell>
+            </row>
+          </tabular>
+        </p>
+      </statement>
+    </definition>
+
+    <p>The pictures are memorable:</p>
+
+    <table xml:id="c3s6-tab-form-shapes">
+      <title>Sign patterns of a quadratic form and the shape of its graph.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Type</cell>
+          <cell>Example</cell>
+          <cell>Shape of <m>z=q(x,y)</m></cell>
+        </row>
+        <row>
+          <cell>positive definite</cell>
+          <cell><m>x^2+y^2</m></cell>
+          <cell>bowl</cell>
+        </row>
+        <row>
+          <cell>negative definite</cell>
+          <cell><m>-x^2-y^2</m></cell>
+          <cell>dome</cell>
+        </row>
+        <row>
+          <cell>indefinite</cell>
+          <cell><m>x^2-y^2</m></cell>
+          <cell>saddle</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      There is also a borderline case. The form
+      <md>q(x,y)=(2x+y)^2</md>
+      is never negative, but it is zero along the whole line
+      <md>2x+y=0.</md>
+      So it is not positive definite. It has a flat direction.
+    </p>
+
+    <p>For <m>2\times2</m> symmetric matrices, there is a simple determinant test.</p>
+
+    <theorem xml:id="c3s6-thm-2x2-quadratic-form-test">
+      <title>The <m>2\times2</m> quadratic-form test</title>
+      <statement>
+        <p>
+          Let
+          <md>A=\begin{pmatrix}a\amp b\\b\amp c\end{pmatrix}</md>
+          be symmetric, and let
+          <md>q(x,y)=\begin{pmatrix}x\amp y\end{pmatrix}A\begin{pmatrix}x\\y\end{pmatrix}=ax^2+2bxy+cy^2.</md>
+          Let
+          <md>\Delta=\det A=ac-b^2.</md>
+          Then:
+        </p>
+        <p>
+          <tabular>
+            <row>
+              <cell>1.</cell>
+              <cell><m>q</m> is positive definite if and only if <m>a&gt;0</m> and <m>\Delta&gt;0</m>.</cell>
+            </row>
+            <row>
+              <cell>2.</cell>
+              <cell><m>q</m> is negative definite if and only if <m>a&lt;0</m> and <m>\Delta&gt;0</m>.</cell>
+            </row>
+            <row>
+              <cell>3.</cell>
+              <cell><m>q</m> is indefinite if <m>\Delta&lt;0</m>.</cell>
+            </row>
+          </tabular>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Assume first that <m>a\neq0</m>. Complete the square:
+          <md>
+            <mrow>q(x,y) \amp= ax^2+2bxy+cy^2\\</mrow>
+            <mrow>\amp= a\left(x+\frac ba y\right)^2+\left(c-\frac{b^2}{a}\right)y^2\\</mrow>
+            <mrow>\amp= a\left(x+\frac ba y\right)^2+\frac{ac-b^2}{a}y^2\\</mrow>
+            <mrow>\amp= a\left(x+\frac ba y\right)^2+\frac{\Delta}{a}y^2.</mrow>
+          </md>
+        </p>
+        <p>
+          If <m>a&gt;0</m> and <m>\Delta&gt;0</m>, then both coefficients are positive. The form
+          is positive except at the origin.
+        </p>
+        <p>
+          If <m>a&lt;0</m> and <m>\Delta&gt;0</m>, then both coefficients are negative. The form
+          is negative except at the origin.
+        </p>
+        <p>
+          If <m>\Delta&lt;0</m> and <m>a\neq0</m>, then the two square terms have opposite signs.
+          The form takes both positive and negative values, so it is indefinite.
+        </p>
+        <p>
+          If <m>a=0</m> and <m>\Delta&lt;0</m>, then
+          <md>\Delta=-b^2&lt;0,</md>
+          so <m>b\neq0</m>. In that case
+          <md>q(x,y)=2bxy+cy^2.</md>
+          Taking <m>y=1</m>, the expression
+          <md>q(x,1)=2bx+c</md>
+          takes both positive and negative values as <m>x</m> varies. So <m>q</m> is indefinite.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>Each condition matters.</p>
+
+    <p>
+      First, <m>\Delta&gt;0</m> alone does not mean positive definite. The matrix
+      <md>A=\begin{pmatrix}-1\amp 0\\0\amp -1\end{pmatrix}</md>
+      has
+      <md>\det A=1&gt;0,</md>
+      but
+      <md>q(x,y)=-x^2-y^2</md>
+      is negative definite, not positive definite. We also need the sign of <m>a</m>.
+    </p>
+
+    <p>
+      Second, <m>a&gt;0</m> alone does not mean positive definite. The matrix
+      <md>A=\begin{pmatrix}1\amp 0\\0\amp -1\end{pmatrix}</md>
+      has
+      <md>a=1&gt;0,</md>
+      but
+      <md>q(x,y)=x^2-y^2</md>
+      takes both signs. The determinant is
+      <md>\det A=-1&lt;0,</md>
+      and the form is indefinite.
+    </p>
+
+    <p>
+      Third, when
+      <md>\Delta=0,</md>
+      there is a flat direction. For example,
+      <md>q(x,y)=(2x+y)^2</md>
+      has matrix
+      <md>A=\begin{pmatrix}4\amp 2\\2\amp 1\end{pmatrix},</md>
+      and
+      <md>\det A=4\cdot1-2\cdot2=0.</md>
+      The form is not positive definite because
+      <md>q(1,-2)=0</md>
+      even though
+      <md>(1,-2)\neq(0,0).</md>
+    </p>
+
+    <p>
+      The determinant has returned as a collapse detector. For a linear transformation,
+      <m>\det A=0</m> meant area was collapsed. For a quadratic form, <m>\det A=0</m> means one
+      curvature direction has flattened.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s6-subsec-hessian-preview">
+    <title>Preview: the Hessian matrix will classify critical points</title>
+
+    <p>
+      Quadratic forms matter in calculus because a curved function often looks quadratic after
+      its linear part disappears.
+    </p>
+
+    <p>
+      Suppose a hiker stands at a point on a hill where the tangent plane is horizontal. There is
+      no first-order uphill direction at that exact point. The next question is not
+      <q>Which way is the slope?</q> The slope starts at zero. The next question is:
+      <md>\text{Does the surface bend up, bend down, or bend both ways?}</md>
+      That bending is measured by a quadratic form.
+    </p>
+
+    <p>
+      Later, near a point <m>(a,b)</m>, a function <m>f(x,y)</m> will have an approximation of the
+      form
+      <md>f(a+h,b+k)\approx f(a,b)+\text{linear part}+\frac12\begin{pmatrix}h\amp k\end{pmatrix}H\begin{pmatrix}h\\k\end{pmatrix}.</md>
+      The matrix
+      <md>H=\begin{pmatrix}f_{xx}\amp f_{xy}\\f_{yx}\amp f_{yy}\end{pmatrix}</md>
+      is called the Hessian matrix.
+    </p>
+
+    <p>
+      At a critical point, the linear part is zero. Then the Hessian's quadratic form becomes the
+      first visible shape:
+    </p>
+
+    <table xml:id="c3s6-tab-hessian-shapes">
+      <title>The Hessian's sign pattern and the local shape at a critical point.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Hessian type</cell>
+          <cell>Local shape</cell>
+        </row>
+        <row>
+          <cell>positive definite</cell>
+          <cell>local minimum, like a bowl</cell>
+        </row>
+        <row>
+          <cell>negative definite</cell>
+          <cell>local maximum, like a dome</cell>
+        </row>
+        <row>
+          <cell>indefinite</cell>
+          <cell>saddle point</cell>
+        </row>
+        <row>
+          <cell>degenerate</cell>
+          <cell>the quadratic part is not enough</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      This is only a preview. We do not yet have the derivative of a multivariable function. But
+      the pattern is now visible: matrices describe the best linear part, and symmetric matrices
+      describe the first curved part. The next step is to make the phrase
+      <q>best linear part</q> precise. That phrase will become the multivariable derivative.
+    </p>
+  </subsection>
+</section>

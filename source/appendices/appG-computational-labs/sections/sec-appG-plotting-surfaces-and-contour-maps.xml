@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/appendices/appG-computational-labs.tex, Section G.1.
+     Status: CONVERTED. -->
+<section xml:id="sec-appG-plotting-surfaces-and-contour-maps" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Plotting surfaces and contour maps</title>
+
+  <subsection xml:id="appG-plot-standard-imports">
+    <title>Standard imports</title>
+
+    <program language="python">
+      <input>import numpy as np
+import matplotlib.pyplot as plt</input>
+    </program>
+
+    <p>
+      For symbolic work:
+    </p>
+
+    <program language="python">
+      <input>import sympy as sp</input>
+    </program>
+
+    <p>
+      For numerical integration and ODEs:
+    </p>
+
+    <program language="python">
+      <input>from scipy.integrate import dblquad, tplquad, solve_ivp</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-plot-grid-function-two-variables">
+    <title>Grid for a function of two variables</title>
+
+    <p>
+      For
+      <md>z=f(x,y),</md>
+      make arrays of <m>x</m>- and <m>y</m>-values:
+    </p>
+
+    <program language="python">
+      <input>x = np.linspace(a, b, 200)
+y = np.linspace(c, d, 200)
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)</input>
+    </program>
+
+    <p>
+      Here <m>X</m>, <m>Y</m>, and <m>Z</m> are arrays. The function <m>f</m> must accept arrays.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-plot-surface-plot">
+    <title>Surface plot</title>
+
+    <program language="python">
+      <input>fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_surface(X, Y, Z)
+
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("z")
+plt.show()</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-plot-wireframe-plot">
+    <title>Wireframe plot</title>
+
+    <program language="python">
+      <input>fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_wireframe(X, Y, Z)
+
+plt.show()</input>
+    </program>
+
+    <p>
+      A wireframe is often easier to read than a solid surface.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-plot-contour-plot">
+    <title>Contour plot</title>
+
+    <p>
+      A contour plot shows level curves:
+      <md>f(x,y)=c.</md>
+    </p>
+
+    <program language="python">
+      <input>plt.contour(X, Y, Z, levels=20)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.axis("equal")
+plt.show()</input>
+    </program>
+
+    <p>
+      Filled contour plot: <c>contourf</c>
+    </p>
+
+    <program language="python">
+      <input>plt.contourf(X, Y, Z, levels=30)
+plt.colorbar()
+plt.axis("equal")
+plt.show()</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-plot-implicit-curves">
+    <title>Implicit curves</title>
+
+    <p>
+      To plot
+      <md>F(x,y)=0,</md>
+      plot the zero contour:
+    </p>
+
+    <program language="python">
+      <input>Z = F(X, Y)
+plt.contour(X, Y, Z, levels=[0])
+plt.axis("equal")
+plt.show()</input>
+    </program>
+
+    <p>
+      To plot
+      <md>F(x,y)=c,</md>
+      use:
+    </p>
+
+    <program language="python">
+      <input>plt.contour(X, Y, Z, levels=[c])</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-plot-common-examples">
+    <title>Common examples</title>
+
+    <p>
+      Plane:
+      <md>z=ax+by+c.</md>
+    </p>
+
+    <p>
+      Bowl:
+      <md>z=x^2+y^2.</md>
+    </p>
+
+    <p>
+      Saddle:
+      <md>z=x^2-y^2.</md>
+    </p>
+
+    <p>
+      Hill:
+      <md>z=e^{-(x^2+y^2)}.</md>
+    </p>
+
+    <p>
+      Radial wave:
+      <md>z=\sin\sqrt{x^2+y^2}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appG-plot-parametrized-surface">
+    <title>Plotting a parametrized surface</title>
+
+    <p>
+      For
+      <md>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)),</md>
+      use a parameter grid:
+    </p>
+
+    <program language="python">
+      <input>u = np.linspace(u0, u1, 150)
+v = np.linspace(v0, v1, 150)
+U, V = np.meshgrid(u, v)
+
+X = x(U, V)
+Y = y(U, V)
+Z = z(U, V)
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+ax.plot_surface(X, Y, Z)
+plt.show()</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-plot-cylinder">
+    <title>Cylinder</title>
+
+    <p>
+      <md>\mathbf r(\theta,z)=(R\cos\theta,R\sin\theta,z).</md>
+    </p>
+
+    <program language="python">
+      <input>theta = np.linspace(0, 2*np.pi, 150)
+z = np.linspace(z0, z1, 100)
+Theta, Z = np.meshgrid(theta, z)
+
+X = R*np.cos(Theta)
+Y = R*np.sin(Theta)
+
+ax.plot_surface(X, Y, Z)</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-plot-sphere">
+    <title>Sphere</title>
+
+    <p>
+      <md>\mathbf r(\phi,\theta)
+=
+(R\sin\phi\cos\theta,\ R\sin\phi\sin\theta,\ R\cos\phi).</md>
+    </p>
+
+    <program language="python">
+      <input>phi = np.linspace(0, np.pi, 150)
+theta = np.linspace(0, 2*np.pi, 150)
+Phi, Theta = np.meshgrid(phi, theta)
+
+X = R*np.sin(Phi)*np.cos(Theta)
+Y = R*np.sin(Phi)*np.sin(Theta)
+Z = R*np.cos(Phi)
+
+ax.plot_surface(X, Y, Z)</input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-plot-plotting-checklist">
+    <title>Plotting checklist</title>
+
+    <table xml:id="appG-plot-checklist-table">
+      <title>Plotting checklist</title>
+      <tabular>
+        <row>
+          <cell>1.</cell>
+          <cell>Choose a domain large enough to show the important feature.</cell>
+        </row>
+        <row>
+          <cell>2.</cell>
+          <cell>Use enough grid points to avoid jagged artifacts.</cell>
+        </row>
+        <row>
+          <cell>3.</cell>
+          <cell>Use <c>axis("equal")</c> for planar geometry.</cell>
+        </row>
+        <row>
+          <cell>4.</cell>
+          <cell>Label axes.</cell>
+        </row>
+        <row>
+          <cell>5.</cell>
+          <cell>Check whether the plot hides singularities or holes.</cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <subsection xml:id="appG-plot-common-warnings">
+    <title>Common warnings</title>
+
+    <warning xml:id="appG-plot-warning-sampling">
+      <p>
+        A computer plot is a sample, not a proof.
+      </p>
+      <p>
+        A surface may look smooth because the grid is too coarse.
+      </p>
+      <p>
+        A contour may disappear if the requested level is outside the range of plotted values.
+      </p>
+      <p>
+        A <m>3</m>-D plot may distort scale unless the axes are adjusted.
+      </p>
+    </warning>
+  </subsection>
+</section>

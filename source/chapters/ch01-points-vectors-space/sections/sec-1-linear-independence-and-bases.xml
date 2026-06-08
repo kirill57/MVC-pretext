@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch01-points-vectors-space.tex, Section 4.
+     Status: CONVERTED. -->
+<section xml:id="sec-1-linear-independence-and-bases" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Linear independence and bases</title>
+
+  <p>
+    The standard basis vectors from the last section did two jobs at once. They gave
+    directions, and they gave coordinates. But not every list of directions can do that.
+  </p>
+
+  <p>
+    Some directions secretly repeat information. Other lists leave out a direction we need. To
+    build a coordinate system, the directions must be neither redundant nor incomplete.
+  </p>
+
+  <subsection xml:id="subsec-redundant-nonredundant">
+    <title>Redundant and nonredundant directions</title>
+
+    <p>Imagine a small robot on a flat floor. It has two movement buttons.</p>
+
+    <p>
+      Button <m>A</m> moves the robot by
+      <md>\mathbf u=(2,1).</md>
+      Button <m>B</m> moves it by
+      <md>\mathbf v=(4,2).</md>
+      At first this looks like two directions. But
+      <md>\mathbf v=2\mathbf u.</md>
+      Button <m>B</m> is just a longer version of Button <m>A</m>. No combination of the two
+      buttons can move the robot away from the line spanned by <m>\mathbf u</m>:
+      <md>a\mathbf u+b\mathbf v=a(2,1)+b(4,2)=(a+2b)(2,1).</md>
+      The robot has two buttons, but only one genuine direction.
+    </p>
+
+    <p>
+      Now replace Button <m>B</m> with a new button:
+      <md>\mathbf w=(1,3).</md>
+      The two directions
+      <md>\mathbf u=(2,1),\qquad \mathbf w=(1,3)</md>
+      are no longer copies of each other. For example,
+      <md>3\mathbf u+2\mathbf w=3(2,1)+2(1,3)=(8,9).</md>
+      The robot can combine the two commands to reach many different directions in the plane.
+      In fact, these two directions can build every vector in the plane.
+    </p>
+
+    <figure xml:id="fig-redundant-nonredundant">
+      <caption>Two arrows may be two copies of one direction, or they may give two genuine directions.</caption>
+      <image width="90%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.72, &gt;=stealth]
+          \begin{scope}
+            \draw[-&gt;] (-0.4,0) -- (5.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,3.2) node[above] {\(y\)};
+            \draw[step=1, gray!20, very thin] (0,0) grid (5,3);
+            \draw[-&gt;, very thick] (0,0) -- (2,1) node[midway, below right] {\(\mathbf u\)};
+            \draw[-&gt;, very thick] (0,0) -- (4,2) node[midway, above left] {\(\mathbf v=2\mathbf u\)};
+            \draw[thick, gray] (-0.3,-0.15) -- (5,2.5);
+            \node at (2.5,-1.0) {redundant directions};
+          \end{scope}
+          \begin{scope}[xshift=8cm]
+            \draw[-&gt;] (-0.4,0) -- (5.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,4.2) node[above] {\(y\)};
+            \draw[step=1, gray!20, very thin] (0,0) grid (5,4);
+            \draw[-&gt;, very thick] (0,0) -- (2,1) node[midway, below right] {\(\mathbf u\)};
+            \draw[-&gt;, very thick] (0,0) -- (1,3) node[midway, left] {\(\mathbf w\)};
+            \draw[dashed] (2,1) -- (3,4);
+            \draw[dashed] (1,3) -- (3,4);
+            \draw[-&gt;, thick] (0,0) -- (3,4) node[midway, right] {\(\mathbf u+\mathbf w\)};
+            \node at (2.5,-1.0) {nonredundant directions};
+          \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The equation
+      <md>2\mathbf u-\mathbf v=\mathbf 0</md>
+      reveals the redundancy in the first pair. It says that a nonzero combination of the
+      vectors cancels out completely. That is the key idea.
+    </p>
+
+    <definition xml:id="def-linear-independence">
+      <title>Linear independence</title>
+      <statement>
+        <p>
+          A list of vectors
+          <md>\mathbf v_1,\mathbf v_2,\ldots,\mathbf v_k</md>
+          is called <term>linearly independent</term> if the only way to make
+          <md>c_1\mathbf v_1+c_2\mathbf v_2+\cdots+c_k\mathbf v_k=\mathbf 0</md>
+          is to use
+          <md>c_1=c_2=\cdots=c_k=0.</md>
+          If there is a nonzero choice of coefficients that gives the zero vector, the vectors
+          are called <term>linearly dependent</term>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      A linear dependence relation is a sign that one direction is unnecessary. For example,
+      <md>2(2,1)-(4,2)=(0,0)</md>
+      says that <m>(4,2)</m> is already built from <m>(2,1)</m>.
+    </p>
+
+    <p>A few immediate facts are worth keeping close:</p>
+
+    <table xml:id="tab-independence-facts">
+      <title>Quick facts about independence.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>List of vectors</cell>
+          <cell>Independent or dependent?</cell>
+        </row>
+        <row><cell>one nonzero vector</cell><cell>independent</cell></row>
+        <row><cell>any list containing <m>\mathbf 0</m></cell><cell>dependent</cell></row>
+        <row><cell>two vectors where one is a multiple of the other</cell><cell>dependent</cell></row>
+      </tabular>
+    </table>
+
+    <p>
+      The zero vector is always redundant because
+      <md>1\cdot \mathbf 0=\mathbf 0</md>
+      is a nontrivial zero combination.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-independence-r2-r3">
+    <title>Linear independence in <m>\mathbb R^2</m> and <m>\mathbb R^3</m></title>
+
+    <p>In the plane, the picture is especially simple.</p>
+
+    <theorem xml:id="thm-two-directions-plane">
+      <title>Two directions in the plane</title>
+      <statement>
+        <p>
+          Two vectors in <m>\mathbb R^2</m> are linearly independent exactly when neither
+          vector is a scalar multiple of the other.
+        </p>
+      </statement>
+      <proof>
+        <title>Why this is true</title>
+        <p>
+          If one vector is a multiple of the other, say
+          <md>\mathbf v=c\mathbf u,</md>
+          then
+          <md>c\mathbf u-\mathbf v=\mathbf 0.</md>
+          That is a nontrivial zero combination, so the vectors are dependent.
+        </p>
+        <p>
+          Conversely, suppose two vectors are dependent. Then there are numbers <m>a</m> and
+          <m>b</m>, not both zero, such that
+          <md>a\mathbf u+b\mathbf v=\mathbf 0.</md>
+          If <m>b\neq 0</m>, then
+          <md>\mathbf v=-\frac{a}{b}\mathbf u.</md>
+          So <m>\mathbf v</m> is a multiple of <m>\mathbf u</m>. If <m>b=0</m>, then
+          <m>a\neq 0</m>, and the equation gives <m>\mathbf u=\mathbf 0</m>, which is also a
+          multiple of <m>\mathbf v</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <example xml:id="ex-checking-independence-plane">
+      <title>Checking independence in the plane</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf u=(2,1),\qquad \mathbf w=(1,3).</md>
+          Suppose
+          <md>a\mathbf u+b\mathbf w=\mathbf 0.</md>
+          Then
+          <md>a(2,1)+b(1,3)=(0,0),</md>
+          so
+          <md>(2a+b,\;a+3b)=(0,0).</md>
+          This gives the system
+          <md>2a+b=0,\qquad a+3b=0.</md>
+          From the first equation,
+          <md>b=-2a.</md>
+          Substitute into the second:
+          <md>a+3(-2a)=0,</md>
+          so
+          <md>-5a=0.</md>
+          Thus <m>a=0</m>, and then <m>b=0</m>. The only zero combination is the trivial one,
+          so <m>\mathbf u</m> and <m>\mathbf w</m> are linearly independent.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      In space, the same idea is present, but the geometry has one more possibility. Two
+      nonparallel vectors span a plane through the origin. A third vector may either leave that
+      plane or stay inside it.
+    </p>
+
+    <example xml:id="ex-three-directions-only-plane">
+      <title>Three directions that look like space but are only a plane</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf u=(1,0,1),\qquad \mathbf v=(0,1,1),\qquad \mathbf w=(1,1,2).</md>
+          These are three vectors in <m>\mathbb R^3</m>. But
+          <md>\mathbf w=\mathbf u+\mathbf v.</md>
+          Therefore
+          <md>\mathbf u+\mathbf v-\mathbf w=\mathbf 0.</md>
+          This is a nontrivial zero combination, so the three vectors are linearly dependent.
+          They do not give three independent directions in space. The third one was already
+          inside the plane spanned by the first two.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The standard vectors
+      <md>\mathbf e_1=(1,0,0),\qquad \mathbf e_2=(0,1,0),\qquad \mathbf e_3=(0,0,1)</md>
+      are independent in <m>\mathbb R^3</m>, because
+      <md>a\mathbf e_1+b\mathbf e_2+c\mathbf e_3=(a,b,c).</md>
+      This is <m>(0,0,0)</m> only when
+      <md>a=b=c=0.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-bases-coordinates">
+    <title>Bases and coordinates relative to a basis</title>
+
+    <p>
+      The standard basis is not the only possible coordinate system. On a city map with
+      diagonal streets, it may be more natural to use diagonal directions.
+    </p>
+
+    <p>
+      Let
+      <md>\mathbf b_1=(1,1),\qquad \mathbf b_2=(1,-1).</md>
+      These two vectors point along two diagonal directions in the plane.
+    </p>
+
+    <p>
+      Suppose a wind displacement is
+      <md>\mathbf v=(5,1)</md>
+      in standard coordinates. We want to describe the same displacement using
+      <m>\mathbf b_1</m> and <m>\mathbf b_2</m>:
+      <md>\mathbf v=a\mathbf b_1+b\mathbf b_2.</md>
+      That means
+      <md>(5,1)=a(1,1)+b(1,-1).</md>
+      So
+      <md>(5,1)=(a+b,\;a-b).</md>
+      Matching components gives
+      <md>a+b=5,\qquad a-b=1.</md>
+      Adding the equations,
+      <md>2a=6,</md>
+      so
+      <md>a=3.</md>
+      Then
+      <md>b=2.</md>
+      Thus
+      <md>(5,1)=3(1,1)+2(1,-1).</md>
+    </p>
+
+    <p>
+      The vector has standard coordinates <m>(5,1)</m>, but relative to the diagonal basis
+      <md>\mathcal B=(\mathbf b_1,\mathbf b_2),</md>
+      its coordinates are
+      <md>[\mathbf v]_{\mathcal B}=(3,2).</md>
+      Those are not a new vector. They are instructions in a different coordinate language.
+    </p>
+
+    <definition xml:id="def-basis">
+      <title>Basis</title>
+      <statement>
+        <p>A list of vectors is a <term>basis</term> for a space if it satisfies two conditions:</p>
+        <p>
+          <ol>
+            <li>It spans the space: every vector can be built from it.</li>
+            <li>It is linearly independent: no vector in the list is redundant.</li>
+          </ol>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      When a basis is used for coordinates, the order matters. The basis
+      <md>(\mathbf b_1,\mathbf b_2)</md>
+      is an ordered list, not just a set. The first coordinate tells how much of the first
+      basis vector to use; the second coordinate tells how much of the second basis vector to
+      use.
+    </p>
+
+    <theorem xml:id="thm-coordinates-in-basis">
+      <title>Coordinates in a basis</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathcal B=(\mathbf b_1,\mathbf b_2,\ldots,\mathbf b_n)</md>
+          be a basis for <m>\mathbb R^n</m>. Then every vector
+          <m>\mathbf v\in\mathbb R^n</m> has one and only one expression of the form
+          <md>\mathbf v=c_1\mathbf b_1+c_2\mathbf b_2+\cdots+c_n\mathbf b_n.</md>
+          The numbers
+          <md>c_1,c_2,\ldots,c_n</md>
+          are called the coordinates of <m>\mathbf v</m> relative to the basis
+          <m>\mathcal B</m>.
+        </p>
+      </statement>
+      <proof>
+        <title>Why this is true</title>
+        <p>
+          Because the basis spans <m>\mathbb R^n</m>, every vector has at least one expression
+          as a linear combination of the basis vectors.
+        </p>
+        <p>
+          Now suppose a vector has two such expressions:
+          <md>\mathbf v=c_1\mathbf b_1+\cdots+c_n\mathbf b_n</md>
+          and
+          <md>\mathbf v=d_1\mathbf b_1+\cdots+d_n\mathbf b_n.</md>
+          Subtract the second equation from the first:
+          <md>\mathbf 0=(c_1-d_1)\mathbf b_1+\cdots+(c_n-d_n)\mathbf b_n.</md>
+          Since the basis vectors are linearly independent, the only zero combination is the
+          trivial one. Therefore
+          <md>c_1-d_1=0,\qquad \ldots,\qquad c_n-d_n=0.</md>
+          So
+          <md>c_1=d_1,\qquad \ldots,\qquad c_n=d_n.</md>
+          The coordinates are unique.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>Both conditions in the definition of a basis are necessary.</p>
+
+    <p>
+      If a list spans but is not independent, coordinates need not be unique. In
+      <m>\mathbb R^2</m>, the three vectors
+      <md>(1,0),\qquad (0,1),\qquad (1,1)</md>
+      span the plane, but they are dependent because
+      <md>(1,0)+(0,1)-(1,1)=\mathbf 0.</md>
+      The vector <m>(1,1)</m> has at least two descriptions:
+      <md>(1,1)=1(1,1)</md>
+      and
+      <md>(1,1)=1(1,0)+1(0,1).</md>
+      So spanning alone gives existence, but not uniqueness.
+    </p>
+
+    <p>
+      If a list is independent but does not span, some vectors cannot be described at all. The
+      one-vector list
+      <md>(1,0)</md>
+      is linearly independent in <m>\mathbb R^2</m>, but it does not span the plane. It can
+      build only vectors of the form
+      <md>a(1,0)=(a,0).</md>
+      It cannot build <m>(0,1)</m>. So independence alone prevents redundancy, but it does not
+      guarantee enough directions.
+    </p>
+
+    <p>A basis is exactly the balance point: enough directions, but no extra directions.</p>
+  </subsection>
+
+  <subsection xml:id="subsec-dimension">
+    <title>Dimension as the number of independent directions</title>
+
+    <p>
+      A line has one direction. A plane has two. Ordinary space has three. The word
+      <term>dimension</term> makes this counting precise.
+    </p>
+
+    <definition xml:id="def-dimension">
+      <title>Dimension</title>
+      <statement>
+        <p>
+          The <term>dimension</term> of a space is the number of vectors in a basis for that
+          space.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The standard basis of <m>\mathbb R^2</m> has two vectors:
+      <md>(1,0),\qquad (0,1).</md>
+      So
+      <md>\dim(\mathbb R^2)=2.</md>
+      The standard basis of <m>\mathbb R^3</m> has three vectors:
+      <md>(1,0,0),\qquad (0,1,0),\qquad (0,0,1).</md>
+      So
+      <md>\dim(\mathbb R^3)=3.</md>
+      In general, the standard basis of <m>\mathbb R^n</m> has <m>n</m> vectors, so
+      <md>\dim(\mathbb R^n)=n.</md>
+    </p>
+
+    <p>
+      Inside a larger space, a span may have smaller dimension. For example,
+      <md>\operatorname{span}\{(2,1,0)\}</md>
+      is a line through the origin in <m>\mathbb R^3</m>, so it is one-dimensional.
+    </p>
+
+    <p>
+      The span
+      <md>\operatorname{span}\{(1,0,0),(0,1,0)\}</md>
+      is the <m>xy</m>-plane in <m>\mathbb R^3</m>, so it is two-dimensional.
+    </p>
+
+    <p>
+      The span
+      <md>\operatorname{span}\{(1,0,0),(0,1,0),(0,0,1)\}</md>
+      is all of <m>\mathbb R^3</m>, so it is three-dimensional.
+    </p>
+
+    <p>
+      The dimension counts genuine directions, not the number of vectors written down. The
+      three vectors
+      <md>(1,0,0),\qquad (0,1,0),\qquad (1,1,0)</md>
+      span only the <m>xy</m>-plane, because the third is built from the first two:
+      <md>(1,1,0)=(1,0,0)+(0,1,0).</md>
+      Three vectors are present, but only two independent directions are present.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-preview-tangent-spaces">
+    <title>A preview of tangent spaces</title>
+
+    <p>
+      The language of spans, bases, and dimension will return in a new form when we study
+      curves and surfaces.
+    </p>
+
+    <p>
+      A curve has one direction of motion at each point, as long as it is not stopped there.
+      For example, the curve
+      <md>\mathbf r(t)=(t,t^2)</md>
+      passes through
+      <md>\mathbf r(1)=(1,1).</md>
+      Its velocity is
+      <md>\mathbf r'(t)=(1,2t),</md>
+      so at <m>t=1</m>,
+      <md>\mathbf r'(1)=(1,2).</md>
+      The tangent line at <m>(1,1)</m> has the form
+      <md>(1,1)+s(1,2).</md>
+      That is an affine line: a point plus the span of one direction.
+    </p>
+
+    <p>
+      A surface usually has two independent tangent directions at each point. Those two
+      directions span a tangent plane. Later, when we differentiate parametrized surfaces, this
+      idea will become concrete:
+      <md>\text{tangent plane}=\text{point}+\operatorname{span}\{\text{two tangent directions}\}.</md>
+    </p>
+
+    <p>
+      This is the first glimpse of a theme that will follow us through the book. Geometry near a
+      point often becomes linear. A curve becomes a tangent line. A surface becomes a tangent
+      plane. A nonlinear function becomes its best linear approximation.
+    </p>
+
+    <p>
+      Linear independence tells us when directions can serve as coordinates. But it does not yet
+      tell us how long a direction is. In standard coordinates the vector <m>(3,4)</m> has
+      length <m>5</m>, but in a diagonal or slanted basis the coordinate pair <m>(3,4)</m> may
+      represent a very different geometric arrow. To talk about speed, distance, spheres, and
+      unit directions, we need a way to measure length itself.
+    </p>
+  </subsection>
+</section>

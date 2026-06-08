@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch08-chain-rule-coordinate-changes.tex, Section 8.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-8-inverse-functions" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Inverse functions</title>
+
+  <p>
+    <xref ref="sec-8-coordinate-changes"/> ended with a sharp clue. A coordinate map behaves
+    well when its Jacobian determinant is nonzero, and it breaks where the determinant
+    vanishes. Polar coordinates gave the simplest example:
+    <md>x=r\cos\theta,\qquad y=r\sin\theta,</md>
+    with
+    <md>\frac{\partial(x,y)}{\partial(r,\theta)}=r.</md>
+    Away from the origin, the map behaves locally like a reversible change of coordinates. At
+    the origin, all angles collapse to the same point.
+  </p>
+
+  <p>
+    That raises the question this section answers:
+    <md>\text{When can we solve locally for the inputs from the outputs?}</md>
+  </p>
+
+  <subsection xml:id="c8s5-solving-locally">
+    <title>What it means to solve locally for inputs from outputs</title>
+
+    <p>
+      A tracking camera sees the position of a small robot on a floor. The robot's internal
+      coordinates are <m>(u,v)</m>, but the camera reports the floor coordinates <m>(x,y)</m>.
+      Suppose the conversion is
+      <md>F(u,v)=(x,y)=(e^u\cos v,\ e^u\sin v).</md>
+      This is a polar-type map. The coordinate <m>u</m> controls distance from the origin,
+      since
+      <md>\sqrt{x^2+y^2}=e^u,</md>
+      and <m>v</m> controls angle.
+    </p>
+
+    <p>
+      Take
+      <md>(u,v)=\left(\ln 2,\frac{\pi}{6}\right).</md>
+      Then
+      <md>
+        F\left(\ln 2,\frac{\pi}{6}\right)
+        =
+        \left(2\cdot\frac{\sqrt3}{2},\ 2\cdot\frac12\right)
+        =
+        (\sqrt3,1).
+      </md>
+      If the camera reports
+      <md>(x,y)=(\sqrt3,1),</md>
+      then the internal coordinates near this point are
+      <md>u=\ln\sqrt{x^2+y^2},</md>
+      and
+      <md>v=\Arg(x+iy),</md>
+      where <m>\Arg</m> is chosen as the angle branch near <m>\pi/6</m>. So near
+      <md>(\sqrt3,1),</md>
+      we can recover
+      <md>(u,v)</md>
+      from
+      <md>(x,y).</md>
+    </p>
+
+    <p>
+      But there is an immediate catch:
+      <md>F(u,v+2\pi)=F(u,v).</md>
+      So <m>F</m> is not one-to-one on the whole <m>(u,v)</m>-plane. The same floor point has
+      many angle names. Still, if we zoom in near
+      <md>\left(\ln2,\frac{\pi}{6}\right),</md>
+      there is no ambiguity. Nearby outputs come from one nearby input.
+    </p>
+
+    <p>That is what <term>local inverse</term> means.</p>
+
+    <definition xml:id="c8s5-def-local-inverse">
+      <title>Local inverse</title>
+      <statement>
+        <p>
+          Let
+          <md>F:D\subseteq\mathbb R^n\to\mathbb R^n</md>
+          and let
+          <md>\mathbf p\in D.</md>
+          A function <m>G</m> is a <term>local inverse</term> of <m>F</m> near <m>\mathbf p</m>
+          if there are neighborhoods <m>U</m> of <m>\mathbf p</m> and <m>V</m> of
+          <m>F(\mathbf p)</m> such that
+          <md>F:U\to V</md>
+          is one-to-one and onto, and
+          <md>G:V\to U</md>
+          satisfies
+          <md>G(F(\mathbf x))=\mathbf x \quad\text{for all }\mathbf x\in U,</md>
+          and
+          <md>F(G(\mathbf y))=\mathbf y \quad\text{for all }\mathbf y\in V.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The word <em>local</em> matters. A map can have a local inverse near each point and
+      still fail to have one global inverse.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s5-derivative-of-inverse">
+    <title>The derivative of an inverse transformation</title>
+
+    <p>The inverse map does not only exist locally. Its derivative is forced by the chain rule.</p>
+
+    <p>
+      Let
+      <md>\mathbf q=F(\mathbf p),</md>
+      and suppose
+      <md>G=F^{-1}</md>
+      near <m>\mathbf q</m>. Then
+      <md>G(F(\mathbf x))=\mathbf x.</md>
+      Differentiate both sides at <m>\mathbf p</m>:
+      <md>D(G\circ F)(\mathbf p)=D I(\mathbf p).</md>
+      The matrix chain rule gives
+      <md>DG(F(\mathbf p))\,DF(\mathbf p)=I.</md>
+      Since <m>F(\mathbf p)=\mathbf q</m>, this says
+      <md>DG(\mathbf q)\,DF(\mathbf p)=I.</md>
+      Therefore
+      <md>\boxed{DG(\mathbf q)=\bigl(DF(\mathbf p)\bigr)^{-1}.}</md>
+      In Jacobian notation,
+      <md>\boxed{J_{F^{-1}}(F(\mathbf p))=\bigl(J_F(\mathbf p)\bigr)^{-1}.}</md>
+    </p>
+
+    <p>
+      This is the multivariable version of the single-variable inverse rule:
+      <md>(f^{-1})'(f(a))=\frac{1}{f'(a)}.</md>
+      A reciprocal becomes an inverse matrix.
+    </p>
+
+    <example xml:id="c8s5-ex-inverse-derivative-log-polar">
+      <title>The inverse derivative for logarithmic polar coordinates</title>
+      <statement>
+        <p>
+          Return to
+          <md>F(u,v)=(e^u\cos v,\ e^u\sin v).</md>
+          Its Jacobian matrix is
+          <md>
+            J_F(u,v)
+            =
+            \begin{pmatrix}
+                e^u\cos v &amp; -e^u\sin v\\
+                e^u\sin v &amp; e^u\cos v
+            \end{pmatrix}.
+          </md>
+          At
+          <md>\mathbf p=\left(\ln2,\frac{\pi}{6}\right),</md>
+          this becomes
+          <md>
+            J_F(\mathbf p)
+            =
+            \begin{pmatrix}
+                \sqrt3 &amp; -1\\
+                1 &amp; \sqrt3
+            \end{pmatrix}.
+          </md>
+          Its determinant is
+          <md>3+1=4.</md>
+          So the inverse derivative is
+          <md>
+            \bigl(J_F(\mathbf p)\bigr)^{-1}
+            =
+            \frac14
+            \begin{pmatrix}
+                \sqrt3 &amp; 1\\
+                -1 &amp; \sqrt3
+            \end{pmatrix}.
+          </md>
+        </p>
+        <p>
+          We can check this from the explicit local inverse. Near
+          <md>\mathbf q=(\sqrt3,1),</md>
+          the inverse is
+          <md>u=\frac12\ln(x^2+y^2), \qquad v=\Arg(x+iy).</md>
+          The differential of <m>u</m> is
+          <md>du=\frac{x\,dx+y\,dy}{x^2+y^2}.</md>
+          The differential of the angle is
+          <md>dv=\frac{-y\,dx+x\,dy}{x^2+y^2}.</md>
+          At <m>(x,y)=(\sqrt3,1)</m>, where <m>x^2+y^2=4</m>, we get
+          <md>du=\frac{\sqrt3}{4}\,dx+\frac14\,dy,</md>
+          and
+          <md>dv=-\frac14\,dx+\frac{\sqrt3}{4}\,dy.</md>
+          Thus
+          <md>
+            J_{F^{-1}}(\mathbf q)
+            =
+            \begin{pmatrix}
+                \sqrt3/4 &amp; 1/4\\
+                -1/4 &amp; \sqrt3/4
+            \end{pmatrix},
+          </md>
+          which is exactly
+          <md>\bigl(J_F(\mathbf p)\bigr)^{-1}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The determinant <m>4</m> had a geometric meaning. Near <m>\mathbf p</m>, the map
+      <m>F</m> multiplies small signed areas by about <m>4</m>. The inverse must divide those
+      areas by about <m>4</m>. That is why the determinant of the inverse matrix is
+      <md>\frac14.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s5-inverse-function-theorem">
+    <title>The inverse function theorem, stated geometrically</title>
+
+    <p>
+      The example suggests the general rule. If the best linear approximation to a map is
+      invertible, then the nonlinear map itself should be invertible after we zoom in enough.
+    </p>
+
+    <theorem xml:id="c8s5-thm-inverse-function">
+      <title>Inverse function theorem</title>
+      <statement>
+        <p>
+          Let
+          <md>F:D\subseteq\mathbb R^n\to\mathbb R^n</md>
+          have continuous first partial derivatives near <m>\mathbf p</m>. Suppose
+          <md>\det J_F(\mathbf p)\ne0.</md>
+          Then <m>F</m> has a local inverse near <m>\mathbf p</m>.
+        </p>
+        <p>
+          More precisely, there are neighborhoods <m>U</m> of <m>\mathbf p</m> and <m>V</m> of
+          <md>F(\mathbf p)</md>
+          such that
+          <md>F:U\to V</md>
+          is one-to-one and onto, and the inverse
+          <md>F^{-1}:V\to U</md>
+          has continuous first partial derivatives. Its derivative is
+          <md>\boxed{J_{F^{-1}}(F(\mathbf p))=\bigl(J_F(\mathbf p)\bigr)^{-1}.}</md>
+        </p>
+      </statement>
+      <proof>
+        <title>Idea of the proof</title>
+        <p>
+          Near <m>\mathbf p</m>, the map <m>F</m> is well approximated by its linear part:
+          <md>F(\mathbf p+\mathbf h) \approx F(\mathbf p)+J_F(\mathbf p)\mathbf h.</md>
+          The matrix
+          <md>J_F(\mathbf p)</md>
+          is invertible because its determinant is nonzero. So the linear approximation sends
+          small balls to non-collapsed ellipsoid-like regions. It does not crush any direction
+          to zero.
+        </p>
+        <p>
+          The continuity of the first partial derivatives says that, after zooming in far
+          enough, the nonlinear map stays close to this invertible linear map. A small
+          nonlinear bend cannot destroy local reversibility if the linear part is already
+          reversible.
+        </p>
+        <p>
+          The derivative formula for the inverse follows from differentiating
+          <md>F^{-1}(F(\mathbf x))=\mathbf x</md>
+          and using the matrix chain rule.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The theorem is local. It does not say that <m>F</m> is one-to-one on its whole domain.
+      The logarithmic polar map already showed why:
+      <md>F(u,v)=(e^u\cos v,e^u\sin v)</md>
+      has
+      <md>\det J_F(u,v)=e^{2u}\ne0</md>
+      everywhere, but
+      <md>F(u,v+2\pi)=F(u,v).</md>
+      The derivative never collapses a small piece, but the whole plane still wraps around the
+      punctured plane again and again.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s5-failure-zero-jacobian">
+    <title>Failure when the Jacobian determinant is zero</title>
+
+    <p>
+      The determinant condition is not decoration. If the determinant is zero, the linear part
+      collapses at least one direction.
+    </p>
+
+    <example xml:id="c8s5-ex-fold-no-inverse">
+      <title>A fold has no local inverse</title>
+      <statement>
+        <p>
+          Let
+          <md>F(u,v)=(u^2,v).</md>
+          Then
+          <md>
+            J_F(u,v)
+            =
+            \begin{pmatrix}
+                2u &amp; 0\\
+                0 &amp; 1
+            \end{pmatrix},
+          </md>
+          so
+          <md>\det J_F(u,v)=2u.</md>
+          At
+          <md>(u,v)=(0,0),</md>
+          the determinant is <m>0</m>.
+        </p>
+        <p>
+          The map folds the plane across the <m>v</m>-axis:
+          <md>F(u,v)=F(-u,v).</md>
+          For every small positive number <m>\epsilon</m>,
+          <md>F(\epsilon,0)=(\epsilon^2,0)</md>
+          and
+          <md>F(-\epsilon,0)=(\epsilon^2,0).</md>
+          No matter how tightly we zoom in around the origin, two different nearby inputs
+          produce the same output. So there is no local inverse at the origin.
+        </p>
+      </statement>
+    </example>
+
+    <figure xml:id="c8s5-fig-fold-map">
+      <caption>The map <m>F(u,v)=(u^2,v)</m> folds two sides of the input plane onto the same output.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-2.4,0) -- (2.6,0) node[right] {\(u\)};
+                \draw[-&gt;] (0,-1.8) -- (0,1.9) node[above] {\(v\)};
+                \draw[step=0.5, gray!20, very thin] (-2,-1.5) grid (2,1.5);
+                \fill (0,0) circle (2pt);
+                \node at (0,-2.2) {input plane};
+            \end{scope}
+
+            \draw[-&gt;, thick] (3.0,0) -- (4.4,0) node[midway, above] {\(F(u,v)=(u^2,v)\)};
+
+            \begin{scope}[shift={(6.2,0)}]
+                \draw[-&gt;] (-0.2,0) -- (3.2,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-1.8) -- (0,1.9) node[above] {\(y\)};
+                \draw[step=0.5, gray!20, very thin] (0,-1.5) grid (3,1.5);
+
+                \draw[very thick, blue!60!black] (0,-1.5) -- (0,1.5);
+                \node[blue!60!black, right] at (0,1.35) {fold line};
+
+                \fill (0,0) circle (2pt);
+                \node at (1.5,-2.2) {output half-plane};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      A zero determinant does not always mean that no inverse exists. It means the theorem can
+      no longer guarantee a differentiable inverse.
+    </p>
+
+    <example xml:id="c8s5-ex-inverse-derivative-blows-up">
+      <title>An inverse exists, but its derivative blows up</title>
+      <statement>
+        <p>
+          Let
+          <md>F(u,v)=(u^3,v).</md>
+          This map is one-to-one on the whole plane. Its inverse is
+          <md>F^{-1}(x,y)=(\sqrt[3]{x},y).</md>
+          But
+          <md>
+            J_F(u,v)=
+            \begin{pmatrix}
+                3u^2 &amp; 0\\
+                0 &amp; 1
+            \end{pmatrix},
+          </md>
+          so
+          <md>\det J_F(0,0)=0.</md>
+          The inverse is not differentiable at <m>(0,0)</m>, because
+          <md>\frac{d}{dx}\sqrt[3]{x} = \frac{1}{3x^{2/3}}</md>
+          blows up at <m>x=0</m>.
+        </p>
+        <p>
+          So the nonzero determinant condition is not saying merely that an inverse exists. It
+          is saying that the inverse behaves smoothly and has a linear approximation.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The theorem also asks for continuous first partial derivatives near the point. A
+      one-dimensional example shows why some smoothness is needed.
+    </p>
+
+    <example xml:id="c8s5-ex-continuity-of-derivative">
+      <title>Why continuity of the derivative is part of the theorem</title>
+      <statement>
+        <p>
+          Define
+          <md>
+            f(t)=
+            \begin{cases}
+            t+2t^2\sin\left(\dfrac{1}{t^2}\right), &amp; t\ne0,\\[2mm]
+            0, &amp; t=0.
+            \end{cases}
+          </md>
+          Then
+          <md>f'(0)=1.</md>
+          So the derivative at the origin is nonzero.
+        </p>
+        <p>
+          For <m>t\ne0</m>,
+          <md>f'(t)= 1+4t\sin\left(\frac1{t^2}\right) - \frac4t\cos\left(\frac1{t^2}\right).</md>
+          The last term oscillates with unbounded size as <m>t\to0</m>. Thus <m>f'</m> is not
+          continuous near <m>0</m>.
+        </p>
+        <p>
+          In every interval around <m>0</m>, the derivative takes both positive and negative
+          values. A continuous one-to-one function on an interval must be monotone. A
+          differentiable monotone function cannot have derivatives of both signs throughout
+          every tiny interval. So <m>f</m> has no local inverse near <m>0</m>, even though
+          <md>f'(0)=1.</md>
+        </p>
+        <p>
+          This example is not meant to be memorized. Its job is to show that knowing the
+          derivative at one point is not enough. The derivative must control a neighborhood.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The inverse function theorem is a local tool. It says that a map with a non-collapsing
+      linear part behaves like a coordinate system after enough zooming.
+    </p>
+
+    <example xml:id="c8s5-ex-nonlinear-calibration">
+      <title>A nonlinear calibration map</title>
+      <statement>
+        <p>
+          A small machine has two control variables <m>(u,v)</m>, and its output position is
+          modeled by
+          <md>F(u,v)=(u+v^2,\ v+u^2).</md>
+          The Jacobian matrix is
+          <md>
+            J_F(u,v)=
+            \begin{pmatrix}
+                1 &amp; 2v\\
+                2u &amp; 1
+            \end{pmatrix}.
+          </md>
+          Its determinant is
+          <md>\det J_F(u,v)=1-4uv.</md>
+        </p>
+        <p>
+          At the origin,
+          <md>\det J_F(0,0)=1,</md>
+          so the inverse function theorem says that <m>F</m> has a local inverse near
+          <m>(0,0)</m>. Near the origin, we can recover the control values from the output
+          position.
+        </p>
+        <p>
+          At
+          <md>\left(\frac12,\frac12\right),</md>
+          the determinant is
+          <md>1-4\cdot\frac12\cdot\frac12=0.</md>
+          There the linear approximation is
+          <md>
+            J_F\left(\frac12,\frac12\right)
+            =
+            \begin{pmatrix}
+                1 &amp; 1\\
+                1 &amp; 1
+            \end{pmatrix}.
+          </md>
+          This matrix sends
+          <md>(1,-1)</md>
+          to
+          <md>(0,0).</md>
+          So, to first order, one input direction is invisible in the output. The theorem
+          cannot give a local inverse there.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Solving an inverse problem means recovering all input coordinates from all output
+      coordinates. But many problems ask for less. A curve might be given by one equation
+      <md>F(x,y)=0,</md>
+      and we may only want to solve for <m>y</m> as a function of <m>x</m>. A surface might be
+      given by one equation
+      <md>F(x,y,z)=0,</md>
+      and we may only want to solve for <m>z</m> as a function of <m>x</m> and <m>y</m>. That
+      is not a full inverse problem. It is an implicit one.
+    </p>
+  </subsection>
+</section>

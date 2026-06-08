@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch19-conservation-laws.tex, Section 6.
+     Status: CONVERTED. -->
+<section xml:id="sec-19-chapter-review-and-modeling-projects" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter review and modeling projects</title>
+
+  <introduction>
+    <p>
+      <xref ref="ch19-conservation-laws"/> turned Stokes' theorem into a modeling tool. The
+      theorem said that boundary measurements and interior derivatives are two forms of the same
+      information:
+      <md>
+        \int_{\partial M}\omega=\int_M d\omega.
+      </md>
+      Conservation laws added time. A density changes inside a region because flux crosses the
+      boundary or because sources act inside.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c19s6-concept-map">
+    <title>Concept map</title>
+
+    <p>The main chain of ideas is:</p>
+
+    <md>
+      \boxed{
+      \begin{aligned}
+      &amp;\text{integral balance}\\
+      &amp;\frac{d}{dt}\int_E \rho\,dV
+      +
+      \int_{\partial E}\Phi_{\mathbf J}
+      =
+      \int_E s\,dV
+      \end{aligned}
+      }
+    </md>
+
+    <md>
+      \Downarrow\quad\text{use Stokes' theorem}\quad
+      \int_{\partial E}\Phi_{\mathbf J}=\int_E d\Phi_{\mathbf J}
+    </md>
+
+    <md>
+      \boxed{
+      \begin{aligned}
+      &amp;\text{local balance}\\
+      &amp;\rho_t+\nabla\cdot\mathbf J=s
+      \end{aligned}
+      }
+    </md>
+
+    <p>When</p>
+    <md>
+      \mathbf J=\rho\mathbf v
+    </md>
+    <p>and</p>
+    <md>
+      s=0,
+    </md>
+    <p>this becomes the continuity equation:</p>
+    <md>
+      \boxed{
+      \rho_t+\nabla\cdot(\rho\mathbf v)=0.
+      }
+    </md>
+
+    <p>The main equations of the chapter fit this pattern.</p>
+
+    <md>
+      \begin{array}{c|c|c}
+      \text{Model} &amp; \text{Equation} &amp; \text{Idea} \\ \hline
+      \text{continuity} &amp;
+      \rho_t+\nabla\cdot(\rho\mathbf v)=0 &amp;
+      \text{density transported by a flow}\\
+      \text{heat} &amp;
+      u_t=\alpha\Delta u &amp;
+      \text{heat flows down the gradient}\\
+      \text{wave} &amp;
+      u_{tt}=c^2\Delta u &amp;
+      \text{acceleration responds to curvature}\\
+      \text{equilibrium} &amp;
+      \Delta u=0 &amp;
+      \text{no source, no time change}\\
+      \text{Maxwell} &amp;
+      d\mathcal D=\mathcal Q,\quad d\mathcal B=0,\quad
+      d\mathcal E+\mathcal B_t=0,\quad
+      d\mathcal H-\mathcal D_t=\mathcal J
+      &amp;
+      \text{fields, fluxes, currents, and charge}\\
+      \text{potential theory} &amp;
+      \Delta u=0 &amp;
+      \text{harmonic balance and least energy}
+      \end{array}
+    </md>
+  </subsection>
+
+  <subsection xml:id="c19s6-formula-dictionary">
+    <title>Formula dictionary</title>
+
+    <p>For reference, here are the main translations between vector calculus and forms.</p>
+
+    <md>
+      \begin{array}{c|c}
+      \text{Vector expression} &amp; \text{Forms expression} \\ \hline
+      \nabla f &amp;
+      df=f_x\,dx+f_y\,dy+f_z\,dz
+      \\
+      \nabla\cdot\mathbf J &amp;
+      d\Phi_{\mathbf J}
+      =
+      (\nabla\cdot\mathbf J)\,dx\wedge dy\wedge dz
+      \\
+      \mathbf J\cdot\widehat{\mathbf n}\,dS &amp;
+      \Phi_{\mathbf J}
+      =
+      J_1\,dy\wedge dz+J_2\,dz\wedge dx+J_3\,dx\wedge dy
+      \\
+      \Delta u &amp;
+      d\Phi_{\nabla u}
+      =
+      \Delta u\,dx\wedge dy\wedge dz
+      \\
+      \nabla\times\mathbf E+\mathbf B_t=0 &amp;
+      d\mathcal E+\mathcal B_t=0
+      \\
+      \nabla\cdot\mathbf B=0 &amp;
+      d\mathcal B=0
+      \end{array}
+    </md>
+
+    <p>The repeated pattern is:</p>
+    <md>
+      \boxed{
+      \text{field as form}
+      \quad\longrightarrow\quad
+      d(\text{field as form})
+      \quad\longrightarrow\quad
+      \text{source, curl, or divergence.}
+      }
+    </md>
+  </subsection>
+
+  <subsection xml:id="c19s6-project-pipe-network">
+    <title>Project 1: conservation of mass in a pipe network</title>
+
+    <p>
+      A small water system has three tanks connected by pipes. Let
+      <md>
+        M_1(t),\quad M_2(t),\quad M_3(t)
+      </md>
+      be the mass of water in the tanks.
+    </p>
+
+    <p>
+      Water flows from tank <m>1</m> to tank <m>2</m> at rate
+      <md>
+        q_{12}=0.4M_1,
+      </md>
+      from tank <m>2</m> to tank <m>3</m> at rate
+      <md>
+        q_{23}=0.3M_2,
+      </md>
+      and from tank <m>3</m> back to tank <m>1</m> at rate
+      <md>
+        q_{31}=0.2M_3.
+      </md>
+      An external pump adds water to tank <m>1</m> at rate <m>5</m>, and water leaves tank
+      <m>3</m> at rate <m>2</m>.
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          Write the balance law for each tank:
+          <md>
+            \frac{d}{dt}(\text{mass in tank})
+            =
+            \text{inflow}-\text{outflow}+\text{source}.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Show that
+          <md>
+            M_1+M_2+M_3
+          </md>
+          changes at rate
+          <md>
+            3.
+          </md>
+          Explain why the internal pipe flows cancel in the total balance.
+        </p>
+      </li>
+      <li>
+        <p>
+          Change the external pump rate from <m>5</m> to <m>2</m>. Show that the total mass is
+          then conserved.
+        </p>
+      </li>
+      <li>
+        <p>
+          Interpret the cancellation of internal flows as a discrete version of the divergence
+          theorem: what leaves one small region enters a neighboring one.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      This project is deliberately finite. It uses tanks instead of a continuum. The same logic
+      becomes
+      <md>
+        \rho_t+\nabla\cdot\mathbf J=s
+      </md>
+      when the tanks shrink to tiny regions.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s6-project-heat-plate">
+    <title>Project 2: heat diffusion on a plate</title>
+
+    <p>
+      A square metal plate occupies
+      <md>
+        0\le x\le1,\qquad 0\le y\le1.
+      </md>
+      Its boundary is held at temperature <m>0</m>. The initial temperature is
+      <md>
+        u(x,y,0)=\sin(\pi x)\sin(\pi y).
+      </md>
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          Verify that
+          <md>
+            u(x,y,t)=e^{-2\alpha\pi^2t}\sin(\pi x)\sin(\pi y)
+          </md>
+          solves
+          <md>
+            u_t=\alpha(u_{xx}+u_{yy})
+          </md>
+          and satisfies the boundary condition.
+        </p>
+      </li>
+      <li>
+        <p>
+          Explain why the factor
+          <md>
+            e^{-2\alpha\pi^2t}
+          </md>
+          shrinks in time.
+        </p>
+      </li>
+      <li>
+        <p>
+          Compute the total heat, up to a constant heat capacity factor:
+          <md>
+            H(t)=\int_0^1\int_0^1 u(x,y,t)\,dy\,dx.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Now compare with the higher-frequency initial temperature
+          <md>
+            u(x,y,0)=\sin(3\pi x)\sin(\pi y).
+          </md>
+          Find the exponential decay rate. Which pattern fades faster?
+        </p>
+      </li>
+      <li>
+        <p>
+          Give a physical explanation: why should a temperature pattern with sharper spatial
+          oscillation smooth out faster?
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      This project connects the Laplacian with smoothing. The second derivatives detect sharp
+      bending, and sharp bending drives faster heat flow.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s6-project-stream-functions">
+    <title>Project 3: incompressible vector fields and stream functions</title>
+
+    <p>
+      In the plane, let
+      <md>
+        \psi(x,y)
+      </md>
+      be a differentiable scalar field, and define
+      <md>
+        \boxed{
+        \mathbf v=(\psi_y,-\psi_x).
+        }
+      </md>
+      This construction produces a divergence-free vector field.
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          Verify directly that
+          <md>
+            \nabla\cdot\mathbf v=0.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Take
+          <md>
+            \psi(x,y)=\sin x\sin y.
+          </md>
+          Compute
+          <md>
+            \mathbf v=(\psi_y,-\psi_x).
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Show that the velocity field is tangent to the level curves of <m>\psi</m>. That is,
+          show
+          <md>
+            \mathbf v\cdot\nabla\psi=0.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Explain why a particle following this flow stays on one level curve of <m>\psi</m>.
+        </p>
+      </li>
+      <li>
+        <p>
+          Compute the scalar curl of <m>\mathbf v</m>:
+          <md>
+            \operatorname{curl}_{\mathrm{plane}}\mathbf v
+            =
+            Q_x-P_y,
+          </md>
+          where
+          <md>
+            \mathbf v=(P,Q).
+          </md>
+          Show that
+          <md>
+            \operatorname{curl}_{\mathrm{plane}}\mathbf v=-\Delta\psi.
+          </md>
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      The function <m>\psi</m> is called a <term>stream function</term>. Its level curves are
+      stream lines of the incompressible flow. This is another place where a scalar field secretly
+      organizes a vector field.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s6-project-maxwell">
+    <title>Project 4: Maxwell's equations in forms and vectors</title>
+
+    <p>
+      This project is a translation exercise. Let
+      <md>
+        \mathcal E=E_1\,dx+E_2\,dy+E_3\,dz
+      </md>
+      and
+      <md>
+        \mathcal B=B_1\,dy\wedge dz+B_2\,dz\wedge dx+B_3\,dx\wedge dy.
+      </md>
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          Compute
+          <md>
+            d\mathcal E.
+          </md>
+          Write its three coefficients next to the components of
+          <md>
+            \nabla\times\mathbf E.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Compute
+          <md>
+            d\mathcal B.
+          </md>
+          Show that its coefficient is
+          <md>
+            \nabla\cdot\mathbf B.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Translate
+          <md>
+            d\mathcal E+\mathcal B_t=0
+          </md>
+          into vector notation.
+        </p>
+      </li>
+      <li>
+        <p>
+          Translate
+          <md>
+            d\mathcal B=0
+          </md>
+          into vector notation.
+        </p>
+      </li>
+      <li>
+        <p>
+          Explain why applying <m>d</m> to
+          <md>
+            d\mathcal E+\mathcal B_t=0
+          </md>
+          does not produce a new equation. Use
+          <md>
+            d^2=0.
+          </md>
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      The goal is not to memorize two languages. The goal is to see that the vector formulas and
+      the forms formulas describe the same geometry.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s6-project-harmonic">
+    <title>Project 5: harmonic functions and boundary data</title>
+
+    <p>
+      Let
+      <md>
+        R=[0,1]\times[0,1].
+      </md>
+      A steady temperature <m>u</m> on <m>R</m> satisfies
+      <md>
+        \Delta u=0.
+      </md>
+    </p>
+
+    <ol>
+      <li>
+        <p>
+          Check that
+          <md>
+            u_1(x,y)=x
+          </md>
+          is harmonic.
+        </p>
+      </li>
+      <li>
+        <p>
+          Check that
+          <md>
+            u_2(x,y)=y
+          </md>
+          is harmonic.
+        </p>
+      </li>
+      <li>
+        <p>
+          Check that
+          <md>
+            u_3(x,y)=xy
+          </md>
+          is harmonic.
+        </p>
+      </li>
+      <li>
+        <p>
+          For each function, describe the boundary temperatures on the four sides of the square.
+        </p>
+      </li>
+      <li>
+        <p>
+          Choose constants <m>a,b,c</m> and form
+          <md>
+            u=a u_1+b u_2+c u_3.
+          </md>
+          Show that <m>u</m> is still harmonic.
+        </p>
+      </li>
+      <li>
+        <p>Explain why linear combinations of harmonic functions are harmonic.</p>
+      </li>
+      <li>
+        <p>
+          Use the maximum principle to explain why a harmonic function on <m>R</m> cannot have a
+          strict interior maximum unless it is constant.
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      This project shows one of the reasons Laplace's equation is manageable: it is linear.
+      Solutions can be added and scaled.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s6-final-reflection">
+    <title>Final reflection: from local change to global balance</title>
+
+    <p>
+      The first chapter began with points, vectors, and displacements. At that stage, a vector was
+      only an instruction:
+      <md>
+        \text{move this far in these directions.}
+      </md>
+      By the end of the book, the same geometric discipline has grown into a language for fields
+      and laws.
+    </p>
+
+    <p>
+      A <m>1</m>-form measures along curves. A <m>2</m>-form measures through surfaces. A
+      <m>3</m>-form measures throughout solids. The exterior derivative moves from one degree to
+      the next:
+      <md>
+        0\longrightarrow 1\longrightarrow 2\longrightarrow 3.
+      </md>
+      The generalized Stokes theorem says that an interior derivative is the same information as a
+      boundary measurement:
+      <md>
+        \int_{\partial M}\omega=\int_M d\omega.
+      </md>
+    </p>
+
+    <p>
+      <xref ref="ch19-conservation-laws"/> added the last ingredient: time.
+    </p>
+
+    <p>
+      Once time enters, Stokes' theorem becomes a bookkeeping machine. What is stored inside a
+      region changes because something crosses the boundary or because something is created inside:
+      <md>
+        \frac{d}{dt}\int_E \rho\,dV
+        +
+        \int_{\partial E}\Phi_{\mathbf J}
+        =
+        \int_E s\,dV.
+      </md>
+      Using Stokes' theorem, this becomes the local equation
+      <md>
+        \rho_t+\nabla\cdot\mathbf J=s.
+      </md>
+    </p>
+
+    <p>That one sentence contains a large part of applied mathematics.</p>
+
+    <p>
+      Heat chooses
+      <md>
+        \mathbf J=-k\nabla u.
+      </md>
+      Waves choose a force law tied to curvature. Equilibrium sets time change to zero. Maxwell's
+      equations choose electric and magnetic forms whose derivatives encode charge, current, flux,
+      and circulation.
+    </p>
+
+    <p>
+      The book's central promise was that multivariable calculus is more than a list of formulas.
+      It is a way to move between local and global information:
+    </p>
+
+    <md>
+      \boxed{
+      \begin{aligned}
+      &amp;\text{local change}\\
+      &amp;\Updownarrow\\
+      &amp;\text{derivatives of fields}\\
+      &amp;\Updownarrow\\
+      &amp;\text{integrals over boundaries}\\
+      &amp;\Updownarrow\\
+      &amp;\text{global balance laws.}
+      \end{aligned}
+      }
+    </md>
+
+    <p>
+      That is why the same theorem appears under so many names: the Fundamental Theorem of
+      Calculus, Green's theorem, Stokes' theorem, the divergence theorem, and finally the
+      generalized Stokes theorem. They are not separate tricks. They are the same idea learning to
+      speak in higher dimensions.
+    </p>
+  </subsection>
+</section>

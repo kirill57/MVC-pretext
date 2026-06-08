@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch04-curves-coordinates-surfaces.tex, Section 3.
+     Status: CONVERTED. -->
+<section xml:id="sec-4-cylindrical-and-spherical-coordinates" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Cylindrical and spherical coordinates</title>
+
+  <p>
+    Polar coordinates gave us a better language for circular motion in the plane:
+    <md>(r,\theta)\longmapsto (r\cos\theta,r\sin\theta).</md>
+    At the end of <xref ref="sec-4-polar-coordinates"/>, we saw that this coordinate map bends a
+    rectangular <m>(r,\theta)</m>-grid into circles and rays. It also brought a warning: angular
+    motion has different physical length depending on how far we are from the origin.
+  </p>
+
+  <p>Now we lift that idea into space.</p>
+
+  <p>
+    A point in space can be described by its rectangular coordinates
+    <md>(x,y,z).</md>
+    But if the object is a pipe, a silo, a planet, a cone of light, or a sphere, rectangular
+    coordinates often hide the shape. Circular and spherical objects ask for circular and
+    spherical coordinates.
+  </p>
+
+  <subsection xml:id="c4s3-subsec-cylindrical-as-polar-with-height">
+    <title>Cylindrical coordinates as polar coordinates with height</title>
+
+    <p>
+      Imagine a worker standing inside a round grain silo. To describe her location, it is
+      natural to say:
+      <md>\text{distance from the center axis},\qquad \text{angle around the silo},\qquad \text{height above the floor}.</md>
+    </p>
+
+    <p>
+      That is not a new idea. It is just polar coordinates in the floor, together with the old
+      vertical coordinate <m>z</m>.
+    </p>
+
+    <example xml:id="c4s3-ex-point-in-round-silo">
+      <title>A point in a round silo</title>
+      <statement>
+        <p>
+          Suppose a point is
+          <md>4 \text{ meters from the center axis},</md>
+          at angle
+          <md>\theta=\frac{\pi}{6},</md>
+          and at height
+          <md>z=7.</md>
+          Then its cylindrical coordinates are
+          <md>\left(4,\frac{\pi}{6},7\right).</md>
+          To convert to rectangular coordinates, use the polar formulas in the <m>xy</m>-plane:
+          <md>x=r\cos\theta,\qquad y=r\sin\theta.</md>
+          So
+          <md>x=4\cos\frac{\pi}{6}=4\cdot\frac{\sqrt3}{2}=2\sqrt3,</md>
+          and
+          <md>y=4\sin\frac{\pi}{6}=4\cdot\frac12=2.</md>
+          The height remains
+          <md>z=7.</md>
+          Thus
+          <md>\left(4,\frac{\pi}{6},7\right)=(2\sqrt3,2,7)</md>
+          in rectangular coordinates.
+        </p>
+      </statement>
+    </example>
+
+    <definition xml:id="c4s3-def-cylindrical-coordinates">
+      <title>Cylindrical coordinates</title>
+      <statement>
+        <p>
+          The <term>cylindrical coordinates</term> of a point in space are written
+          <md>(r,\theta,z).</md>
+          The first two coordinates <m>(r,\theta)</m> are polar coordinates in the
+          <m>xy</m>-plane, and <m>z</m> is the usual height coordinate.
+        </p>
+        <p>
+          The conversion formulas are
+          <md>\boxed{ x=r\cos\theta,\qquad y=r\sin\theta,\qquad z=z. }</md>
+          Also,
+          <md>\boxed{ r^2=x^2+y^2. }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The repeated symbol <m>z=z</m> in the conversion formula is not a joke. It says that the
+      height coordinate is unchanged. Cylindrical coordinates change how we describe motion
+      around the vertical axis, but they keep the vertical direction as it was.
+    </p>
+
+    <figure xml:id="c4s3-fig-cylindrical-coordinates">
+      <caption>Cylindrical coordinates use polar coordinates in the horizontal plane and keep
+      the usual height coordinate.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            % axes
+            \draw[-&gt;] (0,0) -- (5.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,0) -- (-2.2,-1.5) node[left] {\(y\)};
+            \draw[-&gt;] (0,0) -- (0,5.1) node[above] {\(z\)};
+
+            % floor ellipse
+            \draw[gray!50] (0,0) ellipse (2.4 and 0.8);
+
+            % point projection
+            \coordinate (O) at (0,0);
+            \coordinate (Pxy) at (2.0,-0.55);
+            \coordinate (P) at (2.0,3.4);
+
+            \draw[dashed] (Pxy) -- (P);
+            \draw[-&gt;, thick] (O) -- (Pxy) node[midway, below] {\(r\)};
+            \draw[-&gt;, thick] (Pxy) -- (P) node[midway, right] {\(z\)};
+
+            \draw[thick] (0.9,0) arc[start angle=0,end angle=-15,x radius=1.0,y radius=0.35];
+            \node at (1.25,-0.28) {\(\theta\)};
+
+            \fill (P) circle (2.5pt);
+            \fill (Pxy) circle (2pt);
+            \node[right] at (P) {\((r,\theta,z)\)};
+
+            \draw[dashed] (0,3.4) -- (P);
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <example xml:id="c4s3-ex-rectangular-to-cylindrical">
+      <title>From rectangular to cylindrical</title>
+      <statement>
+        <p>
+          Find cylindrical coordinates for
+          <md>(x,y,z)=(-3,3,5).</md>
+          First,
+          <md>r=\sqrt{x^2+y^2}=\sqrt{(-3)^2+3^2}=3\sqrt2.</md>
+          The point <m>(-3,3)</m> lies in the second quadrant of the <m>xy</m>-plane, so one
+          possible angle is
+          <md>\theta=\frac{3\pi}{4}.</md>
+          The height is unchanged:
+          <md>z=5.</md>
+          Thus one cylindrical description is
+          <md>\left(3\sqrt2,\frac{3\pi}{4},5\right).</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Cylindrical coordinates are not unique, because the angle is not unique:
+      <md>(r,\theta,z)=(r,\theta+2\pi,z).</md>
+      Also, if <m>r=0</m>, the angle does not matter. Every point on the <m>z</m>-axis has the
+      form
+      <md>(0,\theta,z),</md>
+      for any angle <m>\theta</m>.
+    </p>
+
+    <p>
+      Usually we take
+      <md>r\ge0.</md>
+      Negative radii can be allowed, just as in polar coordinates, but most multivariable
+      calculus problems avoid them in cylindrical coordinates because the standard range
+      <m>r\ge0</m> already describes space cleanly.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s3-subsec-coordinate-surfaces-cylindrical">
+    <title>Coordinate surfaces in cylindrical coordinates</title>
+
+    <p>
+      A coordinate system gives us a grid. In three dimensions, the grid is made from surfaces,
+      not lines.
+    </p>
+
+    <p>
+      In cylindrical coordinates, each coordinate surface comes from holding one coordinate
+      constant.
+    </p>
+
+    <table xml:id="c4s3-tab-coordinate-surfaces-cylindrical">
+      <title>Coordinate surfaces in cylindrical coordinates.</title>
+      <tabular>
+        <col right="minor"/>
+        <col/>
+        <row header="yes" bottom="medium">
+          <cell>Fixed coordinate</cell>
+          <cell>Surface in space</cell>
+        </row>
+        <row>
+          <cell><m>r=a</m></cell>
+          <cell>circular cylinder of radius <m>a</m></cell>
+        </row>
+        <row>
+          <cell><m>\theta=\alpha</m></cell>
+          <cell>vertical half-plane through the <m>z</m>-axis</cell>
+        </row>
+        <row>
+          <cell><m>z=c</m></cell>
+          <cell>horizontal plane</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <example xml:id="c4s3-ex-pipe-as-coordinate-surface">
+      <title>A pipe as a coordinate surface</title>
+      <statement>
+        <p>
+          The equation
+          <md>r=3</md>
+          means every point is distance <m>3</m> from the <m>z</m>-axis. In rectangular
+          coordinates, this is
+          <md>x^2+y^2=9.</md>
+          There is no restriction on <m>z</m>, so the graph is an infinite circular cylinder.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c4s3-ex-cone-in-cylindrical">
+      <title>A cone in cylindrical coordinates</title>
+      <statement>
+        <p>
+          The equation
+          <md>z=r</md>
+          says that the height equals the distance from the <m>z</m>-axis. In rectangular
+          coordinates,
+          <md>z=\sqrt{x^2+y^2}.</md>
+          Squaring gives
+          <md>z^2=x^2+y^2,</md>
+          with the extra condition
+          <md>z\ge0.</md>
+          So this is the upper half of a circular cone.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The equation <m>z=r</m> is much easier to read in cylindrical coordinates than in
+      rectangular coordinates. It says: as you move one unit away from the central axis, you
+      rise one unit.
+    </p>
+
+    <!-- 3D-FIGURE: candidate for interactive Asymptote upgrade -->
+    <figure xml:id="c4s3-fig-cylinder-and-cone">
+      <caption>Cylindrical coordinates make cylinders and cones simple to describe. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <sidebyside widths="46% 46%" valign="middle">
+      <figure xml:id="c4s3-fig-cylinder">
+        <caption>cylinder <m>r=a</m></caption>
+        <image width="100%">
+        <asymptote>
+        // 3-D interactive (WebGL) surface.
+import graph3;
+        size(7cm);
+        currentprojection=orthographic(5,4,3);
+        real a=1.2,h=2.6;
+        surface s=surface(new triple(pair t){return (a*cos(t.x), a*sin(t.x), t.y);},(0,0),(2pi,h),32,10);
+        draw(s, rgb(0.35,0.70,0.90)+opacity(0.85), meshpen=rgb(0.10,0.35,0.50)+linewidth(0.2pt));
+        draw(O--(2.0,0,0),gray,Arrow3); draw(O--(0,2.0,0),gray,Arrow3); draw(O--(0,0,3.2),gray,Arrow3);
+        label("$x$",(2.0,0,0),S); label("$y$",(0,2.0,0),E); label("$z$",(0,0,3.2),N);
+        </asymptote>
+        </image>
+      </figure>
+      <figure xml:id="c4s3-fig-cone">
+        <caption>cone <m>z=r</m></caption>
+        <image width="100%">
+        <asymptote>
+        // 3-D interactive (WebGL) surface.
+import graph3;
+        size(7cm);
+        currentprojection=orthographic(5,4,3);
+        real R=2;
+        surface s=surface(new triple(pair t){real r=t.y; return (r*cos(t.x), r*sin(t.x), r);},(0,0),(2pi,R),32,12);
+        draw(s, rgb(0.95,0.55,0.35)+opacity(0.85), meshpen=rgb(0.50,0.22,0.10)+linewidth(0.2pt));
+        draw(O--(2.0,0,0),gray,Arrow3); draw(O--(0,2.0,0),gray,Arrow3); draw(O--(0,0,2.8),gray,Arrow3);
+        label("$x$",(2.0,0,0),S); label("$y$",(0,2.0,0),E); label("$z$",(0,0,2.8),N);
+        </asymptote>
+        </image>
+      </figure>
+      </sidebyside>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c4s3-subsec-spherical-radius-two-angles">
+    <title>Spherical coordinates as radius and two angles</title>
+
+    <p>
+      Cylindrical coordinates are built around an axis. Spherical coordinates are built around a
+      point.
+    </p>
+
+    <p>
+      Imagine a small drone flying near a weather balloon. The balloon is the origin. To
+      describe the drone's position, one natural report is:
+      <md>\text{how far from the balloon},</md>
+      <md>\text{which compass direction around the vertical axis},</md>
+      <md>\text{how far down from the positive vertical axis}.</md>
+    </p>
+
+    <p>That is spherical coordinates.</p>
+
+    <example xml:id="c4s3-ex-point-distance-two-angles">
+      <title>A point described by distance and two angles</title>
+      <statement>
+        <p>
+          A point is
+          <md>\rho=6</md>
+          units from the origin. Its horizontal direction is
+          <md>\theta=\frac{\pi}{3},</md>
+          and its angle down from the positive <m>z</m>-axis is
+          <md>\phi=\frac{\pi}{4}.</md>
+          The point has spherical coordinates
+          <md>\left(6,\frac{\pi}{3},\frac{\pi}{4}\right),</md>
+          where the coordinates are listed as
+          <md>(\rho,\theta,\phi).</md>
+        </p>
+        <p>
+          Its rectangular coordinates are
+          <md>x=\rho\sin\phi\cos\theta, \qquad y=\rho\sin\phi\sin\theta, \qquad z=\rho\cos\phi.</md>
+          Therefore
+          <md>x=6\sin\frac{\pi}{4}\cos\frac{\pi}{3} = 6\cdot\frac{\sqrt2}{2}\cdot\frac12 = \frac{3\sqrt2}{2},</md>
+          <md>y=6\sin\frac{\pi}{4}\sin\frac{\pi}{3} = 6\cdot\frac{\sqrt2}{2}\cdot\frac{\sqrt3}{2} = \frac{3\sqrt6}{2},</md>
+          and
+          <md>z=6\cos\frac{\pi}{4} = 3\sqrt2.</md>
+        </p>
+      </statement>
+    </example>
+
+    <definition xml:id="c4s3-def-spherical-coordinates">
+      <title>Spherical coordinates</title>
+      <statement>
+        <p>
+          The <term>spherical coordinates</term> of a point in space are written
+          <md>(\rho,\theta,\phi).</md>
+          Here
+        </p>
+        <table xml:id="c4s3-tab-spherical-meaning">
+          <title>The three spherical coordinates.</title>
+          <tabular>
+            <col right="minor"/>
+            <col/>
+            <row>
+              <cell><m>\rho</m></cell>
+              <cell>distance from the origin</cell>
+            </row>
+            <row>
+              <cell><m>\theta</m></cell>
+              <cell>angle around the <m>z</m>-axis, measured in the <m>xy</m>-plane</cell>
+            </row>
+            <row>
+              <cell><m>\phi</m></cell>
+              <cell>angle down from the positive <m>z</m>-axis</cell>
+            </row>
+          </tabular>
+        </table>
+        <p>
+          The conversion formulas are
+          <md>\boxed{ x=\rho\sin\phi\cos\theta,\qquad y=\rho\sin\phi\sin\theta,\qquad z=\rho\cos\phi. }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The angle <m>\theta</m> is the same angle used in polar and cylindrical coordinates. The
+      new angle is <m>\phi</m>, which measures how far the point has tilted away from the
+      positive <m>z</m>-axis.
+    </p>
+
+    <p>A useful way to remember the formulas is this:</p>
+
+    <p>
+      First project the point down to the <m>xy</m>-plane. The projected radius is
+      <md>r=\rho\sin\phi.</md>
+      Then use polar coordinates in that plane:
+      <md>x=r\cos\theta, \qquad y=r\sin\theta.</md>
+      So
+      <md>x=\rho\sin\phi\cos\theta, \qquad y=\rho\sin\phi\sin\theta.</md>
+      The vertical coordinate is
+      <md>z=\rho\cos\phi.</md>
+    </p>
+
+    <figure xml:id="c4s3-fig-spherical-coordinates">
+      <caption>Spherical coordinates use one distance <m>\rho</m> and two angles <m>\theta</m>
+      and <m>\phi</m>.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[-&gt;] (0,0) -- (4.8,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,0) -- (-1.9,-1.2) node[left] {\(y\)};
+            \draw[-&gt;] (0,0) -- (0,4.6) node[above] {\(z\)};
+
+            \coordinate (O) at (0,0);
+            \coordinate (Pxy) at (2.7,-0.7);
+            \coordinate (P) at (2.7,3.0);
+
+            \draw[dashed] (Pxy) -- (P);
+            \draw[dashed] (O) -- (Pxy);
+            \draw[-&gt;, very thick] (O) -- (P) node[midway, above left] {\(\rho\)};
+
+            \draw[thick] (0,1.2) arc[start angle=90,end angle=48,radius=1.2];
+            \node at (0.7,1.55) {\(\phi\)};
+
+            \draw[thick] (0.9,0) arc[start angle=0,end angle=-14,x radius=1.0,y radius=0.32];
+            \node at (1.35,-0.27) {\(\theta\)};
+
+            \draw[-&gt;, thick] (O) -- (Pxy) node[midway, below] {\(\rho\sin\phi\)};
+            \fill (P) circle (2.5pt);
+            \fill (Pxy) circle (2pt);
+            \node[right] at (P) {\((\rho,\theta,\phi)\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <example xml:id="c4s3-ex-rectangular-to-spherical">
+      <title>From rectangular to spherical</title>
+      <statement>
+        <p>
+          Find spherical coordinates for
+          <md>(x,y,z)=(1,1,\sqrt2).</md>
+          First,
+          <md>\rho=\sqrt{x^2+y^2+z^2} = \sqrt{1^2+1^2+(\sqrt2)^2} = \sqrt4 = 2.</md>
+          The angle around the <m>z</m>-axis is found from the projection <m>(1,1)</m> in the
+          <m>xy</m>-plane:
+          <md>\theta=\frac{\pi}{4}.</md>
+          Finally,
+          <md>z=\rho\cos\phi.</md>
+          So
+          <md>\sqrt2=2\cos\phi,</md>
+          which gives
+          <md>\cos\phi=\frac{\sqrt2}{2}.</md>
+          Thus
+          <md>\phi=\frac{\pi}{4}.</md>
+          One spherical description is
+          <md>\left(2,\frac{\pi}{4},\frac{\pi}{4}\right).</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      For converting from rectangular to spherical, the main formulas are
+      <md>\boxed{ \rho^2=x^2+y^2+z^2, }</md>
+      <md>\boxed{ \tan\theta=\frac{y}{x} \quad\text{with the quadrant checked carefully}, }</md>
+      and
+      <md>\boxed{ \cos\phi=\frac{z}{\rho} \quad(\rho\neq0). }</md>
+    </p>
+
+    <p>
+      As always, angle formulas need care. The equation
+      <md>\tan\theta=\frac{y}{x}</md>
+      does not determine the quadrant by itself.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s3-subsec-coordinate-surfaces-spherical">
+    <title>Coordinate surfaces in spherical coordinates</title>
+
+    <p>Spherical coordinates have their own grid surfaces.</p>
+
+    <table xml:id="c4s3-tab-coordinate-surfaces-spherical">
+      <title>Coordinate surfaces in spherical coordinates.</title>
+      <tabular>
+        <col right="minor"/>
+        <col/>
+        <row header="yes" bottom="medium">
+          <cell>Fixed coordinate</cell>
+          <cell>Surface in space</cell>
+        </row>
+        <row>
+          <cell><m>\rho=a</m></cell>
+          <cell>sphere of radius <m>a</m></cell>
+        </row>
+        <row>
+          <cell><m>\theta=\alpha</m></cell>
+          <cell>vertical half-plane through the <m>z</m>-axis</cell>
+        </row>
+        <row>
+          <cell><m>\phi=\beta</m></cell>
+          <cell>cone with vertex at the origin</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <example xml:id="c4s3-ex-a-sphere">
+      <title>A sphere</title>
+      <statement>
+        <p>
+          The equation
+          <md>\rho=5</md>
+          means the distance from the origin is <m>5</m>. In rectangular coordinates,
+          <md>x^2+y^2+z^2=25.</md>
+          So <m>\rho=5</m> is the sphere of radius <m>5</m> centered at the origin.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c4s3-ex-a-cone">
+      <title>A cone</title>
+      <statement>
+        <p>
+          The equation
+          <md>\phi=\frac{\pi}{4}</md>
+          means every point makes a <m>45^\circ</m> angle with the positive <m>z</m>-axis. Since
+          <md>r=\rho\sin\phi \qquad\text{and}\qquad z=\rho\cos\phi,</md>
+          when <m>\phi=\pi/4</m> we have
+          <md>r=z.</md>
+          So
+          <md>z=\sqrt{x^2+y^2}.</md>
+          This is the upper cone
+          <md>z^2=x^2+y^2, \qquad z\ge0.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Spherical coordinates are not unique. We can always add <m>2\pi</m> to <m>\theta</m>:
+      <md>(\rho,\theta,\phi) = (\rho,\theta+2\pi,\phi).</md>
+      At the origin, <m>\rho=0</m>, both angles are irrelevant. At the north and south poles,
+      where
+      <md>\phi=0 \quad\text{or}\quad \phi=\pi,</md>
+      the angle <m>\theta</m> is irrelevant because all horizontal directions meet at the same
+      point.
+    </p>
+
+    <p>
+      There is also a convention warning. Some books use the letters <m>\theta</m> and
+      <m>\phi</m> in the opposite way. In this book,
+      <md>\theta \text{ goes around the } z\text{-axis},</md>
+      and
+      <md>\phi \text{ comes down from the positive } z\text{-axis}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s3-subsec-when-natural-choice">
+    <title>When cylindrical or spherical coordinates are the natural choice</title>
+
+    <p>
+      A coordinate system is a language. The best language is the one in which the geometry
+      speaks simply.
+    </p>
+
+    <table xml:id="c4s3-tab-which-coordinates">
+      <title>Matching coordinates to geometry.</title>
+      <tabular>
+        <col right="minor"/>
+        <col/>
+        <row header="yes" bottom="medium">
+          <cell>Geometry</cell>
+          <cell>Usually good coordinates</cell>
+        </row>
+        <row>
+          <cell>boxes, planes, rectangular rooms</cell>
+          <cell>rectangular</cell>
+        </row>
+        <row>
+          <cell>pipes, cylinders, vertical axes, spinning objects</cell>
+          <cell>cylindrical</cell>
+        </row>
+        <row>
+          <cell>spheres, balls, shells, distance from one center</cell>
+          <cell>spherical</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <example xml:id="c4s3-ex-a-thick-pipe">
+      <title>A thick pipe</title>
+      <statement>
+        <p>
+          A pipe of inner radius <m>2</m>, outer radius <m>3</m>, and height <m>5</m> around the
+          <m>z</m>-axis is described simply by
+          <md>2\le r\le3, \qquad 0\le\theta\le2\pi, \qquad 0\le z\le5.</md>
+          In rectangular coordinates, the same solid would require
+          <md>4\le x^2+y^2\le9, \qquad 0\le z\le5.</md>
+          The rectangular description is not wrong, but it hides the circular structure.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c4s3-ex-a-spherical-shell">
+      <title>A spherical shell</title>
+      <statement>
+        <p>
+          A shell between two spheres centered at the origin, with radii <m>1</m> and <m>4</m>,
+          is described by
+          <md>1\le \rho\le4, \qquad 0\le\phi\le\pi, \qquad 0\le\theta\le2\pi.</md>
+          In rectangular coordinates, the condition becomes
+          <md>1\le x^2+y^2+z^2\le16,</md>
+          which is readable, but the angular structure is hidden.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Not every problem with a circle needs cylindrical coordinates, and not every problem in
+      space needs spherical coordinates. A rectangular box is easier in <m>x,y,z</m>. A plane
+      like
+      <md>2x-y+z=5</md>
+      is usually easier in rectangular coordinates. The goal is not to use the fanciest system.
+      The goal is to choose the coordinates that match the shape.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s3-subsec-hidden-size-coordinate-boxes">
+    <title>The hidden size of coordinate boxes</title>
+
+    <p>
+      In rectangular coordinates, a tiny box with side lengths
+      <md>\Delta x,\quad \Delta y,\quad \Delta z</md>
+      has volume approximately
+      <md>\Delta x\,\Delta y\,\Delta z.</md>
+    </p>
+
+    <p>Curved coordinates are different.</p>
+
+    <p>
+      In cylindrical coordinates, a tiny coordinate box has side lengths approximately
+      <md>\Delta r,\qquad r\,\Delta\theta,\qquad \Delta z.</md>
+      So its volume is approximately
+      <md>r\,\Delta r\,\Delta\theta\,\Delta z.</md>
+      This is why cylindrical integrals later contain
+      <md>r\,dr\,d\theta\,dz.</md>
+    </p>
+
+    <p>
+      In spherical coordinates, a tiny coordinate box has side lengths approximately
+      <md>\Delta\rho, \qquad \rho\,\Delta\phi, \qquad \rho\sin\phi\,\Delta\theta.</md>
+      So its volume is approximately
+      <md>\rho^2\sin\phi\,\Delta\rho\,\Delta\phi\,\Delta\theta.</md>
+      This is why spherical integrals later contain
+      <md>\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
+    </p>
+
+    <p>
+      In the language of forms, these volume factors are not decorations. They record how the
+      coordinate map changes signed volume:
+      <md>\boxed{ dx\wedge dy\wedge dz = r\,dr\wedge d\theta\wedge dz }</md>
+      for cylindrical coordinates, and, with the positive spherical order
+      <m>(\rho,\phi,\theta)</m>,
+      <md>\boxed{ dx\wedge dy\wedge dz = \rho^2\sin\phi\,d\rho\wedge d\phi\wedge d\theta. }</md>
+      The factors
+      <md>r \qquad\text{and}\qquad \rho^2\sin\phi</md>
+      are the three-dimensional relatives of the polar area factor <m>r</m>.
+    </p>
+
+    <p>
+      Coordinates help us describe space. They also help us recognize surfaces: cylinders,
+      cones, spheres, and shells appeared almost automatically. But many surfaces are not
+      coordinate surfaces in a single coordinate system. Some are bowls, some are saddles, some
+      are stretched spheres, and some are stranger than their equations first suggest. To read
+      them, we need one more geometric skill: slicing a surface and studying its
+      cross-sections.
+    </p>
+  </subsection>
+</section>

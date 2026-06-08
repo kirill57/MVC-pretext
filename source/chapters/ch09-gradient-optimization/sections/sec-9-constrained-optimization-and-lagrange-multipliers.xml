@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch09-gradient-optimization.tex, Section 5.
+     Status: CONVERTED. -->
+<section xml:id="sec-9-constrained-optimization-and-lagrange-multipliers" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Constrained optimization and Lagrange multipliers</title>
+
+  <p>
+    <xref ref="sec-9-the-second-derivative-test"/> classified interior critical points. There
+    the point was free to move in every direction, so a local extremum forced
+    <md>\nabla f=\mathbf 0.</md>
+    But many optimization problems do not allow every direction. A marble on a circular track
+    cannot move off the track. A box with a fixed amount of material cannot choose any side
+    lengths it wants. A point on a surface must stay on the surface.
+  </p>
+
+  <p>
+    The first-order condition changes from
+    <md>\nabla f=\mathbf 0</md>
+    to a condition about the directions that are allowed.
+  </p>
+
+  <subsection xml:id="c9s5-subsec-circular-walking-path">
+    <title>A circular walking path across a sloped field</title>
+
+    <p>
+      A park has a circular walking path of radius <m>5</m> meters, centered at the origin. The
+      sunlight score at a point on the ground is modeled by
+      <md>S(x,y)=6x+8y.</md>
+      We want the brightest and darkest points on the circular path
+      <md>x^2+y^2=25.</md>
+    </p>
+
+    <p>
+      Without calculus, we can already guess the answer. The function
+      <md>S(x,y)=6x+8y</md>
+      increases most strongly in the direction
+      <md>(6,8).</md>
+      The vector <m>(6,8)</m> has length
+      <md>\sqrt{6^2+8^2}=10.</md>
+      The point on the circle of radius <m>5</m> in that direction is
+      <md>5\frac{(6,8)}{10}=(3,4).</md>
+      So the brightest point should be
+      <md>(3,4),</md>
+      and the darkest point should be the opposite point
+      <md>(-3,-4).</md>
+    </p>
+
+    <p>Now let us find the same points by looking at gradients.</p>
+
+    <p>
+      The constraint function is
+      <md>g(x,y)=x^2+y^2.</md>
+      The circular path is the level curve
+      <md>g(x,y)=25.</md>
+      From <xref ref="sec-9-the-gradient-and-level-sets"/>, the gradient
+      <md>\nabla g(x,y)=(2x,2y)</md>
+      is normal to this circle.
+    </p>
+
+    <p>
+      At a highest or lowest point on the circle, motion along the circle cannot change <m>S</m>
+      to first order. So the gradient of <m>S</m> must also be normal to the circle. Since
+      <md>\nabla S=(6,8),</md>
+      we should have
+      <md>\nabla S=\lambda \nabla g</md>
+      for some number <m>\lambda</m>. That is,
+      <md>(6,8)=\lambda(2x,2y).</md>
+      So
+      <md>6=2\lambda x, \qquad 8=2\lambda y.</md>
+      If <m>\lambda\ne0</m>, then
+      <md>x=\frac{3}{\lambda}, \qquad y=\frac{4}{\lambda}.</md>
+      Now use the constraint:
+      <md>x^2+y^2=25.</md>
+      Thus
+      <md>\frac{9}{\lambda^2}+\frac{16}{\lambda^2}=25,</md>
+      so
+      <md>\frac{25}{\lambda^2}=25.</md>
+      Therefore
+      <md>\lambda=\pm1.</md>
+      When <m>\lambda=1</m>,
+      <md>(x,y)=(3,4).</md>
+      When <m>\lambda=-1</m>,
+      <md>(x,y)=(-3,-4).</md>
+      The values are
+      <md>S(3,4)=18+32=50,</md>
+      and
+      <md>S(-3,-4)=-18-32=-50.</md>
+      So
+      <md>\boxed{\text{maximum value }50\text{ at }(3,4),}</md>
+      and
+      <md>\boxed{\text{minimum value }-50\text{ at }(-3,-4).}</md>
+    </p>
+
+    <figure xml:id="c9s5-fig-circle-constraint">
+      <caption>On the circle, allowed motion is tangent to the circle. At a constrained maximum
+      or minimum, the gradient of the objective is normal to the allowed motion.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.72, &gt;=stealth]
+            \draw[-&gt;] (-6.2,0) -- (6.7,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-6.2) -- (0,6.7) node[above] {\(y\)};
+
+            \draw[gray!25, step=1] (-6,-6) grid (6,6);
+            \draw[thick] (0,0) circle (5);
+
+            \fill (3,4) circle (2.5pt);
+            \node[above right] at (3,4) {\((3,4)\)};
+
+            \fill (-3,-4) circle (2.5pt);
+            \node[below left] at (-3,-4) {\((-3,-4)\)};
+
+            \draw[-&gt;, very thick, blue!60!black] (3,4) -- ++(1.2,1.6)
+                node[above right] {\(\nabla g\)};
+            \draw[-&gt;, very thick, red!65!black] (3,4) -- ++(1.8,2.4)
+                node[right] {\(\nabla S\)};
+
+            \draw[-&gt;, very thick, blue!60!black] (-3,-4) -- ++(-1.2,-1.6)
+                node[below left] {\(\nabla g\)};
+            \draw[-&gt;, very thick, red!65!black] (-3,-4) -- ++(1.8,2.4)
+                node[right] {\(\nabla S\)};
+
+            \node at (0,-7.0) {At a constrained extremum, \(\nabla S\) is parallel to the constraint normal.};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The number <m>\lambda</m> is called a <term>Lagrange multiplier</term>. The important part
+      is not the number itself yet. The important part is the geometry:
+      <md>\text{gradient of objective} \quad \text{is parallel to} \quad \text{gradient of constraint}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s5-subsec-why-gradient-perpendicular">
+    <title>Why the gradient is perpendicular to a constraint</title>
+
+    <p>
+      Suppose the constraint is
+      <md>g(x,y)=c.</md>
+      A curve
+      <md>\mathbf r(t)</md>
+      lying on the constraint satisfies
+      <md>g(\mathbf r(t))=c.</md>
+      Differentiating gives
+      <md>\nabla g(\mathbf r(t))\cdot \mathbf r'(t)=0.</md>
+      So every allowed tangent direction is perpendicular to
+      <md>\nabla g.</md>
+    </p>
+
+    <p>
+      Now suppose <m>f</m> has a local maximum or minimum while the point is forced to stay on
+      the constraint. Along every allowed curve through the point, the one-variable function
+      <md>f(\mathbf r(t))</md>
+      has a local maximum or minimum. Therefore
+      <md>\frac{d}{dt}f(\mathbf r(t))=0</md>
+      at that point. By the chain rule,
+      <md>\nabla f\cdot \mathbf r'(t)=0.</md>
+      So <m>\nabla f</m> is also perpendicular to every allowed tangent direction.
+    </p>
+
+    <p>
+      If the constraint is a smooth curve in the plane, then there is one tangent line. Two
+      vectors perpendicular to the same tangent line must be parallel. Therefore
+      <md>\nabla f=\lambda\nabla g.</md>
+    </p>
+
+    <p>
+      In differential-form language, the same idea is even shorter. Allowed tangent vectors
+      <m>\mathbf v</m> satisfy
+      <md>dg(\mathbf v)=0.</md>
+      At a constrained extremum,
+      <md>df(\mathbf v)=0</md>
+      for every allowed tangent vector. If <m>dg\ne0</m>, the two <m>1</m>-forms have the same
+      kernel, so
+      <md>\boxed{df=\lambda\,dg.}</md>
+      In coordinates, this is
+      <md>\boxed{\nabla f=\lambda\nabla g.}</md>
+    </p>
+
+    <theorem xml:id="c9s5-thm-lagrange-one-constraint">
+      <title>Lagrange multiplier condition: one constraint</title>
+      <statement>
+        <p>
+          Let <m>f</m> and <m>g</m> have continuous first partial derivatives near a point
+          <md>\mathbf p.</md>
+          Suppose <m>\mathbf p</m> is a local maximum or local minimum of <m>f</m> subject to
+          the constraint
+          <md>g(\mathbf x)=c.</md>
+          Suppose also that
+          <md>\nabla g(\mathbf p)\ne\mathbf 0,</md>
+          so the constraint is a smooth level curve or level surface near <m>\mathbf p</m>.
+        </p>
+        <p>
+          Then there is a number <m>\lambda</m> such that
+          <md>\boxed{\nabla f(\mathbf p)=\lambda\nabla g(\mathbf p).}</md>
+          Equivalently,
+          <md>\boxed{df_{\mathbf p}=\lambda\,dg_{\mathbf p}.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>
+        At the constrained extremum, <m>f</m> has zero first-order change in every tangent
+        direction allowed by the constraint.
+      </p>
+      <p>
+        The allowed tangent vectors <m>\mathbf v</m> are the vectors satisfying
+        <md>dg_{\mathbf p}(\mathbf v)=0.</md>
+        The extremum condition says
+        <md>df_{\mathbf p}(\mathbf v)=0</md>
+        for all such <m>\mathbf v</m>. Since <m>dg_{\mathbf p}\ne0</m>, the constraint has a
+        well-defined normal direction. Thus <m>df_{\mathbf p}</m> must point in that same normal
+        direction, so
+        <md>df_{\mathbf p}=\lambda\,dg_{\mathbf p}</md>
+        for some number <m>\lambda</m>. In gradient notation, this becomes
+        <md>\nabla f(\mathbf p)=\lambda\nabla g(\mathbf p).</md>
+      </p>
+    </proof>
+
+    <p>
+      The condition
+      <md>\nabla g(\mathbf p)\ne\mathbf 0</md>
+      is not a technical decoration. If the constraint gradient vanishes, the level set may not
+      have an ordinary tangent direction.
+    </p>
+
+    <example xml:id="c9s5-ex-constraint-gradient-nonvanishing">
+      <title>Why the constraint gradient must not vanish</title>
+      <statement>
+        <p>
+          Let
+          <md>g(x,y)=x^2+y^2.</md>
+          The constraint
+          <md>g(x,y)=0</md>
+          contains only the point
+          <md>(0,0).</md>
+          Now take
+          <md>f(x,y)=x.</md>
+          On the constraint set, <m>f</m> has both a maximum and a minimum, because the
+          constraint set has only one point.
+        </p>
+        <p>
+          But
+          <md>\nabla f(0,0)=(1,0),</md>
+          while
+          <md>\nabla g(0,0)=(0,0).</md>
+          There is no number <m>\lambda</m> such that
+          <md>(1,0)=\lambda(0,0).</md>
+          The multiplier condition fails because the constraint is singular. The level set is
+          not a smooth curve near the origin.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c9s5-subsec-one-constraint-three-variables">
+    <title>One constraint in three variables</title>
+
+    <p>The same condition works for surfaces in space.</p>
+
+    <example xml:id="c9s5-ex-closest-point-on-plane">
+      <title>Closest point on a plane</title>
+      <statement>
+        <p>
+          A sensor is located at
+          <md>A=(1,2,3).</md>
+          A flat metal sheet lies in the plane
+          <md>x+2y+2z=6.</md>
+          We want the point on the sheet closest to the sensor.
+        </p>
+        <p>
+          Instead of minimizing the distance, minimize the squared distance:
+          <md>f(x,y,z)=(x-1)^2+(y-2)^2+(z-3)^2.</md>
+          The constraint is
+          <md>g(x,y,z)=x+2y+2z=6.</md>
+          Compute the gradients:
+          <md>\nabla f=\bigl(2(x-1),2(y-2),2(z-3)\bigr),</md>
+          and
+          <md>\nabla g=(1,2,2).</md>
+          The multiplier equation is
+          <md>\nabla f=\lambda\nabla g.</md>
+          So
+          <md>2(x-1)=\lambda,</md>
+          <md>2(y-2)=2\lambda,</md>
+          and
+          <md>2(z-3)=2\lambda.</md>
+          Thus
+          <md>x=1+\frac{\lambda}{2}, \qquad y=2+\lambda, \qquad z=3+\lambda.</md>
+          Use the constraint:
+          <md>x+2y+2z=6.</md>
+          Substitute:
+          <md>\left(1+\frac{\lambda}{2}\right)+2(2+\lambda)+2(3+\lambda)=6.</md>
+          So
+          <md>11+\frac{9}{2}\lambda=6.</md>
+          Therefore
+          <md>\lambda=-\frac{10}{9}.</md>
+          The closest point is
+          <md>x=1-\frac59=\frac49,</md>
+          <md>y=2-\frac{10}{9}=\frac89,</md>
+          and
+          <md>z=3-\frac{10}{9}=\frac{17}{9}.</md>
+          So
+          <md>\boxed{P=\left(\frac49,\frac89,\frac{17}{9}\right).}</md>
+        </p>
+        <p>
+          Geometrically, the vector from the sheet to the sensor is normal to the sheet. The
+          Lagrange equation is just that fact written in gradient form.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The multiplier method gives candidates. It does not, by itself, decide whether a candidate
+      is a maximum, a minimum, or something else. In the closest-point example, the geometry
+      tells us the answer: distance squared from a fixed point to a plane has a unique minimum.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s5-subsec-multiple-constraints">
+    <title>Multiple constraints</title>
+
+    <p>Sometimes a point must satisfy more than one constraint.</p>
+
+    <p>
+      A curve in space can be described as the intersection of two surfaces:
+      <md>g(x,y,z)=c, \qquad h(x,y,z)=d.</md>
+      At a point on the curve, the allowed tangent direction must be perpendicular to both
+      <md>\nabla g \qquad\text{and}\qquad \nabla h.</md>
+      So the normal plane to the curve is spanned by
+      <md>\nabla g \quad\text{and}\quad \nabla h,</md>
+      provided these two gradients are independent.
+    </p>
+
+    <p>
+      At a constrained extremum, <m>\nabla f</m> must also be perpendicular to the allowed
+      tangent direction. Therefore <m>\nabla f</m> must lie in the plane spanned by the two
+      constraint gradients:
+      <md>\boxed{\nabla f=\lambda\nabla g+\mu\nabla h.}</md>
+    </p>
+
+    <theorem xml:id="c9s5-thm-lagrange-two-constraints">
+      <title>Lagrange multiplier condition: two constraints in space</title>
+      <statement>
+        <p>
+          Let <m>f,g,h</m> have continuous first partial derivatives near a point
+          <md>\mathbf p\in\mathbb R^3.</md>
+          Suppose <m>\mathbf p</m> is a local maximum or local minimum of <m>f</m> subject to
+          <md>g(\mathbf x)=c, \qquad h(\mathbf x)=d.</md>
+          Suppose also that
+          <md>\nabla g(\mathbf p) \quad\text{and}\quad \nabla h(\mathbf p)</md>
+          are linearly independent.
+        </p>
+        <p>
+          Then there are numbers <m>\lambda</m> and <m>\mu</m> such that
+          <md>\boxed{\nabla f(\mathbf p)=\lambda\nabla g(\mathbf p)+\mu\nabla h(\mathbf p).}</md>
+          Equivalently,
+          <md>\boxed{df_{\mathbf p}=\lambda\,dg_{\mathbf p}+\mu\,dh_{\mathbf p}.}</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <example xml:id="c9s5-ex-circle-in-space">
+      <title>Optimizing on a circle in space</title>
+      <statement>
+        <p>
+          A sensor ring lies where the cylinder
+          <md>x^2+y^2=1</md>
+          meets the plane
+          <md>z=1.</md>
+          On that ring, the signal strength is
+          <md>F(x,y,z)=x+2y+3z.</md>
+          Find the maximum and minimum signal values.
+        </p>
+        <p>
+          Let
+          <md>g(x,y,z)=x^2+y^2, \qquad h(x,y,z)=z.</md>
+          The constraints are
+          <md>g=1, \qquad h=1.</md>
+          The gradients are
+          <md>\nabla F=(1,2,3),</md>
+          <md>\nabla g=(2x,2y,0),</md>
+          and
+          <md>\nabla h=(0,0,1).</md>
+          The multiplier equation is
+          <md>(1,2,3)=\lambda(2x,2y,0)+\mu(0,0,1).</md>
+          So
+          <md>1=2\lambda x,</md>
+          <md>2=2\lambda y,</md>
+          and
+          <md>3=\mu.</md>
+          Thus
+          <md>x=\frac{1}{2\lambda}, \qquad y=\frac{1}{\lambda}.</md>
+          Use
+          <md>x^2+y^2=1.</md>
+          Then
+          <md>\frac{1}{4\lambda^2}+\frac{1}{\lambda^2}=1,</md>
+          so
+          <md>\frac{5}{4\lambda^2}=1.</md>
+          Therefore
+          <md>\lambda=\pm\frac{\sqrt5}{2}.</md>
+        </p>
+        <p>
+          When
+          <md>\lambda=\frac{\sqrt5}{2},</md>
+          we get
+          <md>x=\frac{1}{\sqrt5}, \qquad y=\frac{2}{\sqrt5}, \qquad z=1.</md>
+          When
+          <md>\lambda=-\frac{\sqrt5}{2},</md>
+          we get
+          <md>x=-\frac{1}{\sqrt5}, \qquad y=-\frac{2}{\sqrt5}, \qquad z=1.</md>
+        </p>
+        <p>
+          The corresponding values are
+          <md>F\left(\frac{1}{\sqrt5},\frac{2}{\sqrt5},1\right)=\frac{1}{\sqrt5}+\frac{4}{\sqrt5}+3=3+\sqrt5,</md>
+          and
+          <md>F\left(-\frac{1}{\sqrt5},-\frac{2}{\sqrt5},1\right)=3-\sqrt5.</md>
+          The ring is closed and bounded, so a continuous function on it has an absolute maximum
+          and minimum. Thus
+          <md>\boxed{\text{maximum value }3+\sqrt5}</md>
+          and
+          <md>\boxed{\text{minimum value }3-\sqrt5.}</md>
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c9s5-subsec-boundary-constraints-compactness">
+    <title>Boundary constraints and compactness</title>
+
+    <p>
+      Lagrange multipliers find candidates on smooth constraint pieces. Boundary points must
+      still be checked separately.
+    </p>
+
+    <p>
+      The guiding theorem is the same extreme-value theorem from single-variable calculus, now
+      used in the plane and in space.
+    </p>
+
+    <theorem xml:id="c9s5-thm-extreme-value">
+      <title>Extreme-value theorem</title>
+      <statement>
+        <p>
+          Let <m>D</m> be a closed and bounded set in <m>\mathbb R^2</m> or <m>\mathbb R^3</m>.
+          If
+          <md>f:D\to\mathbb R</md>
+          is continuous, then <m>f</m> attains an absolute maximum and an absolute minimum on
+          <m>D</m>.
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      Here <em>closed and bounded</em> is the practical meaning of compact in the spaces of this
+      book. Closed means the boundary is included. Bounded means the set fits inside some large
+      ball.
+    </p>
+
+    <p>Each hypothesis matters.</p>
+
+    <example xml:id="c9s5-ex-why-closed-matters">
+      <title>Why closed matters</title>
+      <statement>
+        <p>
+          The function
+          <md>f(x)=x</md>
+          on the open interval
+          <md>0\lt x\lt 1</md>
+          has no maximum and no minimum. The values get close to <m>1</m> and close to <m>0</m>,
+          but the endpoints are missing.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c9s5-ex-why-bounded-matters">
+      <title>Why bounded matters</title>
+      <statement>
+        <p>
+          The function
+          <md>f(x)=x</md>
+          on the real line has no maximum and no minimum. The domain is closed, but it is not
+          bounded.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c9s5-ex-why-continuity-matters">
+      <title>Why continuity matters</title>
+      <statement>
+        <p>
+          Define
+          <md>f(x)=
+          \begin{cases}
+          \dfrac1x, \amp 0\lt x\le1,\\[2mm]
+          0, \amp x=0.
+          \end{cases}</md>
+          The domain
+          <md>[0,1]</md>
+          is closed and bounded. But <m>f</m> is not continuous at <m>0</m>, and it has no
+          maximum: as <m>x\to0^+</m>, the values
+          <md>\frac1x</md>
+          grow without bound.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      For practical optimization on a region, the candidate list usually has several parts:
+    </p>
+
+    <table xml:id="c9s5-tab-candidate-list">
+      <title>Where to look for constrained extrema.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Place</cell><cell>What to do</cell>
+        </row>
+        <row><cell>interior</cell><cell><m>\nabla f=\mathbf 0</m></cell></row>
+        <row><cell>smooth boundary pieces</cell><cell>use Lagrange multipliers or one-variable calculus</cell></row>
+        <row><cell>corners and endpoints</cell><cell>check directly</cell></row>
+      </tabular>
+    </table>
+
+    <example xml:id="c9s5-ex-semicircular-courtyard">
+      <title>A semicircular courtyard</title>
+      <statement>
+        <p>
+          A solar sensor can be placed anywhere in the upper half-disk
+          <md>D=\{(x,y):x^2+y^2\le25,\ y\ge0\}.</md>
+          Its score is
+          <md>S(x,y)=6x+8y.</md>
+          Find the absolute maximum and minimum.
+        </p>
+        <p>
+          The domain is closed and bounded, and <m>S</m> is continuous. Therefore the absolute
+          maximum and minimum exist.
+        </p>
+        <p>
+          There are no interior critical points, because
+          <md>\nabla S=(6,8)\ne\mathbf 0.</md>
+        </p>
+        <p>
+          Now check the curved boundary
+          <md>x^2+y^2=25, \qquad y\ge0.</md>
+          Using
+          <md>g(x,y)=x^2+y^2,</md>
+          the multiplier equation is
+          <md>(6,8)=\lambda(2x,2y).</md>
+          As before, this gives
+          <md>(x,y)=(3,4) \qquad\text{or}\qquad (x,y)=(-3,-4).</md>
+          Only
+          <md>(3,4)</md>
+          lies on the upper semicircle.
+        </p>
+        <p>
+          Now check the flat boundary
+          <md>y=0, \qquad -5\le x\le5.</md>
+          There
+          <md>S(x,0)=6x.</md>
+          On the interval <m>[-5,5]</m>, this has endpoint values
+          <md>S(5,0)=30, \qquad S(-5,0)=-30.</md>
+        </p>
+        <p>
+          Compare the candidates:
+          <md>S(3,4)=50,</md>
+          <md>S(5,0)=30,</md>
+          and
+          <md>S(-5,0)=-30.</md>
+          Therefore
+          <md>\boxed{\text{absolute maximum }50\text{ at }(3,4),}</md>
+          and
+          <md>\boxed{\text{absolute minimum }-30\text{ at }(-5,0).}</md>
+        </p>
+        <p>
+          The minimum occurs at an endpoint of a boundary piece. It is not found by the smooth
+          circle multiplier equation.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c9s5-subsec-interpreting-the-multiplier">
+    <title>Interpreting the multiplier</title>
+
+    <p>
+      The multiplier <m>\lambda</m> often has a useful meaning. It measures how the best value
+      changes when the constraint level changes.
+    </p>
+
+    <p>
+      Return to the circular path problem:
+      <md>S(x,y)=6x+8y, \qquad x^2+y^2=25.</md>
+      More generally, suppose the constraint is
+      <md>x^2+y^2=c,</md>
+      where <m>c\gt 0</m>. This is a circle of radius
+      <md>\sqrt c.</md>
+      The maximum of <m>S</m> on that circle is
+      <md>M(c)=10\sqrt c,</md>
+      because the vector <m>(6,8)</m> has length <m>10</m>.
+    </p>
+
+    <p>
+      Differentiate:
+      <md>M'(c)=\frac{5}{\sqrt c}.</md>
+      At
+      <md>c=25,</md>
+      we get
+      <md>M'(25)=1.</md>
+      That matches the multiplier at the maximum point <m>(3,4)</m>, where
+      <md>\lambda=1.</md>
+    </p>
+
+    <p>
+      So if the allowed squared radius <m>c</m> increases slightly, the maximum sunlight score
+      increases by about
+      <md>1</md>
+      unit of score per unit of <m>c</m>.
+    </p>
+
+    <p>
+      The unit matters. If instead we write the constraint as
+      <md>\sqrt{x^2+y^2}=R,</md>
+      then the maximum value is
+      <md>10R.</md>
+      At
+      <md>R=5,</md>
+      its derivative is
+      <md>10.</md>
+      The multiplier changes because the constraint parameter changed. One version measures
+      change per unit of squared radius. The other measures change per unit of radius.
+    </p>
+
+    <p>
+      This is one reason Lagrange multipliers appear in economics, physics, and design problems.
+      They do not only find candidates. They also tell how valuable it would be to relax a
+      constraint. But the method is easy to over-trust. It speaks only under its hypotheses, and
+      it speaks only about the pieces where those hypotheses hold. The next section collects the
+      traps, because most wrong optimization solutions fail in exactly these places.
+    </p>
+  </subsection>
+</section>

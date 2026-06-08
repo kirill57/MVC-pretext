@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch11-triple-higher-integrals.tex, Section 11.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-11-spherical-coordinates-in-integrals" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Spherical coordinates in integrals</title>
+
+  <p>
+    Cylindrical coordinates made cans, pipes, and cones look simple. A ball is still
+    awkward in cylindrical coordinates, because the top and bottom surfaces involve
+    <md>z=\pm\sqrt{a^2-r^2}.</md>
+    A ball wants a coordinate that measures distance from its center.
+  </p>
+
+  <p>
+    That coordinate is <m>\rho</m>. To locate a point in space, distance alone is not
+    enough. We also need two angles.
+  </p>
+
+  <subsection xml:id="c11s4-subsec-volume-element">
+    <title>The volume element <m>\rho^2\sin\phi\,d\rho\,d\phi\,d\theta</m></title>
+
+    <p>
+      Spherical coordinates use
+      <md>\rho,\qquad \phi,\qquad \theta.</md>
+      The convention in this book is as follows.
+    </p>
+
+    <table xml:id="c11s4-tab-spherical-coordinates">
+      <title>The spherical coordinates and their meanings.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>coordinate</cell>
+          <cell>meaning</cell>
+        </row>
+        <row>
+          <cell><m>\rho</m></cell>
+          <cell>distance from the origin</cell>
+        </row>
+        <row>
+          <cell><m>\theta</m></cell>
+          <cell>angle around the <m>z</m>-axis, measured in the <m>xy</m>-plane</cell>
+        </row>
+        <row>
+          <cell><m>\phi</m></cell>
+          <cell>angle down from the positive <m>z</m>-axis</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Thus
+      <md>0\le \rho, \qquad 0\le \phi\le \pi.</md>
+      The coordinate <m>\theta</m> usually runs through an interval of length <m>2\pi</m>.
+    </p>
+
+    <p>
+      The conversion formulas are
+      <md>\boxed{x=\rho\sin\phi\cos\theta, \qquad y=\rho\sin\phi\sin\theta, \qquad z=\rho\cos\phi.}</md>
+      The distance from the <m>z</m>-axis is
+      <md>r=\sqrt{x^2+y^2}=\rho\sin\phi.</md>
+    </p>
+
+    <figure xml:id="c11s4-fig-spherical-volume-element">
+      <caption>The spherical volume element is bounded by small changes in <m>\rho</m>, <m>\theta</m>, and <m>\phi</m>.</caption>
+      <image source="images/Spherical_Volume.png" width="80%"/>
+    </figure>
+
+    <p>Now find the small volume element.</p>
+
+    <p>
+      A small spherical coordinate box has three side lengths, approximately:
+      <md>d\rho</md>
+      in the radial direction,
+      <md>\rho\,d\phi</md>
+      in the direction that changes <m>\phi</m>, and
+      <md>\rho\sin\phi\,d\theta</md>
+      in the direction that goes around the <m>z</m>-axis.
+    </p>
+
+    <p>
+      Multiplying these gives
+      <md>dV = d\rho\cdot \rho\,d\phi\cdot \rho\sin\phi\,d\theta.</md>
+      So
+      <md>\boxed{dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.}</md>
+    </p>
+
+    <p>
+      The factor <m>\rho^2</m> says that shells farther from the origin are larger. The
+      factor <m>\sin\phi</m> says that angular pieces shrink near the poles. Near
+      <m>\phi=0</m>, all values of <m>\theta</m> crowd around the positive <m>z</m>-axis.
+    </p>
+
+    <p>
+      In form language, the same scale factor is
+      <md>\boxed{dx\wedge dy\wedge dz = \rho^2\sin\phi\, d\rho\wedge d\phi\wedge d\theta.}</md>
+      For positive volume, we write
+      <md>dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
+    </p>
+
+    <example xml:id="c11s4-ex-volume-of-a-ball">
+      <title>Volume of a ball</title>
+      <statement>
+        <p>
+          Let <m>B</m> be the ball of radius <m>4</m> centered at the origin:
+          <md>x^2+y^2+z^2\le16.</md>
+          In spherical coordinates, this is simply
+          <md>0\le\rho\le4,\qquad 0\le\phi\le\pi,\qquad 0\le\theta\le2\pi.</md>
+          Therefore
+          <md>
+            <mrow>\operatorname{Volume}(B) \amp= \int_0^{2\pi}\int_0^\pi\int_0^4 \rho^2\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+            <mrow>\amp= \left(\int_0^{2\pi}d\theta\right)\left(\int_0^\pi\sin\phi\,d\phi\right)\left(\int_0^4\rho^2\,d\rho\right)</mrow>
+            <mrow>\amp= (2\pi)(2)\left(\frac{64}{3}\right)</mrow>
+            <mrow>\amp= \frac{256\pi}{3}.</mrow>
+          </md>
+          This matches
+          <md>\frac43\pi(4)^3=\frac{256\pi}{3}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Again, the scale factor is not optional. If we computed the unit ball without
+      <m>\sin\phi</m>, we would get
+      <md>\int_0^{2\pi}\int_0^\pi\int_0^1 \rho^2\,d\rho\,d\phi\,d\theta = \frac{2\pi^2}{3},</md>
+      not
+      <md>\frac{4\pi}{3}.</md>
+      The missing <m>\sin\phi</m> would give too much weight to tiny angular pieces near
+      the poles.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s4-subsec-balls-shells-cones">
+    <title>Balls, shells, and cones</title>
+
+    <p>
+      Spherical coordinates turn spheres into constant-<m>\rho</m> surfaces:
+      <md>x^2+y^2+z^2=a^2 \qquad\Longleftrightarrow\qquad \rho=a.</md>
+      So balls and shells become very simple.
+    </p>
+
+    <example xml:id="c11s4-ex-spherical-shell">
+      <title>A spherical shell</title>
+      <statement>
+        <p>
+          The shell between radius <m>2</m> and radius <m>5</m> is
+          <md>2\le\rho\le5.</md>
+          With full angular range,
+          <md>0\le\phi\le\pi,\qquad 0\le\theta\le2\pi.</md>
+          Its volume is
+          <md>
+            <mrow>V \amp= \int_0^{2\pi}\int_0^\pi\int_2^5 \rho^2\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+            <mrow>\amp= (2\pi)(2)\left[\frac{\rho^3}{3}\right]_2^5</mrow>
+            <mrow>\amp= 4\pi\cdot\frac{125-8}{3}</mrow>
+            <mrow>\amp= 156\pi.</mrow>
+          </md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Cones also become simple, because a cone with vertex at the origin is a
+      constant-angle surface. For example,
+      <md>z=\sqrt{x^2+y^2}</md>
+      becomes
+      <md>\rho\cos\phi=\rho\sin\phi.</md>
+      Away from the origin, this gives
+      <md>\cos\phi=\sin\phi,</md>
+      so
+      <md>\phi=\frac{\pi}{4}.</md>
+      The inside of the upper cone is
+      <md>0\le\phi\le\frac{\pi}{4}.</md>
+    </p>
+
+    <example xml:id="c11s4-ex-ball-cut-by-cone">
+      <title>A ball cut by a cone</title>
+      <statement>
+        <p>
+          Find the volume inside the sphere
+          <md>\rho\le3</md>
+          and inside the upper cone
+          <md>z\ge \sqrt{x^2+y^2}.</md>
+          The cone is
+          <md>0\le\phi\le\frac{\pi}{4}.</md>
+          The full rotation around the <m>z</m>-axis gives
+          <md>0\le\theta\le2\pi.</md>
+          So
+          <md>
+            <mrow>V \amp= \int_0^{2\pi}\int_0^{\pi/4}\int_0^3 \rho^2\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+            <mrow>\amp= (2\pi)\left(1-\cos\frac{\pi}{4}\right)\left(9\right)</mrow>
+            <mrow>\amp= 18\pi\left(1-\frac{\sqrt2}{2}\right).</mrow>
+          </md>
+          Thus
+          <md>\boxed{V=18\pi\left(1-\frac{\sqrt2}{2}\right).}</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A sphere fixes <m>\rho</m>. A cone fixes <m>\phi</m>. A vertical half-plane fixes
+      <m>\theta</m>. That is the basic geometry of spherical bounds.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s4-subsec-angular-bounds">
+    <title>Choosing the angular bounds</title>
+
+    <p>
+      The angle <m>\theta</m> is the same azimuth angle used in cylindrical coordinates.
+      It describes the shadow in the <m>xy</m>-plane.
+    </p>
+
+    <p>
+      The angle <m>\phi</m> describes how far down from the positive <m>z</m>-axis the
+      point lies. It controls vertical opening.
+    </p>
+
+    <table xml:id="c11s4-tab-angular-bounds">
+      <title>Conditions and their spherical meanings.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>condition</cell>
+          <cell>spherical meaning</cell>
+        </row>
+        <row>
+          <cell><m>z\ge0</m></cell>
+          <cell><m>0\le\phi\le\pi/2</m></cell>
+        </row>
+        <row>
+          <cell><m>z\le0</m></cell>
+          <cell><m>\pi/2\le\phi\le\pi</m></cell>
+        </row>
+        <row>
+          <cell><m>x\ge0,\ y\ge0</m></cell>
+          <cell><m>0\le\theta\le\pi/2</m></cell>
+        </row>
+        <row>
+          <cell><m>\rho\le a</m></cell>
+          <cell>inside sphere of radius <m>a</m></cell>
+        </row>
+        <row>
+          <cell><m>z=\sqrt{x^2+y^2}</m></cell>
+          <cell><m>\phi=\pi/4</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <example xml:id="c11s4-ex-first-octant-of-a-ball">
+      <title>The first octant of a ball</title>
+      <statement>
+        <p>
+          The first octant means
+          <md>x\ge0,\qquad y\ge0,\qquad z\ge0.</md>
+          For the ball
+          <md>\rho\le4,</md>
+          the bounds are
+          <md>0\le\rho\le4, \qquad 0\le\phi\le\frac{\pi}{2}, \qquad 0\le\theta\le\frac{\pi}{2}.</md>
+          The volume is
+          <md>
+            <mrow>V \amp= \int_0^{\pi/2}\int_0^{\pi/2}\int_0^4 \rho^2\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+            <mrow>\amp= \left(\frac{\pi}{2}\right)(1)\left(\frac{64}{3}\right)</mrow>
+            <mrow>\amp= \frac{32\pi}{3}.</mrow>
+          </md>
+          This is one eighth of the full ball volume
+          <md>\frac{256\pi}{3}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Spherical coordinates can also describe caps, where the radial lower bound is not
+      zero.
+    </p>
+
+    <example xml:id="c11s4-ex-spherical-cap">
+      <title>A spherical cap</title>
+      <statement>
+        <p>
+          Find the volume inside the sphere
+          <md>\rho\le3</md>
+          and above the plane
+          <md>z=1.</md>
+          The plane becomes
+          <md>\rho\cos\phi=1.</md>
+          Along a ray with angle <m>\phi</m>, the plane is reached at
+          <md>\rho=\sec\phi.</md>
+          For the ray to reach the sphere after crossing the plane, we need
+          <md>\sec\phi\le3,</md>
+          or
+          <md>\cos\phi\ge\frac13.</md>
+          Thus
+          <md>0\le\phi\le\arccos\frac13.</md>
+          The bounds are
+          <md>0\le\theta\le2\pi, \qquad 0\le\phi\le\arccos\frac13, \qquad \sec\phi\le\rho\le3.</md>
+          So
+          <md>\boxed{V= \int_0^{2\pi} \int_0^{\arccos(1/3)} \int_{\sec\phi}^{3} \rho^2\sin\phi\,d\rho\,d\phi\,d\theta.}</md>
+          Compute:
+          <md>
+            <mrow>V \amp= 2\pi\int_0^{\arccos(1/3)} \left[\frac{\rho^3}{3}\right]_{\sec\phi}^3 \sin\phi\,d\phi</mrow>
+            <mrow>\amp= 2\pi\int_0^{\arccos(1/3)} \left(9-\frac13\sec^3\phi\right)\sin\phi\,d\phi.</mrow>
+          </md>
+          Let
+          <md>\alpha=\arccos\frac13.</md>
+          Then
+          <md>\cos\alpha=\frac13, \qquad \tan^2\alpha=8.</md>
+          Also,
+          <md>\int_0^\alpha 9\sin\phi\,d\phi = 9(1-\cos\alpha)=6,</md>
+          and
+          <md>\frac13\int_0^\alpha \sec^3\phi\sin\phi\,d\phi = \frac13\int_0^\alpha \tan\phi\,\sec^2\phi\,d\phi = \frac16\tan^2\alpha = \frac43.</md>
+          Therefore
+          <md>V=2\pi\left(6-\frac43\right)=\frac{28\pi}{3}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The angular bounds come from looking along rays from the origin. A ray either enters
+      the solid immediately, enters after crossing a surface, or misses the solid.
+      Spherical coordinates make us answer that ray question.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s4-subsec-radial-densities">
+    <title>Applications to gravitational and radial densities</title>
+
+    <p>
+      Many three-dimensional densities depend only on distance from a central point. A
+      planet model, a gas cloud, and a radially symmetric charge distribution all have
+      this shape:
+      <md>\delta=\delta(\rho).</md>
+      For a ball of radius <m>a</m>, the total mass is
+      <md>
+        <mrow>M \amp= \int_0^{2\pi}\int_0^\pi\int_0^a \delta(\rho)\rho^2\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+        <mrow>\amp= 4\pi\int_0^a \delta(\rho)\rho^2\,d\rho.</mrow>
+      </md>
+      So
+      <md>\boxed{M=4\pi\int_0^a \delta(\rho)\rho^2\,d\rho.}</md>
+      The angular part contributes <m>4\pi</m>, and the radial part carries the real
+      information.
+    </p>
+
+    <example xml:id="c11s4-ex-simple-model-planet">
+      <title>A simple model planet</title>
+      <statement>
+        <p>
+          Suppose a planet has radius <m>3</m>, and its density decreases linearly with
+          distance from the center:
+          <md>\delta(\rho)=6-\rho, \qquad 0\le\rho\le3.</md>
+          Then
+          <md>
+            <mrow>M \amp= 4\pi\int_0^3(6-\rho)\rho^2\,d\rho</mrow>
+            <mrow>\amp= 4\pi\int_0^3(6\rho^2-\rho^3)\,d\rho</mrow>
+            <mrow>\amp= 4\pi\left[2\rho^3-\frac{\rho^4}{4}\right]_0^3</mrow>
+            <mrow>\amp= 4\pi\left(54-\frac{81}{4}\right)</mrow>
+            <mrow>\amp= 135\pi.</mrow>
+          </md>
+          Thus
+          <md>\boxed{M=135\pi.}</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The same scale factor explains a familiar feature of inverse-square laws. Suppose an
+      energy density in a spherical shell is
+      <md>u(\rho)=\frac{10}{\rho^2}, \qquad 1\le\rho\le4.</md>
+      The total energy in the shell is
+      <md>
+        <mrow>E \amp= \int_0^{2\pi}\int_0^\pi\int_1^4 \frac{10}{\rho^2}\rho^2\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+        <mrow>\amp= 10(2\pi)(2)\int_1^4 d\rho</mrow>
+        <mrow>\amp= 120\pi.</mrow>
+      </md>
+      The <m>\rho^2</m> in the volume element cancels the <m>1/\rho^2</m> in the density.
+      Each unit of radial thickness contributes the same amount. Later, when we study
+      flux, the same geometric growth of spherical area will help explain why
+      gravitational and electric fields often have inverse-square form.
+    </p>
+
+    <p>
+      Cylindrical and spherical coordinates changed the shape of <m>dV</m>, but not the
+      meaning of the integral. A triple integral still adds tiny contributions through a
+      solid. Once we can add density, the next questions are natural: Where is the mass
+      balanced? How far is it spread from an axis? How much charge or energy does the
+      solid contain? Those are the applications that turn triple integrals from volume
+      machines into physical measuring tools.
+    </p>
+  </subsection>
+</section>

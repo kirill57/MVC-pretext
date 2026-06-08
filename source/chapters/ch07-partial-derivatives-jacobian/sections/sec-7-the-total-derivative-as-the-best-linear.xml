@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch07-partial-derivatives-jacobian.tex, Section 7.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-7-the-total-derivative-as-the-best-linear" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The total derivative as the best linear approximation</title>
+
+  <p>
+    <xref ref="sec-7-directional-derivatives"/> measured slopes in chosen directions. The
+    gradient formula said that, at a good point,
+    <md>D_{\mathbf u}f(\mathbf p)=\nabla f(\mathbf p)\cdot \mathbf u.</md>
+    That formula is really a shadow of a larger idea. Near a good point, the whole function
+    should be predicted by one linear rule.
+  </p>
+
+  <subsection xml:id="c7s3-subsec-partials-not-yet-derivative">
+    <title>Why partial derivatives alone are not yet the derivative</title>
+
+    <p>
+      Return to the hill
+      <md>H(x,y)=80+3x-y-\frac14x^2-\frac12y^2.</md>
+      At
+      <md>P=(2,1),</md>
+      we found
+      <md>H_x(2,1)=2, \qquad H_y(2,1)=-2.</md>
+      These two numbers tell us the east slope and the north slope. But a small step on the
+      map may mix east and north.
+    </p>
+
+    <p>
+      Let the small displacement be
+      <md>(\Delta x,\Delta y).</md>
+      Then the new point is
+      <md>(2+\Delta x,\;1+\Delta y).</md>
+      Compute the height change:
+      <md>H(2+\Delta x,1+\Delta y)-H(2,1).</md>
+      Since
+      <md>H(2,1)=\frac{167}{2},</md>
+      we get
+      <md>
+        <mrow>\amp H(2+\Delta x,1+\Delta y)-H(2,1)</mrow>
+        <mrow>\amp\qquad = 2\Delta x-2\Delta y-\frac14(\Delta x)^2-\frac12(\Delta y)^2.</mrow>
+      </md>
+      The first part,
+      <md>2\Delta x-2\Delta y,</md>
+      is linear in the displacement. The remaining part,
+      <md>-\frac14(\Delta x)^2-\frac12(\Delta y)^2,</md>
+      is quadratic. For a small step, the quadratic terms are much smaller than the linear
+      terms.
+    </p>
+
+    <p>
+      For example, take
+      <md>\Delta x=0.10, \qquad \Delta y=0.20.</md>
+      The linear prediction is
+      <md>2(0.10)-2(0.20)=-0.20.</md>
+      The quadratic error is
+      <md>-\frac14(0.10)^2-\frac12(0.20)^2 = -0.0025-0.0200 = -0.0225.</md>
+      So the actual height change is
+      <md>-0.2225.</md>
+      The linear part predicted most of the change. The error was smaller because it involved
+      squares of the step sizes.
+    </p>
+
+    <p>
+      This is what we want from a derivative in several variables. It should not be only a
+      list of coordinate slopes. It should be a linear machine that takes a small displacement
+      as input and returns the predicted change in the function.
+    </p>
+
+    <p>
+      For the hill at <m>P</m>, that machine is
+      <md>L(\Delta x,\Delta y)=2\Delta x-2\Delta y.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s3-subsec-linear-approximation-two-variables">
+    <title>Linear approximation in two variables</title>
+
+    <p>
+      The same pattern appears for any well-behaved function <m>f(x,y)</m>. Near a point
+      <md>(a,b),</md>
+      a small displacement
+      <md>(\Delta x,\Delta y)</md>
+      should give
+      <md>f(a+\Delta x,b+\Delta y)-f(a,b)</md>
+      approximately equal to a linear function of
+      <md>(\Delta x,\Delta y).</md>
+      If the partial derivatives fit together correctly, that linear function is
+      <md>f_x(a,b)\Delta x+f_y(a,b)\Delta y.</md>
+    </p>
+
+    <p>
+      So the local linear approximation is
+      <md>\boxed{ f(a+\Delta x,b+\Delta y) \approx f(a,b)+f_x(a,b)\Delta x+f_y(a,b)\Delta y. }</md>
+    </p>
+
+    <p>
+      Equivalently, if
+      <md>x=a+\Delta x, \qquad y=b+\Delta y,</md>
+      then
+      <md>\boxed{ f(x,y) \approx f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b). }</md>
+    </p>
+
+    <p>
+      For the hill,
+      <md>H(2+\Delta x,1+\Delta y) \approx H(2,1)+2\Delta x-2\Delta y.</md>
+      Since
+      <md>H(2,1)=\frac{167}{2},</md>
+      this says
+      <md>H(2+\Delta x,1+\Delta y) \approx \frac{167}{2}+2\Delta x-2\Delta y.</md>
+    </p>
+
+    <p>
+      The approximation is not merely a formula. It is a plane pretending, for a short
+      distance, to be the curved surface.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s3-subsec-differentiability-total-derivative">
+    <title>Differentiability and the total derivative</title>
+
+    <p>
+      The word <em>differentiable</em> means that this linear prediction is genuinely the first
+      part of the change.
+    </p>
+
+    <definition xml:id="c7s3-def-differentiability-two-variables">
+      <title>Differentiability in two variables</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^2\to\mathbb R,</md>
+          and suppose
+          <md>(a,b)</md>
+          is an interior point of <m>D</m>. We say that <m>f</m> is
+          <term>differentiable at <m>(a,b)</m></term> if there is a linear function
+          <md>L:\mathbb R^2\to\mathbb R</md>
+          such that
+          <md>\boxed{ f(a+\Delta x,b+\Delta y) = f(a,b)+L(\Delta x,\Delta y)+R(\Delta x,\Delta y), }</md>
+          where the error satisfies
+          <md>\boxed{ \lim_{(\Delta x,\Delta y)\to(0,0)} \frac{|R(\Delta x,\Delta y)|} {\sqrt{(\Delta x)^2+(\Delta y)^2}} = 0. }</md>
+        </p>
+        <p>
+          The linear function <m>L</m> is called the <term>total derivative</term> of <m>f</m>
+          at <m>(a,b)</m>. We write
+          <md>L=Df(a,b).</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The error condition says more than
+      <md>R(\Delta x,\Delta y)\to0.</md>
+      It says the error is small compared with the step length
+      <md>\sqrt{(\Delta x)^2+(\Delta y)^2}.</md>
+      That is why the linear part is truly the first-order part of the change.
+    </p>
+
+    <p>
+      There is only one possible linear function <m>L</m>. If two linear functions both made the
+      error small in this sense, their difference would be a linear function that is smaller than
+      first order in every direction. A nonzero linear function cannot do that. Along any
+      direction where it is not zero, it grows exactly like the step length.
+    </p>
+
+    <p>
+      So it makes sense to say <em>the</em> total derivative.
+    </p>
+
+    <theorem xml:id="c7s3-thm-total-derivative-uses-partials">
+      <title>The total derivative uses the partial derivatives</title>
+      <statement>
+        <p>
+          If <m>f</m> is differentiable at <m>(a,b)</m>, then the partial derivatives
+          <md>f_x(a,b),\qquad f_y(a,b)</md>
+          exist, and
+          <md>\boxed{ Df(a,b)(\Delta x,\Delta y) = f_x(a,b)\Delta x+f_y(a,b)\Delta y. }</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>
+        Because <m>f</m> is differentiable,
+        <md>f(a+\Delta x,b+\Delta y) = f(a,b)+Df(a,b)(\Delta x,\Delta y)+R(\Delta x,\Delta y),</md>
+        where
+        <md>\frac{|R(\Delta x,\Delta y)|}{\sqrt{(\Delta x)^2+(\Delta y)^2}}\to0.</md>
+      </p>
+      <p>
+        First move only in the <m>x</m>-direction. Set
+        <md>\Delta y=0.</md>
+        Then
+        <md>f(a+\Delta x,b)-f(a,b) = Df(a,b)(\Delta x,0)+R(\Delta x,0).</md>
+        Divide by <m>\Delta x</m>:
+        <md>\frac{f(a+\Delta x,b)-f(a,b)}{\Delta x} = \frac{Df(a,b)(\Delta x,0)}{\Delta x} + \frac{R(\Delta x,0)}{\Delta x}.</md>
+        Since <m>Df(a,b)</m> is linear,
+        <md>Df(a,b)(\Delta x,0)=\Delta x\,Df(a,b)(1,0).</md>
+        Also,
+        <md>\frac{R(\Delta x,0)}{\Delta x}\to0.</md>
+        Therefore
+        <md>f_x(a,b)=Df(a,b)(1,0).</md>
+      </p>
+      <p>
+        The same argument with
+        <md>\Delta x=0</md>
+        gives
+        <md>f_y(a,b)=Df(a,b)(0,1).</md>
+      </p>
+      <p>
+        Now use linearity. Since
+        <md>(\Delta x,\Delta y)=\Delta x(1,0)+\Delta y(0,1),</md>
+        we get
+        <md>
+          <mrow>Df(a,b)(\Delta x,\Delta y) \amp= \Delta x\,Df(a,b)(1,0)+\Delta y\,Df(a,b)(0,1)</mrow>
+          <mrow>\amp= f_x(a,b)\Delta x+f_y(a,b)\Delta y.</mrow>
+        </md>
+      </p>
+    </proof>
+
+    <p>
+      This theorem says that if the total derivative exists, then its formula is forced. The
+      partial derivatives are the coefficients of the best linear approximation.
+    </p>
+
+    <p>
+      The converse is false. Partial derivatives can exist without fitting together into a true
+      linear approximation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s3-subsec-partials-fail-to-stitch">
+    <title>A warning: partial derivatives can fail to stitch together</title>
+
+    <p>
+      <xref ref="sec-7-directional-derivatives"/> gave the function
+      <md>
+        f(x,y)=
+        \begin{cases}
+        \dfrac{x^2y}{x^2+y^2}, &amp; (x,y)\ne(0,0),\\[2mm]
+        0, &amp; (x,y)=(0,0).
+        \end{cases}
+      </md>
+      At the origin,
+      <md>f_x(0,0)=0, \qquad f_y(0,0)=0.</md>
+      So if <m>f</m> were differentiable at the origin, the theorem would force
+      <md>Df(0,0)(\Delta x,\Delta y)=0.</md>
+      The linear approximation would predict
+      <md>f(\Delta x,\Delta y)\approx 0.</md>
+    </p>
+
+    <p>
+      But along the diagonal path
+      <md>y=x,</md>
+      we have
+      <md>f(x,x)=\frac{x^3}{2x^2}=\frac{x}{2}</md>
+      for <m>x\ne0</m>. The error, compared with the zero linear approximation, is
+      <md>R(x,x)=\frac{x}{2}.</md>
+      The step length is
+      <md>\sqrt{x^2+x^2}=\sqrt2\,|x|.</md>
+      Thus
+      <md>\frac{|R(x,x)|}{\sqrt{x^2+x^2}} = \frac{|x|/2}{\sqrt2\,|x|} = \frac{1}{2\sqrt2}.</md>
+      This does not approach <m>0</m>.
+    </p>
+
+    <p>
+      So <m>f</m> is not differentiable at the origin.
+    </p>
+
+    <p>
+      The partial derivatives at the origin saw only the two coordinate slices. The total
+      derivative asks for one linear approximation that works for all small displacements at
+      once. That is a stronger demand.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s3-subsec-directional-from-total">
+    <title>Directional derivatives from the total derivative</title>
+
+    <p>
+      The total derivative explains why the gradient formula worked in
+      <xref ref="sec-7-directional-derivatives"/>.
+    </p>
+
+    <p>
+      Suppose <m>f</m> is differentiable at <m>\mathbf p</m>, and let <m>\mathbf u</m> be a unit
+      vector. For small <m>t</m>,
+      <md>f(\mathbf p+t\mathbf u) = f(\mathbf p)+Df(\mathbf p)(t\mathbf u)+R(t\mathbf u).</md>
+      By linearity,
+      <md>Df(\mathbf p)(t\mathbf u)=t\,Df(\mathbf p)(\mathbf u).</md>
+      So
+      <md>\frac{f(\mathbf p+t\mathbf u)-f(\mathbf p)}{t} = Df(\mathbf p)(\mathbf u)+\frac{R(t\mathbf u)}{t}.</md>
+      The error term goes to <m>0</m>, because
+      <md>\frac{|R(t\mathbf u)|}{|t|}\to0.</md>
+      Therefore
+      <md>\boxed{ D_{\mathbf u}f(\mathbf p)=Df(\mathbf p)(\mathbf u). }</md>
+    </p>
+
+    <p>
+      In two variables,
+      <md>Df(a,b)(u_1,u_2) = f_x(a,b)u_1+f_y(a,b)u_2,</md>
+      so
+      <md>\boxed{ D_{\mathbf u}f(a,b) = \nabla f(a,b)\cdot\mathbf u. }</md>
+    </p>
+
+    <p>
+      The gradient formula is therefore not the definition of differentiability. It is a
+      consequence of differentiability.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s3-subsec-tangent-plane-linear-model">
+    <title>The tangent plane as a linear model</title>
+
+    <p>
+      For a function of one variable, differentiability means that the graph has a good tangent
+      line approximation:
+      <md>f(a+\Delta x)\approx f(a)+f'(a)\Delta x.</md>
+      For a function of two variables, the graph is a surface, and the linear approximation is
+      a plane.
+    </p>
+
+    <definition xml:id="c7s3-def-tangent-plane-to-graph">
+      <title>Tangent plane to a graph</title>
+      <statement>
+        <p>
+          Suppose
+          <md>z=f(x,y)</md>
+          and <m>f</m> is differentiable at <m>(a,b)</m>. The tangent plane to the graph of
+          <m>f</m> at
+          <md>(a,b,f(a,b))</md>
+          is
+          <md>\boxed{ z= f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b). }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For the hill <m>H</m>, at
+      <md>(a,b)=(2,1),</md>
+      we have
+      <md>H(2,1)=\frac{167}{2}, \qquad H_x(2,1)=2, \qquad H_y(2,1)=-2.</md>
+      So the tangent plane is
+      <md>z=\frac{167}{2}+2(x-2)-2(y-1).</md>
+      Simplifying,
+      <md>\boxed{ z=\frac{163}{2}+2x-2y. }</md>
+    </p>
+
+    <figure xml:id="c7s3-fig-tangent-plane-surface">
+      <caption>A differentiable surface is locally modeled by its tangent plane.
+      (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="65%">
+        <asymptote>
+        // 3-D interactive (WebGL) figure.
+        import graph3;
+        size(9cm);
+        currentprojection=orthographic(5,3.4,3);
+        real f(pair p){return 2-0.16*p.x^2-0.12*p.y^2;}
+        real fx(real x){return -0.32*x;}
+        real fy(real y){return -0.24*y;}
+        surface s=surface(f,(-3,-3),(3,3),24,24);
+        draw(s, orange+opacity(0.45), meshpen=orange+linewidth(0.15pt));
+        real a=1.1,b=1.0; real za=f((a,b));
+        triple P=(a,b,za);
+        triple du=(1,0,fx(a)), dv=(0,1,fy(b));
+        real d=1.7;
+        path3 plane=(P-d*du-d*dv)--(P+d*du-d*dv)--(P+d*du+d*dv)--(P-d*du+d*dv)--cycle;
+        draw(surface(plane), blue+opacity(0.35));
+        draw(plane, blue+linewidth(0.5pt));
+        dot(P, black+5pt); label("$(a,b,f(a,b))$", P, 2N+E);
+        draw(O--(3.6,0,0),gray,Arrow3); draw(O--(0,3.6,0),gray,Arrow3); draw(O--(0,0,2.8),gray,Arrow3);
+        label("$x$",(3.6,0,0),S); label("$y$",(0,3.6,0),E); label("$z$",(0,0,2.8),N);
+        </asymptote>
+      </image>
+    </figure>
+
+    <p>
+      The tangent plane does not claim that the surface is actually flat. It says that, under a
+      magnifying glass centered at the point, the surface becomes harder and harder to
+      distinguish from this plane.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s3-subsec-differentiability-rn">
+    <title>Differentiability in <m>\mathbb R^n</m></title>
+
+    <p>
+      The definition does not depend on the plane. It works in any number of input variables.
+    </p>
+
+    <definition xml:id="c7s3-def-differentiability-scalar-fields-rn">
+      <title>Differentiability for scalar fields on <m>\mathbb R^n</m></title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^n\to\mathbb R,</md>
+          and let <m>\mathbf p</m> be an interior point of <m>D</m>. We say that <m>f</m> is
+          <term>differentiable at <m>\mathbf p</m></term> if there is a linear function
+          <md>L:\mathbb R^n\to\mathbb R</md>
+          such that
+          <md>\boxed{ f(\mathbf p+\mathbf h) = f(\mathbf p)+L(\mathbf h)+R(\mathbf h), }</md>
+          where
+          <md>\boxed{ \lim_{\mathbf h\to\mathbf 0} \frac{|R(\mathbf h)|}{\|\mathbf h\|}=0. }</md>
+          The linear function <m>L</m> is called the total derivative:
+          <md>L=Df(\mathbf p).</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      If
+      <md>\mathbf p=(a_1,\ldots,a_n),</md>
+      then differentiability forces
+      <md>\boxed{ Df(\mathbf p)(h_1,\ldots,h_n) = f_{x_1}(\mathbf p)h_1+\cdots+f_{x_n}(\mathbf p)h_n. }</md>
+    </p>
+
+    <example xml:id="c7s3-ex-three-variable-temperature-model">
+      <title>A three-variable temperature model</title>
+      <statement>
+        <p>
+          Recall the storage-room temperature model
+          <md>T(x,y,z)=18+\frac{4}{1+x^2+y^2}-0.7z.</md>
+          At the point
+          <md>(1,0,2),</md>
+          the temperature is
+          <md>T(1,0,2)=18+\frac{4}{2}-1.4=18.6.</md>
+          The partial derivatives are
+          <md>T_x(x,y,z)= -\frac{8x}{(1+x^2+y^2)^2},</md>
+          <md>T_y(x,y,z)= -\frac{8y}{(1+x^2+y^2)^2},</md>
+          and
+          <md>T_z(x,y,z)=-0.7.</md>
+          Thus
+          <md>T_x(1,0,2)=-2, \qquad T_y(1,0,2)=0, \qquad T_z(1,0,2)=-0.7.</md>
+          The total derivative at <m>(1,0,2)</m> is the linear function
+          <md>DT(1,0,2)(\Delta x,\Delta y,\Delta z) = -2\Delta x-0.7\Delta z.</md>
+          A small move
+          <md>(\Delta x,\Delta y,\Delta z)=(0.02,-0.03,0.10)</md>
+          therefore changes the temperature by about
+          <md>-2(0.02)-0.7(0.10) = -0.11.</md>
+          So the model predicts a drop of about
+          <md>0.11^\circ\text{C}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A three-variable scalar field has no ordinary graph in three-dimensional space, because
+      its graph would live in four dimensions:
+      <md>(x,y,z,T(x,y,z)).</md>
+      But the total derivative still exists as a linear approximation. The picture is no longer
+      a tangent plane we can draw. The idea is the same: a nonlinear function is replaced,
+      near one point, by its best linear part.
+    </p>
+
+    <p>
+      The notation
+      <md>Df(\mathbf p)(\mathbf h)</md>
+      is honest, but it is a little heavy. The linear function <m>Df(\mathbf p)</m> eats a small
+      displacement <m>\mathbf h</m> and returns the predicted change in <m>f</m>. There is an
+      older notation that says the same thing in a way that will later become the language of
+      line integrals:
+      <md>df=f_x\,dx+f_y\,dy.</md>
+      To make that formula more than a symbol, we have to decide what <m>dx</m> and <m>dy</m>
+      are. We already met them as coordinate-reading linear functions. Now they return as the
+      first examples of <m>1</m>-forms.
+    </p>
+  </subsection>
+</section>

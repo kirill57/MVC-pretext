@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch16-differential-forms-wedge.tex, Section 16.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-16-pullbacks" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Pullbacks</title>
+
+  <p>
+    <xref ref="sec-16-algebra-of-forms"/> ended with a practical problem. A form may be
+    written in <m>x,y,z</m>-space, but the actual calculation may happen in a parameter
+    domain. A curve uses a parameter <m>t</m>. A surface uses parameters <m>u,v</m>. A
+    change of coordinates may use <m>r,\theta,z</m> or <m>\rho,\phi,\theta</m>.
+  </p>
+
+  <p>So we need one operation that answers this question:</p>
+
+  <md>\text{How does a form look after we substitute the parametrization?}</md>
+
+  <p>
+    That operation is called the <term>pullback</term>. The name sounds abstract, but the
+    idea is ordinary substitution, done carefully enough to remember <m>dx</m>,
+    <m>dy</m>, <m>dz</m>, and wedge products.
+  </p>
+
+  <subsection xml:id="c16s5-subsec-substitution-pullback-idea">
+    <title>Substitution as the pullback idea</title>
+
+    <p>Start with a change of coordinates in the plane:</p>
+
+    <md>T(u,v)=(x,y)=(u+v,\;2u-v).</md>
+
+    <p>A point in the <m>(u,v)</m>-plane is sent to a point in the <m>(x,y)</m>-plane.</p>
+
+    <p>Now take the <m>1</m>-form</p>
+
+    <md>\omega=x\,dy+y\,dx</md>
+
+    <p>in the <m>(x,y)</m>-plane. We want to write this form in the <m>(u,v)</m>-coordinates.</p>
+
+    <p>First substitute the coordinate functions:</p>
+
+    <md>x=u+v, \qquad y=2u-v.</md>
+
+    <p>Then substitute their differentials:</p>
+
+    <md>dx=d(u+v)=du+dv,</md>
+
+    <p>and</p>
+
+    <md>dy=d(2u-v)=2\,du-dv.</md>
+
+    <p>Therefore</p>
+
+    <md>
+      <mrow>\omega \amp= x\,dy+y\,dx</mrow>
+      <mrow>\amp\longmapsto (u+v)(2\,du-dv)+(2u-v)(du+dv).</mrow>
+    </md>
+
+    <p>Expand:</p>
+
+    <md>
+      <mrow>(u+v)(2\,du-dv) \amp= (2u+2v)\,du+(-u-v)\,dv,</mrow>
+    </md>
+
+    <p>and</p>
+
+    <md>
+      <mrow>(2u-v)(du+dv) \amp= (2u-v)\,du+(2u-v)\,dv.</mrow>
+    </md>
+
+    <p>So</p>
+
+    <md>\boxed{T^*\omega=(4u+v)\,du+(u-2v)\,dv.}</md>
+
+    <p>The star in</p>
+
+    <md>T^*\omega</md>
+
+    <p>
+      means <q>pull <m>\omega</m> back through <m>T</m>.</q> The original form lived in the
+      <m>(x,y)</m>-world. The pulled-back form lives in the <m>(u,v)</m>-world.
+    </p>
+
+    <definition xml:id="c16s5-def-pullback-coordinate">
+      <title>Pullback, coordinate version</title>
+      <statement>
+        <p>Let</p>
+        <md>T(u,v)=(x(u,v),y(u,v))</md>
+        <p>
+          be a smooth map into the plane. To pull back a form from the <m>(x,y)</m>-plane to
+          the <m>(u,v)</m>-plane, use the substitutions
+        </p>
+        <md>x=x(u,v), \qquad y=y(u,v),</md>
+        <p>and</p>
+        <md>dx=x_u\,du+x_v\,dv, \qquad dy=y_u\,du+y_v\,dv.</md>
+        <p>The resulting form is called the <term>pullback</term> and is written</p>
+        <md>T^*\omega.</md>
+      </statement>
+    </definition>
+
+    <p>A function is a <m>0</m>-form, so its pullback is just ordinary composition:</p>
+
+    <md>\boxed{T^*f=f\circ T.}</md>
+
+    <p>For example, if</p>
+
+    <md>f(x,y)=x^2+y,</md>
+
+    <p>then</p>
+
+    <md>
+      <mrow>T^*f \amp= f(u+v,2u-v)</mrow>
+      <mrow>\amp= (u+v)^2+2u-v.</mrow>
+    </md>
+
+    <p>
+      For <m>1</m>-forms, the pullback remembers the differentials. For <m>2</m>-forms, it
+      also remembers the wedge product.
+    </p>
+
+    <example xml:id="c16s5-ex-pullback-area-form">
+      <title>Pulling back an area form</title>
+      <statement>
+        <p>Let</p>
+        <md>T(u,v)=(x,y)=(u+v,\;2u-v).</md>
+        <p>Then</p>
+        <md>dx=du+dv, \qquad dy=2\,du-dv.</md>
+        <p>Pull back the basic area form:</p>
+        <md>
+          <mrow>T^*(dx\wedge dy) \amp= (du+dv)\wedge(2\,du-dv)</mrow>
+          <mrow>\amp= du\wedge 2\,du - du\wedge dv + dv\wedge 2\,du - dv\wedge dv.</mrow>
+        </md>
+        <p>The repeated factors vanish:</p>
+        <md>du\wedge du=0, \qquad dv\wedge dv=0.</md>
+        <p>Also,</p>
+        <md>dv\wedge du=-du\wedge dv.</md>
+        <p>So</p>
+        <md>
+          <mrow>T^*(dx\wedge dy) \amp= -du\wedge dv + 2(-du\wedge dv)</mrow>
+          <mrow>\amp= -3\,du\wedge dv.</mrow>
+        </md>
+        <p>Thus</p>
+        <md>\boxed{T^*(dx\wedge dy)=-3\,du\wedge dv.}</md>
+        <p>
+          The map multiplies signed area by <m>-3</m>. The negative sign says it reverses
+          orientation.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This example is the pullback version of the Jacobian determinant. We will return to
+      that connection at the end of the section.
+    </p>
+
+    <p>The pullback obeys the algebra of forms:</p>
+
+    <md>\boxed{T^*(\alpha+\beta)=T^*\alpha+T^*\beta,}</md>
+
+    <md>\boxed{T^*(f\alpha)=(T^*f)(T^*\alpha),}</md>
+
+    <p>and</p>
+
+    <md>\boxed{T^*(\alpha\wedge\beta)=T^*\alpha\wedge T^*\beta.}</md>
+
+    <p>
+      These rules are not extra tricks. They say that after substitution, we still add,
+      multiply by functions, and wedge exactly as before.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s5-subsec-pullback-1forms-curves">
+    <title>Pulling back <m>1</m>-forms to curves</title>
+
+    <p>A curve is a map from a parameter interval into space:</p>
+
+    <md>\mathbf r(t)=(x(t),y(t),z(t)).</md>
+
+    <p>
+      Pulling a <m>1</m>-form back to the curve turns it into a <m>1</m>-form in the single
+      variable <m>t</m>. That means it becomes something times <m>dt</m>.
+    </p>
+
+    <p>Let</p>
+
+    <md>\omega=P\,dx+Q\,dy+R\,dz.</md>
+
+    <p>Along the curve,</p>
+
+    <md>x=x(t), \qquad y=y(t), \qquad z=z(t).</md>
+
+    <p>So</p>
+
+    <md>dx=x'(t)\,dt, \qquad dy=y'(t)\,dt, \qquad dz=z'(t)\,dt.</md>
+
+    <p>Therefore</p>
+
+    <md>\boxed{\mathbf r^*\omega = \bigl[ P(\mathbf r(t))x'(t) + Q(\mathbf r(t))y'(t) + R(\mathbf r(t))z'(t) \bigr]\,dt.}</md>
+
+    <p>
+      This is exactly the line-integral integrand from earlier chapters. The pullback is the
+      operation that produces it.
+    </p>
+
+    <example xml:id="c16s5-ex-form-pulled-back-parabola">
+      <title>A form pulled back to a parabola</title>
+      <statement>
+        <p>Let</p>
+        <md>\omega=(x+y)\,dx+x\,dy</md>
+        <p>in the plane, and let</p>
+        <md>\mathbf r(t)=(t,t^2), \qquad 0\le t\le2.</md>
+        <p>Then</p>
+        <md>x=t, \qquad y=t^2,</md>
+        <p>and</p>
+        <md>dx=dt, \qquad dy=2t\,dt.</md>
+        <p>So</p>
+        <md>
+          <mrow>\mathbf r^*\omega \amp= (t+t^2)\,dt+t(2t\,dt)</mrow>
+          <mrow>\amp= (t+3t^2)\,dt.</mrow>
+        </md>
+        <p>Thus</p>
+        <md>\boxed{\mathbf r^*\omega=(t+3t^2)\,dt.}</md>
+        <p>The form is now ready to be integrated over the parameter interval.</p>
+      </statement>
+    </example>
+
+    <example xml:id="c16s5-ex-helix-rotation-height">
+      <title>A helix measuring rotation and height</title>
+      <statement>
+        <p>Let</p>
+        <md>\omega=-y\,dx+x\,dy+dz</md>
+        <p>and let</p>
+        <md>\mathbf r(t)=(\cos t,\sin t,t).</md>
+        <p>Then</p>
+        <md>dx=-\sin t\,dt, \qquad dy=\cos t\,dt, \qquad dz=dt.</md>
+        <p>Also,</p>
+        <md>x=\cos t, \qquad y=\sin t.</md>
+        <p>Therefore</p>
+        <md>
+          <mrow>\mathbf r^*\omega \amp= -\sin t(-\sin t\,dt) + \cos t(\cos t\,dt) + dt</mrow>
+          <mrow>\amp= (\sin^2t+\cos^2t+1)\,dt</mrow>
+          <mrow>\amp= 2\,dt.</mrow>
+        </md>
+        <p>
+          The rotational part contributes <m>1\,dt</m>, and the vertical rise contributes
+          another <m>1\,dt</m>. Along this helix,
+        </p>
+        <md>\boxed{\mathbf r^*\omega=2\,dt.}</md>
+      </statement>
+    </example>
+
+    <p>
+      The curve supplies the tangent direction. The pullback asks the form to measure that
+      direction and then rewrites the answer in the parameter variable.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s5-subsec-pullback-2forms-surfaces">
+    <title>Pulling back <m>2</m>-forms to surfaces</title>
+
+    <p>A surface patch is described by two parameters:</p>
+
+    <md>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)).</md>
+
+    <p>A <m>2</m>-form in space has the shape</p>
+
+    <md>\Phi=A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy.</md>
+
+    <p>Pulling it back to the <m>(u,v)</m>-plane gives something times</p>
+
+    <md>du\wedge dv.</md>
+
+    <p>Start with</p>
+
+    <md>dx=x_u\,du+x_v\,dv,</md>
+
+    <md>dy=y_u\,du+y_v\,dv,</md>
+
+    <p>and</p>
+
+    <md>dz=z_u\,du+z_v\,dv.</md>
+
+    <p>Then</p>
+
+    <md>\boxed{\mathbf r^*(dy\wedge dz) = (y_u z_v-y_v z_u)\,du\wedge dv,}</md>
+
+    <md>\boxed{\mathbf r^*(dz\wedge dx) = (z_u x_v-z_v x_u)\,du\wedge dv,}</md>
+
+    <p>and</p>
+
+    <md>\boxed{\mathbf r^*(dx\wedge dy) = (x_u y_v-x_v y_u)\,du\wedge dv.}</md>
+
+    <p>So</p>
+
+    <md>\boxed{\begin{aligned} \mathbf r^*\Phi \amp= \Bigl[ A(\mathbf r)(y_u z_v-y_v z_u) + B(\mathbf r)(z_u x_v-z_v x_u)\\ \amp\qquad\qquad + C(\mathbf r)(x_u y_v-x_v y_u) \Bigr]\,du\wedge dv. \end{aligned}}</md>
+
+    <p>The three coefficients are the three components of the cross product</p>
+
+    <md>\mathbf r_u\times\mathbf r_v.</md>
+
+    <p>Thus, if</p>
+
+    <md>\Phi_{\mathbf F} = P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy</md>
+
+    <p>is the flux form of</p>
+
+    <md>\mathbf F=(P,Q,R),</md>
+
+    <p>then</p>
+
+    <md>\boxed{\mathbf r^*\Phi_{\mathbf F} = \mathbf F(\mathbf r(u,v))\cdot (\mathbf r_u\times\mathbf r_v)\,du\wedge dv.}</md>
+
+    <p>This is the classical flux formula, written as a pullback.</p>
+
+    <example xml:id="c16s5-ex-tilted-screen">
+      <title>A tilted screen</title>
+      <statement>
+        <p>Let the surface be the tilted plane patch</p>
+        <md>\mathbf r(u,v)=(u,v,u+2v),</md>
+        <p>and let</p>
+        <md>\Phi=dy\wedge dz+z\,dx\wedge dy.</md>
+        <p>Compute the pullback.</p>
+        <p>Here</p>
+        <md>x=u, \qquad y=v, \qquad z=u+2v.</md>
+        <p>Therefore</p>
+        <md>dx=du, \qquad dy=dv, \qquad dz=du+2\,dv.</md>
+        <p>Now</p>
+        <md>
+          <mrow>\mathbf r^*(dy\wedge dz) \amp= dv\wedge(du+2\,dv)</mrow>
+          <mrow>\amp= dv\wedge du+2\,dv\wedge dv</mrow>
+          <mrow>\amp= -du\wedge dv.</mrow>
+        </md>
+        <p>Also,</p>
+        <md>\mathbf r^*(z\,dx\wedge dy) = (u+2v)\,du\wedge dv.</md>
+        <p>So</p>
+        <md>\boxed{\mathbf r^*\Phi=(u+2v-1)\,du\wedge dv.}</md>
+        <p>
+          The original form measured oriented surface pieces in space. The pulled-back form
+          measures the corresponding parameter pieces in the <m>(u,v)</m>-plane.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The pullback is not just a computational convenience. It is what makes it possible to
+      integrate a form over a curved surface by integrating an ordinary form over a flat
+      parameter region.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s5-subsec-pullback-volume-forms">
+    <title>Pulling back volume forms under coordinate changes</title>
+
+    <p>For a coordinate change in space,</p>
+
+    <md>T(u,v,w)=(x(u,v,w),y(u,v,w),z(u,v,w)),</md>
+
+    <p>the basic volume form pulls back to</p>
+
+    <md>T^*(dx\wedge dy\wedge dz).</md>
+
+    <p>Using</p>
+
+    <md>dx=x_u\,du+x_v\,dv+x_w\,dw,</md>
+
+    <p>and similarly for <m>dy</m> and <m>dz</m>, the wedge product gives</p>
+
+    <md>\boxed{T^*(dx\wedge dy\wedge dz) = \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw.}</md>
+
+    <p>The coefficient is the Jacobian determinant:</p>
+
+    <md>\boxed{\frac{\partial(x,y,z)}{\partial(u,v,w)} = \det \begin{pmatrix} x_u \amp x_v \amp x_w\\ y_u \amp y_v \amp y_w\\ z_u \amp z_v \amp z_w \end{pmatrix}.}</md>
+
+    <p>For a general <m>3</m>-form</p>
+
+    <md>\Omega=H(x,y,z)\,dx\wedge dy\wedge dz,</md>
+
+    <p>we get</p>
+
+    <md>\boxed{T^*\Omega = H(T(u,v,w)) \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw.}</md>
+
+    <example xml:id="c16s5-ex-cylindrical-coordinates-pullback">
+      <title>Cylindrical coordinates as a pullback</title>
+      <statement>
+        <p>In cylindrical coordinates,</p>
+        <md>x=r\cos\theta, \qquad y=r\sin\theta, \qquad z=z.</md>
+        <p>Then</p>
+        <md>dx=\cos\theta\,dr-r\sin\theta\,d\theta,</md>
+        <md>dy=\sin\theta\,dr+r\cos\theta\,d\theta,</md>
+        <p>and</p>
+        <md>dz=dz.</md>
+        <p>Compute</p>
+        <md>
+          <mrow>dx\wedge dy \amp= (\cos\theta\,dr-r\sin\theta\,d\theta) \wedge (\sin\theta\,dr+r\cos\theta\,d\theta)</mrow>
+          <mrow>\amp= r\cos^2\theta\,dr\wedge d\theta - r\sin\theta\sin\theta\,d\theta\wedge dr.</mrow>
+        </md>
+        <p>Since</p>
+        <md>d\theta\wedge dr=-dr\wedge d\theta,</md>
+        <p>we get</p>
+        <md>
+          <mrow>dx\wedge dy \amp= r(\cos^2\theta+\sin^2\theta)\,dr\wedge d\theta</mrow>
+          <mrow>\amp= r\,dr\wedge d\theta.</mrow>
+        </md>
+        <p>Therefore</p>
+        <md>\boxed{dx\wedge dy\wedge dz = r\,dr\wedge d\theta\wedge dz.}</md>
+        <p>
+          This is the cylindrical volume factor from
+          <xref ref="ch11-triple-higher-integrals"/>, but now the wedge product has also kept the
+          orientation.
+        </p>
+      </statement>
+    </example>
+
+    <p>For ordinary volume, we write</p>
+
+    <md>dV=r\,dr\,d\theta\,dz.</md>
+
+    <p>For oriented volume, we write</p>
+
+    <md>dx\wedge dy\wedge dz = r\,dr\wedge d\theta\wedge dz.</md>
+
+    <p>The factor is the same. The wedge notation remembers the sign.</p>
+  </subsection>
+
+  <subsection xml:id="c16s5-subsec-jacobian-from-wedge">
+    <title>The Jacobian determinant from wedge products</title>
+
+    <p>
+      The Jacobian determinant is not a mysterious correction factor. It is the coefficient
+      of a pulled-back volume form.
+    </p>
+
+    <p>In two variables, let</p>
+
+    <md>T(u,v)=(x(u,v),y(u,v)).</md>
+
+    <p>Then</p>
+
+    <md>dx=x_u\,du+x_v\,dv,</md>
+
+    <p>and</p>
+
+    <md>dy=y_u\,du+y_v\,dv.</md>
+
+    <p>So</p>
+
+    <md>
+      <mrow>T^*(dx\wedge dy) \amp= (x_u\,du+x_v\,dv)\wedge(y_u\,du+y_v\,dv)</mrow>
+      <mrow>\amp= x_u y_v\,du\wedge dv+x_v y_u\,dv\wedge du</mrow>
+      <mrow>\amp= (x_u y_v-x_v y_u)\,du\wedge dv.</mrow>
+    </md>
+
+    <p>Thus</p>
+
+    <md>\boxed{T^*(dx\wedge dy) = \frac{\partial(x,y)}{\partial(u,v)} \,du\wedge dv.}</md>
+
+    <p>In three variables,</p>
+
+    <md>\boxed{T^*(dx\wedge dy\wedge dz) = \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw.}</md>
+
+    <p>
+      The absolute value of the Jacobian appears in ordinary area and volume computations
+      because ordinary area and volume are unsigned:
+    </p>
+
+    <md>dA=\left|\frac{\partial(x,y)}{\partial(u,v)}\right|\,du\,dv,</md>
+
+    <p>and</p>
+
+    <md>dV=\left|\frac{\partial(x,y,z)}{\partial(u,v,w)}\right|\,du\,dv\,dw.</md>
+
+    <p>Forms do not automatically take absolute values. They measure orientation.</p>
+
+    <example xml:id="c16s5-ex-reflection-remembers-sign">
+      <title>A reflection remembers its sign</title>
+      <statement>
+        <p>Let</p>
+        <md>T(u,v)=(x,y)=(u,1-v).</md>
+        <p>Then</p>
+        <md>dx=du, \qquad dy=-dv.</md>
+        <p>So</p>
+        <md>\boxed{T^*(dx\wedge dy)=-du\wedge dv.}</md>
+        <p>
+          The map reflects the parameter square across a horizontal line. It preserves
+          ordinary area but reverses orientation.
+        </p>
+        <p>
+          If we were computing unsigned area, the scale factor would be <m>1</m>. But for an
+          oriented <m>2</m>-form, the scale factor is <m>-1</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A pullback therefore does two jobs at once. It performs substitution, and it keeps
+      track of how oriented length, area, or volume changes. Once a form has been pulled back
+      to a parameter domain, the only remaining step is to integrate it.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch08-chain-rule-coordinate-changes.tex, Section 8.1.
+     Status: CONVERTED. -->
+<section xml:id="sec-8-the-chain-rule-along-a-curve" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The chain rule along a curve</title>
+
+  <p>
+    A curve from <xref ref="ch05-vector-valued-functions"/> gives position:
+    <md>\mathbf r(t).</md>
+    A scalar field from <xref ref="ch06-functions-limits-continuity"/> gives a number at each point:
+    <md>f(x,y)\qquad\text{or}\qquad f(x,y,z).</md>
+    If a moving object passes through the field, then the object experiences the
+    single-variable function
+    <md>f(\mathbf r(t)).</md>
+    The chain rule tells us how fast that experienced value changes.
+  </p>
+
+  <subsection xml:id="c8s1-subsec-temperature-moving-path">
+    <title>Temperature along a moving path</title>
+
+    <p>
+      A small robot rolls across a greenhouse floor. Let <m>x</m> measure meters east and
+      <m>y</m> measure meters north. Suppose the floor temperature is
+      <md>T(x,y)=20+3x-y-\frac12x^2-\frac14y^2.</md>
+      At time <m>t</m>, the robot is at
+      <md>\mathbf r(t)=(1+2t,\;2-t).</md>
+      So the temperature recorded by the robot is the one-variable function
+      <md>A(t)=T(\mathbf r(t))=T(1+2t,\;2-t).</md>
+    </p>
+
+    <p>
+      We can compute <m>A'(0)</m> directly. Substitute:
+      <md>A(t)=20+3(1+2t)-(2-t)-\frac12(1+2t)^2-\frac14(2-t)^2.</md>
+      Differentiate:
+      <md>
+        <mrow>A'(t) \amp= 6+1-\frac12\cdot 2(1+2t)\cdot 2-\frac14\cdot 2(2-t)(-1)</mrow>
+        <mrow>\amp= 7-2(1+2t)+\frac12(2-t).</mrow>
+      </md>
+      At <m>t=0</m>,
+      <md>A'(0)=7-2+1=6.</md>
+      So, at that instant, the robot's thermometer reads a temperature increasing at
+      <md>6^\circ\text{C per second}.</md>
+    </p>
+
+    <p>Now compute the same number without expanding the whole composition.</p>
+
+    <p>
+      At <m>t=0</m>, the robot is at
+      <md>\mathbf r(0)=(1,2).</md>
+      Its velocity is
+      <md>\mathbf r'(t)=(2,-1),</md>
+      so
+      <md>\mathbf r'(0)=(2,-1).</md>
+      The gradient of the temperature field is
+      <md>\nabla T(x,y)=\left(3-x,\;-1-\frac12y\right).</md>
+      At the robot's position,
+      <md>\nabla T(1,2)=(2,-2).</md>
+      The dot product with the robot's velocity gives
+      <md>\nabla T(1,2)\cdot \mathbf r'(0)=(2,-2)\cdot(2,-1)=4+2=6.</md>
+      The same number appears.
+    </p>
+
+    <p>
+      This calculation has a plain meaning. The gradient says how the temperature changes
+      per meter of displacement. The velocity says how many meters of displacement happen
+      per second. Applying one to the other gives degrees per second.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s1-subsec-derivative-of-composition">
+    <title>The derivative of <m>f(x(t),y(t))</m></title>
+
+    <p>
+      The greenhouse computation suggests the general rule. Let
+      <md>z=f(x,y)</md>
+      and suppose
+      <md>x=x(t),\qquad y=y(t).</md>
+      Then
+      <md>z(t)=f(x(t),y(t)).</md>
+      A small time change <m>dt</m> produces the small coordinate changes
+      <md>dx=x'(t)\,dt,\qquad dy=y'(t)\,dt.</md>
+      The differential of <m>f</m> predicts
+      <md>dz=f_x\,dx+f_y\,dy.</md>
+      Substituting the changes caused by time gives
+      <md>dz=f_x(x(t),y(t))x'(t)\,dt+f_y(x(t),y(t))y'(t)\,dt.</md>
+      Divide by <m>dt</m>:
+      <md>\boxed{\frac{d}{dt}f(x(t),y(t))=f_x(x(t),y(t))x'(t)+f_y(x(t),y(t))y'(t).}</md>
+      This is the two-variable chain rule along a curve.
+    </p>
+
+    <example xml:id="c8s1-ex-pressure-pipe">
+      <title>A pressure reading along a pipe</title>
+      <statement>
+        <p>
+          A sensor moves along a pipe laid across a factory floor. The pressure field is
+          <md>p(x,y)=50+xy-2y^2,</md>
+          and the sensor position is
+          <md>x(t)=2+t^2,\qquad y(t)=1-t.</md>
+          Find the rate of change of pressure at <m>t=1</m>.
+        </p>
+        <p>
+          First compute the partial derivatives:
+          <md>p_x(x,y)=y,\qquad p_y(x,y)=x-4y.</md>
+          At <m>t=1</m>,
+          <md>x(1)=3,\qquad y(1)=0.</md>
+          So
+          <md>p_x(3,0)=0,\qquad p_y(3,0)=3.</md>
+          Also,
+          <md>x'(t)=2t,\qquad y'(t)=-1,</md>
+          so
+          <md>x'(1)=2,\qquad y'(1)=-1.</md>
+          Therefore
+          <md>
+            <mrow>\frac{d}{dt}p(x(t),y(t))\bigg|_{t=1} \amp= p_x(3,0)x'(1)+p_y(3,0)y'(1)</mrow>
+            <mrow>\amp= 0\cdot2+3(-1)</mrow>
+            <mrow>\amp= -3.</mrow>
+          </md>
+          At <m>t=1</m>, the sensor sees pressure decreasing at <m>3</m> pressure units per second.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c8s1-subsec-gradient-form">
+    <title>Gradient form of the chain rule</title>
+
+    <p>
+      The formula becomes shorter if we use vectors. Write
+      <md>\mathbf r(t)=(x(t),y(t)).</md>
+      Then
+      <md>\mathbf r'(t)=(x'(t),y'(t)).</md>
+      Also,
+      <md>\nabla f(x,y)=\bigl(f_x(x,y),f_y(x,y)\bigr).</md>
+      The chain rule becomes
+      <md>\boxed{\frac{d}{dt}f(\mathbf r(t))=\nabla f(\mathbf r(t))\cdot \mathbf r'(t).}</md>
+    </p>
+
+    <p>
+      In three variables, the same pattern gives
+      <md>\boxed{\frac{d}{dt}f(x(t),y(t),z(t))=f_xx'(t)+f_yy'(t)+f_zz'(t),}</md>
+      where the partial derivatives are evaluated at
+      <md>(x(t),y(t),z(t)).</md>
+      Equivalently,
+      <md>\boxed{\frac{d}{dt}f(\mathbf r(t))=\nabla f(\mathbf r(t))\cdot \mathbf r'(t).}</md>
+    </p>
+
+    <p>
+      There is also a differential form version:
+      <md>\boxed{\frac{d}{dt}f(\mathbf r(t))=df_{\mathbf r(t)}\bigl(\mathbf r'(t)\bigr).}</md>
+      Here <m>df</m> is the <m>1</m>-form
+      <md>df=f_x\,dx+f_y\,dy</md>
+      in the plane, or
+      <md>df=f_x\,dx+f_y\,dy+f_z\,dz</md>
+      in space. The differential <m>df</m> eats the velocity vector and returns the observed
+      rate of change.
+    </p>
+
+    <theorem xml:id="c8s1-thm-chain-rule-curve">
+      <title>Chain rule along a curve</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^n\to\mathbb R</md>
+          be differentiable at the point
+          <md>\mathbf r(t_0),</md>
+          and let
+          <md>\mathbf r:I\to\mathbb R^n</md>
+          be differentiable at <m>t_0</m>, with <m>\mathbf r(t_0)\in D</m>. Then the composite
+          <md>t\longmapsto f(\mathbf r(t))</md>
+          is differentiable at <m>t_0</m>, and
+          <md>\boxed{\frac{d}{dt}f(\mathbf r(t))\bigg|_{t=t_0}=Df(\mathbf r(t_0))\bigl(\mathbf r'(t_0)\bigr).}</md>
+          In gradient notation,
+          <md>\boxed{\frac{d}{dt}f(\mathbf r(t))\bigg|_{t=t_0}=\nabla f(\mathbf r(t_0))\cdot \mathbf r'(t_0).}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Let
+          <md>\mathbf p=\mathbf r(t_0),\qquad \mathbf v=\mathbf r'(t_0).</md>
+          Since <m>\mathbf r</m> is differentiable at <m>t_0</m>,
+          <md>\mathbf r(t_0+h)=\mathbf p+h\mathbf v+\mathbf e(h),</md>
+          where
+          <md>\frac{\|\mathbf e(h)\|}{|h|}\to0.</md>
+          So the displacement
+          <md>\mathbf k(h)=\mathbf r(t_0+h)-\mathbf p</md>
+          satisfies
+          <md>\mathbf k(h)=h\mathbf v+\mathbf e(h).</md>
+        </p>
+        <p>
+          Since <m>f</m> is differentiable at <m>\mathbf p</m>,
+          <md>f(\mathbf p+\mathbf k)=f(\mathbf p)+Df(\mathbf p)(\mathbf k)+R(\mathbf k),</md>
+          where
+          <md>\frac{|R(\mathbf k)|}{\|\mathbf k\|}\to0\quad\text{as}\quad \mathbf k\to\mathbf 0.</md>
+          Apply this with <m>\mathbf k=\mathbf k(h)</m>:
+          <md>
+            <mrow>f(\mathbf r(t_0+h))-f(\mathbf r(t_0)) \amp= Df(\mathbf p)(h\mathbf v+\mathbf e(h))+R(\mathbf k(h))</mrow>
+            <mrow>\amp= h\,Df(\mathbf p)(\mathbf v)+Df(\mathbf p)(\mathbf e(h))+R(\mathbf k(h)).</mrow>
+          </md>
+          Divide by <m>h</m>. The middle term approaches <m>0</m> because <m>Df(\mathbf p)</m> is
+          linear and <m>\mathbf e(h)/h\to\mathbf 0</m>. The last term also approaches <m>0</m>, because
+          <m>\mathbf k(h)</m> is of size proportional to <m>|h|</m> for small <m>h</m>. Therefore
+          <md>\lim_{h\to0}\frac{f(\mathbf r(t_0+h))-f(\mathbf r(t_0))}{h}=Df(\mathbf p)(\mathbf v).</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The hypothesis says <m>f</m> is differentiable, not merely that its partial derivatives
+      exist. <xref ref="ch07-partial-derivatives-jacobian"/> gave the reason. Here is the same
+      warning in chain-rule form.
+    </p>
+
+    <example xml:id="c8s1-ex-partials-not-enough">
+      <title>Why partial derivatives are not enough</title>
+      <statement>
+        <p>
+          Define
+          <md>Q(x,y)=\begin{cases}\dfrac{x^2y}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]0, \amp (x,y)=(0,0).\end{cases}</md>
+          At the origin,
+          <md>Q_x(0,0)=0,\qquad Q_y(0,0)=0.</md>
+          Now take the smooth path
+          <md>\mathbf r(t)=(t,t).</md>
+          Then
+          <md>Q(\mathbf r(t))=Q(t,t)=\frac{t^3}{2t^2}=\frac{t}{2}</md>
+          for <m>t\ne0</m>, and the same formula has limiting value <m>0</m> at <m>t=0</m>. Thus
+          <md>\frac{d}{dt}Q(\mathbf r(t))\bigg|_{t=0}=\frac12.</md>
+          If we tried to use only the partial derivatives at the origin, we would get
+          <md>Q_x(0,0)\cdot 1+Q_y(0,0)\cdot 1=0.</md>
+          That is wrong.
+        </p>
+        <p>
+          The failure is exactly the one from <xref ref="ch07-partial-derivatives-jacobian"/>:
+          <m>Q</m> is not differentiable at the origin. The chain rule needs the total derivative,
+          not only two coordinate slopes.
+        </p>
+      </statement>
+    </example>
+
+    <p>The path also has to be differentiable.</p>
+
+    <example xml:id="c8s1-ex-path-velocity">
+      <title>Why the path must have a velocity</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x</md>
+          and
+          <md>\mathbf r(t)=(|t|,0).</md>
+          The scalar field <m>f</m> is smooth, but the path has no velocity at <m>t=0</m>. The
+          composite is
+          <md>f(\mathbf r(t))=|t|,</md>
+          which is not differentiable at <m>0</m>.
+        </p>
+        <p>
+          So a smooth field cannot rescue a path that has a corner. The observer must have a
+          well-defined velocity if the observed rate is to be computed by the chain rule.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c8s1-subsec-rate-moving-observer">
+    <title>Rate seen by a moving observer</title>
+
+    <p>
+      The formula
+      <md>\frac{d}{dt}f(\mathbf r(t))=\nabla f(\mathbf r(t))\cdot\mathbf r'(t)</md>
+      has a useful physical reading.
+    </p>
+
+    <table xml:id="c8s1-tab-moving-observer">
+      <title>The chain rule as a rate seen by a moving observer.</title>
+      <tabular>
+        <row header="yes" bottom="medium"><cell>symbol</cell><cell>meaning</cell></row>
+        <row><cell><m>\nabla f(\mathbf r(t))</m></cell><cell>how the field changes per unit displacement</cell></row>
+        <row><cell><m>\mathbf r'(t)</m></cell><cell>how the observer moves per unit time</cell></row>
+        <row><cell><m>\nabla f(\mathbf r(t))\cdot\mathbf r'(t)</m></cell><cell>how fast the observer sees the field change</cell></row>
+      </tabular>
+    </table>
+
+    <p>
+      If the observer moves across level curves, the value changes. If the observer moves
+      along a level curve, the value does not change.
+    </p>
+
+    <example xml:id="c8s1-ex-diver-salinity">
+      <title>A diver moving through a salinity field</title>
+      <statement>
+        <p>
+          Let the salinity in a tank be
+          <md>S(x,y,z)=10+2x-y+3z+\frac12xz,</md>
+          where <m>x,y,z</m> are measured in meters and <m>S</m> is measured in grams per liter.
+          A small diving probe moves along
+          <md>\mathbf r(t)=(1+t,\;2-t,\;3+2t).</md>
+          Find the salinity rate at <m>t=0</m>.
+        </p>
+        <p>
+          The probe starts at
+          <md>\mathbf r(0)=(1,2,3)</md>
+          with velocity
+          <md>\mathbf r'(0)=(1,-1,2).</md>
+          The gradient is
+          <md>\nabla S(x,y,z)=\left(2+\frac12z,\;-1,\;3+\frac12x\right).</md>
+          At <m>(1,2,3)</m>,
+          <md>\nabla S(1,2,3)=\left(\frac72,\;-1,\;\frac72\right).</md>
+          Therefore
+          <md>
+            <mrow>\frac{d}{dt}S(\mathbf r(t))\bigg|_{t=0} \amp= \left(\frac72,-1,\frac72\right)\cdot(1,-1,2)</mrow>
+            <mrow>\amp= \frac72+1+7</mrow>
+            <mrow>\amp= \frac{21}{2}.</mrow>
+          </md>
+          The probe sees salinity increasing at
+          <md>\frac{21}{2}</md>
+          grams per liter per second.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The chain rule along a curve is already a composition of linear maps:
+      <md>\text{time step}\longmapsto\text{position step}\longmapsto\text{field change}.</md>
+      But a curve is only a one-dimensional input. If one two-dimensional coordinate map
+      feeds into another, the same idea has to track several input directions at once. The
+      linear maps no longer appear as numbers or dot products. They appear as matrices,
+      and the chain rule becomes matrix multiplication.
+    </p>
+  </subsection>
+</section>

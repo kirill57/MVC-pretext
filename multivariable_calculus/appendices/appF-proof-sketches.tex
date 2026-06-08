@@ -1,0 +1,1281 @@
+% =====================================================================
+%  Appendix F: Proof Sketches and Theorem Dependencies
+% =====================================================================
+
+\chapter{Proof Sketches and Theorem Dependencies}
+\label{app:proof-sketches}
+
+This appendix records why the main theorems are true and which earlier facts they use.
+It is not a full proof chapter.  It is a map of the logic.
+
+Each entry gives:
+
+\[
+\begin{array}{c|l}
+\text{Item} & \text{Meaning} \\ \hline
+\text{Statement} & \text{the theorem in compact form}\\[1mm]
+\text{Hypotheses} & \text{the assumptions that make the theorem safe}\\[1mm]
+\text{Proof idea} & \text{the main mechanism behind the proof}\\[1mm]
+\text{Dependencies} & \text{earlier facts used}\\[1mm]
+\text{What can fail} & \text{why the hypotheses are not decoration}
+\end{array}
+\]
+
+\[
+\begin{array}{c|c}
+\text{Theorem} & \text{Main source of the proof} \\ \hline
+\text{Differentiability from continuous partials} & \text{single-variable FTC along coordinate steps}\\[1mm]
+\text{Equality of mixed partials} & \text{two orders of measuring rectangle change}\\[1mm]
+\text{Fubini} & \text{slice sums}\\[1mm]
+\text{Change of variables} & \text{local linearization and determinant scaling}\\[1mm]
+\text{Green} & \text{small rectangles and cancellation}\\[1mm]
+\text{Stokes} & \text{pull back to Green's theorem}\\[1mm]
+\text{Divergence theorem} & \text{small boxes and cancellation}\\[1mm]
+\text{Generalized Stokes} & \text{boundary cancellation in oriented cells}
+\end{array}
+\]
+
+% ---------------------------------------------------------------------
+\section{Differentiability and continuous partial derivatives}
+\label{app:F.1}
+
+\subsection*{Statement}
+
+Let
+\[
+    f:\mathbb R^n\to\mathbb R.
+\]
+If the first partial derivatives of \(f\) exist in a neighborhood of \(\mathbf p\) and are
+continuous at \(\mathbf p\), then \(f\) is differentiable at \(\mathbf p\).
+
+In two variables:
+\[
+\boxed{
+    f(a+h,b+k)
+    =
+    f(a,b)
+    +
+    f_x(a,b)h
+    +
+    f_y(a,b)k
+    +
+    \text{error}
+}
+\]
+where
+\[
+\boxed{
+    \frac{\text{error}}{\sqrt{h^2+k^2}}\to0
+    \quad\text{as }(h,k)\to(0,0).
+}
+\]
+
+\subsection*{Differential form}
+
+\[
+\boxed{
+    df_{\mathbf p}
+    =
+    f_{x_1}(\mathbf p)\,dx_1+\cdots+f_{x_n}(\mathbf p)\,dx_n.
+}
+\]
+
+In two variables:
+\[
+\boxed{
+    df_{(a,b)}=f_x(a,b)\,dx+f_y(a,b)\,dy.
+}
+\]
+
+\subsection*{Hypotheses}
+
+\[
+\begin{array}{ll}
+1. & \text{The partial derivatives exist near the point.}\\[1mm]
+2. & \text{The partial derivatives are continuous at the point.}
+\end{array}
+\]
+
+The theorem is a sufficient condition, not a necessary condition.
+
+A function can be differentiable even if its partial derivatives are not continuous.
+
+\subsection*{Proof idea in two variables}
+
+Move from
+\[
+    (a,b)
+\]
+to
+\[
+    (a+h,b+k)
+\]
+in two coordinate steps:
+\[
+    (a,b)\to(a+h,b)\to(a+h,b+k).
+\]
+
+Then
+\[
+\begin{aligned}
+f(a+h,b+k)-f(a,b)
+&=
+\bigl[f(a+h,b+k)-f(a+h,b)\bigr]\\
+&\quad+
+\bigl[f(a+h,b)-f(a,b)\bigr].
+\end{aligned}
+\]
+
+Apply the one-variable Mean Value Theorem or Fundamental Theorem of Calculus to each
+coordinate slice:
+\[
+    f(a+h,b)-f(a,b)
+    \approx
+    f_x(a,b)h,
+\]
+\[
+    f(a+h,b+k)-f(a+h,b)
+    \approx
+    f_y(a,b)k.
+\]
+
+Continuity of \(f_x\) and \(f_y\) makes the approximation uniform as
+\[
+    (h,k)\to(0,0).
+\]
+
+So the first-order part is
+\[
+\boxed{
+    f_x(a,b)h+f_y(a,b)k.
+}
+\]
+
+\subsection*{Dependencies}
+
+\[
+\begin{array}{ll}
+1. & \text{Single-variable Mean Value Theorem or FTC.}\\[1mm]
+2. & \text{Continuity of partial derivatives.}\\[1mm]
+3. & \text{Linear approximation in one variable.}
+\end{array}
+\]
+
+\subsection*{What can fail}
+
+Partial derivatives can exist without differentiability.
+
+Define
+\[
+    f(x,y)=
+    \begin{cases}
+    \dfrac{xy}{\sqrt{x^2+y^2}}, & (x,y)\ne(0,0),\\[2mm]
+    0, & (x,y)=(0,0).
+    \end{cases}
+\]
+
+At the origin,
+\[
+    f_x(0,0)=0,
+    \qquad
+    f_y(0,0)=0.
+\]
+
+If these partial derivatives gave a true differential, the linear approximation would be
+zero.
+
+But along the path
+\[
+    (x,y)=(t,t),
+\]
+we get
+\[
+    f(t,t)=\frac{t^2}{\sqrt{2t^2}}=\frac{|t|}{\sqrt2}.
+\]
+
+The distance to the origin is
+\[
+    \sqrt{t^2+t^2}=\sqrt2\,|t|.
+\]
+
+The ratio is
+\[
+    \frac{|t|/\sqrt2}{\sqrt2\,|t|}=\frac12,
+\]
+which does not go to \(0\).
+
+So \(f\) is not differentiable at the origin.
+
+\subsection*{Moral}
+
+Coordinate slopes alone do not guarantee a true tangent plane.  Continuous partial
+derivatives stitch the coordinate information into one linear approximation.
+
+% ---------------------------------------------------------------------
+\section{Equality of mixed partials}
+\label{app:F.2}
+
+\subsection*{Statement}
+
+If \(f_{xy}\) and \(f_{yx}\) are continuous near a point, then
+\[
+\boxed{
+    f_{xy}=f_{yx}
+}
+\]
+at that point.
+
+More generally, if the relevant higher partial derivatives are continuous, then the order
+of differentiation can be switched.
+
+\subsection*{Hypotheses}
+
+\[
+\begin{array}{ll}
+1. & f_{xy}\text{ and }f_{yx}\text{ exist near the point.}\\[1mm]
+2. & f_{xy}\text{ and }f_{yx}\text{ are continuous near the point.}
+\end{array}
+\]
+
+\subsection*{Proof idea}
+
+Measure the net change of \(f\) around a small rectangle:
+\[
+    [a,a+h]\times[b,b+k].
+\]
+
+Form the corner difference
+\[
+\boxed{
+    \Delta
+    =
+    f(a+h,b+k)-f(a+h,b)-f(a,b+k)+f(a,b).
+}
+\]
+
+Compute \(\Delta\) in two ways.
+
+First, take \(x\)-changes, then \(y\)-changes.  This connects \(\Delta\) to \(f_{xy}\).
+
+Second, take \(y\)-changes, then \(x\)-changes.  This connects \(\Delta\) to \(f_{yx}\).
+
+Both computations measure the same corner difference.  After division by
+\[
+    hk
+\]
+and letting
+\[
+    h,k\to0,
+\]
+continuity forces
+\[
+    f_{xy}(a,b)=f_{yx}(a,b).
+\]
+
+\subsection*{Dependencies}
+
+\[
+\begin{array}{ll}
+1. & \text{Single-variable FTC or Mean Value Theorem.}\\[1mm]
+2. & \text{Continuity of the mixed partial derivatives.}\\[1mm]
+3. & \text{Rectangle difference quotients.}
+\end{array}
+\]
+
+\subsection*{What can fail}
+
+If the mixed partials are not continuous, they can differ.
+
+Define
+\[
+    f(x,y)=
+    \begin{cases}
+    \dfrac{xy(x^2-y^2)}{x^2+y^2}, & (x,y)\ne(0,0),\\[2mm]
+    0, & (x,y)=(0,0).
+    \end{cases}
+\]
+
+Then
+\[
+    f_x(0,y)=-y,
+\]
+so
+\[
+    f_{xy}(0,0)=-1.
+\]
+
+Also,
+\[
+    f_y(x,0)=x,
+\]
+so
+\[
+    f_{yx}(0,0)=1.
+\]
+
+Thus
+\[
+\boxed{
+    f_{xy}(0,0)\ne f_{yx}(0,0).
+}
+\]
+
+\subsection*{Moral}
+
+The equality of mixed partials is not only about the symbols \(xy\) and \(yx\).  It is
+about enough smoothness to make the small-rectangle measurement independent of the
+order in which it is taken.
+
+% ---------------------------------------------------------------------
+\section{Fubini's theorem and change of variables}
+\label{app:F.3}
+
+\subsection*{Fubini's theorem: statement}
+
+If \(f\) is continuous on a rectangle
+\[
+    R=[a,b]\times[c,d],
+\]
+then
+\[
+\boxed{
+    \iint_R f(x,y)\,dA
+    =
+    \int_a^b\int_c^d f(x,y)\,dy\,dx
+    =
+    \int_c^d\int_a^b f(x,y)\,dx\,dy.
+}
+\]
+
+For a solid box,
+\[
+\boxed{
+    \iiint_B f\,dV
+}
+\]
+can be computed by any order of iterated integration, as long as the corresponding
+bounds describe the same box.
+
+\subsection*{Fubini: hypotheses}
+
+For the version used most often in this book:
+
+\[
+\begin{array}{ll}
+1. & \text{The region is a rectangle, box, or a region described by clean bounds.}\\[1mm]
+2. & \text{The function is continuous, or at least integrable in a safe sense.}
+\end{array}
+\]
+
+\subsection*{Fubini: proof idea}
+
+A double integral is a limit of sums over small rectangles:
+\[
+    \sum f(x_i^*,y_j^*)\,\Delta x\,\Delta y.
+\]
+
+Group the same sum by columns:
+\[
+    \sum_i
+    \left(
+        \sum_j f(x_i^*,y_j^*)\,\Delta y
+    \right)
+    \Delta x.
+\]
+
+The inner sum becomes an integral in \(y\).  The outer sum becomes an integral in
+\(x\).
+
+Group by rows instead, and the order reverses.
+
+\subsection*{Fubini: dependencies}
+
+\[
+\begin{array}{ll}
+1. & \text{Riemann sums.}\\[1mm]
+2. & \text{Single-variable integration.}\\[1mm]
+3. & \text{Continuity or integrability.}
+\end{array}
+\]
+
+\subsection*{Fubini: what can fail}
+
+For ordinary continuous functions on bounded regions, Fubini is safe.
+
+For improper integrals, changing the order can change the value if the integral is not
+absolutely convergent.
+
+The safe rule is:
+
+\[
+\boxed{
+    \text{If }\iint |f|\,dA\text{ is finite, changing order is safe.}
+}
+\]
+
+Without absolute convergence, be careful.
+
+\subsection*{Change of variables: statement}
+
+For a \(C^1\) coordinate map
+\[
+    T(u,v)=(x(u,v),y(u,v)),
+\]
+the change of variables formula is
+\[
+\boxed{
+    \iint_R f(x,y)\,dA
+    =
+    \iint_{\widetilde R}
+    f(T(u,v))
+    \left|
+        \det DT(u,v)
+    \right|
+    \,du\,dv.
+}
+\]
+
+In differential forms language:
+\[
+\boxed{
+    T^*(dx\wedge dy)
+    =
+    \det DT\,du\wedge dv.
+}
+\]
+
+So the oriented form is
+\[
+\boxed{
+    \iint_R f\,dx\wedge dy
+    =
+    \iint_{\widetilde R}
+    f(T(u,v))\det DT\,du\wedge dv.
+}
+\]
+
+The ordinary area formula uses
+\[
+    |\det DT|.
+\]
+
+\subsection*{Change of variables: hypotheses}
+
+The standard version assumes:
+
+\[
+\begin{array}{ll}
+1. & T\text{ is }C^1.\\[1mm]
+2. & T\text{ is one-to-one on the region, except possibly on boundary pieces.}\\[1mm]
+3. & \det DT\ne0\text{ in the interior, except possibly on harmless boundary pieces.}\\[1mm]
+4. & \text{The regions are reasonably nice.}
+\end{array}
+\]
+
+\subsection*{Change of variables: proof idea}
+
+Near a point \((u,v)\), the map \(T\) is almost linear:
+\[
+    T(u+\Delta u,v+\Delta v)
+    \approx
+    T(u,v)+DT
+    \begin{pmatrix}
+    \Delta u\\
+    \Delta v
+    \end{pmatrix}.
+\]
+
+A tiny rectangle in the \(uv\)-plane becomes almost a parallelogram in the \(xy\)-plane.
+
+The area scale factor of that parallelogram is
+\[
+\boxed{
+    |\det DT|.
+}
+\]
+
+Add over many tiny rectangles and pass to the limit.
+
+\subsection*{Change of variables: dependencies}
+
+\[
+\begin{array}{ll}
+1. & \text{Differentiability as local linear approximation.}\\[1mm]
+2. & \text{Determinant as area or volume scale factor.}\\[1mm]
+3. & \text{Riemann sums.}\\[1mm]
+4. & \text{One-to-one coordinate descriptions.}
+\end{array}
+\]
+
+\subsection*{Change of variables: what can fail}
+
+If the map is not one-to-one, the integral may count points more than once.
+
+Example: polar coordinates with
+\[
+    0\le \theta\le4\pi
+\]
+trace a full disk twice.
+
+If the Jacobian vanishes on a whole region, the map may collapse area.
+
+If the orientation matters, do not replace \(\det DT\) by \(|\det DT|\).  The sign is part
+of the form.
+
+\subsection*{Moral}
+
+Fubini explains how to add by slices.  Change of variables explains how small pieces
+change size and orientation under a new coordinate language.
+
+% ---------------------------------------------------------------------
+\section{Green's theorem}
+\label{app:F.4}
+
+\subsection*{Statement in forms}
+
+Let
+\[
+    \omega=P\,dx+Q\,dy.
+\]
+
+If \(R\) is a positively oriented plane region, then
+\[
+\boxed{
+    \int_{\partial R}\omega
+    =
+    \int_R d\omega.
+}
+\]
+
+Since
+\[
+    d\omega=(Q_x-P_y)\,dx\wedge dy,
+\]
+this is
+\[
+\boxed{
+    \int_{\partial R}P\,dx+Q\,dy
+    =
+    \iint_R (Q_x-P_y)\,dx\wedge dy.
+}
+\]
+
+\subsection*{Classical statement}
+
+For
+\[
+    \mathbf F=(P,Q),
+\]
+\[
+\boxed{
+    \oint_{\partial R}\mathbf F\cdot d\mathbf r
+    =
+    \iint_R
+    \left(
+        \frac{\partial Q}{\partial x}
+        -
+        \frac{\partial P}{\partial y}
+    \right)
+    dA.
+}
+\]
+
+\subsection*{Hypotheses}
+
+\[
+\begin{array}{ll}
+1. & R\text{ is a bounded plane region with piecewise smooth boundary.}\\[1mm]
+2. & \partial R\text{ has positive orientation.}\\[1mm]
+3. & P\text{ and }Q\text{ have continuous first partial derivatives on a region containing }R.
+\end{array}
+\]
+
+Positive orientation means:
+
+\[
+\boxed{
+    \text{walk so the region stays on your left.}
+}
+\]
+
+\subsection*{Proof idea}
+
+First prove the theorem for one small rectangle.
+
+For
+\[
+    R=[a,a+h]\times[b,b+k],
+\]
+the line integral around the rectangle compares opposite sides.
+
+Horizontal sides produce the term
+\[
+    -P_y\,hk.
+\]
+
+Vertical sides produce the term
+\[
+    Q_x\,hk.
+\]
+
+Together:
+\[
+    \int_{\partial R}P\,dx+Q\,dy
+    \approx
+    (Q_x-P_y)hk.
+\]
+
+Then subdivide a larger region into many small rectangles.
+
+Interior edges are walked twice in opposite directions, so their contributions cancel.
+
+Only the outer boundary remains.
+
+Let the mesh size go to zero.
+
+\subsection*{Dependencies}
+
+\[
+\begin{array}{ll}
+1. & \text{Line integrals of \(1\)-forms.}\\[1mm]
+2. & \text{Exterior derivative }d(P\,dx+Q\,dy).\\[1mm]
+3. & \text{Fubini's theorem.}\\[1mm]
+4. & \text{Cancellation of oppositely oriented interior edges.}
+\end{array}
+\]
+
+\subsection*{What can fail}
+
+Orientation matters.
+
+If the boundary is walked clockwise instead of counterclockwise, the sign changes.
+
+The field must be defined on the whole region.
+
+Example:
+\[
+    \omega=
+    \frac{-y}{x^2+y^2}\,dx
+    +
+    \frac{x}{x^2+y^2}\,dy.
+\]
+
+This form is defined on
+\[
+    \mathbb R^2\setminus\{(0,0)\}.
+\]
+
+On that punctured plane,
+\[
+    d\omega=0.
+\]
+
+But around the unit circle,
+\[
+    \int_{C}\omega=2\pi.
+\]
+
+Green's theorem cannot be applied to the disk bounded by \(C\), because \(\omega\) is
+not defined at the origin.
+
+\subsection*{Moral}
+
+Green's theorem is a cancellation theorem.  Local rotation inside a region adds up to
+circulation around the boundary, as long as the field is smooth on the whole region.
+
+% ---------------------------------------------------------------------
+\section{Stokes' theorem}
+\label{app:F.5}
+
+\subsection*{Statement in forms}
+
+Let
+\[
+    \omega=P\,dx+Q\,dy+R\,dz.
+\]
+
+If \(S\) is an oriented surface with oriented boundary \(\partial S\), then
+\[
+\boxed{
+    \int_{\partial S}\omega
+    =
+    \int_S d\omega.
+}
+\]
+
+\subsection*{Classical statement}
+
+For
+\[
+    \mathbf F=(P,Q,R),
+\]
+\[
+\boxed{
+    \oint_{\partial S}\mathbf F\cdot d\mathbf r
+    =
+    \iint_S
+    (\nabla\times\mathbf F)\cdot\widehat{\mathbf n}\,dS.
+}
+\]
+
+\subsection*{Hypotheses}
+
+\[
+\begin{array}{ll}
+1. & S\text{ is an oriented piecewise smooth surface.}\\[1mm]
+2. & \partial S\text{ has the boundary orientation induced by }S.\\[1mm]
+3. & P,Q,R\text{ have continuous first partial derivatives near }S.\\[1mm]
+4. & \omega\text{ is defined on a region containing }S.
+\end{array}
+\]
+
+Boundary orientation is given by the right-hand rule:
+
+\[
+\boxed{
+    \text{thumb points along the chosen normal, fingers curl along }\partial S.
+}
+\]
+
+\subsection*{Proof idea}
+
+Parametrize the surface:
+\[
+    \mathbf r(u,v).
+\]
+
+Pull back the \(1\)-form:
+\[
+    \mathbf r^*\omega.
+\]
+
+Now \(\mathbf r^*\omega\) is a \(1\)-form in the \(uv\)-plane.
+
+Apply Green's theorem in the parameter region:
+\[
+    \int_{\partial D}\mathbf r^*\omega
+    =
+    \int_D d(\mathbf r^*\omega).
+\]
+
+Use the pullback identity:
+\[
+\boxed{
+    d(\mathbf r^*\omega)=\mathbf r^*(d\omega).
+}
+\]
+
+This gives
+\[
+    \int_{\partial S}\omega
+    =
+    \int_S d\omega.
+\]
+
+\subsection*{Dependencies}
+
+\[
+\begin{array}{ll}
+1. & \text{Green's theorem.}\\[1mm]
+2. & \text{Parametrized surfaces.}\\[1mm]
+3. & \text{Pullbacks of forms.}\\[1mm]
+4. & \text{Exterior derivative commutes with pullback.}\\[1mm]
+5. & \text{Orientation from }\mathbf r_u\times\mathbf r_v.
+\end{array}
+\]
+
+\subsection*{What can fail}
+
+Orientation matters.
+
+If the surface normal is reversed, then the boundary orientation reverses and both
+sides change sign.
+
+The field must be defined on the surface.
+
+Singularities can break the theorem if they lie on the chosen surface.
+
+If \(S\) has no boundary, then
+\[
+    \partial S=\varnothing,
+\]
+so Stokes gives
+\[
+\boxed{
+    \int_S d\omega=0.
+}
+\]
+
+Classically:
+\[
+\boxed{
+    \iint_S(\nabla\times\mathbf F)\cdot\widehat{\mathbf n}\,dS=0
+}
+\]
+for a closed oriented surface, provided \(\mathbf F\) is smooth near \(S\).
+
+\subsection*{Moral}
+
+Stokes' theorem is Green's theorem on a curved surface.  The pullback flattens the
+surface into a parameter region where Green's theorem can do the work.
+
+% ---------------------------------------------------------------------
+\section{Divergence theorem}
+\label{app:F.6}
+
+\subsection*{Statement in forms}
+
+Let
+\[
+    \Phi_{\mathbf F}
+    =
+    P\,dy\wedge dz
+    +
+    Q\,dz\wedge dx
+    +
+    R\,dx\wedge dy.
+\]
+
+If \(E\) is an oriented solid with outward boundary \(\partial E\), then
+\[
+\boxed{
+    \int_{\partial E}\Phi_{\mathbf F}
+    =
+    \int_E d\Phi_{\mathbf F}.
+}
+\]
+
+Since
+\[
+    d\Phi_{\mathbf F}
+    =
+    (P_x+Q_y+R_z)\,dx\wedge dy\wedge dz,
+\]
+this becomes
+\[
+\boxed{
+    \int_{\partial E}\Phi_{\mathbf F}
+    =
+    \iiint_E
+    (P_x+Q_y+R_z)\,dx\wedge dy\wedge dz.
+}
+\]
+
+\subsection*{Classical statement}
+
+\[
+\boxed{
+    \iint_{\partial E}
+    \mathbf F\cdot\widehat{\mathbf n}\,dS
+    =
+    \iiint_E
+    \nabla\cdot\mathbf F\,dV.
+}
+\]
+
+\subsection*{Hypotheses}
+
+\[
+\begin{array}{ll}
+1. & E\text{ is a bounded solid with piecewise smooth boundary.}\\[1mm]
+2. & \partial E\text{ is oriented outward.}\\[1mm]
+3. & \mathbf F\text{ has continuous first partial derivatives on a region containing }E.
+\end{array}
+\]
+
+\subsection*{Proof idea}
+
+First prove the theorem for a small rectangular box.
+
+Flux through the two \(x\)-faces gives approximately
+\[
+    P_x\,\Delta x\,\Delta y\,\Delta z.
+\]
+
+Flux through the two \(y\)-faces gives approximately
+\[
+    Q_y\,\Delta x\,\Delta y\,\Delta z.
+\]
+
+Flux through the two \(z\)-faces gives approximately
+\[
+    R_z\,\Delta x\,\Delta y\,\Delta z.
+\]
+
+Together:
+\[
+    \text{outward flux}
+    \approx
+    (P_x+Q_y+R_z)\,\Delta V.
+\]
+
+Now subdivide a solid into many small boxes.
+
+Flux through interior faces cancels because each shared face is outward for one box and
+inward for the neighboring box.
+
+Only the outer boundary remains.
+
+Let the box sizes shrink.
+
+\subsection*{Dependencies}
+
+\[
+\begin{array}{ll}
+1. & \text{Flux forms.}\\[1mm]
+2. & \text{Exterior derivative of a \(2\)-form.}\\[1mm]
+3. & \text{Triple integrals.}\\[1mm]
+4. & \text{Cancellation across shared faces.}\\[1mm]
+5. & \text{Single-variable FTC along coordinate directions.}
+\end{array}
+\]
+
+\subsection*{What can fail}
+
+The field must be defined inside the solid, not only on the boundary.
+
+Example:
+\[
+    \mathbf F(x,y,z)
+    =
+    \frac{(x,y,z)}{(x^2+y^2+z^2)^{3/2}}.
+\]
+
+This field is not defined at the origin.
+
+Away from the origin,
+\[
+    \nabla\cdot\mathbf F=0.
+\]
+
+But on the unit sphere,
+\[
+    \mathbf F=\widehat{\mathbf n},
+\]
+so
+\[
+    \iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS
+    =
+    \iint_S 1\,dS
+    =
+    4\pi.
+\]
+
+The divergence theorem cannot be applied to the unit ball because the field is singular
+at the origin.
+
+\subsection*{Moral}
+
+The divergence theorem is a flux bookkeeping theorem.  What leaves through the
+boundary is accounted for by sources and sinks inside, provided the field is smooth
+throughout the solid.
+
+% ---------------------------------------------------------------------
+\section{Generalized Stokes theorem}
+\label{app:F.7}
+
+\subsection*{Statement}
+
+For an oriented \(k\)-dimensional region \(M\) and a \((k-1)\)-form \(\omega\),
+\[
+\boxed{
+    \int_{\partial M}\omega
+    =
+    \int_M d\omega.
+}
+\]
+
+This single statement includes:
+
+\[
+\begin{array}{c|c|c}
+\text{Theorem} & M & \omega \\ \hline
+\text{FTC} & \text{interval} & 0\text{-form}\\[1mm]
+\text{Green} & \text{plane region} & 1\text{-form}\\[1mm]
+\text{Stokes} & \text{surface} & 1\text{-form}\\[1mm]
+\text{Divergence} & \text{solid} & 2\text{-form}
+\end{array}
+\]
+
+\subsection*{Degree matching}
+
+If
+\[
+    \dim M=k,
+\]
+then
+\[
+    \omega
+\]
+must be a \((k-1)\)-form and
+\[
+    d\omega
+\]
+is a \(k\)-form.
+
+\[
+\boxed{
+    \int_{\partial M}\omega
+}
+\]
+makes sense because
+\[
+    \dim(\partial M)=k-1.
+\]
+
+\[
+\boxed{
+    \int_M d\omega
+}
+\]
+makes sense because \(d\omega\) has degree \(k\).
+
+\subsection*{Hypotheses}
+
+The clean version assumes:
+
+\[
+\begin{array}{ll}
+1. & M\text{ is oriented and piecewise smooth.}\\[1mm]
+2. & \partial M\text{ has the induced boundary orientation.}\\[1mm]
+3. & \omega\text{ is smooth enough on a region containing }M.\\[1mm]
+4. & \text{The integrals are defined.}
+\end{array}
+\]
+
+\subsection*{Proof idea}
+
+Break \(M\) into many small oriented pieces.
+
+On each small piece, the theorem reduces to the coordinate version.
+
+When the small pieces are added, every interior boundary appears twice with opposite
+orientations.
+
+Those interior contributions cancel.
+
+Only the boundary of the whole region remains.
+
+This is the same cancellation pattern behind Green's theorem and the divergence theorem.
+
+\subsection*{Dependencies}
+
+\[
+\begin{array}{ll}
+1. & \text{The one-dimensional FTC on coordinate intervals.}\\[1mm]
+2. & \text{Wedge products and orientation.}\\[1mm]
+3. & \text{Exterior derivative.}\\[1mm]
+4. & \text{Pullbacks to parametrized pieces.}\\[1mm]
+5. & \text{Boundary orientation conventions.}\\[1mm]
+6. & \text{Cancellation of interior boundaries.}
+\end{array}
+\]
+
+\subsection*{Boundary of a boundary}
+
+A boundary has no boundary:
+\[
+\boxed{
+    \partial(\partial M)=0.
+}
+\]
+
+The form version is
+\[
+\boxed{
+    d^2=0.
+}
+\]
+
+These two facts match.
+
+If
+\[
+    \partial(\partial M)=0,
+\]
+then applying Stokes twice gives
+\[
+    \int_{\partial(\partial M)}\omega=0.
+\]
+
+On the derivative side,
+\[
+    \int_M d(d\omega)=\int_M 0=0.
+\]
+
+\subsection*{Closed and exact}
+
+A form is closed if
+\[
+\boxed{
+    d\omega=0.
+}
+\]
+
+A form is exact if
+\[
+\boxed{
+    \omega=d\eta.
+}
+\]
+
+Exact implies closed:
+\[
+\boxed{
+    \omega=d\eta
+    \quad\Longrightarrow\quad
+    d\omega=d^2\eta=0.
+}
+\]
+
+Closed need not imply exact.
+
+A hole in the domain can prevent exactness.
+
+\subsection*{What can fail}
+
+If the form is not defined on all of \(M\), Stokes' theorem may fail.
+
+If the orientation of \(\partial M\) is wrong, the sign is wrong.
+
+If \(M\) has corners, edges, or several patches, it must be handled as a piecewise
+smooth object with consistent orientations.
+
+If singularities are inside the region, remove small neighborhoods around them and
+include the new boundary pieces.
+
+\subsection*{Moral}
+
+Every version of Stokes' theorem says the same thing:
+
+\[
+\boxed{
+    \text{local derivative information inside}
+    =
+    \text{accumulated boundary information}.
+}
+\]
+
+The shape of the region changes from interval to surface to solid, but the mechanism is
+always the same: orient, differentiate, integrate, and cancel interior boundaries.
+
+% ---------------------------------------------------------------------
+\section*{Dependency chart}
+
+\[
+\begin{array}{c|l}
+\text{Result} & \text{Depends on} \\ \hline
+\text{Differentiability from continuous partials} &
+\text{one-variable FTC/MVT, continuity}\\[1mm]
+
+\text{Equality of mixed partials} &
+\text{rectangle differences, FTC/MVT, continuity}\\[1mm]
+
+\text{Fubini} &
+\text{Riemann sums, single-variable integration}\\[1mm]
+
+\text{Change of variables} &
+\text{differentiability, determinants, Riemann sums}\\[1mm]
+
+\text{Green} &
+\text{small rectangles, Fubini, cancellation}\\[1mm]
+
+\text{Stokes} &
+\text{Green, parametrized surfaces, pullbacks}\\[1mm]
+
+\text{Divergence theorem} &
+\text{small boxes, flux, cancellation}\\[1mm]
+
+\text{Generalized Stokes} &
+\text{orientation, exterior derivative, pullbacks, cancellation}
+\end{array}
+\]
+
+% ---------------------------------------------------------------------
+\section*{One-page theorem summary}
+
+\[
+\boxed{
+    \text{continuous partials near }\mathbf p
+    \Longrightarrow
+    \text{differentiability at }\mathbf p
+}
+\]
+
+\[
+\boxed{
+    f_{xy}=f_{yx}
+    \quad\text{if the mixed partials are continuous}
+}
+\]
+
+\[
+\boxed{
+    \iint_R f\,dA
+    =
+    \int\!\!\int f\,dy\,dx
+    =
+    \int\!\!\int f\,dx\,dy
+}
+\]
+for continuous \(f\) on a suitable region.
+
+\[
+\boxed{
+    dA=
+    \left|
+    \det DT
+    \right|
+    du\,dv
+}
+\]
+
+\[
+\boxed{
+    dx\wedge dy
+    =
+    \det DT\,du\wedge dv
+}
+\]
+
+\[
+\boxed{
+    \int_{\partial R}P\,dx+Q\,dy
+    =
+    \iint_R(Q_x-P_y)\,dx\wedge dy
+}
+\]
+
+\[
+\boxed{
+    \oint_{\partial S}\mathbf F\cdot d\mathbf r
+    =
+    \iint_S(\nabla\times\mathbf F)\cdot\widehat{\mathbf n}\,dS
+}
+\]
+
+\[
+\boxed{
+    \iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS
+    =
+    \iiint_E\nabla\cdot\mathbf F\,dV
+}
+\]
+
+\[
+\boxed{
+    \int_{\partial M}\omega=\int_M d\omega
+}
+\]
+
+\[
+\boxed{
+    d^2=0
+}
+\]
+
+\[
+\boxed{
+    \partial(\partial M)=0
+}
+\]

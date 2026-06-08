@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch19-conservation-laws.tex, Section 19.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-19-heat-wave-and-equilibrium-equations" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Heat, wave, and equilibrium equations</title>
+
+  <p>
+    <xref ref="sec-19-the-continuity-equation"/> gave us the shape of a
+    conservation law:
+    <md>\rho_t+\nabla\cdot\mathbf J=s.</md>
+    The density <m>\rho</m> tells what is stored. The flux <m>\mathbf J</m> tells what moves
+    across boundaries. The source <m>s</m> tells what is created or destroyed inside.
+  </p>
+
+  <p>
+    That equation is not yet a physical law by itself. It is bookkeeping. To get a specific
+    equation, we must say what the flux is. Heat, waves, and equilibrium all make different
+    choices, but the same few operators keep appearing:
+    <md>\nabla,\qquad \nabla\cdot,\qquad \Delta.</md>
+  </p>
+
+  <subsection xml:id="c19s3-subsec-heat-flow-and-the-heat-equation">
+    <title>Heat flow and the heat equation</title>
+
+    <p>
+      Imagine a thin metal plate on a table. Let
+      <md>u(x,y,t)</md>
+      be its temperature at the point <m>(x,y)</m> and time <m>t</m>.
+    </p>
+
+    <p>
+      Heat flows from warmer places toward colder places. The gradient
+      <md>\nabla u</md>
+      points in the direction where temperature increases fastest. So heat should flow in the
+      opposite direction.
+    </p>
+
+    <p>
+      This modeling rule is called Fourier's law:
+      <md>\boxed{\mathbf J=-k\nabla u.}</md>
+      Here <m>k\gt 0</m> is the thermal conductivity. A larger <m>k</m> means heat moves more
+      easily through the material.
+    </p>
+
+    <p>
+      Let
+      <md>c</md>
+      be the heat capacity per unit area of the thin plate. Then the stored thermal energy per
+      unit area is proportional to temperature:
+      <md>\rho=c u.</md>
+      If there is no internal heat source, the conservation law says
+      <md>(cu)_t+\nabla\cdot\mathbf J=0.</md>
+      Substitute Fourier's law:
+      <md>c u_t+\nabla\cdot(-k\nabla u)=0.</md>
+      If <m>c</m> and <m>k</m> are constant, this becomes
+      <md>c u_t-k\nabla\cdot(\nabla u)=0.</md>
+      The expression
+      <md>\nabla\cdot(\nabla u)</md>
+      is the Laplacian:
+      <md>\boxed{\Delta u=u_{xx}+u_{yy}}</md>
+      in the plane. Therefore
+      <md>c u_t-k\Delta u=0,</md>
+      or
+      <md>\boxed{u_t=\alpha\Delta u,}</md>
+      where
+      <md>\alpha=\frac{k}{c}</md>
+      is called the thermal diffusivity.
+    </p>
+
+    <p>This is the heat equation.</p>
+
+    <definition xml:id="c19s3-def-heat-equation">
+      <title>Heat equation</title>
+      <statement>
+        <p>
+          For a temperature field <m>u</m>, the heat equation with constant diffusivity
+          <m>\alpha\gt 0</m> is
+          <md>\boxed{u_t=\alpha\Delta u.}</md>
+          In one space dimension,
+          <md>\boxed{u_t=\alpha u_{xx}.}</md>
+          In two space dimensions,
+          <md>\boxed{u_t=\alpha(u_{xx}+u_{yy}).}</md>
+          In three space dimensions,
+          <md>\boxed{u_t=\alpha(u_{xx}+u_{yy}+u_{zz}).}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c19s3-ex-warm-bump-on-a-rod">
+      <title>A warm bump on a rod</title>
+      <statement>
+        <p>
+          Consider a thin rod with coordinate <m>0\le x\le1</m>, whose ends are held at
+          temperature <m>0</m>. Let
+          <md>u(x,t)=e^{-\alpha\pi^2t}\sin(\pi x).</md>
+          Then
+          <md>u_t=-\alpha\pi^2e^{-\alpha\pi^2t}\sin(\pi x),</md>
+          while
+          <md>u_{xx}=-\pi^2e^{-\alpha\pi^2t}\sin(\pi x).</md>
+          Therefore
+          <md>u_t=\alpha u_{xx}.</md>
+          So this is a solution of the one-dimensional heat equation.
+        </p>
+        <p>
+          The factor
+          <md>e^{-\alpha\pi^2t}</md>
+          shrinks as time passes. The sine-shaped temperature profile fades away. Heat spreads
+          until the rod settles to the boundary temperature.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The heat equation is not just a formula. It says that temperature changes because heat
+      flows down its gradient. The Laplacian measures the net effect of that flow.
+    </p>
+
+    <p>
+      A point where
+      <md>\Delta u\gt 0</md>
+      is colder than its surroundings in an averaged second-order sense, so heat flows in and
+      <m>u_t\gt 0</m>. A point where
+      <md>\Delta u\lt 0</md>
+      is warmer than its surroundings, so heat flows out and <m>u_t\lt 0</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s3-subsec-heat-sources-and-nonconstant-materials">
+    <title>Heat sources and nonconstant materials</title>
+
+    <p>
+      If heat is created inside the plate, the balance law is
+      <md>(cu)_t+\nabla\cdot\mathbf J=s.</md>
+      Using
+      <md>\mathbf J=-k\nabla u,</md>
+      we get
+      <md>\boxed{c u_t-\nabla\cdot(k\nabla u)=s.}</md>
+      If <m>c</m> and <m>k</m> are constant, then
+      <md>\boxed{u_t=\alpha\Delta u+\frac{s}{c}.}</md>
+    </p>
+
+    <p>
+      The term
+      <md>\frac{s}{c}</md>
+      is the temperature increase forced by the source.
+    </p>
+
+    <example xml:id="c19s3-ex-heater-under-a-plate">
+      <title>A heater under a plate</title>
+      <statement>
+        <p>
+          Suppose a small electric heater under a metal plate produces heat at rate
+          <md>s(x,y,t)=10e^{-x^2-y^2}.</md>
+          This source is strongest near the origin and weak far away. If the plate has constant
+          <m>c</m> and <m>k</m>, its temperature satisfies
+          <md>u_t=\alpha\Delta u+\frac{10}{c}e^{-x^2-y^2}.</md>
+          The first term spreads heat. The second term creates heat.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The assumption
+      <md>\mathbf J=-k\nabla u</md>
+      is a physical assumption, not a theorem of calculus. Some materials conduct better in one
+      direction than another. Then <m>k</m> is not just a number; it is a matrix, and the flux
+      law becomes
+      <md>\mathbf J=-K\nabla u.</md>
+      The conservation law stays the same. The constitutive law, the rule connecting flux to the
+      field, changes.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s3-subsec-vibrating-strings-and-the-wave-equation">
+    <title>Vibrating strings and the wave equation</title>
+
+    <p>Heat spreads and fades. Waves travel.</p>
+
+    <p>
+      The simplest wave model is a stretched string. Let
+      <md>u(x,t)</md>
+      be the vertical displacement of the string at position <m>x</m> and time <m>t</m>.
+    </p>
+
+    <p>
+      Take a short piece of string from <m>x</m> to <m>x+\Delta x</m>. Suppose the tension has
+      constant magnitude <m>T</m>, and suppose the slopes are small. The vertical component of
+      the tension at the right end is approximately
+      <md>T u_x(x+\Delta x,t).</md>
+      The vertical component at the left end pulls the other way and is approximately
+      <md>T u_x(x,t).</md>
+      So the net vertical force is approximately
+      <md>T\bigl(u_x(x+\Delta x,t)-u_x(x,t)\bigr).</md>
+      For small <m>\Delta x</m>,
+      <md>u_x(x+\Delta x,t)-u_x(x,t)\approx u_{xx}(x,t)\Delta x.</md>
+      Thus
+      <md>\text{net vertical force}\approx T u_{xx}(x,t)\Delta x.</md>
+    </p>
+
+    <p>
+      If the string has mass density <m>m</m> per unit length, then the mass of this small piece
+      is
+      <md>m\Delta x.</md>
+      Newton's law gives
+      <md>m\Delta x\,u_{tt}\approx T u_{xx}\Delta x.</md>
+      Cancel <m>\Delta x</m>:
+      <md>m u_{tt}=T u_{xx}.</md>
+      Therefore
+      <md>\boxed{u_{tt}=c^2u_{xx},}</md>
+      where
+      <md>c^2=\frac{T}{m}.</md>
+    </p>
+
+    <p>This is the one-dimensional wave equation.</p>
+
+    <definition xml:id="c19s3-def-wave-equation">
+      <title>Wave equation</title>
+      <statement>
+        <p>
+          The wave equation in one space dimension is
+          <md>\boxed{u_{tt}=c^2u_{xx}.}</md>
+          In two space dimensions, the wave equation is
+          <md>\boxed{u_{tt}=c^2\Delta u=c^2(u_{xx}+u_{yy}).}</md>
+          In three space dimensions,
+          <md>\boxed{u_{tt}=c^2\Delta u=c^2(u_{xx}+u_{yy}+u_{zz}).}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c19s3-ex-a-traveling-wave">
+      <title>A traveling wave</title>
+      <statement>
+        <p>
+          Let
+          <md>u(x,t)=f(x-ct),</md>
+          where <m>f</m> is twice differentiable. Then
+          <md>u_t=-c f'(x-ct),</md>
+          and
+          <md>u_{tt}=c^2 f''(x-ct).</md>
+          Also
+          <md>u_x=f'(x-ct),</md>
+          and
+          <md>u_{xx}=f''(x-ct).</md>
+          Therefore
+          <md>u_{tt}=c^2u_{xx}.</md>
+        </p>
+        <p>
+          The shape <m>f</m> travels to the right with speed <m>c</m>. Unlike heat, it does not
+          have to fade just because it moves.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      There is also a left-moving wave:
+      <md>u(x,t)=g(x+ct).</md>
+      Indeed, any sum
+      <md>\boxed{u(x,t)=f(x-ct)+g(x+ct)}</md>
+      solves the one-dimensional wave equation. This formula says that, in one dimension, waves
+      split naturally into right-moving and left-moving pieces.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s3-subsec-vibrating-membranes">
+    <title>Vibrating membranes</title>
+
+    <p>
+      A drumhead is a two-dimensional version of the string. Let
+      <md>u(x,y,t)</md>
+      be its vertical displacement. The membrane tension pulls in both the <m>x</m>- and
+      <m>y</m>-directions. The net vertical force on a small rectangle is controlled by
+      <md>u_{xx}+u_{yy}.</md>
+      Thus the model becomes
+      <md>\boxed{u_{tt}=c^2(u_{xx}+u_{yy})=c^2\Delta u.}</md>
+    </p>
+
+    <example xml:id="c19s3-ex-standing-wave-on-a-square-membrane">
+      <title>A standing wave on a square membrane</title>
+      <statement>
+        <p>
+          On the square
+          <md>0\le x\le1,\qquad 0\le y\le1,</md>
+          consider
+          <md>u(x,y,t)=\cos(\omega t)\sin(\pi x)\sin(\pi y).</md>
+          Then
+          <md>u_{tt}=-\omega^2\cos(\omega t)\sin(\pi x)\sin(\pi y).</md>
+          Also
+          <md>u_{xx}=-\pi^2\cos(\omega t)\sin(\pi x)\sin(\pi y),</md>
+          and
+          <md>u_{yy}=-\pi^2\cos(\omega t)\sin(\pi x)\sin(\pi y).</md>
+          So
+          <md>\Delta u=-2\pi^2\cos(\omega t)\sin(\pi x)\sin(\pi y).</md>
+          The wave equation
+          <md>u_{tt}=c^2\Delta u</md>
+          holds exactly when
+          <md>-\omega^2=-2c^2\pi^2,</md>
+          or
+          <md>\boxed{\omega=c\pi\sqrt2.}</md>
+        </p>
+        <p>
+          This is one normal mode of the square membrane. The shape
+          <md>\sin(\pi x)\sin(\pi y)</md>
+          stays the same while its amplitude oscillates in time.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The wave equation is second order in time. That is one visible difference between heat and
+      waves:
+      <md>\begin{array}{c|c|c}
+      \text{Equation} \amp \text{Time derivative} \amp \text{Behavior} \\ \hline
+      u_t=\alpha\Delta u \amp \text{first order} \amp \text{spreads and smooths}\\[1mm]
+      u_{tt}=c^2\Delta u \amp \text{second order} \amp \text{travels and oscillates}
+      \end{array}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s3-subsec-equilibrium-and-laplaces-equation">
+    <title>Equilibrium and Laplace's equation</title>
+
+    <p>Equilibrium means no time change.</p>
+
+    <p>
+      For heat, equilibrium means
+      <md>u_t=0.</md>
+      If there are no sources and the material is constant, the heat equation becomes
+      <md>0=\alpha\Delta u,</md>
+      so
+      <md>\boxed{\Delta u=0.}</md>
+    </p>
+
+    <p>
+      For a membrane at rest, equilibrium means
+      <md>u_{tt}=0.</md>
+      The wave equation becomes
+      <md>0=c^2\Delta u,</md>
+      so again
+      <md>\boxed{\Delta u=0.}</md>
+    </p>
+
+    <p>This is Laplace's equation.</p>
+
+    <definition xml:id="c19s3-def-laplaces-equation">
+      <title>Laplace's equation</title>
+      <statement>
+        <p>
+          A twice differentiable function <m>u</m> satisfies Laplace's equation if
+          <md>\boxed{\Delta u=0.}</md>
+          In the plane,
+          <md>\boxed{u_{xx}+u_{yy}=0.}</md>
+          In space,
+          <md>\boxed{u_{xx}+u_{yy}+u_{zz}=0.}</md>
+          A function satisfying Laplace's equation is called <term>harmonic</term>.
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c19s3-ex-saddle-in-equilibrium">
+      <title>A saddle that is in equilibrium</title>
+      <statement>
+        <p>
+          Let
+          <md>u(x,y)=x^2-y^2.</md>
+          Then
+          <md>u_{xx}=2,\qquad u_{yy}=-2.</md>
+          Therefore
+          <md>\Delta u=2-2=0.</md>
+          So <m>u</m> is harmonic.
+        </p>
+        <p>
+          Its graph is a saddle. Equilibrium does not mean <q>flat.</q> It means the upward
+          curvature in one direction is balanced by the downward curvature in another direction.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c19s3-ex-steady-temperature-on-a-rectangle">
+      <title>A steady temperature on a rectangle</title>
+      <statement>
+        <p>
+          Suppose a plate has no heat sources, and its temperature is no longer changing. Then
+          inside the plate
+          <md>\Delta u=0.</md>
+          The boundary temperatures determine the solution. If the left edge is kept hot, the
+          right edge cold, and the top and bottom insulated or prescribed, the interior
+          temperature adjusts until there is no net accumulation of heat anywhere.
+        </p>
+        <p>
+          The equation
+          <md>\Delta u=0</md>
+          does not by itself tell the whole story. Boundary conditions complete the physical
+          problem.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      That last sentence is essential. Partial differential equations almost never describe a
+      physical situation alone. They need a region, boundary conditions, and often initial
+      conditions.
+    </p>
+
+    <p>
+      For heat, one usually needs
+      <md>u(x,y,0)</md>
+      and boundary temperatures or boundary fluxes.
+    </p>
+
+    <p>
+      For waves, one needs both
+      <md>u(x,y,0)</md>
+      and
+      <md>u_t(x,y,0),</md>
+      because the equation is second order in time.
+    </p>
+
+    <p>For equilibrium, there is no initial time, but the boundary data are crucial.</p>
+  </subsection>
+
+  <subsection xml:id="c19s3-subsec-why-different-systems-share-the-same-mathematics">
+    <title>Why different physical systems share the same mathematics</title>
+
+    <p>The heat equation, wave equation, and Laplace equation come from different stories.</p>
+
+    <table xml:id="c19s3-tab-three-physical-stories">
+      <title>Three physical stories behind the same operator.</title>
+      <tabular>
+        <row>
+          <cell><alert>Heat:</alert></cell>
+          <cell>thermal energy is conserved, and heat flows down the temperature gradient.</cell>
+        </row>
+        <row>
+          <cell><alert>Waves:</alert></cell>
+          <cell>force equals mass times acceleration, and tension reacts to curvature.</cell>
+        </row>
+        <row>
+          <cell><alert>Equilibrium:</alert></cell>
+          <cell>net flow, net force, or net source disappears.</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Yet the same operator appears: <m>\Delta</m>.
+    </p>
+
+    <p>
+      The reason is geometric. The Laplacian measures a kind of net second-order imbalance around
+      a point. In one dimension, that imbalance is just <m>u_{xx}</m>. In two dimensions, there
+      are two independent coordinate directions, so the imbalance is
+      <md>u_{xx}+u_{yy}.</md>
+      In three dimensions, it is
+      <md>u_{xx}+u_{yy}+u_{zz}.</md>
+    </p>
+
+    <p>
+      A hot spot with
+      <md>\Delta u\lt 0</md>
+      loses heat. A string segment with
+      <md>u_{xx}\lt 0</md>
+      is pulled downward. A membrane with
+      <md>\Delta u=0</md>
+      has its directional curvatures balanced.
+    </p>
+
+    <p>
+      The equations in this section used scalar fields: temperature, displacement, potential. But
+      nature also has fields that are already vectorial. Electric fields push charges. Magnetic
+      fields measure flux through surfaces. They do not merely diffuse or vibrate; they create
+      each other's circulation and flux. The final capstone of the forms language is to write
+      those laws in the notation the book has been building from the beginning.
+    </p>
+  </subsection>
+</section>

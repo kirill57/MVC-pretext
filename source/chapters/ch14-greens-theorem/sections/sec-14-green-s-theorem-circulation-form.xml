@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch14-greens-theorem.tex, Section 14.2.
+     Status: CONVERTED. -->
+<section xml:id="sec-14-green-s-theorem-circulation-form" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Green's theorem: circulation form</title>
+
+  <p>
+    <xref ref="sec-14-circulation-around-a-small-rectangle"/> showed the engine: local
+    circulation is measured by
+    <md>Q_x-P_y,</md>
+    and shared interior edges cancel when rectangles are added. Green's theorem says that
+    this engine works for a whole region, not only for a grid of rectangles.
+  </p>
+
+  <p>
+    Before the theorem, here is one complete example where both sides can be computed by
+    hand.
+  </p>
+
+  <subsection xml:id="c14s2-triangle">
+    <title>A triangle that already contains the theorem</title>
+
+    <p>
+      Let <m>T</m> be the triangle with vertices
+      <md>(0,0),\qquad (2,0),\qquad (0,1),</md>
+      listed counterclockwise. Let
+      <md>\omega=(x-y)\,dx+(x+2y)\,dy.</md>
+      Then
+      <md>P=x-y, \qquad Q=x+2y,</md>
+      so
+      <md>Q_x-P_y=1-(-1)=2.</md>
+      The area of the triangle is
+      <md>\frac12(2)(1)=1.</md>
+      So the interior curl integral is
+      <md>\boxed{ \iint_T (Q_x-P_y)\,dA = \iint_T 2\,dA =2. }</md>
+    </p>
+
+    <p>Now compute the boundary integral directly.</p>
+
+    <p>
+      On the edge from <m>(0,0)</m> to <m>(2,0)</m>, we have <m>y=0</m> and <m>dy=0</m>, so
+      <md>\int_0^2 x\,dx=2.</md>
+    </p>
+
+    <p>
+      On the edge from <m>(2,0)</m> to <m>(0,1)</m>, use
+      <md>x=2-2t, \qquad y=t, \qquad 0\le t\le1.</md>
+      Then
+      <md>dx=-2\,dt, \qquad dy=dt.</md>
+      Also
+      <md>x-y=2-3t, \qquad x+2y=2.</md>
+      So
+      <md>
+        <mrow>\int_{\text{slanted edge}}\omega \amp= \int_0^1\bigl[(2-3t)(-2)+2\bigr]dt</mrow>
+        <mrow>\amp= \int_0^1(-2+6t)\,dt</mrow>
+        <mrow>\amp= 1.</mrow>
+      </md>
+    </p>
+
+    <p>
+      On the edge from <m>(0,1)</m> down to <m>(0,0)</m>, we have <m>x=0</m>, <m>dx=0</m>,
+      and <m>y</m> goes from <m>1</m> to <m>0</m>. Thus
+      <md>\int_1^0 2y\,dy=-1.</md>
+    </p>
+
+    <p>
+      Adding the three edges gives
+      <md>\boxed{ \oint_{\partial T}\omega =2+1-1=2. }</md>
+      The boundary integral and the interior integral agree:
+      <md>\boxed{ \oint_{\partial T}\omega = \iint_T (Q_x-P_y)\,dA. }</md>
+    </p>
+
+    <p>That is Green's theorem in one triangle.</p>
+  </subsection>
+
+  <subsection xml:id="c14s2-statement">
+    <title>Statement of the theorem</title>
+
+    <p>
+      A region good enough for Green's theorem may have a curved boundary and may have
+      holes, but its boundary should be made from finitely many smooth pieces. The field
+      should be differentiable on the region and slightly around it, so no singularity is
+      hidden on an edge or just inside the boundary.
+    </p>
+
+    <theorem xml:id="c14s2-thm-green-circulation">
+      <title>Green's theorem, circulation form</title>
+      <statement>
+        <p>
+          Let <m>R</m> be a bounded plane region whose boundary <m>\partial R</m> consists
+          of finitely many piecewise smooth simple closed curves. Give <m>\partial R</m> the
+          positive orientation, so the region stays on the left as the boundary is traversed.
+        </p>
+        <p>
+          Let
+          <md>\omega=P\,dx+Q\,dy</md>
+          be a <m>1</m>-form whose coefficient functions <m>P</m> and <m>Q</m> have
+          continuous first partial derivatives on an open region containing <m>R</m>. Then
+          <md>\boxed{ \oint_{\partial R} P\,dx+Q\,dy = \iint_R (Q_x-P_y)\,dA. }</md>
+          Equivalently,
+          <md>\boxed{ \oint_{\partial R}\omega = \iint_R d\omega, \qquad d\omega=(Q_x-P_y)\,dx\wedge dy. }</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>
+      The first boxed formula is the classical vector-calculus version. The second boxed
+      formula is the differential-forms version. They say the same thing, but the forms
+      version shows the pattern that will later become Stokes' theorem.
+    </p>
+
+    <p>
+      The proof idea is the cancellation from
+      <xref ref="sec-14-circulation-around-a-small-rectangle"/>. Prove the formula on
+      rectangles. Cut a more complicated region into many small rectangles. The interior edge
+      integrals cancel in pairs. The small rectangle sums become the double integral of
+      <m>Q_x-P_y</m>. The remaining edge pieces approach the boundary integral around
+      <m>\partial R</m>. <xref ref="sec-14-why-green-s-theorem-is-true"/> will make this
+      argument more careful.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s2-hypotheses">
+    <title>Why the hypotheses are doing work</title>
+
+    <p>Each condition in the theorem protects the formula from a specific mistake.</p>
+
+    <subsubsection xml:id="c14s2-orientation">
+      <title>Orientation cannot be reversed silently</title>
+
+      <p>
+        For the triangle example above,
+        <md>\oint_{\partial T}\omega=2</md>
+        when <m>\partial T</m> is positively oriented. If the same triangle is walked
+        clockwise, then the line integral becomes
+        <md>-2.</md>
+        The interior integral is still
+        <md>\iint_T 2\,dA=2.</md>
+        So Green's theorem would fail with the wrong sign. The boundary orientation is part
+        of the statement, not a drawing choice.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c14s2-jump">
+      <title>A jump inside the region cannot be ignored</title>
+
+      <p>
+        Let
+        <md>R=[-1,1]\times[0,1]</md>
+        and define
+        <md>\omega=Q(x,y)\,dy, \qquad Q(x,y)= \begin{cases} 0, \amp x\le0,\\ 1, \amp x\gt 0. \end{cases}</md>
+        The form jumps along the vertical line <m>x=0</m>. It does not have continuous first
+        partial derivatives on <m>R</m>.
+      </p>
+
+      <p>
+        Compute the boundary integral directly. On the bottom and top edges, <m>dy=0</m>. On
+        the right edge, <m>Q=1</m> and <m>y</m> goes from <m>0</m> to <m>1</m>, giving
+        <md>\int_0^1 dy=1.</md>
+        On the left edge, <m>Q=0</m>. Therefore
+        <md>\boxed{ \oint_{\partial R}\omega=1. }</md>
+      </p>
+
+      <p>
+        Away from the jump line, <m>Q_x=0</m>. If we illegally pretended the curl were zero
+        everywhere, we would get
+        <md>\iint_R 0\,dA=0,</md>
+        which is not the boundary integral. The missing derivative along the jump line is
+        where the contribution lives. The smoothness condition prevents this kind of hidden
+        edge inside the region.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c14s2-singularity">
+      <title>A singularity inside the region changes the answer</title>
+
+      <p>
+        The form
+        <md>\alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}</md>
+        is defined on the punctured plane, but not at the origin. On every point where it is
+        defined,
+        <md>Q_x-P_y=0.</md>
+        Around the unit circle <m>C</m>, oriented counterclockwise,
+        <md>\oint_C \alpha=2\pi.</md>
+      </p>
+
+      <p>
+        If someone tried to apply Green's theorem to the disk bounded by <m>C</m>, the right
+        side would seem to be
+        <md>\iint_{\text{disk}}0\,dA=0,</md>
+        but the left side is <m>2\pi</m>. The theorem did not fail. Its hypothesis failed:
+        the form is not defined on an open region containing the disk. The origin is where
+        the circulation is hiding.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="c14s2-examples-simple">
+    <title>Examples over simple regions</title>
+
+    <p>
+      Green's theorem is often useful because the boundary integral is hard while the area
+      integral is easy.
+    </p>
+
+    <example xml:id="c14s2-ex-disk">
+      <title>A messy boundary integral around a disk</title>
+      <statement>
+        <p>
+          Let <m>D</m> be the unit disk
+          <md>x^2+y^2\le1,</md>
+          with positively oriented boundary. Compute
+          <md>\oint_{\partial D}(e^x-y^3)\,dx+(x^2+\sin y)\,dy.</md>
+        </p>
+        <p>
+          Here
+          <md>P=e^x-y^3, \qquad Q=x^2+\sin y.</md>
+          So
+          <md>Q_x=2x, \qquad P_y=-3y^2.</md>
+          Therefore
+          <md>Q_x-P_y=2x+3y^2.</md>
+          Green's theorem gives
+          <md>
+            <mrow>\oint_{\partial D}(e^x-y^3)\,dx+(x^2+\sin y)\,dy \amp= \iint_D(2x+3y^2)\,dA.</mrow>
+          </md>
+          By symmetry,
+          <md>\iint_D 2x\,dA=0.</md>
+          Also,
+          <md>
+            <mrow>\iint_D y^2\,dA \amp= \int_0^{2\pi}\int_0^1 r^2\sin^2\theta\,r\,dr\,d\theta</mrow>
+            <mrow>\amp= \left(\int_0^1 r^3\,dr\right) \left(\int_0^{2\pi}\sin^2\theta\,d\theta\right)</mrow>
+            <mrow>\amp= \frac14\cdot\pi</mrow>
+            <mrow>\amp= \frac\pi4.</mrow>
+          </md>
+          Thus
+          <md>\boxed{ \oint_{\partial D}(e^x-y^3)\,dx+(x^2+\sin y)\,dy = \frac{3\pi}{4}. }</md>
+        </p>
+        <p>
+          The boundary integral would be unpleasant to compute directly. The curl integral
+          is short.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c14s2-ex-rectangle">
+      <title>A rectangle where only the curl matters</title>
+      <statement>
+        <p>
+          Let
+          <md>R=[0,3]\times[0,2]</md>
+          and
+          <md>\omega=(xy+\cos x)\,dx+(x^2+y^5)\,dy.</md>
+          Then
+          <md>P_y=x, \qquad Q_x=2x.</md>
+          So
+          <md>Q_x-P_y=x.</md>
+          Green's theorem gives
+          <md>
+            <mrow>\oint_{\partial R}\omega \amp= \int_0^3\int_0^2 x\,dy\,dx</mrow>
+            <mrow>\amp= \int_0^3 2x\,dx</mrow>
+            <mrow>\amp= 9.</mrow>
+          </md>
+        </p>
+        <p>
+          The terms <m>\cos x</m> and <m>y^5</m> look large in the original form, but their
+          contribution to circulation around a closed boundary disappears because they do not
+          affect <m>Q_x-P_y</m>.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c14s2-area">
+    <title>Using Green's theorem to compute area</title>
+
+    <p>
+      If we choose a <m>1</m>-form whose scalar curl is <m>1</m>, then Green's theorem turns
+      a boundary integral into area.
+    </p>
+
+    <p>
+      Three common choices are
+      <md>\omega=x\,dy,</md>
+      <md>\omega=-y\,dx,</md>
+      and
+      <md>\omega=\frac12(-y\,dx+x\,dy).</md>
+      Each has
+      <md>Q_x-P_y=1.</md>
+      Therefore, for a positively oriented simple closed curve <m>C=\partial R</m>,
+      <md>\boxed{ \operatorname{Area}(R) = \oint_C x\,dy = -\oint_C y\,dx = \frac12\oint_C(-y\,dx+x\,dy). }</md>
+    </p>
+
+    <example xml:id="c14s2-ex-ellipse">
+      <title>The area of an ellipse from its boundary</title>
+      <statement>
+        <p>
+          Let <m>C</m> be the ellipse
+          <md>x=a\cos t, \qquad y=b\sin t, \qquad 0\le t\le2\pi,</md>
+          where <m>a\gt 0</m> and <m>b\gt 0</m>. This parametrization is counterclockwise.
+        </p>
+        <p>
+          Use
+          <md>\operatorname{Area}(R)=\oint_C x\,dy.</md>
+          Since
+          <md>dy=b\cos t\,dt,</md>
+          we get
+          <md>
+            <mrow>\operatorname{Area}(R) \amp= \int_0^{2\pi}(a\cos t)(b\cos t)\,dt</mrow>
+            <mrow>\amp= ab\int_0^{2\pi}\cos^2t\,dt</mrow>
+            <mrow>\amp= ab\pi.</mrow>
+          </md>
+          So
+          <md>\boxed{ \operatorname{Area}(\text{ellipse})=\pi ab. }</md>
+          A boundary integral has found the area inside the curve.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c14s2-holes">
+    <title>Holes and multiple boundary components</title>
+
+    <p>
+      For a region with holes, <m>\partial R</m> means all boundary components with positive
+      orientation. Leaving out an inner boundary changes the problem.
+    </p>
+
+    <p>
+      Let <m>A</m> be the annulus
+      <md>1\le x^2+y^2\le4.</md>
+      Use again
+      <md>\alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}.</md>
+      This form is defined everywhere on the annulus, and
+      <md>Q_x-P_y=0</md>
+      on the annulus.
+    </p>
+
+    <p>The positively oriented boundary has two pieces:</p>
+
+    <table xml:id="c14s2-tab-annulus-boundary">
+      <title>The two boundary components of the annulus.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>boundary piece</cell>
+          <cell>radius</cell>
+          <cell>orientation</cell>
+        </row>
+        <row>
+          <cell><m>C_{\mathrm{out}}</m></cell>
+          <cell><m>2</m></cell>
+          <cell>counterclockwise</cell>
+        </row>
+        <row>
+          <cell><m>C_{\mathrm{in}}</m></cell>
+          <cell><m>1</m></cell>
+          <cell>clockwise</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Around any counterclockwise circle centered at the origin,
+      <md>\int \alpha=2\pi.</md>
+      Therefore
+      <md>\int_{C_{\mathrm{out}}}\alpha=2\pi,</md>
+      while the clockwise inner boundary gives
+      <md>\int_{C_{\mathrm{in}}}\alpha=-2\pi.</md>
+      So
+      <md>\boxed{ \oint_{\partial A}\alpha=2\pi-2\pi=0. }</md>
+      This agrees with Green's theorem:
+      <md>\boxed{ \iint_A 0\,dA=0. }</md>
+    </p>
+
+    <p>
+      If we had used only the outer circle, we would have obtained <m>2\pi</m>, but that
+      would not be the boundary of the annulus. The inner boundary is not optional. It is
+      exactly what records the hole.
+    </p>
+
+    <p>
+      Green's theorem has now turned circulation into an area integral. But a vector field
+      near a closed curve can do another thing besides circulate around it. It can cross the
+      curve outward or inward. That second measurement is flux, and it leads to another face
+      of the same theorem: divergence in the plane.
+    </p>
+  </subsection>
+</section>

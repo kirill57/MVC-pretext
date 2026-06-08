@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch03-linear-functions-matrices.tex, Section 3.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-3-determinants-of-linear-transformations" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Determinants of linear transformations</title>
+
+  <p>
+    <xref ref="sec-2-determinants-and-signed-volume"/> introduced determinants as signed area
+    in the plane and signed volume in space. <xref ref="sec-3-matrix-multiplication-as-composition"/>
+    showed that a matrix is a linear machine. Now these two ideas meet: the determinant of a
+    square matrix tells us how that machine changes area or volume.
+  </p>
+
+  <subsection xml:id="c3s4-subsec-area-scaling-under-a-matrix">
+    <title>Area scaling under a matrix</title>
+
+    <p>
+      Return to the matrix from the grid example:
+      <md>
+        A=
+        \begin{pmatrix}
+            2&amp;1\\
+            1&amp;3
+        \end{pmatrix}.
+      </md>
+      Its columns are
+      <md>\mathbf a_1=(2,1), \qquad \mathbf a_2=(1,3).</md>
+      The standard unit square is spanned by
+      <md>\mathbf e_1=(1,0), \qquad \mathbf e_2=(0,1).</md>
+      The matrix <m>A</m> sends that square to the parallelogram spanned by
+      <md>A\mathbf e_1=\mathbf a_1=(2,1), \qquad A\mathbf e_2=\mathbf a_2=(1,3).</md>
+    </p>
+
+    <p>
+      The signed area of this parallelogram is
+      <md>
+        \det
+        \begin{pmatrix}
+            2&amp;1\\
+            1&amp;3
+        \end{pmatrix}
+        =
+        2\cdot3-1\cdot1
+        =
+        5.
+      </md>
+      So <m>A</m> sends a unit square of area <m>1</m> to a parallelogram of area <m>5</m>.
+    </p>
+
+    <figure xml:id="c3s4-fig-area-scaling">
+      <caption>The unit square maps to the parallelogram spanned by the columns of <m>A</m>.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-0.3,0) -- (3.2,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.3) -- (0,3.2) node[above] {\(y\)};
+                \draw[fill=gray!12] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+                \draw[-&gt;, very thick] (0,0) -- (1,0) node[midway, below] {\(\mathbf e_1\)};
+                \draw[-&gt;, very thick] (0,0) -- (0,1) node[midway, left] {\(\mathbf e_2\)};
+                \node at (1.1,-0.9) {area \(1\)};
+            \end{scope}
+
+            \begin{scope}[shift={(6,0)}]
+                \draw[-&gt;] (-0.3,0) -- (5.2,0) node[right] {\(X\)};
+                \draw[-&gt;] (0,-0.3) -- (0,5.0) node[above] {\(Y\)};
+
+                \coordinate (O) at (0,0);
+                \coordinate (A1) at (2,1);
+                \coordinate (A2) at (1,3);
+                \coordinate (S) at (3,4);
+
+                \draw[fill=gray!12] (O) -- (A1) -- (S) -- (A2) -- cycle;
+                \draw[-&gt;, very thick] (O) -- (A1) node[midway, below right] {\((2,1)\)};
+                \draw[-&gt;, very thick] (O) -- (A2) node[midway, left] {\((1,3)\)};
+                \draw[dashed] (A1) -- (S);
+                \draw[dashed] (A2) -- (S);
+                \node at (3.4,2.3) {area \(5\)};
+            \end{scope}
+
+            \draw[-&gt;, thick] (3.3,1.5) -- (5.3,1.5) node[midway, above] {\(A\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>This example already contains the general rule.</p>
+
+    <definition xml:id="c3s4-def-determinant-2x2">
+      <title>Determinant of a <m>2\times2</m> matrix</title>
+      <statement>
+        <p>
+          For
+          <md>
+            A=
+            \begin{pmatrix}
+                a&amp;b\\
+                c&amp;d
+            \end{pmatrix},
+          </md>
+          the <term>determinant</term> of <m>A</m> is
+          <md>\boxed{ \det A=ad-bc. }</md>
+          Equivalently, if the columns of <m>A</m> are
+          <md>\mathbf a_1=(a,c), \qquad \mathbf a_2=(b,d),</md>
+          then <m>\det A</m> is the signed area of the parallelogram spanned by
+          <md>\mathbf a_1,\mathbf a_2.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <theorem xml:id="c3s4-thm-area-scaling-plane">
+      <title>Area scaling in the plane</title>
+      <statement>
+        <p>
+          Let <m>A</m> be a <m>2\times2</m> matrix. If <m>P</m> is a parallelogram in the
+          plane, then
+          <md>\boxed{ \text{signed area of }A(P) = (\det A)(\text{signed area of }P). }</md>
+          For ordinary, unsigned area,
+          <md>\boxed{ \text{area of }A(P) = |\det A|\,\text{area of }P. }</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Suppose <m>P</m> is spanned by the vectors
+          <md>\mathbf u=(u_1,u_2), \qquad \mathbf v=(v_1,v_2).</md>
+          Its signed area is
+          <md>
+            \det
+            \begin{pmatrix}
+                u_1&amp;v_1\\
+                u_2&amp;v_2
+            \end{pmatrix}.
+          </md>
+          The image <m>A(P)</m> is spanned by
+          <md>A\mathbf u, \qquad A\mathbf v.</md>
+          A direct expansion shows that
+          <md>
+            \det
+            \begin{pmatrix}
+                |&amp;|\\
+                A\mathbf u&amp;A\mathbf v\\
+                |&amp;|
+            \end{pmatrix}
+            =
+            (\det A)
+            \det
+            \begin{pmatrix}
+                |&amp;|\\
+                \mathbf u&amp;\mathbf v\\
+                |&amp;|
+            \end{pmatrix}.
+          </md>
+          So the signed area is multiplied by <m>\det A</m>. Taking absolute values gives the
+          ordinary area statement.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The word <em>linear</em> is essential. A nonlinear map may stretch different parts of a
+      region by different amounts, so no single number can describe its area effect everywhere.
+    </p>
+
+    <example xml:id="c3s4-ex-why-linearity-matters">
+      <title>Why linearity matters</title>
+      <statement>
+        <p>
+          Consider
+          <md>F(x,y)=(x^2,y).</md>
+          This map is not linear. It sends the unit square
+          <md>0\le x\le1,\qquad 0\le y\le1</md>
+          onto the same unit square, so the total area stays <m>1</m>.
+        </p>
+        <p>
+          But the left half of the square,
+          <md>0\le x\le \frac12,\qquad 0\le y\le1,</md>
+          has area
+          <md>\frac12.</md>
+          Its image is
+          <md>0\le X\le \frac14,\qquad 0\le Y\le1,</md>
+          which has area
+          <md>\frac14.</md>
+          So the left half is scaled by a factor of <m>\frac12</m>, while the whole square is
+          scaled by a factor of <m>1</m>.
+        </p>
+        <p>
+          There is no single constant area-scaling factor for this nonlinear map. Later, the
+          Jacobian determinant will measure the local scaling of such maps, one tiny piece at a
+          time.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c3s4-subsec-orientation">
+    <title>Orientation-preserving and orientation-reversing maps</title>
+
+    <p>The determinant has a sign because signed area has a sign.</p>
+
+    <p>
+      The ordered pair
+      <md>(\mathbf e_1,\mathbf e_2)</md>
+      is the standard positive orientation of the plane. If a matrix sends this ordered pair to
+      two new vectors whose signed area is positive, the matrix preserves orientation. If the
+      signed area is negative, it reverses orientation.
+    </p>
+
+    <definition xml:id="c3s4-def-orientation-plane">
+      <title>Orientation in the plane</title>
+      <statement>
+        <p>
+          A <m>2\times2</m> matrix <m>A</m> is called <term>orientation-preserving</term> if
+          <md>\det A&gt;0.</md>
+          It is called <term>orientation-reversing</term> if
+          <md>\det A&lt;0.</md>
+          If
+          <md>\det A=0,</md>
+          the matrix collapses area and has no genuine two-dimensional orientation.
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c3s4-ex-rotation-preserves-orientation">
+      <title>Rotation preserves orientation</title>
+      <statement>
+        <p>
+          A rotation by <m>\theta</m> has matrix
+          <md>
+            R_\theta=
+            \begin{pmatrix}
+                \cos\theta&amp;-\sin\theta\\
+                \sin\theta&amp;\cos\theta
+            \end{pmatrix}.
+          </md>
+          Its determinant is
+          <md>
+            <mrow>\det R_\theta \amp= \cos^2\theta-(-\sin\theta)(\sin\theta)</mrow>
+            <mrow>\amp= \cos^2\theta+\sin^2\theta</mrow>
+            <mrow>\amp= 1.</mrow>
+          </md>
+          A rotation changes direction, but it does not change area or orientation.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c3s4-ex-reflection-reverses-orientation">
+      <title>Reflection reverses orientation</title>
+      <statement>
+        <p>
+          Reflection across the <m>x</m>-axis has matrix
+          <md>
+            H=
+            \begin{pmatrix}
+                1&amp;0\\
+                0&amp;-1
+            \end{pmatrix}.
+          </md>
+          Its determinant is
+          <md>\det H=-1.</md>
+          So it preserves ordinary area but reverses orientation.
+        </p>
+        <p>
+          Geometrically, the ordered pair
+          <md>(\mathbf e_1,\mathbf e_2)</md>
+          becomes
+          <md>(\mathbf e_1,-\mathbf e_2).</md>
+          The parallelogram has the same size, but its orientation has flipped.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is exactly the sign behavior of the wedge product from Chapter 2:
+      <md>dx\wedge dy=-dy\wedge dx.</md>
+      Swapping the two directions reverses orientation, and the determinant remembers that
+      reversal.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s4-subsec-singular-matrices">
+    <title>Singular matrices and collapsed area</title>
+
+    <p>
+      A determinant can also be zero. That means the matrix collapses two-dimensional area.
+    </p>
+
+    <example xml:id="c3s4-ex-projection-collapses-area">
+      <title>Projection collapses area</title>
+      <statement>
+        <p>
+          The projection onto the <m>x</m>-axis is
+          <md>
+            P=
+            \begin{pmatrix}
+                1&amp;0\\
+                0&amp;0
+            \end{pmatrix}.
+          </md>
+          It sends
+          <md>(x,y)\longmapsto (x,0).</md>
+          The unit square becomes a line segment:
+          <md>0\le x\le1,\qquad y=0.</md>
+          Its area is <m>0</m>. The determinant confirms this:
+          <md>\det P=1\cdot0-0\cdot0=0.</md>
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c3s4-ex-two-columns-same-direction">
+      <title>Two columns in the same direction</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            A=
+            \begin{pmatrix}
+                1&amp;2\\
+                3&amp;6
+            \end{pmatrix}.
+          </md>
+          The columns are
+          <md>\mathbf a_1=(1,3), \qquad \mathbf a_2=(2,6)=2(1,3).</md>
+          They point in the same direction. The unit square maps to a degenerate
+          parallelogram, which is really just a line segment.
+        </p>
+        <p>
+          The determinant is
+          <md>\det A=1\cdot6-2\cdot3=0.</md>
+        </p>
+      </statement>
+    </example>
+
+    <theorem xml:id="c3s4-thm-zero-determinant-collapse">
+      <title>Zero determinant and collapse in the plane</title>
+      <statement>
+        <p>For a <m>2\times2</m> matrix <m>A</m>, the following statements are equivalent:</p>
+        <ol>
+          <li><p><m>\det A=0</m>.</p></li>
+          <li><p>the columns of <m>A</m> are linearly dependent.</p></li>
+          <li><p><m>A</m> collapses the plane onto a line or a point.</p></li>
+          <li><p><m>A</m> is not invertible.</p></li>
+        </ol>
+      </statement>
+      <proof>
+        <p>
+          The determinant of <m>A</m> is the signed area of the parallelogram spanned by its
+          columns. That area is zero exactly when the two columns lie on one line, which means
+          they are linearly dependent.
+        </p>
+        <p>
+          If the columns lie on one line, then every output
+          <md>A(x,y)=x(\text{first column})+y(\text{second column})</md>
+          lies on that same line. So the plane collapses onto a line, or onto a point if both
+          columns are zero.
+        </p>
+        <p>
+          A collapse cannot be inverted, because many different input vectors land on the same
+          output. Conversely, if the columns are independent, they form a basis of the plane, so
+          every output has exactly one coordinate description in those columns. Then <m>A</m> is
+          invertible.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      This theorem is the geometric reason the determinant tests invertibility. A matrix can be
+      undone exactly when it has not flattened the plane.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c3s4-subsec-volume-scaling-space">
+    <title>Volume scaling in space</title>
+
+    <p>In <m>\mathbb R^3</m>, the determinant measures signed volume.</p>
+
+    <p>
+      Let
+      <md>
+        A=
+        \begin{pmatrix}
+            2&amp;0&amp;0\\
+            0&amp;3&amp;0\\
+            0&amp;0&amp;4
+        \end{pmatrix}.
+      </md>
+      Then
+      <md>A(x,y,z)=(2x,3y,4z).</md>
+      The unit cube becomes a rectangular box with side lengths
+      <md>2,\qquad 3,\qquad 4.</md>
+      Its volume is
+      <md>2\cdot3\cdot4=24.</md>
+      So this matrix multiplies volume by <m>24</m>.
+    </p>
+
+    <p>
+      The determinant gives the same number:
+      <md>\det A=24.</md>
+    </p>
+
+    <p>
+      For a general <m>3\times3</m> matrix, the determinant is the signed volume of the
+      parallelepiped spanned by its columns.
+    </p>
+
+    <definition xml:id="c3s4-def-determinant-3x3">
+      <title>Determinant of a <m>3\times3</m> matrix</title>
+      <statement>
+        <p>
+          Let <m>A</m> be a <m>3\times3</m> matrix with columns
+          <md>\mathbf a_1,\mathbf a_2,\mathbf a_3.</md>
+          The <term>determinant</term> of <m>A</m> is
+          <md>\boxed{ \det A=\mathbf a_1\cdot(\mathbf a_2\times\mathbf a_3). }</md>
+          Equivalently, if
+          <md>
+            A=
+            \begin{pmatrix}
+                a_{11}&amp;a_{12}&amp;a_{13}\\
+                a_{21}&amp;a_{22}&amp;a_{23}\\
+                a_{31}&amp;a_{32}&amp;a_{33}
+            \end{pmatrix},
+          </md>
+          then
+          <md>
+            \boxed{
+            \begin{aligned}
+            \det A
+            &amp;=
+            a_{11}(a_{22}a_{33}-a_{23}a_{32})\\
+            &amp;\quad
+            -a_{12}(a_{21}a_{33}-a_{23}a_{31})\\
+            &amp;\quad
+            +a_{13}(a_{21}a_{32}-a_{22}a_{31}).
+            \end{aligned}
+            }
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <theorem xml:id="c3s4-thm-volume-scaling-space">
+      <title>Volume scaling in space</title>
+      <statement>
+        <p>
+          Let <m>A</m> be a <m>3\times3</m> matrix. If <m>P</m> is a parallelepiped in space,
+          then
+          <md>\boxed{ \text{signed volume of }A(P) = (\det A)(\text{signed volume of }P). }</md>
+          For ordinary volume,
+          <md>\boxed{ \text{volume of }A(P) = |\det A|\,\text{volume of }P. }</md>
+        </p>
+      </statement>
+      <proof>
+        <title>Proof idea</title>
+        <p>
+          A parallelepiped is spanned by three vectors
+          <md>\mathbf u,\mathbf v,\mathbf w.</md>
+          Its signed volume is
+          <md>\mathbf u\cdot(\mathbf v\times\mathbf w).</md>
+          After applying <m>A</m>, the new parallelepiped is spanned by
+          <md>A\mathbf u,\quad A\mathbf v,\quad A\mathbf w.</md>
+          The signed volume becomes
+          <md>A\mathbf u\cdot(A\mathbf v\times A\mathbf w).</md>
+          The determinant identity
+          <md>
+            \det
+            \begin{pmatrix}
+                |&amp;|&amp;|\\
+                A\mathbf u&amp;A\mathbf v&amp;A\mathbf w\\
+                |&amp;|&amp;|
+            \end{pmatrix}
+            =
+            (\det A)
+            \det
+            \begin{pmatrix}
+                |&amp;|&amp;|\\
+                \mathbf u&amp;\mathbf v&amp;\mathbf w\\
+                |&amp;|&amp;|
+            \end{pmatrix}
+          </md>
+          says exactly that the signed volume is multiplied by <m>\det A</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The same geometric meanings carry over from the plane:</p>
+
+    <table xml:id="c3s4-tab-orientation-space">
+      <title>Sign of the determinant and its geometric meaning in space.</title>
+      <tabular>
+        <col right="minor"/>
+        <col/>
+        <row><cell><m>\det A&gt;0</m></cell><cell>orientation is preserved</cell></row>
+        <row><cell><m>\det A&lt;0</m></cell><cell>orientation is reversed</cell></row>
+        <row><cell><m>\det A=0</m></cell><cell>volume is collapsed</cell></row>
+      </tabular>
+    </table>
+
+    <example xml:id="c3s4-ex-volume-collapse">
+      <title>A volume collapse</title>
+      <statement>
+        <p>
+          The projection
+          <md>P(x,y,z)=(x,y,0)</md>
+          has matrix
+          <md>
+            P=
+            \begin{pmatrix}
+                1&amp;0&amp;0\\
+                0&amp;1&amp;0\\
+                0&amp;0&amp;0
+            \end{pmatrix}.
+          </md>
+          It sends the unit cube to the unit square in the plane <m>z=0</m>. A square has no
+          three-dimensional volume, so the volume scaling factor is <m>0</m>. Indeed,
+          <md>\det P=0.</md>
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c3s4-subsec-determinants-composition">
+    <title>Determinants and composition</title>
+
+    <p>
+      <xref ref="sec-3-matrix-multiplication-as-composition"/> taught us that connecting two
+      linear machines corresponds to multiplying their matrices. Determinants tell us how the
+      size effects combine.
+    </p>
+
+    <p>
+      Suppose <m>A</m> scales area by <m>\det A</m>, and <m>B</m> scales area by <m>\det B</m>.
+      If we apply <m>A</m> first and then <m>B</m>, the combined scale factor should be
+      <md>(\det B)(\det A).</md>
+      The combined matrix is
+      <md>BA.</md>
+      Therefore its determinant should be
+      <md>\det(BA)=\det B\,\det A.</md>
+    </p>
+
+    <theorem xml:id="c3s4-thm-determinant-product">
+      <title>Determinant of a product</title>
+      <statement>
+        <p>
+          For square matrices of the same size,
+          <md>\boxed{ \det(BA)=(\det B)(\det A). }</md>
+        </p>
+      </statement>
+      <proof>
+        <title>Geometric proof</title>
+        <p>
+          Think in the plane or in space. The matrix <m>A</m> scales signed area or signed
+          volume by
+          <md>\det A.</md>
+          Then <m>B</m> scales the result by
+          <md>\det B.</md>
+          So the composition <m>BA</m> scales signed area or signed volume by
+          <md>(\det B)(\det A).</md>
+          But the scaling factor of the composition is also
+          <md>\det(BA).</md>
+          Therefore
+          <md>\det(BA)=(\det B)(\det A).</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The order of matrices still matters:
+      <md>BA\neq AB</md>
+      in general. But determinants are numbers, and numbers commute:
+      <md>(\det B)(\det A)=(\det A)(\det B).</md>
+      So
+      <md>\det(BA)=\det(AB)</md>
+      whenever both products make sense and the matrices are square of the same size, even
+      though the matrices themselves may be different.
+    </p>
+
+    <example xml:id="c3s4-ex-rotation-followed-by-stretch">
+      <title>A rotation followed by a stretch</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            R=
+            \begin{pmatrix}
+                0&amp;-1\\
+                1&amp;0
+            \end{pmatrix}
+          </md>
+          be a <m>90^\circ</m> rotation, and let
+          <md>
+            S=
+            \begin{pmatrix}
+                3&amp;0\\
+                0&amp;2
+            \end{pmatrix}
+          </md>
+          stretch <m>x</m>-coordinates by <m>3</m> and <m>y</m>-coordinates by <m>2</m>.
+        </p>
+        <p>
+          Then
+          <md>\det R=1, \qquad \det S=6.</md>
+          So
+          <md>\det(SR)=\det S\,\det R=6.</md>
+          The rotation changes orientation neither in size nor sign. The stretch multiplies area
+          by <m>6</m>. Together they multiply area by <m>6</m>.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c3s4-subsec-change-of-variables">
+    <title>The determinant in change of variables</title>
+
+    <p>
+      The determinant will return later in multiple integrals. The reason is simple: integrals
+      add up tiny areas and volumes, and a change of variables changes the size of those tiny
+      pieces.
+    </p>
+
+    <p>
+      For a linear change of variables
+      <md>x=au+bv, \qquad y=cu+dv,</md>
+      the matrix is
+      <md>
+        A=
+        \begin{pmatrix}
+            a&amp;b\\
+            c&amp;d
+        \end{pmatrix}.
+      </md>
+      A tiny square in the <m>uv</m>-plane becomes a tiny parallelogram in the <m>xy</m>-plane.
+      Its area is multiplied by
+      <md>|\det A|=|ad-bc|.</md>
+      That is why ordinary area integrals will use the factor
+      <md>|\det A|.</md>
+    </p>
+
+    <p>
+      But oriented area remembers the sign. Using differentials and the wedge product,
+      <md>dx=a\,du+b\,dv, \qquad dy=c\,du+d\,dv.</md>
+      Then
+      <md>
+        <mrow>dx\wedge dy \amp= (a\,du+b\,dv)\wedge(c\,du+d\,dv)</mrow>
+        <mrow>\amp= ac\,du\wedge du +ad\,du\wedge dv +bc\,dv\wedge du +bd\,dv\wedge dv.</mrow>
+      </md>
+      Since
+      <md>du\wedge du=0, \qquad dv\wedge dv=0,</md>
+      and
+      <md>dv\wedge du=-du\wedge dv,</md>
+      we get
+      <md>\boxed{ dx\wedge dy=(ad-bc)\,du\wedge dv. }</md>
+      So the determinant is the coefficient that appears when an oriented area element is pulled
+      through a linear coordinate change.
+    </p>
+
+    <p>This is the same story in two dialects:</p>
+
+    <table xml:id="c3s4-tab-ordinary-vs-oriented-area">
+      <title>Ordinary area and oriented area under a linear change of variables.</title>
+      <tabular>
+        <col right="minor"/>
+        <col/>
+        <row><cell>ordinary area</cell><cell><m>dA=|\det A|\,du\,dv</m></cell></row>
+        <row><cell>oriented area</cell><cell><m>dx\wedge dy=(\det A)\,du\wedge dv</m></cell></row>
+      </tabular>
+    </table>
+
+    <p>
+      The absolute value appears when we forget orientation. The sign remains when we keep
+      orientation.
+    </p>
+
+    <p>
+      For nonlinear coordinate changes, the scaling factor will no longer be constant. Each tiny
+      piece will have its own best linear approximation, and the determinant of that local linear
+      map will become the <term>Jacobian determinant</term>. This is one reason matrices are not
+      a side topic in multivariable calculus. They are the small-scale language of curved
+      geometry.
+    </p>
+
+    <p>
+      For now, the determinant gives us a clean test: a square linear machine either preserves
+      dimension, or it collapses something. If it does not collapse, we should be able to solve
+      <md>A\mathbf x=\mathbf b</md>
+      for the input <m>\mathbf x</m>. If it does collapse, the same equation may have no
+      solution, or many. The next question is therefore practical and geometric at the same
+      time: when a linear machine produces a given output, how do we find the input that made it?
+    </p>
+  </subsection>
+</section>

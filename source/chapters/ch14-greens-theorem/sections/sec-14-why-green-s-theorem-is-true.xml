@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch14-greens-theorem.tex, Section 14.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-14-why-green-s-theorem-is-true" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Why Green's theorem is true</title>
+
+  <p>
+    <xref ref="sec-14-green-s-theorem-in-differential-form-language"/> compressed Green's
+    theorem into one line:
+    <md>\int_{\partial R}\omega=\int_R d\omega.</md>
+    The formula is short, but it is not magic. It comes from two old facts working together.
+  </p>
+
+  <table xml:id="c14s5-tab-two-old-facts">
+    <title>Two old facts behind Green's theorem.</title>
+    <tabular>
+      <row header="yes" bottom="medium">
+        <cell>old fact</cell>
+        <cell>new role</cell>
+      </row>
+      <row>
+        <cell>the Fundamental Theorem of Calculus</cell>
+        <cell>turns edge differences into derivatives</cell>
+      </row>
+      <row>
+        <cell>opposite orientations cancel</cell>
+        <cell>removes all interior edges</cell>
+      </row>
+    </tabular>
+  </table>
+
+  <p>Both facts can already be seen on one rectangle.</p>
+
+  <subsection xml:id="c14s5-subsec-rectangle-vertical-motion">
+    <title>A rectangle with only vertical motion</title>
+
+    <p>
+      Start with the form
+      <md>\omega=(x^2+y)\,dy</md>
+      on the rectangle
+      <md>R=[0,2]\times[0,1].</md>
+      Only the vertical sides matter, because <m>dy=0</m> along horizontal sides.
+    </p>
+
+    <p>
+      On the right side,
+      <md>x=2,\qquad 0\le y\le1,</md>
+      so
+      <md>
+        <mrow>\int_{\text{right}}\omega \amp= \int_0^1(4+y)\,dy</mrow>
+        <mrow>\amp= 4+\frac12.</mrow>
+      </md>
+      On the left side, positive orientation walks downward:
+      <md>x=0,\qquad 1\ge y\ge0.</md>
+      Thus
+      <md>
+        <mrow>\int_{\text{left}}\omega \amp= \int_1^0 y\,dy</mrow>
+        <mrow>\amp= -\frac12.</mrow>
+      </md>
+      Therefore
+      <md>\boxed{\oint_{\partial R}(x^2+y)\,dy=4.}</md>
+    </p>
+
+    <p>
+      Now compute the interior side. Since
+      <md>P=0,\qquad Q=x^2+y,</md>
+      we have
+      <md>d\omega=Q_x\,dx\wedge dy=2x\,dx\wedge dy.</md>
+      So
+      <md>
+        <mrow>\iint_R d\omega \amp= \int_0^2\int_0^1 2x\,dy\,dx</mrow>
+        <mrow>\amp= \int_0^2 2x\,dx</mrow>
+        <mrow>\amp= 4.</mrow>
+      </md>
+      The two answers agree:
+      <md>\boxed{\oint_{\partial R}\omega=\iint_R d\omega.}</md>
+    </p>
+
+    <p>
+      What happened? The boundary integral compared the value of <m>Q</m> on the right side
+      with the value of <m>Q</m> on the left side:
+      <md>Q(2,y)-Q(0,y).</md>
+      The Fundamental Theorem of Calculus rewrites that difference as
+      <md>Q(2,y)-Q(0,y)=\int_0^2 Q_x(x,y)\,dx.</md>
+      Then integrating over <m>y</m> gives the double integral.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s5-subsec-proof-rectangle">
+    <title>The proof for a rectangle</title>
+
+    <p>
+      Now let
+      <md>R=[a,b]\times[c,d],</md>
+      and let
+      <md>\omega=P\,dx+Q\,dy</md>
+      where <m>P</m> and <m>Q</m> have continuous first partial derivatives.
+    </p>
+
+    <p>
+      First look at the <m>Q\,dy</m> part. Along the bottom and top edges, <m>dy=0</m>. The
+      right side contributes
+      <md>\int_c^d Q(b,y)\,dy,</md>
+      and the left side, walked downward, contributes
+      <md>\int_d^c Q(a,y)\,dy = -\int_c^d Q(a,y)\,dy.</md>
+      So
+      <md>
+        <mrow>\oint_{\partial R} Q\,dy \amp= \int_c^d \bigl(Q(b,y)-Q(a,y)\bigr)\,dy.</mrow>
+      </md>
+      For each fixed <m>y</m>, the single-variable Fundamental Theorem of Calculus gives
+      <md>Q(b,y)-Q(a,y)=\int_a^b Q_x(x,y)\,dx.</md>
+      Therefore
+      <md>\boxed{\oint_{\partial R}Q\,dy = \int_c^d\int_a^b Q_x(x,y)\,dx\,dy.}</md>
+    </p>
+
+    <p>
+      Now look at the <m>P\,dx</m> part. Along the vertical sides, <m>dx=0</m>. The bottom side
+      is walked from <m>a</m> to <m>b</m>, and the top side is walked from <m>b</m> to
+      <m>a</m>. Hence
+      <md>
+        <mrow>\oint_{\partial R} P\,dx \amp= \int_a^b P(x,c)\,dx+\int_b^a P(x,d)\,dx</mrow>
+        <mrow>\amp= \int_a^b \bigl(P(x,c)-P(x,d)\bigr)\,dx.</mrow>
+      </md>
+      For each fixed <m>x</m>,
+      <md>P(x,d)-P(x,c)=\int_c^d P_y(x,y)\,dy.</md>
+      Thus
+      <md>P(x,c)-P(x,d) = -\int_c^d P_y(x,y)\,dy.</md>
+      So
+      <md>\boxed{\oint_{\partial R}P\,dx = -\int_a^b\int_c^d P_y(x,y)\,dy\,dx.}</md>
+    </p>
+
+    <p>
+      Adding the two parts gives
+      <md>\boxed{\oint_{\partial R}P\,dx+Q\,dy = \iint_R (Q_x-P_y)\,dA.}</md>
+      In form language,
+      <md>\boxed{\int_{\partial R}\omega=\int_R d\omega.}</md>
+    </p>
+
+    <p>
+      The rectangle proof is just the Fundamental Theorem of Calculus applied once in the
+      <m>x</m>-direction and once in the <m>y</m>-direction. The signs come from orientation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s5-subsec-two-rectangles-disappearing-edge">
+    <title>Two rectangles and one disappearing edge</title>
+
+    <p>
+      A single rectangle explains where <m>Q_x-P_y</m> comes from. The next idea explains why
+      only the outside boundary survives.
+    </p>
+
+    <p>
+      Put two rectangles side by side:
+      <md>R_1=[0,1]\times[0,1],\qquad R_2=[1,2]\times[0,1].</md>
+      They share the vertical edge
+      <md>E=\{1\}\times[0,1].</md>
+      For <m>R_1</m>, positive orientation walks up along <m>E</m>. For <m>R_2</m>, positive
+      orientation walks down along the same edge.
+    </p>
+
+    <p>
+      Along <m>E</m>,
+      <md>x=1,\qquad dx=0.</md>
+      So the contribution from <m>R_1</m> is
+      <md>\int_0^1 Q(1,y)\,dy.</md>
+      The contribution from <m>R_2</m> is
+      <md>\int_1^0 Q(1,y)\,dy.</md>
+      They add to zero.
+      <md>\boxed{\int_E Q\,dy+\int_{-E}Q\,dy=0.}</md>
+      The same cancellation happens for any shared edge. One rectangle walks the edge in one
+      direction; the neighboring rectangle walks it in the opposite direction. A line integral
+      changes sign when orientation reverses, so the two contributions cancel.
+    </p>
+
+    <figure xml:id="c14s5-fig-shared-edge-cancels">
+      <caption>Interior edges are walked twice in opposite directions.</caption>
+      <image width="55%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.95, &gt;=stealth]
+            \draw[fill=gray!8] (0,0) rectangle (2,1.4);
+            \draw[thick] (0,0) rectangle (2,1.4);
+            \draw[thick] (1,0) -- (1,1.4);
+
+            \node at (0.5,0.7) {\(R_1\)};
+            \node at (1.5,0.7) {\(R_2\)};
+
+            \draw[-&gt;, very thick, red!65!black] (1,0.25) -- (1,0.95);
+            \draw[-&gt;, very thick, blue!65!black] (1,1.15) -- (1,0.45);
+
+            \node[red!65!black, right] at (1.05,1.25) {\(R_1\) walks up};
+            \node[blue!65!black, right] at (1.05,0.35) {\(R_2\) walks down};
+
+            \draw[-&gt;, thick] (0,0) -- (0.55,0);
+            \draw[-&gt;, thick] (2,0) -- (2,0.55);
+            \draw[-&gt;, thick] (2,1.4) -- (1.45,1.4);
+            \draw[-&gt;, thick] (0,1.4) -- (0,0.85);
+
+            \node at (1,-0.55) {the shared edge cancels};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      Therefore
+      <md>\boxed{\oint_{\partial R_1}\omega+\oint_{\partial R_2}\omega = \oint_{\partial(R_1\cup R_2)}\omega.}</md>
+      The left side contains the shared edge twice. The right side contains only the outside
+      boundary.
+    </p>
+
+    <p>
+      The area integrals add even more plainly:
+      <md>\iint_{R_1}d\omega+\iint_{R_2}d\omega = \iint_{R_1\cup R_2}d\omega.</md>
+      Since Green's theorem is true on each rectangle, it is true on their union:
+      <md>
+        <mrow>\oint_{\partial(R_1\cup R_2)}\omega \amp= \oint_{\partial R_1}\omega+\oint_{\partial R_2}\omega</mrow>
+        <mrow>\amp= \iint_{R_1}d\omega+\iint_{R_2}d\omega</mrow>
+        <mrow>\amp= \iint_{R_1\cup R_2}d\omega.</mrow>
+      </md>
+      This is the proof mechanism in one line:
+      <md>\boxed{\text{add small Green formulas}\quad\Longrightarrow\quad\text{interior boundaries cancel.}}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s5-subsec-many-rectangles">
+    <title>Regions made from many rectangles</title>
+
+    <p>
+      Now tile a region <m>S</m> by finitely many nonoverlapping rectangles
+      <md>R_1,R_2,\ldots,R_N.</md>
+      Assume two rectangles meet only along whole edges or at corners. Green's theorem is true
+      on each rectangle:
+      <md>\int_{\partial R_i}\omega=\int_{R_i}d\omega.</md>
+      Add all <m>N</m> formulas:
+      <md>\sum_{i=1}^N\int_{\partial R_i}\omega = \sum_{i=1}^N\int_{R_i}d\omega.</md>
+      On the right,
+      <md>\sum_{i=1}^N\int_{R_i}d\omega = \int_S d\omega.</md>
+      On the left, every shared interior edge cancels with its neighbor. Only the outside
+      boundary remains:
+      <md>\sum_{i=1}^N\int_{\partial R_i}\omega = \int_{\partial S}\omega.</md>
+      Thus
+      <md>\boxed{\int_{\partial S}\omega=\int_S d\omega.}</md>
+      This is already Green's theorem for any region built from finitely many rectangles.
+    </p>
+
+    <figure xml:id="c14s5-fig-staircase-interior-cancel">
+      <caption>For a finite union of rectangles, all interior edges cancel in pairs.</caption>
+      <image width="55%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.62, &gt;=stealth]
+            \draw[step=1, gray!30, very thin] (0,0) grid (7,5);
+
+            \draw[fill=gray!10, thick]
+                (0,1) -- (0,4) -- (1,4) -- (1,5) -- (5,5) -- (5,4) --
+                (7,4) -- (7,1) -- (6,1) -- (6,0) -- (2,0) -- (2,1) -- cycle;
+
+            \draw[gray!55] (1,1) -- (6,1);
+            \draw[gray!55] (1,2) -- (7,2);
+            \draw[gray!55] (0,3) -- (7,3);
+            \draw[gray!55] (1,4) -- (5,4);
+            \draw[gray!55] (2,0) -- (2,5);
+            \draw[gray!55] (3,0) -- (3,5);
+            \draw[gray!55] (4,0) -- (4,5);
+            \draw[gray!55] (5,1) -- (5,4);
+            \draw[gray!55] (6,1) -- (6,4);
+
+            \draw[-&gt;, very thick, red!65!black] (0,1) -- (0,2.1);
+            \draw[-&gt;, very thick, red!65!black] (0.3,4) -- (0.8,4);
+            \draw[-&gt;, very thick, red!65!black] (1,4.3) -- (1,4.8);
+            \draw[-&gt;, very thick, red!65!black] (2.1,5) -- (3.1,5);
+            \draw[-&gt;, very thick, red!65!black] (7,3.5) -- (7,2.5);
+            \draw[-&gt;, very thick, red!65!black] (6,0) -- (5,0);
+            \draw[-&gt;, very thick, red!65!black] (2,0.8) -- (2,0.2);
+
+            \node at (3.5,-0.85) {only the outer staircase boundary remains};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This cancellation is the two-dimensional version of a familiar one-dimensional fact. When
+      we add
+      <md>\int_{x_0}^{x_1}f'(x)\,dx + \int_{x_1}^{x_2}f'(x)\,dx + \cdots + \int_{x_{n-1}}^{x_n}f'(x)\,dx,</md>
+      the intermediate endpoint values cancel:
+      <md>f(x_1)-f(x_0)+f(x_2)-f(x_1)+\cdots+f(x_n)-f(x_{n-1}) = f(x_n)-f(x_0).</md>
+      Green's theorem does the same thing one dimension higher. Interior edges are the new
+      intermediate endpoints.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s5-subsec-curved-slicing">
+    <title>Curved boundaries by slicing</title>
+
+    <p>
+      Rectangles explain the theorem's engine. Curved boundaries require one more idea: slice
+      the region into pieces where the one-variable Fundamental Theorem of Calculus can still
+      see the edge differences.
+    </p>
+
+    <p>
+      Let
+      <md>R=\{(x,y):a\le x\le b,\ g(x)\le y\le h(x)\},</md>
+      where <m>g</m> and <m>h</m> are smooth. This is a vertically simple region.
+    </p>
+
+    <p>
+      For the form
+      <md>P\,dx,</md>
+      the vertical sides do not contribute, because <m>dx=0</m> there. The bottom curve is
+      walked from <m>a</m> to <m>b</m>, and the top curve is walked from <m>b</m> to <m>a</m>.
+      Therefore
+      <md>
+        <mrow>\oint_{\partial R}P\,dx \amp= \int_a^b P(x,g(x))\,dx - \int_a^b P(x,h(x))\,dx</mrow>
+        <mrow>\amp= -\int_a^b\bigl(P(x,h(x))-P(x,g(x))\bigr)\,dx.</mrow>
+      </md>
+      For each fixed <m>x</m>, the Fundamental Theorem of Calculus gives
+      <md>P(x,h(x))-P(x,g(x)) = \int_{g(x)}^{h(x)}P_y(x,y)\,dy.</md>
+      So
+      <md>\boxed{\oint_{\partial R}P\,dx = -\int_a^b\int_{g(x)}^{h(x)}P_y(x,y)\,dy\,dx.}</md>
+    </p>
+
+    <p>
+      The <m>Q\,dy</m> part is proved the same way on a horizontally simple region
+      <md>R=\{(x,y):c\le y\le d,\ \ell(y)\le x\le r(y)\}.</md>
+      The horizontal sides do not contribute, because <m>dy=0</m>. The right boundary is walked
+      upward, and the left boundary is walked downward. Thus
+      <md>
+        <mrow>\oint_{\partial R}Q\,dy \amp= \int_c^d Q(r(y),y)\,dy - \int_c^d Q(\ell(y),y)\,dy</mrow>
+        <mrow>\amp= \int_c^d\bigl(Q(r(y),y)-Q(\ell(y),y)\bigr)\,dy</mrow>
+        <mrow>\amp= \int_c^d\int_{\ell(y)}^{r(y)}Q_x(x,y)\,dx\,dy.</mrow>
+      </md>
+      So
+      <md>\boxed{\oint_{\partial R}Q\,dy = \iint_R Q_x\,dA.}</md>
+    </p>
+
+    <p>
+      If a region can be cut into finitely many pieces that are both vertically and horizontally
+      simple, then the two formulas apply on each piece. Adding the pieces cancels the new
+      internal boundaries, exactly as with rectangles.
+    </p>
+
+    <p>
+      This proves Green's theorem for many familiar regions: disks, ellipses, polygons, and
+      regions with piecewise smooth boundary after a finite number of cuts.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s5-subsec-curved-approximation">
+    <title>Curved boundaries by approximation</title>
+
+    <p>
+      There is another way to picture the last step. Overlay a fine grid on a curved region
+      <m>R</m>. Keep the grid squares that lie inside. The result is a staircase region
+      <m>R_h</m> made from finitely many rectangles. For <m>R_h</m>,
+      <md>\int_{\partial R_h}\omega=\int_{R_h}d\omega</md>
+      is already proved.
+    </p>
+
+    <p>As the grid becomes finer, two things happen.</p>
+
+    <p>
+      First, the area integral over <m>R_h</m> approaches the area integral over <m>R</m>:
+      <md>\int_{R_h}d\omega\longrightarrow \int_R d\omega.</md>
+      Continuity of <m>Q_x-P_y</m> keeps the values from jumping unpredictably in the thin strip
+      near the boundary.
+    </p>
+
+    <p>
+      Second, the staircase boundary approaches the curved boundary. On a smooth arc, a tiny
+      stair step has almost the same first-order effect as the tiny curve segment it replaces.
+      Adding those small differences along the boundary makes the boundary integral approach
+      <md>\int_{\partial R}\omega.</md>
+    </p>
+
+    <figure xml:id="c14s5-fig-curved-staircase">
+      <caption>A curved region can be approximated by regions made from rectangles.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.72, &gt;=stealth]
+            \begin{scope}
+                \draw[step=0.5, gray!25, very thin] (-0.5,-0.5) grid (5,4);
+
+                \draw[fill=gray!8, thick]
+                    plot[smooth cycle] coordinates {
+                        (0.4,0.5)
+                        (1.5,0.1)
+                        (3.6,0.5)
+                        (4.4,1.6)
+                        (3.9,3.1)
+                        (2.2,3.5)
+                        (0.7,2.8)
+                        (0.0,1.5)
+                    };
+
+                \node at (2.2,-1.0) {curved region \(R\)};
+            \end{scope}
+
+            \begin{scope}[shift={(7,0)}]
+                \draw[step=0.5, gray!25, very thin] (-0.5,-0.5) grid (5,4);
+
+                \draw[fill=gray!12, thick]
+                    (0.5,0.5) -- (1.5,0.5) -- (1.5,0.0) -- (3.5,0.0) --
+                    (3.5,0.5) -- (4.0,0.5) -- (4.0,1.0) -- (4.5,1.0) --
+                    (4.5,2.0) -- (4.0,2.0) -- (4.0,3.0) -- (3.5,3.0) --
+                    (3.5,3.5) -- (2.0,3.5) -- (2.0,3.0) -- (1.0,3.0) --
+                    (1.0,2.5) -- (0.5,2.5) -- (0.5,2.0) -- (0.0,2.0) --
+                    (0.0,1.0) -- (0.5,1.0) -- cycle;
+
+                \node at (2.2,-1.0) {staircase region \(R_h\)};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This approximation picture is not a full proof by itself. It tells us where the hypotheses
+      enter.
+    </p>
+
+    <p>
+      The boundary must be piecewise smooth so the staircase boundary really approaches a curve
+      with well-defined line integrals. The partial derivatives must be continuous so the
+      interior integral behaves predictably as the boundary strip shrinks. The boundary must
+      include every component so cancellation does not leave a hidden edge behind.
+    </p>
+
+    <p>
+      Those words are carrying real work. If we reverse orientation, hide a singularity, forget
+      a hole, or ask the theorem to handle a boundary too wild for our definition of line
+      integral, the formula can give the wrong sign, the wrong number, or no number at all. The
+      proof has shown us exactly where to look for the trouble.
+    </p>
+  </subsection>
+</section>

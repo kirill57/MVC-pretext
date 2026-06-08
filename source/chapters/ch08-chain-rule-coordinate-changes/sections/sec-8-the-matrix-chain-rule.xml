@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch08-chain-rule-coordinate-changes.tex, Section 8.2.
+     Status: CONVERTED. -->
+<section xml:id="sec-8-the-matrix-chain-rule" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The matrix chain rule</title>
+
+  <p>
+    <xref ref="sec-8-the-chain-rule-along-a-curve"/> followed one moving point through one
+    scalar field:
+    <md>t\longmapsto \mathbf r(t)\longmapsto f(\mathbf r(t)).</md>
+    Now the input can have several variables, and the output can have several components.
+    One map may feed another:
+    <md>\mathbf u\longmapsto G(\mathbf u)\longmapsto F(G(\mathbf u)).</md>
+    The chain rule says: linearize the first map, linearize the second map, then compose
+    the two linear maps.
+  </p>
+
+  <p>In coordinates, that means multiply the two Jacobian matrices.</p>
+
+  <subsection xml:id="c8s2-subsec-composing-transformations">
+    <title>Composing transformations</title>
+
+    <p>
+      A calibration map sends control variables <m>(u,v)</m> to physical floor coordinates
+      <m>(x,y)</m>:
+      <md>G(u,v)=(u+2v,\;u^2-v).</md>
+      A second map sends floor coordinates to screen coordinates:
+      <md>F(x,y)=(x^2+y,\;x-y^2).</md>
+      The combined map is
+      <md>H(u,v)=F(G(u,v)).</md>
+    </p>
+
+    <p>
+      Take the control point
+      <md>(u,v)=(1,1).</md>
+      First,
+      <md>G(1,1)=(3,0).</md>
+      The Jacobian of <m>G</m> is
+      <md>
+        J_G(u,v)
+        =
+        \begin{pmatrix}
+            1 \amp 2\\
+            2u \amp -1
+        \end{pmatrix},
+      </md>
+      so
+      <md>
+        J_G(1,1)
+        =
+        \begin{pmatrix}
+            1 \amp 2\\
+            2 \amp -1
+        \end{pmatrix}.
+      </md>
+      This matrix sends a small control displacement
+      <md>\begin{pmatrix}\Delta u\\ \Delta v\end{pmatrix}</md>
+      to the first-order physical displacement
+      <md>\begin{pmatrix}\Delta x\\ \Delta y\end{pmatrix}.</md>
+    </p>
+
+    <p>
+      The Jacobian of <m>F</m> is
+      <md>
+        J_F(x,y)
+        =
+        \begin{pmatrix}
+            2x \amp 1\\
+            1 \amp -2y
+        \end{pmatrix}.
+      </md>
+      At the intermediate point <m>(3,0)</m>,
+      <md>
+        J_F(3,0)
+        =
+        \begin{pmatrix}
+            6 \amp 1\\
+            1 \amp 0
+        \end{pmatrix}.
+      </md>
+    </p>
+
+    <p>
+      So the control displacement first passes through
+      <md>J_G(1,1),</md>
+      and then through
+      <md>J_F(3,0).</md>
+      The combined linear map is
+      <md>
+      \boxed{
+          J_F(3,0)J_G(1,1)
+          =
+          \begin{pmatrix}
+              6 \amp 1\\
+              1 \amp 0
+          \end{pmatrix}
+          \begin{pmatrix}
+              1 \amp 2\\
+              2 \amp -1
+          \end{pmatrix}
+          =
+          \begin{pmatrix}
+              8 \amp 11\\
+              1 \amp 2
+          \end{pmatrix}.
+      }
+      </md>
+    </p>
+
+    <p>
+      Let us check this by composing first and differentiating afterward. Since
+      <md>x=u+2v,\qquad y=u^2-v,</md>
+      we get
+      <md>
+        <mrow>H(u,v) \amp= F(u+2v,u^2-v)</mrow>
+        <mrow>\amp= \left( (u+2v)^2+(u^2-v),\; (u+2v)-(u^2-v)^2 \right).</mrow>
+      </md>
+      Thus
+      <md>H_1(u,v)=2u^2+4uv+4v^2-v,</md>
+      so
+      <md>(H_1)_u=4u+4v,\qquad (H_1)_v=4u+8v-1.</md>
+      At <m>(1,1)</m>,
+      <md>(H_1)_u=8,\qquad (H_1)_v=11.</md>
+    </p>
+
+    <p>
+      For the second component,
+      <md>H_2(u,v)=u+2v-(u^2-v)^2.</md>
+      Therefore
+      <md>(H_2)_u=1-2(u^2-v)(2u),</md>
+      and
+      <md>(H_2)_v=2+2(u^2-v).</md>
+      At <m>(1,1)</m>, the factor <m>u^2-v</m> is <m>0</m>, so
+      <md>(H_2)_u=1,\qquad (H_2)_v=2.</md>
+      Hence
+      <md>
+        J_H(1,1)
+        =
+        \begin{pmatrix}
+            8 \amp 11\\
+            1 \amp 2
+        \end{pmatrix},
+      </md>
+      which matches the matrix product.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s2-subsec-multiplying-jacobian-matrices">
+    <title>Multiplying Jacobian matrices</title>
+
+    <p>The example gives the rule.</p>
+
+    <theorem xml:id="c8s2-thm-matrix-chain-rule">
+      <title>Matrix chain rule</title>
+      <statement>
+        <p>
+          Let
+          <md>G:D\subseteq\mathbb R^n\to\mathbb R^m</md>
+          be differentiable at <m>\mathbf p</m>, and let
+          <md>F:E\subseteq\mathbb R^m\to\mathbb R^k</md>
+          be differentiable at <m>G(\mathbf p)</m>. Suppose <m>G(D)\subseteq E</m>, so the
+          composition
+          <md>F\circ G</md>
+          is defined. Then <m>F\circ G</m> is differentiable at <m>\mathbf p</m>, and
+          <md>
+          \boxed{
+              D(F\circ G)(\mathbf p)
+              =
+              DF(G(\mathbf p))\circ DG(\mathbf p).
+          }
+          </md>
+          In matrix form,
+          <md>
+          \boxed{
+              J_{F\circ G}(\mathbf p)
+              =
+              J_F(G(\mathbf p))\,J_G(\mathbf p).
+          }
+          </md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Let
+          <md>\mathbf q=G(\mathbf p).</md>
+          Since <m>G</m> is differentiable at <m>\mathbf p</m>,
+          <md>G(\mathbf p+\mathbf h)=G(\mathbf p)+DG(\mathbf p)\mathbf h+\mathbf e(\mathbf h),</md>
+          where
+          <md>\frac{\|\mathbf e(\mathbf h)\|}{\|\mathbf h\|}\to0.</md>
+          Set
+          <md>\mathbf k(\mathbf h)=G(\mathbf p+\mathbf h)-G(\mathbf p).</md>
+          Then
+          <md>\mathbf k(\mathbf h)=DG(\mathbf p)\mathbf h+\mathbf e(\mathbf h),</md>
+          so <m>\mathbf k(\mathbf h)\to\mathbf 0</m> as <m>\mathbf h\to\mathbf 0</m>.
+        </p>
+        <p>
+          Since <m>F</m> is differentiable at <m>\mathbf q</m>,
+          <md>F(\mathbf q+\mathbf k)=F(\mathbf q)+DF(\mathbf q)\mathbf k+\mathbf r(\mathbf k),</md>
+          where
+          <md>\frac{\|\mathbf r(\mathbf k)\|}{\|\mathbf k\|}\to0.</md>
+          Apply this with <m>\mathbf k=\mathbf k(\mathbf h)</m>:
+          <md>
+            <mrow>F(G(\mathbf p+\mathbf h)) \amp= F(G(\mathbf p)) + DF(\mathbf q)\bigl(DG(\mathbf p)\mathbf h+\mathbf e(\mathbf h)\bigr) + \mathbf r(\mathbf k(\mathbf h))</mrow>
+            <mrow>\amp= F(G(\mathbf p)) + \bigl(DF(\mathbf q)\circ DG(\mathbf p)\bigr)\mathbf h + DF(\mathbf q)\mathbf e(\mathbf h) + \mathbf r(\mathbf k(\mathbf h)).</mrow>
+          </md>
+          The last two terms are smaller than first order in <m>\mathbf h</m>. Therefore the
+          total derivative of the composition is
+          <md>DF(\mathbf q)\circ DG(\mathbf p).</md>
+          The matrix of a composition of linear maps is the product of their matrices, in the
+          same order:
+          <md>J_F(G(\mathbf p))J_G(\mathbf p).</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The sizes explain the order. If
+      <md>G:\mathbb R^n\to\mathbb R^m,</md>
+      then
+      <md>J_G(\mathbf p)</md>
+      is an <m>m\times n</m> matrix. If
+      <md>F:\mathbb R^m\to\mathbb R^k,</md>
+      then
+      <md>J_F(G(\mathbf p))</md>
+      is a <m>k\times m</m> matrix. The product
+      <md>J_F(G(\mathbf p))J_G(\mathbf p)</md>
+      is a <m>k\times n</m> matrix, exactly the size needed for
+      <md>F\circ G:\mathbb R^n\to\mathbb R^k.</md>
+    </p>
+
+    <p>
+      The hypotheses are real. If the outer function is not differentiable, the matrix product
+      built from partial derivatives can give the wrong answer.
+    </p>
+
+    <example xml:id="c8s2-ex-outer-not-differentiable">
+      <title>When the outer derivative does not exist</title>
+      <statement>
+        <p>
+          Use the function
+          <md>
+            Q(x,y)=
+            \begin{cases}
+            \dfrac{x^2y}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+            0, \amp (x,y)=(0,0),
+            \end{cases}
+          </md>
+          from <xref ref="sec-8-the-chain-rule-along-a-curve"/>. It has
+          <md>Q_x(0,0)=0,\qquad Q_y(0,0)=0,</md>
+          but it is not differentiable at the origin.
+        </p>
+        <p>
+          Let
+          <md>G(t)=(t,t).</md>
+          Then
+          <md>(Q\circ G)(t)=Q(t,t)=\frac{t}{2}</md>
+          for <m>t\ne0</m>, with value <m>0</m> at <m>t=0</m>. So
+          <md>(Q\circ G)'(0)=\frac12.</md>
+          If we tried to use the row
+          <md>
+            \begin{pmatrix}Q_x(0,0)\amp Q_y(0,0)\end{pmatrix}
+            =
+            \begin{pmatrix}0\amp 0\end{pmatrix}
+          </md>
+          as if it were the derivative of <m>Q</m>, then the matrix product would predict
+          <md>
+            \begin{pmatrix}0\amp 0\end{pmatrix}
+            \begin{pmatrix}1\\1\end{pmatrix}
+            =
+            0.
+          </md>
+          Again the answer is wrong. The matrix chain rule uses total derivatives, not lists of
+          partials that happen to exist.
+        </p>
+      </statement>
+    </example>
+
+    <p>If the inner map is not differentiable, the composition may also fail to be differentiable.</p>
+
+    <example xml:id="c8s2-ex-inner-corner">
+      <title>When the inner map has a corner</title>
+      <statement>
+        <p>
+          Let
+          <md>G(t)=|t|</md>
+          and let
+          <md>F(x)=x.</md>
+          The outer function is as smooth as possible. But
+          <md>(F\circ G)(t)=|t|,</md>
+          which is not differentiable at <m>0</m>. The inner map has no derivative there, so
+          there is no linear part for the outer derivative to receive.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c8s2-subsec-tree-and-dependency-diagrams">
+    <title>Tree diagrams and dependency diagrams</title>
+
+    <p>For scalar outputs, the matrix chain rule becomes the familiar sum-over-paths formula.</p>
+
+    <p>
+      Suppose
+      <md>w=f(x,y),</md>
+      where
+      <md>x=x(u,v),\qquad y=y(u,v).</md>
+      Then <m>w</m> depends on <m>u</m> and <m>v</m> through the intermediate variables
+      <m>x</m> and <m>y</m>.
+    </p>
+
+    <figure xml:id="c8s2-fig-dependency-diagram">
+      <caption>Each path from an input variable to <m>w</m> contributes one product of
+      derivatives.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=1.0, &gt;=stealth]
+            \node (u) at (0,1.2) {\(u\)};
+            \node (v) at (0,-1.2) {\(v\)};
+            \node (x) at (3,1.2) {\(x\)};
+            \node (y) at (3,-1.2) {\(y\)};
+            \node (w) at (6,0) {\(w\)};
+
+            \draw[-&gt;, thick] (u) -- (x) node[midway, above] {\(x_u\)};
+            \draw[-&gt;, thick] (v) -- (x) node[midway, below left] {\(x_v\)};
+            \draw[-&gt;, thick] (u) -- (y) node[midway, above left] {\(y_u\)};
+            \draw[-&gt;, thick] (v) -- (y) node[midway, below] {\(y_v\)};
+
+            \draw[-&gt;, thick] (x) -- (w) node[midway, above right] {\(f_x\)};
+            \draw[-&gt;, thick] (y) -- (w) node[midway, below right] {\(f_y\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      To find <m>w_u</m>, add the products along all paths from <m>u</m> to <m>w</m>:
+      <md>
+      \boxed{
+          w_u=f_xx_u+f_yy_u.
+      }
+      </md>
+      To find <m>w_v</m>, add the products along all paths from <m>v</m> to <m>w</m>:
+      <md>
+      \boxed{
+          w_v=f_xx_v+f_yy_v.
+      }
+      </md>
+    </p>
+
+    <p>
+      These two formulas are one matrix product. The Jacobian of
+      <md>f:\mathbb R^2\to\mathbb R</md>
+      is the row matrix
+      <md>
+        J_f(x,y)=
+        \begin{pmatrix}
+            f_x \amp f_y
+        \end{pmatrix}.
+      </md>
+      The Jacobian of
+      <md>G(u,v)=(x(u,v),y(u,v))</md>
+      is
+      <md>
+        J_G(u,v)
+        =
+        \begin{pmatrix}
+            x_u \amp x_v\\
+            y_u \amp y_v
+        \end{pmatrix}.
+      </md>
+      Therefore
+      <md>
+        J_{f\circ G}(u,v)
+        =
+        \begin{pmatrix}
+            f_x \amp f_y
+        \end{pmatrix}
+        \begin{pmatrix}
+            x_u \amp x_v\\
+            y_u \amp y_v
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            f_xx_u+f_yy_u
+            \amp
+            f_xx_v+f_yy_v
+        \end{pmatrix}.
+      </md>
+    </p>
+
+    <example xml:id="c8s2-ex-dependency-diagram">
+      <title>A dependency diagram calculation</title>
+      <statement>
+        <p>
+          Let
+          <md>w=x^2+xy,</md>
+          where
+          <md>x=u+v^2,\qquad y=uv.</md>
+          Find <m>w_u</m> and <m>w_v</m> at
+          <md>(u,v)=(2,1).</md>
+        </p>
+        <p>
+          First compute the intermediate values:
+          <md>x(2,1)=2+1=3,\qquad y(2,1)=2.</md>
+          The partial derivatives of <m>w</m> are
+          <md>w_x=2x+y,\qquad w_y=x.</md>
+          At <m>(x,y)=(3,2)</m>,
+          <md>w_x=8,\qquad w_y=3.</md>
+        </p>
+        <p>
+          The derivatives of the intermediate variables are
+          <md>x_u=1,\qquad x_v=2v,</md>
+          and
+          <md>y_u=v,\qquad y_v=u.</md>
+          At <m>(u,v)=(2,1)</m>,
+          <md>x_u=1,\qquad x_v=2,\qquad y_u=1,\qquad y_v=2.</md>
+          Thus
+          <md>
+            <mrow>w_u \amp= w_xx_u+w_yy_u</mrow>
+            <mrow>\amp= 8(1)+3(1)</mrow>
+            <mrow>\amp= 11,</mrow>
+          </md>
+          and
+          <md>
+            <mrow>w_v \amp= w_xx_v+w_yy_v</mrow>
+            <mrow>\amp= 8(2)+3(2)</mrow>
+            <mrow>\amp= 22.</mrow>
+          </md>
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c8s2-subsec-linearize-then-compose">
+    <title>The chain rule as <q>linearize, then compose</q></title>
+
+    <p>
+      The matrix formula can look like a bookkeeping rule:
+      <md>J_{F\circ G}=J_FJ_G.</md>
+      But the meaning is more geometric.
+    </p>
+
+    <p>
+      A small input displacement
+      <md>\Delta\mathbf u</md>
+      first passes through the best linear approximation to <m>G</m>:
+      <md>\Delta\mathbf x\approx J_G(\mathbf p)\Delta\mathbf u.</md>
+      Then that output displacement passes through the best linear approximation to <m>F</m>:
+      <md>\Delta\mathbf z\approx J_F(G(\mathbf p))\Delta\mathbf x.</md>
+      Substitute the first approximation into the second:
+      <md>\Delta\mathbf z\approx J_F(G(\mathbf p))J_G(\mathbf p)\Delta\mathbf u.</md>
+      So the chain rule says:
+      <md>
+      \boxed{
+          \text{linearize each map, then compose the linearizations.}
+      }
+      </md>
+    </p>
+
+    <figure xml:id="c8s2-fig-linearize-compose">
+      <caption>The derivative of a composition is the composition of the derivatives.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=1.0, &gt;=stealth]
+            \node (du) at (0,0) {\(\Delta\mathbf u\)};
+            \node (dx) at (3.2,0) {\(\Delta\mathbf x\)};
+            \node (dz) at (6.4,0) {\(\Delta\mathbf z\)};
+
+            \draw[-&gt;, thick] (du) -- (dx)
+                node[midway, above] {\(J_G(\mathbf p)\)};
+            \draw[-&gt;, thick] (dx) -- (dz)
+                node[midway, above] {\(J_F(G(\mathbf p))\)};
+
+            \draw[-&gt;, thick, bend right=28] (du) to
+                node[midway, below] {\(J_F(G(\mathbf p))J_G(\mathbf p)\)}
+                (dz);
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      There is a cleaner notation hiding inside the matrix multiplication. If
+      <md>x=x(u,v)\qquad\text{and}\qquad y=y(u,v),</md>
+      then their differentials are
+      <md>dx=x_u\,du+x_v\,dv,\qquad dy=y_u\,du+y_v\,dv.</md>
+      Substituting these into
+      <md>df=f_x\,dx+f_y\,dy</md>
+      produces the same chain rule formulas. That substitution looks almost too simple. It is
+      not a trick. It is the beginning of the pullback idea for differential forms, and it will
+      become one of the quiet engines behind line integrals, surface integrals, and the
+      integral theorems later in the book.
+    </p>
+  </subsection>
+</section>

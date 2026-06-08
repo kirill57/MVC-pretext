@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch09-gradient-optimization.tex, Section 9.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-9-second-derivatives-and-the-hessian-matrix" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Second derivatives and the Hessian matrix</title>
+
+  <p>
+    <xref ref="sec-9-critical-points"/> ended at critical points. At those points,
+    <md>df=\mathbf 0,</md>
+    so the first-order approximation stops talking. If a point is a peak, a valley, or a
+    saddle, that information must come from the next visible part of the function.
+  </p>
+
+  <p>That next part is second order.</p>
+
+  <subsection xml:id="c9s3-subsec-summit-we-already-met">
+    <title>The summit we already met</title>
+
+    <p>
+      Return to the hill from <xref ref="sec-9-the-gradient-and-level-sets"/> and
+      <xref ref="sec-9-critical-points"/>:
+      <md>h(x,y)=100+4x+3y-x^2-xy-y^2.</md>
+      Its critical point is
+      <md>P=\left(\frac53,\frac23\right).</md>
+      In <xref ref="sec-9-critical-points"/>, we wrote
+      <md>x=\frac53+u, \qquad y=\frac23+v,</md>
+      and found the exact formula
+      <md>h\left(\frac53+u,\frac23+v\right)=\frac{313}{3}-(u^2+uv+v^2).</md>
+      There is no linear part. The first visible change is
+      <md>-(u^2+uv+v^2).</md>
+    </p>
+
+    <p>
+      That expression tells the shape. Since
+      <md>u^2+uv+v^2=\left(u+\frac12v\right)^2+\frac34v^2,</md>
+      it is positive unless
+      <md>u=v=0.</md>
+      So every nonzero nearby displacement lowers the height. The critical point is a local
+      maximum.
+    </p>
+
+    <p>
+      Now look at the second derivatives:
+      <md>h_x=4-2x-y, \qquad h_y=3-x-2y.</md>
+      Differentiating again gives
+      <md>h_{xx}=-2, \qquad h_{xy}=-1, \qquad h_{yx}=-1, \qquad h_{yy}=-2.</md>
+      These four numbers arrange themselves into the matrix
+      <md>
+        H_h=
+        \begin{pmatrix}
+            -2 \amp -1\\
+            -1 \amp -2
+        \end{pmatrix}.
+      </md>
+      Then
+      <md>
+        \frac12
+        \begin{pmatrix}u\amp v\end{pmatrix}
+        \begin{pmatrix}
+                -2 \amp -1\\
+                -1 \amp -2
+        \end{pmatrix}
+        \begin{pmatrix}u\\v\end{pmatrix}
+        =
+        -(u^2+uv+v^2).
+      </md>
+      So the second-order part of the hill is stored in a matrix.
+    </p>
+
+    <p>That matrix is called the Hessian.</p>
+  </subsection>
+
+  <subsection xml:id="c9s3-subsec-second-partial-derivatives">
+    <title>Second partial derivatives</title>
+
+    <p>
+      A first partial derivative measures a coordinate slope. A second partial derivative
+      measures how that coordinate slope changes.
+    </p>
+
+    <p>
+      For a function
+      <md>f(x,y),</md>
+      we have four second partial derivatives:
+      <md>f_{xx}, \qquad f_{xy}, \qquad f_{yx}, \qquad f_{yy}.</md>
+      The notation means
+      <md>f_{xy}=\frac{\partial}{\partial y}\left(f_x\right).</md>
+      So <m>f_{xy}</m> means: first differentiate with respect to <m>x</m>, then differentiate
+      the result with respect to <m>y</m>.
+    </p>
+
+    <definition xml:id="c9s3-def-second-partial-derivatives">
+      <title>Second partial derivatives</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^2\to\mathbb R.</md>
+          The second partial derivatives of <m>f</m> are
+          <md>f_{xx}=(f_x)_x, \qquad f_{xy}=(f_x)_y, \qquad f_{yx}=(f_y)_x, \qquad f_{yy}=(f_y)_y,</md>
+          when these derivatives exist.
+        </p>
+      </statement>
+    </definition>
+
+    <example xml:id="c9s3-ex-changing-marginal-costs">
+      <title>Changing marginal costs</title>
+      <statement>
+        <p>
+          Recall the bakery cost model
+          <md>C(u,v)=400+3u+4v+0.01uv,</md>
+          where <m>u</m> is the number of sourdough loaves and <m>v</m> is the number of rye
+          loaves.
+        </p>
+        <p>
+          The first partial derivatives are
+          <md>C_u=3+0.01v, \qquad C_v=4+0.01u.</md>
+          Now differentiate again:
+          <md>C_{uu}=0, \qquad C_{uv}=0.01,</md>
+          and
+          <md>C_{vu}=0.01, \qquad C_{vv}=0.</md>
+        </p>
+        <p>
+          The number
+          <md>C_{uv}=0.01</md>
+          says that if the bakery makes one more rye loaf, then the marginal cost of making
+          sourdough rises by <m>0.01</m> dollars. The interaction term <m>0.01uv</m> is
+          responsible. Without it, the two products would not affect each other's marginal costs.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c9s3-ex-second-partials-three-variables">
+      <title>Second partials in three variables</title>
+      <statement>
+        <p>
+          Let
+          <md>T(x,y,z)=18+\frac{4}{1+x^2+y^2}-0.7z.</md>
+          Then
+          <md>T_z=-0.7,</md>
+          so
+          <md>T_{zz}=0.</md>
+          The temperature changes linearly with height, so the height-slope does not change as
+          height changes.
+        </p>
+        <p>
+          For the <m>x</m>-direction,
+          <md>T_x=-\frac{8x}{(1+x^2+y^2)^2}.</md>
+          A second derivative such as
+          <md>T_{xy}</md>
+          measures how this <m>x</m>-slope changes as we move in the <m>y</m>-direction.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Second partial derivatives are rates of change of rates of change. They are the
+      multivariable version of <m>f''</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s3-subsec-mixed-partials">
+    <title>Mixed partials and why order usually does not matter</title>
+
+    <p>
+      Two of the second partials are mixed:
+      <md>f_{xy} \qquad\text{and}\qquad f_{yx}.</md>
+      At first, they look like different operations. One changes <m>x</m> first and <m>y</m>
+      second. The other changes <m>y</m> first and <m>x</m> second.
+    </p>
+
+    <p>For ordinary smooth formulas, they are equal.</p>
+
+    <example xml:id="c9s3-ex-two-orders-one-answer">
+      <title>Two orders, one answer</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^2y+3xy^2.</md>
+          Then
+          <md>f_x=2xy+3y^2,</md>
+          so
+          <md>f_{xy}=2x+6y.</md>
+          Also,
+          <md>f_y=x^2+6xy,</md>
+          so
+          <md>f_{yx}=2x+6y.</md>
+          Thus
+          <md>f_{xy}=f_{yx}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This equality is not a coincidence. It is a theorem, but the theorem needs a regularity
+      condition.
+    </p>
+
+    <theorem xml:id="c9s3-thm-equality-of-mixed-partials">
+      <title>Equality of mixed partials</title>
+      <statement>
+        <p>
+          Let <m>f</m> be defined near a point
+          <md>(a,b).</md>
+          Suppose the mixed partial derivatives
+          <md>f_{xy} \qquad\text{and}\qquad f_{yx}</md>
+          exist near <m>(a,b)</m> and are continuous at <m>(a,b)</m>. Then
+          <md>\boxed{f_{xy}(a,b)=f_{yx}(a,b).}</md>
+        </p>
+      </statement>
+      <proof>
+        <title>Proof idea</title>
+        <p>
+          Look at the small rectangle with corners
+          <md>(a,b),\quad (a+u,b),\quad (a,b+v),\quad (a+u,b+v).</md>
+          The quantity
+          <md>
+            <mrow>\Delta \amp= f(a+u,b+v)-f(a+u,b)</mrow>
+            <mrow>\amp\qquad -f(a,b+v)+f(a,b)</mrow>
+          </md>
+          measures how much the change in one direction depends on moving in the other
+          direction.
+        </p>
+        <p>
+          If we divide by the small signed area <m>uv</m>,
+          <md>\frac{\Delta}{uv},</md>
+          we get an average mixed rate of change over the rectangle. The one-variable mean
+          value theorem can read this average in two ways: as an average of <m>f_{xy}</m>, or as
+          an average of <m>f_{yx}</m>. As the rectangle shrinks to <m>(a,b)</m>, continuity
+          forces both averages to approach the values at <m>(a,b)</m>. Therefore the two values
+          are equal.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The continuity assumption is not decoration. Without it, the two mixed partials can exist
+      and still disagree.
+    </p>
+
+    <example xml:id="c9s3-ex-mixed-partials-can-fail">
+      <title>Mixed partials can fail to agree</title>
+      <statement>
+        <p>
+          Define
+          <md>
+            F(x,y)=
+            \begin{cases}
+            \dfrac{xy(x^2-y^2)}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[3mm]
+            0, \amp (x,y)=(0,0).
+            \end{cases}
+          </md>
+          We will compute the two mixed partials at the origin.
+        </p>
+        <p>
+          First fix <m>y</m> and compute <m>F_x(0,y)</m>. For <m>y\ne0</m>,
+          <md>
+            <mrow>F_x(0,y) \amp= \lim_{h\to0}\frac{F(h,y)-F(0,y)}{h}</mrow>
+            <mrow>\amp= \lim_{h\to0}\frac{hy(h^2-y^2)}{h(h^2+y^2)}</mrow>
+            <mrow>\amp= \lim_{h\to0}\frac{y(h^2-y^2)}{h^2+y^2}</mrow>
+            <mrow>\amp= -y.</mrow>
+          </md>
+          This formula also gives <m>F_x(0,0)=0</m>. Therefore
+          <md>F_x(0,y)=-y.</md>
+          Now differentiate with respect to <m>y</m> at <m>0</m>:
+          <md>F_{xy}(0,0)=\lim_{k\to0}\frac{F_x(0,k)-F_x(0,0)}{k}=\lim_{k\to0}\frac{-k}{k}=-1.</md>
+        </p>
+        <p>
+          Now reverse the order. For <m>x\ne0</m>,
+          <md>
+            <mrow>F_y(x,0) \amp= \lim_{k\to0}\frac{F(x,k)-F(x,0)}{k}</mrow>
+            <mrow>\amp= \lim_{k\to0}\frac{xk(x^2-k^2)}{k(x^2+k^2)}</mrow>
+            <mrow>\amp= \lim_{k\to0}\frac{x(x^2-k^2)}{x^2+k^2}</mrow>
+            <mrow>\amp= x.</mrow>
+          </md>
+          This formula also gives <m>F_y(0,0)=0</m>. Therefore
+          <md>F_y(x,0)=x.</md>
+          Now differentiate with respect to <m>x</m> at <m>0</m>:
+          <md>F_{yx}(0,0)=\lim_{h\to0}\frac{F_y(h,0)-F_y(0,0)}{h}=\lim_{h\to0}\frac{h}{h}=1.</md>
+        </p>
+        <p>
+          So
+          <md>\boxed{F_{xy}(0,0)=-1, \qquad F_{yx}(0,0)=1.}</md>
+          The mixed partials exist, but they are not equal. The missing condition is continuity
+          of the mixed partials near the origin.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      In differential-form language, when <m>f</m> is smooth enough,
+      <md>df=f_x\,dx+f_y\,dy.</md>
+      Taking <m>d</m> again gives
+      <md>d(df)=(f_{yx}-f_{xy})\,dx\wedge dy.</md>
+      The equality of mixed partials says
+      <md>d(df)=0.</md>
+      This small cancellation will return later as the rule
+      <md>d^2=0.</md>
+      For now, it tells us why the Hessian of a smooth function is symmetric.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s3-subsec-the-hessian-matrix">
+    <title>The Hessian matrix</title>
+
+    <p>
+      At a point <m>(a,b)</m>, collect the second partials into one matrix:
+      <md>
+        H_f(a,b)
+        =
+        \begin{pmatrix}
+            f_{xx}(a,b) \amp f_{xy}(a,b)\\
+            f_{yx}(a,b) \amp f_{yy}(a,b)
+        \end{pmatrix}.
+      </md>
+    </p>
+
+    <definition xml:id="c9s3-def-hessian-matrix-two-variables">
+      <title>Hessian matrix in two variables</title>
+      <statement>
+        <p>
+          For a twice differentiable function
+          <md>f(x,y),</md>
+          the <term>Hessian matrix</term> of <m>f</m> at <m>(a,b)</m> is
+          <md>
+            \boxed{
+            H_f(a,b)
+            =
+            \begin{pmatrix}
+                f_{xx}(a,b) \amp f_{xy}(a,b)\\
+                f_{yx}(a,b) \amp f_{yy}(a,b)
+            \end{pmatrix}.
+            }
+          </md>
+          If the second partials are continuous near <m>(a,b)</m>, then
+          <md>f_{xy}(a,b)=f_{yx}(a,b),</md>
+          so the Hessian is symmetric.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For a function of three variables,
+      <md>f(x,y,z),</md>
+      the Hessian is
+      <md>
+        \boxed{
+        H_f(a,b,c)
+        =
+        \begin{pmatrix}
+        f_{xx} \amp f_{xy} \amp f_{xz}\\
+        f_{yx} \amp f_{yy} \amp f_{yz}\\
+        f_{zx} \amp f_{zy} \amp f_{zz}
+        \end{pmatrix}_{(a,b,c)}.
+        }
+      </md>
+      When the second partials are continuous, this matrix is symmetric across its diagonal.
+    </p>
+
+    <example xml:id="c9s3-ex-hessian-of-the-hill">
+      <title>The Hessian of the hill</title>
+      <statement>
+        <p>
+          For
+          <md>h(x,y)=100+4x+3y-x^2-xy-y^2,</md>
+          we found
+          <md>h_{xx}=-2, \qquad h_{xy}=-1, \qquad h_{yx}=-1, \qquad h_{yy}=-2.</md>
+          So
+          <md>
+            H_h=
+            \begin{pmatrix}
+                -2 \amp -1\\
+                -1 \amp -2
+            \end{pmatrix}.
+          </md>
+          This Hessian is constant because <m>h</m> is already a quadratic function.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c9s3-ex-hessian-changes-from-point-to-point">
+      <title>A Hessian that changes from point to point</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^3-3x+y^2.</md>
+          Then
+          <md>f_x=3x^2-3, \qquad f_y=2y.</md>
+          So
+          <md>f_{xx}=6x, \qquad f_{xy}=0, \qquad f_{yx}=0, \qquad f_{yy}=2.</md>
+          The Hessian is
+          <md>
+            H_f(x,y)
+            =
+            \begin{pmatrix}
+                6x \amp 0\\
+                0 \amp 2
+            \end{pmatrix}.
+          </md>
+          At the critical point <m>(1,0)</m>,
+          <md>
+            H_f(1,0)
+            =
+            \begin{pmatrix}
+                6 \amp 0\\
+                0 \amp 2
+            \end{pmatrix}.
+          </md>
+          At the critical point <m>(-1,0)</m>,
+          <md>
+            H_f(-1,0)
+            =
+            \begin{pmatrix}
+                -6 \amp 0\\
+                0 \amp 2
+            \end{pmatrix}.
+          </md>
+          The same function bends differently at its two critical points.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The Hessian is the matrix version of the second derivative. To see this, we need the
+      second-order approximation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s3-subsec-quadratic-approximation">
+    <title>Quadratic approximation near a critical point</title>
+
+    <p>
+      In one-variable calculus, Taylor's formula said that near <m>a</m>,
+      <md>f(a+h)=f(a)+f'(a)h+\frac12f''(a)h^2+\text{smaller terms}.</md>
+      In two variables, the same story has more directions. Near <m>(a,b)</m>, write
+      <md>x=a+u, \qquad y=b+v.</md>
+      Then the second-order approximation is
+      <md>
+        <mrow>f(a+u,b+v) \amp\approx f(a,b)+f_x(a,b)u+f_y(a,b)v</mrow>
+        <mrow>\amp\qquad +\frac12\left(f_{xx}(a,b)u^2+2f_{xy}(a,b)uv+f_{yy}(a,b)v^2\right).</mrow>
+      </md>
+    </p>
+
+    <p>The first line is the linear approximation. The second line is the quadratic correction.</p>
+
+    <p>
+      In matrix form,
+      <md>
+        \boxed{
+        f(a+u,b+v)
+        \approx
+        f(a,b)
+        +
+        df_{(a,b)}(u,v)
+        +
+        \frac12
+        \begin{pmatrix}u\amp v\end{pmatrix}
+        H_f(a,b)
+        \begin{pmatrix}u\\v\end{pmatrix}.
+        }
+      </md>
+      At a critical point,
+      <md>df_{(a,b)}=0.</md>
+      So the approximation becomes
+      <md>
+        \boxed{
+        f(a+u,b+v)
+        \approx
+        f(a,b)
+        +
+        \frac12
+        \begin{pmatrix}u\amp v\end{pmatrix}
+        H_f(a,b)
+        \begin{pmatrix}u\\v\end{pmatrix}.
+        }
+      </md>
+    </p>
+
+    <example xml:id="c9s3-ex-minimum-through-quadratic-part">
+      <title>A minimum seen through its quadratic part</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^3-3x+y^2.</md>
+          At the critical point
+          <md>(1,0),</md>
+          write
+          <md>x=1+u, \qquad y=v.</md>
+          Then
+          <md>
+            <mrow>f(1+u,v) \amp= (1+u)^3-3(1+u)+v^2</mrow>
+            <mrow>\amp= -2+3u^2+u^3+v^2.</mrow>
+          </md>
+          The quadratic part is
+          <md>3u^2+v^2.</md>
+          The Hessian at <m>(1,0)</m> is
+          <md>
+            H_f(1,0)
+            =
+            \begin{pmatrix}
+                6\amp 0\\
+                0\amp 2
+            \end{pmatrix},
+          </md>
+          and
+          <md>
+            \frac12
+            \begin{pmatrix}u\amp v\end{pmatrix}
+            \begin{pmatrix}
+                    6\amp 0\\
+                    0\amp 2
+            \end{pmatrix}
+            \begin{pmatrix}u\\v\end{pmatrix}
+            =
+            3u^2+v^2.
+          </md>
+          So the Hessian gives exactly the quadratic part of the local expansion.
+        </p>
+      </statement>
+    </example>
+
+    <theorem xml:id="c9s3-thm-second-order-approximation">
+      <title>Second-order approximation</title>
+      <statement>
+        <p>
+          Suppose <m>f(x,y)</m> has continuous second partial derivatives near <m>(a,b)</m>. Then
+          <md>
+            <mrow>f(a+u,b+v) \amp= f(a,b)+f_x(a,b)u+f_y(a,b)v</mrow>
+            <mrow>\amp\qquad +\frac12\left(f_{xx}(a,b)u^2+2f_{xy}(a,b)uv+f_{yy}(a,b)v^2\right)+R(u,v),</mrow>
+          </md>
+          where the remainder <m>R(u,v)</m> is small compared with <m>u^2+v^2</m>:
+          <md>
+            \boxed{
+                \frac{R(u,v)}{u^2+v^2}\to0
+                \quad\text{as}\quad
+                (u,v)\to(0,0).
+            }
+          </md>
+          Equivalently,
+          <md>
+            \boxed{
+            f((a,b)+\mathbf u)
+            =
+            f(a,b)
+            +
+            df_{(a,b)}(\mathbf u)
+            +
+            \frac12\mathbf u^T H_f(a,b)\mathbf u
+            +
+            R(\mathbf u),
+            }
+          </md>
+          with
+          <md>\frac{R(\mathbf u)}{\|\mathbf u\|^2}\to0.</md>
+        </p>
+      </statement>
+      <proof>
+        <title>Proof idea</title>
+        <p>
+          Move from <m>(a,b)</m> to <m>(a+u,b+v)</m> along the straight path
+          <md>\mathbf r(t)=(a,b)+t(u,v), \qquad 0\le t\le1.</md>
+          The composite
+          <md>g(t)=f(\mathbf r(t))</md>
+          is a one-variable function. Taylor's formula for <m>g</m> at <m>t=0</m> gives
+          <md>g(1)=g(0)+g'(0)+\frac12g''(0)+\text{smaller terms}.</md>
+          The chain rule gives
+          <md>g'(0)=df_{(a,b)}(u,v),</md>
+          and a second use of the chain rule gives
+          <md>
+            g''(0)
+            =
+            \begin{pmatrix}u\amp v\end{pmatrix}
+            H_f(a,b)
+            \begin{pmatrix}u\\v\end{pmatrix}.
+          </md>
+          This gives the formula. Continuity of the second partials is what makes the remaining
+          terms smaller than <m>\|\mathbf u\|^2</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      At a critical point, the first-order part vanishes. The Hessian becomes the first visible
+      shape. But a matrix is not yet an answer. We still need to know how to read
+      <md>\mathbf u^T H\mathbf u.</md>
+      Can it be positive in every nonzero direction? Negative in every direction? Positive in one
+      direction and negative in another? Those three possibilities are the mechanism behind the
+      second derivative test.
+    </p>
+  </subsection>
+</section>

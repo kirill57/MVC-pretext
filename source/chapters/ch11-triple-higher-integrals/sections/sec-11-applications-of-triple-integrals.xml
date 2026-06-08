@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch11-triple-higher-integrals.tex, Section 11.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-11-applications-of-triple-integrals" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Applications of triple integrals</title>
+
+  <p>
+    <xref ref="sec-11-triple-integrals"/>–<xref ref="sec-11-spherical-coordinates-in-integrals"/>
+    taught us how to add over a solid. The geometry changed from boxes to wedges, cylinders,
+    cones, balls, and shells, but the basic contribution always had the same shape:
+    <md>\text{value near a point}\times \text{tiny volume}.</md>
+    Now the value near the point becomes physical. It may be mass density, charge density,
+    energy density, or probability density.
+  </p>
+
+  <p>
+    Because spherical coordinates already use the letter <m>\rho</m>, this section writes mass
+    density as
+    <md>\delta(x,y,z).</md>
+  </p>
+
+  <subsection xml:id="c11s5-mass-and-density-in-space">
+    <title>Mass and density in space</title>
+
+    <p>
+      Imagine a clear gel block in a laboratory. A chemical additive has settled unevenly, so
+      the density is larger near the top. The block occupies
+      <md>E=[0,4]\times[0,3]\times[0,2],</md>
+      and its density is
+      <md>\delta(x,y,z)=2+z</md>
+      grams per cubic centimeter.
+    </p>
+
+    <p>
+      A small box near <m>(x,y,z)</m> has mass approximately
+      <md>\delta(x,y,z)\,\Delta V.</md>
+      Adding all those small masses gives
+      <md>M=\iiint_E \delta(x,y,z)\,dV.</md>
+      For this block,
+      <md>
+        <mrow>M \amp= \int_0^4\int_0^3\int_0^2 (2+z)\,dz\,dy\,dx</mrow>
+        <mrow>\amp= \int_0^4\int_0^3 \left[2z+\frac{z^2}{2}\right]_0^2 \,dy\,dx</mrow>
+        <mrow>\amp= \int_0^4\int_0^3 6\,dy\,dx</mrow>
+        <mrow>\amp= 72.</mrow>
+      </md>
+      So the total mass is
+      <md>\boxed{ M=72. }</md>
+    </p>
+
+    <definition xml:id="c11s5-def-mass-from-density">
+      <title>Mass from a density</title>
+      <statement>
+        <p>
+          If a solid <m>E</m> has mass density
+          <md>\delta(x,y,z),</md>
+          then its mass is
+          <md>\boxed{ M=\iiint_E \delta(x,y,z)\,dV. }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In oriented form notation, the same integral can be written
+      <md>\iiint_E \delta(x,y,z)\,dx\wedge dy\wedge dz,</md>
+      when the solid is given the standard orientation. For mass, however, we usually write
+      <m>dV</m>, because mass uses positive volume.
+    </p>
+
+    <example xml:id="c11s5-ex-cone-mass">
+      <title>Mass of a cone with density depending on height</title>
+      <statement>
+        <p>
+          A solid cone has height <m>4</m>, radius <m>4</m>, and density
+          <md>\delta(x,y,z)=1+z.</md>
+          The cone has equation
+          <md>0\le z\le 4-r</md>
+          in cylindrical coordinates. Thus
+          <md>0\le \theta\le 2\pi, \qquad 0\le r\le4, \qquad 0\le z\le4-r.</md>
+          The mass is
+          <md>
+            <mrow>M \amp= \int_0^{2\pi}\int_0^4\int_0^{4-r} (1+z)r\,dz\,dr\,d\theta</mrow>
+            <mrow>\amp= 2\pi\int_0^4 \left[z+\frac{z^2}{2}\right]_0^{4-r} r\,dr</mrow>
+            <mrow>\amp= 2\pi\int_0^4 \left((4-r)+\frac12(4-r)^2\right)r\,dr.</mrow>
+          </md>
+          Expand:
+          <md>(4-r)+\frac12(4-r)^2 = 4-r+8-4r+\frac12r^2 = 12-5r+\frac12r^2.</md>
+          So
+          <md>
+            <mrow>M \amp= 2\pi\int_0^4 \left(12r-5r^2+\frac12r^3\right)\,dr</mrow>
+            <mrow>\amp= 2\pi \left[ 6r^2-\frac53r^3+\frac18r^4 \right]_0^4</mrow>
+            <mrow>\amp= 2\pi \left( 96-\frac{320}{3}+32 \right)</mrow>
+            <mrow>\amp= 2\pi\cdot\frac{64}{3}</mrow>
+            <mrow>\amp= \frac{128\pi}{3}.</mrow>
+          </md>
+          Thus
+          <md>\boxed{ M=\frac{128\pi}{3}. }</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The density decides how much each small volume piece counts. The geometry decides where the
+      pieces are.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s5-center-of-mass">
+    <title>Center of mass</title>
+
+    <p>
+      Mass tells us how much matter there is. The center of mass tells us where that matter
+      balances.
+    </p>
+
+    <p>
+      Return to the gel block
+      <md>E=[0,4]\times[0,3]\times[0,2],</md>
+      with density
+      <md>\delta(x,y,z)=2+z.</md>
+      The density depends only on height. So symmetry already tells us
+      <md>\bar x=2, \qquad \bar y=\frac32.</md>
+      But the <m>z</m>-coordinate of the center should be above the geometric middle <m>z=1</m>,
+      because the block is denser near the top.
+    </p>
+
+    <p>
+      To find it, we compute the first moments:
+      <md>N_x=\iiint_E x\delta\,dV, \qquad N_y=\iiint_E y\delta\,dV, \qquad N_z=\iiint_E z\delta\,dV.</md>
+      For this block,
+      <md>
+        <mrow>N_x \amp= \int_0^4\int_0^3\int_0^2 x(2+z)\,dz\,dy\,dx</mrow>
+        <mrow>\amp= \left(\int_0^4 x\,dx\right) \left(\int_0^3 dy\right) \left(\int_0^2(2+z)\,dz\right)</mrow>
+        <mrow>\amp= 8\cdot3\cdot6</mrow>
+        <mrow>\amp= 144.</mrow>
+      </md>
+      Similarly,
+      <md>
+        <mrow>N_y \amp= \left(\int_0^4 dx\right) \left(\int_0^3 y\,dy\right) \left(\int_0^2(2+z)\,dz\right)</mrow>
+        <mrow>\amp= 4\cdot\frac92\cdot6</mrow>
+        <mrow>\amp= 108.</mrow>
+      </md>
+      For the height moment,
+      <md>
+        <mrow>N_z \amp= \int_0^4\int_0^3\int_0^2 z(2+z)\,dz\,dy\,dx</mrow>
+        <mrow>\amp= 12\int_0^2(2z+z^2)\,dz</mrow>
+        <mrow>\amp= 12\left[z^2+\frac{z^3}{3}\right]_0^2</mrow>
+        <mrow>\amp= 12\left(4+\frac83\right)</mrow>
+        <mrow>\amp= 80.</mrow>
+      </md>
+      Since <m>M=72</m>, the center of mass is
+      <md>\boxed{ (\bar x,\bar y,\bar z) = \left( \frac{N_x}{M},\frac{N_y}{M},\frac{N_z}{M} \right) = \left(2,\frac32,\frac{10}{9}\right). }</md>
+      As expected,
+      <md>\bar z=\frac{10}{9}\gt 1.</md>
+    </p>
+
+    <figure xml:id="c11s5-fig-center-of-mass">
+      <caption>When density increases with height, the center of mass moves upward.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.8, &gt;=stealth]
+            \coordinate (O) at (0,0);
+            \coordinate (A) at (4,0);
+            \coordinate (B) at (5.2,1.1);
+            \coordinate (C) at (1.2,1.1);
+            \coordinate (D) at (0,2.6);
+            \coordinate (E) at (4,2.6);
+            \coordinate (F) at (5.2,3.7);
+            \coordinate (G) at (1.2,3.7);
+
+            \draw[fill=gray!8, thick] (O)--(A)--(B)--(C)--cycle;
+            \draw[fill=gray!15, thick] (D)--(E)--(F)--(G)--cycle;
+            \draw[thick] (O)--(D);
+            \draw[thick] (A)--(E);
+            \draw[thick] (B)--(F);
+            \draw[thick] (C)--(G);
+
+            \foreach \z/\shade in {0.45/10,0.9/16,1.35/23,1.8/30,2.25/38} {
+                \draw[fill=blue!\shade, draw=none, opacity=0.45]
+                    (0,\z) -- (4,\z) -- (5.2,{1.1+\z}) -- (1.2,{1.1+\z}) -- cycle;
+            }
+
+            \fill[red!70!black] (2.67,1.92) circle (3pt);
+            \node[right] at (2.75,1.92) {center of mass};
+
+            \node at (2,-0.55) {\(x\)-direction};
+            \node[left] at (0,1.3) {\(z\)};
+            \node at (2.6,-1.05) {denser layers near the top raise \(\bar z\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <definition xml:id="c11s5-def-center-of-mass">
+      <title>Center of mass in space</title>
+      <statement>
+        <p>
+          Let <m>E</m> be a solid with density <m>\delta(x,y,z)</m>, and suppose
+          <md>M=\iiint_E \delta\,dV\gt 0.</md>
+          Define the first moments
+          <md>N_x=\iiint_E x\delta\,dV, \qquad N_y=\iiint_E y\delta\,dV, \qquad N_z=\iiint_E z\delta\,dV.</md>
+          Then the center of mass is
+          <md>\boxed{ (\bar x,\bar y,\bar z) = \left( \frac{N_x}{M}, \frac{N_y}{M}, \frac{N_z}{M} \right). }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The condition <m>M\gt 0</m> matters. A real mass density is nonnegative, and if there is
+      any material at all, then <m>M\gt 0</m>. But for signed quantities, such as electric
+      charge, the same formula can break.
+    </p>
+
+    <example xml:id="c11s5-ex-positive-total-mass">
+      <title>Why positive total mass is needed</title>
+      <statement>
+        <p>
+          Suppose a cube contains equal amounts of positive and negative charge. A signed charge
+          density <m>q</m> might satisfy
+          <md>\iiint_E q\,dV=0.</md>
+          The expression
+          <md>\frac{\iiint_E xq\,dV}{\iiint_E q\,dV}</md>
+          then tries to divide by zero. There may be a meaningful center of positive charge and a
+          meaningful center of negative charge, but there is no center of <q>total signed charge</q>
+          given by this quotient.
+        </p>
+        <p>So the center of mass formula belongs to a positive finite mass distribution.</p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c11s5-moment-of-inertia">
+    <title>Moment of inertia</title>
+
+    <p>Center of mass measures balance. Moment of inertia measures resistance to rotation.</p>
+
+    <p>
+      A point mass far from an axis is harder to spin than the same point mass near the axis. The
+      distance is squared, so far-away material counts strongly.
+    </p>
+
+    <p>
+      If a small volume piece has mass
+      <md>\delta\,dV</md>
+      and its distance from the axis is <m>s</m>, then its small contribution to moment of
+      inertia is
+      <md>s^2\delta\,dV.</md>
+    </p>
+
+    <definition xml:id="c11s5-def-moment-of-inertia">
+      <title>Moment of inertia about an axis</title>
+      <statement>
+        <p>
+          For a solid <m>E</m> with density <m>\delta(x,y,z)</m>, the moment of inertia about an
+          axis is
+          <md>\boxed{ I=\iiint_E s^2\delta(x,y,z)\,dV, }</md>
+          where <m>s</m> is the distance from <m>(x,y,z)</m> to the axis.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For the coordinate axes,
+      <md>\boxed{ I_x=\iiint_E (y^2+z^2)\delta\,dV, }</md>
+      <md>\boxed{ I_y=\iiint_E (x^2+z^2)\delta\,dV, }</md>
+      and
+      <md>\boxed{ I_z=\iiint_E (x^2+y^2)\delta\,dV. }</md>
+    </p>
+
+    <example xml:id="c11s5-ex-cylinder-inertia">
+      <title>A solid cylinder spinning around its axis</title>
+      <statement>
+        <p>
+          A solid cylinder has radius <m>2</m>, height <m>3</m>, and constant density <m>5</m>. It
+          spins around its central <m>z</m>-axis.
+        </p>
+        <p>
+          In cylindrical coordinates,
+          <md>0\le r\le2, \qquad 0\le\theta\le2\pi, \qquad 0\le z\le3.</md>
+          The distance to the <m>z</m>-axis is
+          <md>s=r.</md>
+          So
+          <md>
+            <mrow>I_z \amp= \int_0^{2\pi}\int_0^2\int_0^3 r^2\cdot 5\cdot r\,dz\,dr\,d\theta</mrow>
+            <mrow>\amp= 5\int_0^{2\pi}\int_0^2\int_0^3 r^3\,dz\,dr\,d\theta</mrow>
+            <mrow>\amp= 5(2\pi)(3)\int_0^2 r^3\,dr</mrow>
+            <mrow>\amp= 30\pi\left[\frac{r^4}{4}\right]_0^2</mrow>
+            <mrow>\amp= 30\pi\cdot4</mrow>
+            <mrow>\amp= 120\pi.</mrow>
+          </md>
+          Thus
+          <md>\boxed{ I_z=120\pi. }</md>
+        </p>
+        <p>
+          The mass of the cylinder is
+          <md>M=5\pi(2)^2(3)=60\pi.</md>
+          So
+          <md>I_z=\frac12M(2)^2,</md>
+          which matches the familiar physics formula for a solid cylinder.
+        </p>
+      </statement>
+    </example>
+
+    <figure xml:id="c11s5-fig-inertia-distance">
+      <caption>For rotation about the <m>z</m>-axis, the distance factor is <m>r^2=x^2+y^2</m>.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            % Symmetric horizontal shading (distance from vertical axis is |x|)
+            \pgfdeclarehorizontalshading{densityshading}{100bp}{
+                color(0bp)=(red!80!black);
+                color(25bp)=(red!40!white);
+                color(50bp)=(white);
+                color(75bp)=(red!40!white);
+                color(100bp)=(red!80!black)
+            }
+
+            \begin{scope}
+                \clip (0,0) circle (2.5);
+                \shade[shading=densityshading, shading angle=0] (-2.5,-2.5) rectangle (2.5,2.5);
+            \end{scope}
+
+            \draw[thick] (0,0) circle (2.5);
+            \draw[gray!40, thin] (0,0) circle (0.8);
+            \draw[gray!40, thin] (0,0) circle (1.6);
+
+            \draw[-&gt;] (-3.2,0) -- (3.4,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-3.2) -- (0,3.4) node[above] {\(y\)};
+
+            \draw[-&gt;, thick] (0,0) -- (35:1.7) node[midway, above] {\(r\)};
+            \fill (35:1.7) circle (2pt);
+
+            \draw[very thick, blue!60!black] (0,-3) -- (0,3);
+            \node[blue!60!black, left] at (0,2.9) {axis};
+
+            \node at (0,-3.8) {material farther from the axis contributes \(r^2\) times as much};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      Moment of inertia is an integral because a solid is made of many tiny masses, each at its
+      own distance from the axis.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s5-total-charge-and-total-energy">
+    <title>Total charge and total energy</title>
+
+    <p>
+      Mass density is nonnegative. Charge density can be positive or negative. Energy density is
+      usually nonnegative.
+    </p>
+
+    <p>
+      If <m>q(x,y,z)</m> is charge density, then total charge is
+      <md>\boxed{ Q=\iiint_E q(x,y,z)\,dV. }</md>
+      If <m>u(x,y,z)</m> is energy density, then total energy is
+      <md>\boxed{ \mathcal E=\iiint_E u(x,y,z)\,dV. }</md>
+    </p>
+
+    <example xml:id="c11s5-ex-charge-cancel">
+      <title>Positive and negative charge can cancel</title>
+      <statement>
+        <p>
+          A charged cylinder has radius <m>1</m>, height <m>2</m>, and charge density
+          <md>q(x,y,z)=z-1.</md>
+          The lower half has negative charge, and the upper half has positive charge.
+        </p>
+        <p>
+          In cylindrical coordinates,
+          <md>0\le r\le1, \qquad 0\le\theta\le2\pi, \qquad 0\le z\le2.</md>
+          The total charge is
+          <md>
+            <mrow>Q \amp= \int_0^{2\pi}\int_0^1\int_0^2 (z-1)r\,dz\,dr\,d\theta</mrow>
+            <mrow>\amp= \left(\int_0^{2\pi}d\theta\right) \left(\int_0^1 r\,dr\right) \left(\int_0^2(z-1)\,dz\right).</mrow>
+          </md>
+          But
+          <md>\int_0^2(z-1)\,dz = \left[\frac{z^2}{2}-z\right]_0^2 = 2-2 = 0.</md>
+          Therefore
+          <md>\boxed{ Q=0. }</md>
+          The cylinder is not uncharged everywhere. Its total signed charge is zero because the
+          positive and negative parts cancel.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c11s5-ex-energy-battery">
+      <title>Energy stored in a spherical battery material</title>
+      <statement>
+        <p>
+          A ball of radius <m>2</m> has energy density depending only on distance from the center:
+          <md>u(\rho)=10\left(1-\frac{\rho}{2}\right), \qquad 0\le \rho\le2.</md>
+          The density is largest at the center and drops to <m>0</m> at the surface.
+        </p>
+        <p>
+          Using spherical coordinates,
+          <md>
+            <mrow>\mathcal E \amp= \int_0^{2\pi}\int_0^\pi\int_0^2 10\left(1-\frac{\rho}{2}\right)\rho^2\sin\phi \,d\rho\,d\phi\,d\theta</mrow>
+            <mrow>\amp= 4\pi\cdot10\int_0^2 \left(\rho^2-\frac12\rho^3\right)\,d\rho</mrow>
+            <mrow>\amp= 40\pi \left[ \frac{\rho^3}{3}-\frac{\rho^4}{8} \right]_0^2</mrow>
+            <mrow>\amp= 40\pi\left(\frac83-2\right)</mrow>
+            <mrow>\amp= \frac{80\pi}{3}.</mrow>
+          </md>
+          So
+          <md>\boxed{ \mathcal E=\frac{80\pi}{3}. }</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The same triple integral notation covers mass, charge, and energy. The units of the
+      integrand tell us what is being added.
+    </p>
+
+    <table xml:id="c11s5-tab-density-units">
+      <title>Densities and their total quantities.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Density</cell><cell>Units</cell><cell>Integral</cell>
+        </row>
+        <row>
+          <cell><m>\delta(x,y,z)</m></cell><cell><m>\text{mass}/\text{volume}</m></cell><cell><m>M=\iiint_E \delta\,dV</m></cell>
+        </row>
+        <row>
+          <cell><m>q(x,y,z)</m></cell><cell><m>\text{charge}/\text{volume}</m></cell><cell><m>Q=\iiint_E q\,dV</m></cell>
+        </row>
+        <row>
+          <cell><m>u(x,y,z)</m></cell><cell><m>\text{energy}/\text{volume}</m></cell><cell><m>\mathcal E=\iiint_E u\,dV</m></cell>
+        </row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <subsection xml:id="c11s5-probability-in-three-dimensions">
+    <title>Probability in three dimensions</title>
+
+    <p>
+      A probability density is another kind of density. Instead of mass per volume or charge per
+      volume, it gives probability per volume.
+    </p>
+
+    <p>
+      If a random point is chosen in a solid region <m>E</m>, a probability density
+      <m>p(x,y,z)</m> must satisfy two conditions:
+      <md>p(x,y,z)\ge0</md>
+      and
+      <md>\iiint_E p(x,y,z)\,dV=1.</md>
+      Then the probability that the point lies in a smaller region <m>A\subseteq E</m> is
+      <md>\boxed{ \operatorname{Prob}(A)=\iiint_A p(x,y,z)\,dV. }</md>
+    </p>
+
+    <example xml:id="c11s5-ex-random-point-box">
+      <title>A random point more likely near the top of a box</title>
+      <statement>
+        <p>
+          A random point is chosen in the unit cube
+          <md>0\le x\le1, \qquad 0\le y\le1, \qquad 0\le z\le1.</md>
+          Suppose the density has the form
+          <md>p(x,y,z)=C(1+z).</md>
+          First find <m>C</m>. We need
+          <md>\iiint_E C(1+z)\,dV=1.</md>
+          Thus
+          <md>
+            <mrow>1 \amp= C\int_0^1\int_0^1\int_0^1(1+z)\,dz\,dy\,dx</mrow>
+            <mrow>\amp= C\left[z+\frac{z^2}{2}\right]_0^1</mrow>
+            <mrow>\amp= C\cdot\frac32.</mrow>
+          </md>
+          So
+          <md>\boxed{ C=\frac23. }</md>
+        </p>
+        <p>
+          Now find the probability that
+          <md>z\le\frac12.</md>
+          This is
+          <md>
+            <mrow>\operatorname{Prob}\left(z\le\frac12\right) \amp= \int_0^1\int_0^1\int_0^{1/2} \frac23(1+z)\,dz\,dy\,dx</mrow>
+            <mrow>\amp= \frac23 \left[z+\frac{z^2}{2}\right]_0^{1/2}</mrow>
+            <mrow>\amp= \frac23\left(\frac12+\frac18\right)</mrow>
+            <mrow>\amp= \frac{5}{12}.</mrow>
+          </md>
+          So
+          <md>\boxed{ \operatorname{Prob}\left(z\le\frac12\right)=\frac{5}{12}. }</md>
+          Even though the lower half of the cube has half the volume, it has less than half the
+          probability, because the density increases with <m>z</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The conditions
+      <md>p\ge0, \qquad \iiint_E p\,dV=1</md>
+      are not cosmetic. Without them, the word probability loses its meaning.
+    </p>
+
+    <example xml:id="c11s5-ex-probability-conditions">
+      <title>Why probability densities must be nonnegative and normalized</title>
+      <statement>
+        <p>
+          On the unit cube, the function
+          <md>p(x,y,z)=2</md>
+          is nonnegative, but
+          <md>\iiint_E 2\,dV=2.</md>
+          It assigns total probability <m>2</m>, not <m>1</m>, so it is not a probability density.
+        </p>
+        <p>
+          The function
+          <md>q(x,y,z)=2z-1</md>
+          has total integral <m>0</m>, and it is negative when <m>z\lt 1/2</m>. It cannot describe
+          probability, because some regions would receive negative probability.
+        </p>
+        <p>
+          A probability density is an ordinary density with two extra promises: no negative
+          amounts, and total amount exactly <m>1</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This last example points beyond three dimensions. A random point might have four
+      coordinates, or ten, or a hundred. A gas molecule has position and velocity. A data point
+      may have many measured features. The adding idea does not stop at three coordinates. What
+      changes is harder to draw: a tiny piece is no longer a rectangle or a box we can picture. It
+      is still a product of tiny coordinate lengths.
+    </p>
+  </subsection>
+</section>

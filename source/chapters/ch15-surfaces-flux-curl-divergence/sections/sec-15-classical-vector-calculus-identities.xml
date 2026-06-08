@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch15-surfaces-flux-curl-divergence.tex, Section 15.7.
+     Status: CONVERTED. -->
+<section xml:id="sec-15-classical-vector-calculus-identities" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Classical vector-calculus identities</title>
+
+  <p>
+    <xref ref="sec-15-divergence-and-the-divergence-theorem"/> ended with two
+    familiar-looking derivatives:
+    <md>\nabla\times \mathbf F \qquad\text{and}\qquad \nabla\cdot \mathbf F.</md>
+    In vector notation they look like separate operations. In form notation they are
+    successive appearances of the same operation:
+    <md>d.</md>
+    That is why two famous identities are really one fact.
+  </p>
+
+  <subsection xml:id="c15s7-subsec-gradient-no-rotation">
+    <title>A gradient field has no local rotation</title>
+
+    <p>
+      Suppose a metal plate has temperature
+      <md>T(x,y,z)=x^2y+yz+3z.</md>
+      The gradient field is
+      <md>\nabla T=(2xy,\ x^2+z,\ y+3).</md>
+      This field points in the direction of fastest temperature increase.
+    </p>
+
+    <p>
+      Compute its curl:
+      <md>
+        <mrow>\nabla\times(\nabla T) \amp= \left( \frac{\partial}{\partial y}(y+3) - \frac{\partial}{\partial z}(x^2+z), \right.</mrow>
+        <mrow>\amp\qquad \frac{\partial}{\partial z}(2xy) - \frac{\partial}{\partial x}(y+3),</mrow>
+        <mrow>\amp\qquad\left. \frac{\partial}{\partial x}(x^2+z) - \frac{\partial}{\partial y}(2xy) \right)</mrow>
+        <mrow>\amp= (1-1,\ 0-0,\ 2x-2x)</mrow>
+        <mrow>\amp= \mathbf 0.</mrow>
+      </md>
+    </p>
+
+    <p>
+      The cancellations are not an accident. A gradient field comes from a potential
+      function. It points uphill. A tiny paddle wheel placed in a pure uphill field may be
+      pushed, but it has no first-order tendency to spin.
+    </p>
+
+    <p>
+      In the language of <m>1</m>-forms, the potential <m>T</m> has differential
+      <md>dT=T_x\,dx+T_y\,dy+T_z\,dz.</md>
+      For our example,
+      <md>dT=2xy\,dx+(x^2+z)\,dy+(y+3)\,dz.</md>
+      Taking <m>d</m> again gives
+      <md>d(dT)=0.</md>
+      That is the form version of
+      <md>\nabla\times(\nabla T)=\mathbf 0.</md>
+    </p>
+
+    <theorem xml:id="c15s7-thm-curl-of-gradient">
+      <title>Curl of a gradient</title>
+      <statement>
+        <p>
+          Let <m>f(x,y,z)</m> have continuous second partial derivatives on an open
+          region. Then
+          <md>\boxed{ \nabla\times(\nabla f)=\mathbf 0. }</md>
+          Equivalently,
+          <md>\boxed{ d(df)=0. }</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Write
+          <md>\nabla f=(f_x,f_y,f_z).</md>
+          Then
+          <md>\nabla\times(\nabla f) = (f_{zy}-f_{yz},\ f_{xz}-f_{zx},\ f_{yx}-f_{xy}).</md>
+          If the second partial derivatives are continuous, then the mixed partials agree:
+          <md>f_{zy}=f_{yz},\qquad f_{xz}=f_{zx},\qquad f_{yx}=f_{xy}.</md>
+          So every component is zero.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The hypothesis about continuous second partial derivatives is doing real work.
+    </p>
+
+    <example xml:id="c15s7-ex-smoothness-hypothesis">
+      <title>Why the smoothness hypothesis matters</title>
+      <statement>
+        <p>
+          Define
+          <md>f(x,y)= \begin{cases} \dfrac{xy(x^2-y^2)}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm] 0, \amp (x,y)=(0,0). \end{cases}</md>
+          This function has second mixed partial derivatives at the origin, but they are
+          not equal.
+        </p>
+        <p>
+          First compute <m>f_x(0,y)</m>. For <m>y\ne0</m>,
+          <md>
+            <mrow>f_x(0,y) \amp= \lim_{h\to0} \frac{f(h,y)-f(0,y)}{h}</mrow>
+            <mrow>\amp= \lim_{h\to0} \frac{hy(h^2-y^2)}{h^2+y^2}\cdot\frac1h</mrow>
+            <mrow>\amp= \lim_{h\to0} y\frac{h^2-y^2}{h^2+y^2}</mrow>
+            <mrow>\amp= -y.</mrow>
+          </md>
+          Also <m>f_x(0,0)=0</m>. Therefore
+          <md>f_{xy}(0,0) = \lim_{y\to0}\frac{f_x(0,y)-f_x(0,0)}{y} = \lim_{y\to0}\frac{-y}{y} = -1.</md>
+        </p>
+        <p>
+          Now compute <m>f_y(x,0)</m>. For <m>x\ne0</m>,
+          <md>
+            <mrow>f_y(x,0) \amp= \lim_{h\to0} \frac{f(x,h)-f(x,0)}{h}</mrow>
+            <mrow>\amp= \lim_{h\to0} \frac{xh(x^2-h^2)}{x^2+h^2}\cdot\frac1h</mrow>
+            <mrow>\amp= \lim_{h\to0} x\frac{x^2-h^2}{x^2+h^2}</mrow>
+            <mrow>\amp= x.</mrow>
+          </md>
+          Also <m>f_y(0,0)=0</m>. Therefore
+          <md>f_{yx}(0,0) = \lim_{x\to0}\frac{f_y(x,0)-f_y(0,0)}{x} = \lim_{x\to0}\frac{x}{x} = 1.</md>
+        </p>
+        <p>
+          So
+          <md>\boxed{ f_{xy}(0,0)=-1, \qquad f_{yx}(0,0)=1. }</md>
+          If we form the field
+          <md>\nabla f=(f_x,f_y,0),</md>
+          then at the origin the <m>z</m>-component of
+          <md>\nabla\times(\nabla f)</md>
+          would be
+          <md>f_{yx}(0,0)-f_{xy}(0,0)=2.</md>
+          The identity failed because the second partial derivatives were not continuous
+          enough to force mixed partials to agree.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The moral is small but sharp: the identity
+      <md>\nabla\times(\nabla f)=\mathbf 0</md>
+      belongs to sufficiently smooth functions. It is not a purely formal trick with
+      symbols.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s7-subsec-curl-no-source">
+    <title>A curl field has no source strength</title>
+
+    <p>Now look at a curl instead of a gradient.</p>
+
+    <p>
+      Let
+      <md>\mathbf F(x,y,z)=(0,xz,0).</md>
+      Then
+      <md>
+        <mrow>\nabla\times\mathbf F \amp= \left( 0-\frac{\partial}{\partial z}(xz), \frac{\partial}{\partial z}(0)-0, \frac{\partial}{\partial x}(xz)-0 \right)</mrow>
+        <mrow>\amp= (-x,0,z).</mrow>
+      </md>
+      Now take its divergence:
+      <md>
+        <mrow>\nabla\cdot(\nabla\times\mathbf F) \amp= \frac{\partial}{\partial x}(-x) + \frac{\partial}{\partial y}(0) + \frac{\partial}{\partial z}(z)</mrow>
+        <mrow>\amp= -1+0+1</mrow>
+        <mrow>\amp= 0.</mrow>
+      </md>
+    </p>
+
+    <p>
+      A curl field represents local spinning. Spinning can move material around, but by
+      itself it does not create source strength. In form language, if
+      <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+      is the work form of <m>\mathbf F</m>, then
+      <md>d\omega</md>
+      is the flux form of <m>\nabla\times\mathbf F</m>. Taking <m>d</m> again gives
+      <md>d(d\omega)=0.</md>
+      That is the form version of
+      <md>\nabla\cdot(\nabla\times\mathbf F)=0.</md>
+    </p>
+
+    <theorem xml:id="c15s7-thm-divergence-of-curl">
+      <title>Divergence of a curl</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F=(P,Q,R)</md>
+          have continuous second partial derivatives on an open region. Then
+          <md>\boxed{ \nabla\cdot(\nabla\times\mathbf F)=0. }</md>
+          Equivalently, if
+          <md>\omega=P\,dx+Q\,dy+R\,dz,</md>
+          then
+          <md>\boxed{ d(d\omega)=0. }</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          The curl is
+          <md>\nabla\times\mathbf F = (R_y-Q_z,\ P_z-R_x,\ Q_x-P_y).</md>
+          Its divergence is
+          <md>
+            <mrow>\nabla\cdot(\nabla\times\mathbf F) \amp= (R_y-Q_z)_x + (P_z-R_x)_y + (Q_x-P_y)_z</mrow>
+            <mrow>\amp= R_{yx}-Q_{zx}+P_{zy}-R_{xy}+Q_{xz}-P_{yz}.</mrow>
+          </md>
+          Regroup:
+          <md>(R_{yx}-R_{xy}) + (P_{zy}-P_{yz}) + (Q_{xz}-Q_{zx}).</md>
+          Each pair cancels because the second partial derivatives are continuous.
+          Therefore
+          <md>\nabla\cdot(\nabla\times\mathbf F)=0.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The same smoothness warning appears again.</p>
+
+    <example xml:id="c15s7-ex-nonsmooth-vector-potential">
+      <title>A nonsmooth vector potential can break the cancellation</title>
+      <statement>
+        <p>
+          Use the function from the previous example:
+          <md>f(x,y)= \begin{cases} \dfrac{xy(x^2-y^2)}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm] 0, \amp (x,y)=(0,0). \end{cases}</md>
+          Define a vector field in space by
+          <md>\mathbf A(x,y,z)=(0,0,f(x,y)).</md>
+          Then
+          <md>\nabla\times\mathbf A=(f_y,-f_x,0).</md>
+          At the origin,
+          <md>
+            <mrow>\nabla\cdot(\nabla\times\mathbf A) \amp= (f_y)_x+(-f_x)_y</mrow>
+            <mrow>\amp= f_{yx}-f_{xy}</mrow>
+            <mrow>\amp= 1-(-1)</mrow>
+            <mrow>\amp= 2.</mrow>
+          </md>
+          So the identity
+          <md>\nabla\cdot(\nabla\times\mathbf A)=0</md>
+          fails at the origin. The formal cancellation depends on the mixed partials being
+          allowed to trade order.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c15s7-subsec-single-fact-d-squared">
+    <title>The single fact: <m>d^2=0</m></title>
+
+    <p>The two identities now have the same explanation.</p>
+
+    <p>
+      For a function <m>f</m>,
+      <md>df</md>
+      is a <m>1</m>-form. Its exterior derivative is
+      <md>d(df).</md>
+      The identity
+      <md>d(df)=0</md>
+      is the statement
+      <md>\nabla\times(\nabla f)=\mathbf 0.</md>
+    </p>
+
+    <p>
+      For a work <m>1</m>-form
+      <md>\omega=P\,dx+Q\,dy+R\,dz,</md>
+      the derivative
+      <md>d\omega</md>
+      is the flux <m>2</m>-form of the curl:
+      <md>d\omega=\Phi_{\nabla\times\mathbf F}.</md>
+      The identity
+      <md>d(d\omega)=0</md>
+      is the statement
+      <md>\nabla\cdot(\nabla\times\mathbf F)=0.</md>
+    </p>
+
+    <p>
+      So the two classical identities are one rule:
+      <md>\boxed{ d^2=0. }</md>
+    </p>
+
+    <p>
+      A tiny piece of the algebra shows why. In two variables,
+      <md>df=f_x\,dx+f_y\,dy.</md>
+      Then
+      <md>
+        <mrow>d(df) \amp= d(f_x)\wedge dx+d(f_y)\wedge dy</mrow>
+        <mrow>\amp= (f_{xx}\,dx+f_{xy}\,dy)\wedge dx + (f_{yx}\,dx+f_{yy}\,dy)\wedge dy.</mrow>
+      </md>
+      Now
+      <md>dx\wedge dx=0, \qquad dy\wedge dy=0,</md>
+      and
+      <md>dy\wedge dx=-dx\wedge dy.</md>
+      So
+      <md>
+        <mrow>d(df) \amp= f_{xy}\,dy\wedge dx+f_{yx}\,dx\wedge dy</mrow>
+        <mrow>\amp= (f_{yx}-f_{xy})\,dx\wedge dy.</mrow>
+      </md>
+      When the mixed partials agree, this is <m>0</m>.
+    </p>
+
+    <p>
+      The wedge product supplies the sign. Equality of mixed partials supplies the
+      cancellation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s7-subsec-potentials-topology">
+    <title>Potentials and topology warnings</title>
+
+    <p>
+      The identity
+      <md>\nabla\times(\nabla f)=\mathbf 0</md>
+      says every gradient field has zero curl.
+    </p>
+
+    <p>
+      The converse is more delicate. If
+      <md>\nabla\times\mathbf F=\mathbf 0,</md>
+      then <m>\mathbf F</m> often has a potential function locally. On a simple region with
+      no holes, it may have a global potential:
+      <md>\mathbf F=\nabla f.</md>
+      But holes can prevent a global potential.
+    </p>
+
+    <p>
+      Recall the field
+      <md>\mathbf A(x,y,z) = \left( -\frac{y}{x^2+y^2}, \frac{x}{x^2+y^2}, 0 \right),</md>
+      defined away from the <m>z</m>-axis. A direct calculation gives
+      <md>\nabla\times\mathbf A=\mathbf 0</md>
+      where the field is defined.
+    </p>
+
+    <p>
+      But around the unit circle
+      <md>\mathbf r(t)=(\cos t,\sin t,0), \qquad 0\le t\le2\pi,</md>
+      we get
+      <md>\mathbf A(\mathbf r(t))=(-\sin t,\cos t,0),</md>
+      and
+      <md>\mathbf r'(t)=(-\sin t,\cos t,0).</md>
+      Thus
+      <md>
+        <mrow>\oint_C \mathbf A\cdot d\mathbf r \amp= \int_0^{2\pi} (-\sin t,\cos t,0)\cdot(-\sin t,\cos t,0)\,dt</mrow>
+        <mrow>\amp= \int_0^{2\pi}1\,dt</mrow>
+        <mrow>\amp= 2\pi.</mrow>
+      </md>
+      If <m>\mathbf A</m> were a global gradient field on its whole domain, every
+      closed-loop integral would be <m>0</m>. This nonzero integral proves that no such
+      global potential exists.
+    </p>
+
+    <p>
+      A similar warning appears one level higher. The identity
+      <md>\nabla\cdot(\nabla\times\mathbf A)=0</md>
+      says every curl field has zero divergence. The converse asks whether every
+      divergence-free field can be written as a curl:
+      <md>\mathbf F=\nabla\times\mathbf A.</md>
+      Again, topology can interfere.
+    </p>
+
+    <p>
+      Consider
+      <md>\mathbf G(x,y,z) = \frac{(x,y,z)}{(x^2+y^2+z^2)^{3/2}},</md>
+      defined on
+      <md>\mathbb R^3\setminus\{(0,0,0)\}.</md>
+      Away from the origin,
+      <md>\nabla\cdot\mathbf G=0.</md>
+      But the outward flux through any sphere centered at the origin is
+      <md>4\pi.</md>
+      If <m>\mathbf G=\nabla\times\mathbf A</m> for a smooth vector field <m>\mathbf A</m>
+      defined on the punctured space, then the flux of <m>\mathbf G</m> through the sphere
+      would be the flux of a curl through a closed surface. Stokes' theorem would give
+      <md>\iint_S(\nabla\times\mathbf A)\cdot\widehat{\mathbf n}\,dS = \int_{\partial S}\mathbf A\cdot d\mathbf r = 0,</md>
+      because a sphere has no boundary. But the flux is <m>4\pi</m>. So no global vector
+      potential exists on the punctured space.
+    </p>
+
+    <p>
+      These warnings are not exceptions to the identities. They say something more subtle:
+      local derivative tests do not always decide global questions. Smoothness and domain
+      shape both matter.
+    </p>
+
+    <p>
+      That is why the final section of the chapter collects the traps. The formulas are
+      short, but the surface, the orientation, the boundary, and the domain decide whether
+      the formula may be used.
+    </p>
+  </subsection>
+</section>

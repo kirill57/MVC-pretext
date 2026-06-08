@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch06-functions-limits-continuity.tex, Section 5 (Warning examples).
+     Status: CONVERTED. -->
+<section xml:id="sec-6-warning-examples" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Warning examples</title>
+
+  <p>
+    Limits and continuity in several variables have one central difficulty: there are too many
+    ways to approach a point. The examples in this section are not rare tricks. They are the
+    warning signs that tell us how to think.
+  </p>
+
+  <subsection xml:id="c6s5-different-limits-along-paths">
+    <title>A function with different limits along different paths</title>
+
+    <p>
+      Let
+      <md>A(x,y)=\frac{x^2-y^2}{x^2+y^2}, \qquad (x,y)\ne(0,0).</md>
+      Along the <m>x</m>-axis,
+      <md>A(x,0)=1.</md>
+      Along the <m>y</m>-axis,
+      <md>A(0,y)=-1.</md>
+      So
+      <md>\lim_{x\to0}A(x,0)=1</md>
+      but
+      <md>\lim_{y\to0}A(0,y)=-1.</md>
+      The two paths disagree. Therefore
+      <md>\lim_{(x,y)\to(0,0)}A(x,y)</md>
+      does not exist.
+    </p>
+
+    <p>
+      In polar coordinates,
+      <md>A(r\cos\theta,r\sin\theta)=\frac{r^2\cos^2\theta-r^2\sin^2\theta}{r^2}=\cos(2\theta).</md>
+      The value depends only on the angle. Getting closer to the origin does not force the
+      function toward one number.
+    </p>
+
+    <figure xml:id="c6s5-fig-different-path-limits">
+      <caption>Different path limits disprove a two-variable limit.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-3.4,0) -- (3.6,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-3.2) -- (0,3.4) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-3,-3) grid (3,3);
+
+            \fill (0,0) circle (2pt);
+            \node[below right] at (0,0) {\((0,0)\)};
+
+            \draw[-&gt;, very thick] (3,0) -- (0.35,0);
+            \draw[-&gt;, very thick] (-3,0) -- (-0.35,0);
+            \node[below] at (1.7,0) {\(A=1\)};
+
+            \draw[-&gt;, very thick] (0,3) -- (0,0.35);
+            \draw[-&gt;, very thick] (0,-3) -- (0,-0.35);
+            \node[right] at (0,1.7) {\(A=-1\)};
+
+            \node at (0,-4.0) {two roads to the same point give two different answers};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>The moral is simple:</p>
+
+    <p>
+      <md>\text{One disagreement is enough to destroy a limit.}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s5-lines-agree-limit-fails">
+    <title>A function whose path limits agree along lines but whose limit still fails</title>
+
+    <p>
+      Now comes the more dangerous trap. Sometimes every straight-line test gives the same
+      answer, but the full limit still fails.
+    </p>
+
+    <p>
+      Let
+      <md>C(x,y)=\frac{x^2y}{x^4+y^2}, \qquad (x,y)\ne(0,0).</md>
+      Approach along the line
+      <md>y=mx.</md>
+      If <m>m=0</m>, then
+      <md>C(x,0)=0.</md>
+      If <m>m\ne0</m>, then
+      <md>
+        <mrow>C(x,mx) \amp= \frac{x^2(mx)}{x^4+m^2x^2}</mrow>
+        <mrow>\amp= \frac{mx^3}{x^2(x^2+m^2)}</mrow>
+        <mrow>\amp= \frac{mx}{x^2+m^2}.</mrow>
+      </md>
+      As <m>x\to0</m>,
+      <md>\frac{mx}{x^2+m^2}\to0.</md>
+      So every straight line gives the limiting value <m>0</m>.
+    </p>
+
+    <p>
+      But along the parabola
+      <md>y=x^2,</md>
+      we get
+      <md>
+        <mrow>C(x,x^2) \amp= \frac{x^2(x^2)}{x^4+(x^2)^2}</mrow>
+        <mrow>\amp= \frac{x^4}{2x^4}</mrow>
+        <mrow>\amp= \frac12.</mrow>
+      </md>
+      The curved path gives a different value. Therefore the limit does not exist.
+    </p>
+
+    <figure xml:id="c6s5-fig-line-vs-curve">
+      <caption>All straight paths can agree while a curved path disagrees.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[-&gt;] (-3.2,0) -- (3.4,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.7) -- (0,3.6) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-3,0) grid (3,3);
+
+            \foreach \m in {-0.7,-0.35,0,0.35,0.7} {
+                \draw[thin, gray!60] (-3,{-3*\m}) -- (3,{3*\m});
+            }
+
+            \draw[very thick, domain=-1.7:1.7, samples=80, smooth, variable=\x]
+                plot ({\x},{\x*\x});
+            \node[right] at (1.5,2.25) {\(y=x^2\)};
+
+            \fill (0,0) circle (2pt);
+            \node[below left] at (0,0) {\((0,0)\)};
+
+            \node at (0,-1.4) {straight-line tests can miss curved approaches};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>The moral is sharper now:</p>
+
+    <p>
+      <md>\text{Different path limits disprove a limit.}</md>
+      But
+      <md>\text{matching path limits along many chosen paths do not prove a limit.}</md>
+    </p>
+
+    <p>To prove a limit, we need a bound that controls all paths at once.</p>
+  </subsection>
+
+  <subsection xml:id="c6s5-separate-continuity">
+    <title>Separate continuity does not imply continuity</title>
+
+    <p>
+      There is another tempting shortcut. If a function is continuous in <m>x</m> when <m>y</m>
+      is held fixed, and continuous in <m>y</m> when <m>x</m> is held fixed, should it be
+      continuous as a function of both variables?
+    </p>
+
+    <p>No.</p>
+
+    <p>
+      Define
+      <md>
+        S(x,y)=
+        \begin{cases}
+        \dfrac{xy}{x^2+y^2}, &amp; (x,y)\ne(0,0),\\[2mm]
+        0, &amp; (x,y)=(0,0).
+        \end{cases}
+      </md>
+    </p>
+
+    <p>
+      First hold <m>y</m> fixed. If <m>y=0</m>, then
+      <md>S(x,0)=0,</md>
+      which is continuous in <m>x</m>. If <m>y=y_0\ne0</m>, then
+      <md>S(x,y_0)=\frac{xy_0}{x^2+y_0^2},</md>
+      which is a continuous function of <m>x</m>.
+    </p>
+
+    <p>So <m>S</m> is continuous in <m>x</m> when <m>y</m> is held fixed.</p>
+
+    <p>
+      Similarly, holding <m>x</m> fixed gives a continuous function of <m>y</m>. The function is
+      continuous in each variable separately.
+    </p>
+
+    <p>
+      But as a two-variable function, <m>S</m> is not continuous at the origin. Along the line
+      <m>y=x</m>,
+      <md>S(x,x)=\frac{x^2}{2x^2}=\frac12.</md>
+      Along the <m>x</m>-axis,
+      <md>S(x,0)=0.</md>
+      So the limit at the origin does not exist.
+    </p>
+
+    <p>
+      This example will matter again in <xref ref="ch07-partial-derivatives-jacobian"/>.
+      Partial derivatives look at coordinate directions. Coordinate directions are important, but
+      they are not the whole plane.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s5-pictures-mislead">
+    <title>Why pictures can mislead near a singular point</title>
+
+    <p>
+      Graphs and contour maps are powerful, but they have a weakness: a very thin feature can be
+      invisible at normal scale.
+    </p>
+
+    <p>
+      Define
+      <md>
+        M(x,y)=
+        \begin{cases}
+        1, &amp; 0\lt y\lt x^4,\\
+        0, &amp; \text{otherwise}.
+        \end{cases}
+      </md>
+      Near the origin, the region
+      <md>0\lt y\lt x^4</md>
+      is a very thin strip above the <m>x</m>-axis.
+    </p>
+
+    <p>
+      Along any line
+      <md>y=mx,</md>
+      the function eventually equals <m>0</m> near the origin. To see why, suppose <m>m\ne0</m>.
+      The condition
+      <md>0\lt mx\lt x^4</md>
+      would imply, for small nonzero <m>x</m>,
+      <md>0\lt m\lt x^3</md>
+      or a similar impossible inequality after choosing the sign of <m>x</m>. For sufficiently
+      small <m>x</m>, no fixed nonzero slope can fit inside the narrow strip. The line <m>y=0</m>
+      also gives <m>M=0</m>.
+    </p>
+
+    <p>So every straight-line test gives the value <m>0</m>.</p>
+
+    <p>
+      But along the curve
+      <md>y=\frac{x^4}{2},</md>
+      we have
+      <md>0\lt\frac{x^4}{2}\lt x^4</md>
+      for every <m>x\ne0</m>. Therefore
+      <md>M\left(x,\frac{x^4}{2}\right)=1.</md>
+      This curved path approaches the origin while the function stays equal to <m>1</m>. Hence
+      the limit at the origin does not exist.
+    </p>
+
+    <figure xml:id="c6s5-fig-thin-strip">
+      <caption>A thin curved strip can be missed by every straight-line test.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=2.2, &gt;=stealth]
+            \draw[-&gt;] (-1.35,0) -- (1.45,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.08) -- (0,1.05) node[above] {\(y\)};
+
+            \path[fill=gray!25]
+                plot[domain=-1:1, samples=120, smooth, variable=\x]
+                ({\x},{\x*\x*\x*\x})
+                -- (1,0) -- (-1,0) -- cycle;
+
+            \draw[thick, domain=-1:1, samples=120, smooth, variable=\x]
+                plot ({\x},{\x*\x*\x*\x});
+            \node[right] at (1,1) {\(y=x^4\)};
+
+            \draw[dashed, thick, domain=-1:1, samples=120, smooth, variable=\x]
+                plot ({\x},{0.5*\x*\x*\x*\x});
+            \node[right] at (0.85,0.26) {\(y=\dfrac{x^4}{2}\)};
+
+            \node at (0.1,0.12) {\(M=1\)};
+            \node[below] at (0.65,0) {\(M=0\) on \(y=0\)};
+
+            \fill (0,0) circle (0.8pt);
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This is the geometric reason line tests are dangerous. A line is only one kind of road. A
+      function can hide its bad behavior between all the straight roads.
+    </p>
+
+    <p>
+      The chapter began with functions as fields of values. It ends with a warning: fields can be
+      subtle near a point. The next chapter asks a new question. When a scalar field is continuous
+      enough to behave well, how fast is it changing? In one variable there was one derivative. On
+      a surface, there are many possible directions to move, so the word <q>slope</q> has to split
+      into several ideas.
+    </p>
+  </subsection>
+</section>

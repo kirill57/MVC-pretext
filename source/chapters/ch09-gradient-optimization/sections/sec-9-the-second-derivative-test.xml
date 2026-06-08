@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch09-gradient-optimization.tex, Section 9.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-9-the-second-derivative-test" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The second derivative test</title>
+
+  <p>
+    <xref ref="sec-9-second-derivatives-and-the-hessian-matrix"/> showed what replaces
+    <m>f''</m> in several variables. Near a critical point,
+    <md>f(\mathbf p+\mathbf u)-f(\mathbf p)</md>
+    is controlled first by
+    <md>\frac12\mathbf u^T H_f(\mathbf p)\mathbf u.</md>
+    So the question becomes a question about a quadratic expression.
+  </p>
+
+  <p>
+    <md>\text{What signs can } \mathbf u^T H\mathbf u \text{ have?}</md>
+  </p>
+
+  <subsection xml:id="c9s4-reading-the-quadratic-part">
+    <title>Reading the quadratic part</title>
+
+    <p>
+      Consider the function
+      <md>B(x,y)=12+2x^2+xy+y^2.</md>
+      At the origin,
+      <md>B_x=4x+y,\qquad B_y=x+2y,</md>
+      so
+      <md>\nabla B(0,0)=\mathbf 0.</md>
+      The origin is a critical point.
+    </p>
+
+    <p>
+      The change from the origin is
+      <md>B(x,y)-B(0,0)=2x^2+xy+y^2.</md>
+      Complete the square:
+      <md>2x^2+xy+y^2=2\left(x+\frac14y\right)^2+\frac78y^2.</md>
+      This is positive unless
+      <md>x=y=0.</md>
+      So
+      <md>B(x,y)\gt B(0,0)</md>
+      for every nearby nonzero point. The origin is a local minimum.
+    </p>
+
+    <p>
+      Now consider
+      <md>M(x,y)=12-2x^2-xy-y^2.</md>
+      Again the origin is a critical point, but
+      <md>M(x,y)-M(0,0)=-(2x^2+xy+y^2).</md>
+      So every nearby nonzero point gives a smaller value. The origin is a local maximum.
+    </p>
+
+    <p>
+      Finally consider
+      <md>S(x,y)=12+x^2-y^2.</md>
+      At the origin,
+      <md>\nabla S(0,0)=\mathbf 0.</md>
+      But
+      <md>S(x,0)=12+x^2\gt 12</md>
+      for <m>x\ne0</m>, while
+      <md>S(0,y)=12-y^2\lt 12</md>
+      for <m>y\ne0</m>. The origin is a saddle point.
+    </p>
+
+    <p>The three quadratic parts behave differently:</p>
+
+    <table xml:id="c9s4-tab-quadratic-shapes">
+      <title>Sign behavior of three quadratic parts.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Quadratic part</cell>
+          <cell>Sign behavior</cell>
+          <cell>Shape</cell>
+        </row>
+        <row>
+          <cell><m>2x^2+xy+y^2</m></cell>
+          <cell>positive for every nonzero direction</cell>
+          <cell>minimum</cell>
+        </row>
+        <row>
+          <cell><m>-(2x^2+xy+y^2)</m></cell>
+          <cell>negative for every nonzero direction</cell>
+          <cell>maximum</cell>
+        </row>
+        <row>
+          <cell><m>x^2-y^2</m></cell>
+          <cell>positive in some directions, negative in others</cell>
+          <cell>saddle</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <definition xml:id="c9s4-def-definite-indefinite">
+      <title>Definite and indefinite quadratic forms</title>
+      <statement>
+        <p>
+          Let <m>H</m> be a symmetric matrix, and define
+          <md>q(\mathbf u)=\mathbf u^T H\mathbf u.</md>
+        </p>
+        <p>
+          The quadratic form <m>q</m> is called <term>positive definite</term> if
+          <md>q(\mathbf u)\gt 0</md>
+          for every nonzero vector <m>\mathbf u</m>.
+        </p>
+        <p>
+          It is called <term>negative definite</term> if
+          <md>q(\mathbf u)\lt 0</md>
+          for every nonzero vector <m>\mathbf u</m>.
+        </p>
+        <p>
+          It is called <term>indefinite</term> if it takes both positive and negative values.
+        </p>
+      </statement>
+    </definition>
+
+    <p>The Hessian tells the local shape through its quadratic form.</p>
+
+    <figure xml:id="c9s4-fig-quadratic-form-shapes">
+      <caption>
+        A definite quadratic form has one sign in every nonzero direction. An indefinite
+        form has both signs.
+      </caption>
+      <image width="90%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.78, &gt;=stealth]
+            % positive definite panel
+            \begin{scope}[xshift=-5.0cm]
+                \draw[-&gt;] (-2.4,0) -- (2.6,0) node[right] {\(u\)};
+                \draw[-&gt;] (0,-2.0) -- (0,2.2) node[above] {\(v\)};
+                \draw[very thick, red!40] (0,0) ellipse (0.65 and 0.45);
+                \draw[very thick, red!70] (0,0) ellipse (1.15 and 0.8);
+                \draw[very thick, red!90!black] (0,0) ellipse (1.8 and 1.25);
+                \fill (0,0) circle (2pt);
+                \node at (0,-2.6) {positive definite};
+                \node[red!80!black] at (0,-3.1) {\(q&gt;0\) away from \(0\)};
+            \end{scope}
+            % negative definite panel
+            \begin{scope}
+                \draw[-&gt;] (-2.4,0) -- (2.6,0) node[right] {\(u\)};
+                \draw[-&gt;] (0,-2.0) -- (0,2.2) node[above] {\(v\)};
+                \draw[very thick, blue!40] (0,0) ellipse (0.45 and 0.65);
+                \draw[very thick, blue!70] (0,0) ellipse (0.8 and 1.15);
+                \draw[very thick, blue!90!black] (0,0) ellipse (1.25 and 1.8);
+                \fill (0,0) circle (2pt);
+                \node at (0,-2.6) {negative definite};
+                \node[blue!80!black] at (0,-3.1) {\(q&lt;0\) away from \(0\)};
+            \end{scope}
+            % indefinite panel
+            \begin{scope}[xshift=5.0cm]
+                \draw[-&gt;] (-2.4,0) -- (2.6,0) node[right] {\(u\)};
+                \draw[-&gt;] (0,-2.0) -- (0,2.2) node[above] {\(v\)};
+                \draw[gray!55, thick] (-2,-2) -- (2,2);
+                \draw[gray!55, thick] (-2,2) -- (2,-2);
+                \draw[very thick, red!75!black, domain=-1.8:1.8, samples=50, variable=\y]
+                    plot ({sqrt(\y*\y+0.5)}, \y);
+                \draw[very thick, red!75!black, domain=-1.8:1.8, samples=50, variable=\y]
+                    plot ({-sqrt(\y*\y+0.5)}, \y);
+                \draw[very thick, blue!75!black, domain=-1.8:1.8, samples=50, variable=\x]
+                    plot (\x, {sqrt(\x*\x+0.5)});
+                \draw[very thick, blue!75!black, domain=-1.8:1.8, samples=50, variable=\x]
+                    plot (\x, {-sqrt(\x*\x+0.5)});
+                \fill (0,0) circle (2pt);
+                \node at (0,-2.6) {indefinite};
+                \node at (0,-3.1) {both signs occur};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c9s4-two-variable-determinant-shortcut">
+    <title>The two-variable determinant shortcut</title>
+
+    <p>
+      For a two-variable function, the Hessian at a point has the form
+      <md>H=\begin{pmatrix}A \amp B\\B \amp C\end{pmatrix}.</md>
+      Its quadratic form is
+      <md>q(u,v)=\begin{pmatrix}u \amp v\end{pmatrix}\begin{pmatrix}A \amp B\\B \amp C\end{pmatrix}\begin{pmatrix}u\\v\end{pmatrix}=Au^2+2Buv+Cv^2.</md>
+      The number
+      <md>\boxed{\Delta=AC-B^2}</md>
+      decides most cases.
+    </p>
+
+    <p>
+      If <m>A\ne0</m>, complete the square:
+      <md>
+        <mrow>q(u,v)\amp=Au^2+2Buv+Cv^2</mrow>
+        <mrow>\amp=A\left(u+\frac{B}{A}v\right)^2+\left(C-\frac{B^2}{A}\right)v^2</mrow>
+        <mrow>\amp=A\left(u+\frac{B}{A}v\right)^2+\frac{\Delta}{A}v^2.</mrow>
+      </md>
+      Now the sign is visible.
+    </p>
+
+    <table xml:id="c9s4-tab-determinant-conditions">
+      <title>What the determinant decides.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Condition</cell>
+          <cell>Behavior of <m>q</m></cell>
+        </row>
+        <row>
+          <cell><m>\Delta\gt 0,\ A\gt 0</m></cell>
+          <cell>positive definite</cell>
+        </row>
+        <row>
+          <cell><m>\Delta\gt 0,\ A\lt 0</m></cell>
+          <cell>negative definite</cell>
+        </row>
+        <row>
+          <cell><m>\Delta\lt 0</m></cell>
+          <cell>indefinite</cell>
+        </row>
+        <row>
+          <cell><m>\Delta=0</m></cell>
+          <cell>degenerate; more information needed</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The last case is the one where the quadratic part has a flat direction or disappears
+      entirely. Then second order is not enough.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s4-the-second-derivative-test">
+    <title>The second derivative test</title>
+
+    <p>Now put the quadratic-form reading together with the second-order approximation.</p>
+
+    <theorem xml:id="c9s4-thm-second-derivative-test">
+      <title>Second derivative test in two variables</title>
+      <statement>
+        <p>
+          Let <m>f(x,y)</m> have continuous second partial derivatives near a point
+          <md>(a,b).</md>
+          Suppose
+          <md>(a,b)</md>
+          is a critical point:
+          <md>f_x(a,b)=0,\qquad f_y(a,b)=0.</md>
+          Set
+          <md>A=f_{xx}(a,b),\qquad B=f_{xy}(a,b),\qquad C=f_{yy}(a,b),</md>
+          and
+          <md>\Delta=AC-B^2.</md>
+        </p>
+        <p>Then:</p>
+        <table xml:id="c9s4-tab-theorem-conditions">
+          <title>Classification by the discriminant.</title>
+          <tabular>
+            <row header="yes" bottom="medium">
+              <cell>Condition</cell>
+              <cell>Conclusion</cell>
+            </row>
+            <row>
+              <cell><m>\Delta\gt 0,\ A\gt 0</m></cell>
+              <cell><m>(a,b)</m> is a local minimum</cell>
+            </row>
+            <row>
+              <cell><m>\Delta\gt 0,\ A\lt 0</m></cell>
+              <cell><m>(a,b)</m> is a local maximum</cell>
+            </row>
+            <row>
+              <cell><m>\Delta\lt 0</m></cell>
+              <cell><m>(a,b)</m> is a saddle point</cell>
+            </row>
+            <row>
+              <cell><m>\Delta=0</m></cell>
+              <cell>the test gives no conclusion</cell>
+            </row>
+          </tabular>
+        </table>
+      </statement>
+      <proof>
+        <title>Proof idea</title>
+        <p>
+          At a critical point, the second-order approximation says
+          <md>f((a,b)+\mathbf u)-f(a,b)=\frac12\mathbf u^T H_f(a,b)\mathbf u+R(\mathbf u),</md>
+          where
+          <md>\frac{R(\mathbf u)}{\|\mathbf u\|^2}\to0.</md>
+        </p>
+        <p>
+          If the quadratic form is positive definite, then it is positive in every nonzero
+          direction, and the small remainder cannot change that sign when <m>\mathbf u</m> is
+          close enough to <m>\mathbf 0</m>. So <m>f</m> has a local minimum.
+        </p>
+        <p>If the quadratic form is negative definite, the same argument gives a local maximum.</p>
+        <p>
+          If the quadratic form is indefinite, there is one direction where the quadratic part
+          is positive and another direction where it is negative. Along sufficiently small
+          motions in those two directions, the function takes values both above and below
+          <m>f(a,b)</m>. That is a saddle point.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The test is a sign test for the first nonzero visible part of the function.</p>
+  </subsection>
+
+  <subsection xml:id="c9s4-examples-of-the-test">
+    <title>Examples of the test</title>
+
+    <example xml:id="c9s4-ex-min-saddle-same-function">
+      <title>A minimum and a saddle from the same function</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^3-3x+y^2.</md>
+          First find the critical points:
+          <md>f_x=3x^2-3,\qquad f_y=2y.</md>
+          Setting both equal to zero gives
+          <md>x=\pm1,\qquad y=0.</md>
+          So the critical points are
+          <md>(1,0)\qquad\text{and}\qquad(-1,0).</md>
+        </p>
+        <p>
+          The second partials are
+          <md>f_{xx}=6x,\qquad f_{xy}=0,\qquad f_{yy}=2.</md>
+        </p>
+        <p>
+          At <m>(1,0)</m>,
+          <md>A=6,\qquad B=0,\qquad C=2.</md>
+          Thus
+          <md>\Delta=AC-B^2=12\gt 0,</md>
+          and
+          <md>A\gt 0.</md>
+          So <m>(1,0)</m> is a local minimum.
+        </p>
+        <p>
+          At <m>(-1,0)</m>,
+          <md>A=-6,\qquad B=0,\qquad C=2.</md>
+          Thus
+          <md>\Delta=(-6)(2)-0=-12\lt 0.</md>
+          So <m>(-1,0)</m> is a saddle point.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c9s4-ex-hilltop">
+      <title>The hilltop from earlier sections</title>
+      <statement>
+        <p>
+          For
+          <md>h(x,y)=100+4x+3y-x^2-xy-y^2,</md>
+          the critical point is
+          <md>P=\left(\frac53,\frac23\right).</md>
+          The second partials are
+          <md>h_{xx}=-2,\qquad h_{xy}=-1,\qquad h_{yy}=-2.</md>
+          So
+          <md>A=-2,\qquad B=-1,\qquad C=-2.</md>
+          Then
+          <md>\Delta=AC-B^2=(-2)(-2)-(-1)^2=4-1=3.</md>
+          Since
+          <md>\Delta\gt 0\qquad\text{and}\qquad A\lt 0,</md>
+          the Hessian is negative definite. Therefore
+          <md>\left(\frac53,\frac23\right)</md>
+          is a local maximum.
+        </p>
+        <p>
+          This matches the exact expansion
+          <md>h\left(\frac53+u,\frac23+v\right)=\frac{313}{3}-(u^2+uv+v^2).</md>
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c9s4-ex-cross-term-saddle">
+      <title>A cross-term saddle</title>
+      <statement>
+        <p>
+          Let
+          <md>s(x,y)=xy.</md>
+          Then
+          <md>s_x=y,\qquad s_y=x.</md>
+          The origin is a critical point.
+        </p>
+        <p>
+          The second partials are
+          <md>s_{xx}=0,\qquad s_{xy}=1,\qquad s_{yy}=0.</md>
+          So
+          <md>A=0,\qquad B=1,\qquad C=0.</md>
+          Then
+          <md>\Delta=AC-B^2=0-1=-1\lt 0.</md>
+          Therefore the origin is a saddle point.
+        </p>
+        <p>
+          The geometry is easy to see:
+          <md>s(t,t)=t^2\gt 0,</md>
+          but
+          <md>s(t,-t)=-t^2\lt 0.</md>
+          The function rises along one diagonal and falls along the other.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c9s4-why-critical-point-condition">
+    <title>Why the critical-point condition is needed</title>
+
+    <p>
+      A positive definite Hessian does not by itself mean <q>minimum.</q> The first-order part
+      must be gone.
+    </p>
+
+    <p>
+      Consider
+      <md>g(x,y)=x+x^2+y^2.</md>
+      At the origin,
+      <md>H_g(0,0)=\begin{pmatrix}2 \amp 0\\0 \amp 2\end{pmatrix},</md>
+      which is positive definite.
+    </p>
+
+    <p>
+      But the origin is not a critical point:
+      <md>\nabla g(0,0)=(1,0).</md>
+      In fact,
+      <md>g(-t,0)=-t+t^2\lt 0=g(0,0)</md>
+      for small positive <m>t</m>. So the origin is not a local minimum.
+    </p>
+
+    <p>
+      The Hessian tells us how the function bends. If the function is still sloping, the slope
+      can dominate the bending.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s4-why-continuity-condition">
+    <title>Why the continuity condition is needed</title>
+
+    <p>
+      The second derivative test also needs the second-order approximation to be valid. A
+      Hessian computed at one point can mislead us if nearby second derivatives behave badly.
+    </p>
+
+    <p>
+      Define
+      <md>\Phi(x,y)=\begin{cases}x^2+y^2-8\dfrac{x^2y^2}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[3mm]0, \amp (x,y)=(0,0).\end{cases}</md>
+      At the origin,
+      <md>\nabla \Phi(0,0)=\mathbf 0.</md>
+      Along the coordinate axes,
+      <md>\Phi(x,0)=x^2,\qquad \Phi(0,y)=y^2.</md>
+      A direct calculation gives
+      <md>\Phi_{xx}(0,0)=2,\qquad \Phi_{xy}(0,0)=0,\qquad \Phi_{yx}(0,0)=0,\qquad \Phi_{yy}(0,0)=2.</md>
+      So the Hessian at the origin is
+      <md>H_\Phi(0,0)=\begin{pmatrix}2 \amp 0\\0 \amp 2\end{pmatrix},</md>
+      which is positive definite.
+    </p>
+
+    <p>
+      If the second derivative test applied, it would predict a local minimum. But along the
+      line
+      <md>y=x=t,</md>
+      we get
+      <md>
+        <mrow>\Phi(t,t)\amp=t^2+t^2-8\frac{t^4}{2t^2}</mrow>
+        <mrow>\amp=2t^2-4t^2</mrow>
+        <mrow>\amp=-2t^2.</mrow>
+      </md>
+      So
+      <md>\Phi(t,t)\lt \Phi(0,0)</md>
+      for every nonzero <m>t</m> close to <m>0</m>. The origin is not a local minimum.
+    </p>
+
+    <p>
+      The second partials exist at the origin, but they are not continuous near the origin.
+      The quadratic approximation is not trustworthy here. The continuity condition in the test
+      protects us from this kind of behavior.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s4-degenerate-hessians">
+    <title>Degenerate Hessians</title>
+
+    <p>
+      If
+      <md>\Delta=0,</md>
+      the second derivative test gives no conclusion. This does not mean the point is unusual
+      or impossible to classify. It means the quadratic part does not decide.
+    </p>
+
+    <example xml:id="c9s4-ex-degenerate-min">
+      <title>Degenerate Hessian with a minimum</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^4+y^4.</md>
+          At the origin,
+          <md>\nabla f(0,0)=\mathbf 0.</md>
+          The Hessian is
+          <md>H_f(0,0)=\begin{pmatrix}0 \amp 0\\0 \amp 0\end{pmatrix}.</md>
+          So
+          <md>\Delta=0.</md>
+          The second derivative test says nothing.
+        </p>
+        <p>
+          But the origin is clearly a local minimum, because
+          <md>x^4+y^4\ge0,</md>
+          with equality only at
+          <md>(0,0).</md>
+          Here the first nonzero part is fourth order, not second order.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c9s4-ex-degenerate-saddle">
+      <title>The same degenerate Hessian with a saddle</title>
+      <statement>
+        <p>
+          Let
+          <md>g(x,y)=x^4-y^4.</md>
+          Again
+          <md>\nabla g(0,0)=\mathbf 0,</md>
+          and again
+          <md>H_g(0,0)=\begin{pmatrix}0 \amp 0\\0 \amp 0\end{pmatrix}.</md>
+          The Hessian is exactly the same as in the previous example.
+        </p>
+        <p>
+          But now
+          <md>g(t,0)=t^4\gt 0,</md>
+          while
+          <md>g(0,t)=-t^4\lt 0.</md>
+          So the origin is a saddle point.
+        </p>
+        <p>
+          The same Hessian produced a minimum in one function and a saddle in another. A
+          degenerate Hessian does not carry enough information.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      When the test is degenerate, we look for another idea: higher-order terms, special
+      factoring, restrictions to curves, or a direct inequality.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c9s4-practical-checklist">
+    <title>A practical checklist</title>
+
+    <p>
+      For an interior optimization problem with a twice continuously differentiable function of
+      two variables:
+    </p>
+
+    <table xml:id="c9s4-tab-checklist">
+      <title>Checklist for interior critical points.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Step</cell>
+          <cell>Action</cell>
+        </row>
+        <row>
+          <cell>1</cell>
+          <cell>Find critical points by solving <m>f_x=0,\ f_y=0</m>.</cell>
+        </row>
+        <row>
+          <cell>2</cell>
+          <cell>Compute <m>A=f_{xx},\ B=f_{xy},\ C=f_{yy}</m>.</cell>
+        </row>
+        <row>
+          <cell>3</cell>
+          <cell>At each critical point, compute <m>\Delta=AC-B^2</m>.</cell>
+        </row>
+        <row>
+          <cell>4</cell>
+          <cell>Use the sign of <m>\Delta</m> and <m>A</m> to classify when possible.</cell>
+        </row>
+        <row>
+          <cell>5</cell>
+          <cell>If <m>\Delta=0</m>, use another method.</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      This checklist is for interior critical points. It does not check boundaries. It also
+      does not handle constraints.
+    </p>
+
+    <p>
+      That limitation matters. A marble rolling on a circular track wrapped around a hill
+      cannot move in every direction. The ordinary gradient may not be zero at the highest
+      point on the track, because the steepest uphill direction may point off the track. To
+      optimize when motion is restricted, we need a new first-order condition. It will look
+      strange at first:
+      <md>\nabla f=\lambda \nabla g.</md>
+      The number <m>\lambda</m> is a Lagrange multiplier.
+    </p>
+  </subsection>
+</section>

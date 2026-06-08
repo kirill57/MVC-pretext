@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch04-curves-coordinates-surfaces.tex, Section 4.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-4-parametric-surfaces" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Parametric surfaces</title>
+
+  <p>
+    <xref ref="sec-4-quadric-surfaces-and-level-surfaces"/> described surfaces by equations:
+    <md>x^2+y^2+z^2=9, \qquad z=x^2-y^2, \qquad F(x,y,z)=c.</md>
+    An equation tells us which points belong to a surface. But it does not tell us how to
+    walk on the surface, how to draw a grid on it, or how to measure a small tilted patch.
+  </p>
+
+  <p>For that, we need parameters.</p>
+
+  <p>
+    A curve used one parameter:
+    <md>\mathbf r(t).</md>
+    A surface uses two:
+    <md>\mathbf r(u,v).</md>
+    One parameter can move a point along a curve. Two parameters can move a point across
+    a sheet.
+  </p>
+
+  <subsection xml:id="c4s5-subsec-surfaces-as-moving-curves">
+    <title>Surfaces as moving curves</title>
+
+    <p>
+      Start with a round pipe of radius <m>2</m> and height <m>5</m>. A point on the pipe can be
+      described by two choices:
+      <md>\text{angle around the pipe},\qquad \text{height along the pipe}.</md>
+      Let the angle be <m>\theta</m> and the height be <m>z</m>. Then
+      <md>\mathbf r(\theta,z) = (2\cos\theta,2\sin\theta,z), \qquad 0\le \theta\le2\pi,\quad 0\le z\le5.</md>
+    </p>
+
+    <p>
+      If we hold <m>z</m> fixed, the point moves around a circle:
+      <md>\theta\mapsto (2\cos\theta,2\sin\theta,z).</md>
+      If we hold <m>\theta</m> fixed, the point moves up a vertical line:
+      <md>z\mapsto (2\cos\theta,2\sin\theta,z).</md>
+      The surface is made by letting both motions happen.
+    </p>
+
+    <figure xml:id="c4s5-fig-cylinder-from-rectangle">
+      <caption>The rectangle of parameter values is wrapped into a cylinder.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.82, &gt;=stealth]
+            % parameter domain
+            \begin{scope}
+                \draw[-&gt;] (-0.2,0) -- (4.4,0) node[right] {\(\theta\)};
+                \draw[-&gt;] (0,-0.2) -- (0,3.4) node[above] {\(z\)};
+
+                \draw[thick] (0,0) rectangle (4,3);
+
+                \foreach \x in {0.8,1.6,2.4,3.2}
+                    \draw[gray!45] (\x,0) -- (\x,3);
+                \foreach \y in {0.6,1.2,1.8,2.4}
+                    \draw[gray!45] (0,\y) -- (4,\y);
+
+                \node at (2,-0.65) {parameter rectangle};
+                \node[left] at (0,3) {\(5\)};
+                \node[below] at (4,0) {\(2\pi\)};
+            \end{scope}
+
+            % arrow
+            \draw[-&gt;, thick] (4.7,1.5) -- (6.4,1.5) node[midway, above] {\(\mathbf r\)};
+
+            % cylinder
+            \begin{scope}[shift={(8,0.2)}]
+                \draw[-&gt;] (-2.7,0) -- (2.9,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.5) -- (0,3.9) node[above] {\(z\)};
+
+                \draw[gray!50] (0,0) ellipse (1.5 and 0.38);
+                \draw[thick] (-1.5,0) -- (-1.5,3);
+                \draw[thick] (1.5,0) -- (1.5,3);
+                \draw[thick] (0,3) ellipse (1.5 and 0.38);
+
+                \foreach \h in {0.6,1.2,1.8,2.4}
+                    \draw[gray!45] (0,\h) ellipse (1.5 and 0.38);
+
+                \foreach \x in {-1.0,0,1.0}
+                    \draw[gray!45] (\x,0.1) -- (\x,2.9);
+
+                \node at (0,-0.95) {cylindrical surface};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <definition xml:id="c4s5-def-parametrized-surface">
+      <title>Parametrized surface</title>
+      <statement>
+        <p>
+          A <term>parametrized surface</term> in <m>\mathbb R^3</m> is a continuous function
+          <md>\mathbf r:D\to\mathbb R^3,</md>
+          where <m>D</m> is a region in the <m>uv</m>-plane. We write
+          <md>\mathbf r(u,v)=\bigl(x(u,v),y(u,v),z(u,v)\bigr).</md>
+          The <term>image</term> of the parametrization is the set of points
+          <md>\{\mathbf r(u,v):(u,v)\in D\}.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The region <m>D</m> is called the <term>parameter domain</term>. It might be a rectangle, a
+      disk, a triangle, or some other region.
+    </p>
+
+    <p>
+      We often use the same phrase <q>parametric surface</q> for both the map
+      <md>\mathbf r(u,v)</md>
+      and the geometric surface it traces. When the distinction matters, we will say
+      <term>parametrization</term> for the map and <term>surface</term> for the image.
+    </p>
+
+    <p>
+      The continuity condition matters for the same reason it mattered for curves. A surface
+      should not tear or teleport.
+    </p>
+
+    <example xml:id="c4s5-ex-discontinuous-rule">
+      <title>A discontinuous rule is not a sheet</title>
+      <statement>
+        <p>
+          Define
+          <md>\mathbf r(u,v)= \begin{cases} (u,v,0), \amp u\lt 0,\\ (u,v,1), \amp u\ge0, \end{cases}</md>
+          on the square
+          <md>-1\le u\le1,\qquad -1\le v\le1.</md>
+          The left half of the square is sent to the plane <m>z=0</m>, while the right half is sent to
+          the plane <m>z=1</m>. Along <m>u=0</m>, the image jumps upward by one unit.
+        </p>
+        <p>
+          This is not one continuous surface patch. It is two half-sheets separated by a tear.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c4s5-subsec-graphs-as-parametrized-surfaces">
+    <title>Graphs as parametrized surfaces</title>
+
+    <p>
+      Every graph
+      <md>z=f(x,y)</md>
+      has a natural parametrization:
+      <md>\mathbf r(u,v)=(u,v,f(u,v)).</md>
+      The parameters are just the input coordinates.
+    </p>
+
+    <example xml:id="c4s5-ex-bowl-as-surface">
+      <title>A bowl as a parametrized surface</title>
+      <statement>
+        <p>
+          Consider the elliptic bowl
+          <md>z=4-\frac{x^2}{9}-\frac{y^2}{4}.</md>
+          Using
+          <md>x=u,\qquad y=v,</md>
+          we get
+          <md>\mathbf r(u,v) = \left( u,\, v,\, 4-\frac{u^2}{9}-\frac{v^2}{4} \right).</md>
+          If we use all pairs <m>(u,v)</m>, this traces the whole paraboloid. If we restrict the
+          domain, for example to
+          <md>-3\le u\le3,\qquad -2\le v\le2,</md>
+          we get only a rectangular patch of the bowl.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is one reason parametrizations are useful. The same formula can describe a whole
+      surface or only a chosen piece of it, depending on the parameter domain.
+    </p>
+
+    <p>
+      A plane from Chapter 1 is also a parametrized surface:
+      <md>\mathbf r(u,v)=P+u\mathbf a+v\mathbf b.</md>
+      The two parameters say how far to move in the two plane directions.
+    </p>
+
+    <example xml:id="c4s5-ex-affine-plane-as-surface">
+      <title>An affine plane as a parametrized surface</title>
+      <statement>
+        <p>
+          Let
+          <md>P=(1,0,2),\qquad \mathbf a=(2,1,0),\qquad \mathbf b=(0,1,3).</md>
+          Then
+          <md>\mathbf r(u,v) = (1,0,2)+u(2,1,0)+v(0,1,3).</md>
+          So
+          <md>\mathbf r(u,v)=(1+2u,\;u+v,\;2+3v).</md>
+          This is the plane through <m>P</m> spanned by the directions <m>\mathbf a</m> and
+          <m>\mathbf b</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The formula
+      <md>P+u\mathbf a+v\mathbf b</md>
+      is the flat version of a surface. A general parametrized surface is what happens when
+      the two directions are allowed to bend as we move.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s5-subsec-coordinate-grids">
+    <title>Coordinate grids on surfaces</title>
+
+    <p>A parametrization does more than trace points. It brings a grid with it.</p>
+
+    <p>
+      For a surface
+      <md>\mathbf r(u,v),</md>
+      there are two natural families of curves.
+    </p>
+
+    <p>
+      If we hold <m>u=u_0</m> fixed, we get the curve
+      <md>v\mapsto \mathbf r(u_0,v).</md>
+      If we hold <m>v=v_0</m> fixed, we get the curve
+      <md>u\mapsto \mathbf r(u,v_0).</md>
+      These are called <term>coordinate curves</term> or <term>grid curves</term>.
+    </p>
+
+    <definition xml:id="c4s5-def-grid-curves">
+      <title>Grid curves on a parametrized surface</title>
+      <statement>
+        <p>
+          For a parametrized surface
+          <md>\mathbf r(u,v),</md>
+          the curves
+          <md>\mathbf r(u_0,v)</md>
+          and
+          <md>\mathbf r(u,v_0)</md>
+          are called the <term>grid curves</term> of the parametrization.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      On the cylinder
+      <md>\mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),</md>
+      the grid curves are easy to see.
+    </p>
+
+    <p>
+      Holding <m>z</m> fixed gives horizontal circles. Holding <m>\theta</m> fixed gives vertical
+      lines.
+    </p>
+
+    <p>On a sphere, the same idea becomes latitude and longitude.</p>
+
+    <example xml:id="c4s5-ex-latitude-longitude">
+      <title>Latitude and longitude as grid curves</title>
+      <statement>
+        <p>
+          The sphere of radius <m>3</m> can be parametrized by
+          <md>\mathbf r(\theta,\phi) = (3\sin\phi\cos\theta,\, 3\sin\phi\sin\theta,\, 3\cos\phi),</md>
+          where
+          <md>0\le\theta\le2\pi,\qquad 0\le\phi\le\pi.</md>
+          Here <m>\theta</m> goes around the <m>z</m>-axis, and <m>\phi</m> measures angle down from the
+          positive <m>z</m>-axis.
+        </p>
+        <p>
+          If <m>\phi</m> is fixed, then
+          <md>z=3\cos\phi</md>
+          is fixed, and the point moves around a circle of latitude.
+        </p>
+        <p>
+          If <m>\theta</m> is fixed, then the point moves along a meridian from the north pole to the
+          south pole.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This parametrization also shows a small warning. At
+      <md>\phi=0</md>
+      all values of <m>\theta</m> give the same point:
+      <md>(0,0,3).</md>
+      At
+      <md>\phi=\pi,</md>
+      all values of <m>\theta</m> give
+      <md>(0,0,-3).</md>
+      Also, <m>\theta=0</m> and <m>\theta=2\pi</m> trace the same meridian. So the parametrization
+      is not one-to-one on the full parameter rectangle.
+    </p>
+
+    <p>
+      That is not a mistake. Many useful parametrizations repeat some points. The important
+      thing is to notice when it happens.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s5-subsec-tangent-directions">
+    <title>Tangent directions from parameter curves</title>
+
+    <p>
+      A parametrization gives us two grid curves through most points. Each grid curve has
+      a tangent direction.
+    </p>
+
+    <p>
+      For
+      <md>\mathbf r(u,v),</md>
+      we define
+      <md>\mathbf r_u</md>
+      by holding <m>v</m> fixed and differentiating with respect to <m>u</m>. We define
+      <md>\mathbf r_v</md>
+      by holding <m>u</m> fixed and differentiating with respect to <m>v</m>.
+    </p>
+
+    <p>
+      This notation will become more systematic when we study partial derivatives. For now,
+      it is only single-variable calculus applied to the two parameter curves.
+    </p>
+
+    <example xml:id="c4s5-ex-tangent-directions-cylinder">
+      <title>Tangent directions on a cylinder</title>
+      <statement>
+        <p>
+          For the cylinder
+          <md>\mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),</md>
+          differentiate with respect to <m>\theta</m>:
+          <md>\mathbf r_\theta(\theta,z)=(-2\sin\theta,2\cos\theta,0).</md>
+          This points around the cylinder.
+        </p>
+        <p>
+          Differentiate with respect to <m>z</m>:
+          <md>\mathbf r_z(\theta,z)=(0,0,1).</md>
+          This points straight upward.
+        </p>
+        <p>
+          At
+          <md>\theta=\frac{\pi}{3},\qquad z=2,</md>
+          the point on the cylinder is
+          <md>\mathbf r\left(\frac{\pi}{3},2\right) = (1,\sqrt3,2).</md>
+          The two tangent directions are
+          <md>\mathbf r_\theta\left(\frac{\pi}{3},2\right) = (-\sqrt3,1,0)</md>
+          and
+          <md>\mathbf r_z\left(\frac{\pi}{3},2\right) = (0,0,1).</md>
+          One direction goes around the pipe. The other goes up the pipe.
+        </p>
+      </statement>
+    </example>
+
+    <figure xml:id="c4s5-fig-cylinder-tangent-directions">
+      <caption>The two parameter directions on a cylinder give two tangent directions
+      <m>\mathbf r_\theta</m> (around) and <m>\mathbf r_z</m> (up); their cross product
+      <m>\mathbf r_\theta\times\mathbf r_z</m> is the outward normal.
+      (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="62%">
+        <asymptote>
+        // 3-D interactive (WebGL) figure.
+        import graph3;
+        size(8cm);
+        currentprojection=orthographic(5,3,2.6);
+
+        real a=1.4, h=2.6;
+        surface cyl=surface(new triple(pair t){return (a*cos(t.x), a*sin(t.x), t.y);},(0,0),(2pi,h),40,12);
+        draw(cyl, rgb(0.70,0.78,0.90)+opacity(0.55), meshpen=rgb(0.45,0.5,0.65)+linewidth(0.15pt));
+        draw(circle((0,0,h),a,(0,0,1)), black+linewidth(0.7pt));
+
+        real th=35*pi/180, zP=1.7;
+        triple P=(a*cos(th), a*sin(th), zP);
+        triple rtheta=1.1*(-sin(th), cos(th), 0);   // d r / d theta  (around the circle)
+        triple rz=(0,0,1.1);                          // d r / d z      (up the axis)
+        triple n=1.1*(cos(th), sin(th), 0);           // r_theta x r_z  = outward radial normal
+
+        draw(P--(P+rtheta), blue+linewidth(1.4pt), Arrow3);
+        draw(P--(P+rz),     deepgreen+linewidth(1.4pt), Arrow3);
+        draw(P--(P+n),      red+linewidth(1.4pt), Arrow3);
+        label("$\mathbf r_\theta$", P+rtheta, NW);
+        label("$\mathbf r_z$", P+rz, N);
+        label("$\mathbf r_\theta\times\mathbf r_z$", P+n, E);
+        dot(P); label("$P$", P, SW);
+
+        draw(O--(2.4,0,0), gray, Arrow3); draw(O--(0,2.4,0), gray, Arrow3); draw(O--(0,0,3.2), gray, Arrow3);
+        label("$x$",(2.4,0,0),S); label("$y$",(0,2.4,0),E); label("$z$",(0,0,3.2),N);
+        </asymptote>
+      </image>
+    </figure>
+
+    <p>
+      The two tangent directions often span the tangent plane to the surface. But this only
+      works when they are genuinely two different directions.
+    </p>
+
+    <definition xml:id="c4s5-def-regular-point">
+      <title>Regular point of a parametrized surface</title>
+      <statement>
+        <p>
+          Suppose the derivatives
+          <md>\mathbf r_u(u_0,v_0), \qquad \mathbf r_v(u_0,v_0)</md>
+          exist. The parametrization is called <term>regular</term> at <m>(u_0,v_0)</m> if
+          <md>\mathbf r_u(u_0,v_0)\times \mathbf r_v(u_0,v_0)\neq \mathbf 0.</md>
+          Equivalently, the two tangent directions are not parallel and neither has collapsed
+          enough to make the parallelogram have zero area.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      This condition is not just technical language. It tells us when the parameters really
+      make a two-dimensional patch.
+    </p>
+
+    <example xml:id="c4s5-ex-regularity-cone-tip">
+      <title>Why regularity matters: the tip of a cone</title>
+      <statement>
+        <p>
+          The upper cone
+          <md>z=\sqrt{x^2+y^2}</md>
+          has the parametrization
+          <md>\mathbf r(s,\theta) = (s\cos\theta,s\sin\theta,s), \qquad s\ge0,\quad 0\le\theta\le2\pi.</md>
+          For <m>s\gt0</m>, the parameters describe points away from the tip.
+        </p>
+        <p>
+          At the tip,
+          <md>s=0,</md>
+          all angles give the same point:
+          <md>\mathbf r(0,\theta)=(0,0,0).</md>
+          The tangent directions are
+          <md>\mathbf r_s=(\cos\theta,\sin\theta,1),</md>
+          and
+          <md>\mathbf r_\theta=(-s\sin\theta,s\cos\theta,0).</md>
+          At <m>s=0</m>,
+          <md>\mathbf r_\theta=(0,0,0).</md>
+          So
+          <md>\mathbf r_s\times\mathbf r_\theta=\mathbf 0.</md>
+          The parametrization is not regular at the tip.
+        </p>
+        <p>
+          Geometrically, this matches what we see. The cone has a sharp point. There is no
+          single tangent plane there.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      So a parametrization may still describe a surface even at a nonregular point, but the
+      calculus we want later needs regular points. Surface area, flux, and tangent planes all
+      depend on small surface patches behaving like small parallelograms.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c4s5-subsec-orientation-preview">
+    <title>Orientation preview: choosing a side of a surface</title>
+
+    <p>
+      Recall from Chapter 2 that the order of two vectors matters for signed area:
+      <md>\mathbf a\wedge\mathbf b=-\mathbf b\wedge\mathbf a.</md>
+      The same sign issue appears on surfaces.
+    </p>
+
+    <p>
+      For the cylinder
+      <md>\mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),</md>
+      we computed
+      <md>\mathbf r_\theta=(-2\sin\theta,2\cos\theta,0), \qquad \mathbf r_z=(0,0,1).</md>
+      Their cross product is
+      <md>
+        <mrow>\mathbf r_\theta\times \mathbf r_z \amp= (2\cos\theta,2\sin\theta,0).</mrow>
+      </md>
+      This points outward from the cylinder.
+    </p>
+
+    <p>
+      But if we reverse the parameter order, using
+      <md>\widetilde{\mathbf r}(z,\theta)=\mathbf r(\theta,z),</md>
+      then the corresponding normal is
+      <md>\mathbf r_z\times\mathbf r_\theta = -(\mathbf r_\theta\times\mathbf r_z),</md>
+      which points inward.
+    </p>
+
+    <p>Same cylinder. Opposite orientation.</p>
+
+    <definition xml:id="c4s5-def-orientation-informal">
+      <title>Orientation, informally</title>
+      <statement>
+        <p>
+          An <term>orientation</term> of a two-sided surface is a consistent choice of side, or
+          equivalently a consistent choice of normal direction.
+        </p>
+        <p>
+          For a parametrized patch, the order of the parameters gives an orientation through
+          <md>\mathbf r_u\times\mathbf r_v.</md>
+          Reversing the parameter order reverses the orientation.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      This will matter later in exactly the same way orientation mattered for curves. If we
+      walk around a closed curve in the opposite direction, a line integral changes sign. If we
+      choose the opposite side of a surface, a flux integral changes sign.
+    </p>
+
+    <p>
+      In differential-form language, a small positive parameter patch
+      <md>du\wedge dv</md>
+      is sent to an oriented patch on the surface. Swapping the parameters changes
+      <md>du\wedge dv</md>
+      to
+      <md>dv\wedge du=-du\wedge dv.</md>
+      The sign is not decoration. It records which side of the surface we have chosen.
+    </p>
+
+    <p>
+      Not every surface allows a consistent choice of side. A Möbius strip is the famous
+      warning: if you walk around it, a normal vector that began on one side returns on the
+      other side. We will not need that example for most computations, but it explains why
+      orientation is something we choose carefully instead of assuming automatically.
+    </p>
+
+    <p>
+      A parametrized surface is therefore more than a picture. It is a map from a flat
+      parameter region onto a possibly curved sheet. It carries grid curves, tangent directions,
+      and an orientation. Those are exactly the pieces that surface integrals will need later.
+    </p>
+
+    <p>
+      For now, Chapter 4 has done its job. We can describe curves, coordinates, surfaces,
+      and parameter grids before differentiating or integrating them seriously. The next page
+      collects those tools. After that, the first parameter becomes time again, and a curve
+      starts moving.
+    </p>
+  </subsection>
+</section>

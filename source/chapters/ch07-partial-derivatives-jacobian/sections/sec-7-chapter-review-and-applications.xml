@@ -1,0 +1,1163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch07-partial-derivatives-jacobian.tex, Section 7.7.
+     Status: CONVERTED. -->
+<section xml:id="sec-7-chapter-review-and-applications" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter review and applications</title>
+
+  <introduction>
+    <p>
+      This chapter began with coordinate slopes and ended with a matrix. The path was shorter
+      than it may have looked:
+      <md>
+        \text{small change}
+        \quad\longrightarrow\quad
+        \text{linear prediction}
+        \quad\longrightarrow\quad
+        \text{matrix of that prediction}.
+      </md>
+    </p>
+    <p>
+      The derivative in several variables is not a number. It is the best linear rule for
+      predicting what a function does to a small displacement.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c7s7-map-of-the-chapter">
+    <title>A map of the chapter</title>
+
+    <dl>
+      <li>
+        <title><m>f_x(a,b)</m></title>
+        <p>The rate of change when <m>x</m> moves and <m>y</m> is held fixed.</p>
+      </li>
+      <li>
+        <title><m>f_y(a,b)</m></title>
+        <p>The rate of change when <m>y</m> moves and <m>x</m> is held fixed.</p>
+      </li>
+      <li>
+        <title><m>D_{\mathbf u}f(\mathbf p)</m></title>
+        <p>The rate of change at <m>\mathbf p</m> in the unit direction <m>\mathbf u</m>.</p>
+      </li>
+      <li>
+        <title><m>\nabla f(\mathbf p)</m></title>
+        <p>
+          The vector of partial derivatives. When the function is differentiable,
+          <md>D_{\mathbf u}f(\mathbf p)=\nabla f(\mathbf p)\cdot\mathbf u.</md>
+        </p>
+      </li>
+      <li>
+        <title><m>Df(\mathbf p)</m></title>
+        <p>
+          The total derivative: the linear function that gives the first-order change in
+          <m>f</m> near <m>\mathbf p</m>.
+        </p>
+      </li>
+      <li>
+        <title><m>df_{\mathbf p}</m></title>
+        <p>
+          Another name for <m>Df(\mathbf p)</m>. Written as
+          <md>df_{\mathbf p}=f_x(\mathbf p)\,dx+f_y(\mathbf p)\,dy</md>
+          in two variables.
+        </p>
+      </li>
+      <li>
+        <title><m>1</m>-form</title>
+        <p>
+          A rule such as
+          <md>P\,dx+Q\,dy</md>
+          that eats a small displacement and returns a number. A differential <m>df</m> is the
+          first example.
+        </p>
+      </li>
+      <li>
+        <title>tangent plane</title>
+        <p>
+          The graph of the linear approximation:
+          <md>z=f(a,b)+f_x(a,b)(x-a)+f_y(a,b)(y-b).</md>
+        </p>
+      </li>
+      <li>
+        <title><m>J_F(\mathbf p)</m></title>
+        <p>
+          The Jacobian matrix of a transformation <m>F</m>. Its rows are the differentials of
+          the component functions.
+        </p>
+      </li>
+      <li>
+        <title><m>\det J_F(\mathbf p)</m></title>
+        <p>
+          For a map <m>\mathbb R^n\to\mathbb R^n</m>, the signed local area or volume scaling
+          factor.
+        </p>
+      </li>
+    </dl>
+
+    <p>The safest practical test was this:</p>
+    <p>
+      <alert>If the first partial derivatives are continuous near the point, then the function
+      is differentiable there.</alert>
+    </p>
+    <p>The warning was just as important:</p>
+    <p>
+      <alert>Partial derivatives at one point do not guarantee differentiability.</alert>
+    </p>
+    <p>
+      Coordinate slices can lie. The total derivative asks for one linear approximation that
+      works in every small direction at once.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s7-one-model-four-readings">
+    <title>One model, four readings</title>
+
+    <p>
+      A vineyard has a thin protective canopy over a rectangular patch of young plants. The
+      height of the canopy above the ground is modeled by
+      <md>
+        A(x,y)
+        =
+        6+\frac25x-\frac15y-\frac{3}{100}x^2-\frac1{50}y^2,
+      </md>
+      where <m>x</m> and <m>y</m> are measured in meters, and <m>A</m> is measured in meters.
+    </p>
+    <p>
+      At the point
+      <md>P=(3,2),</md>
+      the height is
+      <md>
+        <mrow>A(3,2) \amp= 6+\frac65-\frac25-\frac{27}{100}-\frac4{50}</mrow>
+        <mrow>\amp= \frac{129}{20}.</mrow>
+      </md>
+    </p>
+    <p>
+      First compute the partial derivatives:
+      <md>A_x(x,y)=\frac25-\frac{3}{50}x,</md>
+      and
+      <md>A_y(x,y)=-\frac15-\frac1{25}y.</md>
+      At <m>P</m>,
+      <md>
+        A_x(3,2)=\frac{11}{50},
+        \qquad
+        A_y(3,2)=-\frac7{25}.
+      </md>
+    </p>
+    <p>
+      So a small eastward step raises the canopy at about
+      <md>\frac{11}{50}</md>
+      meter per meter, while a small northward step lowers it at about
+      <md>\frac7{25}</md>
+      meter per meter.
+    </p>
+    <p>
+      The gradient is
+      <md>\nabla A(3,2)=\left(\frac{11}{50},-\frac7{25}\right).</md>
+    </p>
+    <p>
+      The differential is the linear function
+      <md>
+        \boxed{
+        dA_{(3,2)}=
+        \frac{11}{50}\,dx-\frac7{25}\,dy.
+        }
+      </md>
+      If a worker moves by
+      <md>
+        \Delta x=0.20,
+        \qquad
+        \Delta y=-0.10,
+      </md>
+      then the first-order height change is
+      <md>
+        <mrow>dA_{(3,2)}(0.20,-0.10) \amp= \frac{11}{50}(0.20)-\frac7{25}(-0.10)</mrow>
+        <mrow>\amp= 0.044+0.028</mrow>
+        <mrow>\amp= 0.072.</mrow>
+      </md>
+    </p>
+    <p>
+      The exact height change is
+      <md>
+        0.072-\frac{3}{100}(0.20)^2-\frac1{50}(-0.10)^2
+        =
+        0.0706.
+      </md>
+      The differential predicted the first-order part. The missing
+      <md>-0.0014</md>
+      came from the quadratic terms.
+    </p>
+    <p>
+      Now take the unit direction
+      <md>\mathbf u=\left(\frac35,\frac45\right).</md>
+      The directional derivative at <m>P</m> is
+      <md>
+        <mrow>D_{\mathbf u}A(3,2) \amp= \nabla A(3,2)\cdot \mathbf u</mrow>
+        <mrow>\amp= \frac{11}{50}\cdot\frac35 - \frac7{25}\cdot\frac45</mrow>
+        <mrow>\amp= \frac{33}{250}-\frac{56}{250}</mrow>
+        <mrow>\amp= -\frac{23}{250}.</mrow>
+      </md>
+      So moving in that direction lowers the canopy at about
+      <md>0.092</md>
+      meter per meter.
+    </p>
+    <p>
+      The tangent plane to the graph <m>z=A(x,y)</m> at <m>(3,2,A(3,2))</m> is
+      <md>
+        \boxed{
+        z=
+        \frac{129}{20}
+        +
+        \frac{11}{50}(x-3)
+        -
+        \frac7{25}(y-2).
+        }
+      </md>
+    </p>
+    <p>
+      These are four different readings of the same first-order data:
+      <md>
+        A_x,\ A_y,
+        \qquad
+        \nabla A,
+        \qquad
+        dA,
+        \qquad
+        \text{tangent plane}.
+      </md>
+      They are not four separate ideas. They are four ways of seeing the same local linear
+      approximation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c7s7-common-traps">
+    <title>Common traps</title>
+
+    <dl>
+      <li>
+        <title><q>The partial derivatives exist, so the function is differentiable.</q></title>
+        <p>
+          False. Partial derivatives at one point only check coordinate slices.
+          Differentiability requires a linear approximation that works in all small directions.
+        </p>
+      </li>
+      <li>
+        <title><q>The directional derivative can use any direction vector.</q></title>
+        <p>
+          Use a unit vector if the answer is meant to be rate per unit distance. A non-unit
+          vector mixes direction with speed.
+        </p>
+      </li>
+      <li>
+        <title><q>The gradient and the differential are the same object.</q></title>
+        <p>
+          They have the same coefficients, but different roles. The gradient is a vector. The
+          differential is a linear function:
+          <md>df_{\mathbf p}(\mathbf h)=\nabla f(\mathbf p)\cdot\mathbf h.</md>
+        </p>
+      </li>
+      <li>
+        <title><q>The tangent plane formula always works if <m>f_x</m> and <m>f_y</m> exist.</q></title>
+        <p>
+          False. The formula is a tangent plane only when <m>f</m> is differentiable at the
+          point.
+        </p>
+      </li>
+      <li>
+        <title><q>The Jacobian matrix is always square.</q></title>
+        <p>
+          No. If
+          <md>F:\mathbb R^n\to\mathbb R^m,</md>
+          then <m>J_F</m> is an <m>m\times n</m> matrix. It is square only when <m>m=n</m>.
+        </p>
+      </li>
+      <li>
+        <title><q>Every Jacobian matrix has a determinant.</q></title>
+        <p>
+          Only square matrices have determinants. A parametrized surface
+          <md>\mathbf s:\mathbb R^2\to\mathbb R^3</md>
+          has a <m>3\times2</m> Jacobian, whose columns are tangent directions.
+        </p>
+      </li>
+    </dl>
+  </subsection>
+
+  <exercises xml:id="c7s7-ex-concept-checks">
+    <title>Concept checks</title>
+
+    <exercise xml:id="c7s7-cc-1">
+      <statement>
+        <p>Explain, in words, what <m>f_x(a,b)</m> measures. What is held fixed?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-2">
+      <statement>
+        <p>Explain the difference between a partial derivative and a directional derivative.</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-3">
+      <statement>
+        <p>Why must the direction vector in <m>D_{\mathbf u}f</m> usually be a unit vector?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-4">
+      <statement>
+        <p>
+          What does the gradient formula
+          <md>D_{\mathbf u}f(\mathbf p)=\nabla f(\mathbf p)\cdot\mathbf u</md>
+          say geometrically?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-5">
+      <statement>
+        <p>
+          Suppose
+          <md>\nabla f(\mathbf p)=\mathbf 0.</md>
+          What does the gradient formula say about all directional derivatives at
+          <m>\mathbf p</m>, assuming <m>f</m> is differentiable there?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-6">
+      <statement>
+        <p>
+          What is the difference between the statement
+          <md>f(a+\Delta x,b+\Delta y)-f(a,b)\to0</md>
+          and the differentiability error condition
+          <md>\frac{|R(\Delta x,\Delta y)|}{\sqrt{(\Delta x)^2+(\Delta y)^2}}\to0?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-7">
+      <statement>
+        <p>Why does differentiability imply continuity?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-8">
+      <statement>
+        <p>Give a sentence explaining why continuous partial derivatives imply differentiability.</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-9">
+      <statement>
+        <p>
+          What is the differential
+          <md>df_{\mathbf p}</md>
+          as an object? What does it eat, and what does it return?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-10">
+      <statement>
+        <p>
+          In the expression
+          <md>df=f_x\,dx+f_y\,dy,</md>
+          what do <m>dx</m> and <m>dy</m> do to a displacement vector?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-11">
+      <statement>
+        <p>
+          For a transformation
+          <md>F=(F_1,F_2,F_3):\mathbb R^2\to\mathbb R^3,</md>
+          what are the rows of <m>J_F</m>? What are the columns?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-12">
+      <statement>
+        <p>
+          What does
+          <md>\det J_F(\mathbf p)\lt 0</md>
+          mean geometrically for a map <m>F:\mathbb R^2\to\mathbb R^2</m>?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-13">
+      <statement>
+        <p>
+          Why does the function
+          <md>
+            f(x,y)=
+            \begin{cases}
+            \dfrac{xy}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+            0, \amp (x,y)=(0,0)
+            \end{cases}
+          </md>
+          show that partial derivatives at a point do not even guarantee continuity?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-cc-14">
+      <statement>
+        <p>
+          Why does the function
+          <md>
+            g(x,y)=
+            \begin{cases}
+            \dfrac{x^2y}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+            0, \amp (x,y)=(0,0)
+            \end{cases}
+          </md>
+          show that continuity plus partial derivatives at a point still does not guarantee
+          differentiability?
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises xml:id="c7s7-ex-skills-partial">
+    <title>Skills: partial derivatives</title>
+
+    <exercise xml:id="c7s7-skpd-1">
+      <statement>
+        <p>
+          For
+          <md>f(x,y)=x^2e^y-y\ln(1+x^2),</md>
+          find
+          <md>f_x(x,y),\qquad f_y(x,y).</md>
+          Then evaluate them at <m>(1,0)</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skpd-2">
+      <statement>
+        <p>
+          For
+          <md>h(x,y)=\sqrt{25-x^2-4y^2},</md>
+          find <m>h_x</m> and <m>h_y</m> where they exist. Describe the domain of <m>h</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skpd-3">
+      <statement>
+        <p>
+          For
+          <md>T(x,y,z)=18+\frac{4}{1+x^2+y^2}-0.7z,</md>
+          find
+          <md>T_x,\qquad T_y,\qquad T_z.</md>
+          Then evaluate them at <m>(1,0,2)</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skpd-4">
+      <statement>
+        <p>
+          For
+          <md>p(x,y,z)=\ln(x^2+y^2+z^2),</md>
+          find
+          <md>p_x,\qquad p_y,\qquad p_z.</md>
+          Where are these formulas valid?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skpd-5">
+      <statement>
+        <p>
+          Let
+          <md>C(u,v)=400+3u+4v+0.01uv.</md>
+          Find
+          <md>C_u(200,100),\qquad C_v(200,100).</md>
+          Interpret both numbers with units.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skpd-6">
+      <statement>
+        <p>
+          A surface has height
+          <md>M(x,y)=5+0.2x-0.4y+0.03xy.</md>
+          Find <m>M_x</m> and <m>M_y</m>. At <m>(10,5)</m>, is the surface rising or falling as
+          <m>x</m> increases? As <m>y</m> increases?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skpd-7">
+      <statement>
+        <p>
+          A vector field is
+          <md>\mathbf W(x,y)=(-y,x).</md>
+          Find
+          <md>\mathbf W_x(x,y),\qquad \mathbf W_y(x,y).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skpd-8">
+      <statement>
+        <p>
+          A transformation is
+          <md>F(x,y,z)=\left(x+y,\,yz,\,x^2-z\right).</md>
+          Find all first partial derivatives of its component functions.
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises xml:id="c7s7-ex-skills-directional">
+    <title>Skills: directional derivatives and gradients</title>
+
+    <exercise xml:id="c7s7-skdg-9">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^2+3y^2-xy.</md>
+          Find
+          <md>\nabla f(1,2).</md>
+          Then find the directional derivative at <m>(1,2)</m> in the direction of
+          <md>\mathbf v=(2,-1).</md>
+          Remember to normalize <m>\mathbf v</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdg-10">
+      <statement>
+        <p>
+          Let
+          <md>q(x,y)=e^{x-y}+xy.</md>
+          Find
+          <md>D_{\mathbf u}q(1,1)</md>
+          for
+          <md>\mathbf u=\left(\frac{1}{\sqrt2},\frac{1}{\sqrt2}\right).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdg-11">
+      <statement>
+        <p>
+          Let
+          <md>B(x,y)=10-\frac{x^2}{4}-y^2.</md>
+          At <m>(2,1)</m>, find the direction of fastest increase and the maximum directional
+          derivative.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdg-12">
+      <statement>
+        <p>For the same function <m>B</m>, find the direction of steepest descent at <m>(2,1)</m>.</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdg-13">
+      <statement>
+        <p>
+          Let
+          <md>T(x,y,z)=18+\frac{4}{1+x^2+y^2}-0.7z.</md>
+          At <m>(1,0,2)</m>, find the directional derivative in the unit direction
+          <md>\mathbf u=\left(0,\frac{3}{5},\frac{4}{5}\right).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdg-14">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y,z)=x^2y+yz^2.</md>
+          Find
+          <md>\nabla f(1,-1,2).</md>
+          Then find the directional derivative at that point in the direction
+          <md>\mathbf v=(1,2,2).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdg-15">
+      <statement>
+        <p>
+          Suppose
+          <md>\nabla f(3,4)=(-2,5).</md>
+          Without knowing <m>f</m>, find the directional derivative at <m>(3,4)</m> in the
+          direction
+          <md>\mathbf u=\left(\frac35,-\frac45\right).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdg-16">
+      <statement>
+        <p>
+          Suppose
+          <md>\nabla f(\mathbf p)=(0,0,0).</md>
+          What does the gradient formula predict for every directional derivative at
+          <m>\mathbf p</m>, assuming <m>f</m> is differentiable there?
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises xml:id="c7s7-ex-skills-differentials">
+    <title>Skills: differentials, linear approximation, and tangent planes</title>
+
+    <exercise xml:id="c7s7-skdt-17">
+      <statement>
+        <p>
+          Find the linear approximation to
+          <md>f(x,y)=e^{x-y}+xy</md>
+          at
+          <md>(1,1).</md>
+          Use it to estimate
+          <md>f(1.02,0.97).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdt-18">
+      <statement>
+        <p>
+          Find the tangent plane to
+          <md>z=\sqrt{36-x^2-y^2}</md>
+          at the point where
+          <md>(x,y)=(2,3).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdt-19">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y,z)=x^2y+\sin z.</md>
+          Write
+          <md>df</md>
+          at a general point <m>(x,y,z)</m>. Then evaluate <m>df</m> at
+          <md>(1,2,0).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdt-20">
+      <statement>
+        <p>
+          A rectangular box has volume
+          <md>V(x,y,z)=xyz.</md>
+          At
+          <md>(x,y,z)=(2,3,5),</md>
+          use the differential to estimate the change in volume when
+          <md>dx=0.01,\qquad dy=-0.02,\qquad dz=0.04.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdt-21">
+      <statement>
+        <p>
+          A sensor output is modeled by
+          <md>S(a,b)=\frac{a}{1+b^2}.</md>
+          Find
+          <md>dS_{(4,1)}.</md>
+          Use it to estimate the output change when
+          <md>da=-0.05,\qquad db=0.02.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdt-22">
+      <statement>
+        <p>
+          Let
+          <md>
+            f(x,y)=
+            \begin{cases}
+            \dfrac{x^2y}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+            0, \amp (x,y)=(0,0).
+            \end{cases}
+          </md>
+          Show that <m>f_x(0,0)=0</m> and <m>f_y(0,0)=0</m>. Then use the path <m>y=x</m> to
+          show that <m>f</m> is not differentiable at the origin.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdt-23">
+      <statement>
+        <p>
+          Let
+          <md>
+            f(x,y)=
+            \begin{cases}
+            x^2\sin\left(\dfrac1x\right), \amp x\ne0,\\[2mm]
+            0, \amp x=0.
+            \end{cases}
+          </md>
+          This function does not depend on <m>y</m>. Show that it is differentiable at
+          <m>(0,0)</m>, but that <m>f_x</m> is not continuous at <m>(0,0)</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skdt-24">
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=|x|+|y|.</md>
+          Do <m>f_x(0,0)</m> and <m>f_y(0,0)</m> exist? Is <m>f</m> differentiable at the
+          origin? Explain.
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises xml:id="c7s7-ex-skills-jacobian">
+    <title>Skills: Jacobian matrices</title>
+
+    <exercise xml:id="c7s7-skj-25">
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=\left(x^2-y,\,xy+y^2\right).</md>
+          Find
+          <md>J_F(x,y).</md>
+          Then find the local linear approximation to <m>F</m> at <m>(1,2)</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skj-26">
+      <statement>
+        <p>
+          Let
+          <md>G(x,y,z)=\left(x+y+z,\,x^2-yz\right).</md>
+          Find
+          <md>J_G(x,y,z).</md>
+          What is the size of this matrix, and why?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skj-27">
+      <statement>
+        <p>
+          Let
+          <md>\mathbf s(u,v)=\left(u,\,v,\,2+\frac{u^2}{4}-\frac{v^2}{9}\right).</md>
+          Find
+          <md>J_{\mathbf s}(u,v).</md>
+          Then find the tangent vectors
+          <md>\mathbf s_u(2,3),\qquad \mathbf s_v(2,3).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skj-28">
+      <statement>
+        <p>
+          Use the tangent vectors from the previous problem to write a vector equation for the
+          tangent plane to the surface at
+          <md>\mathbf s(2,3).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skj-29">
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=\left(2x+y,\,x+3y\right).</md>
+          Find
+          <md>\det J_F.</md>
+          By what factor does <m>F</m> scale signed area?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skj-30">
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=\left(x^2-y,\,x+y\right).</md>
+          Find
+          <md>\det J_F(x,y).</md>
+          At which points does the local area scaling vanish?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skj-31">
+      <statement>
+        <p>
+          Let
+          <md>X=r\cos\theta,\qquad Y=r\sin\theta.</md>
+          Find the Jacobian matrix of the transformation
+          <md>(r,\theta)\mapsto (X,Y).</md>
+          Then show that
+          <md>\det J = r.</md>
+          This number will return when polar coordinates are used in double integrals.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skj-32">
+      <statement>
+        <p>
+          For the same polar transformation, compute
+          <md>dX\wedge dY</md>
+          and show that
+          <md>dX\wedge dY=r\,dr\wedge d\theta.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skj-33">
+      <statement>
+        <p>
+          Let
+          <md>X=x+y,\qquad Y=x-y.</md>
+          Compute
+          <md>dX\wedge dY.</md>
+          What does the sign tell you about orientation?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-skj-34">
+      <statement>
+        <p>
+          Let
+          <md>F:\mathbb R^2\to\mathbb R^3</md>
+          be defined by
+          <md>F(u,v)=(u+v,u-v,uv).</md>
+          Find <m>J_F(u,v)</m>. Why does it not make sense to ask for <m>\det J_F</m>?
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises xml:id="c7s7-ex-project">
+    <title>Project: sensitivity analysis in a model with several inputs</title>
+
+    <introduction>
+      <p>
+        A differential is a practical tool for sensitivity analysis. It tells which input errors
+        or input changes matter most near a chosen operating point.
+      </p>
+      <p>Here is one model to study.</p>
+      <p>
+        A small aquarium has dissolved oxygen level
+        <md>O(T,p,s)</md>
+        measured in milligrams per liter. The variables are:
+      </p>
+      <dl>
+        <li>
+          <title><m>T</m></title>
+          <p>water temperature in degrees Celsius</p>
+        </li>
+        <li>
+          <title><m>p</m></title>
+          <p>pump setting in percent</p>
+        </li>
+        <li>
+          <title><m>s</m></title>
+          <p>stock density, in fish per cubic meter</p>
+        </li>
+      </dl>
+      <p>
+        A simplified model near normal operating conditions is
+        <md>
+          O(T,p,s)
+          =
+          8.4
+          -0.18(T-22)
+          +0.035(p-60)
+          -0.025(s-30)
+          -0.002(T-22)(s-30).
+        </md>
+      </p>
+      <p>
+        The base operating point is
+        <md>(T,p,s)=(22,60,30).</md>
+        At this point,
+        <md>O_T=-0.18,\qquad O_p=0.035,\qquad O_s=-0.025.</md>
+        So
+        <md>
+          \boxed{
+          dO_{(22,60,30)}
+          =
+          -0.18\,dT+0.035\,dp-0.025\,ds.
+          }
+        </md>
+      </p>
+      <p>
+        Suppose the temperature increases by <m>2^\circ</m>C, the pump setting increases by
+        <m>5</m> percentage points, and the stock density decreases by <m>3</m> fish per cubic
+        meter. Then
+        <md>dT=2,\qquad dp=5,\qquad ds=-3.</md>
+        The differential predicts
+        <md>
+          <mrow>dO \amp= -0.18(2)+0.035(5)-0.025(-3)</mrow>
+          <mrow>\amp= -0.36+0.175+0.075</mrow>
+          <mrow>\amp= -0.11.</mrow>
+        </md>
+        So the model predicts a drop of about
+        <md>0.11\text{ mg/L}.</md>
+      </p>
+      <p>
+        The exact change from the formula is
+        <md>-0.11-0.002(2)(-3)=-0.098.</md>
+        The difference,
+        <md>0.012,</md>
+        comes from the product term
+        <md>-0.002(T-22)(s-30),</md>
+        which is second order in the simultaneous change of <m>T</m> and <m>s</m>.
+      </p>
+      <p>Use this model, or build a similar one, and carry out the following steps.</p>
+    </introduction>
+
+    <exercise xml:id="c7s7-proj-1">
+      <statement>
+        <p>State the meaning and units of each input variable and of the output.</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-proj-2">
+      <statement>
+        <p>
+          Choose a base point
+          <md>\mathbf p.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-proj-3">
+      <statement>
+        <p>Compute the partial derivatives at <m>\mathbf p</m>.</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-proj-4">
+      <statement>
+        <p>
+          Write the differential
+          <md>df_{\mathbf p}.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-proj-5">
+      <statement>
+        <p>
+          Choose a realistic small change
+          <md>\Delta\mathbf x.</md>
+          Use the differential to predict
+          <md>\Delta f.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-proj-6">
+      <statement>
+        <p>
+          Compute the exact change from the original formula, if possible. Compare it with the
+          differential estimate.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-proj-7">
+      <statement>
+        <p>
+          Rank the input variables by their effect on the output near <m>\mathbf p</m>. Do this
+          with realistic changes, not just by comparing the raw partial derivatives. For example,
+          a change of <m>1^\circ</m>C and a change of <m>1</m> pump percentage point may not be
+          equally likely or equally large in practice.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-proj-8">
+      <statement>
+        <p>
+          Write a short paragraph explaining what the model says and what it leaves out. For the
+          aquarium model, possible missing factors include water volume, plants, time of day,
+          and feeding schedule.
+        </p>
+      </statement>
+    </exercise>
+
+    <conclusion>
+      <p>
+        The point of the project is not that the model is perfect. It is that the differential
+        gives a local sensitivity card:
+        <md>
+          \text{small input changes}
+          \quad\longmapsto\quad
+          \text{predicted output change}.
+        </md>
+        That card is often the most useful part of a multivariable model.
+      </p>
+    </conclusion>
+  </exercises>
+
+  <exercises xml:id="c7s7-ex-discovery">
+    <title>Discovery problems</title>
+
+    <exercise xml:id="c7s7-disc-35">
+      <title>A function with all directional derivatives but no linear approximation</title>
+      <statement>
+        <p>
+          Define
+          <md>
+            f(x,y)=
+            \begin{cases}
+            \dfrac{x^3}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+            0, \amp (x,y)=(0,0).
+            \end{cases}
+          </md>
+          Show that the directional derivative
+          <md>D_{\mathbf u}f(0,0)</md>
+          exists for every unit vector
+          <md>\mathbf u=(a,b).</md>
+          Then show that the function is not differentiable at the origin.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-disc-36">
+      <title>A zero Jacobian determinant can mean folding</title>
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=(x^2,y).</md>
+          Find
+          <md>J_F(x,y)</md>
+          and
+          <md>\det J_F(x,y).</md>
+          Explain geometrically what happens near the line <m>x=0</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-disc-37">
+      <title>A map that preserves area but changes shape</title>
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=(x+ky,y)</md>
+          where <m>k</m> is a constant. Find
+          <md>\det J_F.</md>
+          Draw the image of the unit square for <m>k=1</m> and <m>k=2</m>. How can area stay the
+          same while the square changes shape?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-disc-38">
+      <title>Rows and columns tell different stories</title>
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=\left(x+xy,\,y-x^2\right).</md>
+          At <m>(1,2)</m>, compute <m>J_F</m>. Interpret the rows as differentials of output
+          coordinates, and interpret the columns as images of the coordinate directions.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-disc-39">
+      <title>Testing a claimed tangent plane</title>
+      <statement>
+        <p>
+          Someone claims that the graph of
+          <md>
+            f(x,y)=
+            \begin{cases}
+            \dfrac{x^2y}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+            0, \amp (x,y)=(0,0)
+            \end{cases}
+          </md>
+          has tangent plane <m>z=0</m> at the origin because
+          <md>f_x(0,0)=0,\qquad f_y(0,0)=0.</md>
+          Write a short response explaining exactly why this reasoning fails.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-disc-40">
+      <title>Design a counterexample</title>
+      <statement>
+        <p>
+          Create a function <m>f(x,y)</m> that is continuous at the origin and has
+          <md>f_x(0,0)=f_y(0,0)=0,</md>
+          but is not differentiable at the origin. Your example may use the function <m>G</m>
+          from <xref ref="sec-7-sufficient-conditions-and-warning-examples"/>, or you may build
+          a different one.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-disc-41">
+      <title>A differential as a <m>1</m>-form</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x^2y-y^3.</md>
+          Compute
+          <md>df.</md>
+          Then evaluate <m>df_{(2,1)}</m> on the displacement
+          <md>\mathbf h=(0.1,-0.2).</md>
+          Explain why this is the first-order predicted change in <m>f</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c7s7-disc-42">
+      <title>A determinant as a <m>2</m>-form coefficient</title>
+      <statement>
+        <p>
+          Let
+          <md>X=3x-y,\qquad Y=2x+4y.</md>
+          Compute
+          <md>dX\wedge dY.</md>
+          Then compute
+          <md>
+            \det
+            \begin{pmatrix}
+            X_x \amp X_y\\
+            Y_x \amp Y_y
+            \end{pmatrix}.
+          </md>
+          Explain why the same number appears.
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <conclusion>
+    <p>A derivative is now a linear map. That sentence is the turning point.</p>
+    <p>
+      Suppose a drone flies through a temperature field. Its path is
+      <md>\mathbf r(t),</md>
+      and the temperature is
+      <md>T(x,y,z).</md>
+      The temperature felt by the drone is the single-variable function
+      <md>T(\mathbf r(t)).</md>
+      A small time step first becomes a small displacement through the derivative of
+      <m>\mathbf r</m>. Then that displacement becomes a temperature change through the
+      differential of <m>T</m>. One linear map follows another.
+    </p>
+    <p>
+      Single-variable calculus called this the chain rule. In several variables, the same old
+      rule returns with a new face: linear parts compose, and matrices multiply.
+    </p>
+  </conclusion>
+</section>

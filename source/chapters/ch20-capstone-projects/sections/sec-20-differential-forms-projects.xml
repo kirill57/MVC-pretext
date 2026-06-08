@@ -1,0 +1,735 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch20-capstone-projects.tex, Section 20.5.
+     Status: CONVERTED. -->
+<section xml:id="sec-20-differential-forms-projects" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Differential forms projects</title>
+
+  <introduction>
+    <p>
+      The vector calculus projects ended with two dialects. In one dialect, we used vector
+      fields, dot products, curls, divergences, and normal vectors. In the other, we used
+      forms:
+      <md>1\text{-forms},\qquad 2\text{-forms},\qquad 3\text{-forms},</md>
+      together with the exterior derivative
+      <md>d.</md>
+    </p>
+    <p>
+      The point of forms is not to make old problems look fancier. The point is to make the
+      shape of the theorem visible:
+      <md>\boxed{\int_{\partial M}\omega=\int_M d\omega.}</md>
+    </p>
+    <p>
+      These projects ask you to practice that translation. A successful project should make
+      the reader feel that Green's theorem, Stokes' theorem, and the divergence theorem are
+      not three unrelated miracles. They are one boundary principle seen in different
+      dimensions.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c20s5-project-1-translate-classical-into-forms">
+    <title>Project 1: translate a classical vector calculus problem into forms</title>
+
+    <p>
+      A classical vector calculus problem often begins with a vector field:
+      <md>\mathbf F=(P,Q) \qquad\text{or}\qquad \mathbf F=(P,Q,R).</md>
+      A forms solution begins by asking what kind of integral we are doing.
+    </p>
+    <p>
+      For work or circulation, we use a <m>1</m>-form:
+      <md>\boxed{\omega=P\,dx+Q\,dy}</md>
+      in the plane, or
+      <md>\boxed{\omega=P\,dx+Q\,dy+R\,dz}</md>
+      in space.
+    </p>
+    <p>
+      For flux through a surface, we use a <m>2</m>-form:
+      <md>\boxed{\Phi_{\mathbf F} = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy.}</md>
+    </p>
+    <p>
+      The same vector field may produce different forms, depending on what we are measuring.
+    </p>
+
+    <p>
+      <em>A seed example: circulation around the unit circle.</em>
+      Let
+      <md>\mathbf F(x,y)=(-y,x).</md>
+      Classically, the work around a closed curve <m>C</m> is
+      <md>\oint_C \mathbf F\cdot d\mathbf r.</md>
+      The corresponding <m>1</m>-form is
+      <md>\boxed{\omega=-y\,dx+x\,dy.}</md>
+    </p>
+    <p>
+      Let <m>C</m> be the unit circle, oriented counterclockwise:
+      <md>x=\cos t,\qquad y=\sin t,\qquad 0\le t\le2\pi.</md>
+      Then
+      <md>dx=-\sin t\,dt, \qquad dy=\cos t\,dt.</md>
+      Pull back the form:
+      <md>
+        <mrow>\omega \amp = -\sin t(-\sin t\,dt)+\cos t(\cos t\,dt)</mrow>
+        <mrow>\amp = (\sin^2t+\cos^2t)\,dt</mrow>
+        <mrow>\amp = dt.</mrow>
+      </md>
+      Therefore
+      <md>\boxed{\oint_C\omega=\int_0^{2\pi}dt=2\pi.}</md>
+    </p>
+    <p>
+      Now use Green's theorem in forms language. Compute
+      <md>
+        <mrow>d\omega \amp = d(-y\,dx+x\,dy)</mrow>
+        <mrow>\amp = 2\,dx\wedge dy.</mrow>
+      </md>
+      If <m>D</m> is the unit disk, then
+      <md>
+        <mrow>\int_D d\omega \amp = \int_D 2\,dx\wedge dy</mrow>
+        <mrow>\amp = 2\operatorname{Area}(D)</mrow>
+        <mrow>\amp = 2\pi.</mrow>
+      </md>
+      So
+      <md>\boxed{\int_{\partial D}\omega=\int_D d\omega.}</md>
+    </p>
+    <p>
+      The classical statement is
+      <md>\oint_C \mathbf F\cdot d\mathbf r = \iint_D \left( \frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} \right) dA.</md>
+      The forms statement is
+      <md>\int_{\partial D}\omega=\int_D d\omega.</md>
+      They are the same calculation. The form notation simply keeps the integrand and the
+      orientation together.
+    </p>
+
+    <figure xml:id="c20s5-fig-circulation-unit-circle">
+      <caption>The boundary integral measures circulation. The exterior derivative measures
+      circulation per unit area.</caption>
+      <image xml:id="c20s5-img-circulation-unit-circle">
+        <latex-image>
+\begin{tikzpicture}[scale=0.9, &gt;=stealth]
+    \draw[-&gt;] (-2.4,0) -- (2.6,0) node[right] {\(x\)};
+    \draw[-&gt;] (0,-2.4) -- (0,2.6) node[above] {\(y\)};
+
+    \draw[fill=gray!10, thick] (0,0) circle (1.7);
+
+    \draw[-&gt;, very thick, red!65!black]
+        (1.7,0) arc[start angle=0,end angle=70,radius=1.7];
+
+    \foreach \x/\y in {
+        1.2/0,0.85/0.85,0/1.2,-0.85/0.85,-1.2/0,
+        -0.85/-0.85,0/-1.2,0.85/-0.85
+    } {
+        \draw[-&gt;, blue!65!black, thick]
+            (\x,\y) -- ++({-0.35*\y},{0.35*\x});
+    }
+
+    \node at (0,-2.95)
+        {\(\displaystyle \int_{\partial D}(-y\,dx+x\,dy)=\int_D2\,dx\wedge dy\)};
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      Choose one classical vector calculus problem and translate it completely into forms.
+      Use one of the following, or choose your own.
+      <md>
+\begin{array}{c|c|c}
+\text{Classical problem} \amp \text{Classical theorem} \amp \text{Forms version} \\ \hline
+\oint_C \mathbf F\cdot d\mathbf r
+\amp
+\text{Green's theorem}
+\amp
+\int_{\partial R}\omega=\int_R d\omega
+\\[1mm]
+\oint_{\partial S}\mathbf F\cdot d\mathbf r
+\amp
+\text{Stokes' theorem}
+\amp
+\int_{\partial S}\omega=\int_S d\omega
+\\[1mm]
+\iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS
+\amp
+\text{Divergence theorem}
+\amp
+\int_{\partial E}\Phi=\int_E d\Phi
+\\[1mm]
+\int_C \nabla f\cdot d\mathbf r
+\amp
+\text{Fundamental theorem for line integrals}
+\amp
+\int_C df=\int_{\partial C}f
+\end{array}
+      </md>
+    </p>
+
+    <p>
+      <em>Suggested examples.</em>
+      <md>
+\begin{array}{c|c}
+\text{Example} \amp \text{What to translate} \\ \hline
+\mathbf F=(-y/2,x/2) \text{ around an ellipse}
+\amp
+\text{area from circulation}\\[1mm]
+\mathbf F=(x,y,z) \text{ through a box}
+\amp
+\text{flux and divergence}\\[1mm]
+\mathbf F=(-y,x,0) \text{ around a disk in space}
+\amp
+\text{Stokes' theorem}\\[1mm]
+f(x,y,z)=x^2y+z
+\amp
+\text{gradient field and }df
+\end{array}
+      </md>
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li><p>State the classical problem.</p></li>
+      <li>
+        <p>
+          Identify the correct form:
+          <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+          or
+          <md>\Phi=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy.</md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Compute the exterior derivative:
+          <md>d\omega \qquad\text{or}\qquad d\Phi.</md>
+        </p>
+      </li>
+      <li><p>Compute the integral directly, if possible.</p></li>
+      <li>
+        <p>
+          Compute the integral using
+          <md>\int_{\partial M}\omega=\int_Md\omega.</md>
+        </p>
+      </li>
+      <li><p>Write a translation table showing each classical object and its forms version.</p></li>
+      <li><p>Explain which notation made orientation easier to track.</p></li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li><p>the original classical problem,</p></li>
+      <li><p>the form version of the problem,</p></li>
+      <li><p>the calculation of <m>d\omega</m> or <m>d\Phi</m>,</p></li>
+      <li><p>both sides of the theorem,</p></li>
+      <li><p>a short translation table,</p></li>
+      <li><p>a paragraph explaining what the forms notation clarifies.</p></li>
+    </ol>
+
+    <p>
+      The best reports do not merely replace dots and crosses by wedges. They explain why
+      the form is the natural integrand for the geometric object.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s5-project-2-closed-not-exact">
+    <title>Project 2: closed but not exact forms on punctured domains</title>
+
+    <p>
+      A <m>1</m>-form <m>\omega</m> is called <term>closed</term> if
+      <md>d\omega=0.</md>
+      It is called <term>exact</term> if there is a function <m>f</m> such that
+      <md>\omega=df.</md>
+      Every exact form is closed, because
+      <md>d(df)=0.</md>
+      But the converse can fail when the domain has a hole.
+    </p>
+    <p>
+      This project is about that failure.
+    </p>
+
+    <p>
+      <em>A seed example: the angular form.</em>
+      On the punctured plane
+      <md>\mathbb R^2\setminus\{(0,0)\},</md>
+      define
+      <md>\boxed{\omega= \frac{-y\,dx+x\,dy}{x^2+y^2}.}</md>
+      This form measures change in angle around the origin.
+    </p>
+    <p>
+      Let
+      <md>P=\frac{-y}{x^2+y^2}, \qquad Q=\frac{x}{x^2+y^2}.</md>
+      Then
+      <md>\omega=P\,dx+Q\,dy.</md>
+      Compute:
+      <md>
+        <mrow>Q_x \amp = \frac{(x^2+y^2)-2x^2}{(x^2+y^2)^2} = \frac{y^2-x^2}{(x^2+y^2)^2},</mrow>
+      </md>
+      and
+      <md>
+        <mrow>P_y \amp = \frac{-(x^2+y^2)+2y^2}{(x^2+y^2)^2} = \frac{y^2-x^2}{(x^2+y^2)^2}.</mrow>
+      </md>
+      Thus
+      <md>Q_x-P_y=0.</md>
+      So
+      <md>\boxed{d\omega=0.}</md>
+      The form is closed.
+    </p>
+    <p>
+      Now integrate around the unit circle:
+      <md>x=\cos t,\qquad y=\sin t,\qquad 0\le t\le2\pi.</md>
+      Then
+      <md>dx=-\sin t\,dt, \qquad dy=\cos t\,dt,</md>
+      and
+      <md>x^2+y^2=1.</md>
+      Therefore
+      <md>
+        <mrow>\omega \amp = -\sin t(-\sin t\,dt)+\cos t(\cos t\,dt)</mrow>
+        <mrow>\amp = dt.</mrow>
+      </md>
+      So
+      <md>\boxed{\oint_C\omega=2\pi.}</md>
+    </p>
+    <p>
+      If <m>\omega</m> were exact on the punctured plane, say
+      <md>\omega=df,</md>
+      then every closed-curve integral would be zero:
+      <md>\oint_C df=f(\text{endpoint})-f(\text{starting point})=0.</md>
+      But we found
+      <md>\oint_C\omega=2\pi.</md>
+      So <m>\omega</m> is closed but not exact on
+      <md>\mathbb R^2\setminus\{(0,0)\}.</md>
+    </p>
+    <p>
+      The missing origin stores the obstruction.
+    </p>
+
+    <figure xml:id="c20s5-fig-angular-form-hole">
+      <caption>A closed form can fail to be exact when the domain has a hole.</caption>
+      <image xml:id="c20s5-img-angular-form-hole">
+        <latex-image>
+\begin{tikzpicture}[scale=0.85, &gt;=stealth]
+    \draw[-&gt;] (-3,0) -- (3.2,0) node[right] {\(x\)};
+    \draw[-&gt;] (0,-3) -- (0,3.2) node[above] {\(y\)};
+
+    \fill[white] (0,0) circle (4pt);
+    \draw[thick] (0,0) circle (4pt);
+    \node[below right] at (0,0) {hole};
+
+    \draw[thick, red!65!black] (0,0) circle (2);
+    \draw[-&gt;, very thick, red!65!black]
+        (2,0) arc[start angle=0,end angle=60,radius=2];
+
+    \foreach \ang in {0,45,90,135,180,225,270,315} {
+        \pgfmathsetmacro{\x}{2*cos(\ang)}
+        \pgfmathsetmacro{\y}{2*sin(\ang)}
+        \draw[-&gt;, blue!65!black, thick]
+            (\x,\y) -- ++({-0.35*sin(\ang)},{0.35*cos(\ang)});
+    }
+
+    \node at (0,-3.7)
+        {\(\displaystyle \omega=\frac{-y\,dx+x\,dy}{x^2+y^2}\) is closed, but loops detect the hole};
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      Study one closed form on a punctured domain. Use one of the following.
+      <md>
+\begin{array}{c|c}
+\text{Form} \amp \text{Domain} \\ \hline
+\displaystyle
+\omega_1=\frac{-y\,dx+x\,dy}{x^2+y^2}
+\amp
+\mathbb R^2\setminus\{(0,0)\}
+\\[4mm]
+\displaystyle
+\omega_2=\frac{x\,dx+y\,dy}{x^2+y^2}
+\amp
+\mathbb R^2\setminus\{(0,0)\}
+\\[4mm]
+\displaystyle
+\omega_3=
+\frac{-(y-b)\,dx+(x-a)\,dy}{(x-a)^2+(y-b)^2}
+\amp
+\mathbb R^2\setminus\{(a,b)\}
+\end{array}
+      </md>
+    </p>
+    <p>
+      The second form is different from the angular form. In fact,
+      <md>\omega_2=d\left(\ln\sqrt{x^2+y^2}\right).</md>
+      So <m>\omega_2</m> is exact on the punctured plane. Comparing <m>\omega_1</m> and
+      <m>\omega_2</m> is a good way to see that <q>closed</q> and <q>exact</q> are not the same idea.
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li><p>State the domain carefully. Do not include points where the formula is undefined.</p></li>
+      <li><p>Compute <m>d\omega</m>.</p></li>
+      <li><p>Decide whether the form is closed.</p></li>
+      <li>
+        <p>
+          Integrate <m>\omega</m> around at least two closed curves:
+          <md>\text{one loop that surrounds the missing point}</md>
+          and
+          <md>\text{one loop that does not surround the missing point}.</md>
+        </p>
+      </li>
+      <li><p>Decide whether the form is exact on the whole domain.</p></li>
+      <li><p>If possible, find a potential function on a smaller domain, such as a plane with a ray removed.</p></li>
+      <li><p>Explain what the hole changes.</p></li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li><p>Why does <m>d\omega=0</m> not automatically imply <m>\omega=df</m>?</p></li>
+      <li><p>What happens to the integral if a loop winds around the puncture twice?</p></li>
+      <li><p>Why does a loop that does not surround the puncture give a different kind of answer?</p></li>
+      <li><p>What is the role of the angle function <m>\theta</m>? Why can it be chosen locally but not globally around the puncture?</p></li>
+      <li><p>What does this example teach about the hypotheses in conservative-field theorems?</p></li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li><p>the form and its domain,</p></li>
+      <li><p>the calculation of <m>d\omega</m>,</p></li>
+      <li><p>at least two closed-curve integrals,</p></li>
+      <li><p>a conclusion about closedness and exactness,</p></li>
+      <li><p>a drawing of the domain and the loops,</p></li>
+      <li><p>a paragraph explaining why the missing point matters.</p></li>
+    </ol>
+
+    <p>
+      The important lesson is not the formula itself. The important lesson is that local
+      information can miss global topology. A form may have no local curl and still remember
+      a hole.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s5-project-3-generalized-stokes-cube">
+    <title>Project 3: the generalized Stokes theorem on a cube</title>
+
+    <p>
+      The generalized Stokes theorem says
+      <md>\boxed{\int_{\partial M}\omega=\int_M d\omega.}</md>
+      For a solid cube, the form <m>\omega</m> must be a <m>2</m>-form, because the boundary of a
+      solid is a surface.
+    </p>
+    <p>
+      This project asks you to verify the theorem face by face.
+    </p>
+
+    <p>
+      <em>A seed example: a flux form on the unit cube.</em>
+      Let
+      <md>B=[0,1]\times[0,1]\times[0,1]</md>
+      with orientation
+      <md>dx\wedge dy\wedge dz.</md>
+      Consider the <m>2</m>-form
+      <md>\boxed{\Phi = x\,dy\wedge dz + y\,dz\wedge dx + z\,dx\wedge dy.}</md>
+      This is the flux form of the vector field
+      <md>\mathbf F=(x,y,z).</md>
+    </p>
+    <p>
+      First compute the exterior derivative:
+      <md>
+        <mrow>d\Phi \amp = d(x\,dy\wedge dz) + d(y\,dz\wedge dx) + d(z\,dx\wedge dy)</mrow>
+        <mrow>\amp = dx\wedge dy\wedge dz + dy\wedge dz\wedge dx + dz\wedge dx\wedge dy.</mrow>
+      </md>
+      Both
+      <md>dy\wedge dz\wedge dx</md>
+      and
+      <md>dz\wedge dx\wedge dy</md>
+      are cyclic rearrangements of
+      <md>dx\wedge dy\wedge dz,</md>
+      so they have the same sign. Thus
+      <md>\boxed{d\Phi=3\,dx\wedge dy\wedge dz.}</md>
+      Therefore
+      <md>\boxed{\int_B d\Phi=3.}</md>
+    </p>
+    <p>
+      Now compute the boundary integral. The boundary has six faces.
+      Using the outward orientation, the induced face orientations are:
+      <md>
+\begin{array}{c|c}
+\text{Face} \amp \text{Induced orientation} \\ \hline
+x=1 \amp dy\wedge dz\\
+x=0 \amp -dy\wedge dz\\
+y=1 \amp dz\wedge dx\\
+y=0 \amp -dz\wedge dx\\
+z=1 \amp dx\wedge dy\\
+z=0 \amp -dx\wedge dy
+\end{array}
+      </md>
+    </p>
+    <p>
+      On the face <m>x=1</m>,
+      <md>\Phi=1\,dy\wedge dz+\text{terms involving }dx.</md>
+      Terms involving <m>dx</m> vanish on this face because <m>x</m> is constant there. Hence
+      <md>\int_{x=1}\Phi=1.</md>
+    </p>
+    <p>
+      On the face <m>x=0</m>, the coefficient <m>x</m> is zero, so the contribution is
+      <md>0.</md>
+      Similarly,
+      <md>\int_{y=1}\Phi=1, \qquad \int_{y=0}\Phi=0,</md>
+      and
+      <md>\int_{z=1}\Phi=1, \qquad \int_{z=0}\Phi=0.</md>
+    </p>
+    <p>
+      Thus
+      <md>\boxed{\int_{\partial B}\Phi=1+1+1=3.}</md>
+      So
+      <md>\boxed{\int_{\partial B}\Phi=\int_B d\Phi.}</md>
+    </p>
+
+    <p>
+      <em>Your task.</em>
+      Verify the generalized Stokes theorem on a rectangular box or cube. Choose one of these.
+      <md>
+\begin{array}{c|c}
+\text{Region} \amp \text{Form} \\ \hline
+[0,1]^3 \amp
+x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy\\[1mm]
+[0,a]\times[0,b]\times[0,c] \amp
+x^2\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy\\[1mm]
+[0,1]^2 \amp
+(x^2+y)\,dx+xy\,dy\\[1mm]
+[0,a]\times[0,b] \amp
+-y\,dx+x\,dy
+\end{array}
+      </md>
+      The three-dimensional choices verify the divergence theorem in forms language. The
+      two-dimensional choices verify Green's theorem in forms language.
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li><p>State the region and its orientation.</p></li>
+      <li><p>State the form <m>\omega</m>.</p></li>
+      <li><p>Compute <m>d\omega</m>.</p></li>
+      <li>
+        <p>
+          Compute the interior integral:
+          <md>\int_M d\omega.</md>
+        </p>
+      </li>
+      <li><p>List all boundary pieces.</p></li>
+      <li><p>State the induced orientation on each boundary piece.</p></li>
+      <li><p>Compute each boundary contribution.</p></li>
+      <li><p>Add the boundary contributions and compare with the interior integral.</p></li>
+    </ol>
+
+    <p>
+      <em>Questions to answer.</em>
+    </p>
+    <ol>
+      <li><p>Which boundary pieces contribute zero? Why?</p></li>
+      <li><p>Where does orientation enter the calculation?</p></li>
+      <li><p>What would change if the region were given the opposite orientation?</p></li>
+      <li><p>In the three-dimensional case, what vector field has the chosen <m>2</m>-form as its flux form?</p></li>
+      <li><p>In the two-dimensional case, what vector field has the chosen <m>1</m>-form as its work form?</p></li>
+    </ol>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li><p>a drawing of the region,</p></li>
+      <li><p>the form and its exterior derivative,</p></li>
+      <li><p>the interior integral,</p></li>
+      <li><p>a table of boundary pieces and orientations,</p></li>
+      <li><p>the boundary integral,</p></li>
+      <li>
+        <p>
+          a sentence explaining how this example fits
+          <md>\int_{\partial M}\omega=\int_Md\omega.</md>
+        </p>
+      </li>
+    </ol>
+
+    <p>
+      A cube is simple enough that no geometry is hidden. Every sign must be earned. That is
+      why it is such a good testing ground for Stokes' theorem.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c20s5-project-4-orientation-errors">
+    <title>Project 4: orientation errors as sign errors</title>
+
+    <p>
+      Many wrong answers in vector calculus are not calculus mistakes. They are orientation
+      mistakes.
+    </p>
+    <p>
+      A curve is walked the wrong way. A normal vector points inward instead of outward.
+      An inner boundary is treated like an outer boundary. A parametrization reverses the
+      surface orientation.
+    </p>
+    <p>
+      Forms do not remove these errors, but they make them visible. A form changes sign
+      when orientation reverses. If the sign is wrong, the geometry is usually wrong too.
+    </p>
+
+    <p>
+      <em>A seed example: the annulus and the inner boundary.</em>
+      Let <m>A</m> be the annulus
+      <md>1\le x^2+y^2\le4.</md>
+      Consider the <m>1</m>-form
+      <md>\boxed{\eta=\frac12(x\,dy-y\,dx).}</md>
+      Then
+      <md>
+        <mrow>d\eta \amp = \frac12(dx\wedge dy-dy\wedge dx)</mrow>
+        <mrow>\amp = dx\wedge dy.</mrow>
+      </md>
+      So Green's theorem says
+      <md>\boxed{\int_{\partial A}\eta = \int_A dx\wedge dy = \operatorname{Area}(A).}</md>
+    </p>
+    <p>
+      The area is
+      <md>\pi(2^2)-\pi(1^2)=3\pi.</md>
+    </p>
+    <p>
+      Now compute the boundary integral. On a counterclockwise circle of radius <m>R</m>,
+      <md>x=R\cos t,\qquad y=R\sin t.</md>
+      Then
+      <md>dx=-R\sin t\,dt, \qquad dy=R\cos t\,dt,</md>
+      so
+      <md>
+        <mrow>\eta \amp = \frac12 \left( R\cos t(R\cos t\,dt) - R\sin t(-R\sin t\,dt) \right)</mrow>
+        <mrow>\amp = \frac12R^2\,dt.</mrow>
+      </md>
+      Therefore
+      <md>\int_{\text{ccw circle radius }R}\eta = \pi R^2.</md>
+    </p>
+    <p>
+      The outer boundary of the annulus is oriented counterclockwise, so it contributes
+      <md>4\pi.</md>
+      The inner boundary is oriented clockwise, so it contributes
+      <md>-\pi.</md>
+      Thus
+      <md>\boxed{\int_{\partial A}\eta=4\pi-\pi=3\pi.}</md>
+    </p>
+    <p>
+      If we accidentally orient the inner boundary counterclockwise, we get
+      <md>4\pi+\pi=5\pi.</md>
+      That answer is not the area of the annulus. The sign error has added the hole instead
+      of subtracting it.
+    </p>
+
+    <figure xml:id="c20s5-fig-annulus-orientation">
+      <caption>An inner boundary is positively oriented clockwise, because the region must
+      stay on the left.</caption>
+      <image xml:id="c20s5-img-annulus-orientation">
+        <latex-image>
+\begin{tikzpicture}[scale=0.95, &gt;=stealth]
+    \draw[fill=gray!12, even odd rule]
+        (0,0) circle (2.3)
+        (0,0) circle (1.0);
+
+    \draw[very thick, red!65!black] (0,0) circle (2.3);
+    \draw[-&gt;, very thick, red!65!black]
+        (2.3,0) arc[start angle=0,end angle=55,radius=2.3];
+
+    \draw[very thick, blue!65!black] (0,0) circle (1.0);
+    \draw[-&gt;, very thick, blue!65!black]
+        (1,0) arc[start angle=0,end angle=-70,radius=1.0];
+
+    \node at (0,1.55) {\(A\)};
+    \node[red!65!black, align=center] at (3.5,0.8) {outer:\\counter-clockwise};
+    \node[blue!65!black, align=center] at (1.6,-1.0) {inner:\\clockwise};
+
+    \node at (0,-3.0) {correct orientation subtracts the hole};
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      <em>Your task.</em>
+      Choose one orientation-sensitive problem and compute it twice: once correctly and once
+      with a common orientation error. Use one of these.
+      <md>
+\begin{array}{c|c}
+\text{Problem} \amp \text{Common sign error} \\ \hline
+\text{annulus area from } \eta=\frac12(x\,dy-y\,dx)
+\amp
+\text{inner boundary walked counterclockwise}\\[1mm]
+\text{flux through a closed box}
+\amp
+\text{one face normal points inward}\\[1mm]
+\text{Stokes' theorem on a disk}
+\amp
+\text{boundary direction disagrees with normal}\\[1mm]
+\text{surface integral over a parametrized surface}
+\amp
+\text{parameters swapped}\\[1mm]
+\text{Green's theorem on a rectangle}
+\amp
+\text{boundary walked clockwise}
+\end{array}
+      </md>
+    </p>
+
+    <p>
+      <em>Required steps.</em>
+    </p>
+    <ol>
+      <li><p>State the region, curve, or surface.</p></li>
+      <li><p>State its correct orientation.</p></li>
+      <li><p>Compute the integral correctly.</p></li>
+      <li><p>Deliberately make one orientation error.</p></li>
+      <li><p>Compute the incorrect result.</p></li>
+      <li><p>Explain exactly where the sign changed.</p></li>
+      <li><p>State a practical rule for avoiding that error.</p></li>
+    </ol>
+
+    <p>
+      <em>Orientation checklist.</em>
+      Use this checklist in your report.
+      <md>
+\begin{array}{c|l}
+\text{Object} \amp \text{Positive orientation rule} \\ \hline
+\text{interval} \amp \text{right endpoint positive, left endpoint negative}\\[1mm]
+\text{plane region} \amp \text{walk so the region stays on the left}\\[1mm]
+\text{surface in space} \amp \text{right-hand rule connects normal and boundary}\\[1mm]
+\text{solid} \amp \text{boundary surface points outward}\\[1mm]
+\text{parametrized surface} \amp \mathbf r_u\times\mathbf r_v \text{ gives the chosen normal}
+\end{array}
+      </md>
+    </p>
+
+    <p>
+      <em>What to hand in.</em>
+      Your report should include:
+    </p>
+    <ol>
+      <li><p>a drawing showing the correct orientation,</p></li>
+      <li><p>the correct calculation,</p></li>
+      <li><p>the incorrect calculation,</p></li>
+      <li><p>a comparison of the two answers,</p></li>
+      <li><p>a short <q>sign diagnosis</q> explaining the mistake,</p></li>
+      <li><p>a final checklist for future problems.</p></li>
+    </ol>
+  </subsection>
+
+  <conclusion>
+    <p>
+      These forms projects are computational, but they also train a habit of attention:
+      integrals do not live on shapes alone. They live on oriented shapes. The last projects
+      in the chapter ask for a different skill. After learning to compute, translate, and check
+      signs, a mathematician has one more job: explain the story clearly enough that someone
+      else can see why it matters.
+    </p>
+  </conclusion>
+</section>

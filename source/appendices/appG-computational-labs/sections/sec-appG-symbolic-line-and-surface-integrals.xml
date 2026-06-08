@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/appendices/appG-computational-labs.tex, lines 923-1222.
+     Status: CONVERTED. -->
+<section xml:id="sec-appG-symbolic-line-and-surface-integrals" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Symbolic line and surface integrals</title>
+
+  <subsection xml:id="appG-sym-symbolic-setup">
+    <title>Symbolic setup</title>
+
+    <program language="python">
+      <input>
+import sympy as sp
+      </input>
+    </program>
+
+    <p>Define variables:</p>
+
+    <program language="python">
+      <input>
+x, y, z, t, u, v = sp.symbols("x y z t u v")
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-sym-line-integral-1-form">
+    <title>Line integral of a <m>1</m>-form</title>
+
+    <p>Let
+    <md>\omega=P\,dx+Q\,dy+R\,dz.</md></p>
+
+    <p>Let
+    <md>\mathbf r(t)=(x(t),y(t),z(t)),
+    \qquad
+    a\le t\le b.</md></p>
+
+    <p>Then
+    <md>
+    \int_C\omega
+    =
+    \int_a^b
+    \left[
+    P(\mathbf r(t))x'(t)
+    +
+    Q(\mathbf r(t))y'(t)
+    +
+    R(\mathbf r(t))z'(t)
+    \right]\,dt.
+    </md></p>
+  </subsection>
+
+  <subsection xml:id="appG-sym-sympy-line-integral-pattern">
+    <title>SymPy line integral pattern</title>
+
+    <program language="python">
+      <input>
+x, y, z, t = sp.symbols("x y z t")
+
+P = ...
+Q = ...
+R = ...
+
+xt = ...
+yt = ...
+zt = ...
+
+integrand = (
+    P.subs({x: xt, y: yt, z: zt})*sp.diff(xt, t)
+    + Q.subs({x: xt, y: yt, z: zt})*sp.diff(yt, t)
+    + R.subs({x: xt, y: yt, z: zt})*sp.diff(zt, t)
+)
+
+value = sp.integrate(integrand, (t, a, b))
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-sym-line-integral-vector-field">
+    <title>Line integral of a vector field</title>
+
+    <p>For
+    <md>\mathbf F=(P,Q,R),</md>
+    <md>\int_C\mathbf F\cdot d\mathbf r</md>
+    uses the same formula as the <m>1</m>-form
+    <md>P\,dx+Q\,dy+R\,dz.</md></p>
+  </subsection>
+
+  <subsection xml:id="appG-sym-surface-flux-integral">
+    <title>Surface flux integral</title>
+
+    <p>Let
+    <md>\mathbf F=(P,Q,R).</md></p>
+
+    <p>Let
+    <md>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)).</md></p>
+
+    <p>Then
+    <md>
+    \iint_S\mathbf F\cdot\widehat{\mathbf n}\,dS
+    =
+    \iint_D
+    \mathbf F(\mathbf r(u,v))
+    \cdot
+    (\mathbf r_u\times\mathbf r_v)
+    \,du\,dv.
+    </md></p>
+  </subsection>
+
+  <subsection xml:id="appG-sym-sympy-surface-flux-pattern">
+    <title>SymPy surface flux pattern</title>
+
+    <program language="python">
+      <input>
+x, y, z, u, v = sp.symbols("x y z u v")
+
+P = ...
+Q = ...
+R = ...
+
+xu = ...
+yu = ...
+zu = ...
+
+r = sp.Matrix([xu, yu, zu])
+ru = r.diff(u)
+rv = r.diff(v)
+
+normal = ru.cross(rv)
+
+F = sp.Matrix([
+    P.subs({x: xu, y: yu, z: zu}),
+    Q.subs({x: xu, y: yu, z: zu}),
+    R.subs({x: xu, y: yu, z: zu})
+])
+
+integrand = sp.simplify(F.dot(normal))
+
+value = sp.integrate(
+    integrand,
+    (u, u0, u1),
+    (v, v0, v1)
+)
+      </input>
+    </program>
+
+    <p>The order of <m>(u,v)</m> bounds must match the expression.</p>
+  </subsection>
+
+  <subsection xml:id="appG-sym-surface-area">
+    <title>Surface area</title>
+
+    <p><md>
+    \operatorname{Area}(S)
+    =
+    \iint_D
+    |\mathbf r_u\times\mathbf r_v|
+    \,du\,dv.
+    </md></p>
+
+    <p>Symbolic pattern:</p>
+
+    <program language="python">
+      <input>
+area_integrand = sp.sqrt(normal.dot(normal))
+area = sp.integrate(area_integrand, (u, u0, u1), (v, v0, v1))
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-sym-curl">
+    <title>Curl</title>
+
+    <p>For
+    <md>\mathbf F=(P,Q,R),</md>
+    <md>
+    \nabla\times\mathbf F
+    =
+    (R_y-Q_z,\ P_z-R_x,\ Q_x-P_y).
+    </md></p>
+
+    <p>SymPy pattern:</p>
+
+    <program language="python">
+      <input>
+curlF = sp.Matrix([
+    sp.diff(R, y) - sp.diff(Q, z),
+    sp.diff(P, z) - sp.diff(R, x),
+    sp.diff(Q, x) - sp.diff(P, y)
+])
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-sym-divergence">
+    <title>Divergence</title>
+
+    <p><md>
+    \nabla\cdot\mathbf F=P_x+Q_y+R_z.
+    </md></p>
+
+    <p>SymPy pattern:</p>
+
+    <program language="python">
+      <input>
+divF = sp.diff(P, x) + sp.diff(Q, y) + sp.diff(R, z)
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-sym-gradient">
+    <title>Gradient</title>
+
+    <p><md>
+    \nabla f=(f_x,f_y,f_z).
+    </md></p>
+
+    <p>SymPy pattern:</p>
+
+    <program language="python">
+      <input>
+gradf = sp.Matrix([
+    sp.diff(f, x),
+    sp.diff(f, y),
+    sp.diff(f, z)
+])
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-sym-jacobian">
+    <title>Jacobian</title>
+
+    <p>For
+    <md>F=(F_1,\ldots,F_m),</md>
+    <md>
+    J_F=\left(\frac{\partial F_i}{\partial x_j}\right).
+    </md></p>
+
+    <p>SymPy pattern:</p>
+
+    <program language="python">
+      <input>
+F = sp.Matrix([F1, F2, F3])
+J = F.jacobian([x, y, z])
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-sym-greens-theorem-check">
+    <title>Green's theorem check</title>
+
+    <p>For
+    <md>\omega=P\,dx+Q\,dy,</md>
+    <md>
+    d\omega=(Q_x-P_y)\,dx\wedge dy.
+    </md></p>
+
+    <p>Symbolic scalar curl:</p>
+
+    <program language="python">
+      <input>
+scalar_curl = sp.diff(Q, x) - sp.diff(P, y)
+      </input>
+    </program>
+  </subsection>
+
+  <subsection xml:id="appG-sym-orientation-warnings">
+    <title>Orientation warnings</title>
+
+    <p>For a curve, reversing the parametrization changes the sign of a <m>1</m>-form integral.</p>
+
+    <p>For a surface, switching <m>u</m> and <m>v</m> changes
+    <md>\mathbf r_u\times\mathbf r_v</md>
+    to
+    <md>-\mathbf r_u\times\mathbf r_v.</md></p>
+
+    <p>Flux changes sign when orientation reverses.</p>
+
+    <p>Surface area does not.</p>
+  </subsection>
+
+  <subsection xml:id="appG-sym-symbolic-warnings">
+    <title>Symbolic warnings</title>
+
+    <p>A symbolic answer may be correct but hard to read.</p>
+
+    <p>Use:
+    <md>\texttt{sp.simplify}</md></p>
+
+    <p><md>\texttt{sp.factor}</md></p>
+
+    <p><md>\texttt{sp.expand}</md></p>
+
+    <p>Always check assumptions, especially signs and parameter ranges.</p>
+  </subsection>
+</section>

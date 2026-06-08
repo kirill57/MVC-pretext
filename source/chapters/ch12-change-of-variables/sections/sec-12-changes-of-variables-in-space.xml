@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch12-change-of-variables.tex, Section 12.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-12-changes-of-variables-in-space" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Changes of variables in space</title>
+
+  <p>
+    <xref ref="sec-12-nonlinear-changes-of-variables-in-the-plane"/> turned a tiny square into a
+    tiny parallelogram. The area scale factor was the absolute value of a <m>2\times2</m>
+    determinant.
+  </p>
+
+  <p>
+    A spatial coordinate change turns a tiny box into a tiny parallelepiped. The volume scale
+    factor is the absolute value of a <m>3\times3</m> determinant.
+  </p>
+
+  <subsection xml:id="c12s4-subsec-volume-scaling-jacobian">
+    <title>Volume scaling by the Jacobian determinant</title>
+
+    <p>
+      Begin with a transformation that turns a box into a solid with a curved ceiling:
+      <md>T(u,v,w)=(x,y,z)=(u,\ v,\ uvw).</md>
+      Let
+      <md>S=\{(u,v,w):1\le u\le2,\ 1\le v\le3,\ 0\le w\le1\}.</md>
+      Since
+      <md>x=u,\qquad y=v,\qquad z=uvw,</md>
+      the image <m>E=T(S)</m> is
+      <md>1\le x\le2, \qquad 1\le y\le3, \qquad 0\le z\le xy.</md>
+      So the simple box in <m>u,v,w</m>-coordinates becomes the solid under the surface
+      <md>z=xy</md>
+      over the rectangle <m>1\le x\le2,\ 1\le y\le3</m>.
+    </p>
+
+    <p>
+      Compute the volume directly:
+      <md>
+        <mrow>\operatorname{Vol}(E) \amp= \int_1^2\int_1^3\int_0^{xy}1\,dz\,dy\,dx</mrow>
+        <mrow>\amp= \int_1^2\int_1^3 xy\,dy\,dx</mrow>
+        <mrow>\amp= \left[\int_1^2 x\,dx\right]\left[\int_1^3 y\,dy\right]</mrow>
+        <mrow>\amp= \frac32\cdot4</mrow>
+        <mrow>\amp= 6.</mrow>
+      </md>
+    </p>
+
+    <p>Now compute the same volume by the transformation.</p>
+
+    <p>
+      The derivative matrix is
+      <md>
+        DT(u,v,w)
+        =
+        \begin{pmatrix}
+            x_u\amp x_v\amp x_w\\
+            y_u\amp y_v\amp y_w\\
+            z_u\amp z_v\amp z_w
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            1\amp 0\amp 0\\
+            0\amp 1\amp 0\\
+            vw\amp uw\amp uv
+        \end{pmatrix}.
+      </md>
+      Its determinant is
+      <md>J_T(u,v,w)=uv.</md>
+      Therefore
+      <md>
+        <mrow>\operatorname{Vol}(E) \amp= \int_1^2\int_1^3\int_0^1 uv\,dw\,dv\,du</mrow>
+        <mrow>\amp= \left[\int_1^2 u\,du\right]\left[\int_1^3 v\,dv\right]\left[\int_0^1 1\,dw\right]</mrow>
+        <mrow>\amp= \frac32\cdot4\cdot1</mrow>
+        <mrow>\amp= 6.</mrow>
+      </md>
+    </p>
+
+    <p>
+      Again the determinant is the scale factor. Here <m>w</m> measures the fraction of the way
+      from the floor <m>z=0</m> to the ceiling <m>z=xy</m>. A small <m>w</m>-step corresponds to a
+      vertical <m>z</m>-step of length approximately
+      <md>xy\,\Delta w=uv\,\Delta w.</md>
+      That is why the factor is <m>uv</m>.
+    </p>
+
+    <figure xml:id="c12s4-fig-box-to-curved-solid">
+      <caption>A simple coordinate box can become a solid whose height depends on position.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.82, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-0.2,0) -- (3.6,0) node[right] {\(u\)};
+                \draw[-&gt;] (0,-0.2) -- (0,2.8) node[above] {\(w\)};
+
+                \draw[fill=gray!12, thick] (1,0) rectangle (3,2);
+                \node at (2,1) {\(S\)};
+                \node[below] at (1,0) {\(u=1\)};
+                \node[below] at (3,0) {\(u=2\)};
+                \node[left] at (0,2) {\(w=1\)};
+                \node at (1.9,-0.8) {one face of the coordinate box};
+            \end{scope}
+
+            \draw[-&gt;, thick] (4.1,1.2) -- (5.5,1.2);
+            \node[above] at (4.85,1.2) {\(T\)};
+
+            \begin{scope}[shift={(6.7,0)}]
+                \draw[-&gt;] (-0.2,0) -- (4.2,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.2) -- (0,4.0) node[above] {\(z\)};
+
+                \draw[thick, fill=blue!8]
+                    (1,0) -- (3,0) -- (3,3.2)
+                    .. controls (2.2,2.4) and (1.4,1.5) ..
+                    (1,1.1) -- cycle;
+
+                \draw[thick]
+                    plot[smooth] coordinates {(1,1.1) (1.6,1.7) (2.2,2.4) (3,3.2)};
+                \node at (2.35,1.35) {\(E\)};
+                \node[right] at (3,3.2) {\(z=xy\)};
+                \node at (2.1,-0.8) {a curved-ceiling solid};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <definition xml:id="c12s4-def-jacobian-determinant-space">
+      <title>Jacobian determinant in space</title>
+      <statement>
+        <p>
+          For a differentiable map
+          <md>T(u,v,w)=(x(u,v,w),y(u,v,w),z(u,v,w)),</md>
+          the <term>Jacobian determinant</term> is
+          <md>
+            \boxed{
+                J_T(u,v,w)
+                =
+                \frac{\partial(x,y,z)}{\partial(u,v,w)}
+                =
+                \det
+                \begin{pmatrix}
+                    x_u\amp x_v\amp x_w\\
+                    y_u\amp y_v\amp y_w\\
+                    z_u\amp z_v\amp z_w
+                \end{pmatrix}.
+            }
+          </md>
+          The ordinary local volume scale factor is
+          <md>\boxed{|J_T(u,v,w)|.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <theorem xml:id="c12s4-thm-change-of-variables-space">
+      <title>Change of variables in space</title>
+      <statement>
+        <p>
+          Let <m>S</m> be a bounded solid in the <m>(u,v,w)</m>-space, and let
+          <md>T(u,v,w)=(x(u,v,w),y(u,v,w),z(u,v,w))</md>
+          map <m>S</m> to a solid <m>E</m> in <m>(x,y,z)</m>-space.
+        </p>
+        <p>Assume:</p>
+        <ol>
+          <li>
+            <p><m>T</m> has continuous first partial derivatives on a region containing <m>S</m>;</p>
+          </li>
+          <li>
+            <p><m>T</m> is one-to-one on the interior of <m>S</m>, except possibly along boundary pieces;</p>
+          </li>
+          <li>
+            <p><m>J_T(u,v,w)\ne0</m> on the interior of <m>S</m>.</p>
+          </li>
+        </ol>
+        <p>
+          If <m>f</m> is continuous on <m>E=T(S)</m>, then
+          <md>
+            \boxed{
+                \iiint_E f(x,y,z)\,dV
+                =
+                \iiint_S
+                f(T(u,v,w))\,|J_T(u,v,w)|\,du\,dv\,dw.
+            }
+          </md>
+        </p>
+      </statement>
+      <proof>
+        <title>Proof idea</title>
+        <p>
+          Cut <m>S</m> into tiny boxes. Near one point <m>(u,v,w)</m>, the transformation is almost
+          linear:
+          <md>
+            T(u+\Delta u,v+\Delta v,w+\Delta w)
+            \approx
+            T(u,v,w)+T_u\Delta u+T_v\Delta v+T_w\Delta w.
+          </md>
+          So a small coordinate box maps almost to the parallelepiped spanned by
+          <md>T_u\,\Delta u, \qquad T_v\,\Delta v, \qquad T_w\,\Delta w.</md>
+          The volume of that parallelepiped is
+          <md>|J_T(u,v,w)|\,\Delta u\,\Delta v\,\Delta w.</md>
+          A small contribution to the integral is therefore
+          <md>f(T(u,v,w))\,|J_T(u,v,w)|\,\Delta u\,\Delta v\,\Delta w.</md>
+          Adding the contributions and shrinking the boxes gives the formula.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The same warnings from the plane remain. If a map covers the same solid twice, the integral
+      counts twice. If it has a crease, split the domain into smooth pieces. If its Jacobian
+      vanishes on a whole three-dimensional patch, it is crushing volume.
+    </p>
+
+    <p>
+      For example, cylindrical coordinates with
+      <md>0\le\theta\le4\pi</md>
+      trace the same cylinder twice. The factor <m>r</m> is correct locally, but the chosen domain
+      is not one-to-one. The integral gives twice the ordinary volume.
+    </p>
+
+    <p>
+      The map
+      <md>T(u,v,w)=(u,v,0)</md>
+      has
+      <md>J_T=0</md>
+      everywhere. It sends a solid box to a flat rectangle in the plane <m>z=0</m>. A
+      three-dimensional volume has been crushed to zero.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c12s4-subsec-cylindrical-spherical-revisited">
+    <title>Cylindrical and spherical coordinates revisited</title>
+
+    <p>
+      Cylindrical coordinates are
+      <md>x=r\cos\theta, \qquad y=r\sin\theta, \qquad z=z.</md>
+      The derivative matrix with variables <m>(r,\theta,z)</m> is
+      <md>
+        \begin{pmatrix}
+            \cos\theta\amp -r\sin\theta\amp 0\\
+            \sin\theta\amp r\cos\theta\amp 0\\
+            0\amp 0\amp 1
+        \end{pmatrix}.
+      </md>
+      Its determinant is
+      <md>r.</md>
+      Therefore
+      <md>\boxed{dV=r\,dr\,d\theta\,dz.}</md>
+    </p>
+
+    <example xml:id="c12s4-ex-mass-in-cylinder">
+      <title>Mass in a cylinder</title>
+      <statement>
+        <p>
+          A solid cylinder has radius <m>3</m> and height <m>4</m>:
+          <md>x^2+y^2\le9,\qquad 0\le z\le4.</md>
+          Its density is
+          <md>\delta(x,y,z)=z.</md>
+          Find its mass.
+        </p>
+        <p>
+          Cylindrical coordinates give
+          <md>0\le r\le3, \qquad 0\le\theta\le2\pi, \qquad 0\le z\le4.</md>
+          The density is just <m>z</m>, and
+          <md>dV=r\,dr\,d\theta\,dz.</md>
+          Thus
+          <md>
+            <mrow>M \amp= \int_0^{2\pi}\int_0^3\int_0^4 z\,r\,dz\,dr\,d\theta</mrow>
+            <mrow>\amp= \left[\int_0^{2\pi}d\theta\right]\left[\int_0^3 r\,dr\right]\left[\int_0^4 z\,dz\right]</mrow>
+            <mrow>\amp= 2\pi\cdot\frac92\cdot8</mrow>
+            <mrow>\amp= 72\pi.</mrow>
+          </md>
+          So
+          <md>\boxed{M=72\pi.}</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Spherical coordinates are
+      <md>x=\rho\sin\phi\cos\theta,</md>
+      <md>y=\rho\sin\phi\sin\theta,</md>
+      and
+      <md>z=\rho\cos\phi.</md>
+      Here <m>\rho</m> is distance from the origin, <m>\phi</m> is the angle down from the positive
+      <m>z</m>-axis, and <m>\theta</m> is the angle around the <m>z</m>-axis.
+    </p>
+
+    <p>
+      The three coordinate direction vectors are
+      <md>T_\rho,\qquad T_\phi,\qquad T_\theta.</md>
+      Their lengths are
+      <md>1,\qquad \rho,\qquad \rho\sin\phi,</md>
+      and they are mutually perpendicular. With the order <m>(\rho,\phi,\theta)</m>, the signed
+      Jacobian determinant is
+      <md>\rho^2\sin\phi.</md>
+      So
+      <md>\boxed{dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.}</md>
+    </p>
+
+    <p>
+      This is the spherical scale factor from <xref ref="ch11-triple-higher-integrals"/>, now
+      obtained from the same determinant rule.
+    </p>
+
+    <example xml:id="c12s4-ex-radially-denser-ball">
+      <title>A radially denser ball</title>
+      <statement>
+        <p>
+          A ball of radius <m>2</m> has density
+          <md>\delta(x,y,z)=1+\rho,</md>
+          where
+          <md>\rho=\sqrt{x^2+y^2+z^2}.</md>
+          Find its mass.
+        </p>
+        <p>
+          In spherical coordinates, the ball is
+          <md>0\le\rho\le2, \qquad 0\le\phi\le\pi, \qquad 0\le\theta\le2\pi.</md>
+          Therefore
+          <md>
+            <mrow>M \amp= \int_0^{2\pi}\int_0^\pi\int_0^2 (1+\rho)\rho^2\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+            <mrow>\amp= \left[\int_0^{2\pi}d\theta\right]\left[\int_0^\pi\sin\phi\,d\phi\right]\left[\int_0^2(\rho^2+\rho^3)\,d\rho\right]</mrow>
+            <mrow>\amp= 2\pi\cdot2\cdot\left[\frac{\rho^3}{3}+\frac{\rho^4}{4}\right]_0^2</mrow>
+            <mrow>\amp= 4\pi\left(\frac83+4\right)</mrow>
+            <mrow>\amp= \frac{80\pi}{3}.</mrow>
+          </md>
+          So
+          <md>\boxed{M=\frac{80\pi}{3}.}</md>
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c12s4-subsec-general-transformations-r3">
+    <title>General transformations in <m>\mathbb R^3</m></title>
+
+    <p>
+      Not every useful transformation has a special name like cylindrical or spherical. Sometimes
+      the geometry of the region suggests its own variables.
+    </p>
+
+    <p>
+      Consider the ellipsoid
+      <md>\frac{x^2}{4}+\frac{y^2}{9}+z^2\le1.</md>
+      The denominators are not obstacles. They are instructions. They suggest
+      <md>x=2u, \qquad y=3v, \qquad z=w.</md>
+      Then
+      <md>\frac{x^2}{4}+\frac{y^2}{9}+z^2 = u^2+v^2+w^2.</md>
+      So the ellipsoid becomes the unit ball
+      <md>u^2+v^2+w^2\le1.</md>
+      The Jacobian determinant is
+      <md>
+        \det
+        \begin{pmatrix}
+            2\amp 0\amp 0\\
+            0\amp 3\amp 0\\
+            0\amp 0\amp 1
+        \end{pmatrix}
+        =
+        6.
+      </md>
+      Therefore the volume of the ellipsoid is
+      <md>
+        <mrow>\operatorname{Vol} \amp= \iiint_{u^2+v^2+w^2\le1}6\,du\,dv\,dw</mrow>
+        <mrow>\amp= 6\cdot \frac{4\pi}{3}</mrow>
+        <mrow>\amp= 8\pi.</mrow>
+      </md>
+      So
+      <md>
+        \boxed{
+            \operatorname{Vol}\left(
+            \frac{x^2}{4}+\frac{y^2}{9}+z^2\le1
+            \right)
+            =
+            8\pi.
+        }
+      </md>
+    </p>
+
+    <p>
+      This example is linear, but the habit is the same for nonlinear maps: read the boundary
+      equations and ask what variables would make them simple.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c12s4-subsec-choosing-transformations-geometry">
+    <title>Choosing transformations from geometry</title>
+
+    <p>
+      A good change of variables is usually not guessed from the integrand alone. It is read from
+      the shape of the region.
+    </p>
+
+    <table xml:id="c12s4-tab-region-to-variables">
+      <title>Reading useful variables from the shape of a region.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>What the region shows</cell>
+          <cell>Useful variables</cell>
+        </row>
+        <row>
+          <cell><m>x^2+y^2</m> appears</cell>
+          <cell>polar or cylindrical</cell>
+        </row>
+        <row>
+          <cell><m>x^2+y^2+z^2</m> appears</cell>
+          <cell>spherical</cell>
+        </row>
+        <row>
+          <cell><m>\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}</m> appears</cell>
+          <cell><m>x=au,\ y=bv,\ z=cw</m></cell>
+        </row>
+        <row>
+          <cell>slanted parallel lines or planes</cell>
+          <cell>linear substitution</cell>
+        </row>
+        <row>
+          <cell>a top surface like <m>z=g(x,y)</m></cell>
+          <cell><m>w=\dfrac{z}{g(x,y)}</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The last entry is exactly what happened in the first example of this section. The solid
+      <md>0\le z\le xy</md>
+      became simple after setting
+      <md>z=xyw.</md>
+      The new variable <m>w</m> measured the fraction of the way from the bottom to the top.
+    </p>
+
+    <p>Here is another example of that idea.</p>
+
+    <example xml:id="c12s4-ex-solid-variable-ceiling">
+      <title>A solid with a variable ceiling</title>
+      <statement>
+        <p>
+          Let
+          <md>E=\{(x,y,z):1\le x\le2,\ 0\le y\le1,\ 0\le z\le x(1+y)\}.</md>
+          Use
+          <md>x=u,\qquad y=v,\qquad z=u(1+v)w.</md>
+          Then
+          <md>1\le u\le2,\qquad 0\le v\le1,\qquad 0\le w\le1.</md>
+          The ceiling has become the flat coordinate face <m>w=1</m>.
+        </p>
+        <p>
+          The Jacobian matrix is
+          <md>
+            \begin{pmatrix}
+                1\amp 0\amp 0\\
+                0\amp 1\amp 0\\
+                (1+v)w\amp uw\amp u(1+v)
+            \end{pmatrix},
+          </md>
+          so
+          <md>J_T(u,v,w)=u(1+v).</md>
+          The volume is
+          <md>
+            <mrow>\operatorname{Vol}(E) \amp= \int_1^2\int_0^1\int_0^1 u(1+v)\,dw\,dv\,du</mrow>
+            <mrow>\amp= \left[\int_1^2u\,du\right]\left[\int_0^1(1+v)\,dv\right]\left[\int_0^1dw\right]</mrow>
+            <mrow>\amp= \frac32\cdot\frac32\cdot1</mrow>
+            <mrow>\amp= \frac94.</mrow>
+          </md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The formula is now powerful, but it hides one subtle difference. Ordinary area and volume use
+      <md>|J|.</md>
+      Oriented forms use
+      <md>J</md>
+      with its sign. That sign seemed like a nuisance when we only wanted mass or volume. But it is
+      not a nuisance. It is the bookkeeping that makes orientation work in line integrals, surface
+      integrals, and the theorems still ahead. To see that bookkeeping clearly, we need to look not
+      only at <m>dA</m> and <m>dV</m>, but at the forms
+      <md>dx\wedge dy \qquad\text{and}\qquad dx\wedge dy\wedge dz</md>
+      as they are pulled back through a coordinate map.
+    </p>
+  </subsection>
+</section>

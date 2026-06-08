@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch15-surfaces-flux-curl-divergence.tex, Section 15.1.
+     Status: CONVERTED. -->
+<section xml:id="sec-15-parametric-surfaces-and-tangent-planes" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Parametric surfaces and tangent planes</title>
+
+  <p>
+    A curve needed one parameter:
+    <md>\mathbf r(t).</md>
+    A surface needs two. One parameter moves along one family of curves on the surface;
+    the other moves along a crossing family. Together they form a coordinate grid on the
+    surface.
+  </p>
+
+  <subsection xml:id="c15s1-subsec-two-parameters-make-a-surface">
+    <title>Two parameters make a surface</title>
+
+    <p>
+      Think of a rectangular sheet of rubber. Before it is bent, a point on the sheet can be
+      labeled by two numbers:
+      <md>(u,v).</md>
+      After the sheet is bent into space, the point has three coordinates:
+      <md>(x,y,z).</md>
+      So a bent sheet is naturally described by a function
+      <md>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)).</md>
+    </p>
+
+    <p>
+      The input <m>(u,v)</m> lives in a flat parameter region. The output <m>\mathbf r(u,v)</m>
+      lives in space.
+    </p>
+
+    <p>
+      For example, a cylinder of radius <m>2</m> can be described by
+      <md>\mathbf r(\theta,z)=(2\cos\theta,\,2\sin\theta,\,z),</md>
+      where
+      <md>0\le \theta\le 2\pi, \qquad 0\le z\le 5.</md>
+      The parameter <m>\theta</m> moves around the cylinder. The parameter <m>z</m> moves upward.
+    </p>
+
+    <p>
+      If <m>\theta=\pi/3</m> and <m>z=4</m>, then
+      <md>\mathbf r\left(\frac{\pi}{3},4\right) = \left(1,\sqrt3,4\right).</md>
+      So the flat rectangle
+      <md>0\le \theta\le 2\pi,\qquad 0\le z\le5</md>
+      has been wrapped into the side of a cylinder.
+    </p>
+
+    <figure xml:id="c15s1-fig-parametrization-rectangle-to-surface">
+      <caption>A parametrization turns a flat two-parameter domain into a surface. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="70%">
+        <asymptote>
+        // 3-D interactive (WebGL) figure.
+        import graph3; size(10cm); currentprojection=orthographic(5,2.3,2.6);
+        real f(pair p){return 1.6+0.35*sin(1.1*p.x)-0.12*(p.y-1.5)^2;}
+        real L=3;
+        draw(surface((0,0,0)--(L,0,0)--(L,L,0)--(0,L,0)--cycle), gray(0.85)+opacity(0.6));
+        for(int i=0;i&lt;=3;++i){ draw((i,0,0)--(i,L,0), gray(0.5)+0.3pt); draw((0,i,0)--(L,i,0), gray(0.5)+0.3pt); }
+        label("parameter domain $(u,v)$", (L/2,L+0.4,0), gray(0.3));
+        surface s=surface(f,(0,0),(L,L),28,28);
+        draw(s, rgb(0.6,0.78,0.95)+opacity(0.5));
+        for(int i=0;i&lt;=3;++i){
+          path3 uc=graph(new triple(real u){return (u,i,f((u,i)));},0,L,40,operator ..); draw(uc, blue+0.7pt);
+          path3 vc=graph(new triple(real v){return (i,v,f((i,v)));},0,L,40,operator ..); draw(vc, red+0.7pt);
+        }
+        label("surface $S$", (L/2,L+0.4,f((L/2,L))+0.2));
+        draw((L/2,L/2,0.08)--(L/2,L/2,f((L/2,L/2))-0.12), black+1pt, Arrow3);
+        label("$T$", (L/2,L/2,f((L/2,L/2))/2), 2E);
+        draw(O--(L+0.7,0,0),gray,Arrow3); draw(O--(0,L+0.9,0),gray,Arrow3); draw(O--(0,0,2.4),gray,Arrow3);
+        label("$x$",(L+0.7,0,0),S); label("$y$",(0,L+0.9,0),E); label("$z$",(0,0,2.4),N);
+        </asymptote>
+      </image>
+    </figure>
+
+    <definition xml:id="c15s1-def-parametric-surface">
+      <title>Parametric surface</title>
+      <statement>
+        <p>
+          A <term>parametric surface</term> in space is a function
+          <md>\mathbf r:D\subseteq\mathbb R^2\to\mathbb R^3</md>
+          of the form
+          <md>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)).</md>
+          The set
+          <md>\{\mathbf r(u,v):(u,v)\in D\}</md>
+          is the image of the parametrization.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The parameters do not have to be called <m>u</m> and <m>v</m>. On a cylinder, it is more
+      natural to use <m>\theta</m> and <m>z</m>. On a sphere, it is more natural to use two angles.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s1-subsec-coordinate-curves-on-a-surface">
+    <title>Coordinate curves on a surface</title>
+
+    <p>A parametrized surface comes with two families of curves.</p>
+
+    <p>
+      For the cylinder
+      <md>\mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),</md>
+      hold <m>z</m> fixed and let <m>\theta</m> vary. We get a horizontal circle:
+      <md>\theta\longmapsto (2\cos\theta,2\sin\theta,z_0).</md>
+      Hold <m>\theta</m> fixed and let <m>z</m> vary. We get a vertical line:
+      <md>z\longmapsto (2\cos\theta_0,2\sin\theta_0,z).</md>
+    </p>
+
+    <p>These two curve families form the grid on the surface.</p>
+
+    <p>
+      At a point, the derivatives of these coordinate curves give two tangent directions:
+      <md>\mathbf r_\theta(\theta,z)=(-2\sin\theta,2\cos\theta,0),</md>
+      and
+      <md>\mathbf r_z(\theta,z)=(0,0,1).</md>
+      At
+      <md>\theta=\frac{\pi}{3},\qquad z=4,</md>
+      these become
+      <md>\mathbf r_\theta\left(\frac{\pi}{3},4\right)=(-\sqrt3,1,0),</md>
+      and
+      <md>\mathbf r_z\left(\frac{\pi}{3},4\right)=(0,0,1).</md>
+      One vector points around the cylinder. The other points upward.
+    </p>
+
+    <definition xml:id="c15s1-def-tangent-vectors-from-a-parametrization">
+      <title>Tangent vectors from a parametrization</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)).</md>
+          The two coordinate tangent vectors are
+          <md>\boxed{ \mathbf r_u=(x_u,y_u,z_u), \qquad \mathbf r_v=(x_v,y_v,z_v). }</md>
+          They are tangent to the coordinate curves obtained by holding one parameter fixed.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      A surface is locally two-dimensional when these two tangent directions are genuinely
+      different. If one direction is a multiple of the other, the parameter grid has collapsed
+      at that point.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s1-subsec-normal-direction-from-the-cross-product">
+    <title>Normal direction from the cross product</title>
+
+    <p>
+      Two nonparallel tangent vectors determine a plane. A normal vector to that plane is
+      given by their cross product:
+      <md>\mathbf r_u\times \mathbf r_v.</md>
+    </p>
+
+    <p>
+      For the cylinder,
+      <md>\mathbf r_\theta=(-2\sin\theta,2\cos\theta,0), \qquad \mathbf r_z=(0,0,1).</md>
+      So
+      <md>
+        <mrow>\mathbf r_\theta\times \mathbf r_z \amp= (2\cos\theta,2\sin\theta,0).</mrow>
+      </md>
+      This vector points radially outward. At <m>\theta=\pi/3</m>,
+      <md>\mathbf r_\theta\times \mathbf r_z=(1,\sqrt3,0).</md>
+      That is exactly the outward normal direction at the point
+      <md>(1,\sqrt3,z).</md>
+    </p>
+
+    <p>
+      The order matters. If we reverse the order,
+      <md>\mathbf r_z\times \mathbf r_\theta = -(\mathbf r_\theta\times \mathbf r_z),</md>
+      so the normal points inward instead of outward. This sign will become part of
+      orientation and flux later.
+    </p>
+
+    <definition xml:id="c15s1-def-smooth-regular-surface-patch">
+      <title>Smooth regular surface patch</title>
+      <statement>
+        <p>
+          A parametrization
+          <md>\mathbf r(u,v)</md>
+          is called <term>smooth</term> if its first partial derivatives are continuous.
+        </p>
+        <p>
+          It is called <term>regular</term> at <m>(u,v)</m> if
+          <md>\boxed{ \mathbf r_u(u,v)\times \mathbf r_v(u,v)\ne \mathbf 0. }</md>
+          A smooth regular parametrization gives a smooth surface patch.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The regularity condition says that the two parameter directions really make a little
+      surface patch, not just a curve or a point.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c15s1-subsec-tangent-planes-to-parametrized-surfaces">
+    <title>Tangent planes to parametrized surfaces</title>
+
+    <p>
+      The tangent plane is the plane spanned by
+      <md>\mathbf r_u(u_0,v_0) \qquad\text{and}\qquad \mathbf r_v(u_0,v_0).</md>
+      If
+      <md>\mathbf p=\mathbf r(u_0,v_0),</md>
+      then a parametric equation for the tangent plane is
+      <md>\boxed{ \mathbf X=\mathbf p+s\,\mathbf r_u(u_0,v_0)+t\,\mathbf r_v(u_0,v_0). }</md>
+      A normal vector is
+      <md>\mathbf n=\mathbf r_u(u_0,v_0)\times \mathbf r_v(u_0,v_0),</md>
+      so the same plane can be written as
+      <md>\boxed{ \mathbf n\cdot(\mathbf X-\mathbf p)=0. }</md>
+    </p>
+
+    <theorem xml:id="c15s1-thm-tangent-plane-to-a-parametrized-surface">
+      <title>Tangent plane to a parametrized surface</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r:D\to\mathbb R^3</md>
+          be smooth and regular at <m>(u_0,v_0)</m>. Set
+          <md>\mathbf p=\mathbf r(u_0,v_0).</md>
+          Then the tangent plane to the surface at <m>\mathbf p</m> is
+          <md>\boxed{ \mathbf X=\mathbf p+s\,\mathbf r_u(u_0,v_0)+t\,\mathbf r_v(u_0,v_0). }</md>
+          Equivalently, if
+          <md>\mathbf n=\mathbf r_u(u_0,v_0)\times \mathbf r_v(u_0,v_0),</md>
+          then
+          <md>\boxed{ \mathbf n\cdot(\mathbf X-\mathbf p)=0. }</md>
+        </p>
+      </statement>
+    </theorem>
+
+    <proof>
+      <p>
+        The curve
+        <md>u\longmapsto \mathbf r(u,v_0)</md>
+        lies on the surface, and its velocity at <m>u=u_0</m> is
+        <md>\mathbf r_u(u_0,v_0).</md>
+        So <m>\mathbf r_u</m> is tangent to the surface.
+      </p>
+      <p>
+        Similarly, the curve
+        <md>v\longmapsto \mathbf r(u_0,v)</md>
+        lies on the surface, and its velocity at <m>v=v_0</m> is
+        <md>\mathbf r_v(u_0,v_0).</md>
+        So <m>\mathbf r_v</m> is also tangent.
+      </p>
+      <p>
+        Regularity says these two directions are not parallel, so they span a plane. Their
+        cross product is normal to that plane.
+      </p>
+    </proof>
+
+    <example xml:id="c15s1-ex-a-tangent-plane-to-a-cylinder">
+      <title>A tangent plane to a cylinder</title>
+      <statement>
+        <p>
+          For the cylinder
+          <md>\mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),</md>
+          take
+          <md>\theta=\frac{\pi}{3}, \qquad z=4.</md>
+          Then
+          <md>\mathbf p=(1,\sqrt3,4).</md>
+          The tangent vectors are
+          <md>\mathbf r_\theta=(-\sqrt3,1,0), \qquad \mathbf r_z=(0,0,1).</md>
+          A normal vector is
+          <md>\mathbf n=\mathbf r_\theta\times\mathbf r_z=(1,\sqrt3,0).</md>
+          Therefore the tangent plane is
+          <md>(1,\sqrt3,0)\cdot\bigl((x,y,z)-(1,\sqrt3,4)\bigr)=0.</md>
+          That is
+          <md>x-1+\sqrt3(y-\sqrt3)=0,</md>
+          or
+          <md>\boxed{ x+\sqrt3\,y=4. }</md>
+          The tangent plane is vertical, as it should be for the side of a cylinder.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c15s1-subsec-graphs-as-parametrized-surfaces">
+    <title>Graphs as parametrized surfaces</title>
+
+    <p>
+      A graph
+      <md>z=g(x,y)</md>
+      is a surface. It has the natural parametrization
+      <md>\boxed{ \mathbf r(x,y)=(x,y,g(x,y)). }</md>
+      The two tangent vectors are
+      <md>\mathbf r_x=(1,0,g_x), \qquad \mathbf r_y=(0,1,g_y).</md>
+      Their cross product is
+      <md>
+        <mrow>\mathbf r_x\times \mathbf r_y \amp= (-g_x,-g_y,1).</mrow>
+      </md>
+      So a normal vector to the graph is
+      <md>\boxed{ (-g_x,-g_y,1). }</md>
+    </p>
+
+    <p>
+      This agrees with the tangent-plane formula from
+      <xref ref="ch09-gradient-optimization"/>. If
+      <md>\mathbf p=(a,b,g(a,b)),</md>
+      then
+      <md>z-g(a,b)=g_x(a,b)(x-a)+g_y(a,b)(y-b).</md>
+    </p>
+
+    <example xml:id="c15s1-ex-a-tangent-plane-to-a-curved-shade-cloth">
+      <title>A tangent plane to a curved shade cloth</title>
+      <statement>
+        <p>
+          A shade cloth over a courtyard has height
+          <md>g(x,y)=4+\frac{x}{3}-\frac{y}{4}-\frac{x^2}{12}.</md>
+          At the point
+          <md>(x,y)=(1,2),</md>
+          the height is
+          <md>g(1,2) = 4+\frac13-\frac12-\frac1{12} = \frac{15}{4}.</md>
+          The partial derivatives are
+          <md>g_x(x,y)=\frac13-\frac{x}{6}, \qquad g_y(x,y)=-\frac14.</md>
+          At <m>(1,2)</m>,
+          <md>g_x(1,2)=\frac16, \qquad g_y(1,2)=-\frac14.</md>
+          So the tangent plane is
+          <md>\boxed{ z-\frac{15}{4} = \frac16(x-1)-\frac14(y-2). }</md>
+          In parametric-surface language, this is the same plane spanned by
+          <md>\mathbf r_x=\left(1,0,\frac16\right), \qquad \mathbf r_y=\left(0,1,-\frac14\right).</md>
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c15s1-subsec-why-the-hypotheses-matter">
+    <title>Why the hypotheses matter</title>
+
+    <p>
+      We asked for smoothness and regularity because tangent planes can fail in two different
+      ways.
+    </p>
+
+    <p>
+      First, a surface can have a crease. Consider
+      <md>z=|x|.</md>
+      A natural parametrization is
+      <md>\mathbf r(x,y)=(x,y,|x|).</md>
+      Along the line <m>x=0</m>, the surface folds like a roof ridge. Approaching from <m>x&gt;0</m>,
+      the surface has slope <m>+1</m> in the <m>x</m>-direction. Approaching from <m>x&lt;0</m>, it has
+      slope <m>-1</m>. There is no single tangent plane along the crease.
+    </p>
+
+    <p>
+      The partial derivative with respect to <m>x</m> does not exist there. Smoothness was not
+      a decoration; it prevented a hidden fold.
+    </p>
+
+    <p>
+      Second, a parametrization can collapse. A cone can be parametrized by
+      <md>\mathbf r(u,\theta)=(u\cos\theta,u\sin\theta,u), \qquad u\ge0.</md>
+      The tangent vectors are
+      <md>\mathbf r_u=(\cos\theta,\sin\theta,1),</md>
+      and
+      <md>\mathbf r_\theta=(-u\sin\theta,u\cos\theta,0).</md>
+      Their cross product is
+      <md>\mathbf r_u\times\mathbf r_\theta = (-u\cos\theta,-u\sin\theta,u).</md>
+      At the tip, where <m>u=0</m>,
+      <md>\mathbf r_u\times\mathbf r_\theta=\mathbf 0.</md>
+      The cone has no unique tangent plane at its tip. Different straight lines on the cone
+      arrive at the tip with different tangent directions. Regularity is the condition that
+      rules out this kind of collapse.
+    </p>
+
+    <p>
+      So a smooth regular patch is the surface version of a smooth curve with nonzero
+      velocity. It has a well-defined tangent plane and a normal direction.
+    </p>
+
+    <p>
+      But a normal direction is not yet an area. The vector
+      <md>\mathbf r_u\times\mathbf r_v</md>
+      does two jobs at once: it points perpendicular to the surface, and its length measures
+      how much a tiny parameter rectangle has been stretched. That length is the next
+      piece of the story.
+    </p>
+  </subsection>
+</section>

@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch12-change-of-variables.tex, Section 7.
+     Status: CONVERTED. -->
+<section xml:id="sec-12-chapter-review-and-applications" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter review and applications</title>
+
+  <introduction>
+    <p>
+      Chapter <xref ref="ch12-change-of-variables"/> answered the scale-factor question left by
+      Chapter <xref ref="ch11-triple-higher-integrals"/>. Cylindrical coordinates needed the
+      factor
+      <md>r,</md>
+      and spherical coordinates needed the factor
+      <md>\rho^2\sin\phi.</md>
+      Those were not special tricks. They were Jacobian determinants.
+    </p>
+    <p>
+      A change of variables has two jobs:
+      <md>\boxed{\begin{aligned}
+        \text{make the region simpler,}\\
+        \text{and measure how the small pieces change size.}
+      \end{aligned}}</md>
+      The first job is geometry. The second job is the determinant.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c12s7-subsec-skills-choosing">
+    <title>Skills: choosing and using substitutions</title>
+
+    <p>A good substitution usually comes from the boundary equations.</p>
+
+    <p>
+      If the boundary contains
+      <md>x+y=1 \qquad\text{and}\qquad x+y=4,</md>
+      then the expression
+      <md>u=x+y</md>
+      is asking to become a coordinate.
+    </p>
+
+    <p>
+      If the boundary contains
+      <md>xy=1 \qquad\text{and}\qquad xy=5,</md>
+      then
+      <md>u=xy</md>
+      may be a natural coordinate.
+    </p>
+
+    <p>
+      If the region is circular, polar coordinates are listening. If the solid is spherical,
+      spherical coordinates are listening. If the object is an ellipsoid, a stretched ball is
+      often hiding inside it.
+    </p>
+
+    <table xml:id="c12s7-tab-natural-substitutions">
+      <title>Natural substitutions suggested by the geometry</title>
+      <tabular>
+        <col right="minor"/>
+        <col/>
+        <row header="yes" bottom="medium">
+          <cell>What the geometry shows</cell>
+          <cell>Natural substitution</cell>
+        </row>
+        <row>
+          <cell>circles centered at the origin</cell>
+          <cell><m>x=r\cos\theta,\ y=r\sin\theta</m></cell>
+        </row>
+        <row>
+          <cell>cylinders around the <m>z</m>-axis</cell>
+          <cell><m>x=r\cos\theta,\ y=r\sin\theta,\ z=z</m></cell>
+        </row>
+        <row>
+          <cell>spheres centered at the origin</cell>
+          <cell><m>x=\rho\sin\phi\cos\theta,\ y=\rho\sin\phi\sin\theta,\ z=\rho\cos\phi</m></cell>
+        </row>
+        <row>
+          <cell>ellipses or ellipsoids</cell>
+          <cell><m>x=au,\ y=bv,\ z=cw</m></cell>
+        </row>
+        <row>
+          <cell>slanted parallel lines</cell>
+          <cell><m>u=ax+by,\ v=cx+dy</m></cell>
+        </row>
+        <row>
+          <cell>products and ratios</cell>
+          <cell><m>u=xy,\ v=\dfrac{y}{x}</m></cell>
+        </row>
+        <row>
+          <cell>a variable ceiling <m>0\le z\le g(x,y)</m></cell>
+          <cell><m>z=g(x,y)w</m></cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      Once the substitution is chosen, the steps are always the same.
+      <md>\boxed{\begin{aligned}
+        \text{1. Write the map from new variables to old variables.}\\
+        \text{2. Translate the region.}\\
+        \text{3. Translate the integrand.}\\
+        \text{4. Compute the Jacobian determinant.}\\
+        \text{5. Use } |J| \text{ for ordinary area or volume.}\\
+        \text{6. Use } J \text{ for oriented forms.}
+      \end{aligned}}</md>
+    </p>
+
+    <p>
+      In the plane, for
+      <md>T(u,v)=(x(u,v),y(u,v)),</md>
+      the Jacobian determinant is
+      <md>\boxed{
+        J_T(u,v)=
+        \frac{\partial(x,y)}{\partial(u,v)}
+        =
+        \begin{vmatrix}
+        x_u\amp x_v\\
+        y_u\amp y_v
+        \end{vmatrix}.
+      }</md>
+      The ordinary area rule is
+      <md>\boxed{dA=|J_T(u,v)|\,du\,dv.}</md>
+      The oriented form rule is
+      <md>\boxed{T^*(dx\wedge dy)=J_T(u,v)\,du\wedge dv.}</md>
+    </p>
+
+    <p>
+      In space, for
+      <md>T(u,v,w)=(x(u,v,w),y(u,v,w),z(u,v,w)),</md>
+      the Jacobian determinant is
+      <md>\boxed{
+        J_T(u,v,w)=
+        \frac{\partial(x,y,z)}{\partial(u,v,w)}
+        =
+        \det
+        \begin{pmatrix}
+        x_u\amp x_v\amp x_w\\
+        y_u\amp y_v\amp y_w\\
+        z_u\amp z_v\amp z_w
+        \end{pmatrix}.
+      }</md>
+      The ordinary volume rule is
+      <md>\boxed{dV=|J_T(u,v,w)|\,du\,dv\,dw.}</md>
+      The oriented form rule is
+      <md>\boxed{T^*(dx\wedge dy\wedge dz)=J_T(u,v,w)\,du\wedge dv\wedge dw.}</md>
+    </p>
+
+    <p>The absolute value is for size. The sign is for orientation.</p>
+
+    <figure xml:id="c12s7-fig-cov-workflow">
+      <caption>A substitution is both a geometric choice and a measurement correction.</caption>
+      <image width="80%">
+        <latex-image>
+\begin{tikzpicture}[scale=0.9, &gt;=stealth]
+    \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+        (start) at (0,0) {Integral over a region\\ \(\displaystyle \iint_R f\,dA\) or \(\displaystyle \iiint_E f\,dV\)};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (region) at (-5,-2.2) {Choose variables\\ from the boundary};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (jac) at (0,-2.2) {Compute the\\ Jacobian determinant};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (one) at (5,-2.2) {Check whether the map\\ covers once};
+
+    \node[draw, rounded corners, align=center, minimum width=5.2cm, minimum height=0.9cm]
+        (new) at (0,-4.6) {New integral over simpler variables};
+
+    \draw[-&gt;, thick] (start) -- (region);
+    \draw[-&gt;, thick] (start) -- (jac);
+    \draw[-&gt;, thick] (start) -- (one);
+
+    \draw[-&gt;, thick] (region) -- (new);
+    \draw[-&gt;, thick] (jac) -- (new);
+    \draw[-&gt;, thick] (one) -- (new);
+\end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c12s7-subsec-slanted-window">
+    <title>Worked review example: a slanted window</title>
+
+    <p>
+      A thin glass window occupies the parallelogram-like region
+      <md>R=\{(x,y):1\le x+y\le3,\ 0\le x-y\le2\}.</md>
+      The density of tint on the glass is
+      <md>q(x,y)=x+y.</md>
+      Find the total amount of tint:
+      <md>\iint_R (x+y)\,dA.</md>
+    </p>
+
+    <p>
+      The boundary equations suggest
+      <md>u=x+y, \qquad v=x-y.</md>
+      Then <m>R</m> becomes the rectangle
+      <md>1\le u\le3, \qquad 0\le v\le2.</md>
+    </p>
+
+    <p>
+      Solve for <m>x</m> and <m>y</m>:
+      <md>x=\frac{u+v}{2}, \qquad y=\frac{u-v}{2}.</md>
+      The Jacobian determinant is
+      <md>
+        <mrow>\frac{\partial(x,y)}{\partial(u,v)} \amp= \det\begin{pmatrix} 1/2\amp 1/2\\ 1/2\amp -1/2\end{pmatrix}</mrow>
+        <mrow>\amp= -\frac14-\frac14</mrow>
+        <mrow>\amp= -\frac12.</mrow>
+      </md>
+      So the ordinary area factor is
+      <md>\left|\frac{\partial(x,y)}{\partial(u,v)}\right|=\frac12.</md>
+      The integrand becomes
+      <md>x+y=u.</md>
+      Therefore
+      <md>
+        <mrow>\iint_R (x+y)\,dA \amp= \int_1^3\int_0^2 u\cdot\frac12\,dv\,du</mrow>
+        <mrow>\amp= \int_1^3 u\,du</mrow>
+        <mrow>\amp= \left[\frac{u^2}{2}\right]_1^3</mrow>
+        <mrow>\amp= 4.</mrow>
+      </md>
+      Thus
+      <md>\boxed{\iint_R (x+y)\,dA=4.}</md>
+    </p>
+
+    <p>
+      The signed Jacobian was negative. That means the ordered variables <m>(u,v)</m> reverse
+      the usual orientation of the <m>xy</m>-plane. The glass does not have negative area, so
+      the ordinary integral uses the absolute value.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c12s7-subsec-curved-plate">
+    <title>Worked review example: a curved plate between hyperbolas</title>
+
+    <p>
+      A thin metal plate lies in the first quadrant. Its edges are
+      <md>xy=1,\qquad xy=4,</md>
+      and
+      <md>\frac{y}{x}=1,\qquad \frac{y}{x}=3.</md>
+      Its density is
+      <md>\delta(x,y)=xy.</md>
+      Find its mass.
+    </p>
+
+    <p>
+      The boundary equations almost name the new variables:
+      <md>u=xy, \qquad v=\frac{y}{x}.</md>
+      Then the plate becomes the rectangle
+      <md>1\le u\le4, \qquad 1\le v\le3.</md>
+    </p>
+
+    <p>
+      Because we are in the first quadrant, <m>x\gt0</m> and <m>y\gt0</m>. From
+      <md>u=xy, \qquad v=\frac{y}{x},</md>
+      we get
+      <md>y=vx.</md>
+      Then
+      <md>u=x(vx)=vx^2,</md>
+      so
+      <md>x=\sqrt{\frac{u}{v}}.</md>
+      Also,
+      <md>y=vx=\sqrt{uv}.</md>
+      Thus
+      <md>x=\sqrt{\frac{u}{v}}, \qquad y=\sqrt{uv}.</md>
+    </p>
+
+    <p>
+      Compute the Jacobian. A quick way is to compute the determinant of the forward map
+      <md>(x,y)\longmapsto (u,v).</md>
+      Since
+      <md>u=xy, \qquad v=\frac{y}{x},</md>
+      we have
+      <md>\frac{\partial(u,v)}{\partial(x,y)}=\det\begin{pmatrix} y\amp x\\ -y/x^2\amp 1/x\end{pmatrix}.</md>
+      Therefore
+      <md>
+        <mrow>\frac{\partial(u,v)}{\partial(x,y)} \amp= y\cdot\frac1x - x\left(-\frac{y}{x^2}\right)</mrow>
+        <mrow>\amp= \frac{y}{x}+\frac{y}{x}</mrow>
+        <mrow>\amp= 2\frac{y}{x}</mrow>
+        <mrow>\amp= 2v.</mrow>
+      </md>
+      So
+      <md>\boxed{\frac{\partial(x,y)}{\partial(u,v)}=\frac{1}{2v}.}</md>
+      The density becomes
+      <md>\delta(x,y)=xy=u.</md>
+      Thus
+      <md>
+        <mrow>M \amp= \iint_R xy\,dA</mrow>
+        <mrow>\amp= \int_1^4\int_1^3 u\cdot\frac{1}{2v}\,dv\,du</mrow>
+        <mrow>\amp= \frac12 \left(\int_1^4 u\,du\right)\left(\int_1^3 \frac{1}{v}\,dv\right)</mrow>
+        <mrow>\amp= \frac12 \left[\frac{u^2}{2}\right]_1^4 \left[\ln v\right]_1^3</mrow>
+        <mrow>\amp= \frac12\cdot\frac{15}{2}\cdot\ln 3</mrow>
+        <mrow>\amp= \frac{15}{4}\ln 3.</mrow>
+      </md>
+      So
+      <md>\boxed{M=\frac{15}{4}\ln 3.}</md>
+    </p>
+
+    <p>
+      The region looked awkward in <m>x,y</m>. It was a rectangle in the variables its own
+      edges were already using.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c12s7-subsec-stretched-ball">
+    <title>Worked review example: a stretched ball</title>
+
+    <p>
+      Let <m>E</m> be the ellipsoid
+      <md>\frac{x^2}{4}+\frac{y^2}{9}+z^2\le1.</md>
+      Its density is
+      <md>\delta(x,y,z)=1+\frac{x^2}{4}+\frac{y^2}{9}+z^2.</md>
+      Find the mass.
+    </p>
+
+    <p>
+      The ellipsoid is a stretched unit ball. Use
+      <md>x=2u, \qquad y=3v, \qquad z=w.</md>
+      Then
+      <md>\frac{x^2}{4}+\frac{y^2}{9}+z^2=u^2+v^2+w^2.</md>
+      So the solid <m>E</m> becomes the unit ball
+      <md>B=\{(u,v,w):u^2+v^2+w^2\le1\}.</md>
+    </p>
+
+    <p>
+      The Jacobian determinant is
+      <md>\det\begin{pmatrix} 2\amp0\amp0\\ 0\amp3\amp0\\ 0\amp0\amp1\end{pmatrix}=6.</md>
+      The density becomes
+      <md>\delta=1+u^2+v^2+w^2.</md>
+      Therefore
+      <md>
+        <mrow>M \amp= \iiint_E \left(1+\frac{x^2}{4}+\frac{y^2}{9}+z^2\right)dV</mrow>
+        <mrow>\amp= \iiint_B 6(1+u^2+v^2+w^2)\,du\,dv\,dw.</mrow>
+      </md>
+    </p>
+
+    <p>
+      Now use spherical coordinates in the <m>uvw</m>-space:
+      <md>u^2+v^2+w^2=\rho^2, \qquad dV_{uvw}=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
+      The unit ball is
+      <md>0\le\rho\le1, \qquad 0\le\phi\le\pi, \qquad 0\le\theta\le2\pi.</md>
+      Thus
+      <md>
+        <mrow>M \amp= 6\int_0^{2\pi}\int_0^\pi\int_0^1 (1+\rho^2)\rho^2\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+        <mrow>\amp= 6 \left(\int_0^{2\pi}d\theta\right)\left(\int_0^\pi \sin\phi\,d\phi\right)\left(\int_0^1(\rho^2+\rho^4)\,d\rho\right)</mrow>
+        <mrow>\amp= 6(2\pi)(2)\left(\frac13+\frac15\right)</mrow>
+        <mrow>\amp= 24\pi\cdot\frac{8}{15}</mrow>
+        <mrow>\amp= \frac{64\pi}{5}.</mrow>
+      </md>
+      So
+      <md>\boxed{M=\frac{64\pi}{5}.}</md>
+    </p>
+
+    <p>
+      Two coordinate changes worked together. The first turned the ellipsoid into a ball.
+      The second used spherical coordinates because the new ball had radial symmetry.
+    </p>
+  </subsection>
+
+  <exercises xml:id="c12s7-ex-grp-concept-check">
+    <title>Concept check</title>
+
+    <exercise xml:id="c12s7-ex-cc-jacobian-plane">
+      <statement>
+        <p>
+          What does the Jacobian determinant measure geometrically in a plane change of
+          variables?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-jacobian-space">
+      <statement>
+        <p>
+          What does the Jacobian determinant measure geometrically in a space change of
+          variables?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-absolute-value">
+      <statement>
+        <p>
+          Why does an ordinary area or volume integral use
+          <md>|J|</md>
+          instead of <m>J</m>?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-wedge-vs-dA">
+      <statement>
+        <p>
+          What information is kept by
+          <md>dx\wedge dy</md>
+          but forgotten by
+          <md>dA?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-wedge-vs-dV">
+      <statement>
+        <p>
+          What information is kept by
+          <md>dx\wedge dy\wedge dz</md>
+          but forgotten by
+          <md>dV?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-signed-pullback">
+      <statement>
+        <p>
+          In the plane, why does
+          <md>T^*(dx\wedge dy)=\frac{\partial(x,y)}{\partial(u,v)}\,du\wedge dv</md>
+          contain the signed Jacobian, not its absolute value?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-one-to-one-interior">
+      <statement>
+        <p>
+          Why must a change of variables be one-to-one on the interior of the parameter region?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-boundary-overlaps">
+      <statement>
+        <p>Why are boundary overlaps usually harmless?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-polar-origin">
+      <statement>
+        <p>
+          Why does polar coordinates having <m>J=r=0</m> at <m>r=0</m> not ruin the area
+          formula for a disk?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-jacobian-zero-patch">
+      <statement>
+        <p>
+          What goes wrong if a transformation has <m>J=0</m> on a whole two-dimensional or
+          three-dimensional patch?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-crease-split">
+      <statement>
+        <p>
+          Why should a map with a crease be split into smooth pieces before applying the
+          change-of-variables theorem?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-multiplicity-two">
+      <statement>
+        <p>
+          What does it mean to say that polar coordinates with
+          <md>0\le\theta\le4\pi</md>
+          cover a disk with multiplicity <m>2</m>?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-boundary-suggests-vars">
+      <statement>
+        <p>
+          How can the equations of a region's boundary suggest useful new variables?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-integrand-vs-element">
+      <statement>
+        <p>
+          What is the difference between changing the integrand and changing the area or volume
+          element?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-cc-local-vs-global">
+      <statement>
+        <p>
+          Why is the determinant rule a local rule, while the one-to-one condition is a global
+          condition?
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises xml:id="c12s7-ex-grp-skill-problems">
+    <title>Skill problems</title>
+
+    <exercise xml:id="c12s7-ex-sk-jacobian-linear">
+      <statement>
+        <p>
+          For
+          <md>x=3u-v, \qquad y=u+2v,</md>
+          compute
+          <md>\frac{\partial(x,y)}{\partial(u,v)}.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-area-unit-square">
+      <statement>
+        <p>
+          Let <m>S</m> be the unit square
+          <md>0\le u\le1,\qquad 0\le v\le1.</md>
+          Under
+          <md>x=3u-v, \qquad y=u+2v,</md>
+          find the area of <m>T(S)</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-integral-image-square">
+      <statement>
+        <p>
+          Let <m>R</m> be the image of the unit square under
+          <md>x=2u+v, \qquad y=u+4v.</md>
+          Compute
+          <md>\iint_R (x-y)\,dA.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-solve-uv">
+      <statement>
+        <p>
+          Let
+          <md>u=x+y, \qquad v=x-y.</md>
+          Find <m>x</m> and <m>y</m> in terms of <m>u</m> and <m>v</m>, and compute
+          <md>\frac{\partial(x,y)}{\partial(u,v)}.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-area-uv-region">
+      <statement>
+        <p>
+          Let
+          <md>R=\{(x,y):0\le x+y\le2,\ 1\le x-y\le3\}.</md>
+          Use
+          <md>u=x+y, \qquad v=x-y</md>
+          to find the area of <m>R</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-disk-area">
+      <statement>
+        <p>
+          Use polar coordinates to compute the area of the disk
+          <md>x^2+y^2\le a^2.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-annulus-integral">
+      <statement>
+        <p>
+          Use polar coordinates to compute
+          <md>\iint_R (x^2+y^2)\,dA,</md>
+          where <m>R</m> is the annulus
+          <md>1\le x^2+y^2\le4.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-circular-plate-mass">
+      <statement>
+        <p>
+          A thin circular plate has radius <m>3</m> and density
+          <md>\delta(x,y)=5-x^2-y^2.</md>
+          Use polar coordinates to find its mass.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-hyperbola-region-area">
+      <statement>
+        <p>
+          Let <m>R</m> be the first-quadrant region bounded by
+          <md>xy=2,\qquad xy=6,</md>
+          and
+          <md>\frac{y}{x}=1,\qquad \frac{y}{x}=4.</md>
+          Use
+          <md>u=xy, \qquad v=\frac{y}{x}</md>
+          to find the area of <m>R</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-hyperbola-region-integral">
+      <statement>
+        <p>
+          For the same region as the previous problem, compute
+          <md>\iint_R xy\,dA.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-pullback-uvuv">
+      <statement>
+        <p>
+          Let
+          <md>T(u,v)=(u^2-v^2,\ 2uv).</md>
+          Compute
+          <md>T^*(dx\wedge dy).</md>
+          Where does the Jacobian vanish?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-double-cover">
+      <statement>
+        <p>
+          Explain why the map
+          <md>T(u,v)=(u^2-v^2,\ 2uv)</md>
+          covers most of its image twice if the domain is a disk centered at the origin.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-reflection-pullback">
+      <statement>
+        <p>
+          Let
+          <md>T(u,v)=(u,\ 1-v).</md>
+          Compute
+          <md>T^*(dx\wedge dy).</md>
+          Does this map preserve or reverse orientation?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-volume-scale-diagonal">
+      <statement>
+        <p>
+          Let
+          <md>T(u,v,w)=(2u,\ 3v,\ 4w).</md>
+          Find the volume scale factor.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-ellipsoid-volume">
+      <statement>
+        <p>
+          Use the substitution
+          <md>x=2u,\qquad y=3v,\qquad z=4w</md>
+          to find the volume of the ellipsoid
+          <md>\frac{x^2}{4}+\frac{y^2}{9}+\frac{z^2}{16}\le1.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-cylinder-volume">
+      <statement>
+        <p>
+          Use cylindrical coordinates to compute the volume of the solid cylinder
+          <md>x^2+y^2\le9, \qquad 0\le z\le5.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-ball-volume">
+      <statement>
+        <p>
+          Use spherical coordinates to compute the volume of the ball
+          <md>x^2+y^2+z^2\le a^2.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-ball-mass">
+      <statement>
+        <p>
+          A ball of radius <m>2</m> has density
+          <md>\delta(\rho)=4-\rho.</md>
+          Use spherical coordinates to find its mass.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-jacobian-uvw">
+      <statement>
+        <p>
+          Let
+          <md>T(u,v,w)=(u,\ v,\ uvw).</md>
+          Compute the Jacobian determinant.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-variable-ceiling-volume">
+      <statement>
+        <p>
+          Use
+          <md>x=u,\qquad y=v,\qquad z=u(1+v)w</md>
+          to find the volume of
+          <md>E=\{(x,y,z):1\le x\le2,\ 0\le y\le1,\ 0\le z\le x(1+y)\}.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-polar-wedge-plane">
+      <statement>
+        <p>
+          Let
+          <md>x=r\cos\theta, \qquad y=r\sin\theta.</md>
+          Compute
+          <md>dx\wedge dy</md>
+          in terms of <m>dr</m> and <m>d\theta</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-cylindrical-wedge">
+      <statement>
+        <p>
+          Let
+          <md>x=r\cos\theta, \qquad y=r\sin\theta, \qquad z=z.</md>
+          Compute
+          <md>dx\wedge dy\wedge dz</md>
+          in terms of <m>dr,d\theta,dz</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-spherical-element">
+      <statement>
+        <p>
+          Let
+          <md>x=\rho\sin\phi\cos\theta, \quad y=\rho\sin\phi\sin\theta, \quad z=\rho\cos\phi.</md>
+          State the volume element in spherical coordinates.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-cover-once">
+      <statement>
+        <p>
+          Decide whether the following parameter region covers its image once, twice, or with
+          boundary overlap only:
+          <md>0\le r\le2,\qquad 0\le\theta\le2\pi.</md>
+          Explain.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-cover-twice">
+      <statement>
+        <p>
+          Decide whether the following parameter region covers its image once, twice, or with
+          boundary overlap only:
+          <md>0\le r\le2,\qquad 0\le\theta\le4\pi.</md>
+          Explain.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-choose-vars-wedge">
+      <statement>
+        <p>
+          Choose useful variables for the region bounded by
+          <md>y=2x,\qquad y=5x,\qquad x^2+y^2=1,\qquad x^2+y^2=9.</md>
+          Do not evaluate an integral. Just explain the substitution.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-choose-vars-parallelogram">
+      <statement>
+        <p>
+          Choose useful variables for the region bounded by
+          <md>x+y=1,\qquad x+y=4,\qquad x-2y=0,\qquad x-2y=3.</md>
+          Do not evaluate an integral. Just explain the substitution.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-rules-plane">
+      <statement>
+        <p>
+          Write the ordinary and oriented change-of-variables rules for a plane transformation.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-rules-space">
+      <statement>
+        <p>
+          Write the ordinary and oriented change-of-variables rules for a space transformation.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c12s7-ex-sk-example-double-cover">
+      <statement>
+        <p>
+          Give an example of a transformation whose Jacobian is correct locally but whose
+          parameter region covers the same image twice.
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <subsection xml:id="c12s7-subsec-project-gaussian">
+    <title>Project: Gaussian integrals and polar coordinates</title>
+
+    <p>
+      The integral
+      <md>\int e^{-x^2}\,dx</md>
+      has no elementary antiderivative. That is a single-variable problem. The surprising way
+      through it is to square the integral and make it two-dimensional.
+    </p>
+
+    <p>
+      Let
+      <md>I=\int_{-\infty}^{\infty}e^{-x^2}\,dx.</md>
+      This integral is positive, so if we can find <m>I^2</m>, then we can find <m>I</m>.
+    </p>
+
+    <subsubsection xml:id="c12s7-subsubsec-project-part1">
+      <title>Part 1. Square the integral</title>
+      <p>
+        Write
+        <md>I^2=\left(\int_{-\infty}^{\infty}e^{-x^2}\,dx\right)\left(\int_{-\infty}^{\infty}e^{-y^2}\,dy\right).</md>
+        The second variable is called <m>y</m> so the two copies can be combined as a double
+        integral:
+        <md>\boxed{I^2=\iint_{\mathbb R^2} e^{-(x^2+y^2)}\,dA.}</md>
+        The integrand is now radial:
+        <md>e^{-(x^2+y^2)}=e^{-r^2}.</md>
+        The region is the whole plane. Polar coordinates fit both the integrand and the region.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c12s7-subsubsec-project-part2">
+      <title>Part 2. Change to polar coordinates</title>
+      <p>
+        In polar coordinates,
+        <md>dA=r\,dr\,d\theta.</md>
+        Therefore
+        <md>I^2=\int_0^{2\pi}\int_0^\infty e^{-r^2}r\,dr\,d\theta.</md>
+        The inner integral uses the substitution
+        <md>s=r^2, \qquad ds=2r\,dr.</md>
+        So
+        <md>
+          <mrow>\int_0^\infty e^{-r^2}r\,dr \amp= \frac12\int_0^\infty e^{-s}\,ds</mrow>
+          <mrow>\amp= \frac12.</mrow>
+        </md>
+        Thus
+        <md>
+          <mrow>I^2 \amp= \int_0^{2\pi}\frac12\,d\theta</mrow>
+          <mrow>\amp= \pi.</mrow>
+        </md>
+        Since <m>I\gt0</m>,
+        <md>\boxed{\int_{-\infty}^{\infty}e^{-x^2}\,dx=\sqrt{\pi}.}</md>
+      </p>
+      <p>
+        This is one of the most famous uses of polar coordinates. A one-variable antiderivative
+        was unavailable, but a two-dimensional symmetry solved the definite integral.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c12s7-subsubsec-project-part3">
+      <title>Part 3. A careful finite-radius version</title>
+      <p>
+        For a radius <m>R\gt0</m>, define
+        <md>G(R)=\iint_{x^2+y^2\le R^2} e^{-(x^2+y^2)}\,dA.</md>
+        Use polar coordinates:
+        <md>
+          <mrow>G(R) \amp= \int_0^{2\pi}\int_0^R e^{-r^2}r\,dr\,d\theta</mrow>
+          <mrow>\amp= 2\pi\left[-\frac12e^{-r^2}\right]_0^R</mrow>
+          <mrow>\amp= \pi(1-e^{-R^2}).</mrow>
+        </md>
+        So
+        <md>\boxed{G(R)=\pi(1-e^{-R^2}).}</md>
+        As <m>R\to\infty</m>,
+        <md>G(R)\to\pi.</md>
+        That is the polar-coordinate shadow of
+        <md>I^2=\pi.</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c12s7-subsubsec-project-part4">
+      <title>Part 4. A scaled Gaussian</title>
+      <p>
+        Let <m>a\gt0</m>. Find
+        <md>I(a)=\int_{-\infty}^{\infty}e^{-ax^2}\,dx.</md>
+        Use the substitution
+        <md>u=\sqrt a\,x.</md>
+        Then
+        <md>dx=\frac{1}{\sqrt a}\,du,</md>
+        and
+        <md>
+          <mrow>I(a) \amp= \int_{-\infty}^{\infty}e^{-u^2}\frac{1}{\sqrt a}\,du</mrow>
+          <mrow>\amp= \frac{1}{\sqrt a}\sqrt\pi.</mrow>
+        </md>
+        Thus
+        <md>\boxed{\int_{-\infty}^{\infty}e^{-ax^2}\,dx=\sqrt{\frac{\pi}{a}}.}</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c12s7-subsubsec-project-part5">
+      <title>Part 5. Normalizing the normal density</title>
+      <p>
+        A probability density on the real line must integrate to <m>1</m>. The bell-shaped
+        density with mean <m>0</m> and spread parameter <m>\sigma\gt0</m> has the form
+        <md>p(x)=C e^{-x^2/(2\sigma^2)}.</md>
+        Find <m>C</m>.
+      </p>
+      <p>
+        Using the scaled Gaussian formula with
+        <md>a=\frac{1}{2\sigma^2},</md>
+        we get
+        <md>\int_{-\infty}^{\infty}e^{-x^2/(2\sigma^2)}\,dx=\sqrt{2\pi\sigma^2}=\sigma\sqrt{2\pi}.</md>
+        Therefore
+        <md>1=C\sigma\sqrt{2\pi},</md>
+        so
+        <md>\boxed{C=\frac{1}{\sigma\sqrt{2\pi}}.}</md>
+        Thus the normalized density is
+        <md>\boxed{p(x)=\frac{1}{\sigma\sqrt{2\pi}}e^{-x^2/(2\sigma^2)}.}</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c12s7-subsubsec-project-handin">
+      <title>What to hand in</title>
+      <p>Write a short report with the following pieces.</p>
+      <ol>
+        <li>
+          <p>Explain why the single-variable antiderivative is not the point of this problem.</p>
+        </li>
+        <li>
+          <p>Show how squaring the integral produces a double integral over <m>\mathbb R^2</m>.</p>
+        </li>
+        <li>
+          <p>Evaluate the double integral using polar coordinates.</p>
+        </li>
+        <li>
+          <p>
+            Compute
+            <md>\int_{-\infty}^{\infty} e^{-ax^2}\,dx</md>
+            for <m>a\gt0</m>.
+          </p>
+        </li>
+        <li>
+          <p>
+            Use the result to find the normalizing constant for
+            <md>C e^{-x^2/(2\sigma^2)}.</md>
+          </p>
+        </li>
+        <li>
+          <p>
+            Write one paragraph explaining why polar coordinates were the right coordinates for
+            the squared integral.
+          </p>
+        </li>
+      </ol>
+      <p>
+        The last paragraph is the heart of the project. The formula
+        <md>e^{-x^2}</md>
+        does not look circular. But after squaring the integral, the expression
+        <md>e^{-(x^2+y^2)}</md>
+        reveals a hidden disk symmetry.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <conclusion>
+    <title>Hook: the boundary of a region now begins to matter</title>
+    <p>
+      Change of variables taught us to respect the inside of a region. Tiny squares became
+      parallelograms. Tiny boxes became parallelepipeds. The determinant kept track of how much
+      size changed, and the wedge product kept track of orientation.
+    </p>
+    <p>
+      But the warning examples kept pointing toward the boundary. A square reflected by
+      <md>(u,v)\mapsto (u,1-v)</md>
+      did not change its ordinary area, but it reversed the direction in which its boundary was
+      walked. A polar rectangle with
+      <md>0\le\theta\le4\pi</md>
+      did not describe a larger disk; it walked around the same disk twice.
+    </p>
+    <p>
+      So far, the boundary has mostly helped us write bounds. Soon it will become an object we
+      integrate over. A force field can do work along a path. A swirling fluid can have
+      circulation around a closed curve. A <m>1</m>-form
+      <md>P\,dx+Q\,dy+R\,dz</md>
+      is built to be added along such a path.
+    </p>
+    <p>
+      The question waiting for us is no longer only
+      <md>\text{How much is spread through a region?}</md>
+      It is also
+      <md>\text{What happens as we walk along its edge?}</md>
+      That edge question begins the next part of the book.
+    </p>
+  </conclusion>
+</section>

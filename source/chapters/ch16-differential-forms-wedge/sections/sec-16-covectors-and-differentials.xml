@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch16-differential-forms-wedge.tex, Section 2.
+     Status: CONVERTED. -->
+<section xml:id="sec-16-covectors-and-differentials" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Covectors and differentials</title>
+
+  <p>
+    <xref ref="sec-16-what-is-a-differential-form"/> treated forms as integrands. A <m>1</m>-form
+    measures tiny tangent arrows along a curve, and a <m>2</m>-form measures tiny oriented
+    parallelograms on a surface. To understand the pieces of those forms, we start with the
+    simplest question: what does <m>dx</m> do to a vector?
+  </p>
+
+  <subsection xml:id="c16s2-subsec-linear-functions-on-vectors">
+    <title>Linear functions on vectors</title>
+
+    <p>
+      Stand on a flat loading dock. A small cart can move east, north, and up. Write one
+      displacement as
+      <md>\mathbf v=(v_x,v_y,v_z).</md>
+      Suppose a scanner assigns the number
+      <md>L(\mathbf v)=4v_x-v_y+2v_z</md>
+      to that displacement. A move one meter east counts <m>4</m>. A move one meter north counts
+      <m>-1</m>. A move one meter upward counts <m>2</m>.
+    </p>
+
+    <p>
+      This scanner is linear. If the cart makes two displacements,
+      <md>\mathbf u \qquad\text{and}\qquad \mathbf v,</md>
+      then
+      <md>L(\mathbf u+\mathbf v)=L(\mathbf u)+L(\mathbf v).</md>
+      If the displacement is doubled, the reading doubles:
+      <md>L(2\mathbf v)=2L(\mathbf v).</md>
+    </p>
+
+    <p>
+      For example, let
+      <md>\mathbf u=(1,3,0), \qquad \mathbf v=(2,-1,4).</md>
+      Then
+      <md>L(\mathbf u)=4(1)-3+0=1</md>
+      and
+      <md>L(\mathbf v)=4(2)-(-1)+2(4)=17.</md>
+      Also,
+      <md>\mathbf u+\mathbf v=(3,2,4),</md>
+      so
+      <md>L(\mathbf u+\mathbf v)=4(3)-2+2(4)=18.</md>
+      Indeed,
+      <md>18=1+17.</md>
+    </p>
+
+    <p>This is the kind of object hiding behind <m>dx</m>, <m>dy</m>, and <m>dz</m>.</p>
+
+    <definition xml:id="c16s2-def-covector">
+      <title>Covector</title>
+      <statement>
+        <p>
+          A <term>covector</term> at a point is a linear function that takes a tangent vector at
+          that point and returns a number.
+        </p>
+        <p>
+          In <m>\mathbb R^3</m>, a covector has the form
+          <md>a\,dx+b\,dy+c\,dz</md>
+          at a point, and it acts on
+          <md>\mathbf v=(v_x,v_y,v_z)</md>
+          by
+          <md>\boxed{(a\,dx+b\,dy+c\,dz)(\mathbf v)=av_x+bv_y+cv_z.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>A vector points. A covector measures.</p>
+
+    <p>
+      They are related, especially when a dot product is available, but they are not the same
+      kind of object.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s2-subsec-coordinate-covectors">
+    <title><m>dx</m>, <m>dy</m>, and <m>dz</m> as coordinate covectors</title>
+
+    <p>
+      The coordinate covectors are the simplest measuring rules:
+      <md>dx(\mathbf v)=v_x,</md>
+      <md>dy(\mathbf v)=v_y,</md>
+      <md>dz(\mathbf v)=v_z.</md>
+      They read the coordinate components of a tangent vector.
+    </p>
+
+    <figure xml:id="c16s2-fig-coordinate-covectors">
+      <caption><m>dx</m> reads the horizontal component, and <m>dy</m> reads the vertical component.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-0.3,0) -- (5.5,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.3) -- (0,4.2) node[above] {\(y\)};
+
+            \coordinate (P) at (1.2,1.0);
+            \coordinate (Q) at (4.4,3.2);
+
+            \fill (P) circle (2.5pt);
+            \node[below left] at (P) {\(\mathbf p\)};
+
+            \draw[-&gt;, very thick] (P) -- (Q) node[midway, above left] {\(\mathbf v\)};
+
+            \draw[dashed] (P) -- (4.4,1.0);
+            \draw[dashed] (4.4,1.0) -- (Q);
+
+            \draw[&lt;-&gt;, thick] (1.2,0.55) -- (4.4,0.55);
+            \node[below] at (2.8,0.55) {\(dx(\mathbf v)\)};
+
+            \draw[&lt;-&gt;, thick] (4.75,1.0) -- (4.75,3.2);
+            \node[right] at (4.75,2.1) {\(dy(\mathbf v)\)};
+
+            \node at (2.7,-0.9) {coordinate covectors read components of a tangent vector};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      For instance, if
+      <md>\mathbf v=(3,-5,2),</md>
+      then
+      <md>dx(\mathbf v)=3, \qquad dy(\mathbf v)=-5, \qquad dz(\mathbf v)=2.</md>
+    </p>
+
+    <p>A general covector is a linear combination of these coordinate covectors.</p>
+
+    <example xml:id="c16s2-ex-covector-from-coordinate-readings">
+      <title>A covector from its coordinate readings</title>
+      <statement>
+        <p>
+          Let
+          <md>\eta=4\,dx-dy+2\,dz.</md>
+          Then on
+          <md>\mathbf v=(3,-5,2),</md>
+          we get
+          <md>
+            <mrow>\eta(\mathbf v) \amp= 4\,dx(\mathbf v)-dy(\mathbf v)+2\,dz(\mathbf v)</mrow>
+            <mrow>\amp= 4(3)-(-5)+2(2)</mrow>
+            <mrow>\amp= 21.</mrow>
+          </md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The next theorem is the covector version of a familiar fact: a linear rule is determined by
+      what it does to the standard basis vectors.
+    </p>
+
+    <theorem xml:id="c16s2-thm-every-covector-is-combination-of-coordinate-covectors">
+      <title>Every covector is a linear combination of coordinate covectors</title>
+      <statement>
+        <p>
+          Let <m>\eta</m> be a covector in <m>\mathbb R^3</m>. Then there are unique numbers
+          <m>a,b,c</m> such that
+          <md>\boxed{\eta=a\,dx+b\,dy+c\,dz.}</md>
+          The coefficients are
+          <md>\boxed{a=\eta(\mathbf i), \qquad b=\eta(\mathbf j), \qquad c=\eta(\mathbf k).}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Every vector
+          <md>\mathbf v=(v_x,v_y,v_z)</md>
+          can be written as
+          <md>\mathbf v=v_x\mathbf i+v_y\mathbf j+v_z\mathbf k.</md>
+          Since <m>\eta</m> is linear,
+          <md>
+            <mrow>\eta(\mathbf v) \amp= v_x\eta(\mathbf i)+v_y\eta(\mathbf j)+v_z\eta(\mathbf k).</mrow>
+          </md>
+          Let
+          <md>a=\eta(\mathbf i), \qquad b=\eta(\mathbf j), \qquad c=\eta(\mathbf k).</md>
+          Then
+          <md>\eta(\mathbf v)=av_x+bv_y+cv_z.</md>
+          But this is exactly
+          <md>(a\,dx+b\,dy+c\,dz)(\mathbf v).</md>
+          The coefficients are unique because applying the covector to <m>\mathbf i,\mathbf j</m>,
+          and <m>\mathbf k</m> forces them.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      In the plane, the same statement says every covector has the form
+      <md>a\,dx+b\,dy.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s2-subsec-evaluating-a-1-form">
+    <title>Evaluating a <m>1</m>-form on a tangent vector</title>
+
+    <p>
+      A covector lives at one point. A <m>1</m>-form is a covector field: it attaches a covector
+      to every point.
+    </p>
+
+    <p>
+      For example,
+      <md>\omega=(x+y)\,dx+x\,dy+z\,dz</md>
+      is a <m>1</m>-form in space. At the point
+      <md>\mathbf p=(2,1,-1),</md>
+      its coefficients become
+      <md>x+y=3, \qquad x=2, \qquad z=-1.</md>
+      So at that point,
+      <md>\omega_{\mathbf p}=3\,dx+2\,dy-dz.</md>
+    </p>
+
+    <p>
+      Now evaluate it on the tangent vector
+      <md>\mathbf v=(3,-4,2).</md>
+      We get
+      <md>
+        <mrow>\omega_{\mathbf p}(\mathbf v) \amp= 3\,dx(\mathbf v)+2\,dy(\mathbf v)-dz(\mathbf v)</mrow>
+        <mrow>\amp= 3(3)+2(-4)-2</mrow>
+        <mrow>\amp= -1.</mrow>
+      </md>
+    </p>
+
+    <p>
+      The subscript matters:
+      <md>\omega_{\mathbf p}</md>
+      means the covector obtained by freezing the coefficient functions at the point
+      <m>\mathbf p</m>.
+    </p>
+
+    <definition xml:id="c16s2-def-evaluating-a-1-form">
+      <title>Evaluating a <m>1</m>-form</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+          be a <m>1</m>-form on a region in space. At a point <m>\mathbf p</m>, and on a tangent
+          vector
+          <md>\mathbf v=(v_x,v_y,v_z),</md>
+          we define
+          <md>\boxed{\omega_{\mathbf p}(\mathbf v)=P(\mathbf p)v_x+Q(\mathbf p)v_y+R(\mathbf p)v_z.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>This is the local measurement behind every line integral.</p>
+
+    <p>
+      If a curve is
+      <md>\mathbf r(t),</md>
+      then its tangent vector is
+      <md>\mathbf r'(t).</md>
+      At time <m>t</m>, the <m>1</m>-form measures that tangent vector:
+      <md>\omega_{\mathbf r(t)}(\mathbf r'(t)).</md>
+      The line integral is obtained by adding those measurements over time:
+      <md>\boxed{\int_C \omega=\int_a^b \omega_{\mathbf r(t)}(\mathbf r'(t))\,dt.}</md>
+    </p>
+
+    <example xml:id="c16s2-ex-form-along-circular-path">
+      <title>A form along a circular path</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=-y\,dx+x\,dy</md>
+          and let
+          <md>\mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi.</md>
+          Then
+          <md>\mathbf r'(t)=(-\sin t,\cos t).</md>
+          At the point
+          <md>\mathbf r(t),</md>
+          the form is
+          <md>\omega_{\mathbf r(t)}=-\sin t\,dx+\cos t\,dy.</md>
+          Evaluate on the tangent vector:
+          <md>
+            <mrow>\omega_{\mathbf r(t)}(\mathbf r'(t)) \amp= (-\sin t)(-\sin t)+(\cos t)(\cos t)</mrow>
+            <mrow>\amp= 1.</mrow>
+          </md>
+          Therefore
+          <md>\int_C \omega=\int_0^{2\pi}1\,dt=2\pi.</md>
+          The form gives <m>1</m> on the counterclockwise unit tangent all the way around the
+          circle.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This language separates two jobs. The curve supplies tangent vectors. The form measures
+      them.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s2-subsec-gradients-vs-differentials">
+    <title>Why gradients require a dot product but differentials do not</title>
+
+    <p>The differential of a function is a covector.</p>
+
+    <p>
+      Let
+      <md>f(x,y,z)</md>
+      be differentiable at a point
+      <md>\mathbf p=(a,b,c).</md>
+      The best linear prediction for the change in <m>f</m> is
+      <md>df_{\mathbf p}=f_x(\mathbf p)\,dx+f_y(\mathbf p)\,dy+f_z(\mathbf p)\,dz.</md>
+      On a tangent vector
+      <md>\mathbf v=(v_x,v_y,v_z),</md>
+      this gives
+      <md>\boxed{df_{\mathbf p}(\mathbf v)=f_x(\mathbf p)v_x+f_y(\mathbf p)v_y+f_z(\mathbf p)v_z.}</md>
+    </p>
+
+    <p>
+      This formula does not mention length or angle. It only uses how the function changes under a
+      displacement.
+    </p>
+
+    <p>
+      The gradient vector appears when we use the usual Euclidean dot product. With that dot
+      product,
+      <md>\nabla f(\mathbf p)=\bigl(f_x(\mathbf p),f_y(\mathbf p),f_z(\mathbf p)\bigr),</md>
+      and
+      <md>\boxed{df_{\mathbf p}(\mathbf v)=\nabla f(\mathbf p)\cdot\mathbf v.}</md>
+    </p>
+
+    <theorem xml:id="c16s2-thm-differential-represented-by-gradient">
+      <title>The differential is represented by the gradient in Euclidean space</title>
+      <statement>
+        <p>
+          Let <m>f</m> be differentiable at <m>\mathbf p\in\mathbb R^3</m>, and use the usual dot
+          product. Then the covector <m>df_{\mathbf p}</m> is represented by the gradient vector:
+          <md>\boxed{df_{\mathbf p}(\mathbf v)=\nabla f(\mathbf p)\cdot\mathbf v}</md>
+          for every tangent vector <m>\mathbf v</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Write
+          <md>\mathbf v=(v_x,v_y,v_z).</md>
+          By the definition of <m>df_{\mathbf p}</m>,
+          <md>df_{\mathbf p}(\mathbf v)=f_x(\mathbf p)v_x+f_y(\mathbf p)v_y+f_z(\mathbf p)v_z.</md>
+          By the definition of the usual dot product,
+          <md>\nabla f(\mathbf p)\cdot\mathbf v=\bigl(f_x(\mathbf p),f_y(\mathbf p),f_z(\mathbf p)\bigr)\cdot(v_x,v_y,v_z),</md>
+          which is the same expression.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The phrase <q>use the usual dot product</q> is doing real work.</p>
+
+    <example xml:id="c16s2-ex-same-differential-different-gradients">
+      <title>The same differential can have different gradient vectors</title>
+      <statement>
+        <p>
+          Take the function
+          <md>f(x,y)=3x+4y.</md>
+          Its differential is
+          <md>\boxed{df=3\,dx+4\,dy.}</md>
+          This covector is fixed. On a vector
+          <md>\mathbf v=(v_x,v_y),</md>
+          it gives
+          <md>df(\mathbf v)=3v_x+4v_y.</md>
+        </p>
+        <p>
+          With the usual dot product,
+          <md>(a,b)\cdot(v_x,v_y)=av_x+bv_y,</md>
+          the representing gradient vector is
+          <md>\nabla f=(3,4).</md>
+        </p>
+        <p>
+          Now change only the dot product. Suppose the geometry of the floor measures vertical
+          motion with four times the weight:
+          <md>\langle (a,b),(v_x,v_y)\rangle_*=av_x+4bv_y.</md>
+          The same differential
+          <md>df=3\,dx+4\,dy</md>
+          is now represented by the vector
+          <md>\mathbf g=(3,1),</md>
+          because
+          <md>\langle (3,1),(v_x,v_y)\rangle_*=3v_x+4v_y=df(\mathbf v).</md>
+          So the differential did not change:
+          <md>df=3\,dx+4\,dy.</md>
+          The gradient vector changed because the dot product changed.
+        </p>
+      </statement>
+    </example>
+
+    <p>This is the moral:</p>
+
+    <p>
+      <md>\boxed{df \text{ is a covector.  The gradient is the vector that represents } df \text{ after a dot product is chosen.}}</md>
+    </p>
+
+    <p>
+      In ordinary Euclidean coordinates, the distinction is easy to miss because
+      <md>df=f_x\,dx+f_y\,dy+f_z\,dz</md>
+      and
+      <md>\nabla f=(f_x,f_y,f_z)</md>
+      use the same coefficients. But they have different jobs. The differential measures tangent
+      vectors directly. The gradient is a vector chosen so that the dot product with a tangent
+      vector gives the same measurement.
+    </p>
+
+    <p>
+      This distinction becomes more valuable as soon as we multiply covectors. A single covector
+      measures one direction. To measure an oriented parallelogram, we need two directions at
+      once. The operation that combines covectors into area-measuring forms is the wedge product.
+    </p>
+  </subsection>
+</section>

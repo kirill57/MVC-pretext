@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch06-functions-limits-continuity.tex, Section 3 (sec:6.3).
+     Status: CONVERTED. -->
+<section xml:id="sec-6-limits-in-several-variables" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Limits in several variables</title>
+
+  <p>
+    <xref ref="sec-6-graphs-level-curves-and-level-surfaces"/> gave us graphs, level curves,
+    and level surfaces. Those pictures help us see scalar fields, but a picture is still a
+    promise made from a distance. Limits ask a more delicate question:
+    <md>\text{What happens as the input gets very close to one point?}</md>
+  </p>
+
+  <p>
+    In single-variable calculus, <m>x\to a</m> meant approaching from the left and from the
+    right. In the plane, a point can approach from every direction: along lines, curves,
+    spirals, parabolas, and paths we have not thought to name.
+  </p>
+
+  <subsection xml:id="c6s3-subsec-approaching-along-many-paths">
+    <title>Approaching a point along many paths</title>
+
+    <p>
+      Consider the function
+      <md>A(x,y)=\frac{x^2-y^2}{x^2+y^2}, \qquad (x,y)\ne(0,0).</md>
+      The formula is not defined at the origin. But we can ask whether the values settle down
+      as <m>(x,y)</m> approaches <m>(0,0)</m>.
+    </p>
+
+    <p>
+      Approach along the <m>x</m>-axis. Then <m>y=0</m>, so
+      <md>A(x,0)=\frac{x^2}{x^2}=1</md>
+      for <m>x\ne0</m>. Along this path, the values approach
+      <md>1.</md>
+    </p>
+
+    <p>
+      Approach along the <m>y</m>-axis. Then <m>x=0</m>, so
+      <md>A(0,y)=\frac{-y^2}{y^2}=-1</md>
+      for <m>y\ne0</m>. Along this path, the values approach
+      <md>-1.</md>
+    </p>
+
+    <p>
+      The same point gives two different limiting answers:
+      <md>1 \qquad\text{and}\qquad -1.</md>
+      So the function has no limit at the origin.
+    </p>
+
+    <figure xml:id="c6s3-fig-different-paths-different-limits">
+      <caption>A two-variable limit must survive every possible approach to the point.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[-&gt;] (-3.4,0) -- (3.6,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-3.2) -- (0,3.4) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-3,-3) grid (3,3);
+
+            \fill (0,0) circle (2pt);
+            \node[below right] at (0,0) {\((0,0)\)};
+
+            \draw[-&gt;, very thick] (3,0) -- (0.3,0);
+            \draw[-&gt;, very thick] (-3,0) -- (-0.3,0);
+            \node[below] at (1.8,0) {\(A=1\)};
+
+            \draw[-&gt;, very thick] (0,3) -- (0,0.3);
+            \draw[-&gt;, very thick] (0,-3) -- (0,-0.3);
+            \node[right] at (0,1.8) {\(A=-1\)};
+
+            \node at (0,-4.0) {different paths to the same point give different limiting values};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This is the main new issue. A two-variable limit is not a left-right test. It is an
+      all-paths test.
+    </p>
+
+    <definition xml:id="c6s3-def-limit-two-variables">
+      <title>Limit of a function of two variables</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^2\to\mathbb R.</md>
+          We write
+          <md>\boxed{ \lim_{(x,y)\to(a,b)} f(x,y)=L }</md>
+          if the values <m>f(x,y)</m> get arbitrarily close to <m>L</m> whenever <m>(x,y)</m>
+          is sufficiently close to <m>(a,b)</m>, with <m>(x,y)\ne(a,b)</m>.
+        </p>
+        <p>
+          The point <m>(a,b)</m> does not have to be in the domain of <m>f</m>. A limit is
+          about nearby points, not necessarily the point itself.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The phrase <q>whenever <m>(x,y)</m> is sufficiently close</q> means from every direction
+      and along every path. If even one path gives a different answer, the limit fails.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s3-subsec-path-tests-nonexistence">
+    <title>Path tests for nonexistence of a limit</title>
+
+    <p>
+      A path is a curve approaching the point. If a limit exists, every path must see the same
+      limiting value.
+    </p>
+
+    <p>The quickest way to disprove a limit is to find two paths that disagree.</p>
+
+    <example xml:id="c6s3-ex-family-straight-paths">
+      <title>A family of straight paths</title>
+      <statement>
+        <p>
+          Let
+          <md>B(x,y)=\frac{xy}{x^2+y^2}, \qquad (x,y)\ne(0,0).</md>
+          Along the <m>x</m>-axis,
+          <md>B(x,0)=0.</md>
+          So along that path, the values approach <m>0</m>.
+        </p>
+        <p>
+          Along the line
+          <md>y=x,</md>
+          we get
+          <md>B(x,x)=\frac{x^2}{x^2+x^2}=\frac12.</md>
+          So along that path, the values approach <m>\frac12</m>.
+        </p>
+        <p>
+          The two path limits disagree. Therefore
+          <md>\lim_{(x,y)\to(0,0)}\frac{xy}{x^2+y^2}</md>
+          does not exist.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The same function shows something stronger. Along the line
+      <md>y=mx,</md>
+      we get
+      <md>
+        <mrow>B(x,mx) \amp= \frac{x(mx)}{x^2+(mx)^2}</mrow>
+        <mrow>\amp= \frac{mx^2}{(1+m^2)x^2}</mrow>
+        <mrow>\amp= \frac{m}{1+m^2},</mrow>
+      </md>
+      for <m>x\ne0</m>. Different slopes <m>m</m> give different limiting values. The origin is
+      not approached by one road; it is approached by infinitely many roads.
+    </p>
+
+    <theorem xml:id="c6s3-thm-path-test-nonexistence">
+      <title>Path test for nonexistence</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^2\to\mathbb R.</md>
+          Suppose two paths
+          <md>\mathbf r_1(t)\to(a,b), \qquad \mathbf r_2(t)\to(a,b)</md>
+          as <m>t\to0</m>, and suppose the paths stay in the domain of <m>f</m> except possibly
+          at the endpoint.
+        </p>
+        <p>
+          If
+          <md>\lim_{t\to0} f(\mathbf r_1(t))</md>
+          and
+          <md>\lim_{t\to0} f(\mathbf r_2(t))</md>
+          exist but are different, then
+          <md>\lim_{(x,y)\to(a,b)} f(x,y)</md>
+          does not exist.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          If the two-variable limit were <m>L</m>, then <m>f(x,y)</m> would approach <m>L</m>
+          whenever <m>(x,y)</m> approaches <m>(a,b)</m>. In particular, it would approach
+          <m>L</m> along every path to <m>(a,b)</m>.
+        </p>
+        <p>
+          Two different path limits would force the same limit to equal two different numbers.
+          That is impossible.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The theorem is a tool for showing that a limit does not exist. It is not a tool for
+      proving that a limit exists.
+    </p>
+
+    <p>Here is the trap.</p>
+
+    <example xml:id="c6s3-ex-straight-paths-agree-limit-fails">
+      <title>All straight paths agree, but the limit still fails</title>
+      <statement>
+        <p>
+          Define
+          <md>C(x,y)=\frac{x^2y}{x^4+y^2}, \qquad (x,y)\ne(0,0).</md>
+          First approach along a straight line
+          <md>y=mx.</md>
+          If <m>m=0</m>, then
+          <md>C(x,0)=0.</md>
+          If <m>m\ne0</m>, then
+          <md>
+            <mrow>C(x,mx) \amp= \frac{x^2(mx)}{x^4+m^2x^2}</mrow>
+            <mrow>\amp= \frac{mx^3}{x^2(x^2+m^2)}</mrow>
+            <mrow>\amp= \frac{mx}{x^2+m^2}.</mrow>
+          </md>
+          As <m>x\to0</m>,
+          <md>\frac{mx}{x^2+m^2}\to0.</md>
+          So every straight-line path gives the limiting value <m>0</m>.
+        </p>
+        <p>
+          But now approach along the parabola
+          <md>y=x^2.</md>
+          Then
+          <md>
+            <mrow>C(x,x^2) \amp= \frac{x^2(x^2)}{x^4+(x^2)^2}</mrow>
+            <mrow>\amp= \frac{x^4}{2x^4}</mrow>
+            <mrow>\amp= \frac12.</mrow>
+          </md>
+          Along this curved path, the limiting value is <m>\frac12</m>.
+        </p>
+        <p>
+          So the full limit does not exist, even though every straight-line test gave <m>0</m>.
+          Straight roads are not enough.
+        </p>
+      </statement>
+    </example>
+
+    <p>The moral is important:</p>
+
+    <p>
+      <md>\text{Different path limits disprove a limit.}</md>
+      But
+      <md>\text{matching path limits along a few paths do not prove a limit.}</md>
+      To prove a limit, we need a method that controls all approaches at once.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s3-subsec-polar-coordinate-tests">
+    <title>Polar-coordinate tests near the origin</title>
+
+    <p>
+      Near the origin, polar coordinates are built for limits. Every point near <m>(0,0)</m>
+      can be written as
+      <md>x=r\cos\theta,\qquad y=r\sin\theta,</md>
+      where
+      <md>r=\sqrt{x^2+y^2}.</md>
+      Approaching the origin means
+      <md>r\to0.</md>
+      The angle <m>\theta</m> may stay fixed, change, or spin wildly. A good polar argument
+      must work no matter what <m>\theta</m> does.
+    </p>
+
+    <example xml:id="c6s3-ex-polar-proof-of-limit">
+      <title>A polar-coordinate proof of a limit</title>
+      <statement>
+        <p>
+          Let
+          <md>D(x,y)=\frac{x^2y}{x^2+y^2}, \qquad (x,y)\ne(0,0).</md>
+          We want to find
+          <md>\lim_{(x,y)\to(0,0)}D(x,y).</md>
+        </p>
+        <p>
+          Use polar coordinates:
+          <md>x=r\cos\theta,\qquad y=r\sin\theta.</md>
+          Then
+          <md>
+            <mrow>D(x,y) \amp= \frac{(r\cos\theta)^2(r\sin\theta)}{r^2}</mrow>
+            <mrow>\amp= r\cos^2\theta\sin\theta.</mrow>
+          </md>
+          Therefore
+          <md>|D(x,y)| = |r\cos^2\theta\sin\theta|.</md>
+          Since
+          <md>|\cos^2\theta\sin\theta|\le1,</md>
+          we get
+          <md>|D(x,y)|\le r.</md>
+          As <m>(x,y)\to(0,0)</m>, we have <m>r\to0</m>. So
+          <md>|D(x,y)|\le r\to0.</md>
+          By the squeeze idea from single-variable calculus,
+          <md>\boxed{ \lim_{(x,y)\to(0,0)}\frac{x^2y}{x^2+y^2}=0. }</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The key was not merely rewriting in polar coordinates. The key was finding a bound that
+      did not depend on <m>\theta</m>.
+    </p>
+
+    <theorem xml:id="c6s3-thm-polar-squeeze-test">
+      <title>Polar squeeze test near the origin</title>
+      <statement>
+        <p>
+          Suppose
+          <md>f(x,y)</md>
+          is defined near <m>(0,0)</m>, except possibly at <m>(0,0)</m>. Write
+          <md>x=r\cos\theta,\qquad y=r\sin\theta.</md>
+          If there is a function <m>g(r)</m> such that
+          <md>|f(r\cos\theta,r\sin\theta)-L|\le g(r)</md>
+          for all sufficiently small <m>r\gt0</m> and all angles <m>\theta</m>, and if
+          <md>\lim_{r\to0^+}g(r)=0,</md>
+          then
+          <md>\boxed{ \lim_{(x,y)\to(0,0)}f(x,y)=L. }</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          The distance from <m>(x,y)</m> to the origin is <m>r</m>. As <m>(x,y)\to(0,0)</m>, we
+          have <m>r\to0^+</m>. The inequality
+          <md>|f(r\cos\theta,r\sin\theta)-L|\le g(r)</md>
+          holds for every angle, so it controls every possible approach to the origin. Since
+          <m>g(r)\to0</m>, the difference
+          <md>|f(x,y)-L|</md>
+          must also go to <m>0</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The phrase <q>for all angles <m>\theta</m></q> is the heart of the theorem. Without it, a
+      path could hide in the angle dependence.
+    </p>
+
+    <example xml:id="c6s3-ex-polar-reveals-failure">
+      <title>Polar coordinates can also reveal failure</title>
+      <statement>
+        <p>
+          Return to
+          <md>A(x,y)=\frac{x^2-y^2}{x^2+y^2}.</md>
+          In polar coordinates,
+          <md>
+            <mrow>A(x,y) \amp= \frac{r^2\cos^2\theta-r^2\sin^2\theta}{r^2}</mrow>
+            <mrow>\amp= \cos^2\theta-\sin^2\theta</mrow>
+            <mrow>\amp= \cos(2\theta).</mrow>
+          </md>
+          The expression does not depend on <m>r</m> at all. It depends only on the angle.
+        </p>
+        <p>
+          Along <m>\theta=0</m>,
+          <md>A=1.</md>
+          Along <m>\theta=\frac{\pi}{2}</m>,
+          <md>A=-1.</md>
+          No matter how close we get to the origin, the angle still controls the value. So the
+          limit does not exist.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      To use polar coordinates near another point <m>(a,b)</m>, shift the point to the origin:
+      <md>u=x-a,\qquad v=y-b.</md>
+      Then write
+      <md>u=r\cos\theta,\qquad v=r\sin\theta.</md>
+      Approaching <m>(a,b)</m> is the same as
+      <md>r=\sqrt{(x-a)^2+(y-b)^2}\to0.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s3-subsec-formal-limit-definition-rn">
+    <title>The formal limit definition in <m>\mathbb R^n</m></title>
+
+    <p>
+      The words <q>nearby inputs give nearby outputs</q> are right, but sometimes we need the
+      exact sentence behind them.
+    </p>
+
+    <p>
+      For a function
+      <md>F:D\subseteq\mathbb R^n\to\mathbb R^m,</md>
+      both the input and the output may be vectors. Distance measures closeness in both spaces.
+    </p>
+
+    <definition xml:id="c6s3-def-formal-limit-rn">
+      <title>Formal limit in <m>\mathbb R^n</m></title>
+      <statement>
+        <p>
+          Let
+          <md>F:D\subseteq\mathbb R^n\to\mathbb R^m.</md>
+          We write
+          <md>\boxed{ \lim_{\mathbf x\to\mathbf a}F(\mathbf x)=\mathbf L }</md>
+          if the following condition holds:
+        </p>
+        <p>
+          For every <m>\varepsilon\gt0</m>, there is a <m>\delta\gt0</m> such that whenever
+          <md>0\lt\|\mathbf x-\mathbf a\|\lt\delta</md>
+          and
+          <md>\mathbf x\in D,</md>
+          we have
+          <md>\|F(\mathbf x)-\mathbf L\|\lt\varepsilon.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      This definition is just the precise version of the all-paths idea. The condition
+      <md>0\lt\|\mathbf x-\mathbf a\|\lt\delta</md>
+      says that the input is close to <m>\mathbf a</m>, but not equal to <m>\mathbf a</m>. The
+      condition
+      <md>\|F(\mathbf x)-\mathbf L\|\lt\varepsilon</md>
+      says that the output is close to <m>\mathbf L</m>.
+    </p>
+
+    <example xml:id="c6s3-ex-direct-limit-linear-function">
+      <title>A direct limit proof for a linear function</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=3x-2y.</md>
+          We claim that
+          <md>\lim_{(x,y)\to(1,4)} f(x,y)=f(1,4)=-5.</md>
+          Compute the difference:
+          <md>
+            <mrow>|f(x,y)-(-5)| \amp= |3x-2y+5|</mrow>
+            <mrow>\amp= |3(x-1)-2(y-4)|.</mrow>
+          </md>
+          Using the triangle inequality,
+          <md>|3(x-1)-2(y-4)| \le 3|x-1|+2|y-4|.</md>
+          Also,
+          <md>|x-1|\le \sqrt{(x-1)^2+(y-4)^2},</md>
+          and
+          <md>|y-4|\le \sqrt{(x-1)^2+(y-4)^2}.</md>
+          Therefore
+          <md>|f(x,y)-(-5)| \le 5\sqrt{(x-1)^2+(y-4)^2}.</md>
+          If
+          <md>\sqrt{(x-1)^2+(y-4)^2}\lt\delta,</md>
+          then
+          <md>|f(x,y)-(-5)|\lt5\delta.</md>
+          To make this less than <m>\varepsilon</m>, choose
+          <md>\delta=\frac{\varepsilon}{5}.</md>
+          So the formal definition confirms what geometry already suggested: a linear function
+          has no sudden behavior. Its values move continuously with its inputs.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Vector-valued limits work component by component, just as they did for the one-variable
+      vector-valued functions in <xref ref="ch05-vector-valued-functions"/>.
+    </p>
+
+    <theorem xml:id="c6s3-thm-componentwise-limits">
+      <title>Componentwise limits</title>
+      <statement>
+        <p>
+          Let
+          <md>F:D\subseteq\mathbb R^n\to\mathbb R^m</md>
+          be written in components as
+          <md>F(\mathbf x)= \bigl(F_1(\mathbf x),F_2(\mathbf x),\ldots,F_m(\mathbf x)\bigr).</md>
+          Let
+          <md>\mathbf L=(L_1,L_2,\ldots,L_m).</md>
+          Then
+          <md>\lim_{\mathbf x\to\mathbf a}F(\mathbf x)=\mathbf L</md>
+          if and only if
+          <md>\lim_{\mathbf x\to\mathbf a}F_i(\mathbf x)=L_i</md>
+          for every component <m>i=1,2,\ldots,m</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          If the vector <m>F(\mathbf x)</m> approaches <m>\mathbf L</m>, then the distance
+          between them goes to <m>0</m>. Each component difference is no larger in absolute
+          value than that distance, so each component approaches its limiting value.
+        </p>
+        <p>
+          Conversely, if each component difference approaches <m>0</m>, then
+          <md>\|F(\mathbf x)-\mathbf L\| = \sqrt{ (F_1(\mathbf x)-L_1)^2+\cdots+(F_m(\mathbf x)-L_m)^2 }</md>
+          also approaches <m>0</m>. So the vector limit holds.
+        </p>
+      </proof>
+    </theorem>
+
+    <example xml:id="c6s3-ex-vector-valued-limit">
+      <title>A vector-valued limit</title>
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)= \left( x+y,\; \frac{x^2y}{x^2+y^2} \right), \qquad (x,y)\ne(0,0).</md>
+          As <m>(x,y)\to(0,0)</m>,
+          <md>x+y\to0.</md>
+          From the polar-coordinate example above,
+          <md>\frac{x^2y}{x^2+y^2}\to0.</md>
+          Therefore
+          <md>\lim_{(x,y)\to(0,0)}F(x,y)=(0,0).</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A limit does not care what happens at the point itself. That is both useful and a little
+      dangerous.
+    </p>
+
+    <p>
+      For example, define
+      <md>G(x,y)= \begin{cases} \dfrac{x^2y}{x^2+y^2}, &amp; (x,y)\ne(0,0),\\[2mm] 17, &amp; (x,y)=(0,0). \end{cases}</md>
+      The limit at the origin is still
+      <md>0.</md>
+      But the actual value at the origin is
+      <md>17.</md>
+      So the surface has a perfectly good limiting height, but the function has placed the point
+      at the wrong height.
+    </p>
+
+    <p>
+      That mismatch is exactly what continuity is designed to catch. A limit asks what the
+      nearby values want the answer to be. Continuity asks whether the function actually
+      listens.
+    </p>
+  </subsection>
+</section>

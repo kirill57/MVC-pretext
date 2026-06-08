@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch12-change-of-variables.tex, Section 12.1.
+     Status: CONVERTED. -->
+<section xml:id="sec-12-the-geometry-of-substitution" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>The geometry of substitution</title>
+
+  <p>
+    A substitution is a change of language. In single-variable calculus, we replaced
+    <m>x</m> by a new variable <m>u</m>. In double integrals, we replace <m>(x,y)</m> by
+    new variables <m>(u,v)</m>. The new variables may straighten a slanted region, unwrap a
+    circular region, or turn a difficult boundary into a rectangle.
+  </p>
+
+  <p>
+    But changing language changes the size of the small pieces. That is the whole issue.
+  </p>
+
+  <subsection xml:id="c12s1-subsec-single-variable-substitution">
+    <title>Single-variable substitution remembered</title>
+
+    <p>
+      Start with the one-dimensional story. Compute
+      <md>\int_0^4 \sqrt{x}\,dx.</md>
+      Let
+      <md>x=u^2.</md>
+      Since <m>x</m> runs from <m>0</m> to <m>4</m>, and we choose <m>u\ge0</m>, the new
+      variable runs from
+      <md>u=0 \qquad\text{to}\qquad u=2.</md>
+      Also,
+      <md>dx=2u\,du.</md>
+      So
+      <md>
+        <mrow>\int_0^4 \sqrt{x}\,dx \amp= \int_0^2 \sqrt{u^2}\,(2u)\,du</mrow>
+        <mrow>\amp= \int_0^2 2u^2\,du</mrow>
+        <mrow>\amp= 2\left[\frac{u^3}{3}\right]_0^2</mrow>
+        <mrow>\amp= \frac{16}{3}.</mrow>
+      </md>
+    </p>
+
+    <p>
+      The factor
+      <md>2u</md>
+      did not appear by magic. It measures how much an interval in <m>u</m>-space is
+      stretched when it becomes an interval in <m>x</m>-space.
+    </p>
+
+    <p>
+      Near a particular value <m>u</m>, a small interval of length <m>\Delta u</m> becomes an
+      interval of length approximately
+      <md>\Delta x\approx \frac{dx}{du}\Delta u.</md>
+      For
+      <md>x=u^2,</md>
+      this says
+      <md>\Delta x\approx 2u\,\Delta u.</md>
+      Near <m>u=2</m>, a small <m>u</m>-interval is stretched by about <m>4</m>. Near
+      <m>u=1/10</m>, it is stretched by about <m>1/5</m>.
+    </p>
+
+    <p>
+      So the one-dimensional substitution rule is really a measurement rule:
+      <md>\boxed{ \text{new small length in }x = \text{stretch factor}\cdot \text{old small length in }u. }</md>
+    </p>
+
+    <p>
+      In symbols,
+      <md>dx=\frac{dx}{du}\,du.</md>
+      For ordinary positive length, the scale factor is
+      <md>\left|\frac{dx}{du}\right|.</md>
+      For oriented integrals, the sign is allowed to stay. A negative derivative means the
+      substitution reverses direction.
+    </p>
+
+    <p>
+      The same idea will guide us in the plane. The only difference is that small intervals
+      become small parallelograms.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c12s1-subsec-intervals-to-parallelograms">
+    <title>From small intervals to small parallelograms</title>
+
+    <p>
+      Suppose a square tile in the <m>(u,v)</m>-plane is sent to the <m>(x,y)</m>-plane by
+      <md>T(u,v)=(x,y)=(u+2v,\;3u+v).</md>
+      The point <m>(0,0)</m> goes to
+      <md>(0,0).</md>
+      The unit step in the <m>u</m>-direction goes to
+      <md>T(1,0)-T(0,0)=(1,3).</md>
+      The unit step in the <m>v</m>-direction goes to
+      <md>T(0,1)-T(0,0)=(2,1).</md>
+      So the unit square in the <m>(u,v)</m>-plane becomes the parallelogram spanned by
+      <md>\mathbf a=(1,3), \qquad \mathbf b=(2,1).</md>
+    </p>
+
+    <p>
+      Its signed area is
+      <md>\det[\mathbf a\ \mathbf b] = \begin{vmatrix} 1\amp2\\ 3\amp1 \end{vmatrix} = 1\cdot1-3\cdot2 = -5.</md>
+      The ordinary area is
+      <md>5.</md>
+    </p>
+
+    <figure xml:id="c12s1-fig-square-to-parallelogram">
+      <caption>A linear change of variables sends a square to a parallelogram. The
+      determinant measures the signed area of that parallelogram.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \begin{scope}
+                \draw[-&gt;] (-0.4,0) -- (3.0,0) node[right] {\(u\)};
+                \draw[-&gt;] (0,-0.4) -- (0,3.0) node[above] {\(v\)};
+
+                \draw[fill=gray!12, thick] (0,0) rectangle (1.5,1.5);
+                \draw[-&gt;, very thick] (0,0) -- (1.5,0) node[midway, below] {\(\Delta u\)};
+                \draw[-&gt;, very thick] (0,0) -- (0,1.5) node[midway, left] {\(\Delta v\)};
+
+                \node at (1.2,-0.9) {a square in \((u,v)\)};
+            \end{scope}
+
+            \draw[-&gt;, thick] (3.4,1.2) -- (5.2,1.2);
+            \node[above] at (4.6,1.2) {\(T\)};
+
+            \begin{scope}[shift={(7,0)}]
+                \draw[-&gt;] (-0.5,0) -- (5.0,0) node[right] {\(x\)};
+                \draw[-&gt;] (0,-0.5) -- (0,5.0) node[above] {\(y\)};
+
+                \coordinate (O) at (0,0);
+                \coordinate (A) at (1,3);
+                \coordinate (B) at (2,1);
+                \coordinate (AB) at (3,4);
+
+                \draw[fill=blue!8, thick] (O) -- (A) -- (AB) -- (B) -- cycle;
+                \draw[-&gt;, very thick] (O) -- (A) node[midway, left] {\((1,3)\)};
+                \draw[-&gt;, very thick] (O) -- (B) node[midway, below right] {\((2,1)\)};
+                \draw[dashed] (A) -- (AB);
+                \draw[dashed] (B) -- (AB);
+
+                \node at (2.5,-0.9) {a parallelogram in \((x,y)\)};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This is the two-dimensional version of the factor <m>dx/du</m>. A small square of area
+      <md>\Delta u\,\Delta v</md>
+      is turned into a parallelogram whose area is
+      <md>5\,\Delta u\,\Delta v.</md>
+      The number <m>5</m> is the area scale factor.
+    </p>
+
+    <p>
+      The sign
+      <md>-5</md>
+      also matters. It says the ordered directions have been flipped. The <m>u</m>-direction
+      followed by the <m>v</m>-direction becomes a clockwise ordered pair in the
+      <m>(x,y)</m>-plane. Ordinary area ignores that sign. Oriented area remembers it.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c12s1-subsec-local-linearization">
+    <title>Local linearization of a coordinate map</title>
+
+    <p>
+      The previous map was linear, so every square became a true parallelogram. Most useful
+      coordinate maps are not linear.
+    </p>
+
+    <p>
+      For example, take
+      <md>T(u,v)=(x,y)=(u,\;uv).</md>
+      This map bends the <m>(u,v)</m>-grid. A small rectangle in the <m>(u,v)</m>-plane
+      becomes a curved quadrilateral in the <m>(x,y)</m>-plane.
+    </p>
+
+    <p>
+      Still, if the rectangle is tiny, its image is almost a parallelogram. The two side
+      vectors come from the partial derivatives of <m>T</m>.
+    </p>
+
+    <p>
+      For
+      <md>T(u,v)=(x(u,v),y(u,v)),</md>
+      define
+      <md>T_u=(x_u,y_u), \qquad T_v=(x_v,y_v).</md>
+      These are the two velocity vectors of the coordinate grid: one obtained by changing
+      <m>u</m>, the other by changing <m>v</m>.
+    </p>
+
+    <p>
+      For
+      <md>T(u,v)=(u,uv),</md>
+      we have
+      <md>T_u(u,v)=(1,v), \qquad T_v(u,v)=(0,u).</md>
+      At the point
+      <md>(u,v)=(2,3),</md>
+      these become
+      <md>T_u(2,3)=(1,3), \qquad T_v(2,3)=(0,2).</md>
+      So a tiny rectangle near <m>(2,3)</m>, with side lengths <m>\Delta u</m> and
+      <m>\Delta v</m>, maps approximately to the parallelogram spanned by
+      <md>(1,3)\Delta u \qquad\text{and}\qquad (0,2)\Delta v.</md>
+      The signed area scale factor is
+      <md>\det \begin{pmatrix} 1\amp0\\ 3\amp2 \end{pmatrix} = 2.</md>
+      So the image area is approximately
+      <md>2\,\Delta u\,\Delta v.</md>
+    </p>
+
+    <p>
+      Let us check this with a small actual rectangle:
+      <md>2\le u\le2.01, \qquad 3\le v\le3.01.</md>
+      Since
+      <md>x=u, \qquad y=uv,</md>
+      the vertical height of the image at a fixed <m>u</m> is
+      <md>u(3.01)-u(3)=0.01u.</md>
+      Therefore the exact image area is
+      <md>
+        <mrow>\int_{2}^{2.01} 0.01u\,du \amp= 0.01\left[\frac{u^2}{2}\right]_{2}^{2.01}</mrow>
+        <mrow>\amp= 0.01\cdot\frac{2.01^2-2^2}{2}</mrow>
+        <mrow>\amp= 0.0002005.</mrow>
+      </md>
+      The local linear estimate gives
+      <md>2(0.01)(0.01)=0.0002.</md>
+      The agreement is close because the rectangle is small.
+    </p>
+
+    <definition xml:id="c12s1-def-jacobian-determinant-plane">
+      <title>Jacobian determinant in the plane</title>
+      <statement>
+        <p>
+          For a differentiable coordinate map
+          <md>T(u,v)=(x(u,v),y(u,v)),</md>
+          the <term>Jacobian determinant</term> of <m>T</m> is
+          <md>\boxed{ J_T(u,v) = \frac{\partial(x,y)}{\partial(u,v)} = \begin{vmatrix} x_u \amp x_v\\ y_u \amp y_v \end{vmatrix} = x_u y_v-x_v y_u. }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The notation
+      <md>\frac{\partial(x,y)}{\partial(u,v)}</md>
+      means: the determinant of the derivative matrix of the map from <m>(u,v)</m> to
+      <m>(x,y)</m>.
+    </p>
+
+    <p>
+      The geometric meaning is the one we just saw:
+      <md>\boxed{ \text{small signed area in }(x,y) \approx J_T(u,v)\, \text{small signed area in }(u,v). }</md>
+      For ordinary area, the local scale factor is
+      <md>\boxed{ |J_T(u,v)|. }</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c12s1-subsec-why-determinants-appear">
+    <title>Why determinants appear</title>
+
+    <p>
+      The determinant appears because two variables create area, and area is measured by a
+      two-input object.
+    </p>
+
+    <p>
+      The side vectors of a tiny image tile are approximately
+      <md>T_u\,du \qquad\text{and}\qquad T_v\,dv.</md>
+      The signed area form <m>dx\wedge dy</m> measures the signed area of those two vectors:
+      <md>
+        <mrow>(dx\wedge dy)(T_u,T_v) \amp= \begin{vmatrix} x_u \amp x_v\\ y_u \amp y_v \end{vmatrix}</mrow>
+        <mrow>\amp= J_T(u,v).</mrow>
+      </md>
+      So the determinant is not a random correction factor. It is the signed area of the
+      parallelogram made by the two coordinate velocity vectors.
+    </p>
+
+    <p>
+      The same fact can be written in differential form notation. Since
+      <md>x=x(u,v), \qquad y=y(u,v),</md>
+      we have
+      <md>dx=x_u\,du+x_v\,dv,</md>
+      and
+      <md>dy=y_u\,du+y_v\,dv.</md>
+      Then
+      <md>
+        <mrow>dx\wedge dy \amp= (x_u\,du+x_v\,dv)\wedge(y_u\,du+y_v\,dv)</mrow>
+        <mrow>\amp= x_u y_v\,du\wedge dv+x_v y_u\,dv\wedge du</mrow>
+        <mrow>\amp= (x_u y_v-x_v y_u)\,du\wedge dv.</mrow>
+      </md>
+      Thus
+      <md>\boxed{ dx\wedge dy = J_T(u,v)\,du\wedge dv. }</md>
+      This is the form version of the change in signed area.
+    </p>
+
+    <p>
+      There is one condition hidden in the phrase <q>local linearization.</q> The map must
+      have a good derivative at the point. If
+      <md>T(u,v)=(|u|,v),</md>
+      then at the origin the map has a crease. Approaching from the right, the
+      <m>u</m>-direction goes to <m>(1,0)</m>. Approaching from the left, it goes to
+      <m>(-1,0)</m>. There is no single linear map that describes the behavior from all
+      sides. So there is no single determinant at the origin that explains every tiny tile
+      crossing the crease.
+    </p>
+
+    <p>
+      Away from the crease, the determinant picture works again.
+    </p>
+
+    <p>
+      For a nonlinear coordinate map, the determinant may change from point to point. That is
+      why polar coordinates have the factor <m>r</m>, and spherical coordinates have the
+      factor <m>\rho^2\sin\phi</m>. Before letting the scale factor vary, it is worth
+      studying the case where it stays constant. Linear maps are the cleanest laboratory:
+      every tiny square is stretched by the same determinant, and the curved-tile
+      approximation becomes exact.
+    </p>
+  </subsection>
+</section>

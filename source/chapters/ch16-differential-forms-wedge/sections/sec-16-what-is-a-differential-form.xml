@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch16-differential-forms-wedge.tex, Section 1.
+     Status: CONVERTED. -->
+<section xml:id="sec-16-what-is-a-differential-form" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>What is a differential form?</title>
+
+  <p>
+    A curve gives tiny tangent arrows. A surface gives tiny oriented parallelograms. A
+    solid gives tiny oriented boxes. A differential form is a rule that knows how to measure
+    one of those tiny objects.
+  </p>
+
+  <subsection xml:id="c16s1-subsec-forms-objects-integrated">
+    <title>Forms as objects designed to be integrated</title>
+
+    <p>Think of four measurements in a small laboratory.</p>
+
+    <p>
+      A temperature reading at one point is just a number:
+      <md>T(P).</md>
+      A force measurement along a wire uses tiny displacements:
+      <md>P\,dx+Q\,dy+R\,dz.</md>
+      A flow measurement through a screen uses tiny oriented area pieces:
+      <md>P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy.</md>
+      A density measurement throughout a box uses tiny volume pieces:
+      <md>\rho\,dx\wedge dy\wedge dz.</md>
+    </p>
+
+    <p>Each expression is designed for a different dimension.</p>
+
+    <md>
+      \begin{array}{c|c|c}
+      \text{Degree} \amp \text{Kind of form} \amp \text{Where it is integrated} \\ \hline
+      0 \amp \text{function} \amp \text{oriented points}\\[1mm]
+      1 \amp \text{line-measuring form} \amp \text{oriented curves}\\[1mm]
+      2 \amp \text{area-measuring form} \amp \text{oriented surfaces}\\[1mm]
+      3 \amp \text{volume-measuring form} \amp \text{oriented solids}
+      \end{array}
+    </md>
+
+    <p>The degree tells us the dimension of the object the form measures.</p>
+
+    <figure xml:id="c16s1-fig-forms-by-degree">
+      <caption>A <m>k</m>-form is built to be integrated over <m>k</m>-dimensional oriented objects.</caption>
+      <image width="90%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \begin{scope}
+                \fill (0,0) circle (3pt);
+                \node[below] at (0,0) {point};
+                \node at (0,-0.75) {\(0\)-form};
+            \end{scope}
+
+            \begin{scope}[shift={(3.1,0)}]
+                \draw[thick, -&gt;] (0,0) .. controls (0.6,0.9) and (1.4,-0.7) .. (2.0,0.4);
+                \node[below] at (1,0) {curve};
+                \node at (1,-0.75) {\(1\)-form};
+            \end{scope}
+
+            \begin{scope}[shift={(7,0)}]
+                \coordinate (A) at (0,0);
+                \coordinate (B) at (2,0.3);
+                \coordinate (C) at (2.4,1.5);
+                \coordinate (D) at (0.4,1.2);
+                \draw[fill=gray!12, thick] (A)--(B)--(C)--(D)--cycle;
+                \draw[-&gt;, thick] (0.35,0.25) -- (1.2,0.38);
+                \draw[-&gt;, thick] (0.35,0.25) -- (0.55,0.95);
+                \node[below] at (1.2,0) {surface patch};
+                \node at (1.2,-0.75) {\(2\)-form};
+            \end{scope}
+
+            \begin{scope}[shift={(11.2,-0.1)}]
+                \coordinate (O) at (0,0);
+                \coordinate (A) at (1.4,0);
+                \coordinate (B) at (2.0,0.55);
+                \coordinate (C) at (0.6,0.55);
+                \coordinate (D) at (0,1.1);
+                \coordinate (E) at (1.4,1.1);
+                \coordinate (F) at (2.0,1.65);
+                \coordinate (G) at (0.6,1.65);
+
+                \draw[fill=gray!10, thick] (O)--(A)--(B)--(C)--cycle;
+                \draw[fill=gray!16, thick] (D)--(E)--(F)--(G)--cycle;
+                \draw[thick] (O)--(D);
+                \draw[thick] (A)--(E);
+                \draw[thick] (B)--(F);
+                \draw[thick] (C)--(G);
+
+                \node[below] at (1.0,0) {solid};
+                \node at (1.0,-0.75) {\(3\)-form};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This is the guiding idea:
+      <md>\boxed{\text{A differential form is an object designed to be integrated.}}</md>
+    </p>
+
+    <p>
+      The symbols <m>dx</m>, <m>dy</m>, <m>dz</m>, and their wedge products are not
+      decorations. They tell the form what kind of tiny geometric piece it is measuring.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s1-subsec-0-forms-functions">
+    <title><m>0</m>-forms: functions</title>
+
+    <p>A <m>0</m>-form is a function.</p>
+
+    <p>
+      For example, on the real line,
+      <md>f(x)=x^2</md>
+      is a <m>0</m>-form. On the plane,
+      <md>T(x,y)=20+\frac{6}{1+(x-2)^2+(y-1)^2}</md>
+      is also a <m>0</m>-form. It assigns one number to each point.
+    </p>
+
+    <p>
+      The unusual part is integration. A <m>0</m>-form is integrated over oriented points. An
+      oriented point is just a point with a sign attached:
+      <md>+P \qquad\text{or}\qquad -P.</md>
+      We define
+      <md>\int_{+P} f=f(P), \qquad \int_{-P} f=-f(P).</md>
+    </p>
+
+    <p>
+      This may look strange until we remember the Fundamental Theorem of Calculus. The
+      oriented boundary of the interval <m>[a,b]</m> is
+      <md>\partial[a,b]=\{b\}-\{a\}.</md>
+      So
+      <md>\int_{\partial[a,b]} f = f(b)-f(a).</md>
+      That is exactly the boundary term in
+      <md>\int_a^b f'(x)\,dx=f(b)-f(a).</md>
+    </p>
+
+    <example xml:id="c16s1-ex-function-boundary-interval">
+      <title>A function on the boundary of an interval</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x)=x^2+1</md>
+          and let
+          <md>I=[1,4].</md>
+          Then
+          <md>\partial I=\{4\}-\{1\}.</md>
+          Therefore
+          <md>
+            <mrow>\int_{\partial I} f \amp= f(4)-f(1)</mrow>
+            <mrow>\amp= 17-2</mrow>
+            <mrow>\amp= 15.</mrow>
+          </md>
+          The signs on the endpoints matter. The right endpoint is positive, and the left
+          endpoint is negative.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is why functions belong in the forms family. They are the forms of degree zero.
+      They do not measure length, area, or volume. They measure signed points.
+    </p>
+
+    <definition xml:id="c16s1-def-0-form">
+      <title><m>0</m>-form</title>
+      <statement>
+        <p>
+          A <term><m>0</m>-form</term> on a region <m>D</m> is a scalar function
+          <md>f:D\to\mathbb R.</md>
+          It is integrated over oriented <m>0</m>-dimensional objects, which are signed
+          collections of points.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Later, the exterior derivative will turn a <m>0</m>-form into a <m>1</m>-form:
+      <md>f \quad\longmapsto\quad df.</md>
+      That is the form version of taking a derivative.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s1-subsec-1-forms-line-measuring">
+    <title><m>1</m>-forms: line-measuring objects</title>
+
+    <p>
+      A <m>1</m>-form measures one tangent direction at a time. That is why it is integrated
+      along a curve.
+    </p>
+
+    <p>
+      The work form of a vector field
+      <md>\mathbf F=(P,Q,R)</md>
+      is
+      <md>\omega=P\,dx+Q\,dy+R\,dz.</md>
+      At each tiny step along a curve, it adds
+      <md>P(\text{tiny }x\text{-change}) + Q(\text{tiny }y\text{-change}) + R(\text{tiny }z\text{-change}).</md>
+    </p>
+
+    <example xml:id="c16s1-ex-turnstile-displacement">
+      <title>A turnstile that charges by displacement</title>
+      <statement>
+        <p>
+          A robot moves across a warehouse floor. The cost of a tiny move is
+          <md>\omega=3\,dx+2\,dy.</md>
+          Moving east by one meter costs <m>3</m> units. Moving north by one meter costs
+          <m>2</m> units. Moving west or south gives a negative cost, because the displacement
+          is oriented.
+        </p>
+        <p>
+          Let the robot move from <m>(0,0)</m> to <m>(4,1)</m> along the straight path
+          <md>\mathbf r(t)=(4t,t), \qquad 0\le t\le1.</md>
+          Then
+          <md>dx=4\,dt, \qquad dy=dt.</md>
+          So
+          <md>
+            <mrow>\int_C \omega \amp= \int_0^1 \bigl(3(4\,dt)+2(dt)\bigr)</mrow>
+            <mrow>\amp= \int_0^1 14\,dt</mrow>
+            <mrow>\amp= 14.</mrow>
+          </md>
+          The <m>1</m>-form did not measure how long the path was. It measured the oriented
+          coordinate changes along the path.
+        </p>
+      </statement>
+    </example>
+
+    <definition xml:id="c16s1-def-1-form">
+      <title><m>1</m>-form</title>
+      <statement>
+        <p>
+          A <term><m>1</m>-form</term> on a region <m>D\subseteq\mathbb R^2</m> is an expression
+          <md>\omega=P(x,y)\,dx+Q(x,y)\,dy.</md>
+          A <term><m>1</m>-form</term> on a region <m>D\subseteq\mathbb R^3</m> is an expression
+          <md>\omega=P(x,y,z)\,dx+Q(x,y,z)\,dy+R(x,y,z)\,dz.</md>
+          It is integrated over oriented curves.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      A <m>1</m>-form changes sign when the orientation of the curve is reversed:
+      <md>\int_{-C}\omega=-\int_C\omega.</md>
+      That sign is part of the object. A <m>1</m>-form is not an unsigned length density like
+      <md>\rho\,ds.</md>
+      The form <m>P\,dx+Q\,dy+R\,dz</m> cares which way the curve is traveled.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s1-subsec-2-forms-surface-measuring">
+    <title><m>2</m>-forms: surface-measuring objects</title>
+
+    <p>
+      A <m>2</m>-form measures an oriented area piece. In the plane, the basic area form is
+      <md>dx\wedge dy.</md>
+      So a typical <m>2</m>-form in the plane is
+      <md>\alpha=M(x,y)\,dx\wedge dy.</md>
+    </p>
+
+    <p>
+      On a positively oriented region in the <m>xy</m>-plane, this acts like
+      <md>M\,dA.</md>
+      But the wedge notation remembers the sign:
+      <md>dy\wedge dx=-dx\wedge dy.</md>
+    </p>
+
+    <example xml:id="c16s1-ex-signed-paint-floor-tile">
+      <title>A signed paint layer on a floor tile</title>
+      <statement>
+        <p>
+          Let
+          <md>\alpha=(2+x)\,dx\wedge dy</md>
+          on the rectangle
+          <md>R=[0,3]\times[0,2],</md>
+          with the usual orientation of the plane. Then
+          <md>
+            <mrow>\int_R \alpha \amp= \int_0^3\int_0^2 (2+x)\,dy\,dx</mrow>
+            <mrow>\amp= \int_0^3 2(2+x)\,dx</mrow>
+            <mrow>\amp= \left[4x+x^2\right]_0^3</mrow>
+            <mrow>\amp= 21.</mrow>
+          </md>
+          If we reverse the orientation of <m>R</m>, the same form gives
+          <md>-21.</md>
+          The physical amount of paint would not become negative, but the oriented integral
+          does. A <m>2</m>-form measures signed area.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      In space, a surface can have shadows on three coordinate planes. The basic
+      <m>2</m>-forms are
+      <md>dy\wedge dz,\qquad dz\wedge dx,\qquad dx\wedge dy.</md>
+      A general <m>2</m>-form in space has the shape
+      <md>\Phi=A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy.</md>
+    </p>
+
+    <p>
+      Flux forms are the main example:
+      <md>\Phi_{\mathbf F} = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy</md>
+      for a vector field
+      <md>\mathbf F=(P,Q,R).</md>
+    </p>
+
+    <example xml:id="c16s1-ex-flow-coordinate-screen">
+      <title>Flow through a coordinate screen</title>
+      <statement>
+        <p>
+          Let
+          <md>\Phi=5\,dy\wedge dz+2\,dz\wedge dx.</md>
+          Take the screen
+          <md>x=1, \qquad 0\le y\le2, \qquad 0\le z\le3,</md>
+          oriented in the positive <m>x</m>-direction. A parametrization is
+          <md>\mathbf r(y,z)=(1,y,z).</md>
+          On this screen,
+          <md>dy\wedge dz</md>
+          is the positive area form. Also,
+          <md>dx=0,</md>
+          so
+          <md>dz\wedge dx=0.</md>
+          Thus
+          <md>\mathbf r^*\Phi=5\,dy\wedge dz.</md>
+          Therefore
+          <md>
+            <mrow>\int_S \Phi \amp= \int_0^2\int_0^3 5\,dz\,dy</mrow>
+            <mrow>\amp= 30.</mrow>
+          </md>
+          Only the <m>dy\wedge dz</m> part crosses a screen perpendicular to the
+          <m>x</m>-axis.
+        </p>
+      </statement>
+    </example>
+
+    <definition xml:id="c16s1-def-2-form">
+      <title><m>2</m>-form</title>
+      <statement>
+        <p>
+          A <term><m>2</m>-form</term> on a region in the plane has the form
+          <md>\alpha=M(x,y)\,dx\wedge dy.</md>
+          A <term><m>2</m>-form</term> on a region in space has the form
+          <md>\Phi=A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy.</md>
+          It is integrated over oriented surfaces or oriented plane regions.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Surface area integrals such as
+      <md>\iint_S f\,dS</md>
+      do not need an orientation. A <m>2</m>-form integral does. That is why flux is the
+      natural surface integral for forms.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c16s1-subsec-3-forms-volume-measuring">
+    <title><m>3</m>-forms: volume-measuring objects</title>
+
+    <p>
+      A <m>3</m>-form measures oriented volume in space. The basic volume form is
+      <md>dx\wedge dy\wedge dz.</md>
+      A typical <m>3</m>-form is
+      <md>\Omega=H(x,y,z)\,dx\wedge dy\wedge dz.</md>
+    </p>
+
+    <example xml:id="c16s1-ex-density-storage-box">
+      <title>Density in a storage box</title>
+      <statement>
+        <p>
+          A gas fills the box
+          <md>E=[0,2]\times[0,1]\times[0,3].</md>
+          Suppose its density form is
+          <md>\Omega=(5+z)\,dx\wedge dy\wedge dz.</md>
+          Using the usual orientation of space,
+          <md>
+            <mrow>\int_E \Omega \amp= \int_0^2\int_0^1\int_0^3 (5+z)\,dz\,dy\,dx</mrow>
+            <mrow>\amp= \int_0^2\int_0^1 \left[5z+\frac{z^2}{2}\right]_0^3 \,dy\,dx</mrow>
+            <mrow>\amp= \int_0^2\int_0^1 \frac{39}{2} \,dy\,dx</mrow>
+            <mrow>\amp= 39.</mrow>
+          </md>
+          So the total mass is
+          <md>39.</md>
+          If we reverse the orientation of space, the form integral becomes <m>-39</m>. For
+          physical mass we usually keep the standard orientation fixed and report the positive
+          number.
+        </p>
+      </statement>
+    </example>
+
+    <definition xml:id="c16s1-def-3-form">
+      <title><m>3</m>-form</title>
+      <statement>
+        <p>
+          A <term><m>3</m>-form</term> on a region in space is an expression
+          <md>\Omega=H(x,y,z)\,dx\wedge dy\wedge dz.</md>
+          It is integrated over oriented solid regions.
+        </p>
+      </statement>
+    </definition>
+
+    <p>The whole family now fits into one picture:</p>
+
+    <md>
+      \begin{array}{c|c|c|c}
+      \text{Degree} \amp \text{Typical form} \amp \text{Tiny object measured} \amp \text{Integral} \\ \hline
+      0 \amp f \amp \text{oriented point} \amp \int_{\partial I} f\\[1mm]
+      1 \amp P\,dx+Q\,dy+R\,dz \amp \text{oriented tangent vector} \amp \int_C \omega\\[1mm]
+      2 \amp A\,dy\wedge dz+B\,dz\wedge dx+C\,dx\wedge dy \amp \text{oriented parallelogram} \amp \int_S \Phi\\[1mm]
+      3 \amp H\,dx\wedge dy\wedge dz \amp \text{oriented box} \amp \int_E \Omega
+      \end{array}
+    </md>
+
+    <p>
+      The table hides one important question. A <m>1</m>-form is built from <m>dx</m>,
+      <m>dy</m>, and <m>dz</m>. But what are these symbols really? They are not tiny numbers.
+      They are linear measuring rules for tangent vectors. Giving those rules their proper
+      name, <term>covectors</term>, is the next step.
+    </p>
+  </subsection>
+</section>

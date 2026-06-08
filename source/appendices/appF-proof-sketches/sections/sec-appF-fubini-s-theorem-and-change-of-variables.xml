@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/appendices/appF-proof-sketches.tex, Section F.3.
+     Status: CONVERTED. -->
+<section xml:id="sec-appF-fubini-s-theorem-and-change-of-variables" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Fubini's theorem and change of variables</title>
+
+  <subsection xml:id="appF-fubini-fubinis-theorem-statement">
+    <title>Fubini's theorem: statement</title>
+
+    <p>
+      If <m>f</m> is continuous on a rectangle
+      <md>R=[a,b]\times[c,d],</md>
+      then
+      <md>
+        \boxed{
+          \iint_R f(x,y)\,dA
+          =
+          \int_a^b\int_c^d f(x,y)\,dy\,dx
+          =
+          \int_c^d\int_a^b f(x,y)\,dx\,dy.
+        }
+      </md>
+    </p>
+
+    <p>
+      For a solid box,
+      <md>
+        \boxed{
+          \iiint_B f\,dV
+        }
+      </md>
+      can be computed by any order of iterated integration, as long as the corresponding
+      bounds describe the same box.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-fubini-hypotheses">
+    <title>Fubini: hypotheses</title>
+
+    <p>For the version used most often in this book:</p>
+
+    <md>
+      <mrow>1. \amp \text{The region is a rectangle, box, or a region described by clean bounds.}</mrow>
+      <mrow>2. \amp \text{The function is continuous, or at least integrable in a safe sense.}</mrow>
+    </md>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-fubini-proof-idea">
+    <title>Fubini: proof idea</title>
+
+    <p>
+      A double integral is a limit of sums over small rectangles:
+      <md>\sum f(x_i^*,y_j^*)\,\Delta x\,\Delta y.</md>
+    </p>
+
+    <p>
+      Group the same sum by columns:
+      <md>
+        \sum_i
+        \left(
+          \sum_j f(x_i^*,y_j^*)\,\Delta y
+        \right)
+        \Delta x.
+      </md>
+    </p>
+
+    <p>
+      The inner sum becomes an integral in <m>y</m>. The outer sum becomes an integral in
+      <m>x</m>.
+    </p>
+
+    <p>Group by rows instead, and the order reverses.</p>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-fubini-dependencies">
+    <title>Fubini: dependencies</title>
+
+    <md>
+      <mrow>1. \amp \text{Riemann sums.}</mrow>
+      <mrow>2. \amp \text{Single-variable integration.}</mrow>
+      <mrow>3. \amp \text{Continuity or integrability.}</mrow>
+    </md>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-fubini-what-can-fail">
+    <title>Fubini: what can fail</title>
+
+    <p>For ordinary continuous functions on bounded regions, Fubini is safe.</p>
+
+    <p>
+      For improper integrals, changing the order can change the value if the integral is not
+      absolutely convergent.
+    </p>
+
+    <p>The safe rule is:</p>
+
+    <md>
+      \boxed{
+        \text{If }\iint |f|\,dA\text{ is finite, changing order is safe.}
+      }
+    </md>
+
+    <p>Without absolute convergence, be careful.</p>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-change-of-variables-statement">
+    <title>Change of variables: statement</title>
+
+    <p>
+      For a <m>C^1</m> coordinate map
+      <md>T(u,v)=(x(u,v),y(u,v)),</md>
+      the change of variables formula is
+      <md>
+        \boxed{
+          \iint_R f(x,y)\,dA
+          =
+          \iint_{\widetilde R}
+          f(T(u,v))
+          \left|
+            \det DT(u,v)
+          \right|
+          \,du\,dv.
+        }
+      </md>
+    </p>
+
+    <p>
+      In differential forms language:
+      <md>
+        \boxed{
+          T^*(dx\wedge dy)
+          =
+          \det DT\,du\wedge dv.
+        }
+      </md>
+    </p>
+
+    <p>
+      So the oriented form is
+      <md>
+        \boxed{
+          \iint_R f\,dx\wedge dy
+          =
+          \iint_{\widetilde R}
+          f(T(u,v))\det DT\,du\wedge dv.
+        }
+      </md>
+    </p>
+
+    <p>
+      The ordinary area formula uses
+      <md>|\det DT|.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-change-of-variables-hypotheses">
+    <title>Change of variables: hypotheses</title>
+
+    <p>The standard version assumes:</p>
+
+    <md>
+      <mrow>1. \amp T\text{ is }C^1.</mrow>
+      <mrow>2. \amp T\text{ is one-to-one on the region, except possibly on boundary pieces.}</mrow>
+      <mrow>3. \amp \det DT\ne0\text{ in the interior, except possibly on harmless boundary pieces.}</mrow>
+      <mrow>4. \amp \text{The regions are reasonably nice.}</mrow>
+    </md>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-change-of-variables-proof-idea">
+    <title>Change of variables: proof idea</title>
+
+    <p>
+      Near a point <m>(u,v)</m>, the map <m>T</m> is almost linear:
+      <md>
+        T(u+\Delta u,v+\Delta v)
+        \approx
+        T(u,v)+DT
+        \begin{pmatrix}
+        \Delta u\\
+        \Delta v
+        \end{pmatrix}.
+      </md>
+    </p>
+
+    <p>
+      A tiny rectangle in the <m>uv</m>-plane becomes almost a parallelogram in the
+      <m>xy</m>-plane.
+    </p>
+
+    <p>
+      The area scale factor of that parallelogram is
+      <md>
+        \boxed{
+          |\det DT|.
+        }
+      </md>
+    </p>
+
+    <p>Add over many tiny rectangles and pass to the limit.</p>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-change-of-variables-dependencies">
+    <title>Change of variables: dependencies</title>
+
+    <md>
+      <mrow>1. \amp \text{Differentiability as local linear approximation.}</mrow>
+      <mrow>2. \amp \text{Determinant as area or volume scale factor.}</mrow>
+      <mrow>3. \amp \text{Riemann sums.}</mrow>
+      <mrow>4. \amp \text{One-to-one coordinate descriptions.}</mrow>
+    </md>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-change-of-variables-what-can-fail">
+    <title>Change of variables: what can fail</title>
+
+    <p>If the map is not one-to-one, the integral may count points more than once.</p>
+
+    <p>
+      Example: polar coordinates with
+      <md>0\le \theta\le4\pi</md>
+      trace a full disk twice.
+    </p>
+
+    <p>If the Jacobian vanishes on a whole region, the map may collapse area.</p>
+
+    <p>
+      If the orientation matters, do not replace <m>\det DT</m> by <m>|\det DT|</m>. The sign is
+      part of the form.
+    </p>
+  </subsection>
+
+  <subsection xml:id="appF-fubini-moral">
+    <title>Moral</title>
+
+    <p>
+      Fubini explains how to add by slices. Change of variables explains how small pieces
+      change size and orientation under a new coordinate language.
+    </p>
+  </subsection>
+</section>

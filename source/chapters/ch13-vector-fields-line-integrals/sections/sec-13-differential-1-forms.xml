@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch13-vector-fields-line-integrals.tex, Section 13.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-13-differential-1-forms" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Differential 1-forms</title>
+
+  <p>
+    <xref ref="sec-13-work-integrals-of-vector-fields"/> defined work by
+    <md>\int_C \mathbf F\cdot d\mathbf r.</md>
+    If
+    <md>\mathbf F=(P,Q,R)</md>
+    and
+    <md>\mathbf r(t)=(x(t),y(t),z(t)),</md>
+    then the integrand is
+    <md>P x'(t)+Q y'(t)+R z'(t).</md>
+    But
+    <md>x'(t)\,dt=dx,\qquad y'(t)\,dt=dy,\qquad z'(t)\,dt=dz.</md>
+    So the work integrand is really
+    <md>P\,dx+Q\,dy+R\,dz.</md>
+  </p>
+
+  <p>
+    This is the point where differential forms enter the story as integrands, not as
+    abstract algebra.
+  </p>
+
+  <subsection xml:id="c13s4-subsec-work-written-pdx">
+    <title>Work written as <m>P\,dx+Q\,dy+R\,dz</m></title>
+
+    <p>
+      Return to the swirling field
+      <md>\mathbf F(x,y)=(-y,x).</md>
+      The work expression is
+      <md>\mathbf F\cdot d\mathbf r = (-y,x)\cdot(dx,dy) = -y\,dx+x\,dy.</md>
+      So instead of writing
+      <md>\int_C \mathbf F\cdot d\mathbf r,</md>
+      we can write
+      <md>\int_C -y\,dx+x\,dy.</md>
+    </p>
+
+    <p>
+      Let <m>C</m> be the unit circle oriented counterclockwise:
+      <md>\mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi.</md>
+      Along this curve,
+      <md>x=\cos t,\qquad y=\sin t,</md>
+      so
+      <md>dx=-\sin t\,dt, \qquad dy=\cos t\,dt.</md>
+      Substitute into the expression
+      <md>-y\,dx+x\,dy:</md>
+      <md>
+        <mrow>-y\,dx+x\,dy \amp= -(\sin t)(-\sin t\,dt)+(\cos t)(\cos t\,dt)</mrow>
+        <mrow>\amp= (\sin^2 t+\cos^2 t)\,dt</mrow>
+        <mrow>\amp= dt.</mrow>
+      </md>
+      Therefore
+      <md>\boxed{ \int_C -y\,dx+x\,dy = \int_0^{2\pi}dt = 2\pi. }</md>
+    </p>
+
+    <p>
+      The calculation is the same as the work integral, but the notation has changed. The
+      expression
+      <md>-y\,dx+x\,dy</md>
+      is the object being integrated. It knows how to eat tiny steps along a curve:
+      multiply the tiny <m>x</m>-step by <m>-y</m>, multiply the tiny <m>y</m>-step by
+      <m>x</m>, and add.
+    </p>
+
+    <definition xml:id="c13s4-def-differential-1-form">
+      <title>Differential 1-form</title>
+      <statement>
+        <p>
+          A <term>differential <m>1</m>-form</term> on a region <m>D</m> in the plane is an
+          expression
+          <md>\boxed{ \omega=P(x,y)\,dx+Q(x,y)\,dy. }</md>
+          A differential <m>1</m>-form on a region <m>D</m> in space is an expression
+          <md>\boxed{ \omega=P(x,y,z)\,dx+Q(x,y,z)\,dy+R(x,y,z)\,dz. }</md>
+          The coefficient functions <m>P,Q,R</m> are scalar functions on <m>D</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The symbols
+      <md>dx,\qquad dy,\qquad dz</md>
+      are the coordinate-reading <m>1</m>-forms. They measure components of a displacement:
+      <md>dx(v_1,v_2,v_3)=v_1,</md>
+      <md>dy(v_1,v_2,v_3)=v_2,</md>
+      and
+      <md>dz(v_1,v_2,v_3)=v_3.</md>
+      So at a point <m>\mathbf p</m>, the <m>1</m>-form
+      <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+      acts on a displacement vector
+      <md>\mathbf v=(v_1,v_2,v_3)</md>
+      by
+      <md>\boxed{ \omega_{\mathbf p}(\mathbf v) = P(\mathbf p)v_1+Q(\mathbf p)v_2+R(\mathbf p)v_3. }</md>
+    </p>
+
+    <p>
+      A <m>1</m>-form is therefore a field of linear measuring rules. At each point, it takes
+      a tiny displacement and returns a number.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c13s4-subsec-why-1-form-integrates">
+    <title>Why a 1-form naturally integrates along a curve</title>
+
+    <p>
+      A curve supplies tiny displacements:
+      <md>d\mathbf r=(dx,dy,dz).</md>
+      A <m>1</m>-form is built to measure those tiny displacements:
+      <md>P\,dx+Q\,dy+R\,dz.</md>
+      That is why <m>1</m>-forms are the natural integrands along curves.
+    </p>
+
+    <example xml:id="c13s4-ex-form-parabolic-track">
+      <title>A form along a parabolic track</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=y\,dx+x\,dy</md>
+          and let
+          <md>\mathbf r(t)=(t,t^2), \qquad 0\le t\le1.</md>
+          Then
+          <md>x=t,\qquad y=t^2,</md>
+          so
+          <md>dx=dt, \qquad dy=2t\,dt.</md>
+          Substitute:
+          <md>
+            <mrow>\omega \amp= y\,dx+x\,dy</mrow>
+            <mrow>\amp= t^2(dt)+t(2t\,dt)</mrow>
+            <mrow>\amp= 3t^2\,dt.</mrow>
+          </md>
+          Therefore
+          <md>\boxed{ \int_C \omega = \int_0^1 3t^2\,dt = 1. }</md>
+        </p>
+        <p>
+          Something interesting happened here. The answer is
+          <md>1,</md>
+          which is also the change in
+          <md>xy</md>
+          from the beginning of the curve to the end:
+          <md>xy\big|_{(1,1)}-xy\big|_{(0,0)}=1-0=1.</md>
+          That is not a coincidence. The next section will name the reason.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A <m>1</m>-form does not need a length element <m>ds</m>. It does not ask how long the
+      motion was. It asks how much <m>x</m>, <m>y</m>, and <m>z</m> changed, with
+      coefficients attached to those changes.
+    </p>
+
+    <p>
+      That is why orientation matters. Reverse a curve, and
+      <md>dx,\ dy,\ dz</md>
+      all reverse sign.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c13s4-subsec-pulling-back">
+    <title>Pulling a 1-form back to a parameter interval</title>
+
+    <p>A curve turns a <m>1</m>-form into an ordinary single-variable integrand.</p>
+
+    <p>
+      Let
+      <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+      and let
+      <md>\mathbf r(t)=(x(t),y(t),z(t)), \qquad a\le t\le b.</md>
+      Along the curve,
+      <md>dx=x'(t)\,dt, \qquad dy=y'(t)\,dt, \qquad dz=z'(t)\,dt.</md>
+      So
+      <md>\omega</md>
+      becomes
+      <md>\left[ P(\mathbf r(t))x'(t) + Q(\mathbf r(t))y'(t) + R(\mathbf r(t))z'(t) \right]dt.</md>
+    </p>
+
+    <definition xml:id="c13s4-def-pullback-1-form">
+      <title>Pullback of a 1-form to a curve</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=P\,dx+Q\,dy+R\,dz</md>
+          be a <m>1</m>-form, and let
+          <md>\mathbf r(t)=(x(t),y(t),z(t)).</md>
+          The <term>pullback</term> of <m>\omega</m> by <m>\mathbf r</m> is the
+          <m>1</m>-variable form
+          <md>\boxed{ \mathbf r^*\omega = \left[ P(\mathbf r(t))x'(t) + Q(\mathbf r(t))y'(t) + R(\mathbf r(t))z'(t) \right]dt. }</md>
+          The line integral of <m>\omega</m> along <m>C</m> is
+          <md>\boxed{ \int_C \omega = \int_a^b \mathbf r^*\omega. }</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The word <em>pullback</em> means that the form has been pulled back from the curve in
+      space to the parameter interval on the <m>t</m>-line. Once that happens, the integral
+      is an ordinary single-variable integral.
+    </p>
+
+    <example xml:id="c13s4-ex-pullback-space-form">
+      <title>Pulling back a space form</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=z\,dx+x\,dy+y\,dz.</md>
+          Let the curve be
+          <md>\mathbf r(t)=(t,t^2,1-t), \qquad 0\le t\le1.</md>
+          Then
+          <md>dx=dt, \qquad dy=2t\,dt, \qquad dz=-dt.</md>
+          Also,
+          <md>x=t,\qquad y=t^2,\qquad z=1-t.</md>
+          So
+          <md>
+            <mrow>\mathbf r^*\omega \amp= (1-t)\,dt+t(2t\,dt)+t^2(-dt)</mrow>
+            <mrow>\amp= (1-t+2t^2-t^2)\,dt</mrow>
+            <mrow>\amp= (1-t+t^2)\,dt.</mrow>
+          </md>
+          Therefore
+          <md>
+            <mrow>\int_C \omega \amp= \int_0^1(1-t+t^2)\,dt</mrow>
+            <mrow>\amp= \left[t-\frac{t^2}{2}+\frac{t^3}{3}\right]_0^1</mrow>
+            <mrow>\amp= 1-\frac12+\frac13</mrow>
+            <mrow>\amp= \frac56.</mrow>
+          </md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The same hypotheses from work integrals remain. The curve should be piecewise smooth,
+      and the coefficients of the form should be continuous along the curve. Otherwise the
+      pulled-back integrand may not be integrable.
+    </p>
+
+    <example xml:id="c13s4-ex-form-too-wild">
+      <title>A 1-form too wild along a path</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=D(x)\,dx,</md>
+          where
+          <md>D(x)= \begin{cases} 1, \amp x \text{ rational},\\ 0, \amp x \text{ irrational}. \end{cases}</md>
+          Along the line segment
+          <md>\mathbf r(t)=(t,0), \qquad 0\le t\le1,</md>
+          we get
+          <md>dx=dt,</md>
+          so
+          <md>\mathbf r^*\omega=D(t)\,dt.</md>
+          This is not Riemann integrable. The problem is not the curve. The problem is that
+          the coefficient jumps between <m>0</m> and <m>1</m> at every scale.
+        </p>
+      </statement>
+    </example>
+
+    <p>Tracing a curve more than once also matters.</p>
+
+    <example xml:id="c13s4-ex-image-counted-twice">
+      <title>The same image counted twice</title>
+      <statement>
+        <p>
+          On the punctured plane
+          <md>\mathbb R^2\setminus\{(0,0)\},</md>
+          consider the form
+          <md>\omega=\frac{-y\,dx+x\,dy}{x^2+y^2}.</md>
+          On the unit circle
+          <md>\mathbf r(t)=(\cos t,\sin t),</md>
+          we have
+          <md>dx=-\sin t\,dt, \qquad dy=\cos t\,dt,</md>
+          so
+          <md>
+            <mrow>\mathbf r^*\omega \amp= \frac{-(\sin t)(-\sin t\,dt)+(\cos t)(\cos t\,dt)}{\cos^2t+\sin^2t}</mrow>
+            <mrow>\amp= dt.</mrow>
+          </md>
+          One counterclockwise trip gives
+          <md>\int_0^{2\pi}dt=2\pi.</md>
+          Two counterclockwise trips give
+          <md>\int_0^{4\pi}dt=4\pi.</md>
+          The image is the same circle, but the traveled curve is different.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This form will return. It measures change in angle. It is locally called
+      <md>d\theta,</md>
+      but the whole punctured plane has no single continuous angle function
+      <m>\theta</m>. That small fact is the source of a large surprise later.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c13s4-subsec-vector-fields-and-1-forms">
+    <title>Vector fields and 1-forms: related but not identical</title>
+
+    <p>
+      A vector field assigns an arrow to each point. A <m>1</m>-form assigns a measuring
+      rule to each point.
+    </p>
+
+    <p>
+      In ordinary Cartesian coordinates, the dot product lets us turn a vector field into a
+      <m>1</m>-form. If
+      <md>\mathbf F=(P,Q,R),</md>
+      then the associated work form is
+      <md>\boxed{ \omega_{\mathbf F}=P\,dx+Q\,dy+R\,dz. }</md>
+      For every displacement vector <m>\mathbf v</m>,
+      <md>\omega_{\mathbf F}(\mathbf v)=\mathbf F\cdot\mathbf v.</md>
+      So
+      <md>\boxed{ \int_C \mathbf F\cdot d\mathbf r = \int_C \omega_{\mathbf F}. }</md>
+    </p>
+
+    <p>
+      That is why vector fields and <m>1</m>-forms look almost the same in this chapter. But
+      they are not the same kind of object.
+    </p>
+
+    <p>The distinction becomes visible in polar coordinates.</p>
+
+    <p>
+      A small displacement in the plane can be written as
+      <md>d\mathbf r=\mathbf e_r\,dr+\mathbf e_\theta\,r\,d\theta.</md>
+      The factor <m>r</m> appears because a small angular change <m>d\theta</m> at radius
+      <m>r</m> sweeps out an arc of length
+      <md>r\,d\theta.</md>
+    </p>
+
+    <p>
+      If a vector field is written in polar unit vectors as
+      <md>\mathbf F=F_r\,\mathbf e_r+F_\theta\,\mathbf e_\theta,</md>
+      then its work form is
+      <md>\boxed{ \mathbf F\cdot d\mathbf r = F_r\,dr+F_\theta\,r\,d\theta. }</md>
+      The angular part gets a factor of <m>r</m>.
+    </p>
+
+    <example xml:id="c13s4-ex-angular-unit-vector">
+      <title>The angular unit vector and the angle form</title>
+      <statement>
+        <p>
+          The unit angular vector field is
+          <md>\mathbf e_\theta=(-\sin\theta,\cos\theta) = \left(-\frac{y}{r},\frac{x}{r}\right),</md>
+          where
+          <md>r=\sqrt{x^2+y^2}.</md>
+          Its associated work form is
+          <md>\omega_{\mathbf e_\theta} = -\frac{y}{r}\,dx+\frac{x}{r}\,dy.</md>
+          Since
+          <md>d\theta= \frac{-y\,dx+x\,dy}{r^2},</md>
+          we have
+          <md>\boxed{ \omega_{\mathbf e_\theta}=r\,d\theta. }</md>
+        </p>
+        <p>
+          On a circle of radius <m>R</m>,
+          <md>r\,d\theta=R\,d\theta.</md>
+          So
+          <md>\int_{\text{circle}} \omega_{\mathbf e_\theta} = \int_0^{2\pi}R\,d\theta = 2\pi R.</md>
+          That is the circumference. A unit tangent force does one unit of work per unit of
+          arc length.
+        </p>
+        <p>
+          But the form
+          <md>d\theta</md>
+          itself gives
+          <md>\int_{\text{circle}}d\theta=2\pi.</md>
+          It measures angle swept out, not distance traveled.
+        </p>
+        <p>
+          The vector field corresponding to <m>d\theta</m> by the Cartesian dot product is
+          <md>\left(-\frac{y}{r^2},\frac{x}{r^2}\right),</md>
+          whose length is
+          <md>\frac1r.</md>
+          So <m>d\theta</m> is not the work form of the unit angular vector field. It is the
+          work form of a field whose arrows get weaker as the radius grows.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This example is worth keeping. The vector field
+      <md>\mathbf e_\theta</md>
+      is an arrow field. The form
+      <md>d\theta</md>
+      is an angle-measuring rule. In Cartesian coordinates, a dot product connects arrows
+      and measuring rules, but the connection uses the geometry of the plane.
+    </p>
+
+    <p>
+      For line integrals, the <m>1</m>-form is the cleaner object:
+      <md>\int_C P\,dx+Q\,dy+R\,dz.</md>
+      It says exactly what is added along the curve.
+    </p>
+
+    <p>
+      Some <m>1</m>-forms have a special origin. The form
+      <md>y\,dx+x\,dy</md>
+      from the earlier example is
+      <md>d(xy).</md>
+      It is the differential of a function. That is why its integral along the parabola
+      quietly became an endpoint difference.
+    </p>
+
+    <p>
+      But the angle form
+      <md>\frac{-y\,dx+x\,dy}{x^2+y^2}</md>
+      also looks like it should be <m>d\theta</m>, and its integral around a closed circle is
+      <md>2\pi,</md>
+      not <m>0</m>. How can a differential around a closed loop fail to cancel?
+    </p>
+
+    <p>
+      The answer depends not only on the formula, but on the domain. A missing point can
+      change everything. That is where conservative vector fields and exact <m>1</m>-forms
+      begin.
+    </p>
+  </subsection>
+</section>

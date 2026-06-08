@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch10-double-integrals.tex, Section 10.2.
+     Status: CONVERTED. -->
+<section xml:id="sec-10-double-integrals-over-rectangles" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Double integrals over rectangles</title>
+
+  <p>
+    <xref ref="sec-10-from-area-to-volume-by-slicing"/> built the double integral from a
+    picture: columns over small rectangles. Now we make the pieces precise. The goal is the
+    same as in single-variable calculus: define the integral in a way that does not depend on
+    a lucky choice of sample points.
+  </p>
+
+  <subsection xml:id="c10s2-subsec-partitions-sample-points">
+    <title>Partitions and sample points</title>
+
+    <p>
+      Start with a rectangle
+      <md>R=[a,b]\times[c,d].</md>
+      A partition of the <m>x</m>-interval is a list
+      <md>a=x_0\lt x_1\lt\cdots\lt x_m=b.</md>
+      A partition of the <m>y</m>-interval is a list
+      <md>c=y_0\lt y_1\lt\cdots\lt y_n=d.</md>
+      Together they cut <m>R</m> into subrectangles
+      <md>R_{ij}=[x_{i-1},x_i]\times[y_{j-1},y_j].</md>
+      The area of <m>R_{ij}</m> is
+      <md>\Delta A_{ij}=\Delta x_i\,\Delta y_j,</md>
+      where
+      <md>\Delta x_i=x_i-x_{i-1}, \qquad \Delta y_j=y_j-y_{j-1}.</md>
+    </p>
+
+    <figure xml:id="c10s2-fig-partition-rectangle">
+      <caption>A partition cuts a rectangle into smaller rectangles. A Riemann sum chooses
+      one sample point in each piece.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (6.6,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,4.7) node[above] {\(y\)};
+
+            \draw[thick] (0,0) rectangle (6,4);
+
+            \foreach \x in {1,2.4,4.1} {
+                \draw[gray!50] (\x,0) -- (\x,4);
+            }
+            \foreach \y in {0.9,2.2,3.1} {
+                \draw[gray!50] (0,\y) -- (6,\y);
+            }
+
+            \foreach \p in {
+                (0.55,0.45),(1.65,0.55),(3.2,0.35),(5.0,0.65),
+                (0.4,1.5),(1.7,1.35),(3.3,1.75),(5.2,1.45),
+                (0.75,2.75),(1.5,2.6),(3.5,2.55),(5.0,2.75),
+                (0.55,3.55),(1.8,3.55),(3.3,3.65),(5.2,3.5)
+            } {
+                \fill \p circle (1.5pt);
+            }
+
+            \node at (3,-0.8) {one sample point in each subrectangle};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      Choose a sample point
+      <md>(x_{ij}^*,y_{ij}^*)\in R_{ij}</md>
+      for each subrectangle. The corresponding Riemann sum is
+      <md>
+      \boxed{
+          S=
+          \sum_{i=1}^{m}\sum_{j=1}^{n}
+          f(x_{ij}^*,y_{ij}^*)\,\Delta x_i\,\Delta y_j.
+      }
+      </md>
+    </p>
+
+    <example xml:id="c10s2-ex-midpoint-estimate">
+      <title>A midpoint estimate on a rectangle</title>
+      <statement>
+        <p>
+          Let
+          <md>R=[0,4]\times[0,2],</md>
+          and let
+          <md>f(x,y)=3+x+\frac12y.</md>
+          Cut <m>R</m> into four rectangles of size <m>2\times1</m>. The midpoint sample points
+          are
+          <md>(1,0.5),\quad (3,0.5),\quad (1,1.5),\quad (3,1.5).</md>
+          Each subrectangle has area
+          <md>\Delta A=2.</md>
+          The midpoint Riemann sum is
+          <md>
+            <mrow>S \amp= 2\Bigl[ f(1,0.5)+f(3,0.5)+f(1,1.5)+f(3,1.5) \Bigr]</mrow>
+            <mrow>\amp= 2\Bigl[ \left(3+1+\frac14\right) +\left(3+3+\frac14\right) +\left(3+1+\frac34\right) +\left(3+3+\frac34\right) \Bigr]</mrow>
+            <mrow>\amp= 2\left[ \frac{17}{4}+\frac{25}{4}+\frac{19}{4}+\frac{27}{4} \right]</mrow>
+            <mrow>\amp= 2\cdot 22</mrow>
+            <mrow>\amp= 44.</mrow>
+          </md>
+          So this grid estimates
+          <md>\iint_R f\,dA</md>
+          by <m>44</m>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      For this linear function, the midpoint estimate is already exact. We will prove such
+      facts later using iterated integrals. For now, the sum is the object to understand.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s2-subsec-integrable-functions-informally">
+    <title>Integrable functions, informally</title>
+
+    <p>
+      A function is integrable over a rectangle when the Riemann sums settle down to one
+      number as the rectangles get small.
+    </p>
+
+    <p>
+      The sample points should stop mattering. The exact shape of the grid should stop
+      mattering. Only the function and the region should matter.
+    </p>
+
+    <definition xml:id="c10s2-def-integrable-rectangle">
+      <title>Integrable over a rectangle</title>
+      <statement>
+        <p>
+          A bounded function
+          <md>f:R\to\mathbb R</md>
+          on a rectangle
+          <md>R=[a,b]\times[c,d]</md>
+          is <term>integrable over <m>R</m></term> if all Riemann sums
+          <md>\sum_i\sum_j f(x_{ij}^*,y_{ij}^*)\,\Delta A_{ij}</md>
+          approach the same number as the largest side length of the subrectangles approaches
+          <m>0</m>.
+        </p>
+        <p>
+          That common number is
+          <md>
+          \boxed{
+              \iint_R f\,dA.
+          }
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      There is another way to say the same thing. On each subrectangle, the function has a
+      largest possible value and a smallest possible value, at least for the functions we first
+      meet. If we use all the largest values, we get an upper estimate. If we use all the
+      smallest values, we get a lower estimate.
+    </p>
+
+    <p>
+      If the upper and lower estimates can be forced close together by using a fine enough
+      partition, then the function is integrable.
+    </p>
+
+    <theorem xml:id="c10s2-thm-continuous-integrable">
+      <title>Continuous functions on rectangles are integrable</title>
+      <statement>
+        <p>
+          If <m>f</m> is continuous on a rectangle
+          <md>R=[a,b]\times[c,d],</md>
+          then <m>f</m> is integrable over <m>R</m>.
+        </p>
+      </statement>
+      <proof>
+        <title>Idea of proof</title>
+        <p>
+          A continuous function on a closed rectangle cannot oscillate too much inside very
+          small rectangles. If the partition is fine enough, then the largest and smallest
+          values of <m>f</m> on each subrectangle are close. Multiplying those small
+          differences by the areas of the subrectangles and adding them gives upper and lower
+          sums that are close. So every reasonable Riemann sum is trapped between two nearly
+          equal numbers.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      We required continuity because it gives a clean guarantee. Without it, the conclusion can
+      fail.
+    </p>
+
+    <example xml:id="c10s2-ex-bounded-not-integrable">
+      <title>A bounded function that is not integrable</title>
+      <statement>
+        <p>
+          Define a function on the unit square
+          <md>R=[0,1]\times[0,1]</md>
+          by
+          <md>
+          D(x,y)=
+          \begin{cases}
+          1, \amp x\text{ and }y\text{ are both rational},\\
+          0, \amp \text{otherwise}.
+          \end{cases}
+          </md>
+          Every small rectangle contains points with rational coordinates and also points where
+          at least one coordinate is irrational. So on every subrectangle,
+          <md>\text{largest value}=1, \qquad \text{smallest value}=0.</md>
+          Every upper sum is therefore
+          <md>1\cdot \operatorname{Area}(R)=1,</md>
+          and every lower sum is
+          <md>0.</md>
+          The upper and lower sums never get close.
+        </p>
+        <p>
+          The function is bounded, but not integrable. It jumps too wildly on every tiny piece.
+        </p>
+      </statement>
+    </example>
+
+    <p>The boundedness condition is also part of this definition.</p>
+
+    <example xml:id="c10s2-ex-unbounded-function">
+      <title>An unbounded function needs a different treatment</title>
+      <statement>
+        <p>
+          Define
+          <md>
+          u(x,y)=
+          \begin{cases}
+          \dfrac{1}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+          0, \amp (x,y)=(0,0),
+          \end{cases}
+          </md>
+          on
+          <md>[-1,1]\times[-1,1].</md>
+          The function is unbounded near the origin. A sample point very close to the origin
+          can make a Riemann sum extremely large.
+        </p>
+        <p>
+          This function does not fit the ordinary rectangle definition above. Integrals of
+          unbounded functions require a limiting process. Those are improper double integrals,
+          which return in <xref ref="sec-10-improper-double-integrals"/>.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The rectangle itself also has finite area. If we try to integrate
+      <md>f(x,y)=1</md>
+      over the whole plane, the sums do not approach a finite number. They grow with the area
+      being covered. Infinite regions also need improper integrals.
+    </p>
+
+    <p>
+      For now, rectangles are finite, functions are bounded, and continuity is the safe
+      condition that makes the integral exist.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s2-subsec-average-value">
+    <title>Average value over a rectangle</title>
+
+    <p>
+      Single-variable calculus defined the average value of a function on an interval by
+      <md>f_{\text{avg}} = \frac{1}{b-a}\int_a^b f(x)\,dx.</md>
+      The denominator was the length of the interval.
+    </p>
+
+    <p>For a rectangle, length is replaced by area.</p>
+
+    <definition xml:id="c10s2-def-average-value-rectangle">
+      <title>Average value over a rectangle</title>
+      <statement>
+        <p>
+          Let <m>f</m> be integrable over a rectangle <m>R</m> with positive area. The
+          <term>average value</term> of <m>f</m> over <m>R</m> is
+          <md>
+          \boxed{
+              f_{\text{avg}}
+              =
+              \frac{1}{\operatorname{Area}(R)}
+              \iint_R f\,dA.
+          }
+          </md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The units work out exactly as they should. If <m>f</m> is temperature in degrees Celsius,
+      then
+      <md>\iint_R f\,dA</md>
+      has units
+      <md>{}^\circ\text{C}\cdot \text{m}^2.</md>
+      Dividing by area leaves
+      <md>{}^\circ\text{C}.</md>
+    </p>
+
+    <example xml:id="c10s2-ex-average-canopy">
+      <title>Average height of the market canopy</title>
+      <statement>
+        <p>
+          In <xref ref="sec-10-from-area-to-volume-by-slicing"/>, the canopy over the rectangle
+          <md>[0,4]\times[0,3]</md>
+          had estimated volume
+          <md>33\text{ m}^3.</md>
+          The floor area is
+          <md>4\cdot 3=12\text{ m}^2.</md>
+          So the average canopy height is
+          <md>\frac{33}{12}=\frac{11}{4}=2.75\text{ m}.</md>
+          The average height is the height of a flat roof over the same floor that would enclose
+          the same volume.
+        </p>
+      </statement>
+    </example>
+
+    <p>That last sentence is often the best way to remember average value:</p>
+
+    <p>
+      <md>
+      \boxed{
+          \text{average height}\times\text{base area}
+          =
+          \text{total volume}.
+      }
+      </md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c10s2-subsec-numerical-estimates">
+    <title>Numerical estimates from tables and contour maps</title>
+
+    <p>
+      In applications, we often do not know a formula for <m>f(x,y)</m>. We may only have
+      measurements.
+    </p>
+
+    <p>
+      Suppose a greenhouse floor is
+      <md>0\le x\le 6,\qquad 0\le y\le 4,</md>
+      and temperature is measured at the centers of six equal rectangles. Each rectangle has
+      dimensions
+      <md>2\times2,</md>
+      so each has area
+      <md>4.</md>
+    </p>
+
+    <table xml:id="c10s2-tab-temperature-grid">
+      <title>Measured temperatures at the centers of six subrectangles.</title>
+      <tabular>
+        <col right="medium"/>
+        <col/>
+        <col/>
+        <col/>
+        <row bottom="medium">
+          <cell></cell>
+          <cell><m>x=1</m></cell>
+          <cell><m>x=3</m></cell>
+          <cell><m>x=5</m></cell>
+        </row>
+        <row>
+          <cell><m>y=3</m></cell>
+          <cell>18</cell>
+          <cell>19</cell>
+          <cell>20</cell>
+        </row>
+        <row>
+          <cell><m>y=1</m></cell>
+          <cell>22</cell>
+          <cell>24</cell>
+          <cell>23</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The midpoint estimate for the integral is
+      <md>
+        <mrow>\iint_R T\,dA \amp\approx 4(18+19+20+22+24+23)</mrow>
+        <mrow>\amp= 4(126)</mrow>
+        <mrow>\amp= 504.</mrow>
+      </md>
+      The total area is
+      <md>6\cdot4=24.</md>
+      So the estimated average temperature is
+      <md>T_{\text{avg}} \approx \frac{504}{24} = 21{}^\circ\text{C}.</md>
+    </p>
+
+    <p>
+      This is a double integral computed from a table. The table supplies the sample values.
+      The grid supplies the area pieces.
+    </p>
+
+    <p>
+      Contour maps give another kind of estimate. They do not give values at isolated points;
+      they show curves of equal value. We can estimate by splitting the region into bands.
+    </p>
+
+    <figure xml:id="c10s2-fig-pond-contours">
+      <caption>A contour map can be turned into an estimate by using the areas between
+      contours.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.82, &gt;=stealth]
+            \draw[thick, fill=blue!6]
+                plot[smooth cycle] coordinates {
+                    (0.4,1.2)
+                    (1.2,0.3)
+                    (3.2,0.2)
+                    (5.3,0.9)
+                    (5.7,2.4)
+                    (4.7,3.8)
+                    (2.5,4.2)
+                    (0.7,3.3)
+                };
+
+            \draw[blue!55!black, thick]
+                plot[smooth cycle] coordinates {
+                    (1.0,1.4)
+                    (1.7,0.9)
+                    (3.4,0.8)
+                    (4.7,1.3)
+                    (4.9,2.4)
+                    (4.0,3.2)
+                    (2.4,3.4)
+                    (1.2,2.7)
+                };
+            \node[blue!55!black] at (5.35,1.35) {\(1\) m};
+
+            \draw[blue!65!black, thick]
+                plot[smooth cycle] coordinates {
+                    (1.6,1.7)
+                    (2.2,1.25)
+                    (3.4,1.25)
+                    (4.1,1.8)
+                    (4.1,2.5)
+                    (3.4,2.9)
+                    (2.3,2.9)
+                    (1.7,2.4)
+                };
+            \node[blue!65!black] at (4.55,2.55) {\(2\) m};
+
+            \draw[blue!75!black, thick]
+                plot[smooth cycle] coordinates {
+                    (2.25,1.9)
+                    (2.8,1.65)
+                    (3.35,1.8)
+                    (3.55,2.35)
+                    (3.1,2.55)
+                    (2.45,2.45)
+                };
+            \node[blue!75!black] at (3.75,2.05) {\(3\) m};
+
+            \node at (3,-0.55) {depth contours for a small pond};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <example xml:id="c10s2-ex-water-volume-depth-bands">
+      <title>Estimating water volume from depth bands</title>
+      <statement>
+        <p>
+          A pond is divided by contour lines into depth bands. Suppose the estimated areas are:
+        </p>
+        <table xml:id="c10s2-tab-depth-bands">
+          <title>Depth bands, typical depths, and estimated areas for the pond.</title>
+          <tabular>
+            <col right="medium"/>
+            <col right="medium"/>
+            <col/>
+            <row bottom="medium">
+              <cell>depth band</cell>
+              <cell>typical depth</cell>
+              <cell>area</cell>
+            </row>
+            <row>
+              <cell><m>0\text{ to }1\text{ m}</m></cell>
+              <cell><m>0.5\text{ m}</m></cell>
+              <cell><m>120\text{ m}^2</m></cell>
+            </row>
+            <row>
+              <cell><m>1\text{ to }2\text{ m}</m></cell>
+              <cell><m>1.5\text{ m}</m></cell>
+              <cell><m>200\text{ m}^2</m></cell>
+            </row>
+            <row>
+              <cell><m>2\text{ to }3\text{ m}</m></cell>
+              <cell><m>2.5\text{ m}</m></cell>
+              <cell><m>160\text{ m}^2</m></cell>
+            </row>
+            <row>
+              <cell><m>3\text{ to }4\text{ m}</m></cell>
+              <cell><m>3.5\text{ m}</m></cell>
+              <cell><m>60\text{ m}^2</m></cell>
+            </row>
+          </tabular>
+        </table>
+        <p>
+          Then the water volume is estimated by
+          <md>
+            <mrow>V \amp\approx 0.5(120)+1.5(200)+2.5(160)+3.5(60)</mrow>
+            <mrow>\amp= 60+300+400+210</mrow>
+            <mrow>\amp= 970\text{ m}^3.</mrow>
+          </md>
+          The pond area is
+          <md>120+200+160+60=540\text{ m}^2.</md>
+          So the estimated average depth is
+          <md>\frac{970}{540}\approx 1.80\text{ m}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Both the table method and the contour method are Riemann sums in disguise. Each small
+      contribution has the form
+      <md>\text{value}\times\text{area}.</md>
+    </p>
+
+    <p>
+      So far, our double integrals have been built by estimates. That is honest, but slow.
+      Single-variable calculus became powerful when area sums turned into ordinary
+      antiderivatives. The same thing happens here in a surprising way: a double integral over
+      a rectangle can often be computed by doing two single-variable integrals, one after the
+      other. The next step is to slice the rectangle into strips and let the old Fundamental
+      Theorem of Calculus do part of the work.
+    </p>
+  </subsection>
+</section>

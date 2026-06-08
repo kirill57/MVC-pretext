@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch05-vector-valued-functions.tex, Section 5.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-5-curvature-and-normal-direction" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Curvature and normal direction</title>
+
+  <p>
+    Arc length gave us a fair way to measure progress along a curve. It removed the
+    arbitrary clock. Now we can ask a geometric question:
+    <md>\text{How much does the curve turn per meter traveled?}</md>
+    That question leads to curvature.
+  </p>
+
+  <subsection xml:id="c5s4-how-sharply-a-curve-turns">
+    <title>How sharply a curve turns</title>
+
+    <p>
+      A bicycle moving around a small traffic circle must turn sharply. A bicycle moving
+      around a large roundabout turns gently. Both paths are circles, but their radii are
+      different.
+    </p>
+
+    <p>
+      Start with a circle of radius <m>R</m>:
+      <md>\mathbf r(t)=(R\cos t,R\sin t).</md>
+      Its velocity is
+      <md>\mathbf r'(t)=(-R\sin t,R\cos t),</md>
+      and its speed is
+      <md>\|\mathbf r'(t)\|=R.</md>
+      The unit tangent vector is
+      <md>\mathbf T(t)=\frac{\mathbf r'(t)}{\|\mathbf r'(t)\|}=(-\sin t,\cos t).</md>
+      Differentiate:
+      <md>\mathbf T'(t)=(-\cos t,-\sin t).</md>
+      The length of this derivative is
+      <md>\|\mathbf T'(t)\|=1.</md>
+    </p>
+
+    <p>
+      But this is the rate of change of <m>\mathbf T</m> with respect to <m>t</m>, not with
+      respect to distance. Since
+      <md>\frac{ds}{dt}=R,</md>
+      we have
+      <md>\frac{d\mathbf T}{ds}=\frac{d\mathbf T/dt}{ds/dt}=\frac{\mathbf T'(t)}{R}.</md>
+      Therefore
+      <md>\left\|\frac{d\mathbf T}{ds}\right\|=\frac1R.</md>
+    </p>
+
+    <p>
+      A circle of radius <m>R</m> has curvature
+      <md>\frac1R.</md>
+      Small radius means large curvature. Large radius means small curvature.
+    </p>
+
+    <figure xml:id="c5s4-fig-radius-curvature">
+      <caption>Curvature measures turning per unit distance, not turning per unit time.</caption>
+      <image width="80%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.95, &gt;=stealth]
+            \begin{scope}
+                \draw[thick] (0,0) circle (1.2);
+                \draw[-&gt;, very thick] (1.2,0) arc[start angle=0,end angle=70,radius=1.2];
+                \node at (0,-1.75) {small radius};
+                \node at (0,-2.15) {large curvature};
+            \end{scope}
+
+            \begin{scope}[shift={(5.2,0)}]
+                \draw[thick] (0,0) circle (2.2);
+                \draw[-&gt;, very thick] (2.2,0) arc[start angle=0,end angle=45,radius=2.2];
+                \node at (0,-2.75) {large radius};
+                \node at (0,-3.15) {small curvature};
+            \end{scope}
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>This example tells us what the definition should be.</p>
+
+    <definition xml:id="c5s4-def-curvature">
+      <title>Curvature</title>
+      <statement>
+        <p>
+          For a regular curve, the <term>curvature</term> is
+          <md>\boxed{\kappa=\left\|\frac{d\mathbf T}{ds}\right\|.}</md>
+          It measures how quickly the unit tangent vector changes per unit distance traveled.
+        </p>
+      </statement>
+    </definition>
+
+    <p>The letter <m>\kappa</m> is the Greek letter kappa.</p>
+
+    <p>
+      Curvature has units of
+      <md>\frac{1}{\text{length}}.</md>
+      For example, a circle of radius <m>50</m> meters has curvature
+      <md>\frac{1}{50}\text{ per meter}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s4-computing-curvature-from-any-parameter">
+    <title>Computing curvature from any parameter</title>
+
+    <p>
+      Curvature is defined using arc length <m>s</m>, but most curves are given with some
+      other parameter <m>t</m>. The chain rule converts between them.
+    </p>
+
+    <p>
+      Since
+      <md>\frac{ds}{dt}=\|\mathbf r'(t)\|,</md>
+      we have
+      <md>\frac{d\mathbf T}{ds}=\frac{d\mathbf T/dt}{ds/dt}=\frac{\mathbf T'(t)}{\|\mathbf r'(t)\|}.</md>
+      Therefore
+      <md>\boxed{\kappa(t)=\frac{\|\mathbf T'(t)\|}{\|\mathbf r'(t)\|}.}</md>
+    </p>
+
+    <theorem xml:id="c5s4-thm-curvature-from-a-parameter">
+      <title>Curvature from a parameter</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)</md>
+          be a <m>C^2</m> regular curve. Then
+          <md>\boxed{\kappa(t)=\frac{\|\mathbf T'(t)\|}{\|\mathbf r'(t)\|},}</md>
+          where
+          <md>\mathbf T(t)=\frac{\mathbf r'(t)}{\|\mathbf r'(t)\|}.</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          The definition is
+          <md>\kappa=\left\|\frac{d\mathbf T}{ds}\right\|.</md>
+          By the chain rule,
+          <md>\frac{d\mathbf T}{dt}=\frac{d\mathbf T}{ds}\frac{ds}{dt}.</md>
+          Since
+          <md>\frac{ds}{dt}=\|\mathbf r'(t)\|,</md>
+          we get
+          <md>\frac{d\mathbf T}{ds}=\frac{\mathbf T'(t)}{\|\mathbf r'(t)\|}.</md>
+          Taking lengths gives the formula.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The word <em>regular</em> is essential. If
+      <md>\mathbf r'(t)=\mathbf 0,</md>
+      then <m>\mathbf T(t)</m> is not defined.
+    </p>
+
+    <example xml:id="c5s4-ex-curvature-fails-at-a-stopping-time">
+      <title>Curvature fails at a stopping time</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=(t^2,0).</md>
+          For <m>t&lt;0</m>, the unit tangent vector is
+          <md>\mathbf T(t)=(-1,0).</md>
+          For <m>t&gt;0</m>, it is
+          <md>\mathbf T(t)=(1,0).</md>
+          At <m>t=0</m>, the velocity is zero:
+          <md>\mathbf r'(0)=(0,0).</md>
+          So the unit tangent is undefined there, and the curvature formula cannot be used
+          at that instant.
+        </p>
+        <p>
+          The path lies on a straight line, but the parametrized motion stops and reverses.
+          The regularity condition prevents this kind of ambiguity.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c5s4-a-useful-plane-formula">
+    <title>A useful plane formula</title>
+
+    <p>
+      For a plane curve
+      <md>\mathbf r(t)=(x(t),y(t)),</md>
+      there is a compact curvature formula:
+      <md>\boxed{\kappa(t)=\frac{|x'(t)y''(t)-y'(t)x''(t)|}{\left((x'(t))^2+(y'(t))^2\right)^{3/2}}.}</md>
+    </p>
+
+    <p>
+      This formula is easier to remember if we recognize the numerator as a signed area
+      measurement:
+      <md>x'y''-y'x''=\det\begin{pmatrix} x' \amp x''\\ y' \amp y'' \end{pmatrix}.</md>
+      It measures the signed area of the parallelogram spanned by
+      <md>\mathbf r'(t)\qquad\text{and}\qquad\mathbf r''(t).</md>
+      In the language that will later become differential forms, it is the same alternating
+      measurement behind
+      <md>dx\wedge dy.</md>
+    </p>
+
+    <example xml:id="c5s4-ex-curvature-of-a-parabola">
+      <title>Curvature of a parabola</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=(t,t^2).</md>
+          Then
+          <md>x(t)=t,\qquad y(t)=t^2.</md>
+          So
+          <md>x'(t)=1,\qquad y'(t)=2t,</md>
+          and
+          <md>x''(t)=0,\qquad y''(t)=2.</md>
+          The curvature is
+          <md>
+            <mrow>\kappa(t) \amp= \frac{|x'y''-y'x''|}{\left((x')^2+(y')^2\right)^{3/2}}</mrow>
+            <mrow>\amp= \frac{|1\cdot2-(2t)\cdot0|}{\left(1+4t^2\right)^{3/2}}</mrow>
+            <mrow>\amp= \frac{2}{(1+4t^2)^{3/2}}.</mrow>
+          </md>
+          At the vertex,
+          <md>t=0,</md>
+          the curvature is
+          <md>\kappa(0)=2.</md>
+          Farther away from the vertex, the denominator grows, so the curvature decreases.
+          The parabola bends most sharply at its vertex.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The denominator in the curvature formula must not be zero. That denominator is
+      <md>\left((x')^2+(y')^2\right)^{3/2}=\|\mathbf r'(t)\|^3.</md>
+      So the plane formula has the same regularity requirement:
+      <md>\mathbf r'(t)\ne\mathbf 0.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s4-unit-normal-vector-in-the-plane">
+    <title>Unit normal vector in the plane</title>
+
+    <p>
+      The tangent vector tells us the direction of motion. When the curve turns, the tangent
+      vector changes. The direction in which <m>\mathbf T</m> changes is the normal direction.
+    </p>
+
+    <p>
+      For the circle
+      <md>\mathbf r(t)=(R\cos t,R\sin t),</md>
+      we found
+      <md>\mathbf T(t)=(-\sin t,\cos t).</md>
+      Then
+      <md>\mathbf T'(t)=(-\cos t,-\sin t).</md>
+      This points inward, toward the center of the circle. Its length is <m>1</m>, so the
+      unit normal vector is
+      <md>\mathbf N(t)=(-\cos t,-\sin t).</md>
+    </p>
+
+    <definition xml:id="c5s4-def-unit-normal-vector">
+      <title>Unit normal vector</title>
+      <statement>
+        <p>
+          If
+          <md>\mathbf T'(t)\ne\mathbf 0,</md>
+          then the <term>unit normal vector</term> is
+          <md>\boxed{\mathbf N(t)=\frac{\mathbf T'(t)}{\|\mathbf T'(t)\|}.}</md>
+          It points in the direction the curve is turning.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For a plane curve, <m>\mathbf T</m> and <m>\mathbf N</m> are perpendicular. To see why,
+      notice that
+      <md>\mathbf T(t)\cdot\mathbf T(t)=1</md>
+      for all <m>t</m>. Differentiate:
+      <md>2\mathbf T(t)\cdot\mathbf T'(t)=0.</md>
+      Thus
+      <md>\mathbf T(t)\cdot\mathbf T'(t)=0.</md>
+      So <m>\mathbf T'(t)</m>, and therefore <m>\mathbf N(t)</m>, is perpendicular to
+      <m>\mathbf T(t)</m>.
+    </p>
+
+    <figure xml:id="c5s4-fig-tangent-normal-parabola">
+      <caption>The normal vector points toward the side where the tangent direction is changing.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (6.6,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,4.2) node[above] {\(y\)};
+
+            \draw[thick, domain=0.4:6.0, samples=150, smooth, variable=\x]
+                plot ({\x}, {1.0 + 0.32*(\x-3.2)^2});
+
+            \coordinate (P) at (3.2,1.0);
+
+            \fill (P) circle (2.5pt);
+            \draw[-&gt;, very thick] (P) -- ++(1.3,0) node[below] {\(\mathbf T\)};
+            \draw[-&gt;, very thick] (P) -- ++(0,1.3) node[right] {\(\mathbf N\)};
+
+            \node at (3.2,-0.85) {At the bottom of the parabola, the curve turns upward.};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The condition
+      <md>\mathbf T'(t)\ne\mathbf 0</md>
+      also matters.
+    </p>
+
+    <example xml:id="c5s4-ex-line-has-no-preferred-normal">
+      <title>A straight line has no preferred normal direction</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=(t,0).</md>
+          Then
+          <md>\mathbf T(t)=(1,0)</md>
+          for every <m>t</m>. Therefore
+          <md>\mathbf T'(t)=\mathbf 0.</md>
+          The curve is not turning, so there is no direction in which the tangent is changing.
+        </p>
+        <p>
+          Geometrically, the line has many perpendicular unit vectors, such as
+          <md>(0,1)\qquad\text{and}\qquad(0,-1).</md>
+          But neither is chosen by the curve. The normal vector <m>\mathbf N</m> is only
+          defined where the curve is actually turning.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      When
+      <md>\kappa&gt;0,</md>
+      we can write
+      <md>\boxed{\frac{d\mathbf T}{ds}=\kappa\mathbf N.}</md>
+      This is a compact way to read curvature and normal direction at once:
+      <md>\text{change of tangent per unit length}=\text{amount of turning}\times\text{direction of turning}.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s4-curvature-in-space">
+    <title>Curvature in space</title>
+
+    <p>
+      A space curve can bend without staying in one plane. The definition of curvature does
+      not change:
+      <md>\kappa=\left\|\frac{d\mathbf T}{ds}\right\|.</md>
+      The normal vector is still
+      <md>\mathbf N=\frac{d\mathbf T/ds}{\|d\mathbf T/ds\|}</md>
+      when
+      <md>\kappa&gt;0.</md>
+    </p>
+
+    <p>
+      For computation in <m>\mathbb R^3</m>, there is a useful formula involving the cross
+      product:
+      <md>\boxed{\kappa(t)=\frac{\|\mathbf r'(t)\times \mathbf r''(t)\|}{\|\mathbf r'(t)\|^3}.}</md>
+    </p>
+
+    <theorem xml:id="c5s4-thm-curvature-formula-in-space">
+      <title>Curvature formula in space</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)</md>
+          be a <m>C^2</m> regular curve in <m>\mathbb R^3</m>. Then
+          <md>\boxed{\kappa(t)=\frac{\|\mathbf r'(t)\times \mathbf r''(t)\|}{\|\mathbf r'(t)\|^3}.}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Let
+          <md>\sigma(t)=\|\mathbf r'(t)\|</md>
+          be the speed. Then
+          <md>\mathbf r'(t)=\sigma(t)\mathbf T(t).</md>
+          Differentiate:
+          <md>\mathbf r''(t)=\sigma'(t)\mathbf T(t)+\sigma(t)\mathbf T'(t).</md>
+          Now take the cross product with <m>\mathbf r'(t)=\sigma\mathbf T</m>:
+          <md>
+            <mrow>\mathbf r'\times\mathbf r'' \amp= \sigma\mathbf T\times\bigl(\sigma'\mathbf T+\sigma\mathbf T'\bigr)</mrow>
+            <mrow>\amp= \sigma\sigma'(\mathbf T\times\mathbf T)+\sigma^2(\mathbf T\times\mathbf T')</mrow>
+            <mrow>\amp= \sigma^2(\mathbf T\times\mathbf T').</mrow>
+          </md>
+          Since
+          <md>\mathbf T\cdot\mathbf T=1,</md>
+          we have
+          <md>\mathbf T\cdot\mathbf T'=0.</md>
+          Thus <m>\mathbf T</m> and <m>\mathbf T'</m> are perpendicular, and
+          <m>\|\mathbf T\|=1</m>. Hence
+          <md>\|\mathbf T\times\mathbf T'\|=\|\mathbf T'\|.</md>
+          Therefore
+          <md>\|\mathbf r'\times\mathbf r''\|=\sigma^2\|\mathbf T'\|.</md>
+          But
+          <md>\kappa=\frac{\|\mathbf T'\|}{\|\mathbf r'\|}=\frac{\|\mathbf T'\|}{\sigma}.</md>
+          So
+          <md>\|\mathbf T'\|=\kappa\sigma.</md>
+          Substitute:
+          <md>\|\mathbf r'\times\mathbf r''\|=\sigma^2(\kappa\sigma)=\kappa\sigma^3.</md>
+          Therefore
+          <md>\kappa=\frac{\|\mathbf r'\times\mathbf r''\|}{\|\mathbf r'\|^3}.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The hypothesis
+      <md>\mathbf r'(t)\ne\mathbf 0</md>
+      again appears in the denominator. A stopped particle has no unit tangent, so it has no
+      curvature as a parametrized motion at that instant.
+    </p>
+
+    <example xml:id="c5s4-ex-curvature-of-a-helix">
+      <title>Curvature of a helix</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=(2\cos t,2\sin t,t).</md>
+          Then
+          <md>\mathbf r'(t)=(-2\sin t,2\cos t,1),</md>
+          and
+          <md>\mathbf r''(t)=(-2\cos t,-2\sin t,0).</md>
+          The speed is
+          <md>\|\mathbf r'(t)\|=\sqrt{4\sin^2t+4\cos^2t+1}=\sqrt5.</md>
+          Compute the cross product:
+          <md>
+            <mrow>\mathbf r'(t)\times\mathbf r''(t) \amp= \begin{vmatrix} \mathbf i \amp \mathbf j \amp \mathbf k\\ -2\sin t \amp 2\cos t \amp 1\\ -2\cos t \amp -2\sin t \amp 0 \end{vmatrix}</mrow>
+            <mrow>\amp= (2\sin t,\;-2\cos t,\;4).</mrow>
+          </md>
+          Its length is
+          <md>\sqrt{4\sin^2t+4\cos^2t+16}=\sqrt{20}=2\sqrt5.</md>
+          Therefore
+          <md>\kappa(t)=\frac{2\sqrt5}{(\sqrt5)^3}=\frac{2}{5}.</md>
+          The curvature is constant. A circular helix bends the same amount at every point.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      A helix also twists out of its osculating plane, but that requires another
+      measurement, called torsion. We will not need torsion in this course. Curvature is the
+      amount of bending, and that is the part that controls normal acceleration.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s4-tangential-and-normal-components-of-acceleration">
+    <title>Tangential and normal components of acceleration</title>
+
+    <p>Velocity can change in two different ways.</p>
+
+    <p>It can change length. That means the object speeds up or slows down.</p>
+
+    <p>It can change direction. That means the object turns.</p>
+
+    <p>Acceleration sees both.</p>
+
+    <p>
+      Write the velocity as
+      <md>\mathbf r'(t)=\sigma(t)\mathbf T(t),</md>
+      where
+      <md>\sigma(t)=\|\mathbf r'(t)\|</md>
+      is speed. Differentiate:
+      <md>
+        <mrow>\mathbf a(t) \amp= \mathbf r''(t)</mrow>
+        <mrow>\amp= \sigma'(t)\mathbf T(t)+\sigma(t)\mathbf T'(t).</mrow>
+      </md>
+      Since
+      <md>\frac{d\mathbf T}{ds}=\kappa\mathbf N</md>
+      and
+      <md>\frac{ds}{dt}=\sigma,</md>
+      we get
+      <md>\mathbf T'(t)=\frac{d\mathbf T}{ds}\frac{ds}{dt}=\kappa\mathbf N\,\sigma.</md>
+      Therefore
+      <md>\boxed{\mathbf a(t)=\sigma'(t)\mathbf T(t)+\kappa(t)\sigma(t)^2\mathbf N(t).}</md>
+    </p>
+
+    <p>This is one of the cleanest formulas in motion.</p>
+
+    <p>
+      The first term,
+      <md>\sigma'(t)\mathbf T(t),</md>
+      is tangential acceleration. It changes speed.
+    </p>
+
+    <p>
+      The second term,
+      <md>\kappa(t)\sigma(t)^2\mathbf N(t),</md>
+      is normal acceleration. It changes direction.
+    </p>
+
+    <definition xml:id="c5s4-def-tangential-and-normal-acceleration">
+      <title>Tangential and normal acceleration</title>
+      <statement>
+        <p>
+          For a regular curve with speed
+          <md>\sigma(t)=\|\mathbf r'(t)\|,</md>
+          the tangential component of acceleration is
+          <md>\boxed{a_T=\sigma'(t).}</md>
+          The normal component of acceleration is
+          <md>\boxed{a_N=\kappa(t)\sigma(t)^2.}</md>
+          Thus
+          <md>\boxed{\mathbf a=a_T\mathbf T+a_N\mathbf N.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The formula says something physical. Turning at high speed requires large normal
+      acceleration because the speed is squared:
+      <md>a_N=\kappa\sigma^2.</md>
+      This is why taking a sharp curve too fast is dangerous.
+    </p>
+
+    <example xml:id="c5s4-ex-car-on-a-circular-track">
+      <title>A car on a circular track</title>
+      <statement>
+        <p>
+          A car moves around a circular track of radius <m>30</m> meters at constant speed
+          <md>12\text{ m/s}.</md>
+          The curvature of the track is
+          <md>\kappa=\frac{1}{30}.</md>
+          Because the speed is constant,
+          <md>a_T=0.</md>
+          The normal acceleration is
+          <md>a_N=\kappa\sigma^2=\frac{1}{30}(12)^2=\frac{144}{30}=4.8.</md>
+          So the acceleration has magnitude
+          <md>4.8\text{ m/s}^2</md>
+          and points inward, toward the center of the track.
+        </p>
+        <p>
+          The car is not speeding up, but it is accelerating because its direction is
+          changing.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c5s4-ex-acceleration-on-a-helix">
+      <title>Acceleration on a helix</title>
+      <statement>
+        <p>
+          For
+          <md>\mathbf r(t)=(2\cos t,2\sin t,t),</md>
+          we found
+          <md>\sigma=\sqrt5,\qquad\kappa=\frac25.</md>
+          The speed is constant, so
+          <md>a_T=\sigma'=0.</md>
+          The normal acceleration is
+          <md>a_N=\kappa\sigma^2=\frac25\cdot5=2.</md>
+          Directly,
+          <md>\mathbf r''(t)=(-2\cos t,-2\sin t,0),</md>
+          whose length is
+          <md>2.</md>
+          So all of the acceleration is normal. The moving point is not speeding up or
+          slowing down; it is being pulled toward the axis of the helix.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      There is also a useful dot-product formula for the tangential component. Since
+      <md>\mathbf v=\sigma\mathbf T,</md>
+      we have
+      <md>\mathbf v\cdot\mathbf a=\sigma\mathbf T\cdot(a_T\mathbf T+a_N\mathbf N).</md>
+      Because
+      <md>\mathbf T\cdot\mathbf T=1\qquad\text{and}\qquad\mathbf T\cdot\mathbf N=0,</md>
+      this gives
+      <md>\mathbf v\cdot\mathbf a=\sigma a_T.</md>
+      Therefore
+      <md>\boxed{a_T=\frac{\mathbf r'(t)\cdot\mathbf r''(t)}{\|\mathbf r'(t)\|}.}</md>
+      In space, the normal component can be computed from
+      <md>\boxed{a_N=\frac{\|\mathbf r'(t)\times\mathbf r''(t)\|}{\|\mathbf r'(t)\|}.}</md>
+      This follows from
+      <md>a_N=\kappa\sigma^2</md>
+      and
+      <md>\kappa=\frac{\|\mathbf r'\times\mathbf r''\|}{\|\mathbf r'\|^3}.</md>
+    </p>
+
+    <example xml:id="c5s4-ex-path-with-both-kinds-of-acceleration">
+      <title>A path with both kinds of acceleration</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=(t,t^2),\qquad t&gt;0.</md>
+          Then
+          <md>\mathbf r'(t)=(1,2t),\qquad\mathbf r''(t)=(0,2).</md>
+          The speed is
+          <md>\sigma(t)=\sqrt{1+4t^2}.</md>
+          So
+          <md>a_T=\sigma'(t)=\frac{4t}{\sqrt{1+4t^2}}.</md>
+          The curvature of this parabola is
+          <md>\kappa(t)=\frac{2}{(1+4t^2)^{3/2}}.</md>
+          Thus
+          <md>a_N=\kappa\sigma^2=\frac{2}{(1+4t^2)^{3/2}}(1+4t^2)=\frac{2}{\sqrt{1+4t^2}}.</md>
+          The acceleration vector
+          <md>\mathbf r''(t)=(0,2)</md>
+          has a tangential part and a normal part. Part of it makes the point move faster;
+          part of it bends the motion upward.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This decomposition is useful because it separates two effects that are mixed together
+      inside the raw vector
+      <md>\mathbf a=\mathbf r''.</md>
+    </p>
+
+    <p>
+      Curvature tells us how a path bends. Tangential and normal acceleration tell us how
+      motion responds to that bending. But some paths are better described not by
+      <m>x,y,z</m>, but by radius and angle. Circular motion, spirals, and planetary motion
+      keep asking for the same language: distance from a center, direction from a center, and
+      the area swept out by a moving radius. That is where special coordinate systems begin
+      to pay back the work we spent learning them.
+    </p>
+  </subsection>
+</section>

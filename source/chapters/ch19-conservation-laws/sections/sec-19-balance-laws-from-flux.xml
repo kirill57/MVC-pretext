@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch19-conservation-laws.tex, Section 19.1.
+     Status: CONVERTED. -->
+<section xml:id="sec-19-balance-laws-from-flux" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Balance laws from flux</title>
+
+  <p>
+    Recall from <xref ref="ch18-generalized-stokes"/> that the divergence theorem is Stokes'
+    theorem for a solid:
+    <md>\int_{\partial E}\Phi=\int_E d\Phi.</md>
+    When <m>\Phi</m> is a flux form, the boundary integral measures what crosses the surface
+    <m>\partial E</m>. A conservation law begins by asking what that crossing does to the amount
+    stored inside <m>E</m>.
+  </p>
+
+  <subsection xml:id="c19s1-subsec-fixed-window-moving-dye">
+    <title>A fixed window in moving dye</title>
+
+    <p>
+      Imagine a clear box sitting inside a tank of water. The box is not a physical wall. It is
+      only a measuring window:
+      <md>E=[0,3]\times[0,1]\times[0,1].</md>
+      Dye flows through the tank. Let
+      <md>\rho(x,y,z,t)</md>
+      be the dye density at time <m>t</m>, measured in grams per cubic meter.
+    </p>
+
+    <p>
+      The amount of dye inside the window is
+      <md>\boxed{A(t)=\iiint_E \rho(x,y,z,t)\,dV.}</md>
+    </p>
+
+    <p>
+      Now suppose that, for <m>0\le t\lt 10</m>,
+      <md>\rho(x,y,z,t)=10-t</md>
+      and that the dye flux field is
+      <md>\mathbf J(x,y,z,t)=(x,0,0).</md>
+      The vector <m>\mathbf J</m> measures dye transported per unit area per unit time. It is not
+      just a velocity. It is the actual transported amount.
+    </p>
+
+    <p>
+      First compute the stored amount:
+      <md>\boxed{\begin{aligned}
+        A(t)
+        &amp;=
+        \int_0^3\int_0^1\int_0^1 (10-t)\,dz\,dy\,dx\\
+        &amp;=
+        3(10-t).
+      \end{aligned}}</md>
+      Therefore
+      <md>\boxed{A'(t)=-3.}</md>
+      The window is losing dye at rate <m>3</m>.
+    </p>
+
+    <p>
+      Now compute the outward flux across the boundary. Since
+      <md>\mathbf J=(x,0,0),</md>
+      only the left and right faces can contribute.
+    </p>
+
+    <p>
+      On the right face <m>x=3</m>, the outward normal is
+      <md>\widehat{\mathbf n}=(1,0,0),</md>
+      so
+      <md>\mathbf J\cdot\widehat{\mathbf n}=3.</md>
+      The face has area <m>1</m>, so the outward flux through the right face is
+      <md>3.</md>
+    </p>
+
+    <p>
+      On the left face <m>x=0</m>, the outward normal is
+      <md>\widehat{\mathbf n}=(-1,0,0),</md>
+      but
+      <md>\mathbf J=(0,0,0),</md>
+      so the flux is <m>0</m>. The other four faces also have zero flux because their normals are
+      perpendicular to <m>(x,0,0)</m>.
+    </p>
+
+    <p>
+      Thus
+      <md>\boxed{\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS=3.}</md>
+    </p>
+
+    <p>
+      The two calculations match the bookkeeping rule:
+      <md>\boxed{\frac{d}{dt}\iiint_E \rho\,dV
+        =
+        -\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS.}</md>
+      Outward flux is positive, but it decreases what remains inside. That is why the minus sign
+      is there.
+    </p>
+
+    <figure xml:id="c19s1-fig-balance-law-window">
+      <caption>The Balance Law: For a fixed region <m>E</m>, the rate at which the stored quantity
+      decreases is exactly equal to the net outward flux through the boundary <m>\partial E</m>.
+      The negative sign accounts for the fact that a positive outward flux results in a loss of
+      internal density.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            % Coordinates for the box E
+            \coordinate (O) at (0,0);
+            \coordinate (A) at (3.6,0);
+            \coordinate (B) at (4.6,0.8);
+            \coordinate (C) at (1.0,0.8);
+            \coordinate (D) at (0,1.7);
+            \coordinate (Ept) at (3.6,1.7);
+            \coordinate (F) at (4.6,2.5);
+            \coordinate (G) at (1.0,2.5);
+
+            % Draw the "measuring window" box
+            \draw[fill=blue!5, thick] (O)--(A)--(B)--(C)--cycle;
+            \draw[fill=blue!8, thick] (D)--(Ept)--(F)--(G)--cycle;
+            \draw[thick] (O)--(D);
+            \draw[thick] (A)--(Ept);
+            \draw[thick] (B)--(F);
+            \draw[thick] (C)--(G);
+
+            % Interior state
+            \node at (2.1,1.15) {\textbf{Region} \(E\)};
+            \node at (2.1,0.75) {\(\rho(t)\) density};
+
+            % Inward flux (aligned with the center of the left face)
+            \draw[-&gt;, very thick, blue!65!black] (-0.4,1.45) -- ++(0.9,0);
+            \draw[-&gt;, very thick, blue!65!black] (-0.4,1.05) -- ++(0.9,0);
+            \node[blue!65!black, align=right, font=\small, anchor=east] at (-0.5, 1.25) {Inward flux \\ density \(\mathbf{J}\)};
+
+            % Outward flux (aligned with the center of the right face)
+            \draw[-&gt;, very thick, red!65!black] (4.1,1.45) -- ++(0.9,0);
+            \draw[-&gt;, very thick, red!65!black] (4.1,1.05) -- ++(0.9,0);
+
+            % Text safely spaced away from the arrow tips
+            \node[red!65!black, font=\small, anchor=west, align=left] at (5.1,1.25) {Outward flux\\[1mm] \(\displaystyle \iint_{\partial E} \mathbf{J} \cdot \widehat{\mathbf{n}} \, dS &gt; 0\)};
+
+            % The fundamental balance equation
+            \node at (2.4,-1.2)
+                {\(\displaystyle \underbrace{\frac{d}{dt}\iiint_E\rho\,dV}_{\text{Rate of Change}}
+                = \underbrace{-\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS}_{\text{Net Transport across boundary}}\)};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c19s1-subsec-stored-amount-flux-density">
+    <title>Stored amount and flux density</title>
+
+    <p>The example contains the main objects.</p>
+
+    <p>
+      The density
+      <md>\rho</md>
+      measures how much material is stored per unit volume.
+    </p>
+
+    <p>
+      The flux density
+      <md>\mathbf J</md>
+      measures how much material is transported through a unit area per unit time.
+    </p>
+
+    <p>
+      If the material has density <m>\rho</m> and moves with velocity
+      <md>\mathbf v,</md>
+      then the flux density is
+      <md>\boxed{\mathbf J=\rho\mathbf v.}</md>
+      A fast flow in a nearly empty region may carry little material. A slow flow in a dense
+      region may carry a lot. The product <m>\rho\mathbf v</m> measures what is actually being
+      transported.
+    </p>
+
+    <p>
+      For a fixed solid region <m>E</m>, the stored amount is
+      <md>\boxed{\iiint_E \rho\,dV.}</md>
+      The outward flux through the boundary is
+      <md>\boxed{\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS.}</md>
+    </p>
+
+    <definition xml:id="c19s1-def-flux-density">
+      <title>Flux density</title>
+      <statement>
+        <p>
+          A <term>flux density</term> is a vector field
+          <md>\mathbf J</md>
+          whose normal component
+          <md>\mathbf J\cdot\widehat{\mathbf n}</md>
+          measures the amount crossing a unit area per unit time in the normal direction.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The sign convention is important:
+      <md>\begin{array}{c|c}
+        \mathbf J\cdot\widehat{\mathbf n}\gt 0 \amp \text{net flow outward}\\[1mm]
+        \mathbf J\cdot\widehat{\mathbf n}\lt 0 \amp \text{net flow inward}\\[1mm]
+        \mathbf J\cdot\widehat{\mathbf n}=0 \amp \text{no crossing through that surface}
+      \end{array}</md>
+    </p>
+
+    <p>
+      A vector tangent to the boundary may be large, but it contributes no flux across the
+      boundary. It slides along the boundary instead of crossing it.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s1-subsec-the-flux-form">
+    <title>The flux form</title>
+
+    <p>The same flux can be written in the language of forms.</p>
+
+    <p>
+      For a vector field
+      <md>\mathbf J=(J_1,J_2,J_3),</md>
+      the corresponding flux <m>2</m>-form is
+      <md>\boxed{\Phi_{\mathbf J}
+        =
+        J_1\,dy\wedge dz
+        +
+        J_2\,dz\wedge dx
+        +
+        J_3\,dx\wedge dy.}</md>
+      Then
+      <md>\boxed{\int_{\partial E}\Phi_{\mathbf J}
+        =
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS.}</md>
+    </p>
+
+    <p>
+      For the previous example,
+      <md>\mathbf J=(x,0,0),</md>
+      so
+      <md>\Phi_{\mathbf J}=x\,dy\wedge dz.</md>
+      On the right face <m>x=3</m>, this becomes
+      <md>3\,dy\wedge dz.</md>
+      The face has <m>y,z</m>-area <m>1</m>, so its contribution is <m>3</m>. On the left face
+      <m>x=0</m>, the form is zero. The form gives the same outward flux.
+    </p>
+
+    <p>
+      This is why flux forms were worth building. They remember which oriented area pieces a
+      vector field crosses.
+    </p>
+
+    <p>
+      In the plane, the matching formula is simpler. If
+      <md>\mathbf J=(M,N),</md>
+      then the outward flux form on a positively oriented boundary is
+      <md>\boxed{\phi_{\mathbf J}=M\,dy-N\,dx.}</md>
+      Indeed,
+      <md>\int_{\partial R}\phi_{\mathbf J}
+        =
+        \int_{\partial R}\mathbf J\cdot\widehat{\mathbf n}\,ds.</md>
+      The small vector
+      <md>(dy,-dx)</md>
+      is the outward normal times arclength when <m>\partial R</m> is walked with the region on
+      the left.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c19s1-subsec-sources-and-sinks">
+    <title>Sources and sinks</title>
+
+    <p>
+      Some quantities are not conserved by transport alone. Ink may be injected into water. Heat
+      may be produced by a heater. Charge may be created in one model only because a chemical
+      reaction is supplying it.
+    </p>
+
+    <p>
+      Let
+      <md>s(x,y,z,t)</md>
+      be the source rate per unit volume. Positive <m>s</m> means creation. Negative <m>s</m>
+      means destruction.
+    </p>
+
+    <p>
+      For a fixed solid <m>E</m>, the total source inside <m>E</m> is
+      <md>\iiint_E s\,dV.</md>
+      The full balance law becomes
+      <md>\boxed{\frac{d}{dt}\iiint_E \rho\,dV
+        =
+        -\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        +
+        \iiint_E s\,dV.}</md>
+    </p>
+
+    <p>
+      Equivalently,
+      <md>\boxed{\frac{d}{dt}\iiint_E \rho\,dV
+        +
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E s\,dV.}</md>
+    </p>
+
+    <p>
+      The left side says:
+      <md>\text{accumulation inside}+\text{outflow through boundary}.</md>
+      The right side says:
+      <md>\text{creation inside}.</md>
+    </p>
+
+    <definition xml:id="c19s1-def-integral-balance-law">
+      <title>Integral balance law</title>
+      <statement>
+        <p>
+          Let <m>E</m> be a fixed solid region. A density <m>\rho</m>, flux density
+          <m>\mathbf J</m>, and source rate <m>s</m> satisfy the <term>integral balance law</term>
+          on <m>E</m> if
+          <md>\boxed{\frac{d}{dt}\iiint_E \rho\,dV
+            +
+            \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+            =
+            \iiint_E s\,dV.}</md>
+          When
+          <md>s=0,</md>
+          the quantity is locally conserved by transport alone.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      In form language, the same law is
+      <md>\boxed{\frac{d}{dt}\int_E \rho\,dx\wedge dy\wedge dz
+        +
+        \int_{\partial E}\Phi_{\mathbf J}
+        =
+        \int_E s\,dx\wedge dy\wedge dz.}</md>
+    </p>
+
+    <example xml:id="c19s1-ex-source-in-still-water">
+      <title>A source in still water</title>
+      <statement>
+        <p>
+          Suppose the water is still, so
+          <md>\mathbf J=\mathbf 0.</md>
+          Let
+          <md>s(x,y,z,t)=2</md>
+          inside a box <m>E</m> of volume <m>5</m>. Then the balance law says
+          <md>\frac{d}{dt}\iiint_E \rho\,dV
+            =
+            \iiint_E 2\,dV
+            =
+            10.</md>
+          The amount inside increases at rate <m>10</m>. Nothing crossed the boundary. The
+          increase came from a source inside.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c19s1-subsec-fixed-region-assumption">
+    <title>What the fixed-region assumption means</title>
+
+    <p>
+      The region <m>E</m> in the balance law is fixed in space. It is a window, not a moving blob
+      of material.
+    </p>
+
+    <p>This matters.</p>
+
+    <p>
+      Suppose a cloud of dye moves to the right with constant velocity. If we follow the dye cloud
+      itself, the total dye in that moving blob may stay constant. But a fixed window on the table
+      may first gain dye, then lose dye, as the cloud passes through.
+    </p>
+
+    <p>
+      So the balance law above is a statement for fixed control regions:
+      <md>\text{watch this place, and count what enters, leaves, or is created there.}</md>
+    </p>
+
+    <p>
+      That is exactly the viewpoint needed for the divergence theorem. The boundary
+      <m>\partial E</m> is fixed, so flux through it is well-defined. Moving regions require an
+      extra transport correction. That correction is important in fluid mechanics, but it is not
+      needed for the first form of conservation laws.
+    </p>
+
+    <p>
+      The balance law is still global. It speaks about a whole region <m>E</m>. But if the same
+      balance holds for every small box we could draw inside space, then the law should have a
+      pointwise version. The next step is to shrink the bookkeeping until only one local equation
+      remains.
+    </p>
+  </subsection>
+</section>

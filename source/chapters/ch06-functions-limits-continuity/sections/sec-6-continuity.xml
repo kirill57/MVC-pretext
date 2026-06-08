@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch06-functions-limits-continuity.tex, Section 4 (Continuity).
+     Status: CONVERTED. -->
+<section xml:id="sec-6-continuity" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Continuity</title>
+
+  <p>
+    <xref ref="sec-6-limits-in-several-variables"/> ended with a mismatch. The nearby values of
+    <md>\frac{x^2y}{x^2+y^2}</md>
+    wanted to approach <m>0</m> at the origin, but we could still define the value at the origin
+    to be <m>17</m>. Limits notice what happens nearby. Continuity asks whether the function
+    agrees with its own nearby behavior.
+  </p>
+
+  <subsection xml:id="c6s4-subsec-continuity-nearby-inputs-outputs">
+    <title>Continuity as nearby inputs give nearby outputs</title>
+
+    <p>
+      A temperature field should not usually jump suddenly. If you move a few centimeters across a
+      room, the temperature should change only a little. A formula can express that kind of
+      steadiness.
+    </p>
+
+    <p>
+      Consider
+      <md>
+        R(x,y)=
+        \begin{cases}
+        \dfrac{x^2y}{x^2+y^2}, &amp; (x,y)\ne(0,0),\\[2mm]
+        0, &amp; (x,y)=(0,0).
+        \end{cases}
+      </md>
+      In <xref ref="sec-6-limits-in-several-variables"/>, polar coordinates gave
+      <md>\frac{x^2y}{x^2+y^2}=r\cos^2\theta\sin\theta.</md>
+      Since
+      <md>\left|r\cos^2\theta\sin\theta\right|\le r,</md>
+      we get
+      <md>\lim_{(x,y)\to(0,0)}\frac{x^2y}{x^2+y^2}=0.</md>
+      But now the value at the origin is also
+      <md>R(0,0)=0.</md>
+      So
+      <md>\lim_{(x,y)\to(0,0)}R(x,y)=R(0,0).</md>
+      There is no hole, no jump, and no mismatch. The function is continuous at the origin.
+    </p>
+
+    <p>
+      Now change only one line:
+      <md>
+        G(x,y)=
+        \begin{cases}
+        \dfrac{x^2y}{x^2+y^2}, &amp; (x,y)\ne(0,0),\\[2mm]
+        17, &amp; (x,y)=(0,0).
+        \end{cases}
+      </md>
+      The nearby values still approach <m>0</m>, but the actual value is <m>17</m>. Therefore
+      <md>\lim_{(x,y)\to(0,0)}G(x,y)\ne G(0,0).</md>
+      The function is not continuous at the origin.
+    </p>
+
+    <definition xml:id="c6s4-def-continuity-at-a-point">
+      <title>Continuity at a point</title>
+      <statement>
+        <p>
+          Let
+          <md>F:D\subseteq \mathbb R^n\to\mathbb R^m.</md>
+          We say that <m>F</m> is <term>continuous at <m>\mathbf a\in D</m></term> if
+          <md>
+            \boxed{
+            \lim_{\mathbf x\to\mathbf a}F(\mathbf x)=F(\mathbf a).
+            }
+          </md>
+          We say that <m>F</m> is <term>continuous on <m>D</m></term> if it is continuous at every
+          point of <m>D</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <p>The definition contains three requirements at once:</p>
+
+    <ol>
+      <li><p><m>F(\mathbf a)</m> must be defined.</p></li>
+      <li><p><m>\displaystyle \lim_{\mathbf x\to\mathbf a}F(\mathbf x)</m> must exist.</p></li>
+      <li><p><m>\displaystyle \lim_{\mathbf x\to\mathbf a}F(\mathbf x)</m> must equal <m>F(\mathbf a)</m>.</p></li>
+    </ol>
+
+    <p>If any one of these fails, continuity fails.</p>
+
+    <example xml:id="c6s4-ex-removable-discontinuity">
+      <title>A removable discontinuity</title>
+      <statement>
+        <p>
+          Define
+          <md>f(x,y)=\frac{x^2+y^2}{\sqrt{x^2+y^2}},\qquad (x,y)\ne(0,0).</md>
+          For <m>(x,y)\ne(0,0)</m>,
+          <md>f(x,y)=\sqrt{x^2+y^2}.</md>
+          Thus
+          <md>\lim_{(x,y)\to(0,0)} f(x,y)=0.</md>
+          But the original formula is not defined at <m>(0,0)</m>. So <m>f</m> is not continuous at
+          the origin.
+        </p>
+        <p>
+          If we define
+          <md>f(0,0)=0,</md>
+          then the repaired function becomes continuous at the origin. The discontinuity was only a
+          missing value.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s4-ex-discontinuity-cannot-be-repaired">
+      <title>A discontinuity that cannot be repaired</title>
+      <statement>
+        <p>
+          Let
+          <md>h(x,y)=\frac{xy}{x^2+y^2},\qquad (x,y)\ne(0,0).</md>
+          Along the <m>x</m>-axis,
+          <md>h(x,0)=0.</md>
+          Along the line <m>y=x</m>,
+          <md>h(x,x)=\frac{x^2}{2x^2}=\frac12.</md>
+          The limit at the origin does not exist. No choice of <m>h(0,0)</m> can make the function
+          continuous there.
+        </p>
+        <p>A missing value can be repaired only when the limit exists.</p>
+      </statement>
+    </example>
+
+    <p>For vector-valued functions, continuity is componentwise, just as limits are.</p>
+
+    <theorem xml:id="c6s4-thm-componentwise-continuity">
+      <title>Componentwise continuity</title>
+      <statement>
+        <p>
+          Let
+          <md>F:D\subseteq\mathbb R^n\to\mathbb R^m</md>
+          be written as
+          <md>F(\mathbf x)=\bigl(F_1(\mathbf x),F_2(\mathbf x),\ldots,F_m(\mathbf x)\bigr).</md>
+          Then <m>F</m> is continuous at <m>\mathbf a</m> if and only if each component function
+          <md>F_i:D\to\mathbb R</md>
+          is continuous at <m>\mathbf a</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          This follows directly from the componentwise limit theorem in
+          <xref ref="sec-6-limits-in-several-variables"/>. The vector limit
+          <md>\lim_{\mathbf x\to\mathbf a}F(\mathbf x)=F(\mathbf a)</md>
+          holds exactly when every component limit satisfies
+          <md>\lim_{\mathbf x\to\mathbf a}F_i(\mathbf x)=F_i(\mathbf a).</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <example xml:id="c6s4-ex-continuous-vector-field">
+      <title>A continuous vector field</title>
+      <statement>
+        <p>
+          The swirling field
+          <md>\mathbf W(x,y)=(-y,x)</md>
+          is continuous everywhere in the plane. Its components
+          <md>-y\qquad\text{and}\qquad x</md>
+          are continuous functions.
+        </p>
+        <p>
+          The field
+          <md>\mathbf V(x,y)=\frac{1}{x^2+y^2}(-y,x)</md>
+          is continuous on its domain
+          <md>\mathbb R^2\setminus\{(0,0)\}.</md>
+          It is not continuous at the origin because it is not even defined there. The missing point
+          is not a small detail; it will matter later when we study circulation around holes.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c6s4-subsec-algebra-of-continuous-functions">
+    <title>Algebra of continuous functions</title>
+
+    <p>Most continuous functions are built from simpler continuous functions.</p>
+
+    <p>
+      For example, suppose the pressure in a tank is modeled by
+      <md>p(x,y,z)=\frac{100+2z}{1+x^2+y^2}.</md>
+      The numerator
+      <md>100+2z</md>
+      is continuous. The denominator
+      <md>1+x^2+y^2</md>
+      is continuous and never equals <m>0</m>. So the quotient behaves continuously everywhere in
+      space.
+    </p>
+
+    <p>This example is so common that we turn it into a theorem.</p>
+
+    <theorem xml:id="c6s4-thm-algebra-of-continuous-functions">
+      <title>Algebra of continuous functions</title>
+      <statement>
+        <p>
+          Suppose
+          <md>f,g:D\subseteq\mathbb R^n\to\mathbb R</md>
+          are continuous at <m>\mathbf a\in D</m>, and let <m>c</m> be a constant. Then the following
+          functions are continuous at <m>\mathbf a</m>:
+          <md>f+g,\qquad f-g,\qquad cf,\qquad fg.</md>
+          If
+          <md>g(\mathbf a)\ne0,</md>
+          then
+          <md>\frac{f}{g}</md>
+          is also continuous at <m>\mathbf a</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          The limit laws from <xref ref="sec-6-limits-in-several-variables"/> give
+          <md>\lim_{\mathbf x\to\mathbf a}(f+g)(\mathbf x)=f(\mathbf a)+g(\mathbf a),</md>
+          and similarly for differences, constant multiples, and products.
+        </p>
+        <p>
+          For quotients, the limit law for quotients applies when the limiting denominator is not
+          zero:
+          <md>\lim_{\mathbf x\to\mathbf a}g(\mathbf x)=g(\mathbf a)\ne0.</md>
+          Thus
+          <md>\lim_{\mathbf x\to\mathbf a}\frac{f(\mathbf x)}{g(\mathbf x)}=\frac{f(\mathbf a)}{g(\mathbf a)}.</md>
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      We required
+      <md>g(\mathbf a)\ne0</md>
+      for a reason.
+    </p>
+
+    <example xml:id="c6s4-ex-why-denominator-condition-matters">
+      <title>Why the denominator condition matters</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=1,\qquad g(x,y)=x^2+y^2.</md>
+          Both functions are continuous everywhere. But
+          <md>\frac{f(x,y)}{g(x,y)}=\frac{1}{x^2+y^2}</md>
+          is not continuous at the origin. It is not even defined there, and its values become
+          unbounded as <m>(x,y)\to(0,0)</m>.
+        </p>
+        <p>
+          So a quotient of continuous functions is continuous only where the denominator is not
+          zero.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s4-ex-formula-continuous-on-natural-domain">
+      <title>A formula continuous on its natural domain</title>
+      <statement>
+        <p>
+          The function
+          <md>q(x,y)=\frac{\sqrt{4-x^2-y^2}}{1+xy}</md>
+          is continuous wherever the formula makes sense and the denominator is not zero.
+        </p>
+        <p>
+          The square root requires
+          <md>4-x^2-y^2\ge0,</md>
+          so
+          <md>x^2+y^2\le4.</md>
+          The denominator requires
+          <md>1+xy\ne0.</md>
+          Therefore <m>q</m> is continuous on
+          <md>\{(x,y):x^2+y^2\le4,\ xy\ne -1\}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>This gives a practical habit:</p>
+
+    <md>\text{A formula made from continuous pieces is continuous wherever it is allowed to be.}</md>
+
+    <p>
+      The suspicious points are the places where the formula is not allowed: zero denominators,
+      square roots of negative numbers, logarithms of nonpositive numbers, and special piecewise
+      definitions.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c6s4-subsec-continuity-of-compositions">
+    <title>Continuity of compositions</title>
+
+    <p>A function can feed into another function.</p>
+
+    <p>
+      For example, the height of a dome over a circular floor is
+      <md>h(x,y)=\sqrt{16-x^2-y^2}.</md>
+      In polar coordinates,
+      <md>x=r\cos\theta,\qquad y=r\sin\theta.</md>
+      Substituting gives
+      <md>
+        <mrow>h(r\cos\theta,r\sin\theta) \amp= \sqrt{16-r^2\cos^2\theta-r^2\sin^2\theta}</mrow>
+        <mrow>\amp= \sqrt{16-r^2}.</mrow>
+      </md>
+      The coordinate map
+      <md>\Phi(r,\theta)=(r\cos\theta,r\sin\theta)</md>
+      is continuous. The height function <m>h</m> is continuous on its disk. Their composition
+      <md>h\circ \Phi</md>
+      is continuous wherever
+      <md>16-r^2\ge0.</md>
+    </p>
+
+    <theorem xml:id="c6s4-thm-continuity-of-compositions">
+      <title>Continuity of compositions</title>
+      <statement>
+        <p>
+          Let
+          <md>F:D\subseteq\mathbb R^n\to\mathbb R^m</md>
+          be continuous at <m>\mathbf a</m>, and let
+          <md>G:E\subseteq\mathbb R^m\to\mathbb R^k</md>
+          be continuous at <m>F(\mathbf a)</m>. If
+          <md>F(D)\subseteq E,</md>
+          then the composition
+          <md>G\circ F</md>
+          is continuous at <m>\mathbf a</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Since <m>F</m> is continuous at <m>\mathbf a</m>,
+          <md>F(\mathbf x)\to F(\mathbf a)\qquad\text{as}\qquad\mathbf x\to\mathbf a.</md>
+          Since <m>G</m> is continuous at <m>F(\mathbf a)</m>,
+          <md>G(\mathbf y)\to G(F(\mathbf a))\qquad\text{as}\qquad\mathbf y\to F(\mathbf a).</md>
+          Taking
+          <md>\mathbf y=F(\mathbf x),</md>
+          we get
+          <md>G(F(\mathbf x))\to G(F(\mathbf a)).</md>
+          So <m>G\circ F</m> is continuous at <m>\mathbf a</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The continuity hypotheses are real. If either piece has a jump in the wrong place, the
+      composition can have a jump.
+    </p>
+
+    <example xml:id="c6s4-ex-discontinuous-outer-function">
+      <title>A discontinuous outer function can break the composition</title>
+      <statement>
+        <p>
+          Let
+          <md>F(x,y)=x^2+y^2,</md>
+          which is continuous everywhere. Define
+          <md>
+            G(u)=
+            \begin{cases}
+            0, &amp; u=0,\\
+            1, &amp; u\gt 0.
+            \end{cases}
+          </md>
+          Then <m>G</m> is not continuous at <m>u=0</m>.
+        </p>
+        <p>
+          The composition is
+          <md>
+            (G\circ F)(x,y)=
+            \begin{cases}
+            0, &amp; (x,y)=(0,0),\\
+            1, &amp; (x,y)\ne(0,0).
+            \end{cases}
+          </md>
+          As <m>(x,y)\to(0,0)</m>, the values are always <m>1</m> except at the origin itself. The
+          limit is <m>1</m>, but the value at the origin is <m>0</m>. So the composition is not
+          continuous at the origin.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s4-ex-discontinuous-inner-function">
+      <title>A discontinuous inner function can also break the composition</title>
+      <statement>
+        <p>
+          Let
+          <md>
+            F(x,y)=
+            \begin{cases}
+            0, &amp; x^2+y^2\lt 1,\\
+            1, &amp; x^2+y^2\ge1.
+            \end{cases}
+          </md>
+          This function jumps on the circle
+          <md>x^2+y^2=1.</md>
+          Let
+          <md>G(u)=u.</md>
+          The outer function <m>G</m> is continuous everywhere, but
+          <md>G\circ F=F.</md>
+          So the composition is still discontinuous on the circle. A continuous outer function does
+          not repair a discontinuous inner function.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c6s4-subsec-continuous-functions-closed-bounded">
+    <title>Continuous functions on closed and bounded regions</title>
+
+    <p>
+      Single-variable calculus has a comforting theorem: a continuous function on a closed interval
+      <md>[a,b]</md>
+      has a maximum and a minimum. Multivariable calculus has the same idea, but the interval
+      becomes a closed and bounded region.
+    </p>
+
+    <p>First, an example.</p>
+
+    <p>
+      Let
+      <md>H(x,y)=120-x^2-4y^2</md>
+      on the rectangle
+      <md>D=\{(x,y):0\le x\le3,\ 0\le y\le2\}.</md>
+      This is the height function from our contour-map hill, restricted to a rectangular park.
+    </p>
+
+    <p>
+      The function is largest at
+      <md>(0,0),</md>
+      where
+      <md>H(0,0)=120.</md>
+      It is smallest at
+      <md>(3,2),</md>
+      where
+      <md>H(3,2)=120-9-16=95.</md>
+      So this hill has both a highest point and a lowest point on the park.
+    </p>
+
+    <p>The rectangle matters. It contains its edges, and it does not stretch to infinity.</p>
+
+    <definition xml:id="c6s4-def-bounded-region">
+      <title>Bounded region</title>
+      <statement>
+        <p>
+          A set <m>D\subseteq\mathbb R^n</m> is <term>bounded</term> if it fits inside some large
+          ball. That is, there is a number <m>M</m> such that
+          <md>\|\mathbf x\|\le M</md>
+          for every <m>\mathbf x\in D</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <definition xml:id="c6s4-def-closed-region">
+      <title>Closed region</title>
+      <statement>
+        <p>
+          A set <m>D\subseteq\mathbb R^n</m> is <term>closed</term> if it contains all of its
+          boundary points.
+        </p>
+        <p>
+          In this book, the most important examples are regions described by non-strict
+          inequalities, such as
+          <md>x^2+y^2\le 9</md>
+          or
+          <md>0\le x\le 3,\qquad 0\le y\le 2.</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The disk
+      <md>x^2+y^2\le1</md>
+      is closed and bounded. The open disk
+      <md>x^2+y^2\lt 1</md>
+      is bounded but not closed, because it leaves out its boundary circle. The whole plane
+      <md>\mathbb R^2</md>
+      is closed but not bounded.
+    </p>
+
+    <theorem xml:id="c6s4-thm-extreme-value-theorem">
+      <title>Extreme Value Theorem in several variables</title>
+      <statement>
+        <p>
+          Let
+          <md>f:D\subseteq\mathbb R^n\to\mathbb R</md>
+          be continuous. If <m>D</m> is closed and bounded, then <m>f</m> attains an absolute
+          maximum and an absolute minimum on <m>D</m>.
+        </p>
+        <p>
+          That means there are points
+          <md>\mathbf p,\mathbf q\in D</md>
+          such that
+          <md>f(\mathbf p)\le f(\mathbf x)\le f(\mathbf q)</md>
+          for every <m>\mathbf x\in D</m>.
+        </p>
+      </statement>
+      <proof>
+        <title>Idea of the proof</title>
+        <p>
+          A closed and bounded region has no missing edge point and no escape to infinity. A
+          continuous function cannot jump over a value or shoot upward without nearby values
+          following it. These two facts together force the highest and lowest values to be reached.
+        </p>
+        <p>
+          The full proof belongs to a later analysis course. For this course, the theorem is a tool:
+          on a closed and bounded region, a continuous function cannot merely approach its maximum or
+          minimum. It must attain them.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>Each hypothesis matters.</p>
+
+    <example xml:id="c6s4-ex-why-boundedness-matters">
+      <title>Why boundedness matters</title>
+      <statement>
+        <p>
+          The function
+          <md>f(x,y)=x</md>
+          is continuous on all of <m>\mathbb R^2</m>. The domain <m>\mathbb R^2</m> is closed, but it
+          is not bounded.
+        </p>
+        <p>
+          There is no maximum, because <m>x</m> can be made as large as we like. There is no minimum,
+          because <m>x</m> can be made as negative as we like.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s4-ex-why-closedness-matters">
+      <title>Why closedness matters</title>
+      <statement>
+        <p>
+          The function
+          <md>f(x,y)=x^2+y^2</md>
+          is continuous on the open disk
+          <md>D=\{(x,y):x^2+y^2\lt 1\}.</md>
+          The domain is bounded, but it is not closed.
+        </p>
+        <p>
+          The values satisfy
+          <md>0\le f(x,y)\lt 1.</md>
+          The function has a minimum at <m>(0,0)</m>, but it has no maximum. The value <m>1</m> is
+          approached near the boundary circle, but the boundary circle is not included.
+        </p>
+      </statement>
+    </example>
+
+    <example xml:id="c6s4-ex-why-continuity-matters">
+      <title>Why continuity matters</title>
+      <statement>
+        <p>
+          Define
+          <md>
+            u(x,y)=
+            \begin{cases}
+            \dfrac{1}{x^2+y^2}, &amp; (x,y)\ne(0,0),\\[2mm]
+            0, &amp; (x,y)=(0,0).
+            \end{cases}
+          </md>
+          Let
+          <md>D=\{(x,y):x^2+y^2\le1\}.</md>
+          The domain <m>D</m> is closed and bounded. But <m>u</m> is not continuous at the origin.
+        </p>
+        <p>
+          As <m>(x,y)\to(0,0)</m>, the values
+          <md>\frac{1}{x^2+y^2}</md>
+          become arbitrarily large. So <m>u</m> has no maximum on <m>D</m>. Closed and bounded
+          domains do not protect us from discontinuities.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Continuity is a powerful promise, but it is also easy to assume too quickly. A formula may look
+      harmless from a few straight paths and still hide a thin ridge, a missing point, or a sudden
+      jump. Before we move on to slopes in many directions, it is worth collecting the main traps in
+      one place.
+    </p>
+  </subsection>
+</section>

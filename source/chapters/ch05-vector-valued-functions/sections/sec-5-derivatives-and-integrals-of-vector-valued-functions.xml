@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch05-vector-valued-functions.tex, Section 5.2.
+     Status: CONVERTED. -->
+<section xml:id="sec-5-derivatives-and-integrals-of-vector-valued-functions" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Derivatives and integrals of vector-valued functions</title>
+
+  <p>
+    <xref ref="sec-5-vector-valued-functions"/> made <m>\mathbf r(t)</m> a position record. A
+    position record becomes useful when we compare nearby times. The difference
+    <md>\mathbf r(t+h)-\mathbf r(t)</md>
+    is a displacement. Dividing by <m>h</m> gives average velocity over a short time interval.
+  </p>
+
+  <p>Then the old single-variable idea returns: let the time interval shrink.</p>
+
+  <subsection xml:id="c5s2-subsec-velocity-difference-quotient">
+    <title>Velocity from a difference quotient</title>
+
+    <p>
+      A small drone flies through a warehouse. Its position, in meters, is
+      <md>\mathbf r(t)=\left(t,\;t^2,\;3-\frac{t}{2}\right),</md>
+      where <m>t</m> is measured in seconds.
+    </p>
+
+    <p>
+      At <m>t=1</m>,
+      <md>\mathbf r(1)=\left(1,1,\frac52\right).</md>
+      At time <m>1+h</m>,
+      <md>\mathbf r(1+h)=\left(1+h,\;(1+h)^2,\;3-\frac{1+h}{2}\right).</md>
+      The displacement from <m>t=1</m> to <m>t=1+h</m> is
+      <md>
+        <mrow>\mathbf r(1+h)-\mathbf r(1) \amp= \left(h,\;(1+h)^2-1,\;-\frac{h}{2}\right)</mrow>
+        <mrow>\amp= \left(h,\;2h+h^2,\;-\frac{h}{2}\right).</mrow>
+      </md>
+      The average velocity over that interval is
+      <md>\frac{\mathbf r(1+h)-\mathbf r(1)}{h}=\left(1,\;2+h,\;-\frac12\right).</md>
+      Letting <m>h\to0</m>, we get the instantaneous velocity at <m>t=1</m>:
+      <md>\left(1,2,-\frac12\right).</md>
+    </p>
+
+    <p>This vector points in the direction the drone is moving at that instant.</p>
+
+    <definition xml:id="c5s2-def-derivative-vector-valued-function">
+      <title>Derivative of a vector-valued function</title>
+      <statement>
+        <p>
+          The derivative of
+          <md>\mathbf r(t)</md>
+          at <m>t=a</m> is
+          <md>\boxed{\mathbf r'(a)=\lim_{h\to0}\frac{\mathbf r(a+h)-\mathbf r(a)}{h}}</md>
+          when this limit exists.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      When <m>\mathbf r(t)</m> is a position vector, the derivative
+      <md>\mathbf v(t)=\mathbf r'(t)</md>
+      is called the <term>velocity</term>. The derivative of velocity,
+      <md>\mathbf a(t)=\mathbf v'(t)=\mathbf r''(t),</md>
+      is called the <term>acceleration</term>.
+    </p>
+
+    <p>
+      For the drone,
+      <md>\mathbf r(t)=\left(t,\;t^2,\;3-\frac{t}{2}\right),</md>
+      so we expect
+      <md>\mathbf v(t)=\left(1,2t,-\frac12\right),</md>
+      and
+      <md>\mathbf a(t)=(0,2,0).</md>
+      We will justify the component-by-component rule next.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s2-subsec-differentiating-component-by-component">
+    <title>Differentiating component by component</title>
+
+    <p>
+      A helix gives a clean example. Let
+      <md>\mathbf r(t)=\left(2\cos t,\;2\sin t,\;\frac{t}{3}\right).</md>
+      The component functions are
+      <md>x(t)=2\cos t,\qquad y(t)=2\sin t,\qquad z(t)=\frac{t}{3}.</md>
+      Differentiating each one gives
+      <md>x'(t)=-2\sin t,</md>
+      <md>y'(t)=2\cos t,</md>
+      and
+      <md>z'(t)=\frac13.</md>
+      So
+      <md>\mathbf r'(t)=\left(-2\sin t,\;2\cos t,\;\frac13\right).</md>
+      At <m>t=0</m>,
+      <md>\mathbf r(0)=(2,0,0),</md>
+      and
+      <md>\mathbf r'(0)=\left(0,2,\frac13\right).</md>
+      The point is at the right side of the circle and is moving in the positive
+      <m>y</m>-direction while also rising.
+    </p>
+
+    <figure xml:id="c5s2-fig-helix-tangent-vector">
+      <caption>The derivative vector points tangent to the path. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="62%">
+        <asymptote>
+        // 3-D interactive (WebGL) figure.
+        import graph3;
+        size(8.5cm);
+        currentprojection=orthographic(5,3,2.4);
+        real a=2;
+        path3 helix=graph(new triple(real t){return (a*cos(t), a*sin(t), t/3);}, 0, 3.5pi, 220, operator ..);
+        draw(helix, blue+linewidth(1.1pt));
+        draw(circle((0,0,0), a, (0,0,1)), gray(0.6)+dashed);
+        real t0=1.2; triple P=(a*cos(t0), a*sin(t0), t0/3);
+        triple v=(-a*sin(t0), a*cos(t0), 1.0/3);
+        dot(P); label("$P$", P, SW);
+        draw(P--(P+v), red+linewidth(1.3pt), Arrow3); label("$\mathbf r'(t)$", P+v, N);
+        draw(O--(3,0,0),gray,Arrow3); draw(O--(0,3,0),gray,Arrow3); draw(O--(0,0,4.2),gray,Arrow3);
+        label("$x$",(3,0,0),S); label("$y$",(0,3,0),E); label("$z$",(0,0,4.2),N);
+        </asymptote>
+      </image>
+    </figure>
+
+    <p>The rule is exactly what the example showed.</p>
+
+    <theorem xml:id="c5s2-thm-componentwise-differentiation">
+      <title>Componentwise differentiation</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=\bigl(r_1(t),r_2(t),\ldots,r_n(t)\bigr).</md>
+          Then <m>\mathbf r'(a)</m> exists if and only if each component derivative
+          <md>r_i'(a)</md>
+          exists. In that case,
+          <md>\boxed{\mathbf r'(a)=\bigl(r_1'(a),r_2'(a),\ldots,r_n'(a)\bigr).}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Use the definition:
+          <md>\frac{\mathbf r(a+h)-\mathbf r(a)}{h}=\left(\frac{r_1(a+h)-r_1(a)}{h},\ldots,\frac{r_n(a+h)-r_n(a)}{h}\right).</md>
+          A vector limit exists exactly when all component limits exist. Those component limits
+          are the ordinary derivatives <m>r_i'(a)</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The hypothesis that the component derivatives exist is real. A continuous curve can still
+      fail to have a velocity.
+    </p>
+
+    <example xml:id="c5s2-ex-sharp-corner-no-velocity">
+      <title>A sharp corner has no velocity vector</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=(|t|,t).</md>
+          This curve is continuous at <m>t=0</m>, but
+          <md>\frac{\mathbf r(h)-\mathbf r(0)}{h}=\left(\frac{|h|}{h},1\right).</md>
+          If <m>h&gt;0</m>, this quotient is
+          <md>(1,1).</md>
+          If <m>h&lt;0</m>, it is
+          <md>(-1,1).</md>
+          The two one-sided limits do not agree. Therefore <m>\mathbf r'(0)</m> does not exist.
+        </p>
+        <p>
+          Geometrically, the curve has a corner at the origin. The point arrives from one
+          direction and leaves in another, so there is no single tangent velocity at that instant.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      At endpoints of a time interval, we use the same caution as in single-variable calculus. A
+      curve defined only for <m>t\ge0</m> may have a right-hand velocity at <m>t=0</m>, but not a
+      two-sided derivative there unless the curve is defined on both sides.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s2-subsec-tangent-lines-motion-path">
+    <title>Tangent lines to a motion path</title>
+
+    <p>
+      If
+      <md>\mathbf r'(a)\ne\mathbf 0,</md>
+      then the tangent line to the curve at time <m>a</m> is the line through
+      <md>\mathbf r(a)</md>
+      in the direction
+      <md>\mathbf r'(a).</md>
+      Thus
+      <md>\boxed{\mathbf L(s)=\mathbf r(a)+s\mathbf r'(a)}</md>
+      is a parametrization of the tangent line.
+    </p>
+
+    <example xml:id="c5s2-ex-tangent-line-drone-path">
+      <title>A tangent line to a drone path</title>
+      <statement>
+        <p>
+          For
+          <md>\mathbf r(t)=\left(t,\;t^2,\;3-\frac{t}{2}\right),</md>
+          we found
+          <md>\mathbf r(1)=\left(1,1,\frac52\right)</md>
+          and
+          <md>\mathbf r'(1)=\left(1,2,-\frac12\right).</md>
+          So the tangent line at <m>t=1</m> is
+          <md>\mathbf L(s)=\left(1,1,\frac52\right)+s\left(1,2,-\frac12\right).</md>
+          In coordinates,
+          <md>x=1+s,\qquad y=1+2s,\qquad z=\frac52-\frac{s}{2}.</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The velocity vector gives the instantaneous direction of motion, not merely the direction
+      of the curve as a set. If the same geometric curve is traced with a different clock, the
+      velocity vector changes.
+    </p>
+
+    <example xml:id="c5s2-ex-same-circle-different-speeds">
+      <title>Same circle, different speeds</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r_1(t)=(\cos t,\sin t)</md>
+          and
+          <md>\mathbf r_2(t)=(\cos 2t,\sin 2t).</md>
+          Both trace the unit circle. But
+          <md>\mathbf r_1'(t)=(-\sin t,\cos t),</md>
+          while
+          <md>\mathbf r_2'(t)=(-2\sin 2t,2\cos 2t).</md>
+          The second velocity vector has twice the length. The same circle is being traced twice
+          as fast.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The length of the velocity vector is the <term>speed</term>:
+      <md>\text{speed}=\|\mathbf r'(t)\|.</md>
+      Speed will become the key to arc length in <xref ref="sec-5-arc-length-and-speed"/>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s2-subsec-differentiation-rules">
+    <title>Differentiation rules</title>
+
+    <p>
+      Since derivatives are computed component by component, the familiar single-variable rules
+      return almost unchanged.
+    </p>
+
+    <p>Before listing them, here is one example.</p>
+
+    <example xml:id="c5s2-ex-dot-product-changing-with-time">
+      <title>A dot product changing with time</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=(t,t^2,0),\qquad \mathbf s(t)=(1,\cos t,\sin t).</md>
+          Then
+          <md>\mathbf r(t)\cdot\mathbf s(t)=t+t^2\cos t.</md>
+          Differentiating directly,
+          <md>\frac{d}{dt}\bigl(\mathbf r(t)\cdot\mathbf s(t)\bigr)=1+2t\cos t-t^2\sin t.</md>
+        </p>
+        <p>
+          Now compute using a product rule:
+          <md>\mathbf r'(t)=(1,2t,0),</md>
+          <md>\mathbf s'(t)=(0,-\sin t,\cos t).</md>
+          Then
+          <md>
+            <mrow>\mathbf r'(t)\cdot\mathbf s(t)+\mathbf r(t)\cdot\mathbf s'(t) \amp= (1,2t,0)\cdot(1,\cos t,\sin t)</mrow>
+            <mrow>\amp\quad +(t,t^2,0)\cdot(0,-\sin t,\cos t)</mrow>
+            <mrow>\amp= 1+2t\cos t-t^2\sin t.</mrow>
+          </md>
+          The ordinary product rule is still there, but now it is written with dot products.
+        </p>
+      </statement>
+    </example>
+
+    <theorem xml:id="c5s2-thm-differentiation-rules">
+      <title>Differentiation rules for vector-valued functions</title>
+      <statement>
+        <p>
+          Suppose <m>\mathbf r(t)</m> and <m>\mathbf s(t)</m> are differentiable vector-valued
+          functions, and <m>f(t)</m> is a differentiable real-valued function. Then
+          <md>\frac{d}{dt}\bigl(\mathbf r+\mathbf s\bigr)=\mathbf r'+\mathbf s',</md>
+          <md>\frac{d}{dt}\bigl(f\mathbf r\bigr)=f'\mathbf r+f\mathbf r',</md>
+          and
+          <md>\frac{d}{dt}\bigl(\mathbf r\cdot\mathbf s\bigr)=\mathbf r'\cdot\mathbf s+\mathbf r\cdot\mathbf s'.</md>
+          If <m>\mathbf r(t)</m> and <m>\mathbf s(t)</m> are functions into <m>\mathbb R^3</m>,
+          then
+          <md>\frac{d}{dt}\bigl(\mathbf r\times\mathbf s\bigr)=\mathbf r'\times\mathbf s+\mathbf r\times\mathbf s'.</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Each rule follows by writing the vectors in components and applying the ordinary
+          single-variable differentiation rules. The dot product rule, for example, is just the
+          product rule applied to each term:
+          <md>\mathbf r\cdot\mathbf s=r_1s_1+\cdots+r_ns_n.</md>
+          Then
+          <md>
+            <mrow>\frac{d}{dt}(\mathbf r\cdot\mathbf s) \amp= (r_1's_1+r_1s_1')+\cdots+(r_n's_n+r_ns_n')</mrow>
+            <mrow>\amp= \mathbf r'\cdot\mathbf s+\mathbf r\cdot\mathbf s'.</mrow>
+          </md>
+          The cross product rule is checked the same way from the component formula for
+          <m>\mathbf r\times\mathbf s</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The differentiability assumptions matter. If a component has a corner, as in
+      <md>|t|,</md>
+      then the corresponding vector function may fail to have a derivative, and the rules above
+      have nothing to apply to at that time.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s2-subsec-integrating-vector-valued-functions">
+    <title>Integrating vector-valued functions</title>
+
+    <p>
+      Differentiation takes us from position to velocity:
+      <md>\mathbf r(t)\longmapsto \mathbf r'(t).</md>
+      Integration goes the other way. It adds many tiny velocity vectors to recover a net
+      displacement.
+    </p>
+
+    <p>
+      Suppose a drifting boat has velocity
+      <md>\mathbf v(t)=(2,\cos t,3t^2),\qquad 0\le t\le\pi.</md>
+      The displacement from <m>t=0</m> to <m>t=\pi</m> is
+      <md>\int_0^\pi \mathbf v(t)\,dt.</md>
+      Compute component by component:
+      <md>
+        <mrow>\int_0^\pi (2,\cos t,3t^2)\,dt \amp= \left(\int_0^\pi 2\,dt,\;\int_0^\pi \cos t\,dt,\;\int_0^\pi 3t^2\,dt\right)</mrow>
+        <mrow>\amp= \left(2\pi,\;\sin t\bigg|_0^\pi,\;t^3\bigg|_0^\pi\right)</mrow>
+        <mrow>\amp= (2\pi,0,\pi^3).</mrow>
+      </md>
+      The boat's net displacement is
+      <md>(2\pi,0,\pi^3).</md>
+    </p>
+
+    <definition xml:id="c5s2-def-integral-vector-valued-function">
+      <title>Integral of a vector-valued function</title>
+      <statement>
+        <p>
+          If
+          <md>\mathbf v(t)=\bigl(v_1(t),v_2(t),\ldots,v_n(t)\bigr),</md>
+          then
+          <md>\boxed{\int_a^b \mathbf v(t)\,dt=\left(\int_a^b v_1(t)\,dt,\;\int_a^b v_2(t)\,dt,\;\ldots,\;\int_a^b v_n(t)\,dt\right)}</md>
+          whenever the component integrals exist.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For an indefinite integral,
+      <md>\int \mathbf v(t)\,dt</md>
+      means a vector-valued antiderivative:
+      <md>\mathbf R'(t)=\mathbf v(t).</md>
+      The constant of integration is now a constant vector.
+    </p>
+
+    <example xml:id="c5s2-ex-vector-antiderivative">
+      <title>A vector antiderivative</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf v(t)=(6t,\;e^t,\;\cos t).</md>
+          Then
+          <md>\int \mathbf v(t)\,dt=(3t^2,\;e^t,\;\sin t)+\mathbf C,</md>
+          where
+          <md>\mathbf C=(C_1,C_2,C_3)</md>
+          is a constant vector.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      The condition that the component integrals exist is not decoration. If even one component
+      fails to have an ordinary definite integral, then the vector integral fails.
+    </p>
+
+    <example xml:id="c5s2-ex-one-bad-component">
+      <title>One bad component breaks the vector integral</title>
+      <statement>
+        <p>
+          The function
+          <md>\mathbf v(t)=\left(\frac1t,0\right)</md>
+          is not bounded near <m>t=0</m>. The ordinary integral
+          <md>\int_0^1 \frac1t\,dt</md>
+          does not exist as a finite definite integral. Therefore
+          <md>\int_0^1 \left(\frac1t,0\right)\,dt</md>
+          does not exist as an ordinary vector integral.
+        </p>
+        <p>A vector integral is only as well behaved as its components.</p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c5s2-subsec-fundamental-theorem-vector-valued">
+    <title>The Fundamental Theorem for vector-valued functions</title>
+
+    <p>The Fundamental Theorem of Calculus now returns in vector form.</p>
+
+    <theorem xml:id="c5s2-thm-fundamental-theorem-vector-valued">
+      <title>Fundamental Theorem for vector-valued functions</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=\bigl(r_1(t),\ldots,r_n(t)\bigr)</md>
+          be differentiable on an interval, and suppose <m>\mathbf r'(t)</m> has continuous
+          components on <m>[a,b]</m>. Then
+          <md>\boxed{\int_a^b \mathbf r'(t)\,dt=\mathbf r(b)-\mathbf r(a).}</md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Write
+          <md>\mathbf r'(t)=\bigl(r_1'(t),\ldots,r_n'(t)\bigr).</md>
+          Then
+          <md>
+            <mrow>\int_a^b \mathbf r'(t)\,dt \amp= \left(\int_a^b r_1'(t)\,dt,\ldots,\int_a^b r_n'(t)\,dt\right)</mrow>
+            <mrow>\amp= \left(r_1(b)-r_1(a),\ldots,r_n(b)-r_n(a)\right)</mrow>
+            <mrow>\amp= \mathbf r(b)-\mathbf r(a).</mrow>
+          </md>
+          The middle step is the single-variable Fundamental Theorem of Calculus, applied one
+          component at a time.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The continuity assumption on the components of <m>\mathbf r'</m> is a friendly sufficient
+      condition. It guarantees that the component integrals behave exactly as expected. There are
+      more advanced versions with weaker hypotheses, but this one is the right tool for the curves
+      in this course.
+    </p>
+
+    <p>
+      For motion, the theorem says:
+      <md>\boxed{\int_a^b \mathbf v(t)\,dt=\mathbf r(b)-\mathbf r(a).}</md>
+      The integral of velocity is displacement.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s2-subsec-initial-value-problems-motion">
+    <title>Initial value problems for motion</title>
+
+    <p>Often we know velocity or acceleration first, and we want position.</p>
+
+    <p>
+      A basketball is thrown across a gym. Let the <m>x</m>-axis point across the court, the
+      <m>y</m>-axis point sideways, and the <m>z</m>-axis point upward. Suppose the ball starts at
+      <md>\mathbf r(0)=(0,0,1)</md>
+      meters and has initial velocity
+      <md>\mathbf v(0)=(8,3,10)</md>
+      meters per second. Ignore air resistance. Then acceleration is constant:
+      <md>\mathbf a(t)=(0,0,-9.8).</md>
+    </p>
+
+    <p>
+      Since
+      <md>\mathbf v'(t)=\mathbf a(t),</md>
+      we integrate acceleration:
+      <md>\mathbf v(t)=\int (0,0,-9.8)\,dt=(0,0,-9.8t)+\mathbf C.</md>
+      Use
+      <md>\mathbf v(0)=(8,3,10)</md>
+      to get
+      <md>\mathbf C=(8,3,10).</md>
+      Thus
+      <md>\mathbf v(t)=(8,3,10-9.8t).</md>
+    </p>
+
+    <p>
+      Now integrate velocity:
+      <md>\mathbf r(t)=\int (8,3,10-9.8t)\,dt=(8t,3t,10t-4.9t^2)+\mathbf D.</md>
+      Use
+      <md>\mathbf r(0)=(0,0,1)</md>
+      to get
+      <md>\mathbf D=(0,0,1).</md>
+      Therefore
+      <md>\boxed{\mathbf r(t)=(8t,\;3t,\;1+10t-4.9t^2).}</md>
+    </p>
+
+    <p>
+      The three coordinates tell three simpler stories:
+      <md>x(t)=8t,</md>
+      <md>y(t)=3t,</md>
+      <md>z(t)=1+10t-4.9t^2.</md>
+      The horizontal motion is linear. The vertical motion is the familiar falling-object
+      parabola from single-variable calculus.
+    </p>
+
+    <example xml:id="c5s2-ex-recovering-position-from-velocity">
+      <title>Recovering position from velocity</title>
+      <statement>
+        <p>
+          A small underwater robot has velocity
+          <md>\mathbf v(t)=(1+t,\;2,\;e^{-t})</md>
+          and starts at
+          <md>\mathbf r(0)=(3,-1,0).</md>
+          Find <m>\mathbf r(t)</m>.
+        </p>
+        <p>
+          Since
+          <md>\mathbf r'(t)=\mathbf v(t),</md>
+          we integrate:
+          <md>\mathbf r(t)=\left(t+\frac{t^2}{2},\;2t,\;-e^{-t}\right)+\mathbf C.</md>
+          Use the initial position:
+          <md>\mathbf r(0)=(0,0,-1)+\mathbf C=(3,-1,0).</md>
+          So
+          <md>\mathbf C=(3,-1,1).</md>
+          Therefore
+          <md>\boxed{\mathbf r(t)=\left(3+t+\frac{t^2}{2},\;-1+2t,\;1-e^{-t}\right).}</md>
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      This is an initial value problem. The derivative information gives a family of possible
+      motions. The initial condition chooses the one motion that actually starts in the given
+      place.
+    </p>
+
+    <p>
+      Differentiation and integration now work for motion in space. But a subtle problem has
+      appeared. The integral of velocity gives displacement, not distance traveled. A runner who
+      completes one lap has
+      <md>\mathbf r(b)-\mathbf r(a)=\mathbf 0,</md>
+      but she certainly did not run zero meters. To measure distance traveled, we must add up tiny
+      lengths
+      <md>\|\mathbf r'(t)\|\,dt.</md>
+      That question leads directly to arc length and speed.
+    </p>
+  </subsection>
+</section>

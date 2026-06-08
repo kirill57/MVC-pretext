@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch08-chain-rule-coordinate-changes.tex, Section 8.4.
+     Status: CONVERTED. -->
+<section xml:id="sec-8-coordinate-changes" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Coordinate changes</title>
+
+  <p>
+    <xref ref="sec-8-differentials-and-the-chain-rule"/> treated a coordinate change as a
+    differentiable map and moved differentials through it by substitution. Now we use that idea
+    on the coordinate systems from <xref ref="ch04-curves-coordinates-surfaces"/>: polar,
+    cylindrical, and spherical coordinates.
+  </p>
+
+  <p>
+    A coordinate change does two things at once. It gives new labels to points, and it stretches
+    small pieces of length, area, and volume. The chain rule handles the labels. The Jacobian
+    determinant measures the stretching.
+  </p>
+
+  <subsection xml:id="c8s4-subsec-polar-chain-rule">
+    <title>Polar coordinates and the chain rule</title>
+
+    <p>
+      The polar coordinate map is
+      <md>G(r,\theta)=(x,y)=(r\cos\theta,r\sin\theta).</md>
+      If
+      <md>f=f(x,y),</md>
+      then the same scalar field written in polar coordinates is
+      <md>F(r,\theta)=f(r\cos\theta,r\sin\theta).</md>
+    </p>
+
+    <p>
+      Take differentials:
+      <md>dx=\cos\theta\,dr-r\sin\theta\,d\theta,</md>
+      and
+      <md>dy=\sin\theta\,dr+r\cos\theta\,d\theta.</md>
+      Since
+      <md>df=f_x\,dx+f_y\,dy,</md>
+      substitution gives
+      <md>
+        <mrow>dF \amp= f_x(\cos\theta\,dr-r\sin\theta\,d\theta) + f_y(\sin\theta\,dr+r\cos\theta\,d\theta)</mrow>
+        <mrow>\amp= (f_x\cos\theta+f_y\sin\theta)\,dr + (-rf_x\sin\theta+rf_y\cos\theta)\,d\theta.</mrow>
+      </md>
+      Therefore
+      <md>\boxed{F_r=f_x\cos\theta+f_y\sin\theta,}</md>
+      and
+      <md>\boxed{F_\theta=-r f_x\sin\theta+r f_y\cos\theta.}</md>
+      The partial derivatives <m>f_x</m> and <m>f_y</m> are evaluated at
+      <md>(x,y)=(r\cos\theta,r\sin\theta).</md>
+    </p>
+
+    <example xml:id="c8s4-ex-temperature-fountain">
+      <title>Temperature around a circular fountain</title>
+      <statement>
+        <p>
+          A circular fountain sits at the origin. A temperature field on the stone plaza is
+          <md>T(x,y)=20+\frac{6}{1+x^2+y^2}+x-2y.</md>
+          The term
+          <md>\frac{6}{1+x^2+y^2}</md>
+          is strongest near the fountain. The term <m>x-2y</m> tilts the temperature field
+          across the plaza.
+        </p>
+        <p>
+          In polar coordinates,
+          <md>
+            <mrow>A(r,\theta) \amp= T(r\cos\theta,r\sin\theta)</mrow>
+            <mrow>\amp= 20+\frac{6}{1+r^2}+r\cos\theta-2r\sin\theta.</mrow>
+          </md>
+          Differentiate directly:
+          <md>A_r = -\frac{12r}{(1+r^2)^2}+\cos\theta-2\sin\theta,</md>
+          and
+          <md>A_\theta = -r\sin\theta-2r\cos\theta.</md>
+        </p>
+        <p>
+          At the point
+          <md>r=2, \qquad \theta=\frac{\pi}{2},</md>
+          we are at
+          <md>(x,y)=(0,2).</md>
+          There,
+          <md>A_r = -\frac{24}{25}-2 = -\frac{74}{25},</md>
+          and
+          <md>A_\theta=-2.</md>
+          The first number is a rate per meter in the radial direction. The second is a rate per
+          radian, not per meter. At radius <m>2</m>, one radian of angular motion has length
+          <m>2</m>. So the tangential rate per meter is
+          <md>\frac{A_\theta}{r}=\frac{-2}{2}=-1.</md>
+          This distinction is where many polar-coordinate mistakes begin: an angle is not a
+          length.
+        </p>
+      </statement>
+    </example>
+
+    <figure xml:id="c8s4-fig-polar-length-scales">
+      <caption>In polar coordinates, radial and angular changes have different length scales.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (5.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,4.7) node[above] {\(y\)};
+
+            \draw[gray!35] (0,0) circle (2);
+            \draw[gray!35] (0,0) circle (2.8);
+            \draw[gray!35] (0,0) -- (4.2,0);
+            \draw[gray!35] (0,0) -- ({4.2*cos(35)}, {4.2*sin(35)});
+
+            \coordinate (P) at ({2*cos(25)}, {2*sin(25)});
+            \coordinate (Pr) at ({2.8*cos(25)}, {2.8*sin(25)});
+            \coordinate (Pt) at ({2*cos(35)}, {2*sin(35)});
+
+            \fill (P) circle (2.5pt);
+            \node[below right] at (P) {\((r,\theta)\)};
+
+            \draw[-&gt;, very thick] (P) -- (Pr) node[midway, below right] {\(dr\)};
+            \draw[-&gt;, very thick] (P) -- (Pt) node[midway, above] {\(r\,d\theta\)};
+
+            \draw[thick] (1.1,0) arc[start angle=0,end angle=25,radius=1.1];
+            \node at (1.35,0.3) {\(\theta\)};
+
+            \node at (2.5,-0.9) {A small angular change has physical length \(r\,d\theta\).};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c8s4-subsec-cylindrical">
+    <title>Cylindrical coordinates</title>
+
+    <p>
+      Cylindrical coordinates are polar coordinates with height:
+      <md>x=r\cos\theta, \qquad y=r\sin\theta, \qquad z=z.</md>
+      If
+      <md>f=f(x,y,z),</md>
+      write
+      <md>F(r,\theta,z)=f(r\cos\theta,r\sin\theta,z).</md>
+      The differentials are
+      <md>dx=\cos\theta\,dr-r\sin\theta\,d\theta,</md>
+      <md>dy=\sin\theta\,dr+r\cos\theta\,d\theta,</md>
+      and
+      <md>dz=dz.</md>
+      Substituting into
+      <md>df=f_x\,dx+f_y\,dy+f_z\,dz</md>
+      gives
+      <md>\boxed{F_r=f_x\cos\theta+f_y\sin\theta,}</md>
+      <md>\boxed{F_\theta=-r f_x\sin\theta+r f_y\cos\theta,}</md>
+      and
+      <md>\boxed{F_z=f_z.}</md>
+    </p>
+
+    <example xml:id="c8s4-ex-pressure-tank">
+      <title>Pressure inside a round tank</title>
+      <statement>
+        <p>
+          A round tank has pressure field
+          <md>p(x,y,z)=100-z+xy.</md>
+          In cylindrical coordinates,
+          <md>xy=(r\cos\theta)(r\sin\theta)=r^2\sin\theta\cos\theta.</md>
+          So
+          <md>P(r,\theta,z)=100-z+r^2\sin\theta\cos\theta.</md>
+          Then
+          <md>P_r=2r\sin\theta\cos\theta,</md>
+          <md>P_\theta=r^2(\cos^2\theta-\sin^2\theta),</md>
+          and
+          <md>P_z=-1.</md>
+          The derivative <m>P_z=-1</m> says pressure drops by one unit per meter of height. The
+          derivative <m>P_\theta</m> is a rate per radian around the tank. To convert it to a
+          rate per meter along a circular ring, divide by <m>r</m>.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c8s4-subsec-spherical">
+    <title>Spherical coordinates</title>
+
+    <p>
+      <xref ref="ch04-curves-coordinates-surfaces"/> used the spherical coordinates
+      <md>(\rho,\theta,\phi),</md>
+      where <m>\rho</m> is distance from the origin, <m>\theta</m> is the angle around the
+      <m>z</m>-axis, and <m>\phi</m> is the angle down from the positive <m>z</m>-axis. The
+      conversion formulas are
+      <md>\boxed{x=\rho\sin\phi\cos\theta,\qquad y=\rho\sin\phi\sin\theta,\qquad z=\rho\cos\phi.}</md>
+    </p>
+
+    <p>
+      Let
+      <md>F(\rho,\theta,\phi) = f(\rho\sin\phi\cos\theta,\rho\sin\phi\sin\theta,\rho\cos\phi).</md>
+      The chain rule gives
+      <md>\boxed{F_\rho = f_x\sin\phi\cos\theta + f_y\sin\phi\sin\theta + f_z\cos\phi.}</md>
+      The <m>\theta</m>-derivative is
+      <md>\boxed{F_\theta = -\rho f_x\sin\phi\sin\theta + \rho f_y\sin\phi\cos\theta.}</md>
+      The <m>\phi</m>-derivative is
+      <md>\boxed{F_\phi = \rho f_x\cos\phi\cos\theta + \rho f_y\cos\phi\sin\theta - \rho f_z\sin\phi.}</md>
+      Again, the partial derivatives <m>f_x,f_y,f_z</m> are evaluated at the rectangular point
+      corresponding to <m>(\rho,\theta,\phi)</m>.
+    </p>
+
+    <p>The length scales are different:</p>
+
+    <table xml:id="c8s4-tab-spherical-length-scales">
+      <title>Length scales in spherical coordinates.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>coordinate change</cell>
+          <cell>physical length</cell>
+        </row>
+        <row><cell><m>d\rho</m></cell><cell><m>d\rho</m></cell></row>
+        <row><cell><m>d\theta</m></cell><cell><m>\rho\sin\phi\,d\theta</m></cell></row>
+        <row><cell><m>d\phi</m></cell><cell><m>\rho\,d\phi</m></cell></row>
+      </tabular>
+    </table>
+
+    <p>
+      A small change in <m>\theta</m> moves around a horizontal circle of radius
+      <md>\rho\sin\phi.</md>
+      A small change in <m>\phi</m> moves along a meridian of radius
+      <md>\rho.</md>
+    </p>
+
+    <example xml:id="c8s4-ex-radially-symmetric-field">
+      <title>A radially symmetric field</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y,z)=\frac{1}{1+x^2+y^2+z^2}.</md>
+          Since
+          <md>x^2+y^2+z^2=\rho^2,</md>
+          the spherical form is
+          <md>F(\rho,\theta,\phi)=\frac{1}{1+\rho^2}.</md>
+          Therefore
+          <md>F_\rho=-\frac{2\rho}{(1+\rho^2)^2},</md>
+          while
+          <md>F_\theta=0, \qquad F_\phi=0.</md>
+          In spherical coordinates the symmetry is visible: the field changes only when we move
+          toward or away from the origin. Moving around a sphere of fixed <m>\rho</m> does not
+          change the value.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c8s4-subsec-gradients-non-cartesian">
+    <title>Gradients in non-Cartesian coordinates</title>
+
+    <p>
+      The differential
+      <md>df</md>
+      does not care which coordinates we use. But the gradient vector does care about lengths,
+      because it measures change per unit distance.
+    </p>
+
+    <p>
+      In polar coordinates,
+      <md>dF=F_r\,dr+F_\theta\,d\theta.</md>
+      The radial coordinate <m>r</m> is a distance. The angular coordinate <m>\theta</m> is not.
+      A change <m>d\theta</m> at radius <m>r</m> has physical length <m>r\,d\theta</m>.
+    </p>
+
+    <p>
+      Let
+      <md>\mathbf e_r=(\cos\theta,\sin\theta), \qquad \mathbf e_\theta=(-\sin\theta,\cos\theta).</md>
+      Then, away from the origin,
+      <md>\boxed{\nabla f = F_r\,\mathbf e_r + \frac{1}{r}F_\theta\,\mathbf e_\theta.}</md>
+      The factor
+      <md>\frac1r</md>
+      appears because <m>F_\theta</m> is change per radian, while the gradient needs change per
+      unit length.
+    </p>
+
+    <p>
+      In cylindrical coordinates,
+      <md>\boxed{\nabla f = F_r\,\mathbf e_r + \frac1rF_\theta\,\mathbf e_\theta + F_z\,\mathbf k, \qquad r&gt;0.}</md>
+    </p>
+
+    <p>
+      In spherical coordinates, define the unit vectors
+      <md>\mathbf e_\rho = (\sin\phi\cos\theta,\sin\phi\sin\theta,\cos\phi),</md>
+      <md>\mathbf e_\theta = (-\sin\theta,\cos\theta,0),</md>
+      and
+      <md>\mathbf e_\phi = (\cos\phi\cos\theta,\cos\phi\sin\theta,-\sin\phi).</md>
+      Then, away from the origin and away from the <m>z</m>-axis,
+      <md>\boxed{\nabla f = F_\rho\,\mathbf e_\rho + \frac{1}{\rho\sin\phi}F_\theta\,\mathbf e_\theta + \frac1\rho F_\phi\,\mathbf e_\phi.}</md>
+      The denominators are the length scales:
+      <md>d\rho,\qquad \rho\sin\phi\,d\theta,\qquad \rho\,d\phi.</md>
+    </p>
+
+    <p>
+      These formulas should not be memorized as disconnected rules. They come from one sentence:
+      <md>\text{differentiate with respect to a coordinate, then divide by the physical length of that coordinate step.}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s4-subsec-jacobian-determinant">
+    <title>Local stretching and the Jacobian determinant</title>
+
+    <p>
+      A coordinate change does not only change derivatives. It also changes tiny areas and
+      volumes.
+    </p>
+
+    <p>
+      For polar coordinates,
+      <md>x=r\cos\theta, \qquad y=r\sin\theta.</md>
+      We already found
+      <md>dx=\cos\theta\,dr-r\sin\theta\,d\theta,</md>
+      and
+      <md>dy=\sin\theta\,dr+r\cos\theta\,d\theta.</md>
+      Take the wedge product:
+      <md>
+        <mrow>dx\wedge dy \amp= (\cos\theta\,dr-r\sin\theta\,d\theta) \wedge (\sin\theta\,dr+r\cos\theta\,d\theta)</mrow>
+        <mrow>\amp= r\cos^2\theta\,dr\wedge d\theta + r\sin^2\theta\,dr\wedge d\theta</mrow>
+        <mrow>\amp= r\,dr\wedge d\theta.</mrow>
+      </md>
+      Thus
+      <md>\boxed{dx\wedge dy=r\,dr\wedge d\theta.}</md>
+      The factor <m>r</m> is the Jacobian determinant:
+      <md>\boxed{\frac{\partial(x,y)}{\partial(r,\theta)} = \det \begin{pmatrix} \cos\theta \amp -r\sin\theta\\ \sin\theta \amp r\cos\theta \end{pmatrix} = r.}</md>
+      A tiny polar rectangle with side lengths <m>dr</m> and <m>d\theta</m> maps to a tiny
+      sector whose area is approximately
+      <md>r\,dr\,d\theta.</md>
+    </p>
+
+    <p>
+      For cylindrical coordinates,
+      <md>x=r\cos\theta, \qquad y=r\sin\theta, \qquad z=z.</md>
+      The volume form becomes
+      <md>\boxed{dx\wedge dy\wedge dz = r\,dr\wedge d\theta\wedge dz.}</md>
+      So the local volume stretching factor is
+      <md>\boxed{r.}</md>
+    </p>
+
+    <p>
+      For spherical coordinates in the order
+      <md>(\rho,\theta,\phi),</md>
+      the Jacobian determinant is
+      <md>\boxed{\frac{\partial(x,y,z)}{\partial(\rho,\theta,\phi)} = -\rho^2\sin\phi.}</md>
+      The negative sign is an orientation sign. It says that the ordered coordinate directions
+      <md>(\rho,\theta,\phi)</md>
+      have the opposite orientation from
+      <md>(x,y,z).</md>
+      The size of the local volume stretching is
+      <md>\boxed{\rho^2\sin\phi.}</md>
+      Equivalently,
+      <md>\boxed{dx\wedge dy\wedge dz = -\rho^2\sin\phi\, d\rho\wedge d\theta\wedge d\phi.}</md>
+      If we order the spherical coordinates as
+      <md>(\rho,\phi,\theta),</md>
+      then the sign becomes positive:
+      <md>\boxed{dx\wedge dy\wedge dz = \rho^2\sin\phi\, d\rho\wedge d\phi\wedge d\theta.}</md>
+    </p>
+
+    <p>
+      The absolute value is what appears in ordinary volume computations:
+      <md>dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
+      The wedge product keeps the orientation information too.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c8s4-subsec-where-coordinates-fail">
+    <title>Where coordinates fail</title>
+
+    <p>Coordinate changes have their own weak spots.</p>
+
+    <p>
+      In polar coordinates,
+      <md>(r,\theta)</md>
+      and
+      <md>(r,\theta+2\pi)</md>
+      describe the same point. At the origin, the problem is stronger:
+      <md>(0,\theta)</md>
+      describes the origin for every <m>\theta</m>. The angle is meaningless there.
+    </p>
+
+    <p>
+      The Jacobian determinant detects this:
+      <md>\frac{\partial(x,y)}{\partial(r,\theta)}=r.</md>
+      At
+      <md>r=0,</md>
+      the determinant is <m>0</m>. A small angular change at the origin produces no physical
+      motion at all.
+    </p>
+
+    <p>
+      The gradient formula also warns us:
+      <md>\nabla f = F_r\,\mathbf e_r+\frac1rF_\theta\,\mathbf e_\theta.</md>
+      At <m>r=0</m>, the factor <m>1/r</m> is not defined. The failure belongs to the
+      coordinates, not necessarily to the function.
+    </p>
+
+    <example xml:id="c8s4-ex-smooth-function-bad-coordinates">
+      <title>A smooth function in bad coordinates</title>
+      <statement>
+        <p>
+          Let
+          <md>f(x,y)=x.</md>
+          This is as smooth as a function can be. In polar coordinates,
+          <md>F(r,\theta)=r\cos\theta.</md>
+          At <m>r=0</m>,
+          <md>F(0,\theta)=0</md>
+          for every <m>\theta</m>. The same physical point has infinitely many coordinate names.
+          So we should not expect polar coordinates to give a single clean coordinate
+          description of the derivative at the origin.
+        </p>
+        <p>
+          The rectangular gradient is simple:
+          <md>\nabla f=(1,0).</md>
+          The polar description breaks because the coordinate system breaks.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Spherical coordinates have the same kind of singular sets. At
+      <md>\rho=0,</md>
+      both angles lose meaning. On the positive and negative <m>z</m>-axis,
+      <md>\sin\phi=0,</md>
+      so the angle <m>\theta</m> loses meaning. The stretching factor
+      <md>\rho^2\sin\phi</md>
+      vanishes there.
+    </p>
+
+    <p>
+      A coordinate system is a tool, not part of the space itself. When its Jacobian determinant
+      is nonzero, the tool behaves locally like a reversible linear map. When the determinant
+      vanishes, something has collapsed: an angle, an area, a volume, or a direction.
+    </p>
+
+    <p>
+      That observation is too sharp to leave alone. If a transformation has a nonzero Jacobian
+      determinant at a point, should it have a local inverse nearby? The polar map away from the
+      origin says yes. The origin says no. The next question is to turn that pattern into a
+      theorem about inverse functions.
+    </p>
+  </subsection>
+</section>

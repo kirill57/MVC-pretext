@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch14-greens-theorem.tex, Section 14.7.
+     Status: CONVERTED. -->
+<section xml:id="sec-14-chapter-review-and-applications" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter review and applications</title>
+
+  <introduction>
+    <p>
+      Green's theorem began with a small rectangle. Opposite sides compared the field in
+      two directions, and the surviving coefficient was
+      <md>Q_x-P_y.</md>
+      After adding many rectangles, every interior edge canceled. What remained was the
+      boundary of the whole region.
+    </p>
+    <p>
+      That cancellation is the heart of the chapter:
+      <md>\boxed{\int_{\partial R}\omega=\int_R d\omega.}</md>
+      The rest is learning to choose the right <m>1</m>-form <m>\omega</m>, the right
+      orientation, and the right region.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c14s7-one-theorem-several-questions">
+    <title>One theorem, several questions</title>
+
+    <p>
+      A boundary curve can answer different questions. The same curve and the same vector
+      field can ask for circulation, flux, or area. Green's theorem helps only after we know
+      which question we are asking.
+    </p>
+
+    <md>
+\begin{array}{c|c|c}
+\text{Question} \amp \text{Boundary form} \amp \text{Interior form} \\ \hline
+\text{circulation of } \mathbf F=(M,N) \amp M\,dx+N\,dy \amp (N_x-M_y)\,dx\wedge dy \\[2mm]
+\text{outward flux of } \mathbf F=(M,N) \amp M\,dy-N\,dx \amp (M_x+N_y)\,dx\wedge dy \\[2mm]
+\text{area of }R \amp x\,dy \amp dx\wedge dy \\[2mm]
+\text{area of }R \amp -y\,dx \amp dx\wedge dy \\[2mm]
+\text{area of }R \amp \dfrac12(-y\,dx+x\,dy) \amp dx\wedge dy
+\end{array}
+    </md>
+
+    <p>
+      The same theorem sits behind every row:
+      <md>\int_{\partial R}\omega=\int_R d\omega.</md>
+      The form <m>\omega</m> decides what the boundary is measuring.
+    </p>
+
+    <example xml:id="c14s7-ex-two-boundary-questions">
+      <title>The same field, two different boundary questions</title>
+      <statement>
+        <p>
+          Let
+          <md>R=[0,2]\times[0,1],</md>
+          with positive orientation, and let
+          <md>\mathbf F(x,y)=(M,N)=(xy,\;x^2-y).</md>
+        </p>
+        <p>
+          First ask for circulation:
+          <md>\oint_{\partial R}\mathbf F\cdot d\mathbf r=\oint_{\partial R}xy\,dx+(x^2-y)\,dy.</md>
+          Here
+          <md>P=xy,\qquad Q=x^2-y.</md>
+          So
+          <md>Q_x-P_y=2x-x=x.</md>
+          Green's theorem gives
+          <md>
+            <mrow>\oint_{\partial R}xy\,dx+(x^2-y)\,dy \amp= \iint_R x\,dA</mrow>
+            <mrow>\amp= \int_0^2\int_0^1 x\,dy\,dx</mrow>
+            <mrow>\amp= \int_0^2 x\,dx</mrow>
+            <mrow>\amp= 2.</mrow>
+          </md>
+          Thus
+          <md>\boxed{\text{circulation}=2.}</md>
+        </p>
+        <p>
+          Now ask for outward flux:
+          <md>\oint_{\partial R}\mathbf F\cdot\mathbf n\,ds.</md>
+          The flux form is
+          <md>M\,dy-N\,dx=xy\,dy-(x^2-y)\,dx.</md>
+          Green's theorem in flux form gives
+          <md>\oint_{\partial R}\mathbf F\cdot\mathbf n\,ds=\iint_R(M_x+N_y)\,dA.</md>
+          Since
+          <md>M_x=y,\qquad N_y=-1,</md>
+          we get
+          <md>
+            <mrow>\oint_{\partial R}\mathbf F\cdot\mathbf n\,ds \amp= \iint_R(y-1)\,dA</mrow>
+            <mrow>\amp= \int_0^2\int_0^1(y-1)\,dy\,dx</mrow>
+            <mrow>\amp= \int_0^2\left(\frac12-1\right)dx</mrow>
+            <mrow>\amp= -1.</mrow>
+          </md>
+          So
+          <md>\boxed{\text{outward flux}=-1.}</md>
+        </p>
+        <p>
+          The same field and the same rectangle gave two different answers because circulation
+          and flux are different boundary measurements.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c14s7-checklist">
+    <title>A checklist before using Green's theorem</title>
+
+    <p>
+      Before applying
+      <md>\int_{\partial R}\omega=\int_R d\omega,</md>
+      pause long enough to check four things.
+    </p>
+
+    <md>
+\begin{array}{c|l}
+\text{Check} \amp \text{What it protects} \\ \hline
+\text{positive orientation} \amp \text{the sign of the boundary integral}\\[1mm]
+\text{all boundary components} \amp \text{holes and inner boundaries}\\[1mm]
+\omega \text{ is } C^1 \text{ near } R \amp \text{no hidden jumps or singularities}\\[1mm]
+\partial R \text{ is piecewise smooth and finite} \amp \text{the boundary integral is a finite sum}
+\end{array}
+    </md>
+
+    <p>
+      For a region without holes, positive orientation means counterclockwise. For a region
+      with holes, the outer boundary is counterclockwise and each inner boundary is
+      clockwise. That one rule says the same thing everywhere:
+      <md>\text{as you walk, the region stays on your left.}</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s7-area-from-boundary-curve">
+    <title>Area from a boundary curve</title>
+
+    <p>
+      Green's theorem can turn a boundary walk into an area calculation. Since
+      <md>d\left(\frac12(-y\,dx+x\,dy)\right)=dx\wedge dy,</md>
+      a positively oriented simple closed curve <m>C=\partial R</m> satisfies
+      <md>\boxed{\operatorname{Area}(R)=\frac12\oint_C(-y\,dx+x\,dy).}</md>
+    </p>
+    <p>
+      This formula becomes especially useful when the boundary is known but the region is
+      awkward.
+    </p>
+
+    <example xml:id="c14s7-ex-shoelace">
+      <title>The shoelace formula from Green's theorem</title>
+      <statement>
+        <p>
+          A surveyor records the vertices of a small lot, in counterclockwise order:
+          <md>(0,0),\qquad (4,1),\qquad (5,4),\qquad (2,5),\qquad (-1,3).</md>
+          The boundary is made of straight line segments.
+        </p>
+        <p>
+          On one segment from
+          <md>(x_i,y_i)\quad\text{to}\quad(x_{i+1},y_{i+1}),</md>
+          write
+          <md>x(t)=x_i+t(x_{i+1}-x_i),\qquad y(t)=y_i+t(y_{i+1}-y_i),\qquad 0\le t\le1.</md>
+          Then
+          <md>dx=(x_{i+1}-x_i)\,dt,\qquad dy=(y_{i+1}-y_i)\,dt.</md>
+          So
+          <md>
+            <mrow>\int_{\text{edge}}(-y\,dx+x\,dy) \amp= \int_0^1\Bigl[-(y_i+t\Delta y)\Delta x+(x_i+t\Delta x)\Delta y\Bigr]dt</mrow>
+            <mrow>\amp= x_i\Delta y-y_i\Delta x</mrow>
+            <mrow>\amp= x_i y_{i+1}-x_{i+1}y_i.</mrow>
+          </md>
+          Adding all edges gives
+          <md>\boxed{\operatorname{Area}(R)=\frac12\left|\sum_{i=1}^n(x_i y_{i+1}-x_{i+1}y_i)\right|,}</md>
+          where the last point is followed by the first:
+          <md>(x_{n+1},y_{n+1})=(x_1,y_1).</md>
+          This is the shoelace formula.
+        </p>
+        <p>
+          For the lot above,
+          <md>
+            <mrow>\sum (x_i y_{i+1}-x_{i+1}y_i) \amp= (0\cdot1-4\cdot0)</mrow>
+            <mrow>\amp\quad +(4\cdot4-5\cdot1)</mrow>
+            <mrow>\amp\quad +(5\cdot5-2\cdot4)</mrow>
+            <mrow>\amp\quad +(2\cdot3-(-1)\cdot5)</mrow>
+            <mrow>\amp\quad +((-1)\cdot0-0\cdot3)</mrow>
+            <mrow>\amp= 0+11+17+11+0</mrow>
+            <mrow>\amp= 39.</mrow>
+          </md>
+          Therefore
+          <md>\boxed{\operatorname{Area}(R)=\frac{39}{2}.}</md>
+          A formula often taught as a polygon trick is really Green's theorem in disguise.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c14s7-polar-area-formula">
+    <title>A polar area formula from the same boundary form</title>
+
+    <p>
+      The same area form also explains the familiar polar area formula.
+    </p>
+    <p>
+      Suppose a positively oriented boundary is written in polar form as
+      <md>x=r(\theta)\cos\theta,\qquad y=r(\theta)\sin\theta,\qquad 0\le \theta\le 2\pi.</md>
+      Then
+      <md>dx=(r'\cos\theta-r\sin\theta)\,d\theta</md>
+      and
+      <md>dy=(r'\sin\theta+r\cos\theta)\,d\theta.</md>
+      Compute the boundary form:
+      <md>
+        <mrow>-y\,dx+x\,dy \amp= -r\sin\theta(r'\cos\theta-r\sin\theta)\,d\theta</mrow>
+        <mrow>\amp\quad +r\cos\theta(r'\sin\theta+r\cos\theta)\,d\theta</mrow>
+        <mrow>\amp= r^2(\sin^2\theta+\cos^2\theta)\,d\theta</mrow>
+        <mrow>\amp= r^2\,d\theta.</mrow>
+      </md>
+      Thus
+      <md>\boxed{\operatorname{Area}(R)=\frac12\int_0^{2\pi}r(\theta)^2\,d\theta.}</md>
+    </p>
+
+    <example xml:id="c14s7-ex-rounded-triangular-lake">
+      <title>A rounded triangular lake</title>
+      <statement>
+        <p>
+          A drone traces the boundary of a lake whose polar equation is
+          <md>r(\theta)=3+\cos(3\theta),\qquad 0\le \theta\le2\pi.</md>
+          Since
+          <md>r(\theta)\gt 0</md>
+          for all <m>\theta</m>, the curve does not pass through the origin. The area enclosed is
+          <md>
+            <mrow>A \amp= \frac12\int_0^{2\pi}(3+\cos3\theta)^2\,d\theta</mrow>
+            <mrow>\amp= \frac12\int_0^{2\pi}\left(9+6\cos3\theta+\cos^2 3\theta\right)d\theta.</mrow>
+          </md>
+          Now
+          <md>\int_0^{2\pi}\cos3\theta\,d\theta=0</md>
+          and
+          <md>\int_0^{2\pi}\cos^2 3\theta\,d\theta=\pi.</md>
+          Therefore
+          <md>
+            <mrow>A \amp= \frac12(18\pi+\pi)</mrow>
+            <mrow>\amp= \frac{19\pi}{2}.</mrow>
+          </md>
+          So
+          <md>\boxed{A=\frac{19\pi}{2}.}</md>
+        </p>
+
+        <figure xml:id="c14s7-fig-rounded-triangular-lake">
+          <caption>A polar boundary can give area without describing the region by inequalities.</caption>
+          <image width="60%">
+            <latex-image>
+\begin{tikzpicture}[scale=0.7, &gt;=stealth]
+    \draw[-&gt;] (-4.5,0) -- (4.8,0) node[right] {\(x\)};
+    \draw[-&gt;] (0,-4.5) -- (0,4.8) node[above] {\(y\)};
+
+    \draw[gray!20, step=1] (-4,-4) grid (4,4);
+
+    \draw[thick, fill=blue!8, domain=0:360, samples=360, smooth, variable=\t]
+        plot ({(3+cos(3*\t))*cos(\t)}, {(3+cos(3*\t))*sin(\t)});
+
+    % A clean, distinct orientation arrow hovering safely outside the boundary
+    \draw[-&gt;, very thick, red!65!black]
+        (15:4.4) arc[start angle=15, end angle=65, radius=4.4];
+
+    \node at (0,-5.15) {\(r(\theta)=3+\cos(3\theta)\)};
+\end{tikzpicture}
+            </latex-image>
+          </image>
+        </figure>
+      </statement>
+    </example>
+  </subsection>
+
+  <exercises xml:id="c14s7-ex-grp-project">
+    <title>Project: area from a measured boundary curve</title>
+
+    <introduction>
+      <p>
+        A curve can be known from measurements instead of from a clean formula. This project
+        uses Green's theorem to estimate area from boundary data.
+      </p>
+      <p>
+        Suppose a drone flies once counterclockwise around a pond and records points
+        <md>(x_1,y_1),(x_2,y_2),\ldots,(x_n,y_n)</md>
+        at equally spaced times. Connect consecutive points by straight segments, and connect
+        the last point back to the first.
+      </p>
+    </introduction>
+
+    <exercise xml:id="c14s7-proj-1">
+      <statement>
+        <p>
+          Use
+          <md>\operatorname{Area}=\frac12\left|\sum_{i=1}^n(x_i y_{i+1}-x_{i+1}y_i)\right|</md>
+          to estimate the pond's area.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-proj-2">
+      <statement>
+        <p>
+          Explain why the estimate improves as the drone records more points, assuming the
+          boundary is smooth.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-proj-3">
+      <statement>
+        <p>
+          Repeat the computation using
+          <md>\operatorname{Area}=\oint_C x\,dy.</md>
+          For a straight segment from <m>(x_i,y_i)</m> to <m>(x_{i+1},y_{i+1})</m>, show that
+          <md>\int_{\text{edge}}x\,dy=\frac{x_i+x_{i+1}}{2}(y_{i+1}-y_i).</md>
+          Then show that the result agrees with the shoelace formula.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-proj-4">
+      <statement>
+        <p>
+          Try the method on a boundary given parametrically by
+          <md>x(t)=3\cos t+\cos 2t,\qquad y(t)=2\sin t,\qquad 0\le t\le2\pi.</md>
+          Use
+          <md>\operatorname{Area}=\frac12\int_0^{2\pi}\bigl(x(t)y'(t)-y(t)x'(t)\bigr)\,dt.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <conclusion>
+      <p>
+        The point is not the formula alone. The point is that area can be recovered from a
+        walk around the edge.
+      </p>
+    </conclusion>
+  </exercises>
+
+  <exercises xml:id="c14s7-ex-grp-practice">
+    <title>Practice problems</title>
+
+    <exercise xml:id="c14s7-prac-1">
+      <statement>
+        <p>
+          Let <m>C</m> be the positively oriented boundary of the rectangle
+          <md>[0,3]\times[0,2].</md>
+          Compute
+          <md>\oint_C (x^2-y)\,dx+(xy+y^3)\,dy</md>
+          using Green's theorem.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-prac-2">
+      <statement>
+        <p>
+          Let <m>C</m> be the positively oriented unit circle. Compute
+          <md>\oint_C (e^x-y)\,dx+(x+\cos y)\,dy.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-prac-3">
+      <statement>
+        <p>
+          Let <m>R</m> be the triangle with vertices
+          <md>(0,0),\qquad (3,0),\qquad (0,2).</md>
+          For
+          <md>\mathbf F=(x+y,\;2x-y),</md>
+          compute the outward flux across <m>\partial R</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-prac-4">
+      <statement>
+        <p>
+          Let <m>A</m> be the annulus
+          <md>1\le x^2+y^2\le9.</md>
+          Compute
+          <md>\oint_{\partial A}x\,dy.</md>
+          Remember the orientation of the inner boundary.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-prac-5">
+      <statement>
+        <p>
+          Let
+          <md>\omega=(y^2+x)\,dx+(x^2-y)\,dy.</md>
+          Find <m>d\omega</m>. Then compute
+          <md>\int_{\partial R}\omega</md>
+          for
+          <md>R=[0,1]\times[0,2].</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-prac-6">
+      <statement>
+        <p>
+          Let
+          <md>\alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}.</md>
+          Explain why Green's theorem cannot be applied to <m>\alpha</m> on the unit disk. Then
+          explain why it can be applied on the annulus
+          <md>\frac14\le x^2+y^2\le1.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-prac-7">
+      <statement>
+        <p>
+          A closed curve <m>C</m> is oriented clockwise. If
+          <md>\frac12\oint_C(-y\,dx+x\,dy)=-8,</md>
+          what is the area enclosed by <m>C</m>?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c14s7-prac-8">
+      <statement>
+        <p>
+          Find a <m>1</m>-form
+          <md>\omega=P\,dx+Q\,dy</md>
+          such that
+          <md>d\omega=5\,dx\wedge dy.</md>
+          Use it to write an area-like boundary formula for
+          <md>5\operatorname{Area}(R).</md>
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <subsection xml:id="c14s7-what-green-cannot-yet-do">
+    <title>What Green's theorem cannot yet do</title>
+
+    <p>
+      Green's theorem lives in the plane. Its region <m>R</m> is flat, and its boundary
+      <md>\partial R</md>
+      is a curve. The positive orientation rule is simple: walk so the region stays on your
+      left.
+    </p>
+    <p>
+      But many boundaries in space are not edges of flat regions. A wire loop may bound a
+      soap film. The film may bend. The same wire may bound many different surfaces.
+      A dome has a top side and a bottom side. A sphere has an outside and an inside.
+    </p>
+    <p>
+      On a flat region, orientation could be described by left and right. On a surface in
+      space, orientation becomes a choice of normal direction. Once that choice is made, the
+      boundary direction has to match it.
+    </p>
+    <p>
+      That is the next problem. To carry Green's theorem into space, we need to understand
+      surfaces, their area, their two possible sides, and how a boundary curve knows which
+      side has been chosen. The surprising part is that the same short formula will survive:
+      <md>\int_{\partial(\text{something})}\omega=\int_{\text{something}}d\omega.</md>
+      The <q>something</q> will no longer be only a flat region. It will be a surface.
+    </p>
+  </subsection>
+</section>

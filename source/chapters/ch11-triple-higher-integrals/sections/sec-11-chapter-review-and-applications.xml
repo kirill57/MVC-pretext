@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch11-triple-higher-integrals.tex, Section 7.
+     Status: CONVERTED. -->
+<section xml:id="sec-11-chapter-review-and-applications" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Chapter review and applications</title>
+
+  <introduction>
+    <p>
+      Chapter <xref ref="ch11-triple-higher-integrals"/> took the adding idea one dimension
+      higher. A double integral adds over a region in the plane:
+      <md>f(x,y)\,dA.</md>
+      A triple integral adds over a solid:
+      <md>f(x,y,z)\,dV.</md>
+      The tiny pieces changed from rectangles to boxes. The story did not change:
+      <md>\text{value near a point}\times \text{tiny volume}.</md>
+    </p>
+    <p>
+      The hard part is rarely the antiderivative. The hard part is describing the solid without
+      counting too much or too little.
+    </p>
+  </introduction>
+
+  <subsection xml:id="c11s7-coordinate-systems">
+    <title>Skills: triple integrals in several coordinate systems</title>
+
+    <p>
+      A triple integral begins with one question:
+      <md>\text{What solid am I adding over?}</md>
+      After that, the coordinate system should serve the geometry.
+    </p>
+
+    <figure xml:id="c11s7-fig-choose-coordinates">
+      <caption>Choose coordinates by listening to the shape of the solid.</caption>
+      <image width="90%">
+        <latex-image>
+          \begin{tikzpicture}[scale=0.88, &gt;=stealth]
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (start) at (0,0) {Triple integral\\ \(\displaystyle \iiint_E f\,dV\)};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (rect) at (-5.9,-2) {Boxes, wedges, slabs\\ rectangular coordinates};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (cyl) at (0,-2) {Cylinders, cones, tubes\\ cylindrical coordinates};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (sph) at (5.9,-2) {Balls, shells, central symmetry\\ spherical coordinates};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (app) at (-2.8,-4.5) {Mass, charge, energy,\\ probability};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (hd) at (2.8,-4.5) {Higher dimensions\\ product boxes and slicing};
+
+              \draw[-&gt;, thick] (start) -- (rect);
+              \draw[-&gt;, thick] (start) -- (cyl);
+              \draw[-&gt;, thick] (start) -- (sph);
+
+              \draw[-&gt;, thick] (rect) -- (app);
+              \draw[-&gt;, thick] (cyl) -- (app);
+              \draw[-&gt;, thick] (sph) -- (app);
+
+              \draw[-&gt;, thick] (app) -- (hd);
+          \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      The main volume elements are:
+      <md>
+        \begin{array}{c|c|c}
+        \text{Coordinates} \amp \text{Conversion} \amp \text{Volume element} \\ \hline
+        \text{rectangular} \amp
+        (x,y,z) \amp
+        dV=dx\,dy\,dz
+        \\[2mm]
+        \text{cylindrical} \amp
+        x=r\cos\theta,\quad y=r\sin\theta,\quad z=z \amp
+        dV=r\,dr\,d\theta\,dz
+        \\[2mm]
+        \text{spherical} \amp
+        x=\rho\sin\phi\cos\theta,\quad
+        y=\rho\sin\phi\sin\theta,\quad
+        z=\rho\cos\phi \amp
+        dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta
+        \end{array}
+      </md>
+    </p>
+
+    <p>
+      The oriented version of rectangular volume is
+      <md>dx\wedge dy\wedge dz.</md>
+      For ordinary volume, mass, probability, and energy, we use positive volume:
+      <md>dV.</md>
+      For orientation-sensitive integrals later in the book, the wedge notation will remember
+      the order of the directions.
+    </p>
+
+    <p>
+      Here are the main application formulas from the chapter.
+      <md>
+        \begin{array}{c|c}
+        \text{Quantity} \amp \text{Triple integral} \\ \hline
+        \text{volume of }E
+        \amp
+        \displaystyle
+        \operatorname{Vol}(E)=\iiint_E 1\,dV
+        \\[3mm]
+        \text{mass from density }\delta
+        \amp
+        \displaystyle
+        M=\iiint_E \delta\,dV
+        \\[3mm]
+        \text{center of mass}
+        \amp
+        \displaystyle
+        (\bar x,\bar y,\bar z)
+        =
+        \left(
+        \frac{\iiint_E x\delta\,dV}{M},
+        \frac{\iiint_E y\delta\,dV}{M},
+        \frac{\iiint_E z\delta\,dV}{M}
+        \right)
+        \\[5mm]
+        \text{moment of inertia about the }z\text{-axis}
+        \amp
+        \displaystyle
+        I_z=\iiint_E (x^2+y^2)\delta\,dV
+        \\[4mm]
+        \text{total charge from charge density }q
+        \amp
+        \displaystyle
+        Q=\iiint_E q\,dV
+        \\[3mm]
+        \text{total energy from energy density }u
+        \amp
+        \displaystyle
+        \mathcal E=\iiint_E u\,dV
+        \\[3mm]
+        \text{probability of a region }A
+        \amp
+        \displaystyle
+        \operatorname{Prob}(A)=\iiint_A p\,dV
+        \end{array}
+      </md>
+    </p>
+
+    <p>
+      A probability density must satisfy
+      <md>p\ge0</md>
+      and
+      <md>\iiint_E p\,dV=1.</md>
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s7-example-wedge">
+    <title>Worked review example: a wedge with density</title>
+
+    <p>
+      A storage wedge has rectangular floor
+      <md>0\le x\le2,\qquad 0\le y\le1,</md>
+      and slanted roof
+      <md>z=4-x-y.</md>
+      The floor is
+      <md>z=0.</md>
+      Its density is
+      <md>\delta(x,y,z)=1+z.</md>
+      Find the mass.
+    </p>
+
+    <p>
+      The solid is
+      <md>E=\{(x,y,z):0\le x\le2,\ 0\le y\le1,\ 0\le z\le4-x-y\}.</md>
+      So
+      <md>
+        <mrow>M \amp= \int_0^2\int_0^1\int_0^{4-x-y} (1+z)\,dz\,dy\,dx</mrow>
+        <mrow>\amp= \int_0^2\int_0^1 \left[ z+\frac12z^2 \right]_0^{4-x-y} \,dy\,dx</mrow>
+        <mrow>\amp= \int_0^2\int_0^1 \left( (4-x-y)+\frac12(4-x-y)^2 \right)dy\,dx.</mrow>
+      </md>
+      Expand the integrand:
+      <md>(4-x-y)+\frac12(4-x-y)^2 = 12-5x-5y+\frac12x^2+xy+\frac12y^2.</md>
+      Now integrate in <m>y</m>:
+      <md>
+        <mrow>\int_0^1 \left( 12-5x-5y+\frac12x^2+xy+\frac12y^2 \right)dy \amp= \frac{29}{3}-\frac92x+\frac12x^2.</mrow>
+      </md>
+      Then
+      <md>
+        <mrow>M \amp= \int_0^2 \left( \frac{29}{3}-\frac92x+\frac12x^2 \right)dx</mrow>
+        <mrow>\amp= \frac{58}{3}-9+\frac43</mrow>
+        <mrow>\amp= \frac{35}{3}.</mrow>
+      </md>
+      Thus
+      <md>\boxed{ M=\frac{35}{3}. }</md>
+    </p>
+
+    <p>
+      The bounds came from the geometry. The integrand came from the density. The
+      calculation only came after both were clear.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s7-example-round-tank">
+    <title>Worked review example: a round tank in cylindrical coordinates</title>
+
+    <p>
+      A round tank has radius <m>2</m>. Its floor is
+      <md>z=0,</md>
+      and its roof height depends on distance from the central axis:
+      <md>z=3+\frac r2.</md>
+      The density is
+      <md>\delta(r,z)=1+r.</md>
+      Find the mass.
+    </p>
+
+    <p>
+      The solid is rotationally symmetric, so cylindrical coordinates fit:
+      <md>0\le\theta\le2\pi, \qquad 0\le r\le2, \qquad 0\le z\le 3+\frac r2.</md>
+      Remember the volume factor:
+      <md>dV=r\,dz\,dr\,d\theta.</md>
+      So
+      <md>
+        <mrow>M \amp= \int_0^{2\pi}\int_0^2\int_0^{3+r/2} (1+r)r\,dz\,dr\,d\theta</mrow>
+        <mrow>\amp= 2\pi\int_0^2 (1+r)r\left(3+\frac r2\right)dr.</mrow>
+      </md>
+      Expand:
+      <md>(1+r)r\left(3+\frac r2\right) = 3r+\frac72r^2+\frac12r^3.</md>
+      Thus
+      <md>
+        <mrow>M \amp= 2\pi\int_0^2 \left( 3r+\frac72r^2+\frac12r^3 \right)dr</mrow>
+        <mrow>\amp= 2\pi \left[ \frac32r^2+\frac76r^3+\frac18r^4 \right]_0^2</mrow>
+        <mrow>\amp= 2\pi \left( 6+\frac{28}{3}+2 \right)</mrow>
+        <mrow>\amp= \frac{104\pi}{3}.</mrow>
+      </md>
+      So
+      <md>\boxed{ M=\frac{104\pi}{3}. }</md>
+    </p>
+
+    <p>
+      The factor <m>r</m> is doing real work. Rings near <m>r=2</m> contain more volume than
+      rings near the central axis.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c11s7-example-spherical-cone">
+    <title>Worked review example: probability in a spherical cone</title>
+
+    <p>
+      A random point is chosen in the solid inside the sphere
+      <md>\rho\le2</md>
+      and inside the cone
+      <md>0\le\phi\le\frac{\pi}{3}.</md>
+      The probability density is proportional to distance from the origin:
+      <md>p(\rho,\phi,\theta)=C\rho.</md>
+      Find <m>C</m>. Then find the probability that
+      <md>\rho\le1.</md>
+    </p>
+
+    <p>
+      The region is
+      <md>0\le\theta\le2\pi, \qquad 0\le\phi\le\frac{\pi}{3}, \qquad 0\le\rho\le2.</md>
+      The density must integrate to <m>1</m>:
+      <md>
+        <mrow>1 \amp= \int_0^{2\pi}\int_0^{\pi/3}\int_0^2 C\rho\cdot \rho^2\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+        <mrow>\amp= C \left(\int_0^{2\pi}d\theta\right) \left(\int_0^{\pi/3}\sin\phi\,d\phi\right) \left(\int_0^2\rho^3\,d\rho\right)</mrow>
+        <mrow>\amp= C(2\pi)\left(1-\frac12\right)(4)</mrow>
+        <mrow>\amp= 4\pi C.</mrow>
+      </md>
+      Therefore
+      <md>\boxed{ C=\frac{1}{4\pi}. }</md>
+    </p>
+
+    <p>
+      Now restrict to
+      <md>0\le\rho\le1.</md>
+      Then
+      <md>
+        <mrow>\operatorname{Prob}(\rho\le1) \amp= \int_0^{2\pi}\int_0^{\pi/3}\int_0^1 \frac{1}{4\pi}\rho^3\sin\phi\,d\rho\,d\phi\,d\theta</mrow>
+        <mrow>\amp= \frac{1}{4\pi}(2\pi)\left(\frac12\right)\left(\frac14\right)</mrow>
+        <mrow>\amp= \frac{1}{16}.</mrow>
+      </md>
+      So
+      <md>\boxed{ \operatorname{Prob}(\rho\le1)=\frac{1}{16}. }</md>
+    </p>
+
+    <p>
+      The ball of half the radius has much less than half the probability. Part of the reason
+      is geometry: volume grows like <m>\rho^2</m>. Another part is density: this density also
+      grows like <m>\rho</m>.
+    </p>
+  </subsection>
+
+  <exercises xml:id="c11s7-ex-concept-check">
+    <title>Concept check</title>
+
+    <exercise xml:id="c11s7-cc-1">
+      <statement>
+        <p>What does <md>dV</md> mean in a triple integral?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-2">
+      <statement>
+        <p>Why is <md>\iiint_E 1\,dV</md> the volume of <m>E</m>?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-3">
+      <statement>
+        <p>What is the difference between <md>dV</md> and <md>dx\wedge dy\wedge dz?</md></p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-4">
+      <statement>
+        <p>What does it mean for a solid to be <m>z</m>-simple?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-5">
+      <statement>
+        <p>Why does the innermost variable determine the coordinate shadow we should draw?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-6">
+      <statement>
+        <p>In cylindrical coordinates, why does <md>dV</md> contain the factor <md>r?</md></p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-7">
+      <statement>
+        <p>
+          In spherical coordinates, why does <md>dV</md> contain both
+          <md>\rho^2 \qquad\text{and}\qquad \sin\phi?</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-8">
+      <statement>
+        <p>
+          What angle does <m>\phi</m> measure in the spherical-coordinate convention used in
+          this book?
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-9">
+      <statement>
+        <p>
+          Give one example of a solid that is better described in cylindrical coordinates than
+          in rectangular coordinates.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-10">
+      <statement>
+        <p>
+          Give one example of a solid that is better described in spherical coordinates than
+          in cylindrical coordinates.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-11">
+      <statement>
+        <p>Why can the same solid have several correct iterated-integral descriptions?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-12">
+      <statement>
+        <p>Why does the center of mass require <md>M\gt0?</md></p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-13">
+      <statement>
+        <p>What is the distance factor for moment of inertia about the <m>z</m>-axis?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-14">
+      <statement>
+        <p>What two conditions must a probability density satisfy?</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-cc-15">
+      <statement>
+        <p>
+          In <m>\mathbb R^n</m>, why does scaling every coordinate by <m>a</m> scale volume by
+          <md>a^n?</md>
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <exercises xml:id="c11s7-ex-skill-problems">
+    <title>Skill problems</title>
+
+    <exercise xml:id="c11s7-sk-1">
+      <statement>
+        <p>Compute <md>\int_0^2\int_0^1\int_0^3 (x+y+z)\,dz\,dy\,dx.</md></p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-2">
+      <statement>
+        <p>
+          Find the volume of the solid
+          <md>E=\{(x,y,z):0\le x\le2,\ 0\le y\le x,\ 0\le z\le x+y\}.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-3">
+      <statement>
+        <p>
+          Let
+          <md>E=\{(x,y,z):x\ge0,\ y\ge0,\ z\ge0,\ x+2y+3z\le6\}.</md>
+          Write an iterated integral for
+          <md>\iiint_E f(x,y,z)\,dV</md>
+          in the order
+          <md>dz\,dy\,dx.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-4">
+      <statement>
+        <p>For the same solid in <xref ref="c11s7-sk-3"/>, compute its volume.</p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-5">
+      <statement>
+        <p>
+          Describe the solid represented by
+          <md>\int_0^4\int_0^{\sqrt{16-x^2}}\int_0^{x+y} f(x,y,z)\,dz\,dy\,dx.</md>
+          Use words and inequalities.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-6">
+      <statement>
+        <p>
+          Rewrite
+          <md>\int_0^1\int_0^{1-x}\int_0^{1-x-y} f(x,y,z)\,dz\,dy\,dx</md>
+          with <m>x</m> as the innermost variable.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-7">
+      <statement>
+        <p>
+          A box occupies
+          <md>0\le x\le3,\qquad 0\le y\le2,\qquad 0\le z\le1.</md>
+          Its density is
+          <md>\delta(x,y,z)=2+x.</md>
+          Find its mass.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-8">
+      <statement>
+        <p>
+          For the box in <xref ref="c11s7-sk-7"/>, find
+          <md>\bar x.</md>
+          Use symmetry to explain <m>\bar y</m> and <m>\bar z</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-9">
+      <statement>
+        <p>
+          A solid cylinder has radius <m>a</m>, height <m>h</m>, and constant density
+          <m>\delta_0</m>. Use cylindrical coordinates to show that its moment of inertia about
+          the central axis is
+          <md>I_z=\frac12Ma^2.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-10">
+      <statement>
+        <p>
+          Find the volume inside the cylinder
+          <md>x^2+y^2\le9</md>
+          and between the planes
+          <md>z=0 \qquad\text{and}\qquad z=4.</md>
+          Use cylindrical coordinates.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-11">
+      <statement>
+        <p>
+          Find the volume inside the cone
+          <md>z=5-r</md>
+          above the floor
+          <md>z=0.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-12">
+      <statement>
+        <p>
+          A pipe has inner radius <m>1</m>, outer radius <m>3</m>, and height <m>4</m>. Its
+          density is
+          <md>\delta(r)=\frac{1}{r}.</md>
+          Find its mass.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-13">
+      <statement>
+        <p>
+          A round tank is inside
+          <md>r\le2</md>
+          and below the slanted roof
+          <md>z=5+r\cos\theta.</md>
+          It is above the floor <m>z=0</m>. Set up and evaluate the volume integral.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-14">
+      <statement>
+        <p>
+          Find the volume inside the sphere
+          <md>\rho\le3</md>
+          and above the cone
+          <md>\phi=\frac{\pi}{4}.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-15">
+      <statement>
+        <p>
+          Find the volume of the first octant part of the sphere
+          <md>\rho\le5.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-16">
+      <statement>
+        <p>
+          Write a spherical-coordinate integral for the volume inside
+          <md>\rho\le4</md>
+          and below the cone
+          <md>\phi=\frac{2\pi}{3}.</md>
+          Be careful: below the cone means farther down from the positive <m>z</m>-axis.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-17">
+      <statement>
+        <p>
+          A ball of radius <m>2</m> has density
+          <md>\delta(\rho)=3+\rho.</md>
+          Find its mass.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-18">
+      <statement>
+        <p>
+          A spherical shell satisfies
+          <md>2\le\rho\le5.</md>
+          Its energy density is
+          <md>u(\rho)=\frac{12}{\rho^2}.</md>
+          Find the total energy.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-19">
+      <statement>
+        <p>
+          A probability density on the unit cube is
+          <md>p(x,y,z)=C(x+y+z).</md>
+          Find <m>C</m>. Then find
+          <md>\operatorname{Prob}(z\le1/2).</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-20">
+      <statement>
+        <p>
+          A probability density on the ball <m>\rho\le1</m> is
+          <md>p(\rho)=C.</md>
+          Find <m>C</m>. Then find the probability that
+          <md>\rho\le\frac12.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-21">
+      <statement>
+        <p>
+          Decide which coordinate system you would use first: rectangular, cylindrical, or
+          spherical. Give a reason.
+          <md>x^2+y^2\le4,\qquad 0\le z\le 7.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-22">
+      <statement>
+        <p>
+          Decide which coordinate system you would use first: rectangular, cylindrical, or
+          spherical. Give a reason.
+          <md>x^2+y^2+z^2\le9,\qquad z\ge0.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-23">
+      <statement>
+        <p>
+          Decide which coordinate system you would use first: rectangular, cylindrical, or
+          spherical. Give a reason.
+          <md>0\le x\le2,\qquad 0\le y\le3,\qquad 0\le z\le 4-x.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-24">
+      <statement>
+        <p>
+          The four-dimensional box
+          <md>B=[0,2]\times[0,1]\times[0,3]\times[0,4]</md>
+          has constant density <m>5</m>. Find its total mass.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-25">
+      <statement>
+        <p>
+          Find the volume of the four-dimensional ball of radius <m>3</m>, using
+          <md>\operatorname{Vol}_4(B_4(R))=\frac{\pi^2}{2}R^4.</md>
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-26">
+      <statement>
+        <p>
+          A point is chosen uniformly from the cube
+          <md>[-1,1]^6.</md>
+          Find the probability that every coordinate lies between <m>-1/2</m> and <m>1/2</m>.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-27">
+      <statement>
+        <p>
+          Explain why the bounds
+          <md>0\le\theta\le4\pi,\qquad 0\le r\le2,\qquad 0\le z\le1</md>
+          describe the same cylinder twice.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c11s7-sk-28">
+      <statement>
+        <p>
+          Write the oriented volume form in rectangular coordinates, and then write its
+          positive-volume version.
+        </p>
+      </statement>
+    </exercise>
+  </exercises>
+
+  <subsection xml:id="c11s7-project-volume-formulas">
+    <title>Project: comparing volume formulas numerically</title>
+
+    <p>
+      A unit ball has volume
+      <md>\frac{4\pi}{3}.</md>
+      That formula is familiar, but this chapter gives several ways to approach the same
+      number. The goal of this project is to compare three numerical estimates of the unit
+      ball volume.
+    </p>
+
+    <p>
+      The unit ball is
+      <md>B=\{(x,y,z):x^2+y^2+z^2\le1\}.</md>
+    </p>
+
+    <subsubsection xml:id="c11s7-project-method-cubes">
+      <title>Method 1. Counting small cubes</title>
+
+      <p>
+        Divide the cube
+        <md>-1\le x\le1,\qquad -1\le y\le1,\qquad -1\le z\le1</md>
+        into <m>N^3</m> equal small cubes. Each small cube has side length
+        <md>\Delta x=\frac{2}{N}</md>
+        and volume
+        <md>\Delta V=\left(\frac{2}{N}\right)^3.</md>
+        Use the center of each small cube as a test point. Count how many centers satisfy
+        <md>x^2+y^2+z^2\le1.</md>
+        If that number is <m>K_N</m>, then
+        <md>\boxed{ V_N^{\mathrm{box}} = K_N\left(\frac{2}{N}\right)^3. }</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c11s7-project-method-cylindrical">
+      <title>Method 2. Cylindrical slices</title>
+
+      <p>
+        In cylindrical coordinates, the ball is
+        <md>0\le r\le1, \qquad -\sqrt{1-r^2}\le z\le \sqrt{1-r^2}, \qquad 0\le\theta\le2\pi.</md>
+        Its volume is
+        <md>V= \int_0^{2\pi}\int_0^1\int_{-\sqrt{1-r^2}}^{\sqrt{1-r^2}} r\,dz\,dr\,d\theta.</md>
+        After integrating in <m>z</m> and <m>\theta</m>, this becomes
+        <md>V=4\pi\int_0^1 r\sqrt{1-r^2}\,dr.</md>
+        Use a midpoint sum with
+        <md>r_i^*=\left(i-\frac12\right)\Delta r, \qquad \Delta r=\frac1N.</md>
+        Then
+        <md>\boxed{ V_N^{\mathrm{cyl}} = 4\pi\sum_{i=1}^N r_i^*\sqrt{1-(r_i^*)^2}\,\Delta r. }</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c11s7-project-method-spherical">
+      <title>Method 3. Spherical shells</title>
+
+      <p>
+        In spherical coordinates, the unit ball is simply
+        <md>0\le\rho\le1,\qquad 0\le\phi\le\pi,\qquad 0\le\theta\le2\pi.</md>
+        The volume is
+        <md>V= \int_0^{2\pi}\int_0^\pi\int_0^1 \rho^2\sin\phi\,d\rho\,d\phi\,d\theta = 4\pi\int_0^1\rho^2\,d\rho.</md>
+        Use a midpoint sum with
+        <md>\rho_i^*=\left(i-\frac12\right)\Delta\rho, \qquad \Delta\rho=\frac1N.</md>
+        Then
+        <md>\boxed{ V_N^{\mathrm{sph}} = 4\pi\sum_{i=1}^N (\rho_i^*)^2\,\Delta\rho. }</md>
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c11s7-project-sample-results">
+      <title>Sample results</title>
+
+      <p>
+        The exact value is
+        <md>\frac{4\pi}{3}\approx 4.18879.</md>
+        Here are typical midpoint estimates.
+        <md>
+          \begin{array}{c|c|c|c}
+          N \amp V_N^{\mathrm{box}} \amp V_N^{\mathrm{cyl}} \amp V_N^{\mathrm{sph}} \\ \hline
+          4  \amp 4.00000 \amp 4.34530 \amp 4.12334\\
+          8  \amp 4.37500 \amp 4.24276 \amp 4.17243\\
+          16 \amp 4.25000 \amp 4.20738 \amp 4.18470\\
+          32 \amp 4.21289 \amp 4.19522 \amp 4.18777
+          \end{array}
+        </md>
+      </p>
+
+      <p>
+        The spherical estimate improves quickly because the spherical bounds match the ball.
+        The cube-counting estimate also improves, but its boundary is rough: small cubes do not
+        fit a sphere very naturally.
+      </p>
+    </subsubsection>
+
+    <subsubsection xml:id="c11s7-project-what-to-hand-in">
+      <title>What to hand in</title>
+
+      <p>Write a short report with the following pieces.</p>
+
+      <ol>
+        <li>
+          <p>A picture or description of the three methods.</p>
+        </li>
+        <li>
+          <p>A table of your estimates for at least four values of <m>N</m>.</p>
+        </li>
+        <li>
+          <p>
+            The absolute error for each method:
+            <md>\left|V_N-\frac{4\pi}{3}\right|.</md>
+          </p>
+        </li>
+        <li>
+          <p>A paragraph explaining which method converges fastest in your computation.</p>
+        </li>
+        <li>
+          <p>
+            A paragraph explaining why the coordinate system matters even though all three
+            methods are estimating the same volume.
+          </p>
+        </li>
+      </ol>
+
+      <p>
+        The last paragraph is the point of the project. A coordinate system is not just
+        notation. It shapes the pieces being added.
+      </p>
+    </subsubsection>
+  </subsection>
+
+  <subsection xml:id="c11s7-hook-scale-factor">
+    <title>Hook: coordinate changes need a systematic scale factor</title>
+
+    <p>
+      Cylindrical coordinates gave
+      <md>dV=r\,dr\,d\theta\,dz.</md>
+      Spherical coordinates gave
+      <md>dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
+      We found those factors by looking carefully at tiny coordinate boxes. That worked
+      because cylinders and spheres have familiar geometry.
+    </p>
+
+    <p>
+      But there are many other coordinate changes. A square can be sheared into a
+      parallelogram. A rectangle can be bent into a curved patch. A box can be stretched,
+      tilted, or folded by a transformation. We need one rule that tells us the correct scale
+      factor every time.
+    </p>
+
+    <p>
+      That rule is not new. It has been waiting since the determinant appeared as signed
+      area and signed volume. In Chapter <xref ref="ch12-change-of-variables"/>, the
+      determinant returns as the automatic correction factor for changing variables. In the
+      language of forms, it is what appears when
+      <md>dx\wedge dy \qquad\text{or}\qquad dx\wedge dy\wedge dz</md>
+      is pulled back through a coordinate map.
+    </p>
+  </subsection>
+</section>

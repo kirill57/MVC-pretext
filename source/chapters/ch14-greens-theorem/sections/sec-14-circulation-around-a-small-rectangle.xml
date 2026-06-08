@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Converted from multivariable_calculus/chapters/ch14-greens-theorem.tex, Section 14.1.
+     Status: CONVERTED. -->
+<section xml:id="sec-14-circulation-around-a-small-rectangle" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Circulation around a small rectangle</title>
+
+  <p>
+    A line integral of a <m>1</m>-form adds tiny measurements along a curve. When the curve
+    is closed, the integral is called a circulation integral. It measures the net tendency of
+    the field to push us around the loop.
+  </p>
+
+  <p>
+    The simplest loop is a small rectangle. On that rectangle we can see the whole theorem
+    before naming it.
+  </p>
+
+  <subsection xml:id="c14s1-local-rotation-from-boundary-motion">
+    <title>Local rotation from boundary motion</title>
+
+    <p>
+      Suppose a flat fluid moves with velocity field
+      <md>\mathbf F(x,y)=(P(x,y),Q(x,y)).</md>
+      The associated work form is
+      <md>\omega=P\,dx+Q\,dy.</md>
+      If we walk counterclockwise around a tiny rectangle, a positive integral means the field
+      helps that counterclockwise motion more than it resists it.
+    </p>
+
+    <p>
+      Start with a field whose calculation is exact:
+      <md>\omega=(3-y)\,dx+2x\,dy.</md>
+      Let
+      <md>R=[a,a+h]\times[b,b+k],</md>
+      where <m>h&gt;0</m> and <m>k&gt;0</m>. Give <m>\partial R</m> the counterclockwise
+      orientation.
+    </p>
+
+    <p>There are four sides.</p>
+
+    <paragraphs xml:id="c14s1-bottom-side">
+      <title>Bottom side</title>
+      <p>
+        Here <m>y=b</m>, <m>dy=0</m>, and <m>x</m> goes from <m>a</m> to <m>a+h</m>. So
+        <md>
+          <mrow>\int_{\text{bottom}}\omega \amp= \int_a^{a+h}(3-b)\,dx</mrow>
+          <mrow>\amp= (3-b)h.</mrow>
+        </md>
+      </p>
+    </paragraphs>
+
+    <paragraphs xml:id="c14s1-right-side">
+      <title>Right side</title>
+      <p>
+        Here <m>x=a+h</m>, <m>dx=0</m>, and <m>y</m> goes from <m>b</m> to <m>b+k</m>. So
+        <md>
+          <mrow>\int_{\text{right}}\omega \amp= \int_b^{b+k}2(a+h)\,dy</mrow>
+          <mrow>\amp= 2(a+h)k.</mrow>
+        </md>
+      </p>
+    </paragraphs>
+
+    <paragraphs xml:id="c14s1-top-side">
+      <title>Top side</title>
+      <p>
+        Here <m>y=b+k</m>, <m>dy=0</m>, and <m>x</m> goes backward from <m>a+h</m> to
+        <m>a</m>. So
+        <md>
+          <mrow>\int_{\text{top}}\omega \amp= \int_{a+h}^{a}(3-b-k)\,dx</mrow>
+          <mrow>\amp= -(3-b-k)h.</mrow>
+        </md>
+      </p>
+    </paragraphs>
+
+    <paragraphs xml:id="c14s1-left-side">
+      <title>Left side</title>
+      <p>
+        Here <m>x=a</m>, <m>dx=0</m>, and <m>y</m> goes backward from <m>b+k</m> to
+        <m>b</m>. So
+        <md>
+          <mrow>\int_{\text{left}}\omega \amp= \int_{b+k}^{b}2a\,dy</mrow>
+          <mrow>\amp= -2ak.</mrow>
+        </md>
+      </p>
+    </paragraphs>
+
+    <p>
+      Add the four sides:
+      <md>
+        <mrow>\oint_{\partial R}\omega \amp= (3-b)h+2(a+h)k-(3-b-k)h-2ak</mrow>
+        <mrow>\amp= kh+2hk</mrow>
+        <mrow>\amp= 3hk.</mrow>
+      </md>
+      The area of the rectangle is
+      <md>hk.</md>
+      So
+      <md>\boxed{\oint_{\partial R}\bigl((3-y)\,dx+2x\,dy\bigr)=3\,\operatorname{Area}(R).}</md>
+    </p>
+
+    <p>
+      The number <m>3</m> came from how the field changes across the rectangle. The constant
+      parts canceled. Only two differences survived:
+      <md>\text{right side} - \text{left side}</md>
+      and
+      <md>\text{bottom side} - \text{top side}.</md>
+    </p>
+
+    <p>
+      Those are the two ways a field can help counterclockwise motion: the upward push can
+      be stronger on the right than on the left, and the rightward push can be weaker at the
+      top than at the bottom.
+    </p>
+
+    <figure xml:id="c14s1-fig-circulation-rectangle">
+      <caption>Circulation around a small rectangle compares opposite sides.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.92, &gt;=stealth]
+            \draw[-&gt;] (-0.4,0) -- (5.2,0) node[right] {\(x\)};
+            \draw[-&gt;] (0,-0.4) -- (0,3.9) node[above] {\(y\)};
+
+            \draw[thick, fill=gray!8] (1,0.8) rectangle (4,2.8);
+
+            \draw[-&gt;, very thick, red!65!black] (1,0.8) -- (2.2,0.8);
+            \draw[-&gt;, very thick, red!65!black] (4,0.8) -- (4,1.75);
+            \draw[-&gt;, very thick, red!65!black] (4,2.8) -- (2.8,2.8);
+            \draw[-&gt;, very thick, red!65!black] (1,2.8) -- (1,1.85);
+
+            \node[below] at (2.5,0.8) {bottom};
+            \node[right] at (4,1.9) {right};
+            \node[above] at (2.5,2.8) {top};
+            \node[left] at (1,1.9) {left};
+
+            \foreach \x in {1.35,2.15,2.95,3.65} {
+                \foreach \y in {1.1,1.75,2.35} {
+                    \draw[-&gt;, blue!65!black, thick]
+                        (\x,\y) -- ++({0.13*(3-\y)},{0.05*(2*\x)});
+                }
+            }
+
+            \node at (2.5,-0.75) {positive orientation keeps the rectangle on the left};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+  </subsection>
+
+  <subsection xml:id="c14s1-the-scalar-curl-in-the-plane">
+    <title>The scalar curl in the plane</title>
+
+    <p>
+      The rectangle calculation generalizes. On a small rectangle, the circulation of
+      <md>\omega=P\,dx+Q\,dy</md>
+      is controlled by two rates:
+      <md>Q_x,\qquad P_y.</md>
+    </p>
+
+    <p>
+      The right side and left side involve <m>Q\,dy</m>. If <m>Q</m> increases as <m>x</m>
+      increases, then the upward contribution on the right side is larger than the downward
+      contribution on the left side. This contributes approximately
+      <md>Q_x\,hk.</md>
+    </p>
+
+    <p>
+      The bottom and top involve <m>P\,dx</m>. The top is walked in the negative
+      <m>x</m>-direction. If <m>P</m> increases as <m>y</m> increases, then the top
+      contribution cancels too much of the bottom contribution. This contributes approximately
+      <md>-P_y\,hk.</md>
+    </p>
+
+    <p>
+      Together,
+      <md>\boxed{\oint_{\partial R}\omega \approx (Q_x-P_y)\,\Delta A}</md>
+      for a small rectangle.
+    </p>
+
+    <p>This coefficient gets its own name.</p>
+
+    <definition xml:id="c14s1-def-scalar-curl-plane">
+      <title>Scalar curl in the plane</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf F(x,y)=(P(x,y),Q(x,y))</md>
+          be a vector field in the plane, and let
+          <md>\omega=P\,dx+Q\,dy</md>
+          be its associated <m>1</m>-form. The <term>scalar curl</term> of <m>\mathbf F</m>,
+          or of <m>\omega</m>, is
+          <md>\boxed{\operatorname{curl}_{\mathrm{plane}}\mathbf F = Q_x-P_y.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The word <q>scalar</q> matters. In three-dimensional space, curl will be a vector. In
+      the plane, the rotation axis points out of the page, so only one signed number is needed:
+      positive for counterclockwise tendency, negative for clockwise tendency.
+    </p>
+
+    <p>
+      For the form in the first example,
+      <md>P=3-y,\qquad Q=2x.</md>
+      So
+      <md>Q_x-P_y=2-(-1)=3,</md>
+      which matches the exact rectangle computation.
+    </p>
+
+    <p>
+      In the language of forms, the same coefficient appears in
+      <md>\boxed{d\omega=(Q_x-P_y)\,dx\wedge dy.}</md>
+      Here <m>dx\wedge dy</m> measures signed area. So <m>d\omega</m> is the signed circulation
+      per unit area. This is why <xref ref="ch13-vector-fields-line-integrals"/> kept pairing
+      curl with the exterior derivative.
+    </p>
+
+    <example xml:id="c14s1-ex-shear-field">
+      <title>A shear field</title>
+      <statement>
+        <p>
+          Let
+          <md>\omega=x\,dy.</md>
+          Then
+          <md>P=0,\qquad Q=x,</md>
+          so
+          <md>Q_x-P_y=1.</md>
+          Around any small positively oriented rectangle, the circulation is approximately its
+          area.
+        </p>
+        <p>
+          For the rectangle
+          <md>[a,a+h]\times[b,b+k],</md>
+          the computation is exact. The bottom and top contribute nothing because <m>dy=0</m>.
+          The right side contributes
+          <md>(a+h)k,</md>
+          and the left side, walked downward, contributes
+          <md>-ak.</md>
+          So
+          <md>\boxed{\oint_{\partial R}x\,dy=hk=\operatorname{Area}(R).}</md>
+          This simple form will become an area-measuring tool in Green's theorem.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="c14s1-positive-orientation-of-a-plane-region">
+    <title>Positive orientation of a plane region</title>
+
+    <p>
+      The sign of circulation depends on the direction of travel. If we reverse a curve,
+      then
+      <md>dx,\qquad dy</md>
+      reverse sign along the curve, and every <m>1</m>-form integral changes sign.
+    </p>
+
+    <p>
+      For a rectangle, the counterclockwise direction is the positive one. For a general plane
+      region, the same idea is stated without mentioning clockwise or counterclockwise:
+    </p>
+
+    <definition xml:id="c14s1-def-positive-orientation">
+      <title>Positive orientation</title>
+      <statement>
+        <p>
+          A boundary curve is <term>positively oriented</term> if, as you walk along it, the
+          region stays on your left.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      For a region without holes, positive orientation usually means counterclockwise.
+      For a region with a hole, this rule has two effects:
+    </p>
+
+    <table xml:id="c14s1-tab-orientation-components">
+      <title>Positive orientation of boundary components.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>boundary component</cell>
+          <cell>positive direction</cell>
+        </row>
+        <row>
+          <cell>outer boundary</cell>
+          <cell>counterclockwise</cell>
+        </row>
+        <row>
+          <cell>inner boundary around a hole</cell>
+          <cell>clockwise</cell>
+        </row>
+      </tabular>
+    </table>
+
+    <p>
+      The clockwise direction on the inner boundary can feel surprising at first. But if you
+      walk around a hole clockwise, the actual region, the material outside the hole, stays on
+      your left.
+    </p>
+
+    <figure xml:id="c14s1-fig-positive-orientation-annulus">
+      <caption>Positive orientation means the region stays on the left. Inner boundaries are
+      oriented clockwise.</caption>
+      <image width="60%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
+            \draw[fill=gray!10, even odd rule]
+                (0,0) circle (2.7)
+                (0,0) circle (1.0);
+
+            \draw[very thick, red!65!black] (0,0) circle (2.7);
+            \draw[-&gt;, very thick, red!65!black] (2.7,0) arc[start angle=0,end angle=35,radius=2.7];
+
+            \draw[very thick, blue!65!black] (0,0) circle (1.0);
+            \draw[-&gt;, very thick, blue!65!black] (1.0,0) arc[start angle=0,end angle=-45,radius=1.0];
+
+            \node[red!65!black] at (0,-3.25) {outer boundary: counterclockwise};
+            \node[blue!65!black] at (0,0) {hole};
+            \node[blue!65!black] at (0,3.25) {inner boundary: clockwise};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      Orientation is not a convention we can ignore. It is part of the theorem's sign.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c14s1-from-many-small-rectangles-to-one-boundary-curve">
+    <title>From many small rectangles to one boundary curve</title>
+
+    <p>
+      Now tile a region with many small rectangles. Around each small rectangle,
+      <md>\oint_{\partial R_i} \omega \approx (Q_x-P_y)\,\Delta A_i.</md>
+      Add these approximations over all rectangles:
+      <md>\sum_i \oint_{\partial R_i}\omega \approx \sum_i (Q_x-P_y)\,\Delta A_i.</md>
+    </p>
+
+    <p>
+      The right side is becoming a double integral:
+      <md>\sum_i (Q_x-P_y)\,\Delta A_i \longrightarrow \iint_R (Q_x-P_y)\,dA.</md>
+    </p>
+
+    <p>
+      The left side has a different kind of magic. Every interior edge is walked twice: once
+      in one direction by one rectangle, and once in the opposite direction by the neighboring
+      rectangle. Since line integrals reverse sign when orientation reverses, the two interior
+      edge contributions cancel.
+    </p>
+
+    <p>Only the outside boundary survives.</p>
+
+    <figure xml:id="c14s1-fig-tiling-rectangles">
+      <caption>Adding circulation around small rectangles cancels all shared interior
+      edges.</caption>
+      <image width="70%">
+        <latex-image>
+        \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \draw[step=1, gray!35, very thin] (0,0) grid (6,4);
+            \draw[very thick] (0,0) rectangle (6,4);
+
+            \foreach \x in {0,...,5} {
+                \foreach \y in {0,...,3} {
+                    \draw[-&gt;, blue!60, line width=2.5pt, opacity=0.4]
+                        (\x+0.1, \y) -- (\x+0.9, \y);
+
+                    \draw[-&gt;, blue!60, line width=2.5pt, opacity=0.4]
+                        (\x+1, \y+0.1) -- (\x+1, \y+0.9);
+
+                    \draw[-&gt;, red!80!black, thick, dashed]
+                        (\x+0.9, \y+1) -- (\x+0.1, \y+1);
+
+                    \draw[-&gt;, red!80!black, thick, dashed]
+                        (\x, \y+0.9) -- (\x, \y+0.1);
+                }
+            }
+
+            \draw[-&gt;, very thick, red!65!black] (0,0) -- (3.2,0);
+            \draw[-&gt;, very thick, red!65!black] (6,0) -- (6,2.2);
+            \draw[-&gt;, very thick, red!65!black] (6,4) -- (2.8,4);
+            \draw[-&gt;, very thick, red!65!black] (0,4) -- (0,1.8);
+
+            \node[blue!60!black] at (3,-0.6) {interior edges cancel};
+            \node[red!65!black] at (3,4.55) {outer boundary remains};
+        \end{tikzpicture}
+        </latex-image>
+      </image>
+    </figure>
+
+    <p>
+      This cancellation is the beginning of Stokes' idea. A sum of many tiny boundary
+      integrals becomes one large boundary integral. A sum of many tiny curls becomes an
+      area integral.
+    </p>
+
+    <p>
+      The small-rectangle calculation has shown the mechanism. The next step is to state
+      the theorem that says the limiting version is exact.
+    </p>
+  </subsection>
+</section>
