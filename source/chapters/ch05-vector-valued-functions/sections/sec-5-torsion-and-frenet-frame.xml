@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Author-added section corresponding to the approved LaTeX label sec:5.4add.
+     Inserted after curvature and before motion in special coordinate systems.
+     Status: CONVERTED. -->
+<section xml:id="sec-5-torsion-and-frenet-frame"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Torsion and the Frenet frame</title>
+
+  <p>
+    <xref ref="sec-5-curvature-and-normal-direction"/> measured how strongly a curve
+    bends. Curvature records bending, but a curve in space has another freedom: it can
+    twist out of the plane in which it is currently bending.
+  </p>
+
+  <p>
+    A circle and a helix show the missing information. The circle
+    <md>
+      \mathbf c(t)
+      =
+      \left(\frac52\cos t,\frac52\sin t,0\right)
+    </md>
+    has curvature
+    <md>\kappa=\frac{1}{5/2}=\frac25.</md>
+    The helix from <xref ref="sec-5-curvature-and-normal-direction"/>,
+    <md>\mathbf h(t)=(2\cos t,2\sin t,t),</md>
+    also has curvature
+    <md>\kappa=\frac25.</md>
+    Yet the two curves are plainly different. The circle is contained in one plane. The
+    helix is not contained in any plane.
+  </p>
+
+  <p>
+    Curvature sees their equal bending. It does not see the helix's twisting. To measure
+    that second effect, we first complete the tangent and normal vectors to a moving
+    orthonormal frame.
+  </p>
+
+  <subsection xml:id="c5s4add-binormal-and-osculating-plane">
+    <title>The binormal and the osculating plane</title>
+
+    <p>
+      For the rest of this section, let
+      <md>\mathbf r(s)</md>
+      be a regular curve in <m>\mathbb R^3</m>, parametrized by arc length, and suppose
+      <md>\kappa(s)&gt;0.</md>
+      Then the unit tangent and unit normal vectors are defined, and
+      <md>\frac{d\mathbf T}{ds}=\kappa\mathbf N.</md>
+      The vectors <m>\mathbf T</m> and <m>\mathbf N</m> are perpendicular unit vectors.
+      Their cross product gives a third perpendicular unit vector:
+      <md>\boxed{\mathbf B=\mathbf T\times\mathbf N.}</md>
+    </p>
+
+    <definition xml:id="c5s4add-def-binormal-osculating-frenet-frame">
+      <title>Binormal, osculating plane, and Frenet frame</title>
+      <statement>
+        <p>
+          Let <m>\mathbf r(s)</m> be a regular space curve with <m>\kappa(s)&gt;0</m>.
+        </p>
+        <p>
+          The <term>unit binormal vector</term> is
+          <md>\boxed{\mathbf B(s)=\mathbf T(s)\times\mathbf N(s).}</md>
+        </p>
+        <p>
+          The plane through <m>\mathbf r(s)</m> spanned by <m>\mathbf T(s)</m> and
+          <m>\mathbf N(s)</m> is called the <term>osculating plane</term>. Its normal
+          vector is <m>\mathbf B(s)</m>.
+        </p>
+        <p>
+          The ordered triple
+          <md>\boxed{\bigl(\mathbf T(s),\mathbf N(s),\mathbf B(s)\bigr)}</md>
+          is called the <term>Frenet frame</term> of the curve.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The word <em>osculating</em> comes from a word meaning “kissing.” The tangent line
+      follows the curve to first order. The osculating plane contains both the tangent
+      direction and the first direction in which the tangent turns, so it follows the
+      space curve one order more closely.
+    </p>
+
+    <p>
+      Because
+      <md>\mathbf B=\mathbf T\times\mathbf N,</md>
+      the Frenet frame is right-handed. Its cross products follow the same cyclic pattern
+      as <m>\mathbf i,\mathbf j,\mathbf k</m>:
+      <md>
+        \mathbf T\times\mathbf N=\mathbf B,
+        \qquad
+        \mathbf N\times\mathbf B=\mathbf T,
+        \qquad
+        \mathbf B\times\mathbf T=\mathbf N.
+      </md>
+      Reversing the order reverses the sign. For example,
+      <md>\mathbf T\times\mathbf B=-\mathbf N.</md>
+      That sign will matter when we derive the formulas for the moving frame.
+    </p>
+
+    <exercise xml:id="checkpoint-5-4add-why-binormal">
+      <title>Why is the binormal perpendicular to the osculating plane?</title>
+      <statement>
+        <p>
+          Explain why <m>\mathbf B=\mathbf T\times\mathbf N</m> is perpendicular to the
+          osculating plane. Why does the order <m>\mathbf T\times\mathbf N</m>, rather
+          than <m>\mathbf N\times\mathbf T</m>, matter?
+        </p>
+      </statement>
+      <hint>
+        <p>
+          The osculating plane is spanned by <m>\mathbf T</m> and <m>\mathbf N</m>.
+          Recall what the cross product does and how reversing its factors changes its
+          sign.
+        </p>
+      </hint>
+    </exercise>
+
+    <figure xml:id="c5s4add-fig-frenet-frame-helix">
+      <caption>
+        The Frenet frame moves with the helix. The vectors
+        <m>\mathbf T</m> and <m>\mathbf N</m> span the osculating plane,
+        while <m>\mathbf B</m> is perpendicular to it.
+        (Interactive: drag to rotate, scroll to zoom.)
+      </caption>
+      <image width="70%">
+        <asymptote>
+        // 3-D interactive (WebGL) figure.
+        import graph3;
+        size(11cm);
+        currentprojection=orthographic(5,3,2.4);
+        currentlight=White;
+        defaultpen(fontsize(10pt));
+
+        path3 helix=graph(new triple(real t){return (2*cos(t), 2*sin(t), t);}, 0, 2pi, 220, operator ..);
+        draw(helix, blue+linewidth(1.2pt));
+
+        triple P=(-2,0,pi);
+        real s5=sqrt(5);
+        triple Tdir=(0,-2,1)/s5;
+        triple Ndir=(1,0,0);
+        triple Bdir=(0,1,2)/s5;
+
+        // Translucent osculating-plane patch through P, spanned by T and N.
+        real aN=1.30, aT=1.10;
+        triple C1=P-aN*Ndir-aT*Tdir;
+        triple C2=P+aN*Ndir-aT*Tdir;
+        triple C3=P+aN*Ndir+aT*Tdir;
+        triple C4=P-aN*Ndir+aT*Tdir;
+        path3 oscplane=C1--C2--C3--C4--cycle;
+        draw(surface(oscplane), gray(0.82)+opacity(0.22));
+        draw(oscplane, gray(0.55)+linewidth(0.4pt));
+
+        // Frame arrows drawn after the plane so they stay visible.
+        real sT=1.55, sN=1.40, sB=1.55;
+        draw(P--(P+sT*Tdir), black+linewidth(1.65pt), Arrow3);
+        draw(P--(P+sN*Ndir), black+linewidth(1.65pt), Arrow3);
+        draw(P--(P+sB*Bdir), black+linewidth(1.65pt), Arrow3);
+        label("$\mathbf T$", P+sT*Tdir, SE);
+        label("$\mathbf N$", P+sN*Ndir, E);
+        label("$\mathbf B$", P+sB*Bdir, N);
+        label("osculating plane", C3+(0.15,0,0.15), E);
+
+        dot(P, black+6pt);
+
+        draw(O--(3.4,0,0), gray, Arrow3);
+        draw(O--(0,3.4,0), gray, Arrow3);
+        draw(O--(0,0,7.0), gray, Arrow3);
+        label("$x$",(3.4,0,0),S);
+        label("$y$",(0,3.4,0),E);
+        label("$z$",(0,0,7.0),N);
+        </asymptote>
+      </image>
+    </figure>
+
+    <p>
+      The frame is attached to the curve, not to the fixed coordinate axes. As the point
+      moves, the three vectors may all turn. Curvature tells how quickly <m>\mathbf T</m>
+      turns. The turning of <m>\mathbf B</m> will measure how the osculating plane twists.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s4add-torsion-osculating-plane-turns">
+    <title>Torsion: how the osculating plane turns</title>
+
+    <p>The derivative of <m>\mathbf B</m> has a surprisingly restricted direction.</p>
+
+    <p>
+      First,
+      <md>\mathbf B\cdot\mathbf B=1.</md>
+      Differentiating with respect to arc length gives
+      <md>2\mathbf B\cdot\frac{d\mathbf B}{ds}=0.</md>
+      Thus
+      <md>\frac{d\mathbf B}{ds}\perp\mathbf B.</md>
+    </p>
+
+    <p>
+      Also,
+      <md>\mathbf B\cdot\mathbf T=0.</md>
+      Differentiate:
+      <md>
+        \frac{d\mathbf B}{ds}\cdot\mathbf T
+        +
+        \mathbf B\cdot\frac{d\mathbf T}{ds}
+        =0.
+      </md>
+      Since
+      <md>\frac{d\mathbf T}{ds}=\kappa\mathbf N</md>
+      and
+      <md>\mathbf B\cdot\mathbf N=0,</md>
+      we get
+      <md>\frac{d\mathbf B}{ds}\cdot\mathbf T=0.</md>
+      Therefore <m>d\mathbf B/ds</m> is perpendicular to both <m>\mathbf T</m> and
+      <m>\mathbf B</m>. The only remaining Frenet direction is <m>\mathbf N</m>. Hence
+      <md>\frac{d\mathbf B}{ds}</md>
+      must be a scalar multiple of <m>\mathbf N</m>.
+    </p>
+
+    <definition xml:id="c5s4add-def-torsion">
+      <title>Torsion</title>
+      <statement>
+        <p>
+          Let <m>\mathbf r(s)</m> be a <m>C^3</m> regular space curve with
+          <m>\kappa(s)&gt;0</m>. The <term>torsion</term> <m>\tau(s)</m> is defined by
+          <md>\boxed{\frac{d\mathbf B}{ds}=-\tau\mathbf N.}</md>
+          Equivalently,
+          <md>\boxed{\tau=-\frac{d\mathbf B}{ds}\cdot\mathbf N.}</md>
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      The minus sign is a convention. With this convention, the standard upward
+      right-handed helix has positive torsion.
+    </p>
+
+    <p>
+      Curvature is nonnegative because it is defined as a length. Torsion is signed. Its
+      magnitude is
+      <md>\boxed{|\tau|=\left\|\frac{d\mathbf B}{ds}\right\|.}</md>
+      Thus <m>|\tau|</m> measures how quickly the binormal, and therefore the osculating
+      plane, turns per unit distance traveled. The sign distinguishes the two possible
+      senses of twisting.
+    </p>
+
+    <p>
+      Like curvature, torsion has units
+      <md>\frac{1}{\text{length}}.</md>
+      A plane curve has a fixed binormal vector, so its torsion is zero wherever its
+      Frenet frame is defined.
+    </p>
+
+    <exercise xml:id="checkpoint-5-4add-curvature-versus-torsion">
+      <title>Curvature versus torsion</title>
+      <statement>
+        <p>
+          Curvature is always nonnegative, while torsion may be positive or negative.
+          Explain what is different about the two definitions and what geometric
+          information the sign of torsion records.
+        </p>
+      </statement>
+      <hint>
+        <p>
+          Curvature is defined using a norm. Torsion is defined as a signed coefficient
+          in <m>d\mathbf B/ds=-\tau\mathbf N</m>.
+        </p>
+      </hint>
+    </exercise>
+  </subsection>
+
+  <subsection xml:id="c5s4add-frenet-serret-formulas">
+    <title>The Frenet–Serret formulas</title>
+
+    <p>
+      We now know how two vectors in the frame change:
+      <md>\frac{d\mathbf T}{ds}=\kappa\mathbf N,</md>
+      and
+      <md>\frac{d\mathbf B}{ds}=-\tau\mathbf N.</md>
+      The derivative of <m>\mathbf N</m> is forced by these two formulas.
+    </p>
+
+    <p>
+      Since
+      <md>\mathbf N=\mathbf B\times\mathbf T,</md>
+      the product rule for cross products gives
+      <md>
+        <mrow>
+          \frac{d\mathbf N}{ds}
+          \amp=
+          \frac{d\mathbf B}{ds}\times\mathbf T
+          +
+          \mathbf B\times\frac{d\mathbf T}{ds}
+        </mrow>
+        <mrow>
+          \amp=
+          (-\tau\mathbf N)\times\mathbf T
+          +
+          \mathbf B\times(\kappa\mathbf N).
+        </mrow>
+      </md>
+      Now
+      <md>\mathbf N\times\mathbf T=-\mathbf B</md>
+      and
+      <md>\mathbf B\times\mathbf N=-\mathbf T.</md>
+      Therefore
+      <md>\boxed{\frac{d\mathbf N}{ds}=-\kappa\mathbf T+\tau\mathbf B.}</md>
+    </p>
+
+    <p>The three equations form one system.</p>
+
+    <theorem xml:id="c5s4add-thm-frenet-serret">
+      <title>Frenet–Serret formulas</title>
+      <statement>
+        <p>
+          Let <m>\mathbf r(s)</m> be a <m>C^3</m> regular curve in <m>\mathbb R^3</m>,
+          parametrized by arc length, and suppose <m>\kappa(s)&gt;0</m>. Then its Frenet
+          frame satisfies
+          <md>
+            \boxed{
+            \begin{aligned}
+            \frac{d\mathbf T}{ds} \amp= \kappa\mathbf N,\\
+            \frac{d\mathbf N}{ds} \amp= -\kappa\mathbf T+\tau\mathbf B,\\
+            \frac{d\mathbf B}{ds} \amp= -\tau\mathbf N.
+            \end{aligned}
+            }
+          </md>
+        </p>
+      </statement>
+    </theorem>
+
+    <p>The formulas separate two geometric effects.</p>
+
+    <p>
+      The coefficient <m>\kappa</m> couples <m>\mathbf T</m> and <m>\mathbf N</m>. It
+      records bending inside the osculating plane.
+    </p>
+
+    <p>
+      The coefficient <m>\tau</m> couples <m>\mathbf N</m> and <m>\mathbf B</m>. It
+      records twisting of the osculating plane through space.
+    </p>
+
+    <p>
+      The same system can be written in matrix form:
+      <md>
+        \boxed{
+        \frac{d}{ds}
+        \begin{pmatrix}
+        \mathbf T\\
+        \mathbf N\\
+        \mathbf B
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+        0 \amp \kappa \amp 0\\
+        -\kappa \amp 0 \amp \tau\\
+        0 \amp -\tau \amp 0
+        \end{pmatrix}
+        \begin{pmatrix}
+        \mathbf T\\
+        \mathbf N\\
+        \mathbf B
+        \end{pmatrix}.
+        }
+      </md>
+      The coefficient matrix is skew-symmetric: its transpose is its negative. This is
+      not an accident. The Frenet frame may rotate, but its vectors remain mutually
+      perpendicular and keep length <m>1</m>. A skew-symmetric matrix is exactly the
+      infinitesimal form of such a rotation.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s4add-computing-frame-torsion">
+    <title>Computing the frame and torsion from any parameter</title>
+
+    <p>
+      Arc length gives the cleanest definitions, but a curve is usually presented as
+      <md>\mathbf r(t).</md>
+      We now turn the geometric definitions into formulas that use the original
+      parameter.
+    </p>
+
+    <p>
+      Let
+      <md>\sigma(t)=\|\mathbf r'(t)\|</md>
+      be the speed. Since
+      <md>\mathbf r'(t)=\sigma\mathbf T,</md>
+      we have
+      <md>
+        <mrow>
+          \mathbf r''(t)
+          \amp=
+          \sigma'\mathbf T+\sigma\frac{d\mathbf T}{dt}
+        </mrow>
+        <mrow>
+          \amp=
+          \sigma'\mathbf T+\sigma^2\kappa\mathbf N.
+        </mrow>
+      </md>
+      Taking the cross product with <m>\mathbf r'=\sigma\mathbf T</m> gives
+      <md>
+        <mrow>
+          \mathbf r'\times\mathbf r''
+          \amp=
+          \sigma\mathbf T
+          \times
+          \bigl(\sigma'\mathbf T+\sigma^2\kappa\mathbf N\bigr)
+        </mrow>
+        <mrow>
+          \amp=
+          \sigma^3\kappa\mathbf B.
+        </mrow>
+      </md>
+      When <m>\kappa&gt;0</m>, this gives the binormal directly:
+      <md>
+        \boxed{
+        \mathbf B(t)
+        =
+        \frac{\mathbf r'(t)\times\mathbf r''(t)}
+        {\|\mathbf r'(t)\times\mathbf r''(t)\|}.
+        }
+      </md>
+      Then
+      <md>\boxed{\mathbf N(t)=\mathbf B(t)\times\mathbf T(t).}</md>
+      The order matters. The cross product <m>\mathbf T\times\mathbf B</m> would give
+      <m>-\mathbf N</m>.
+    </p>
+
+    <p>Torsion has an equally compact formula.</p>
+
+    <theorem xml:id="c5s4add-thm-torsion-from-parameter">
+      <title>Torsion from a parameter</title>
+      <statement>
+        <p>
+          Let <m>\mathbf r(t)</m> be a <m>C^3</m> regular curve in <m>\mathbb R^3</m>,
+          and suppose
+          <md>\mathbf r'(t)\times\mathbf r''(t)\ne\mathbf 0.</md>
+          Then
+          <md>
+            \boxed{
+            \tau(t)
+            =
+            \frac{
+            \bigl(\mathbf r'(t)\times\mathbf r''(t)\bigr)
+            \cdot\mathbf r'''(t)}
+            {\|\mathbf r'(t)\times\mathbf r''(t)\|^2}.
+            }
+          </md>
+          Equivalently,
+          <md>
+            \boxed{
+            \tau(t)
+            =
+            \frac{
+            \det\bigl(\mathbf r'(t),\mathbf r''(t),\mathbf r'''(t)\bigr)}
+            {\|\mathbf r'(t)\times\mathbf r''(t)\|^2}.
+            }
+          </md>
+        </p>
+      </statement>
+      <proof>
+        <p>
+          We already found
+          <md>\mathbf r'\times\mathbf r''=\sigma^3\kappa\mathbf B.</md>
+          Also,
+          <md>\mathbf r''=\sigma'\mathbf T+\sigma^2\kappa\mathbf N.</md>
+          Differentiate this expression with respect to <m>t</m>. Most resulting terms
+          lie in the span of <m>\mathbf T</m> and <m>\mathbf N</m>. The only term that
+          can have a binormal component comes from differentiating <m>\mathbf N</m>:
+          <md>\sigma^2\kappa\frac{d\mathbf N}{dt}.</md>
+          By the chain rule and the Frenet–Serret formula,
+          <md>
+            <mrow>
+              \frac{d\mathbf N}{dt}
+              \amp=
+              \frac{d\mathbf N}{ds}\frac{ds}{dt}
+            </mrow>
+            <mrow>
+              \amp=
+              \bigl(-\kappa\mathbf T+\tau\mathbf B\bigr)\sigma.
+            </mrow>
+          </md>
+          Therefore the binormal component of <m>\mathbf r'''</m> is
+          <md>\sigma^3\kappa\tau\mathbf B.</md>
+          Taking the dot product with
+          <md>\mathbf r'\times\mathbf r''=\sigma^3\kappa\mathbf B</md>
+          gives
+          <md>(\mathbf r'\times\mathbf r'')\cdot\mathbf r'''=\sigma^6\kappa^2\tau.</md>
+          On the other hand,
+          <md>\|\mathbf r'\times\mathbf r''\|^2=\sigma^6\kappa^2.</md>
+          Dividing gives the formula for <m>\tau</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The scalar triple product in the numerator is signed volume. Thus the torsion
+      formula has a geometric memory of orientation: the sign changes when the twisting
+      changes from one handedness to the other.
+    </p>
+
+    <remark xml:id="c5s4add-practical-computation-order">
+      <title>A practical computation order</title>
+      <p>
+        For a <m>C^3</m> curve with
+        <md>\mathbf r'(t)\times\mathbf r''(t)\ne\mathbf 0,</md>
+        compute
+        <md>
+          \boxed{
+          \begin{aligned}
+          \mathbf T
+          \amp=
+          \frac{\mathbf r'}{\|\mathbf r'\|},\\
+          \mathbf B
+          \amp=
+          \frac{\mathbf r'\times\mathbf r''}
+          {\|\mathbf r'\times\mathbf r''\|},\\
+          \mathbf N
+          \amp=
+          \mathbf B\times\mathbf T,\\
+          \kappa
+          \amp=
+          \frac{\|\mathbf r'\times\mathbf r''\|}
+          {\|\mathbf r'\|^3},\\
+          \tau
+          \amp=
+          \frac{(\mathbf r'\times\mathbf r'')\cdot\mathbf r'''}
+          {\|\mathbf r'\times\mathbf r''\|^2}.
+          \end{aligned}
+          }
+        </md>
+      </p>
+    </remark>
+  </subsection>
+
+  <subsection xml:id="c5s4add-circular-helix-revisited">
+    <title>The circular helix revisited</title>
+
+    <p>
+      The helix from <xref ref="sec-5-curvature-and-normal-direction"/> now gives a
+      complete example.
+    </p>
+
+    <example xml:id="c5s4add-ex-helix-frame-and-torsion">
+      <title>The Frenet frame and torsion of a helix</title>
+      <statement>
+        <p>
+          Let
+          <md>\mathbf r(t)=(2\cos t,2\sin t,t).</md>
+          We already know that
+          <md>\|\mathbf r'(t)\|=\sqrt5</md>
+          and
+          <md>\kappa=\frac25.</md>
+          The first three derivatives are
+          <md>\mathbf r'(t)=(-2\sin t,2\cos t,1),</md>
+          <md>\mathbf r''(t)=(-2\cos t,-2\sin t,0),</md>
+          and
+          <md>\mathbf r'''(t)=(2\sin t,-2\cos t,0).</md>
+          Also,
+          <md>\mathbf r'(t)\times\mathbf r''(t)=(2\sin t,-2\cos t,4).</md>
+          The numerator in the torsion formula is
+          <md>
+            <mrow>
+              (\mathbf r'\times\mathbf r'')\cdot\mathbf r'''
+              \amp=
+              (2\sin t,-2\cos t,4)
+              \cdot
+              (2\sin t,-2\cos t,0)
+            </mrow>
+            <mrow>
+              \amp=
+              4\sin^2t+4\cos^2t
+            </mrow>
+            <mrow>
+              \amp=
+              4.
+            </mrow>
+          </md>
+          The denominator is
+          <md>
+            <mrow>
+              \|\mathbf r'\times\mathbf r''\|^2
+              \amp=
+              4\sin^2t+4\cos^2t+16
+            </mrow>
+            <mrow>
+              \amp=
+              20.
+            </mrow>
+          </md>
+          Therefore
+          <md>\boxed{\tau=\frac4{20}=\frac15.}</md>
+        </p>
+        <p>
+          The Frenet frame is
+          <md>
+            \boxed{
+            \mathbf T(t)
+            =
+            \frac{1}{\sqrt5}(-2\sin t,2\cos t,1),
+            }
+          </md>
+          <md>
+            \boxed{
+            \mathbf B(t)
+            =
+            \frac{1}{\sqrt5}(\sin t,-\cos t,2),
+            }
+          </md>
+          and
+          <md>
+            \boxed{
+            \mathbf N(t)
+            =
+            \mathbf B(t)\times\mathbf T(t)
+            =
+            (-\cos t,-\sin t,0).
+            }
+          </md>
+        </p>
+        <p>
+          We can check the torsion sign directly. Differentiate <m>\mathbf B</m>:
+          <md>
+            \frac{d\mathbf B}{dt}
+            =
+            \frac1{\sqrt5}(\cos t,\sin t,0).
+          </md>
+          Since
+          <md>\frac{ds}{dt}=\sqrt5,</md>
+          we have
+          <md>
+            <mrow>
+              \frac{d\mathbf B}{ds}
+              \amp=
+              \frac{d\mathbf B/dt}{ds/dt}
+            </mrow>
+            <mrow>
+              \amp=
+              \frac15(\cos t,\sin t,0)
+            </mrow>
+            <mrow>
+              \amp=
+              -\frac15\mathbf N.
+            </mrow>
+          </md>
+          Thus the defining equation
+          <md>\frac{d\mathbf B}{ds}=-\tau\mathbf N</md>
+          indeed gives
+          <md>\tau=\frac15.</md>
+        </p>
+        <p>
+          The circle of radius <m>5/2</m> and this helix have the same curvature,
+          <md>\kappa=\frac25,</md>
+          but their torsions are different:
+          <md>
+            <mrow>\text{circle:}\amp\qquad \tau=0,</mrow>
+            <mrow>\text{helix:}\amp\qquad \tau=\frac15.</mrow>
+          </md>
+          Curvature separates straightness from bending. Torsion separates planar
+          bending from spatial twisting.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      More generally, the circular helix
+      <md>
+        \mathbf r(t)=(a\cos t,a\sin t,bt),
+        \qquad a&gt;0,
+      </md>
+      has
+      <md>
+        \boxed{
+        \kappa=\frac{a}{a^2+b^2},
+        \qquad
+        \tau=\frac{b}{a^2+b^2}.
+        }
+      </md>
+      Changing the sign of <m>b</m> reverses the handedness of the helix and changes the
+      sign of <m>\tau</m>, while <m>\kappa</m> remains unchanged.
+    </p>
+  </subsection>
+
+  <subsection xml:id="c5s4add-zero-torsion-plane-curves">
+    <title>Zero torsion and plane curves</title>
+
+    <p>
+      The motivating circle had zero torsion, while the helix did not. Under the
+      hypotheses needed for the Frenet frame, this is the exact distinction between
+      planar and genuinely spatial curves.
+    </p>
+
+    <theorem xml:id="c5s4add-thm-torsion-detects-planarity">
+      <title>Torsion detects planarity</title>
+      <statement>
+        <p>
+          Let <m>\mathbf r(s)</m> be a <m>C^3</m> regular curve on a connected interval,
+          parametrized by arc length, and suppose
+          <md>\kappa(s)&gt;0</md>
+          throughout the interval. Then the image of <m>\mathbf r</m> lies in a fixed
+          plane if and only if
+          <md>\tau(s)=0</md>
+          throughout the interval.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          Suppose first that the curve lies in a fixed plane. Let <m>\mathbf b</m> be a
+          fixed unit normal to that plane. Both <m>\mathbf T</m> and <m>\mathbf N</m>
+          lie in the plane, so <m>\mathbf B=\mathbf T\times\mathbf N</m> is either
+          <m>\mathbf b</m> or <m>-\mathbf b</m>. Because <m>\mathbf B</m> varies
+          continuously on a connected interval, it cannot jump from one choice to the
+          other. Thus <m>\mathbf B</m> is constant. Hence
+          <md>\frac{d\mathbf B}{ds}=\mathbf 0,</md>
+          so
+          <md>\tau=0.</md>
+        </p>
+        <p>
+          Conversely, suppose <m>\tau=0</m>. The third Frenet–Serret formula gives
+          <md>\frac{d\mathbf B}{ds}=\mathbf 0.</md>
+          Therefore <m>\mathbf B</m> is a fixed vector. Since
+          <md>\frac{d\mathbf r}{ds}=\mathbf T</md>
+          and
+          <md>\mathbf T\cdot\mathbf B=0,</md>
+          we have
+          <md>
+            <mrow>
+              \frac{d}{ds}\bigl(\mathbf r(s)\cdot\mathbf B\bigr)
+              \amp=
+              \mathbf T(s)\cdot\mathbf B
+            </mrow>
+            <mrow>
+              \amp=
+              0.
+            </mrow>
+          </md>
+          Thus
+          <md>\mathbf r(s)\cdot\mathbf B=c</md>
+          for some constant <m>c</m>. This is the equation of one fixed plane with
+          normal <m>\mathbf B</m>. The entire curve lies in that plane.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>The curvature assumption cannot simply be erased.</p>
+
+    <example xml:id="c5s4add-ex-why-positive-curvature-required">
+      <title>Why nonzero curvature is required</title>
+      <statement>
+        <p>
+          Consider the straight line
+          <md>\mathbf r(s)=(s,0,0).</md>
+          It is certainly planar, and its curvature is
+          <md>\kappa=0.</md>
+          But
+          <md>\frac{d\mathbf T}{ds}=\mathbf 0,</md>
+          so the curve does not choose a principal normal <m>\mathbf N</m>. Without
+          <m>\mathbf N</m>, the binormal <m>\mathbf B=\mathbf T\times\mathbf N</m> and
+          the torsion are not defined by the Frenet construction.
+        </p>
+        <p>
+          The theorem assumes <m>\kappa&gt;0</m> not because a straight line is somehow
+          nonplanar, but because the Frenet frame itself needs a direction in which the
+          tangent is turning.
+        </p>
+      </statement>
+    </example>
+
+    <p>
+      Curvature and torsion now give two independent rates:
+      <md>
+        \text{curvature }\kappa
+        =
+        \text{bending per unit length},
+      </md>
+      <md>
+        \text{torsion }\tau
+        =
+        \text{signed twisting per unit length}.
+      </md>
+      The Frenet–Serret equations show how these two scalar functions control the motion
+      of the entire moving frame. A deeper theorem of curve geometry says that, when
+      <m>\kappa&gt;0</m>, the functions <m>\kappa(s)</m> and <m>\tau(s)</m> determine a
+      space curve up to a translation and rotation. In that sense, curvature and torsion
+      together are a geometric fingerprint of the curve.
+    </p>
+  </subsection>
+
+  <aside xml:id="c5s4add-looking-ahead-polar-frame">
+    <title>Looking ahead</title>
+    <p>
+      The Frenet frame moves because the curve bends and twists.
+      <xref ref="sec-5-motion-in-special-coordinate-systems"/> uses a different moving
+      frame, the polar vectors <m>\mathbf e_r</m> and <m>\mathbf e_\theta</m>, which
+      move because the coordinate directions themselves change. In both cases, the same
+      lesson returns: when a basis moves, its derivatives carry geometric information.
+    </p>
+  </aside>
+</section>

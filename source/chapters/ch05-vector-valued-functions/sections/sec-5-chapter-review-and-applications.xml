@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Converted from multivariable_calculus/chapters/ch05-vector-valued-functions.tex, Section 6 (Chapter review and applications).
+<!-- Converted from multivariable_calculus/chapters/ch05-vector-valued-functions.tex, originally Section 5.6 (Chapter review and applications).
+     Now renders as §5.7 after the inserted torsion section. Existing xml:id values are preserved.
      Status: CONVERTED. -->
 <section xml:id="sec-5-chapter-review-and-applications" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Chapter review and applications</title>
@@ -9,8 +10,9 @@
       Chapter 5 began with a moving point
       <md>\mathbf r(t).</md>
       From that one object came velocity, acceleration, speed, arc length, curvature, normal
-      direction, polar motion, angular velocity, and swept area. The point moved through a
-      curve, but the calculus happened through one variable: time.
+      direction, osculating plane, binormal, Frenet frame, torsion, polar motion, angular
+      velocity, and swept area. The chapter studies both how a curve bends and how it twists.
+      The point moved through a curve, but the calculus happened through one variable: time.
     </p>
   </introduction>
 
@@ -61,6 +63,30 @@
           <cell><m>\kappa(t)=\dfrac{\|\mathbf r'(t)\times\mathbf r''(t)\|}{\|\mathbf r'(t)\|^3}</m></cell>
         </row>
         <row>
+          <cell>binormal</cell>
+          <cell><m>\mathbf B=\mathbf T\times\mathbf N=\dfrac{\mathbf r'\times\mathbf r''}{\|\mathbf r'\times\mathbf r''\|}</m></cell>
+        </row>
+        <row>
+          <cell>principal normal from the frame</cell>
+          <cell><m>\mathbf N=\mathbf B\times\mathbf T</m></cell>
+        </row>
+        <row>
+          <cell>torsion</cell>
+          <cell><m>\tau=\dfrac{(\mathbf r'\times\mathbf r'')\cdot\mathbf r'''}{\|\mathbf r'\times\mathbf r''\|^2}</m></cell>
+        </row>
+        <row>
+          <cell>Frenet–Serret for <m>\mathbf T</m></cell>
+          <cell><m>\dfrac{d\mathbf T}{ds}=\kappa\mathbf N</m></cell>
+        </row>
+        <row>
+          <cell>Frenet–Serret for <m>\mathbf N</m></cell>
+          <cell><m>\dfrac{d\mathbf N}{ds}=-\kappa\mathbf T+\tau\mathbf B</m></cell>
+        </row>
+        <row>
+          <cell>Frenet–Serret for <m>\mathbf B</m></cell>
+          <cell><m>\dfrac{d\mathbf B}{ds}=-\tau\mathbf N</m></cell>
+        </row>
+        <row>
           <cell>acceleration split</cell>
           <cell><m>\mathbf a=a_T\mathbf T+a_N\mathbf N</m></cell>
         </row>
@@ -91,9 +117,14 @@
       The formulas are less separate than they look. The speed <m>\sigma</m> is the bridge from
       time to distance:
       <md>ds=\sigma\,dt.</md>
-      Curvature measures how fast the tangent changes with respect to distance:
+      Curvature measures bending per unit length:
       <md>\kappa=\left\|\frac{d\mathbf T}{ds}\right\|.</md>
-      Polar coordinates split velocity into radial and angular pieces. The swept-area form
+      Torsion measures signed twisting per unit length:
+      <md>\tau=-\frac{d\mathbf B}{ds}\cdot\mathbf N.</md>
+      The Frenet frame <m>(\mathbf T,\mathbf N,\mathbf B)</m> is attached to the curve. Polar
+      coordinates use a different moving frame, <m>(\mathbf e_r,\mathbf e_\theta)</m>, whose
+      directions rotate with the coordinates rather than with the bending of the path. The
+      swept-area form
       <md>\frac12(x\,dy-y\,dx)</md>
       quietly points toward the next big subject: integrating forms along paths.
     </p>
@@ -144,8 +175,42 @@
     </p>
 
     <p>
-      The helix has constant speed and constant curvature. It bends the same amount at
-      every point.
+      The unit tangent is already in hand. The binormal is the unit vector in the direction of
+      <m>\mathbf r'\times\mathbf r''</m>:
+      <md>
+        \mathbf B(t)
+        =
+        \frac1{15}(12\sin t,-12\cos t,9)
+        =
+        \left(\frac45\sin t,-\frac45\cos t,\frac35\right).
+      </md>
+      Then
+      <md>
+        \mathbf N(t)
+        =
+        \mathbf B(t)\times\mathbf T(t)
+        =
+        (-\cos t,-\sin t,0).
+      </md>
+    </p>
+
+    <p>
+      To obtain torsion, differentiate once more:
+      <md>\mathbf r'''(t)=(3\sin t,-3\cos t,0).</md>
+      The numerator of the torsion formula is
+      <md>(\mathbf r'\times\mathbf r'')\cdot\mathbf r'''=36,</md>
+      and the denominator is
+      <md>\|\mathbf r'\times\mathbf r''\|^2=225.</md>
+      Therefore
+      <md>\boxed{\tau=\frac{36}{225}=\frac4{25}.}</md>
+    </p>
+
+    <p>
+      This <m>3</m>-<m>4</m>-<m>5</m> helix has constant
+      <md>\kappa=\frac3{25},\qquad\tau=\frac4{25}.</md>
+      The same integers that made the speed equal to <m>5</m> now reappear in the curvature
+      and torsion. The helix has constant speed, constant curvature, and constant torsion.
+      It bends the same amount at every point, and it twists the same amount at every point.
     </p>
   </subsection>
 
@@ -199,6 +264,56 @@
           for plane curves, and
           <md>\kappa(t)=\frac{\|\mathbf r'\times\mathbf r''\|}{\|\mathbf r'\|^3}</md>
           for space curves.
+        </p>
+      </li>
+      <li>
+        <p>
+          Compute the Frenet frame
+          <md>(\mathbf T,\mathbf N,\mathbf B)</md>
+          of a space curve with positive curvature, using
+          <md>
+            \mathbf T=\frac{\mathbf r'}{\|\mathbf r'\|},
+            \qquad
+            \mathbf B=\frac{\mathbf r'\times\mathbf r''}{\|\mathbf r'\times\mathbf r''\|},
+            \qquad
+            \mathbf N=\mathbf B\times\mathbf T.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Identify the osculating plane as the plane through the point spanned by
+          <m>\mathbf T</m> and <m>\mathbf N</m>, with normal <m>\mathbf B</m>.
+        </p>
+      </li>
+      <li>
+        <p>
+          Compute torsion from the derivatives
+          <m>\mathbf r'</m>, <m>\mathbf r''</m>, and <m>\mathbf r'''</m>:
+          <md>
+            \tau
+            =
+            \frac{(\mathbf r'\times\mathbf r'')\cdot\mathbf r'''}
+            {\|\mathbf r'\times\mathbf r''\|^2}.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Use and interpret the Frenet–Serret formulas
+          <md>
+            \frac{d\mathbf T}{ds}=\kappa\mathbf N,
+            \qquad
+            \frac{d\mathbf N}{ds}=-\kappa\mathbf T+\tau\mathbf B,
+            \qquad
+            \frac{d\mathbf B}{ds}=-\tau\mathbf N.
+          </md>
+        </p>
+      </li>
+      <li>
+        <p>
+          Recognize that, under the hypothesis <m>\kappa&gt;0</m> on a connected interval,
+          zero torsion characterizes a planar curve.
         </p>
       </li>
       <li>
@@ -419,6 +534,17 @@
       </statement>
     </exercise>
 
+    <exercise xml:id="c5s6-curv-torsion-extension">
+      <statement>
+        <p>
+          If the track is genuinely three-dimensional, compute or numerically estimate
+          torsion along the track. Identify where the osculating plane rotates most
+          rapidly, and explain how this differs from finding the point of greatest
+          curvature.
+        </p>
+      </statement>
+    </exercise>
+
     <conclusion>
       <p>
         This project is a good test of the whole chapter. The curve gives position. The first
@@ -485,7 +611,8 @@
         <p>
           Let
           <md>\mathbf r(t)=(2\cos t,2\sin t,t).</md>
-          Find the speed, curvature, tangential acceleration, and normal acceleration.
+          Find the speed, the Frenet frame <m>(\mathbf T,\mathbf N,\mathbf B)</m>, the
+          curvature, the torsion, the tangential acceleration, and the normal acceleration.
         </p>
       </statement>
     </exercise>
@@ -581,15 +708,43 @@
         </p>
       </statement>
     </exercise>
+
+    <exercise xml:id="c5s6-rev-16">
+      <statement>
+        <p>
+          For <m>\mathbf r(t)=(t,t^2,0)</m>, compute the torsion wherever the Frenet
+          frame is defined. Explain why the answer agrees with the fact that the curve
+          lies in the <m>xy</m>-plane.
+        </p>
+      </statement>
+    </exercise>
+
+    <exercise xml:id="c5s6-rev-17">
+      <statement>
+        <p>
+          For the circular helix
+          <md>
+            \mathbf r(t)=(a\cos t,a\sin t,bt),\qquad a&gt;0,
+          </md>
+          derive
+          <md>
+            \kappa=\frac{a}{a^2+b^2},
+            \qquad
+            \tau=\frac{b}{a^2+b^2}.
+          </md>
+          What changes geometrically when <m>b</m> is replaced by <m>-b</m>?
+        </p>
+      </statement>
+    </exercise>
   </exercises>
 
   <conclusion>
     <p>
-      A curve has only one direction of travel at a time. That made the derivative
-      <md>\mathbf r'(t)</md>
-      a single vector. A surface is different. At a point on a sheet of paper, a hillside, or a
-      sphere, there are many possible directions to move. The next chapter begins there:
-      not with motion along one path, but with functions whose inputs fill a region. A
+      A regular space curve with positive curvature carries one tangent direction and a
+      Frenet frame that records its bending and twisting. A surface is different. At a
+      point on a sheet of paper, a hillside, or a sphere, there are many possible
+      directions to move. The next chapter begins there: not with motion along one path,
+      but with functions whose inputs fill a region. A single tangent direction and a
       single slope number will no longer be enough.
     </p>
   </conclusion>
