@@ -2089,11 +2089,155 @@ var ptx_lunr_docs = [
   "body": " Why alternating forms for oriented regions?   When we integrate over an oriented region, reversing the orientation should reverse the sign of the answer, just as . Explain why a measuring object that is alternating -- one obeying -- is exactly the kind of object that respects orientation, while an object built from ordinary commuting multiplication could not.    An orientation is a choice of order for the directions spanning the region. Ask yourself: if the integrand did not change sign when the order changed, how could the integral ever notice that the region was flipped?   "
 },
 {
+  "id": "sec-2-discovery-project-quaternions-and-rotations",
+  "level": "1",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html",
+  "type": "Section",
+  "number": "2.8",
+  "title": "Discovery project: quaternions and rotations",
+  "body": " Discovery project: quaternions and rotations   In the complex plane, multiplication can turn an arrow without changing its length. Can quaternion multiplication do the same thing for an arrow in space? There is a small obstacle: a quaternion has four real coordinates, while our arrow has only three. This project uses that extra coordinate to discover how spatial rotations work.  Work through the steps in order. Keep the quaternion multiplication table from nearby, and sketch the two-dimensional planes as they appear. You will need distributivity, the dot and cross products, and the angle-addition identities for sine and cosine. No matrix formulas are needed. Try each checkpoint before opening its hint.  Throughout the project, vectors move while the coordinate axes stay fixed. Positive spatial angles follow the right-hand rule: point your right thumb along the positive axis and curl your fingers in the direction of the turn. We use for the angle in a quaternion exponential and reserve for the eventual angle of rotation in three-dimensional space. Discovering their relationship is part of the work.    Step 1: recall how complex multiplication turns a plane  Recall from that For the next few steps, abbreviate and . The complex plane has the ordered basis : draw to the right and upward.   Follow the two basis arrows    Compute and . Draw their images when . What angle has each arrow turned?  Use distributivity to find . Write the resulting coordinates, and check that their squared length is .  Write . Use the angle-addition identities to show that multiplication replaces by . Why does this establish a rotation for every arrow?     The basis images are and . In the length calculation, the mixed terms cancel and .    Keep the resulting pattern in view: More generally, in a plane with ordered perpendicular unit directions , a positive turn through sends The order matters: a small positive angle turns the first direction toward the second. We will recognize rotations by this pattern, even when the plane sits in four dimensions.    Step 2: find two rotating planes inside four dimensions  Regard the quaternion space as the real coordinate space Its four perpendicular unit directions are . The direction is a genuine coordinate direction here. It is perpendicular to the three-dimensional subspace of pure imaginary quaternions.  Each of squares to . Thus each gives its own version of Euler's formula: If you recall the exponential series, this follows by grouping its even and odd powers: for , You may use the sine-cosine expressions directly for all the calculations below.   Multiply every basis direction on the left   Define , and similarly for . Here can be any quaternion. Verify the first row of the table and fill every question mark in the other two rows. Keep the multiplier on the left.   Images of the four basis directions under left multiplication.    Multiplier         For , recognize the rotation pattern in the ordered planes and . Sketch these as two separate ordinary planes. Mark the angle in each.  For , use the ordered planes and . For , use and . Check that both planes in each pair turn by . Why would writing in place of reverse the reported sign?  Use the two perpendicular planes to explain why each map preserves , the sum of the four squared real coordinates.     For example, , while . Read these as images of the ordered pair . The squared lengths of the two plane components add to the squared length in four dimensions.     Why is one multiplication not yet our spatial rotation?   Compute the real part of . Then set and follow the input . Does its image still represent a vector in three-dimensional space? Explain why preserving length in four dimensions does not by itself give a rotation of the pure imaginary subspace.   The real part is . In particular, points along the real coordinate direction.     Step 3: use right multiplication to control the two turns   Quaternion conjugate and unit quaternion   For , define its quaternion conjugate and its length by A unit quaternion has .     Find an inverse without guessing    Write , where , and use to prove .  Deduce that for . Check that are unit quaternions. What is ?    Expand . Real numbers commute with every quaternion, so the mixed terms cancel. For , the inverse is .   Now try the map . Because multiplication does not commute, changing sides may change the geometry.   Which plane reverses its turn?    Compute , , , and . Compare each with the first row of .  Show that right multiplication by turns the ordered plane through , but turns through .  Predict what happens if you first apply and then . Which plane should stop turning? Which angle should add?    The crucial sign is , so . On the other hand, .   Record your prediction in this table before multiplying the two operations out.   Two plane rotations combine.    Ordered plane Left by Right by Combined         Step 4: discover a spatial rotation and its half-angle  The combined operation is It is called conjugation by . Distinguish this map from taking the quaternion conjugate : conjugation by a fixed quaternion means multiplying on the left by that quaternion and on the right by its inverse.   Check the prediction on all four directions    Compute and . Explain why both and return to their starting positions.  Complete this calculation without moving factors past one another: Collect the and terms and use and .  Compute in the same way. Use distributivity to find the image of . Does any real part remain?    Use and in the displayed expansion. For the final part, .   Check your result against the coordinate rule The -coordinate stays fixed, and the -plane follows the complex rotation pattern. Thus the pure imaginary subspace stays pure imaginary. It rotates about the axis, with positive motion from toward . The angle is : the two four-dimensional turns cancelled in and added in .   Choose the quaternion for a quarter turn    To obtain a spatial angle , what value of should you use? Write the quaternion for a positive rotation about the -axis.  Use your quaternion to rotate . Check your result geometrically in the -plane and compare the squared lengths.  If someone uses in , what spatial angle do they actually get? Test the input .  Why would the analogous complex expression leave every complex number unchanged?    A spatial quarter turn needs and gives in the second part. Complex numbers commute, so their two multipliers can be brought together and cancelled.     Step 5: rotate about the other coordinate axes  Return to your rows for and in . The same cancellation-and-addition mechanism should work, with the quaternion units in cyclic order.   Use cyclic order to keep the signs straight    For , compute the four images under right multiplication by . Compare the turns in and with left multiplication. Then find all four images under .  Repeat for , using and .  Replace by . Write coordinate rules for rotating about the - and -axes.  Check positive quarter turns: about , should move to ; about , should move to . Where do the other two coordinate directions go in each case?     For the -axis, the coordinate rule is For the -axis, it is In each case the coordinate along the axis stays fixed.      Step 6: build the same two planes around any axis  A rotation axis need not be a coordinate axis. Choose a unit vector and represent it by The identity in gives . Thus can play the role of an imaginary unit, and is a unit quaternion with inverse .   Make a basis suited to the chosen axis   Choose any unit vector perpendicular to , write its pure imaginary quaternion as , and set .   Use the scalar-vector product identity to explain why is pure imaginary and corresponds to the unit vector . Why are four mutually perpendicular unit directions?  Use the same product identity to prove . Then use associativity to show You have recovered the multiplication relations needed for two rotating planes.  Compute the images of under left multiplication by and under right multiplication by . Identify the angles in the ordered planes and .  Combine the two maps. Show that conjugation fixes and sends Why is positive motion from toward the right-hand direction about ?     First, and . Then , while . Both operations turn the plane in the same direction.    We have reduced the general axis to the same picture as the -axis. Every spatial vector is a real linear combination of . Conjugation fixes its component along and rotates its perpendicular component in . The real coordinate stays zero. Since the three spatial basis directions are perpendicular unit vectors, this operation preserves lengths and angles and gives a rotation about the line through the origin in direction .    Step 7: turn the discovery into a usable formula  You can now assemble the rotation rule. For a desired angle about a unit axis , use the half-angle: Encode as , and compute The coefficients of in are the rotated vector's coordinates.   Recover a formula using dot and cross products    Split the vector into components parallel and perpendicular to the axis: Check that .  When , choose in Step 6. Use the image of to obtain Explain separately why this also holds when .  Substitute the component formulas and use to derive This is called Rodrigues' rotation formula . Explain geometrically why the axis component and the length are preserved.    The two perpendicular vectors and have equal length. Their sine-cosine combination is precisely the plane rotation already discovered.    A half turn about a tilted axis   Rotate through about . Here Direct multiplication gives Thus becomes . The vector formula agrees: The half turn keeps the component along the tilted axis and reverses the perpendicular component.      Step 8: test the construction and tell its geometric story   Three checks on your rotation rule    Rotate through about . Show that , and compute the images of by conjugation. Use them to rotate . Check the length and the component along the axis.  Show that and give exactly the same map . What quaternion does the half-angle rule produce for , and why is the resulting spatial map the identity?  Let and . Starting with , apply the -axis quarter turn and then the -axis quarter turn. Reverse the order and compare. Use associativity to show that the first order is represented by : Verify that the last two factors form .     The first rotation cycles . For the third part, the two orders send to and , respectively. A quaternion product encodes the first rotation in its rightmost factor.    Your project report. Present the construction so that another student could use it without memorizing an unexplained formula. Include:   Your complex-plane sketch and completed basis-image table for left multiplication by .  Two plane sketches for the -axis case, with arrows showing the left and right turns. Explain where the angles cancel and where they add.  A derivation of the half-angle rule and an explanation of why stays pure imaginary and fixes the chosen axis.  One coordinate-axis rotation and one tilted-axis rotation, computed with quaternions and checked using dot and cross products.  A short set of instructions: normalize a nonzero axis vector, form the unit quaternion with half the desired angle, encode the input vector, multiply in the order , and read off the three coefficients.    Optional extension. Rotate a point about a line through a point with unit direction . Explain why you should apply the quaternion rule to the displacement and then add back.    Complex multiplication supplied the plane-rotation pattern. Quaternion multiplication placed that pattern in two perpendicular planes at once. Multiplication by the inverse on the right cancelled the turn involving the real coordinate and doubled the turn perpendicular to the chosen axis. That is the geometric reason a unit quaternion with angle produces a spatial rotation through .   "
+},
+{
+  "id": "checkpoint-c2rot-complex-basis",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-complex-basis",
+  "type": "Checkpoint",
+  "number": "2.8.1",
+  "title": "Follow the two basis arrows.",
+  "body": " Follow the two basis arrows    Compute and . Draw their images when . What angle has each arrow turned?  Use distributivity to find . Write the resulting coordinates, and check that their squared length is .  Write . Use the angle-addition identities to show that multiplication replaces by . Why does this establish a rotation for every arrow?     The basis images are and . In the length calculation, the mixed terms cancel and .   "
+},
+{
+  "id": "checkpoint-c2rot-left-basis",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-left-basis",
+  "type": "Checkpoint",
+  "number": "2.8.2",
+  "title": "Multiply every basis direction on the left.",
+  "body": " Multiply every basis direction on the left   Define , and similarly for . Here can be any quaternion. Verify the first row of the table and fill every question mark in the other two rows. Keep the multiplier on the left.   Images of the four basis directions under left multiplication.    Multiplier         For , recognize the rotation pattern in the ordered planes and . Sketch these as two separate ordinary planes. Mark the angle in each.  For , use the ordered planes and . For , use and . Check that both planes in each pair turn by . Why would writing in place of reverse the reported sign?  Use the two perpendicular planes to explain why each map preserves , the sum of the four squared real coordinates.     For example, , while . Read these as images of the ordered pair . The squared lengths of the two plane components add to the squared length in four dimensions.   "
+},
+{
+  "id": "checkpoint-c2rot-leaving-space",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-leaving-space",
+  "type": "Checkpoint",
+  "number": "2.8.4",
+  "title": "Why is one multiplication not yet our spatial rotation?",
+  "body": " Why is one multiplication not yet our spatial rotation?   Compute the real part of . Then set and follow the input . Does its image still represent a vector in three-dimensional space? Explain why preserving length in four dimensions does not by itself give a rotation of the pure imaginary subspace.   The real part is . In particular, points along the real coordinate direction.  "
+},
+{
+  "id": "def-c2rot-conjugate-norm",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#def-c2rot-conjugate-norm",
+  "type": "Definition",
+  "number": "2.8.5",
+  "title": "Quaternion conjugate and unit quaternion.",
+  "body": " Quaternion conjugate and unit quaternion   For , define its quaternion conjugate and its length by A unit quaternion has .   "
+},
+{
+  "id": "checkpoint-c2rot-inverse",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-inverse",
+  "type": "Checkpoint",
+  "number": "2.8.6",
+  "title": "Find an inverse without guessing.",
+  "body": " Find an inverse without guessing    Write , where , and use to prove .  Deduce that for . Check that are unit quaternions. What is ?    Expand . Real numbers commute with every quaternion, so the mixed terms cancel. For , the inverse is .  "
+},
+{
+  "id": "checkpoint-c2rot-right-basis",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-right-basis",
+  "type": "Checkpoint",
+  "number": "2.8.7",
+  "title": "Which plane reverses its turn?",
+  "body": " Which plane reverses its turn?    Compute , , , and . Compare each with the first row of .  Show that right multiplication by turns the ordered plane through , but turns through .  Predict what happens if you first apply and then . Which plane should stop turning? Which angle should add?    The crucial sign is , so . On the other hand, .  "
+},
+{
+  "id": "tab-c2rot-plane-angles",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#tab-c2rot-plane-angles",
+  "type": "Table",
+  "number": "2.8.8",
+  "title": "Two plane rotations combine.",
+  "body": " Two plane rotations combine.    Ordered plane Left by Right by Combined      "
+},
+{
+  "id": "subsec-c2rot-conjugation-2",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#subsec-c2rot-conjugation-2",
+  "type": "Paragraph (with a defined term)",
+  "number": "",
+  "title": "",
+  "body": "conjugation by "
+},
+{
+  "id": "checkpoint-c2rot-conjugation-basis",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-conjugation-basis",
+  "type": "Checkpoint",
+  "number": "2.8.9",
+  "title": "Check the prediction on all four directions.",
+  "body": " Check the prediction on all four directions    Compute and . Explain why both and return to their starting positions.  Complete this calculation without moving factors past one another: Collect the and terms and use and .  Compute in the same way. Use distributivity to find the image of . Does any real part remain?    Use and in the displayed expansion. For the final part, .  "
+},
+{
+  "id": "checkpoint-c2rot-half-angle",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-half-angle",
+  "type": "Checkpoint",
+  "number": "2.8.10",
+  "title": "Choose the quaternion for a quarter turn.",
+  "body": " Choose the quaternion for a quarter turn    To obtain a spatial angle , what value of should you use? Write the quaternion for a positive rotation about the -axis.  Use your quaternion to rotate . Check your result geometrically in the -plane and compare the squared lengths.  If someone uses in , what spatial angle do they actually get? Test the input .  Why would the analogous complex expression leave every complex number unchanged?    A spatial quarter turn needs and gives in the second part. Complex numbers commute, so their two multipliers can be brought together and cancelled.  "
+},
+{
+  "id": "checkpoint-c2rot-other-axes",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-other-axes",
+  "type": "Checkpoint",
+  "number": "2.8.11",
+  "title": "Use cyclic order to keep the signs straight.",
+  "body": " Use cyclic order to keep the signs straight    For , compute the four images under right multiplication by . Compare the turns in and with left multiplication. Then find all four images under .  Repeat for , using and .  Replace by . Write coordinate rules for rotating about the - and -axes.  Check positive quarter turns: about , should move to ; about , should move to . Where do the other two coordinate directions go in each case?     For the -axis, the coordinate rule is For the -axis, it is In each case the coordinate along the axis stays fixed.   "
+},
+{
+  "id": "checkpoint-c2rot-adapted-basis",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-adapted-basis",
+  "type": "Checkpoint",
+  "number": "2.8.12",
+  "title": "Make a basis suited to the chosen axis.",
+  "body": " Make a basis suited to the chosen axis   Choose any unit vector perpendicular to , write its pure imaginary quaternion as , and set .   Use the scalar-vector product identity to explain why is pure imaginary and corresponds to the unit vector . Why are four mutually perpendicular unit directions?  Use the same product identity to prove . Then use associativity to show You have recovered the multiplication relations needed for two rotating planes.  Compute the images of under left multiplication by and under right multiplication by . Identify the angles in the ordered planes and .  Combine the two maps. Show that conjugation fixes and sends Why is positive motion from toward the right-hand direction about ?     First, and . Then , while . Both operations turn the plane in the same direction.   "
+},
+{
+  "id": "checkpoint-c2rot-vector-formula",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-vector-formula",
+  "type": "Checkpoint",
+  "number": "2.8.13",
+  "title": "Recover a formula using dot and cross products.",
+  "body": " Recover a formula using dot and cross products    Split the vector into components parallel and perpendicular to the axis: Check that .  When , choose in Step 6. Use the image of to obtain Explain separately why this also holds when .  Substitute the component formulas and use to derive This is called Rodrigues' rotation formula . Explain geometrically why the axis component and the length are preserved.    The two perpendicular vectors and have equal length. Their sine-cosine combination is precisely the plane rotation already discovered.  "
+},
+{
+  "id": "ex-c2rot-oblique-half-turn",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#ex-c2rot-oblique-half-turn",
+  "type": "Example",
+  "number": "2.8.14",
+  "title": "A half turn about a tilted axis.",
+  "body": " A half turn about a tilted axis   Rotate through about . Here Direct multiplication gives Thus becomes . The vector formula agrees: The half turn keeps the component along the tilted axis and reverses the perpendicular component.   "
+},
+{
+  "id": "checkpoint-c2rot-final-tests",
+  "level": "2",
+  "url": "sec-2-discovery-project-quaternions-and-rotations.html#checkpoint-c2rot-final-tests",
+  "type": "Checkpoint",
+  "number": "2.8.15",
+  "title": "Three checks on your rotation rule.",
+  "body": " Three checks on your rotation rule    Rotate through about . Show that , and compute the images of by conjugation. Use them to rotate . Check the length and the component along the axis.  Show that and give exactly the same map . What quaternion does the half-angle rule produce for , and why is the resulting spatial map the identity?  Let and . Starting with , apply the -axis quarter turn and then the -axis quarter turn. Reverse the order and compare. Use associativity to show that the first order is represented by : Verify that the last two factors form .     The first rotation cycles . For the third part, the two orders send to and , respectively. A quaternion product encodes the first rotation in its rightmost factor.   "
+},
+{
   "id": "sec-2-chapter-review-and-discovery-problems",
   "level": "1",
   "url": "sec-2-chapter-review-and-discovery-problems.html",
   "type": "Section",
-  "number": "2.8",
+  "number": "2.9",
   "title": "Chapter review and discovery problems",
   "body": " Chapter review and discovery problems   Hamilton's multiplication led us to the dot product and cross product. Determinants then pulled out the deeper quantities: signed area and signed volume. The wedge product kept those quantities in their natural form.  This review is not meant to be a list of formulas to memorize. The goal is to keep the geometric story alive while practicing the computations.    Concept check    Explain the difference between a point and a vector. Why can the same ordered pair represent either one, depending on context?      Complex multiplication by has two geometric effects. What are they?      Why did Hamilton have to give up commutativity when he introduced the quaternion units ?      The quaternion rules include What geometric idea is hidden in this sign change?      When two pure imaginary quaternions are multiplied, their product splits as Which part measures alignment? Which part measures oriented area?      What does mean geometrically, assuming neither vector is zero?      What does mean geometrically?      Why does the cross product point perpendicular to the parallelogram spanned by its inputs?      Explain why is signed area, not just area.      Explain why means that the three vectors do not form a genuine three-dimensional box.      What does it mean for an ordered basis of to be positively oriented?      Why is there no single honest cross product for two vectors in ? What goes wrong with the idea of the perpendicular direction ?      What is the geometric meaning of       Why is       Skills    Compute and interpret geometrically: Write the answer in rectangular form.      Write in polar form. What rotation and scaling does multiplication by this complex number perform?      Use the quaternion rules to compute Then identify the scalar part and the vector part.      Let Compute and the cosine of the angle between them.      Find the projection of onto       A sled is pulled by a force newtons through a displacement meters. Compute the work done:       Compute Then check directly that your answer is perpendicular to both input vectors.      Find a normal vector to the plane spanned by       Find an equation of the plane through with direction vectors       A force is applied at position meters from a pivot. Compute the torque       Compute the signed area: Then interpret the sign.      Find the area of the triangle with vertices Hint: first find the parallelogram area spanned by       Compute the signed volume:       Find the volume of the tetrahedron with vertices Hint: a tetrahedron has one-sixth the volume of the parallelepiped formed by its three edge vectors from one vertex.      A linear grid machine sends and Find the signed area-scaling factor of the machine.      Decide whether the machine in the previous problem preserves orientation, reverses orientation, or collapses area.      Compute for       For compute the three signed shadow areas  and Then compare them with the components of .      Decide whether each ordered triple is positively oriented, negatively oriented, or not a basis:          Discovery problems    Let Show that the components of are the three signed shadow areas:       Use the previous problem to show that This says that the squared area of a parallelogram in space is the sum of the squared areas of its coordinate shadows.      Show directly from the quaternion product that This identity says that the dot product is the symmetric part of the product.      Show directly from the quaternion product that This identity says that the cross product is the antisymmetric part of the product.      Let Prove directly from the formula that is bilinear and alternating.      Let Prove directly from the formula that is bilinear but not alternating.      Let Show that is alternating but not bilinear.      In , let Find two different unit vectors perpendicular to both and . Explain why this prevents a unique normal-vector cross product for two vectors in .      The determinant changes sign when two columns are swapped. Use this fact to explain why changes sign whenever two input vectors are swapped.      A small polar coordinate rectangle has sides when it is located at radius . Use this to explain why the polar area element will later contain the factor  Where does the come from geometrically?      A machine sends the unit square to the parallelogram spanned by Show that its signed area-scaling factor is This number will become the determinant of the matrix       Suppose a machine in space sends to Explain why the signed volume-scaling factor must be       Let Compute Then swap two of the vectors and compute again. What changes? What stays the same?      Find two different ordered bases of that span boxes with the same ordinary volume but opposite orientation.      A parallelogram in space has side vectors and . Its cross product packages the coordinate shadow areas into a vector. But in , there are six coordinate-plane shadows: What does this suggest about why a single normal vector is not enough to represent oriented area in four dimensions?      The next chapter begins with a new kind of object. Instead of measuring one pair of vectors at a time, we let a rule move an entire grid. A square may become a parallelogram, a cube may become a slanted box, and the determinant becomes the scale factor of the whole machine. The machine is called a matrix .   "
 },
@@ -2102,7 +2246,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-point-vs-vector",
   "type": "Exercise",
-  "number": "2.8.1",
+  "number": "2.9.1",
   "title": "",
   "body": "  Explain the difference between a point and a vector. Why can the same ordered pair represent either one, depending on context?   "
 },
@@ -2111,7 +2255,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-complex-effects",
   "type": "Exercise",
-  "number": "2.8.2",
+  "number": "2.9.2",
   "title": "",
   "body": "  Complex multiplication by has two geometric effects. What are they?   "
 },
@@ -2120,7 +2264,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-give-up-commutativity",
   "type": "Exercise",
-  "number": "2.8.3",
+  "number": "2.9.3",
   "title": "",
   "body": "  Why did Hamilton have to give up commutativity when he introduced the quaternion units ?   "
 },
@@ -2129,7 +2273,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-sign-change",
   "type": "Exercise",
-  "number": "2.8.4",
+  "number": "2.9.4",
   "title": "",
   "body": "  The quaternion rules include What geometric idea is hidden in this sign change?   "
 },
@@ -2138,7 +2282,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-product-splits",
   "type": "Exercise",
-  "number": "2.8.5",
+  "number": "2.9.5",
   "title": "",
   "body": "  When two pure imaginary quaternions are multiplied, their product splits as Which part measures alignment? Which part measures oriented area?   "
 },
@@ -2147,7 +2291,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-dot-zero",
   "type": "Exercise",
-  "number": "2.8.6",
+  "number": "2.9.6",
   "title": "",
   "body": "  What does mean geometrically, assuming neither vector is zero?   "
 },
@@ -2156,7 +2300,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-cross-zero",
   "type": "Exercise",
-  "number": "2.8.7",
+  "number": "2.9.7",
   "title": "",
   "body": "  What does mean geometrically?   "
 },
@@ -2165,7 +2309,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-cross-perpendicular",
   "type": "Exercise",
-  "number": "2.8.8",
+  "number": "2.9.8",
   "title": "",
   "body": "  Why does the cross product point perpendicular to the parallelogram spanned by its inputs?   "
 },
@@ -2174,7 +2318,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-signed-area-det",
   "type": "Exercise",
-  "number": "2.8.9",
+  "number": "2.9.9",
   "title": "",
   "body": "  Explain why is signed area, not just area.   "
 },
@@ -2183,7 +2327,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-det-zero-box",
   "type": "Exercise",
-  "number": "2.8.10",
+  "number": "2.9.10",
   "title": "",
   "body": "  Explain why means that the three vectors do not form a genuine three-dimensional box.   "
 },
@@ -2192,7 +2336,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-positively-oriented",
   "type": "Exercise",
-  "number": "2.8.11",
+  "number": "2.9.11",
   "title": "",
   "body": "  What does it mean for an ordered basis of to be positively oriented?   "
 },
@@ -2201,7 +2345,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-no-cross-r4",
   "type": "Exercise",
-  "number": "2.8.12",
+  "number": "2.9.12",
   "title": "",
   "body": "  Why is there no single honest cross product for two vectors in ? What goes wrong with the idea of the perpendicular direction ?   "
 },
@@ -2210,7 +2354,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-wedge-antisymmetry",
   "type": "Exercise",
-  "number": "2.8.13",
+  "number": "2.9.13",
   "title": "",
   "body": "  What is the geometric meaning of    "
 },
@@ -2219,7 +2363,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-wedge-self-zero",
   "type": "Exercise",
-  "number": "2.8.14",
+  "number": "2.9.14",
   "title": "",
   "body": "  Why is    "
 },
@@ -2228,7 +2372,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-complex-product",
   "type": "Exercise",
-  "number": "2.8.1",
+  "number": "2.9.1",
   "title": "",
   "body": "  Compute and interpret geometrically: Write the answer in rectangular form.   "
 },
@@ -2237,7 +2381,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-polar-form",
   "type": "Exercise",
-  "number": "2.8.2",
+  "number": "2.9.2",
   "title": "",
   "body": "  Write in polar form. What rotation and scaling does multiplication by this complex number perform?   "
 },
@@ -2246,7 +2390,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-quaternion-product",
   "type": "Exercise",
-  "number": "2.8.3",
+  "number": "2.9.3",
   "title": "",
   "body": "  Use the quaternion rules to compute Then identify the scalar part and the vector part.   "
 },
@@ -2255,7 +2399,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-dot-norms-cosine",
   "type": "Exercise",
-  "number": "2.8.4",
+  "number": "2.9.4",
   "title": "",
   "body": "  Let Compute and the cosine of the angle between them.   "
 },
@@ -2264,7 +2408,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-projection",
   "type": "Exercise",
-  "number": "2.8.5",
+  "number": "2.9.5",
   "title": "",
   "body": "  Find the projection of onto    "
 },
@@ -2273,7 +2417,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-work",
   "type": "Exercise",
-  "number": "2.8.6",
+  "number": "2.9.6",
   "title": "",
   "body": "  A sled is pulled by a force newtons through a displacement meters. Compute the work done:    "
 },
@@ -2282,7 +2426,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-cross-perp-check",
   "type": "Exercise",
-  "number": "2.8.7",
+  "number": "2.9.7",
   "title": "",
   "body": "  Compute Then check directly that your answer is perpendicular to both input vectors.   "
 },
@@ -2291,7 +2435,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-normal-to-plane",
   "type": "Exercise",
-  "number": "2.8.8",
+  "number": "2.9.8",
   "title": "",
   "body": "  Find a normal vector to the plane spanned by    "
 },
@@ -2300,7 +2444,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-plane-equation",
   "type": "Exercise",
-  "number": "2.8.9",
+  "number": "2.9.9",
   "title": "",
   "body": "  Find an equation of the plane through with direction vectors    "
 },
@@ -2309,7 +2453,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-torque",
   "type": "Exercise",
-  "number": "2.8.10",
+  "number": "2.9.10",
   "title": "",
   "body": "  A force is applied at position meters from a pivot. Compute the torque    "
 },
@@ -2318,7 +2462,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-signed-area-2x2",
   "type": "Exercise",
-  "number": "2.8.11",
+  "number": "2.9.11",
   "title": "",
   "body": "  Compute the signed area: Then interpret the sign.   "
 },
@@ -2327,7 +2471,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-triangle-area",
   "type": "Exercise",
-  "number": "2.8.12",
+  "number": "2.9.12",
   "title": "",
   "body": "  Find the area of the triangle with vertices Hint: first find the parallelogram area spanned by    "
 },
@@ -2336,7 +2480,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-signed-volume-3x3",
   "type": "Exercise",
-  "number": "2.8.13",
+  "number": "2.9.13",
   "title": "",
   "body": "  Compute the signed volume:    "
 },
@@ -2345,7 +2489,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-tetrahedron-volume",
   "type": "Exercise",
-  "number": "2.8.14",
+  "number": "2.9.14",
   "title": "",
   "body": "  Find the volume of the tetrahedron with vertices Hint: a tetrahedron has one-sixth the volume of the parallelepiped formed by its three edge vectors from one vertex.   "
 },
@@ -2354,7 +2498,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-grid-machine-scaling",
   "type": "Exercise",
-  "number": "2.8.15",
+  "number": "2.9.15",
   "title": "",
   "body": "  A linear grid machine sends and Find the signed area-scaling factor of the machine.   "
 },
@@ -2363,7 +2507,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-orientation-decision",
   "type": "Exercise",
-  "number": "2.8.16",
+  "number": "2.9.16",
   "title": "",
   "body": "  Decide whether the machine in the previous problem preserves orientation, reverses orientation, or collapses area.   "
 },
@@ -2372,7 +2516,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-wedge-on-vectors",
   "type": "Exercise",
-  "number": "2.8.17",
+  "number": "2.9.17",
   "title": "",
   "body": "  Compute for    "
 },
@@ -2381,7 +2525,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-three-shadow-areas",
   "type": "Exercise",
-  "number": "2.8.18",
+  "number": "2.9.18",
   "title": "",
   "body": "  For compute the three signed shadow areas  and Then compare them with the components of .   "
 },
@@ -2390,7 +2534,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-orientation-triples",
   "type": "Exercise",
-  "number": "2.8.19",
+  "number": "2.9.19",
   "title": "",
   "body": "  Decide whether each ordered triple is positively oriented, negatively oriented, or not a basis:       "
 },
@@ -2399,7 +2543,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-cross-shadow-components",
   "type": "Exercise",
-  "number": "2.8.1",
+  "number": "2.9.1",
   "title": "",
   "body": "  Let Show that the components of are the three signed shadow areas:    "
 },
@@ -2408,7 +2552,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-pythagoras-shadows",
   "type": "Exercise",
-  "number": "2.8.2",
+  "number": "2.9.2",
   "title": "",
   "body": "  Use the previous problem to show that This says that the squared area of a parallelogram in space is the sum of the squared areas of its coordinate shadows.   "
 },
@@ -2417,7 +2561,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-symmetric-part",
   "type": "Exercise",
-  "number": "2.8.3",
+  "number": "2.9.3",
   "title": "",
   "body": "  Show directly from the quaternion product that This identity says that the dot product is the symmetric part of the product.   "
 },
@@ -2426,7 +2570,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-antisymmetric-part",
   "type": "Exercise",
-  "number": "2.8.4",
+  "number": "2.9.4",
   "title": "",
   "body": "  Show directly from the quaternion product that This identity says that the cross product is the antisymmetric part of the product.   "
 },
@@ -2435,7 +2579,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-bilinear-alternating",
   "type": "Exercise",
-  "number": "2.8.5",
+  "number": "2.9.5",
   "title": "",
   "body": "  Let Prove directly from the formula that is bilinear and alternating.   "
 },
@@ -2444,7 +2588,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-bilinear-not-alternating",
   "type": "Exercise",
-  "number": "2.8.6",
+  "number": "2.9.6",
   "title": "",
   "body": "  Let Prove directly from the formula that is bilinear but not alternating.   "
 },
@@ -2453,7 +2597,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-alternating-not-bilinear",
   "type": "Exercise",
-  "number": "2.8.7",
+  "number": "2.9.7",
   "title": "",
   "body": "  Let Show that is alternating but not bilinear.   "
 },
@@ -2462,7 +2606,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-r4-two-normals",
   "type": "Exercise",
-  "number": "2.8.8",
+  "number": "2.9.8",
   "title": "",
   "body": "  In , let Find two different unit vectors perpendicular to both and . Explain why this prevents a unique normal-vector cross product for two vectors in .   "
 },
@@ -2471,7 +2615,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-triple-wedge-sign",
   "type": "Exercise",
-  "number": "2.8.9",
+  "number": "2.9.9",
   "title": "",
   "body": "  The determinant changes sign when two columns are swapped. Use this fact to explain why changes sign whenever two input vectors are swapped.   "
 },
@@ -2480,7 +2624,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-polar-area-element",
   "type": "Exercise",
-  "number": "2.8.10",
+  "number": "2.9.10",
   "title": "",
   "body": "  A small polar coordinate rectangle has sides when it is located at radius . Use this to explain why the polar area element will later contain the factor  Where does the come from geometrically?   "
 },
@@ -2489,7 +2633,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-unit-square-determinant",
   "type": "Exercise",
-  "number": "2.8.11",
+  "number": "2.9.11",
   "title": "",
   "body": "  A machine sends the unit square to the parallelogram spanned by Show that its signed area-scaling factor is This number will become the determinant of the matrix    "
 },
@@ -2498,7 +2642,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-volume-scaling-det",
   "type": "Exercise",
-  "number": "2.8.12",
+  "number": "2.9.12",
   "title": "",
   "body": "  Suppose a machine in space sends to Explain why the signed volume-scaling factor must be    "
 },
@@ -2507,7 +2651,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-triple-wedge-compute",
   "type": "Exercise",
-  "number": "2.8.13",
+  "number": "2.9.13",
   "title": "",
   "body": "  Let Compute Then swap two of the vectors and compute again. What changes? What stays the same?   "
 },
@@ -2516,7 +2660,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-same-volume-opposite-orientation",
   "type": "Exercise",
-  "number": "2.8.14",
+  "number": "2.9.14",
   "title": "",
   "body": "  Find two different ordered bases of that span boxes with the same ordinary volume but opposite orientation.   "
 },
@@ -2525,7 +2669,7 @@ var ptx_lunr_docs = [
   "level": "2",
   "url": "sec-2-chapter-review-and-discovery-problems.html#ex-c2s8-six-shadows-r4",
   "type": "Exercise",
-  "number": "2.8.15",
+  "number": "2.9.15",
   "title": "",
   "body": "  A parallelogram in space has side vectors and . Its cross product packages the coordinate shadow areas into a vector. But in , there are six coordinate-plane shadows: What does this suggest about why a single normal vector is not enough to represent oriented area in four dimensions?   "
 },
@@ -5389,7 +5533,7 @@ var ptx_lunr_docs = [
   "type": "Section",
   "number": "5.5",
   "title": "Torsion and the Frenet frame",
-  "body": " Torsion and the Frenet frame   measured how strongly a curve bends. A curve in space can do one more thing: it can twist out of the plane in which it is bending.  To see what that means, compare two curves. The circle given by the vector function has curvature The helix from , also has curvature The two curves bend at the same rate, and yet they are not the same shape. The circle stays inside one plane. The helix does not lie in any plane at all.  Here is one way to visualize the difference. Take a piece of wire and bend it. If you keep bending it the same way, the wire stays flat: first an arc, then a circle. To make a coil spring instead, you must keep rotating the plane of bending about the wire. That rotation is what we call twisting, and curvature does not record it. So a curve in space raises two questions rather than one.   How fast is the curve bending? Curvature answers this.  How fast is the plane of bending turning? Torsion will answer this.   Curvature came from the turning of . To measure the second effect, we first complete and to a moving frame of three perpendicular unit vectors.   The binormal and the osculating plane  For the rest of this section, let be a regular curve in , parametrized by arc length, and suppose Then the unit tangent and unit normal vectors are defined, and The vectors and are perpendicular unit vectors. Their cross product gives a third perpendicular unit vector:    Binormal, osculating plane, and Frenet frame   Let be a regular space curve with .  The unit binormal vector is   The plane through spanned by and is called the osculating plane . Its normal vector is .  The ordered triple is called the Frenet frame of the curve.    The word osculating comes from the Latin for kissing . The tangent line touches the curve and matches its direction. The osculating plane does a little better: it holds the tangent direction and also the direction in which the tangent is turning. Of all planes through the point, it is the one that hugs the curve most closely.  Because the Frenet frame is right-handed. Its cross products follow the same cyclic pattern as : Reversing the order reverses the sign. For example, That sign will matter when we derive the formulas for the moving frame.   Why is the binormal perpendicular to the osculating plane?   Explain why is perpendicular to the osculating plane. Why does the order , rather than , matter?    The osculating plane is spanned by and . Recall what the cross product does and how reversing its factors changes its sign.     The Frenet frame moves with the helix. The vectors and span the osculating plane, while is perpendicular to it. (Interactive: drag to rotate, scroll to zoom.)      The frame is attached to the curve, not to the fixed coordinate axes, so all three vectors may turn as the point moves. Curvature already measures how fast turns. Since is the normal vector of the osculating plane, watching turn is the same as watching that plane turn. That is the measurement we want next.    Torsion: how the osculating plane turns  The derivative of has very little freedom. Two short computations show that only one direction is left for it.  First, Differentiating with respect to arc length gives Thus   Also, Differentiate: Since and we get Therefore is perpendicular to both and . The only direction left in the frame is , so must be a scalar multiple of .   Torsion   Let be a regular space curve with . The torsion  is defined by Equivalently,     The scalar multiple is written as rather than . The minus sign is only a convention, chosen so that a right-handed helix rising along the -axis has positive torsion.  Curvature is nonnegative because it is defined as a length. Torsion is signed. Its magnitude is Thus measures how quickly the binormal, and therefore the osculating plane, turns per unit distance traveled. The sign tells us which way the curve twists: a right-handed twist gives , and a left-handed twist gives .  Like curvature, torsion has units A plane curve has a fixed binormal vector, so its torsion is zero wherever its Frenet frame is defined.   Curvature versus torsion   Curvature is always nonnegative, while torsion may be positive or negative. Explain what is different about the two definitions and what geometric information the sign of torsion records.    Curvature is defined using a norm. Torsion is defined as a signed coefficient in .      The Frenet–Serret formulas  We now know how two of the three frame vectors change: and The derivative of is then forced on us by these two formulas.  Since the product rule for cross products gives Now and Therefore   The three equations form one system.   Frenet–Serret formulas   Let be a regular curve in , parametrized by arc length, and suppose . Then its Frenet frame satisfies     The formulas separate two geometric effects.  The coefficient couples and . It records bending inside the osculating plane.  The coefficient couples and . It records twisting of the osculating plane through space.  Both coefficients describe rotation, but about different axes. The term turns the frame about , which moves and within the osculating plane and leaves the plane where it is. The term turns the frame about , which leaves the tangent alone and tips the plane. Indeed is the same as , which is exactly how a vector rotating about at rate behaves.  The same system can be written in matrix form: The coefficient matrix is skew-symmetric: its transpose is its negative. This is not an accident. The Frenet frame may rotate, but its vectors remain mutually perpendicular and keep length . A skew-symmetric matrix is exactly the infinitesimal form of such a rotation.    Computing the frame and torsion from any parameter  Arc length gives the cleanest definitions, but a curve usually arrives written as for some other parameter. We now rewrite the definitions as formulas we can apply directly to , without changing parameter first.  Let be the speed. Since we have Taking the cross product with gives When , this gives the binormal directly: Then The order matters. The cross product would give .  Torsion has an equally compact formula.   Torsion from a parameter   Let be a regular curve in , and suppose Then Equivalently,     We already found Also, Differentiate this expression with respect to . Most resulting terms lie in the span of and . The only term that can have a binormal component comes from differentiating : By the chain rule and the Frenet–Serret formula, Therefore the binormal component of is Taking the dot product with gives On the other hand, Dividing gives the formula for .    The numerator is a scalar triple product, and a scalar triple product is a signed volume. This is where the sign of the torsion comes from: the three derivative vectors sit in space with a handedness, and reversing that handedness reverses the sign of .   A practical computation order  For a curve with compute      The circular helix revisited  We can now work out the whole frame, together with both curvature and torsion, for the helix from .   The Frenet frame and torsion of a helix   Let We already know that and The first three derivatives are  and Also, The numerator in the torsion formula is The denominator is Therefore   The Frenet frame is  and   We can check the torsion sign directly. Differentiate : Since we have Thus the defining equation indeed gives   The circle of radius and this helix have the same curvature, but their torsions are different: Curvature separates straightness from bending. Torsion separates planar bending from spatial twisting.    More generally, the circular helix has Changing the sign of reverses the handedness of the helix. This reverses the sign of and leaves unchanged.    Zero torsion and plane curves  This brings us back to the wire. The circle had zero torsion and stayed flat, while the helix had positive torsion and climbed out of every plane. That was not a coincidence. Whenever the Frenet frame is defined, zero torsion is exactly the condition for a curve to be flat.   Torsion detects planarity   Let be a regular curve on a connected interval, parametrized by arc length, and suppose throughout the interval. Then the image of lies in a fixed plane if and only if throughout the interval.    Suppose first that the curve lies in a fixed plane. Let be a fixed unit normal to that plane. Both and lie in the plane, so is either or . Because varies continuously on a connected interval, it cannot jump from one choice to the other. Thus is constant. Hence so   Conversely, suppose . The third Frenet–Serret formula gives Therefore is a fixed vector. Since and we have Thus for some constant . This is the equation of one fixed plane with normal . The entire curve lies in that plane.    The assumption is doing real work in this theorem, as the next example shows.   Why nonzero curvature is required   Consider the straight line It is certainly planar, and its curvature is But so the curve does not choose a principal normal . Without , the binormal and the torsion are not defined by the Frenet construction.  The theorem assumes not because a straight line fails to be planar, but because the Frenet frame itself needs a direction in which the tangent is turning.    Curvature and torsion now give two independent rates:  The Frenet–Serret equations show how these two functions control the motion of the whole frame. A theorem we will not prove here says more: when , the two functions and determine the curve completely, up to a translation and a rotation. Curvature and torsion together are a fingerprint of the shape.    Looking ahead  The Frenet frame moves because the curve bends and twists. uses a different moving frame, the polar vectors and , which move because the coordinate directions themselves change. In both cases the lesson is the same: when a basis moves, its derivatives carry geometric information.   "
+  "body": " Torsion and the Frenet frame   measured how strongly a curve bends. A curve in space can do one more thing: it can twist out of the plane in which it is bending.  To see what that means, compare two curves. The circle given by the vector function has curvature The helix from , also has curvature The two curves bend at the same rate, and yet they are not the same shape. The circle stays inside one plane. The helix does not lie in any plane at all.  Here is one way to visualize the difference. Take a piece of wire and bend it. If you keep bending it the same way, the wire stays flat: first an arc, then a circle. To make a coil spring instead, you must keep rotating the plane of bending about the wire. That rotation is what we call twisting, and curvature does not record it. So a curve in space raises two questions rather than one.   How fast is the curve bending? Curvature answers this.  How fast is the plane of bending turning? Torsion will answer this.   Curvature came from the turning of . To measure the second effect, we first complete and to a moving frame of three perpendicular unit vectors.   The binormal and the osculating plane  For the rest of this section, let be a regular curve in , parametrized by arc length, and suppose Then the unit tangent and unit normal vectors are defined, and The vectors and are perpendicular unit vectors. Their cross product gives a third perpendicular unit vector:    Binormal, osculating plane, and Frenet frame   Let be a regular space curve with .  The unit binormal vector is   The plane through spanned by and is called the osculating plane . Its normal vector is .  The ordered triple is called the Frenet frame of the curve.    The word osculating comes from the Latin for kissing . The tangent line touches the curve and matches its direction. The osculating plane does a little better: it holds the tangent direction and also the direction in which the tangent is turning. Of all planes through the point, it is the one that hugs the curve most closely.  Because the Frenet frame is right-handed. Its cross products follow the same cyclic pattern as : Reversing the order reverses the sign. For example, That sign will matter when we derive the formulas for the moving frame.   Why is the binormal perpendicular to the osculating plane?   Explain why is perpendicular to the osculating plane. Why does the order , rather than , matter?    The osculating plane is spanned by and . Recall what the cross product does and how reversing its factors changes its sign.     The Frenet frame moves with the helix. The vectors and span the osculating plane, while is perpendicular to it. (Interactive: drag to rotate, scroll to zoom.)      The frame is attached to the curve, not to the fixed coordinate axes, so all three vectors may turn as the point moves. Curvature already measures how fast turns. Since is the normal vector of the osculating plane, watching turn is the same as watching that plane turn. That is the measurement we want next.    Torsion: how the osculating plane turns  The derivative of has very little freedom. Two short computations show that only one direction is left for it.  First, Differentiating with respect to arc length gives Thus   Also, Differentiate: Since and we get Therefore is perpendicular to both and . The only direction left in the frame is , so must be a scalar multiple of .   Torsion   Let be a regular space curve with . The torsion  is defined by Equivalently,     The scalar multiple is written as rather than . The minus sign is only a convention, chosen so that a right-handed helix rising along the -axis has positive torsion.  Curvature is nonnegative because it is defined as a length. Torsion is signed. Its magnitude is Thus measures how quickly the binormal, and therefore the osculating plane, turns per unit distance traveled. The sign tells us which way the curve twists: a right-handed twist gives , and a left-handed twist gives .  Like curvature, torsion has units A plane curve has a fixed binormal vector, so its torsion is zero wherever its Frenet frame is defined.   Curvature versus torsion   Curvature is always nonnegative, while torsion may be positive or negative. Explain what is different about the two definitions and what geometric information the sign of torsion records.    Curvature is defined using a norm. Torsion is defined as a signed coefficient in .      The Frenet–Serret formulas  We now know how two of the three frame vectors change: and The derivative of is then forced on us by these two formulas.  Since the product rule for cross products gives Now and Therefore   The three equations form one system.   Frenet–Serret formulas   Let be a regular curve in , parametrized by arc length, and suppose . Then its Frenet frame satisfies     The formulas separate two geometric effects.  The coefficient couples and . It records bending inside the osculating plane.  The coefficient couples and . It records twisting of the osculating plane through space.  Both coefficients describe rotation, but about different axes. The term turns the frame about , which moves and within the osculating plane and leaves the plane where it is. The term turns the frame about , which leaves the tangent alone and tips the plane. Indeed is the same as , which is exactly how a vector rotating about at rate behaves.  The same system can be written in matrix form: The coefficient matrix is skew-symmetric: its transpose is its negative. A skew-symmetric matrix is exactly the infinitesimal form of such a rotation.    Computing the frame and torsion from any parameter  Arc length gives the cleanest definitions, but a curve usually arrives written as for some other parameter. We now rewrite the definitions as formulas we can apply directly to , without changing parameter first.  Let be the speed. Since we have Taking the cross product with gives When , this gives the binormal directly: Then The order matters. The cross product would give .  Torsion has an equally compact formula.   Torsion from a parameter   Let be a regular curve in , and suppose Then Equivalently,     We already found Also, Differentiate this expression with respect to . Most resulting terms lie in the span of and . The only term that can have a binormal component comes from differentiating : By the chain rule and the Frenet–Serret formula, Therefore the binormal component of is Taking the dot product with gives On the other hand, Dividing gives the formula for .    The numerator is a scalar triple product, and a scalar triple product is a signed volume. This is where the sign of the torsion comes from: the three derivative vectors sit in space with a handedness, and reversing that handedness reverses the sign of .   A practical computation order  For a curve with compute      The circular helix revisited  We can now work out the whole frame, together with both curvature and torsion, for the helix from .   The Frenet frame and torsion of a helix   Let We already know that and The first three derivatives are  and Also, The numerator in the torsion formula is The denominator is Therefore   The Frenet frame is  and   We can check the torsion sign directly. Differentiate : Since we have Thus the defining equation indeed gives   The circle of radius and this helix have the same curvature, but their torsions are different: Curvature separates straightness from bending. Torsion separates planar bending from spatial twisting.    More generally, the circular helix has Changing the sign of reverses the handedness of the helix. This reverses the sign of and leaves unchanged.    Zero torsion and plane curves  This brings us back to the wire. The circle had zero torsion and stayed flat, while the helix had positive torsion and climbed out of every plane. That was not a coincidence. Whenever the Frenet frame is defined, zero torsion is exactly the condition for a curve to be flat.   Torsion detects planarity   Let be a regular curve on a connected interval, parametrized by arc length, and suppose throughout the interval. Then the image of lies in a fixed plane if and only if throughout the interval.    Suppose first that the curve lies in a fixed plane. Let be a fixed unit normal to that plane. Both and lie in the plane, so is either or . Because varies continuously on a connected interval, it cannot jump from one choice to the other. Thus is constant. Hence so   Conversely, suppose . The third Frenet–Serret formula gives Therefore is a fixed vector. Since and we have Thus for some constant . This is the equation of one fixed plane with normal . The entire curve lies in that plane.    The assumption is doing real work in this theorem, as the next example shows.   Why nonzero curvature is required   Consider the straight line It is certainly planar, and its curvature is But so the curve does not choose a principal normal . Without , the binormal and the torsion are not defined by the Frenet construction.  The theorem assumes not because a straight line fails to be planar, but because the Frenet frame itself needs a direction in which the tangent is turning.    Curvature and torsion now give two independent rates:  The Frenet–Serret equations show how these two functions control the motion of the whole frame. A theorem we will not prove here says more: when , the two functions and determine the curve completely, up to a translation and a rotation. Curvature and torsion together are a fingerprint of the shape.    Looking ahead  The Frenet frame moves because the curve bends and twists. uses a different moving frame, the polar vectors and , which move because the coordinate directions themselves change. In both cases the lesson is the same: when a basis moves, its derivatives carry geometric information.   "
 },
 {
   "id": "c5s4add-def-binormal-osculating-frenet-frame",
