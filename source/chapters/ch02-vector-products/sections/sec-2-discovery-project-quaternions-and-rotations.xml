@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original discovery project, authored directly in PreTeXt. -->
+<section xml:id="sec-2-discovery-project-quaternions-and-rotations" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Discovery project: quaternions and rotations</title>
+
+  <introduction>
+    <p>
+      In the complex plane, multiplication can turn an arrow without changing its length.
+      Can quaternion multiplication do the same thing for an arrow in space? There is a
+      small obstacle: a quaternion has four real coordinates, while our arrow has only three.
+      This project uses that extra coordinate to discover how spatial rotations work.
+    </p>
+    <p>
+      Work through the steps in order. Keep the quaternion multiplication table from
+      <xref ref="tab-c2s2-quaternion-multiplication"/> nearby, and sketch the two-dimensional
+      planes as they appear. You will need distributivity, the dot and cross products, and
+      the angle-addition identities for sine and cosine. No matrix formulas are needed.
+      Try each checkpoint before opening its hint.
+    </p>
+    <p>
+      Throughout the project, vectors move while the coordinate axes stay fixed. Positive
+      spatial angles follow the right-hand rule: point your right thumb along the positive
+      axis and curl your fingers in the direction of the turn. We use <m>\phi</m> for the
+      angle in a quaternion exponential and reserve <m>\theta</m> for the eventual angle of
+      rotation in three-dimensional space. Discovering their relationship is part of the work.
+    </p>
+  </introduction>
+
+  <subsection xml:id="subsec-c2rot-complex-plane">
+    <title>Step 1: recall how complex multiplication turns a plane</title>
+
+    <p>
+      Recall from <xref ref="sec-2-complex-numbers-as-a-warm-up"/> that
+      <md>e^{i\phi}=\cos\phi+i\sin\phi.</md>
+      For the next few steps, abbreviate <m>c=\cos\phi</m> and <m>s=\sin\phi</m>.
+      The complex plane has the ordered basis <m>(1,i)</m>: draw <m>1</m> to the right and
+      <m>i</m> upward.
+    </p>
+
+    <exercise xml:id="checkpoint-c2rot-complex-basis">
+      <title>Follow the two basis arrows</title>
+      <statement>
+        <ol>
+          <li><p>Compute <m>(c+si)1</m> and <m>(c+si)i</m>. Draw their images when
+            <m>\phi=\pi/6</m>. What angle has each arrow turned?</p></li>
+          <li><p>Use distributivity to find <m>(c+si)(x+yi)</m>. Write the resulting
+            coordinates, and check that their squared length is <m>x^2+y^2</m>.</p></li>
+          <li><p>Write <m>x+yi=r(\cos\alpha+i\sin\alpha)</m>. Use the angle-addition
+            identities to show that multiplication replaces <m>\alpha</m> by
+            <m>\alpha+\phi</m>. Why does this establish a rotation for every arrow?</p></li>
+        </ol>
+      </statement>
+      <hint>
+        <p>The basis images are <m>c+si</m> and <m>-s+ci</m>. In the length calculation,
+          the mixed terms cancel and <m>c^2+s^2=1</m>.</p>
+      </hint>
+    </exercise>
+
+    <p>
+      Keep the resulting pattern in view:
+      <md>(x,y)\longmapsto(cx-sy,sx+cy).</md>
+      More generally, in a plane with ordered perpendicular unit directions <m>(A,B)</m>,
+      a positive turn through <m>\phi</m> sends
+      <md>A\longmapsto cA+sB,\qquad B\longmapsto-sA+cB.</md>
+      The order matters: a small positive angle turns the first direction toward the second.
+      We will recognize rotations by this pattern, even when the plane sits in four dimensions.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-c2rot-left-multiplication">
+    <title>Step 2: find two rotating planes inside four dimensions</title>
+
+    <p>
+      Regard the quaternion space <m>\mathbb H</m> as the real coordinate space
+      <md>a_0+a_1i+a_2j+a_3k\quad\longleftrightarrow\quad(a_0,a_1,a_2,a_3).</md>
+      Its four perpendicular unit directions are <m>1,i,j,k</m>. The direction <m>1</m>
+      is a genuine coordinate direction here. It is perpendicular to the three-dimensional
+      subspace of pure imaginary quaternions.
+    </p>
+    <p>
+      Each of <m>i,j,k</m> squares to <m>-1</m>. Thus each gives its own version of
+      Euler's formula:
+      <md>
+        <mrow>q_i=e^{i\phi}\amp=c+si,</mrow>
+        <mrow>q_j=e^{j\phi}\amp=c+sj,</mrow>
+        <mrow>q_k=e^{k\phi}\amp=c+sk.</mrow>
+      </md>
+      If you recall the exponential series, this follows by grouping its even and odd powers:
+      for <m>E=i,j,k</m>,
+      <md>
+        <mrow>e^{E\phi}\amp=\left(1-\frac{\phi^2}{2!}+\frac{\phi^4}{4!}-\cdots\right)</mrow>
+        <mrow>\amp\qquad+E\left(\phi-\frac{\phi^3}{3!}+\frac{\phi^5}{5!}-\cdots\right).</mrow>
+      </md>
+      You may use the sine-cosine expressions directly for all the calculations below.
+    </p>
+
+    <exercise xml:id="checkpoint-c2rot-left-basis">
+      <title>Multiply every basis direction on the left</title>
+      <statement>
+        <p>
+          Define <m>L_{q_i}(X)=q_iX</m>, and similarly for <m>q_j,q_k</m>.
+          Here <m>X</m> can be any quaternion. Verify the first row of the table and fill
+          every question mark in the other two rows. Keep the multiplier on the left.
+        </p>
+        <table xml:id="tab-c2rot-left-basis">
+          <title>Images of the four basis directions under left multiplication.</title>
+          <tabular>
+            <row header="yes" bottom="medium">
+              <cell>Multiplier</cell><cell><m>1</m></cell><cell><m>i</m></cell><cell><m>j</m></cell><cell><m>k</m></cell>
+            </row>
+            <row><cell><m>q_i</m></cell><cell><m>c+si</m></cell><cell><m>-s+ci</m></cell><cell><m>cj+sk</m></cell><cell><m>-sj+ck</m></cell></row>
+            <row><cell><m>q_j</m></cell><cell><m>?</m></cell><cell><m>?</m></cell><cell><m>?</m></cell><cell><m>?</m></cell></row>
+            <row><cell><m>q_k</m></cell><cell><m>?</m></cell><cell><m>?</m></cell><cell><m>?</m></cell><cell><m>?</m></cell></row>
+          </tabular>
+        </table>
+        <ol>
+          <li><p>For <m>L_{q_i}</m>, recognize the rotation pattern in the ordered planes
+            <m>(1,i)</m> and <m>(j,k)</m>. Sketch these as two separate ordinary planes.
+            Mark the angle <m>\phi</m> in each.</p></li>
+          <li><p>For <m>L_{q_j}</m>, use the ordered planes <m>(1,j)</m> and <m>(k,i)</m>.
+            For <m>L_{q_k}</m>, use <m>(1,k)</m> and <m>(i,j)</m>. Check that both planes
+            in each pair turn by <m>+\phi</m>. Why would writing <m>(i,k)</m> in place of
+            <m>(k,i)</m> reverse the reported sign?</p></li>
+          <li><p>Use the two perpendicular planes to explain why each map preserves
+            <m>|X|^2</m>, the sum of the four squared real coordinates.</p></li>
+        </ol>
+      </statement>
+      <hint>
+        <p>For example, <m>q_jk=ck+s(jk)=ck+si</m>, while
+          <m>q_ji=ci+s(ji)=ci-sk</m>. Read these as images of the ordered pair
+          <m>(k,i)</m>. The squared lengths of the two plane components add to
+          the squared length in four dimensions.</p>
+      </hint>
+    </exercise>
+
+    <exercise xml:id="checkpoint-c2rot-leaving-space">
+      <title>Why is one multiplication not yet our spatial rotation?</title>
+      <statement>
+        <p>
+          Compute the real part of <m>q_i(xi+yj+zk)</m>. Then set <m>\phi=\pi/2</m>
+          and follow the input <m>i</m>. Does its image still represent a vector in
+          three-dimensional space? Explain why preserving length in four dimensions
+          does not by itself give a rotation of the pure imaginary subspace.
+        </p>
+      </statement>
+      <hint><p>The real part is <m>-sx</m>. In particular, <m>ii=-1</m> points along
+        the real coordinate direction.</p></hint>
+    </exercise>
+  </subsection>
+
+  <subsection xml:id="subsec-c2rot-right-multiplication">
+    <title>Step 3: use right multiplication to control the two turns</title>
+
+    <definition xml:id="def-c2rot-conjugate-norm">
+      <title>Quaternion conjugate and unit quaternion</title>
+      <statement>
+        <p>
+          For <m>q=a_0+a_1i+a_2j+a_3k</m>, define its <term>quaternion conjugate</term> and
+          its length by
+          <md>
+            <mrow>\overline q\amp=a_0-a_1i-a_2j-a_3k,</mrow>
+            <mrow>|q|\amp=\sqrt{a_0^2+a_1^2+a_2^2+a_3^2}.</mrow>
+          </md>
+          A <term>unit quaternion</term> has <m>|q|=1</m>.
+        </p>
+      </statement>
+    </definition>
+
+    <exercise xml:id="checkpoint-c2rot-inverse">
+      <title>Find an inverse without guessing</title>
+      <statement>
+        <ol>
+          <li><p>Write <m>q=a_0+V</m>, where <m>V=a_1i+a_2j+a_3k</m>, and use
+            <m>V^2=-(a_1^2+a_2^2+a_3^2)</m> to prove
+            <m>q\overline q=\overline q q=|q|^2</m>.</p></li>
+          <li><p>Deduce that <m>q^{-1}=\overline q/|q|^2</m> for <m>q\ne0</m>.
+            Check that <m>q_i,q_j,q_k</m> are unit quaternions. What is
+            <m>q_i^{-1}</m>?</p></li>
+        </ol>
+      </statement>
+      <hint><p>Expand <m>(a_0+V)(a_0-V)</m>. Real numbers commute with every quaternion,
+        so the mixed terms cancel. For <m>q_i</m>, the inverse is <m>c-si</m>.</p></hint>
+    </exercise>
+
+    <p>
+      Now try the map <m>R_{q_i^{-1}}(X)=Xq_i^{-1}=X(c-si)</m>.
+      Because multiplication does not commute, changing sides may change the geometry.
+    </p>
+
+    <exercise xml:id="checkpoint-c2rot-right-basis">
+      <title>Which plane reverses its turn?</title>
+      <statement>
+        <ol>
+          <li><p>Compute <m>1(c-si)</m>, <m>i(c-si)</m>, <m>j(c-si)</m>, and
+            <m>k(c-si)</m>. Compare each with the first row of
+            <xref ref="tab-c2rot-left-basis"/>.</p></li>
+          <li><p>Show that right multiplication by <m>q_i^{-1}</m> turns the ordered
+            plane <m>(1,i)</m> through <m>-\phi</m>, but turns <m>(j,k)</m> through
+            <m>+\phi</m>.</p></li>
+          <li><p>Predict what happens if you first apply <m>L_{q_i}</m> and then
+            <m>R_{q_i^{-1}}</m>. Which plane should stop turning? Which angle should add?</p></li>
+        </ol>
+      </statement>
+      <hint><p>The crucial sign is <m>ji=-k</m>, so
+        <m>j(c-si)=cj-sji=cj+sk</m>. On the other hand, <m>i(c-si)=s+ci</m>.</p></hint>
+    </exercise>
+
+    <p>Record your prediction in this table before multiplying the two operations out.</p>
+    <table xml:id="tab-c2rot-plane-angles">
+      <title>Two plane rotations combine.</title>
+      <tabular>
+        <row header="yes" bottom="medium">
+          <cell>Ordered plane</cell><cell>Left by <m>q_i</m></cell><cell>Right by <m>q_i^{-1}</m></cell><cell>Combined</cell>
+        </row>
+        <row><cell><m>(1,i)</m></cell><cell><m>+\phi</m></cell><cell><m>-\phi</m></cell><cell><m>?</m></cell></row>
+        <row><cell><m>(j,k)</m></cell><cell><m>+\phi</m></cell><cell><m>+\phi</m></cell><cell><m>?</m></cell></row>
+      </tabular>
+    </table>
+  </subsection>
+
+  <subsection xml:id="subsec-c2rot-conjugation">
+    <title>Step 4: discover a spatial rotation and its half-angle</title>
+
+    <p>
+      The combined operation is
+      <md>C_{q_i}(X)=q_iXq_i^{-1}.</md>
+      It is called <term>conjugation by <m>q_i</m></term>. Distinguish this map from
+      taking the quaternion conjugate <m>\overline X</m>: conjugation by a fixed
+      quaternion means multiplying on the left by that quaternion and on the right
+      by its inverse.
+    </p>
+
+    <exercise xml:id="checkpoint-c2rot-conjugation-basis">
+      <title>Check the prediction on all four directions</title>
+      <statement>
+        <ol>
+          <li><p>Compute <m>q_i1q_i^{-1}</m> and <m>q_iiq_i^{-1}</m>. Explain why
+            both <m>1</m> and <m>i</m> return to their starting positions.</p></li>
+          <li><p>Complete this calculation without moving factors past one another:
+            <md>
+              <mrow>q_ijq_i^{-1}\amp=(cj+sk)(c-si)</mrow>
+              <mrow>\amp=c^2j-csji+sck-s^2ki.</mrow>
+            </md>
+            Collect the <m>j</m> and <m>k</m> terms and use
+            <m>c^2-s^2=\cos(2\phi)</m> and <m>2cs=\sin(2\phi)</m>.</p></li>
+          <li><p>Compute <m>q_ikq_i^{-1}</m> in the same way. Use distributivity to
+            find the image of <m>xi+yj+zk</m>. Does any real part remain?</p></li>
+        </ol>
+      </statement>
+      <hint><p>Use <m>ji=-k</m> and <m>ki=j</m> in the displayed expansion.
+        For the final part, <m>C_{q_i}(xi+yj+zk)=xC_{q_i}(i)+yC_{q_i}(j)+zC_{q_i}(k)</m>.</p></hint>
+    </exercise>
+
+    <p>
+      Check your result against the coordinate rule
+      <md>
+        (x,y,z)\longmapsto
+        \bigl(x,\ y\cos(2\phi)-z\sin(2\phi),\ y\sin(2\phi)+z\cos(2\phi)\bigr).
+      </md>
+      The <m>x</m>-coordinate stays fixed, and the <m>yz</m>-plane follows the complex
+      rotation pattern. Thus the pure imaginary subspace stays pure imaginary. It rotates
+      about the <m>+i</m> axis, with positive motion from <m>j</m> toward <m>k</m>.
+      The angle is <m>2\phi</m>: the two four-dimensional turns cancelled in <m>(1,i)</m>
+      and added in <m>(j,k)</m>.
+    </p>
+
+    <exercise xml:id="checkpoint-c2rot-half-angle">
+      <title>Choose the quaternion for a quarter turn</title>
+      <statement>
+        <ol>
+          <li><p>To obtain a spatial angle <m>\theta</m>, what value of <m>\phi</m>
+            should you use? Write the quaternion for a positive <m>\pi/2</m> rotation
+            about the <m>x</m>-axis.</p></li>
+          <li><p>Use your quaternion to rotate <m>V=i+2j+3k</m>. Check your result
+            geometrically in the <m>yz</m>-plane and compare the squared lengths.</p></li>
+          <li><p>If someone uses <m>q=i=e^{i\pi/2}</m> in <m>qVq^{-1}</m>, what
+            spatial angle do they actually get? Test the input <m>j</m>.</p></li>
+          <li><p>Why would the analogous complex expression
+            <m>e^{i\phi}ze^{-i\phi}</m> leave every complex number <m>z</m> unchanged?</p></li>
+        </ol>
+      </statement>
+      <hint><p>A spatial quarter turn needs <m>q=(1+i)/\sqrt2</m> and gives
+        <m>i-3j+2k</m> in the second part. Complex numbers commute, so their two
+        multipliers can be brought together and cancelled.</p></hint>
+    </exercise>
+  </subsection>
+
+  <subsection xml:id="subsec-c2rot-other-coordinate-axes">
+    <title>Step 5: rotate about the other coordinate axes</title>
+
+    <p>
+      Return to your rows for <m>q_j</m> and <m>q_k</m> in
+      <xref ref="tab-c2rot-left-basis"/>. The same cancellation-and-addition mechanism
+      should work, with the quaternion units in cyclic order.
+    </p>
+
+    <exercise xml:id="checkpoint-c2rot-other-axes">
+      <title>Use cyclic order to keep the signs straight</title>
+      <statement>
+        <ol>
+          <li><p>For <m>q_j=c+sj</m>, compute the four images under right multiplication
+            by <m>c-sj</m>. Compare the turns in <m>(1,j)</m> and <m>(k,i)</m> with
+            left multiplication. Then find all four images under
+            <m>X\longmapsto q_jXq_j^{-1}</m>.</p></li>
+          <li><p>Repeat for <m>q_k=c+sk</m>, using <m>(1,k)</m> and <m>(i,j)</m>.</p></li>
+          <li><p>Replace <m>2\phi</m> by <m>\theta</m>. Write coordinate rules for
+            rotating <m>(x,y,z)</m> about the <m>y</m>- and <m>z</m>-axes.</p></li>
+          <li><p>Check positive quarter turns: about <m>+j</m>, <m>k</m> should move
+            to <m>i</m>; about <m>+k</m>, <m>i</m> should move to <m>j</m>.
+            Where do the other two coordinate directions go in each case?</p></li>
+        </ol>
+      </statement>
+      <hint>
+        <p>For the <m>y</m>-axis, the coordinate rule is
+          <md>(x,y,z)\longmapsto(x\cos\theta+z\sin\theta,\ y,\ -x\sin\theta+z\cos\theta).</md>
+          For the <m>z</m>-axis, it is
+          <md>(x,y,z)\longmapsto(x\cos\theta-y\sin\theta,\ x\sin\theta+y\cos\theta,\ z).</md>
+          In each case the coordinate along the axis stays fixed.</p>
+      </hint>
+    </exercise>
+  </subsection>
+
+  <subsection xml:id="subsec-c2rot-arbitrary-axis">
+    <title>Step 6: build the same two planes around any axis</title>
+
+    <p>
+      A rotation axis need not be a coordinate axis. Choose a unit vector
+      <m>\mathbf u=(u_1,u_2,u_3)</m> and represent it by
+      <md>U=u_1i+u_2j+u_3k,\qquad u_1^2+u_2^2+u_3^2=1.</md>
+      The identity in <xref ref="thm-c2s2-squaring-pure-imaginary"/> gives
+      <m>U^2=-1</m>. Thus <m>U</m> can play the role of an imaginary unit, and
+      <md>q=e^{U\phi}=\cos\phi+U\sin\phi=c+sU</md>
+      is a unit quaternion with inverse <m>c-sU</m>.
+    </p>
+
+    <exercise xml:id="checkpoint-c2rot-adapted-basis">
+      <title>Make a basis suited to the chosen axis</title>
+      <statement>
+        <p>
+          Choose any unit vector <m>\mathbf b</m> perpendicular to <m>\mathbf u</m>,
+          write its pure imaginary quaternion as <m>B</m>, and set <m>W=UB</m>.
+        </p>
+        <ol>
+          <li><p>Use the scalar-vector product identity
+            <m>UB=-\mathbf u\cdot\mathbf b+\mathbf u\times\mathbf b</m>
+            to explain why <m>W</m> is pure imaginary and corresponds to the unit vector
+            <m>\mathbf u\times\mathbf b</m>. Why are <m>1,U,B,W</m> four mutually
+            perpendicular unit directions?</p></li>
+          <li><p>Use the same product identity to prove <m>BU=-UB=-W</m>.
+            Then use associativity to show
+            <md>UW=-B,\qquad WU=B.</md>
+            You have recovered the multiplication relations needed for two rotating planes.</p></li>
+          <li><p>Compute the images of <m>1,U,B,W</m> under left multiplication by
+            <m>c+sU</m> and under right multiplication by <m>c-sU</m>. Identify the
+            angles in the ordered planes <m>(1,U)</m> and <m>(B,W)</m>.</p></li>
+          <li><p>Combine the two maps. Show that conjugation fixes <m>1,U</m> and sends
+            <md>
+              <mrow>B\amp\longmapsto\cos(2\phi)B+\sin(2\phi)W,</mrow>
+              <mrow>W\amp\longmapsto-\sin(2\phi)B+\cos(2\phi)W.</mrow>
+            </md>
+            Why is positive motion from <m>B</m> toward <m>W=UB</m> the right-hand
+            direction about <m>\mathbf u</m>?</p></li>
+        </ol>
+      </statement>
+      <hint>
+        <p>
+          First, <m>UW=U(UB)=U^2B=-B</m> and
+          <m>WU=(UB)U=U(BU)=-U(UB)=B</m>.
+          Then <m>qB=cB+sW</m>, while <m>Bq^{-1}=cB-sBU=cB+sW</m>.
+          Both operations turn the <m>(B,W)</m> plane in the same direction.
+        </p>
+      </hint>
+    </exercise>
+
+    <p>
+      We have reduced the general axis to the same picture as the <m>i</m>-axis.
+      Every spatial vector is a real linear combination of <m>U,B,W</m>. Conjugation
+      fixes its component along <m>U</m> and rotates its perpendicular component in
+      <m>(B,W)</m>. The real coordinate stays zero. Since the three spatial basis
+      directions are perpendicular unit vectors, this operation preserves lengths and
+      angles and gives a rotation about the line through the origin in direction
+      <m>\mathbf u</m>.
+    </p>
+  </subsection>
+
+  <subsection xml:id="subsec-c2rot-rotation-recipe">
+    <title>Step 7: turn the discovery into a usable formula</title>
+
+    <p>
+      You can now assemble the rotation rule. For a desired angle <m>\theta</m> about
+      a unit axis <m>\mathbf u</m>, use the half-angle:
+      <md>
+        <mrow>q\amp=\cos\frac{\theta}{2}+U\sin\frac{\theta}{2},</mrow>
+        <mrow>q^{-1}=\overline q\amp=\cos\frac{\theta}{2}-U\sin\frac{\theta}{2}.</mrow>
+      </md>
+      Encode <m>\mathbf v=(x,y,z)</m> as <m>V=xi+yj+zk</m>, and compute
+      <md>\boxed{V'=qV\overline q.}</md>
+      The coefficients of <m>i,j,k</m> in <m>V'</m> are the rotated vector's coordinates.
+    </p>
+
+    <exercise xml:id="checkpoint-c2rot-vector-formula">
+      <title>Recover a formula using dot and cross products</title>
+      <statement>
+        <ol>
+          <li><p>Split the vector into components parallel and perpendicular to the axis:
+            <md>
+              \mathbf v_{\parallel}=(\mathbf u\cdot\mathbf v)\mathbf u,\qquad
+              \mathbf v_{\perp}=\mathbf v-\mathbf v_{\parallel}.
+            </md>
+            Check that <m>\mathbf u\cdot\mathbf v_{\perp}=0</m>.</p></li>
+          <li><p>When <m>\mathbf v_{\perp}\ne\mathbf0</m>, choose
+            <m>\mathbf b=\mathbf v_{\perp}/\|\mathbf v_{\perp}\|</m> in Step 6.
+            Use the image of <m>B</m> to obtain
+            <md>
+              \mathbf v'=\mathbf v_{\parallel}+\cos\theta\,\mathbf v_{\perp}
+              +\sin\theta\,(\mathbf u\times\mathbf v_{\perp}).
+            </md>
+            Explain separately why this also holds when <m>\mathbf v_{\perp}=\mathbf0</m>.</p></li>
+          <li><p>Substitute the component formulas and use
+            <m>\mathbf u\times\mathbf v_{\parallel}=\mathbf0</m> to derive
+            <md>
+              <mrow>\mathbf v'\amp=\cos\theta\,\mathbf v
+                +(1-\cos\theta)(\mathbf u\cdot\mathbf v)\mathbf u</mrow>
+              <mrow>\amp\qquad+\sin\theta\,(\mathbf u\times\mathbf v).</mrow>
+            </md>
+            This is called <term>Rodrigues' rotation formula</term>. Explain geometrically
+            why the axis component and the length are preserved.</p></li>
+        </ol>
+      </statement>
+      <hint><p>The two perpendicular vectors <m>\mathbf v_{\perp}</m> and
+        <m>\mathbf u\times\mathbf v_{\perp}</m> have equal length. Their sine-cosine
+        combination is precisely the plane rotation already discovered.</p></hint>
+    </exercise>
+
+    <example xml:id="ex-c2rot-oblique-half-turn">
+      <title>A half turn about a tilted axis</title>
+      <statement>
+        <p>
+          Rotate <m>\mathbf v=(1,0,0)</m> through <m>\theta=\pi</m> about
+          <m>\mathbf u=(1,1,0)/\sqrt2</m>. Here
+          <md>U=\frac{i+j}{\sqrt2},\qquad q=U,\qquad\overline q=-U.</md>
+          Direct multiplication gives
+          <md>
+            <mrow>qiq^{-1}\amp=\frac{(-1-k)(-i-j)}{2}</mrow>
+            <mrow>\amp=\frac{i+j+ki+kj}{2}=j.</mrow>
+          </md>
+          Thus <m>(1,0,0)</m> becomes <m>(0,1,0)</m>.
+          The vector formula agrees:
+          <md>\mathbf v'=-\mathbf v+2(\mathbf u\cdot\mathbf v)\mathbf u
+            =-(1,0,0)+(1,1,0)=(0,1,0).</md>
+          The half turn keeps the component along the tilted axis and reverses the
+          perpendicular component.
+        </p>
+      </statement>
+    </example>
+  </subsection>
+
+  <subsection xml:id="subsec-c2rot-project-report">
+    <title>Step 8: test the construction and tell its geometric story</title>
+
+    <exercise xml:id="checkpoint-c2rot-final-tests">
+      <title>Three checks on your rotation rule</title>
+      <statement>
+        <ol>
+          <li><p>Rotate through <m>2\pi/3</m> about <m>\mathbf u=(1,1,1)/\sqrt3</m>.
+            Show that <m>q=(1+i+j+k)/2</m>, and compute the images of <m>i,j,k</m>
+            by conjugation. Use them to rotate <m>i+2j+3k</m>. Check the length and
+            the component along the axis.</p></li>
+          <li><p>Show that <m>q</m> and <m>-q</m> give exactly the same map
+            <m>V\longmapsto qVq^{-1}</m>. What quaternion does the half-angle rule
+            produce for <m>\theta=2\pi</m>, and why is the resulting spatial map
+            the identity?</p></li>
+          <li><p>Let <m>q_x=(1+i)/\sqrt2</m> and <m>q_y=(1+j)/\sqrt2</m>.
+            Starting with <m>k</m>, apply the <m>x</m>-axis quarter turn and then the
+            <m>y</m>-axis quarter turn. Reverse the order and compare. Use associativity
+            to show that the first order is represented by <m>q_yq_x</m>:
+            <md>q_y(q_xVq_x^{-1})q_y^{-1}=(q_yq_x)V(q_x^{-1}q_y^{-1}).</md>
+            Verify that the last two factors form <m>(q_yq_x)^{-1}</m>.</p></li>
+        </ol>
+      </statement>
+      <hint>
+        <p>The first rotation cycles <m>i\mapsto j\mapsto k\mapsto i</m>.
+          For the third part, the two orders send <m>k</m> to <m>-j</m> and <m>i</m>,
+          respectively. A quaternion product encodes the first rotation in its rightmost
+          factor.</p>
+      </hint>
+    </exercise>
+
+    <p><em>Your project report.</em> Present the construction so that another student
+      could use it without memorizing an unexplained formula. Include:</p>
+    <ol>
+      <li><p>Your complex-plane sketch and completed basis-image table for left
+        multiplication by <m>e^{i\phi},e^{j\phi},e^{k\phi}</m>.</p></li>
+      <li><p>Two plane sketches for the <m>i</m>-axis case, with arrows showing the
+        left and right turns. Explain where the angles cancel and where they add.</p></li>
+      <li><p>A derivation of the half-angle rule and an explanation of why
+        <m>qVq^{-1}</m> stays pure imaginary and fixes the chosen axis.</p></li>
+      <li><p>One coordinate-axis rotation and one tilted-axis rotation, computed with
+        quaternions and checked using dot and cross products.</p></li>
+      <li><p>A short set of instructions: normalize a nonzero axis vector, form the
+        unit quaternion with half the desired angle, encode the input vector, multiply
+        in the order <m>qV\overline q</m>, and read off the three coefficients.</p></li>
+    </ol>
+    <p>
+      <em>Optional extension.</em> Rotate a point <m>P</m> about a line through a point
+      <m>A</m> with unit direction <m>\mathbf u</m>. Explain why you should apply the
+      quaternion rule to the displacement <m>P-A</m> and then add <m>A</m> back.
+    </p>
+  </subsection>
+
+  <conclusion>
+    <p>
+      Complex multiplication supplied the plane-rotation pattern. Quaternion multiplication
+      placed that pattern in two perpendicular planes at once. Multiplication by the inverse
+      on the right cancelled the turn involving the real coordinate and doubled the turn
+      perpendicular to the chosen axis. That is the geometric reason a unit quaternion with
+      angle <m>\theta/2</m> produces a spatial rotation through <m>\theta</m>.
+    </p>
+  </conclusion>
+</section>
