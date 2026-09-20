@@ -57,7 +57,7 @@
           The height remains
           <md>z=7.</md>
           Thus
-          <md>\left(4,\frac{\pi}{6},7\right)=(2\sqrt3,2,7)</md>
+          <md>(x,y,z)=(2\sqrt3,2,7)</md>
           in rectangular coordinates.
         </p>
       </statement>
@@ -143,7 +143,8 @@
     </example>
 
     <p>
-      Cylindrical coordinates are not unique, because the angle is not unique:
+      Cylindrical coordinates are not unique. As in polar coordinates, the equality
+      below means the descriptions name the same point:
       <md>(r,\theta,z)=(r,\theta+2\pi,z).</md>
       Also, if <m>r=0</m>, the angle does not matter. Every point on the <m>z</m>-axis has the
       form
@@ -183,7 +184,7 @@
           <cell>Surface in space</cell>
         </row>
         <row>
-          <cell><m>r=a</m></cell>
+          <cell><m>r=a\gt0</m></cell>
           <cell>circular cylinder of radius <m>a</m></cell>
         </row>
         <row>
@@ -461,7 +462,7 @@ import graph3;
           <cell>Surface in space</cell>
         </row>
         <row>
-          <cell><m>\rho=a</m></cell>
+          <cell><m>\rho=a\gt0</m></cell>
           <cell>sphere of radius <m>a</m></cell>
         </row>
         <row>
@@ -470,7 +471,8 @@ import graph3;
         </row>
         <row>
           <cell><m>\phi=\beta</m></cell>
-          <cell>cone with vertex at the origin</cell>
+          <cell>cone for <m>0\lt\beta\lt\pi</m>, <m>\beta\ne\pi/2</m>;
+          the plane <m>z=0</m> for <m>\beta=\pi/2</m></cell>
         </row>
       </tabular>
     </table>
@@ -506,6 +508,9 @@ import graph3;
       </statement>
     </example>
 
+    <p>At <m>\phi=0</m> or <m>\phi=\pi</m>, the image is a ray on the
+      <m>z</m>-axis. At <m>\rho=0</m>, it is only the origin.</p>
+
     <p>
       Spherical coordinates are not unique. We can always add <m>2\pi</m> to <m>\theta</m>:
       <md>(\rho,\theta,\phi) = (\rho,\theta+2\pi,\phi).</md>
@@ -528,7 +533,9 @@ import graph3;
       <title>Three kinds of level surface?</title>
       <statement>
         <p>
-          In spherical coordinates, holding one coordinate fixed traces out a surface. Without
+          In spherical coordinates, holding one coordinate fixed usually traces out a surface. Use
+          <m>\rho\gt0</m> and <m>0\lt\phi\lt\pi</m> for the usual cases, and
+          include the special plane at <m>\phi=\pi/2</m>. Without
           converting to rectangular coordinates, picture each of <m>\rho=\text{const}</m>,
           <m>\phi=\text{const}</m>, and <m>\theta=\text{const}</m>. What shape is each one,
           and why does fixing a <em>distance</em> behave so differently from fixing an
@@ -640,7 +647,7 @@ import graph3;
     <p>
       In rectangular coordinates, a tiny box with side lengths
       <md>\Delta x,\quad \Delta y,\quad \Delta z</md>
-      has volume approximately
+      has volume exactly
       <md>\Delta x\,\Delta y\,\Delta z.</md>
     </p>
 
@@ -651,8 +658,7 @@ import graph3;
       <md>\Delta r,\qquad r\,\Delta\theta,\qquad \Delta z.</md>
       So its volume is approximately
       <md>r\,\Delta r\,\Delta\theta\,\Delta z.</md>
-      This is why cylindrical integrals later contain
-      <md>r\,dr\,d\theta\,dz.</md>
+      The angular edge follows from radius times angle in radians.
     </p>
 
     <p>
@@ -660,27 +666,19 @@ import graph3;
       <md>\Delta\rho, \qquad \rho\,\Delta\phi, \qquad \rho\sin\phi\,\Delta\theta.</md>
       So its volume is approximately
       <md>\rho^2\sin\phi\,\Delta\rho\,\Delta\phi\,\Delta\theta.</md>
-      This is why spherical integrals later contain
-      <md>\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
+      Here the latitude circle has radius <m>\rho\sin\phi</m>, which explains
+      the length of its angular edge.
     </p>
 
-    <p>
-      In the language of forms, these volume factors are not decorations. They record how the
-      coordinate map changes signed volume:
-      <md>\boxed{ dx\wedge dy\wedge dz = r\,dr\wedge d\theta\wedge dz }</md>
-      for cylindrical coordinates, and, with the positive spherical order
-      <m>(\rho,\phi,\theta)</m>,
-      <md>\boxed{ dx\wedge dy\wedge dz = \rho^2\sin\phi\,d\rho\wedge d\phi\wedge d\theta. }</md>
-      The factors
-      <md>r \qquad\text{and}\qquad \rho^2\sin\phi</md>
-      are the three-dimensional relatives of the polar area factor <m>r</m>.
-    </p>
+    <p>These are geometric approximations for short edges away from the poles and
+      axis, where the coordinate grid collapses. Later integration lessons will turn
+      these local size comparisons into precise formulas.</p>
 
     <exercise xml:id="checkpoint-4-3-box-not-same-size">
       <title>Why isn't every little box the same?</title>
       <statement>
         <p>
-          A spherical coordinate box with edges <m>d\rho\,d\phi\,d\theta</m> uses the same
+          A spherical coordinate box with edges <m>\Delta\rho</m>, <m>\Delta\phi</m>, <m>\Delta\theta</m> uses the same
           three increments everywhere, yet the physical box it carves out is large in some places
           and tiny in others. Why does the same triple of increments not enclose the same amount
           of space everywhere?
@@ -689,8 +687,9 @@ import graph3;
       <hint>
         <p>
           An <em>angular</em> increment sweeps out more length the farther you are from what you
-          are turning around. Compare a step of <m>d\theta</m> near the <m>z</m>-axis with one far
-          from it, and think about what happens to <m>d\rho</m> as <m>\rho</m> grows.
+          are turning around. Compare a step of <m>\Delta\theta</m> near the <m>z</m>-axis with one far
+          from it, and observe that the radial edge stays <m>\Delta\rho</m> while the
+          angular edges grow with their circle radii.
         </p>
       </hint>
     </exercise>

@@ -379,7 +379,7 @@
     </figure>
 
     <p>
-      This is the first place where topology enters the story. The formula
+      This returns to the topology issue from <xref ref="sec-13-curl-tests-in-the-plane-and-in"/>. The formula
       <md>d\alpha=0</md>
       is local. It checks tiny rectangles. Exactness is global. It asks whether one potential
       works on the whole domain.
@@ -414,9 +414,86 @@
     </p>
 
     <p>
-      On the simple domains from ordinary calculus, such as rectangles, disks, boxes, and balls,
-      a smooth closed <m>1</m>-form is exact. In vector language:
-      <md>\boxed{\text{curl-free on a no-hole domain} \quad\Longrightarrow\quad \text{conservative.}}</md>
+      On open simply connected domains, including the interiors of rectangles, disks, boxes,
+      and balls, a <m>C^1</m> closed <m>1</m>-form is exact. Here is the proof promised in
+      <xref ref="c13s6-thm-curl-test-simply-connected"/>. Simple connectivity is a sufficient
+      domain condition; a particular field can also have a potential on a domain with holes.
+    </p>
+
+    <theorem xml:id="c17s5-thm-simply-connected-potential">
+      <title>Closed <m>1</m>-forms on a simply connected domain</title>
+      <statement>
+        <p>
+          Let <m>D\subseteq\mathbb R^n</m>, where <m>n=2</m> or <m>3</m>, be open,
+          path connected, and simply connected. If the coefficients of
+          <m>\omega=\sum_{i=1}^n F_i\,dx_i</m> are <m>C^1</m> and <m>d\omega=0</m>
+          on <m>D</m>, then <m>\omega=d\phi</m> for a function <m>\phi</m> on <m>D</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>
+          First work in an open ball <m>B</m> centered at <m>a</m> and contained in <m>D</m>.
+          Every segment from <m>a</m> to <m>x\in B</m> stays in <m>B</m>. Define
+          <md>\phi_B(x)=\int_0^1\sum_{i=1}^n F_i(a+t(x-a))(x_i-a_i)\,dt.</md>
+          Closedness means <m>\partial_jF_i=\partial_iF_j</m>. Differentiating under this
+          integral is justified by <xref ref="c13s6-lem-parameter-integral"/>, applied to
+          each coordinate on a small closed neighborhood of <m>x</m>. With <m>v=x-a</m>,
+          the product and chain rules give
+          <md>
+            <mrow>\partial_j\phi_B(x)\amp=\int_0^1\left[F_j(a+tv)+t\sum_i v_i\partial_jF_i(a+tv)\right]dt</mrow>
+            <mrow>\amp=\int_0^1\frac{d}{dt}\left[tF_j(a+tv)\right]dt=F_j(x).</mrow>
+          </md>
+          Thus <m>d\phi_B=\omega</m> on <m>B</m>. By the fundamental theorem for line
+          integrals, two piecewise smooth paths inside this ball with the same endpoints
+          have the same integral.
+        </p>
+        <p>
+          Next let <m>C:[0,1]\to D</m> be a piecewise smooth closed path, based at
+          <m>p=C(0)=C(1)</m>. Simple connectivity supplies a continuous contraction
+          <m>H:[0,1]^2\to D</m> with
+          <md>H(t,0)=C(t),\qquad H(t,1)=q,\qquad H(0,s)=H(1,s)</md>
+          for some <m>q\in D</m>. The common endpoint of the intermediate loops may move.
+          We need not differentiate <m>H</m>, and its image need not be a regular surface.
+        </p>
+        <p>
+          Subdivide the parameter square finely enough that the image of each small closed
+          rectangle lies in one open ball contained in <m>D</m>. The elementary compactness
+          fact used here is that a continuous map on a closed square has this uniform local
+          control. To see it directly, suppose arbitrarily small rectangles failed the
+          condition. Their centers have a convergent subsequence in the closed square
+          (apply the bounded-sequence subsequence theorem to the two coordinates).
+          Their diameters tend to zero. Continuity at the limiting center then puts all
+          their images, eventually, in a ball about its image contained in <m>D</m>, a
+          contradiction. Include the finitely many corner parameters of <m>C</m> in the
+          subdivision.
+        </p>
+        <p>
+          Send each grid vertex through <m>H</m>, and replace every grid edge by the straight
+          segment joining the images of its endpoints. Each resulting four-edge path lies
+          in its cell's ball, since balls are convex. Its integral is zero by the local
+          potential. Add these zero integrals over all cells: every interior segment occurs
+          twice with opposite directions and cancels. The top side is constant at
+          <m>q</m>, while the two vertical sides give identical polygonal paths traversed
+          in opposite directions, so they cancel. The bottom side is a polygonal
+          replacement of <m>C</m>. On each
+          bottom interval, the original arc of <m>C</m> and its replacement segment lie
+          in the same ball and have the same integral. Hence <m>\oint_C\omega=0</m>.
+        </p>
+        <p>
+          Finally fix <m>p\in D</m> and define <m>\phi(x)</m> as the integral of
+          <m>\omega</m> along a piecewise smooth path from <m>p</m> to <m>x</m>.
+          Such paths exist: subdivide a continuous path into pieces in balls and replace
+          them by segments, as above. Vanishing integrals around closed paths make
+          <m>\phi(x)</m> independent of the path. In a small ball, differences of
+          <m>\phi</m> equal differences of <m>\phi_B</m>, so <m>d\phi=\omega</m>.
+        </p>
+      </proof>
+    </theorem>
+
+    <p>
+      The proof uses local potentials and cancellation, not an assumption that every loop
+      bounds an embedded smooth surface. It establishes the claim for <m>1</m>-forms;
+      simple connectivity alone does not give exactness in every higher degree.
       But if the domain has a hole, the implication can fail:
       <md>\boxed{\text{closed} \not\Longrightarrow \text{exact}.}</md>
     </p>

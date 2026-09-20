@@ -82,11 +82,12 @@
       <title>Improper double integral over an unbounded region</title>
       <statement>
         <p>
-          Let <m>R</m> be an unbounded region in the plane. For <m>A\gt 0</m>, let
+          Let <m>R</m> be an unbounded region in the plane and let <m>f\ge0</m> be integrable
+          on each bounded truncation below. For <m>A\gt 0</m>, let
           <md>R_A=R\cap\{(x,y):x^2+y^2\le A^2\}.</md>
           If the limit
           <md>\boxed{\lim_{A\to\infty}\iint_{R_A} f\,dA}</md>
-          exists, then we call it the <term>improper double integral</term> of <m>f</m> over
+          is finite, then we call it the convergent <term>improper double integral</term> of <m>f</m> over
           <m>R</m>, and we write
           <md>\boxed{\iint_R f\,dA.}</md>
         </p>
@@ -232,17 +233,27 @@
       <title>Improper double integral near a singular point</title>
       <statement>
         <p>
-          Let <m>R</m> be a bounded region, and suppose <m>f</m> is unbounded at a point
+          Let <m>R</m> be a bounded region, and suppose <m>f\ge0</m> is unbounded near a point
           <md>\mathbf p\in R.</md>
           Let
           <md>R_\varepsilon=R\setminus B_\varepsilon(\mathbf p),</md>
           where <m>B_\varepsilon(\mathbf p)</m> is the disk of radius <m>\varepsilon</m> centered
           at <m>\mathbf p</m>. If the limit
           <md>\boxed{\lim_{\varepsilon\to0^+}\iint_{R_\varepsilon} f\,dA}</md>
-          exists, then it is called the improper double integral of <m>f</m> over <m>R</m>.
+          is finite, and <m>f</m> is integrable on each <m>R_\varepsilon</m>, then it is called
+          the convergent improper double integral of <m>f</m> over <m>R</m>.
         </p>
       </statement>
     </definition>
+
+    <p>
+      For a function that takes both signs, we will use an improper integral only when the
+      corresponding integral of <m>|f|</m> is finite; this is <term>absolute convergence</term>.
+      One then subtracts the finite integrals of its positive and negative parts. A limit using
+      only centered disks can exist through cancellation even when absolute convergence fails;
+      such a limit is a specified <term>principal value</term>, and is not enough to justify
+      changing the order of integration or the shape of the truncations.
+    </p>
 
     <p>
       The power of <m>r</m> decides many singularities. Compare the previous example with
@@ -323,8 +334,8 @@
         <p>
           Let
           <md>0\le f(x,y)\le g(x,y)</md>
-          on a region <m>R</m>, except possibly at boundary points or singular points handled by
-          improper limits.
+          on a region <m>R</m>, except possibly at singular points handled by improper limits,
+          and assume both functions are integrable on the bounded nonsingular truncations.
         </p>
         <ol>
           <li>
@@ -426,7 +437,16 @@
     <p>
       Let
       <md>I=\int_{-\infty}^{\infty}e^{-x^2}\,dx.</md>
-      Since the integrand is positive, we may write
+      This integral is finite: for <m>|x|\ge1</m>, <m>e^{-x^2}\le e^{-|x|}</m>, whose tails
+      converge. To justify squaring it without invoking an improper version of Fubini's theorem,
+      set <m>I_A=\int_{-A}^{A}e^{-x^2}\,dx</m>. Finite-rectangle Fubini gives
+      <md>I_A^2=\iint_{[-A,A]^2}e^{-(x^2+y^2)}\,dA.</md>
+      The disk of radius <m>A</m> lies in this square, which lies in the disk of radius
+      <m>\sqrt2 A</m>. Direct polar integration over a disk of radius <m>B</m> gives
+      <m>\pi(1-e^{-B^2})</m>. Nonnegativity therefore yields
+      <md>\pi(1-e^{-A^2})\le I_A^2\le\pi(1-e^{-2A^2}).</md>
+      Both bounds tend to <m>\pi</m>, so <m>I^2=\pi</m>. The usual compact calculation
+      below is justified by this bounded-domain argument:
       <md>
         <mrow>I^2 \amp= \left(\int_{-\infty}^{\infty}e^{-x^2}\,dx\right) \left(\int_{-\infty}^{\infty}e^{-y^2}\,dy\right)</mrow>
         <mrow>\amp= \iint_{\mathbb R^2} e^{-x^2}e^{-y^2}\,dA</mrow>

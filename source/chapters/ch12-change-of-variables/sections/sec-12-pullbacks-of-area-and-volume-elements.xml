@@ -98,21 +98,29 @@
     </figure>
 
     <p>
-      Now watch the same fact through differentials:
+      Now watch the same fact through differentials. The symbol <m>T^*</m>, called
+      <term>pullback</term>, expresses a form on the target plane as a form on the parameter
+      plane. For a differentiable map it works by applying the derivative to the input vectors:
+      <md>(T^*dx)_{(u,v)}(\mathbf a)=dx_{T(u,v)}(DT_{(u,v)}\mathbf a).</md>
+      Thus <m>T^*(dx)=d(x(u,v))</m>, the scalar differential already studied in
+      <xref ref="sec-7-differentials"/>. In this example,
       <md>x=u+v, \qquad y=u-v.</md>
       So
-      <md>dx=du+dv,</md>
+      <md>T^*(dx)=du+dv,</md>
       and
-      <md>dy=du-dv.</md>
-      Therefore
+      <md>T^*(dy)=du-dv.</md>
+      For an area form we apply <m>DT</m> to both input vectors; by the definition of the
+      wedge of two linear measurements this gives
       <md>
-        <mrow>dx\wedge dy \amp= (du+dv)\wedge(du-dv)</mrow>
+        <mrow>T^*(dx\wedge dy) \amp= (du+dv)\wedge(du-dv)</mrow>
         <mrow>\amp= du\wedge du-du\wedge dv+dv\wedge du-dv\wedge dv</mrow>
         <mrow>\amp= -du\wedge dv-du\wedge dv</mrow>
         <mrow>\amp= -2\,du\wedge dv.</mrow>
       </md>
       Thus
-      <md>\boxed{ dx\wedge dy=-2\,du\wedge dv. }</md>
+      <md>\boxed{ T^*(dx\wedge dy)=-2\,du\wedge dv. }</md>
+      Both sides are now forms on the same parameter plane; <m>dx\wedge dy</m> alone
+      lives on the target plane.
     </p>
 
     <p>
@@ -123,7 +131,9 @@
       For ordinary area, we use the positive scale factor:
       <md>\operatorname{Area}(T(S)) = \int_0^1\int_0^1 2\,du\,dv = 2.</md>
       For signed area using the orientation induced by the parametrization <m>T</m>, we keep the
-      sign:
+      sign. On a parameter region with the standard <m>(u,v)</m> orientation, define the integral
+      of <m>h(u,v)\,du\wedge dv</m> to be the ordinary double integral of its coefficient
+      <m>h</m>:
       <md>\int_S T^*(dx\wedge dy) = \int_0^1\int_0^1 (-2)\,du\,dv = -2.</md>
     </p>
 
@@ -156,7 +166,7 @@
     </p>
 
     <p>
-      If
+      If <m>T</m> is continuously differentiable and
       <md>T(u,v)=(x(u,v),y(u,v)),</md>
       then pulling back <m>dx</m> means replacing it by the differential of <m>x(u,v)</m>:
       <md>T^*(dx)=d(x(u,v))=x_u\,du+x_v\,dv.</md>
@@ -177,11 +187,22 @@
 
     <p>This is the signed version of the change-of-variables rule.</p>
 
+    <p xml:id="c12s5-linear-differential-scaling">
+      In particular, for the linear map from <xref ref="c3s4-subsec-change-of-variables" text="title"/>,
+      <md>T(u,v)=(au+bv,cu+dv),</md>
+      this calculation gives
+      <md>T^*(dx\wedge dy)=(a\,du+b\,dv)\wedge(c\,du+d\,dv)
+        =(ad-bc)\,du\wedge dv.</md>
+      The differential calculation therefore gives the same signed factor as the finite
+      parallelogram calculation there. The corresponding ordinary area factor is
+      <m>|ad-bc|</m>.
+    </p>
+
     <definition xml:id="c12s5-def-pullback-area-form">
       <title>Pullback of an area form</title>
       <statement>
         <p>
-          Let
+          Let <m>T</m> be continuously differentiable, with
           <md>T(u,v)=(x(u,v),y(u,v)).</md>
           For a <m>2</m>-form
           <md>\omega=g(x,y)\,dx\wedge dy,</md>
@@ -199,7 +220,9 @@
     </p>
 
     <p>
-      For ordinary area integrals, the second factor becomes positive:
+      Under the one-to-one and regularity hypotheses of
+      <xref ref="sec-12-nonlinear-changes-of-variables-in-the-plane"/>, ordinary area
+      integrals use the absolute value of the second factor:
       <md>\boxed{ \iint_R g(x,y)\,dA = \iint_S g(T(u,v)) \left| \frac{\partial(x,y)}{\partial(u,v)} \right| du\,dv. }</md>
       For oriented <m>2</m>-form integrals, the sign stays:
       <md>\boxed{ \iint_R g(x,y)\,dx\wedge dy = \iint_S g(T(u,v)) \frac{\partial(x,y)}{\partial(u,v)} \,du\wedge dv, }</md>
@@ -221,7 +244,7 @@
         </p>
         <p>
           The area form pulls back as
-          <md>dx\wedge dy=r\,dr\wedge d\theta.</md>
+          <md>T^*(dx\wedge dy)=r\,dr\wedge d\theta.</md>
           The density becomes
           <md>g(r\cos\theta,r\sin\theta)=3+r\cos\theta.</md>
           So the pulled-back <m>2</m>-form is
@@ -242,8 +265,8 @@
     <p>
       Here the polar Jacobian
       <md>r</md>
-      is nonnegative on the chosen domain, so the signed and ordinary area factors agree except at
-      the origin.
+      is nonnegative on the chosen domain, so the signed and ordinary area factors agree.
+      The coordinate map degenerates at the origin, where both factors are zero.
     </p>
   </subsection>
 
@@ -253,11 +276,24 @@
     <p>
       The same idea works in space. Let
       <md>T(u,v,w)=(x(u,v,w),y(u,v,w),z(u,v,w)).</md>
-      Then
-      <md>dx=x_u\,du+x_v\,dv+x_w\,dw,</md>
-      <md>dy=y_u\,du+y_v\,dv+y_w\,dw,</md>
+      For a continuously differentiable <m>T</m>,
+      <md>T^*(dx)=x_u\,du+x_v\,dv+x_w\,dw,</md>
+      <md>T^*(dy)=y_u\,du+y_v\,dv+y_w\,dw,</md>
       and
-      <md>dz=z_u\,du+z_v\,dv+z_w\,dw.</md>
+      <md>T^*(dz)=z_u\,du+z_v\,dv+z_w\,dw.</md>
+      Here the wedge of three linear scalar measurements is the alternating trilinear
+      measurement
+      <md>(\alpha\wedge\beta\wedge\gamma)(\mathbf a,\mathbf b,\mathbf c)
+      =\det\begin{pmatrix}
+      \alpha(\mathbf a)\amp\alpha(\mathbf b)\amp\alpha(\mathbf c)\\
+      \beta(\mathbf a)\amp\beta(\mathbf b)\amp\beta(\mathbf c)\\
+      \gamma(\mathbf a)\amp\gamma(\mathbf b)\amp\gamma(\mathbf c)
+      \end{pmatrix}.</md>
+      The determinant is linear in each row, changes sign when two rows are exchanged,
+      and is zero when two rows coincide. Grouped expressions such as
+      <m>(\alpha\wedge\beta)\wedge\gamma</m> denote this same triple wedge.
+      These facts justify distributing the wedge,
+      swapping factors, and discarding repeated factors in the following expansion.
       When we wedge these three expressions together, every repeated differential vanishes, and the
       surviving coefficient is the <m>3\times3</m> determinant:
       <md>\boxed{ T^*(dx\wedge dy\wedge dz) = \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw. }</md>
@@ -267,8 +303,8 @@
       <title>Where did the other terms go?</title>
       <statement>
         <p>
-          When the three differentials are wedged together, only one term survives and it
-          carries the determinant. What is it about <m>\wedge</m> that makes every term with
+          When the three differentials are wedged together, six terms can survive; together
+          they give one multiple of <m>du\wedge dv\wedge dw</m>. What is it about <m>\wedge</m> that makes every term with
           a repeated differential disappear, and why does that leave exactly the determinant
           behind rather than some other combination?
         </p>
@@ -295,13 +331,13 @@
           Let
           <md>T(u,v,w)=(x,y,z)=(u+v,\;u-v,\;w).</md>
           Then
-          <md>dx=du+dv,</md>
-          <md>dy=du-dv,</md>
+          <md>T^*(dx)=du+dv,</md>
+          <md>T^*(dy)=du-dv,</md>
           and
-          <md>dz=dw.</md>
+          <md>T^*(dz)=dw.</md>
           Therefore
           <md>
-            <mrow>dx\wedge dy\wedge dz \amp= (du+dv)\wedge(du-dv)\wedge dw</mrow>
+            <mrow>T^*(dx\wedge dy\wedge dz) \amp= (du+dv)\wedge(du-dv)\wedge dw</mrow>
             <mrow>\amp= (-2\,du\wedge dv)\wedge dw</mrow>
             <mrow>\amp= -2\,du\wedge dv\wedge dw.</mrow>
           </md>
@@ -323,9 +359,12 @@
     </example>
 
     <p>
-      For ordinary volume integrals, the positive rule is
+      Under the substitution hypotheses of <xref ref="sec-12-changes-of-variables-in-space"/>,
+      the ordinary volume rule is
       <md>\boxed{ \iiint_E h(x,y,z)\,dV = \iiint_S h(T(u,v,w)) \left| \frac{\partial(x,y,z)}{\partial(u,v,w)} \right| du\,dv\,dw. }</md>
-      For oriented <m>3</m>-form integrals, the sign stays:
+      For oriented <m>3</m>-form integrals, the sign stays, with <m>E</m> carrying the
+      orientation induced by <m>T</m> and the parameter domain carrying the
+      <m>(u,v,w)</m> orientation:
       <md>\boxed{ \iiint_E h(x,y,z)\,dx\wedge dy\wedge dz = \iiint_S h(T(u,v,w)) \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw. }</md>
     </p>
   </subsection>

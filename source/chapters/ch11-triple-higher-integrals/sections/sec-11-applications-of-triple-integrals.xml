@@ -326,19 +326,8 @@
       <image width="60%">
         <latex-image>
         \begin{tikzpicture}[scale=0.9, &gt;=stealth]
-            % Symmetric horizontal shading (distance from vertical axis is |x|)
-            \pgfdeclarehorizontalshading{densityshading}{100bp}{
-                color(0bp)=(red!80!black);
-                color(25bp)=(red!40!white);
-                color(50bp)=(white);
-                color(75bp)=(red!40!white);
-                color(100bp)=(red!80!black)
-            }
-
-            \begin{scope}
-                \clip (0,0) circle (2.5);
-                \shade[shading=densityshading, shading angle=0] (-2.5,-2.5) rectangle (2.5,2.5);
-            \end{scope}
+            % View down the z-axis: distance to the axis is radial.
+            \shade[inner color=white, outer color=red!70!black] (0,0) circle (2.5);
 
             \draw[thick] (0,0) circle (2.5);
             \draw[gray!40, thin] (0,0) circle (0.8);
@@ -350,8 +339,10 @@
             \draw[-&gt;, thick] (0,0) -- (35:1.7) node[midway, above] {\(r\)};
             \fill (35:1.7) circle (2pt);
 
-            \draw[very thick, blue!60!black] (0,-3) -- (0,3);
-            \node[blue!60!black, left] at (0,2.9) {axis};
+            \draw[thick, blue!60!black, fill=white] (0,0) circle (0.10);
+            \fill[blue!60!black] (0,0) circle (1pt);
+
+            \node[blue!60!black, above left] at (-0.15,0.15) {\(z\)-axis (out of page)};
 
             \node at (0,-3.8) {material farther from the axis contributes \(r^2\) times as much};
         \end{tikzpicture}

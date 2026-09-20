@@ -67,7 +67,13 @@
       <md>\boxed{ \begin{pmatrix} \frac65 \amp \frac25\\[1mm] \frac25 \amp 1 \end{pmatrix} \begin{pmatrix} \Delta x\\ \Delta y \end{pmatrix}. }</md>
     </p>
 
-    <p>That matrix is the derivative of the transformation <m>F</m> at <m>P</m>.</p>
+    <p>
+      That matrix is the derivative of the transformation <m>F</m> at <m>P</m>.
+      Write its columns as <m>F_x(P)=(6/5,2/5)</m> and <m>F_y(P)=(2/5,1)</m>:
+      these are the componentwise rates of change when only the indicated input varies.
+      The image displacements predicted for steps of sizes <m>\Delta x</m> and
+      <m>\Delta y</m> are <m>\Delta x\,F_x(P)</m> and <m>\Delta y\,F_y(P)</m>.
+    </p>
 
     <figure xml:id="c7s5-fig-rubber-sheet">
       <caption>Near one point, a nonlinear map sends a small square almost to a parallelogram.
@@ -104,8 +110,8 @@
                 \fill (Q) circle (2pt);
                 \node[below left] at (Q) {\(F(P)\)};
 
-                \draw[-&gt;, thick] (Q) -- (A) node[midway, below right] {\(F_x\)};
-                \draw[-&gt;, thick] (Q) -- (B) node[midway, left] {\(F_y\)};
+                \draw[-&gt;, thick] (Q) -- (A) node[midway, below right] {\(\Delta x\,F_x(P)\)};
+                \draw[-&gt;, thick] (Q) -- (B) node[midway, left] {\(\Delta y\,F_y(P)\)};
 
                 \node at (2.3,-0.9) {linearized image near \(F(P)\)};
             \end{scope}
@@ -256,13 +262,15 @@
     <p>Rows measure how each output coordinate changes.</p>
 
     <p>
-      Columns tell a different story. The first column is the output change caused by a tiny
+      Columns tell a different story. The first column is the output rate of change per unit
       step in the <m>x</m>-direction:
       <md>F_x(P)= \begin{pmatrix} F_{1x}(P)\\ F_{2x}(P) \end{pmatrix}.</md>
-      The second column is the output change caused by a tiny step in the <m>y</m>-direction:
+      The second column is the output rate of change per unit step in the <m>y</m>-direction:
       <md>F_y(P)= \begin{pmatrix} F_{1y}(P)\\ F_{2y}(P) \end{pmatrix}.</md>
+      A step of size <m>\Delta x</m> therefore produces approximately
+      <m>\Delta x\,F_x(P)</m>, and similarly for <m>\Delta y</m>.
       So the rows are differentials of component functions, while the columns are images of
-      coordinate directions.
+      unit coordinate directions under the derivative.
     </p>
 
     <p>Both views are useful.</p>
@@ -272,7 +280,7 @@
     <title>Local linearization of nonlinear maps</title>
 
     <p>
-      The Jacobian matrix gives the linear approximation:
+      When <m>F</m> is differentiable at <m>\mathbf p</m>, the Jacobian matrix gives the linear approximation:
       <md>\boxed{ F(\mathbf p+\mathbf h) \approx F(\mathbf p)+J_F(\mathbf p)\mathbf h. }</md>
       In coordinates, for a map
       <md>F(x,y)=(F_1(x,y),F_2(x,y)),</md>
@@ -350,6 +358,25 @@
     </p>
 
     <p>
+      In <xref ref="sec-4-parametric-surfaces"/>, holding one parameter fixed produced
+      a coordinate curve. We can now differentiate that curve using
+      <xref ref="sec-5-derivatives-and-integrals-of-vector-valued-functions"/> and
+      <xref ref="sec-7-partial-derivatives"/>. For
+      <m>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v))</m>, the notation means
+      <md>\mathbf r_u(u_0,v_0)=(x_u,y_u,z_u)(u_0,v_0)=\left.\frac{d}{du}\mathbf r(u,v_0)\right|_{u=u_0},</md>
+      and
+      <md>\mathbf r_v(u_0,v_0)=(x_v,y_v,z_v)(u_0,v_0)=\left.\frac{d}{dv}\mathbf r(u_0,v)\right|_{v=v_0}.</md>
+      These vectors are the two columns of <m>J_{\mathbf r}</m>. If <m>\mathbf r</m> is
+      differentiable at <m>(u_0,v_0)</m>, its linear approximation is
+      <md>\mathbf r(u_0+\Delta u,v_0+\Delta v)-\mathbf r(u_0,v_0)\approx\Delta u\,\mathbf r_u(u_0,v_0)+\Delta v\,\mathbf r_v(u_0,v_0).</md>
+      Continuous first partial derivatives near the point are sufficient, by applying
+      the scalar differentiability criterion component by component. The next section
+      proves that criterion. A nonzero column is tangent to its coordinate curve;
+      two independent columns span a tangent plane. The systematic regularity conditions
+      are developed in <xref ref="sec-15-parametric-surfaces-and-tangent-planes"/>.
+    </p>
+
+    <p>
       Let
       <md>\mathbf s(u,v)= \left( u,\; v,\; 2+\frac{u^2}{4}-\frac{v^2}{9} \right).</md>
       This is a parametrized surface:
@@ -366,8 +393,9 @@
       <md>\mathbf s_u(u,v)= \left(1,0,\frac{u}{2}\right),</md>
       and
       <md>\mathbf s_v(u,v)= \left(0,1,-\frac{2v}{9}\right).</md>
-      These are tangent directions on the surface. A tiny step in the <m>u</m>-direction becomes
-      <m>\mathbf s_u</m>. A tiny step in the <m>v</m>-direction becomes <m>\mathbf s_v</m>.
+      These are independent tangent directions on this smooth graph. A step of size
+      <m>\Delta u</m> produces approximately <m>\Delta u\,\mathbf s_u</m>;
+      a step of size <m>\Delta v</m> produces approximately <m>\Delta v\,\mathbf s_v</m>.
     </p>
 
     <p>
@@ -393,7 +421,7 @@
       <md>F:\mathbb R^n\to\mathbb R^n.</md>
       Then
       <md>\det J_F(\mathbf p)</md>
-      measures signed local scaling.
+      measures the signed scaling of the derivative when <m>F</m> is differentiable.
     </p>
 
     <p>
@@ -408,7 +436,7 @@
       <title>What does the determinant measure?</title>
       <statement>
         <p>
-          When <m>F:\mathbb R^n\to\mathbb R^n</m>, the number <m>\det J_F(\mathbf p)</m> appears. What
+          When <m>F:\mathbb R^n\to\mathbb R^n</m> is differentiable at <m>\mathbf p</m>, the number <m>\det J_F(\mathbf p)</m> appears. What
           does this single number tell you about how the map treats a tiny region near <m>\mathbf p</m>?
           And what extra information is carried by its <em>sign</em> that its size alone does not?
         </p>
@@ -433,7 +461,10 @@
     </p>
 
     <p>
-      The same fact can be written in the language of <m>2</m>-forms. Since
+      The same fact can be written using the algebra from
+      <xref ref="c2s7-def-wedge-linear-measurements"/>. Here <m>dX</m> and <m>dY</m>
+      mean differentials of the component functions on the input plane, evaluated at one
+      fixed input point. Thus every measurement below acts on input vectors. Since
       <md>dX=X_x\,dx+X_y\,dy</md>
       and
       <md>dY=Y_x\,dx+Y_y\,dy,</md>
@@ -450,11 +481,9 @@
     </p>
 
     <p>
-      In three variables, if
-      <md>F(x,y,z)=(X,Y,Z),</md>
-      then
-      <md>\boxed{ dX\wedge dY\wedge dZ = \det(J_F)\,dx\wedge dy\wedge dz. }</md>
-      Now the determinant measures signed local volume scaling.
+      In three variables, <m>\det J_F</m> likewise measures the signed volume scaling
+      of the linear derivative. The corresponding volume-form formula will be explained in
+      <xref ref="sec-12-pullbacks-of-area-and-volume-elements"/>.
     </p>
 
     <p>

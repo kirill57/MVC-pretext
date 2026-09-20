@@ -5,7 +5,9 @@
   <title>Second derivatives and the Hessian matrix</title>
 
   <p>
-    <xref ref="sec-9-critical-points"/> ended at critical points. At those points,
+    <xref ref="sec-9-critical-points"/> ended at critical points. In this section we
+    study functions with continuous second partial derivatives near the point in question.
+    At a critical point of such a function,
     <md>df=\mathbf 0,</md>
     so the first-order approximation stops talking. If a point is a peak, a valley, or a
     saddle, that information must come from the next visible part of the function.
@@ -306,15 +308,10 @@
     </example>
 
     <p>
-      In differential-form language, when <m>f</m> is smooth enough,
-      <md>df=f_x\,dx+f_y\,dy.</md>
-      Taking <m>d</m> again gives
-      <md>d(df)=(f_{yx}-f_{xy})\,dx\wedge dy.</md>
-      The equality of mixed partials says
-      <md>d(df)=0.</md>
-      This small cancellation will return later as the rule
-      <md>d^2=0.</md>
-      For now, it tells us why the Hessian of a smooth function is symmetric.
+      The equality of mixed partials explains the symmetry of the Hessian below. Later,
+      <xref ref="sec-14-green-s-theorem-in-differential-form-language"/> will express the
+      same cancellation using a derivative of differential forms. That later operation
+      is not needed for the matrix argument here.
     </p>
   </subsection>
 
@@ -618,8 +615,9 @@
           <md>\mathbf r(t)=(a,b)+t(u,v), \qquad 0\le t\le1.</md>
           The composite
           <md>g(t)=f(\mathbf r(t))</md>
-          is a one-variable function. Taylor's formula for <m>g</m> at <m>t=0</m> gives
-          <md>g(1)=g(0)+g'(0)+\frac12g''(0)+\text{smaller terms}.</md>
+          is a one-variable function. Two applications of the one-variable Fundamental Theorem
+          of Calculus (or integration by parts) give the exact identity
+          <md>g(1)=g(0)+g'(0)+\int_0^1(1-t)g''(t)\,dt.</md>
           The chain rule gives
           <md>g'(0)=df_{(a,b)}(u,v),</md>
           and a second use of the chain rule gives
@@ -630,8 +628,16 @@
             H_f(a,b)
             \begin{pmatrix}u\\v\end{pmatrix}.
           </md>
-          This gives the formula. Continuity of the second partials is what makes the remaining
-          terms smaller than <m>\|\mathbf u\|^2</m>.
+          Write <m>\mathbf p=(a,b)</m> and <m>\mathbf u=(u,v)</m>. Subtracting the value
+          of the Hessian at <m>\mathbf p</m> in the integral gives the remainder
+          <md>R(\mathbf u)=\int_0^1(1-t)\mathbf u^T
+            \bigl(H_f(\mathbf p+t\mathbf u)-H_f(\mathbf p)\bigr)\mathbf u\,dt.</md>
+          By continuity, for every <m>\varepsilon\gt0</m>, all four matrix-entry differences
+          have absolute value at most <m>\varepsilon</m> when <m>\|\mathbf u\|</m> is
+          sufficiently small, uniformly for <m>0\le t\le1</m>. Thus
+          <md>|R(\mathbf u)|\le\tfrac12\varepsilon(|u|+|v|)^2
+            \le\varepsilon(u^2+v^2).</md>
+          This proves the stated remainder limit in every direction at once.
         </p>
       </proof>
     </theorem>

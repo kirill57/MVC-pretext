@@ -41,7 +41,8 @@ def midpoint_double(f, a, b, c, d, M=200, N=200):
     y = c + (np.arange(N) + 0.5)*dy
 
     X, Y = np.meshgrid(x, y)
-    return np.sum(f(X, Y))*dx*dy
+    values = np.broadcast_to(f(X, Y), X.shape)
+    return np.sum(values)*dx*dy
       </code>
     </program>
   </subsection>
@@ -206,7 +207,8 @@ def monte_carlo_double(f, inside, a, b, c, d, N=100000):
     mask = inside(x, y)
     box_area = (b - a)*(d - c)
 
-    return box_area*np.mean(f(x, y)*mask)
+    values = np.broadcast_to(f(x[mask], y[mask]), x[mask].shape)
+    return box_area*np.sum(values)/N
       </code>
     </program>
 

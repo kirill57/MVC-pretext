@@ -483,34 +483,28 @@
         </p>
       </statement>
       <proof>
-        <title>Proof idea</title>
         <p>
-          A parallelepiped is spanned by three vectors
-          <md>\mathbf u,\mathbf v,\mathbf w.</md>
-          Its signed volume is
-          <md>\mathbf u\cdot(\mathbf v\times\mathbf w).</md>
-          After applying <m>A</m>, the new parallelepiped is spanned by
-          <md>A\mathbf u,\quad A\mathbf v,\quad A\mathbf w.</md>
-          The signed volume becomes
-          <md>A\mathbf u\cdot(A\mathbf v\times A\mathbf w).</md>
-          The determinant identity
+          Fix <m>A</m> and set
+          <md>B(\mathbf u,\mathbf v,\mathbf w)=\det[A\mathbf u\ A\mathbf v\ A\mathbf w].</md>
+          The explicit determinant formula above is linear in each column and changes sign
+          when two columns are exchanged. Since <m>A</m> is linear, <m>B</m> is therefore
+          linear in each of its three vector inputs and alternating. Repeated inputs give zero.
+        </p>
+        <p>
+          Expand each vector in the standard basis, for example
+          <m>\mathbf u=u_1\mathbf e_1+u_2\mathbf e_2+u_3\mathbf e_3</m>.
+          Terms with a repeated basis vector vanish. The six remaining terms give
           <md>
-            \det
-            \begin{pmatrix}
-                |&amp;|&amp;|\\
-                A\mathbf u&amp;A\mathbf v&amp;A\mathbf w\\
-                |&amp;|&amp;|
-            \end{pmatrix}
-            =
-            (\det A)
-            \det
-            \begin{pmatrix}
-                |&amp;|&amp;|\\
-                \mathbf u&amp;\mathbf v&amp;\mathbf w\\
-                |&amp;|&amp;|
-            \end{pmatrix}
+            <mrow>B(\mathbf u,\mathbf v,\mathbf w)\amp=B(\mathbf e_1,\mathbf e_2,\mathbf e_3)</mrow>
+            <mrow>\amp\quad\cdot(u_1v_2w_3+u_2v_3w_1+u_3v_1w_2-u_1v_3w_2-u_2v_1w_3-u_3v_2w_1).</mrow>
           </md>
-          says exactly that the signed volume is multiplied by <m>\det A</m>.
+          The parenthesis is <m>\det[\mathbf u\ \mathbf v\ \mathbf w]</m>, and
+          <m>B(\mathbf e_1,\mathbf e_2,\mathbf e_3)=\det A</m>, because
+          <m>A\mathbf e_i</m> is column <m>i</m> of <m>A</m>. Hence
+          <md>\det[A\mathbf u\ A\mathbf v\ A\mathbf w]=(\det A)\det[\mathbf u\ \mathbf v\ \mathbf w].</md>
+          The two determinants are the signed volumes before and after applying <m>A</m>.
+          Taking absolute values proves the ordinary-volume statement. This argument uses
+          the coordinate formula, not a determinant-of-a-product rule.
         </p>
       </proof>
     </theorem>
@@ -561,13 +555,39 @@
     </p>
 
     <p>
-      Suppose <m>A</m> scales area by <m>\det A</m>, and <m>B</m> scales area by <m>\det B</m>.
+      Suppose <m>A</m> scales signed area by <m>\det A</m>, and <m>B</m> scales signed area by <m>\det B</m>.
       If we apply <m>A</m> first and then <m>B</m>, the combined scale factor should be
       <md>(\det B)(\det A).</md>
       The combined matrix is
       <md>BA.</md>
       Therefore its determinant should be
       <md>\det(BA)=\det B\,\det A.</md>
+    </p>
+
+    <definition xml:id="c3s4-def-determinant-general">
+      <title>Determinants in any finite dimension</title>
+      <statement>
+        <p>
+          For an <m>n\times n</m> matrix <m>M=(m_{ij})</m>, a <term>permutation</term>
+          <m>\sigma</m> is a rearrangement <m>(\sigma(1),\ldots,\sigma(n))</m> of
+          <m>(1,\ldots,n)</m>. Its sign is <m>\operatorname{sgn}(\sigma)=(-1)^N</m>,
+          where <m>N</m> counts the pairs <m>i&lt;j</m> with <m>\sigma(i)&gt;\sigma(j)</m>.
+          Define
+          <md>\det M=\sum_{\sigma}\operatorname{sgn}(\sigma)\,m_{\sigma(1),1}\cdots m_{\sigma(n),n},</md>
+          summing over every permutation. This is the earlier formula when <m>n=2</m>
+          or <m>n=3</m>; for <m>n=1</m> it is the single matrix entry.
+        </p>
+      </statement>
+    </definition>
+
+    <p>
+      Each product contains exactly one entry from each column, so this formula is linear
+      in each column separately. Exchanging two columns pairs the products with the same
+      factors and opposite signs: exchanging two positions in a permutation changes the
+      number of inversions by an odd number. Thus the determinant is alternating, and it
+      vanishes if two columns are equal. The identity matrix has determinant <m>1</m>.
+      These algebraic facts are enough to prove the product rule in every dimension;
+      no higher-dimensional volume formula is assumed.
     </p>
 
     <theorem xml:id="c3s4-thm-determinant-product">
@@ -579,19 +599,23 @@
         </p>
       </statement>
       <proof>
-        <title>Geometric proof</title>
         <p>
-          Think in the plane or in space. The matrix <m>A</m> scales signed area or signed
-          volume by
-          <md>\det A.</md>
-          Then <m>B</m> scales the result by
-          <md>\det B.</md>
-          So the composition <m>BA</m> scales signed area or signed volume by
-          <md>(\det B)(\det A).</md>
-          But the scaling factor of the composition is also
-          <md>\det(BA).</md>
-          Therefore
-          <md>\det(BA)=(\det B)(\det A).</md>
+          Let <m>A,B</m> be <m>n\times n</m> matrices. Fix <m>B</m> and define
+          <md>F(\mathbf v_1,\ldots,\mathbf v_n)=\det[B\mathbf v_1\ \cdots\ B\mathbf v_n].</md>
+          This is linear in each vector input separately and alternating. Expand each
+          <m>\mathbf v_j=\sum_i v_{ij}\mathbf e_i</m>. Terms with repeated basis vectors
+          vanish. Every remaining term uses a permutation of the standard basis; the
+          alternating rule gives its sign. Consequently
+          <md>
+            F(\mathbf v_1,\ldots,\mathbf v_n)
+            =F(\mathbf e_1,\ldots,\mathbf e_n)
+             \sum_{\sigma}\operatorname{sgn}(\sigma)v_{\sigma(1),1}\cdots v_{\sigma(n),n}
+            =(\det B)\det[\mathbf v_1\ \cdots\ \mathbf v_n].
+          </md>
+          Choose <m>\mathbf v_1,\ldots,\mathbf v_n</m> to be the columns of <m>A</m>.
+          The columns of <m>BA</m> are then <m>B\mathbf v_1,\ldots,B\mathbf v_n</m>,
+          proving <m>\det(BA)=(\det B)(\det A)</m>. In the plane and in space,
+          this identity agrees with the independently proved area and volume scaling rules.
         </p>
       </proof>
     </theorem>
@@ -607,13 +631,30 @@
       though the matrices themselves may be different.
     </p>
 
+    <corollary xml:id="c3s4-cor-determinant-invertibility">
+      <title>Nonzero determinant and invertibility in every dimension</title>
+      <statement><p>An <m>n\times n</m> matrix is invertible exactly when its determinant is nonzero.</p></statement>
+      <proof>
+        <p>
+          Dependent columns give determinant zero: express one column as a combination of
+          the others and use linearity and the repeated-column rule. Thus nonzero determinant
+          forces independent columns. The basis exchange argument in
+          <xref ref="sec-1-linear-independence-and-bases"/> shows that <m>n</m> independent
+          vectors in <m>\mathbb R^n</m> span it: replacing all standard basis vectors by
+          those columns preserves the span. Each output then has unique coordinates in the
+          columns, giving an inverse linear map. Conversely, if <m>A^{-1}</m> exists,
+          the product rule gives <m>1=\det I=\det(A^{-1})\det A</m>, so <m>\det A\ne0</m>.
+        </p>
+      </proof>
+    </corollary>
+
     <exercise xml:id="checkpoint-3-4-product-rule">
       <title>Why should determinants multiply?</title>
       <statement>
         <p>
-          Apply <m>A</m> first, then <m>B</m>. If <m>A</m> scales every area by <m>\det A</m> and
-          <m>B</m> then scales every area by <m>\det B</m>, explain in your own words why the
-          combined map <m>BA</m> must scale area by <m>\det(B)\det(A)</m>.
+          Apply <m>A</m> first, then <m>B</m>. If <m>A</m> scales every signed area by <m>\det A</m> and
+          <m>B</m> then scales every signed area by <m>\det B</m>, explain in your own words why the
+          combined map <m>BA</m> must scale signed area by <m>\det(B)\det(A)</m>.
         </p>
       </statement>
       <hint>
@@ -659,73 +700,32 @@
   </subsection>
 
   <subsection xml:id="c3s4-subsec-change-of-variables">
-    <title>The determinant in change of variables</title>
+    <title>Finite rectangles under a linear coordinate change</title>
 
     <p>
-      The determinant will return later in multiple integrals. The reason is simple: integrals
-      add up tiny areas and volumes, and a change of variables changes the size of those tiny
-      pieces.
+      Consider the linear map
+      <md>T(u,v)=(au+bv,cu+dv),\qquad A=\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix}.</md>
+      A rectangle with positive side lengths <m>h</m> and <m>k</m> has ordered edge
+      vectors <m>(h,0)</m> and <m>(0,k)</m>. Its image has edge vectors
+      <md>A(h,0)=h(a,c),\qquad A(0,k)=k(b,d).</md>
+      These are finite vectors, so the signed area of their parallelogram is exactly
+      <md>\det[h(a,c)\ k(b,d)]=hk(ad-bc)=hk\det A.</md>
+      The original ordinary area is <m>hk</m>, while the image has ordinary area
+      <m>hk|\det A|</m>. Translation of the rectangle changes neither calculation.
     </p>
 
     <p>
-      For a linear change of variables
-      <md>x=au+bv, \qquad y=cu+dv,</md>
-      the matrix is
-      <md>
-        A=
-        \begin{pmatrix}
-            a&amp;b\\
-            c&amp;d
-        \end{pmatrix}.
-      </md>
-      A tiny square in the <m>uv</m>-plane becomes a tiny parallelogram in the <m>xy</m>-plane.
-      Its area is multiplied by
-      <md>|\det A|=|ad-bc|.</md>
-      That is why ordinary area integrals will use the factor
-      <md>|\det A|.</md>
+      Thus <m>\det A</m> records signed scaling, and <m>|\det A|</m> records ordinary
+      area scaling. A negative determinant reverses the order of the two edge directions;
+      it does not produce negative ordinary area. The earlier area-scaling theorem gives
+      the same conclusion for every parallelogram.
     </p>
 
     <p>
-      But oriented area remembers the sign. Using differentials and the wedge product,
-      <md>dx=a\,du+b\,dv, \qquad dy=c\,du+d\,dv.</md>
-      Then
-      <md>
-        <mrow>dx\wedge dy \amp= (a\,du+b\,dv)\wedge(c\,du+d\,dv)</mrow>
-        <mrow>\amp= ac\,du\wedge du +ad\,du\wedge dv +bc\,dv\wedge du +bd\,dv\wedge dv.</mrow>
-      </md>
-      Since
-      <md>du\wedge du=0, \qquad dv\wedge dv=0,</md>
-      and
-      <md>dv\wedge du=-du\wedge dv,</md>
-      we get
-      <md>\boxed{ dx\wedge dy=(ad-bc)\,du\wedge dv. }</md>
-      So the determinant is the coefficient that appears when an oriented area element is pulled
-      through a linear coordinate change.
-    </p>
-
-    <p>This is the same story in two dialects:</p>
-
-    <table xml:id="c3s4-tab-ordinary-vs-oriented-area">
-      <title>Ordinary area and oriented area under a linear change of variables.</title>
-      <tabular>
-        <col right="minor"/>
-        <col/>
-        <row><cell>ordinary area</cell><cell><m>dA=|\det A|\,du\,dv</m></cell></row>
-        <row><cell>oriented area</cell><cell><m>dx\wedge dy=(\det A)\,du\wedge dv</m></cell></row>
-      </tabular>
-    </table>
-
-    <p>
-      The absolute value appears when we forget orientation. The sign remains when we keep
-      orientation.
-    </p>
-
-    <p>
-      For nonlinear coordinate changes, the scaling factor will no longer be constant. Each tiny
-      piece will have its own best linear approximation, and the determinant of that local linear
-      map will become the <term>Jacobian determinant</term>. This is one reason matrices are not
-      a side topic in multivariable calculus. They are the small-scale language of curved
-      geometry.
+      Later, <xref ref="sec-12-pullbacks-of-area-and-volume-elements"/> will connect
+      this finite geometry with differential notation and substitution in integrals.
+      Nonlinear maps require a local linear approximation, whose determinant can vary
+      from point to point.
     </p>
 
     <p>

@@ -90,7 +90,9 @@ def jacobian(F, p, h=1e-5):
     for j in range(n):
         e = np.zeros(n)
         e[j] = 1.0
-        J[:, j] = (F(p + h*e) - F(p - h*e)) / (2*h)
+        plus = np.asarray(F(p + h*e), dtype=float)
+        minus = np.asarray(F(p - h*e), dtype=float)
+        J[:, j] = (plus - minus) / (2*h)
 
     return J
 </code>

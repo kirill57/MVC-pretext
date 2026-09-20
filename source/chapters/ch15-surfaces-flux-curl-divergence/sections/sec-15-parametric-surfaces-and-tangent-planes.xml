@@ -126,19 +126,34 @@
 
     <p>These two curve families form the grid on the surface.</p>
 
-    <p>
-      At a point, the derivatives of these coordinate curves give two tangent directions:
-      <md>\mathbf r_\theta(\theta,z)=(-2\sin\theta,2\cos\theta,0),</md>
-      and
-      <md>\mathbf r_z(\theta,z)=(0,0,1).</md>
-      At
-      <md>\theta=\frac{\pi}{3},\qquad z=4,</md>
-      these become
-      <md>\mathbf r_\theta\left(\frac{\pi}{3},4\right)=(-\sqrt3,1,0),</md>
-      and
-      <md>\mathbf r_z\left(\frac{\pi}{3},4\right)=(0,0,1).</md>
-      One vector points around the cylinder. The other points upward.
-    </p>
+    <example xml:id="c4s5-ex-tangent-directions-cylinder">
+      <title>Tangent directions on a cylinder</title>
+      <statement>
+        <p>
+          For the cylinder
+          <md>\mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),</md>
+          differentiate with respect to <m>\theta</m>:
+          <md>\mathbf r_\theta(\theta,z)=(-2\sin\theta,2\cos\theta,0).</md>
+          This points around the cylinder.
+        </p>
+        <p>
+          Differentiate with respect to <m>z</m>:
+          <md>\mathbf r_z(\theta,z)=(0,0,1).</md>
+          This points straight upward.
+        </p>
+        <p>
+          At
+          <md>\theta=\frac{\pi}{3},\qquad z=2,</md>
+          the point on the cylinder is
+          <md>\mathbf r\left(\frac{\pi}{3},2\right) = (1,\sqrt3,2).</md>
+          The two tangent directions are
+          <md>\mathbf r_\theta\left(\frac{\pi}{3},2\right) = (-\sqrt3,1,0)</md>
+          and
+          <md>\mathbf r_z\left(\frac{\pi}{3},2\right) = (0,0,1).</md>
+          One direction goes around the pipe. The other goes up the pipe.
+        </p>
+      </statement>
+    </example>
 
     <definition xml:id="c15s1-def-tangent-vectors-from-a-parametrization">
       <title>Tangent vectors from a parametrization</title>
@@ -146,7 +161,7 @@
         <p>
           Let
           <md>\mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)).</md>
-          The two coordinate tangent vectors are
+          Assume its first partial derivatives exist. The two coordinate tangent vectors are
           <md>\boxed{ \mathbf r_u=(x_u,y_u,z_u), \qquad \mathbf r_v=(x_v,y_v,z_v). }</md>
           They are tangent to the coordinate curves obtained by holding one parameter fixed.
         </p>
@@ -154,9 +169,9 @@
     </definition>
 
     <p>
-      A surface is locally two-dimensional when these two tangent directions are genuinely
-      different. If one direction is a multiple of the other, the parameter grid has collapsed
-      at that point.
+      Independent coordinate tangent vectors describe two local directions of a sheet.
+      Dependent vectors signal a defect in this parametrization; they do not by themselves
+      prove that the geometric surface has a singularity.
     </p>
   </subsection>
 
@@ -182,6 +197,45 @@
       <md>(1,\sqrt3,z).</md>
     </p>
 
+    <figure xml:id="c4s5-fig-cylinder-tangent-directions">
+      <caption>The two parameter directions on a cylinder give two tangent directions
+      <m>\mathbf r_\theta</m> (around) and <m>\mathbf r_z</m> (up); their cross product
+      <m>\mathbf r_\theta\times\mathbf r_z</m> is the outward normal.
+      Arrows show directions and are scaled for visibility.
+      (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="62%">
+      <shortdescription>A cylinder with two coordinate tangent directions and their outward cross product at one point.</shortdescription>
+        <asymptote>
+        // 3-D interactive (WebGL) figure.
+        import graph3;
+        size(8cm);
+        currentprojection=orthographic(5,3,2.6);
+
+        real a=1.4, h=2.6;
+        surface cyl=surface(new triple(pair t){return (a*cos(t.x), a*sin(t.x), t.y);},(0,0),(2pi,h),40,12);
+        draw(cyl, rgb(0.70,0.78,0.90)+opacity(0.55), meshpen=rgb(0.45,0.5,0.65)+linewidth(0.15pt));
+        draw(circle((0,0,h),a,(0,0,1)), black+linewidth(0.7pt));
+
+        real th=35*pi/180, zP=1.7;
+        triple P=(a*cos(th), a*sin(th), zP);
+        triple rtheta=1.1*(-sin(th), cos(th), 0);   // d r / d theta  (around the circle)
+        triple rz=(0,0,1.1);                          // d r / d z      (up the axis)
+        triple n=1.1*(cos(th), sin(th), 0);           // r_theta x r_z  = outward radial normal
+
+        draw(P--(P+rtheta), blue+linewidth(1.4pt), Arrow3);
+        draw(P--(P+rz),     deepgreen+linewidth(1.4pt), Arrow3);
+        draw(P--(P+n),      red+linewidth(1.4pt), Arrow3);
+        label("$\mathbf r_\theta$", P+rtheta, NW);
+        label("$\mathbf r_z$", P+rz, N);
+        label("$\mathbf r_\theta\times\mathbf r_z$", P+n, E);
+        dot(P); label("$P$", P, SW);
+
+        draw(O--(2.4,0,0), gray, Arrow3); draw(O--(0,2.4,0), gray, Arrow3); draw(O--(0,0,3.2), gray, Arrow3);
+        label("$x$",(2.4,0,0),S); label("$y$",(0,2.4,0),E); label("$z$",(0,0,3.2),N);
+        </asymptote>
+      </image>
+    </figure>
+
     <p>
       The order matters. If we reverse the order,
       <md>\mathbf r_z\times \mathbf r_\theta = -(\mathbf r_\theta\times \mathbf r_z),</md>
@@ -201,8 +255,8 @@
       </statement>
       <hint>
         <p>
-          The surface is the same either way, but you are deciding which face counts as the
-          <q>outside.</q> What is that called?
+          The surface is the same either way, but you select which normal direction
+          counts as positive. An arbitrary patch need not have an inside or an outside.
         </p>
       </hint>
     </exercise>
@@ -215,13 +269,39 @@
           <md>\mathbf r(u,v)</md>
           is called <term>smooth</term> if its first partial derivatives are continuous.
         </p>
-        <p>
+        <p xml:id="c4s5-def-regular-point">
           It is called <term>regular</term> at <m>(u,v)</m> if
           <md>\boxed{ \mathbf r_u(u,v)\times \mathbf r_v(u,v)\ne \mathbf 0. }</md>
-          A smooth regular parametrization gives a smooth surface patch.
+          At an interior parameter point, a smooth regular map describes a smooth sheet
+          after restricting to a sufficiently small neighborhood. To justify the local-sheet claim, a nonzero component of the cross product is a nonzero
+          <m>2\times2</m> minor of the derivative. Project onto those two output coordinates.
+          The inverse function theorem from <xref ref="sec-8-inverse-functions"/> gives local
+          inverse coordinates, in which the third output coordinate is a <m>C^1</m> graph.
+          Distinct parameter neighborhoods may still meet in the image;
+          the tangent plane belongs to the selected local sheet.
         </p>
       </statement>
     </definition>
+
+    <exercise xml:id="checkpoint-4-5-two-tangents-and-cross-product">
+      <title>What do the two tangents build?</title>
+      <statement>
+        <p>
+          Holding <m>v</m> fixed and varying <m>u</m> gives one grid curve; holding <m>u</m> fixed and
+          varying <m>v</m> gives another. Why does this produce <em>two</em> tangent vectors
+          <m>\mathbf r_u</m> and <m>\mathbf r_v</m> at a point, and at a regular point, what geometric
+          object does their cross product <m>\mathbf r_u\times\mathbf r_v</m> describe?
+        </p>
+      </statement>
+      <hint>
+        <p>
+          Each parameter direction traces its own curve through the point, and each curve has
+          its own tangent. Recall that a cross product is perpendicular to both factors. If
+          <m>\mathbf r_u</m> and <m>\mathbf r_v</m> both lie in its tangent plane, where must
+          <m>\mathbf r_u\times\mathbf r_v</m> point?
+        </p>
+      </hint>
+    </exercise>
 
     <p>
       The regularity condition says that the two parameter directions really make a little
@@ -233,7 +313,7 @@
     <title>Tangent planes to parametrized surfaces</title>
 
     <p>
-      The tangent plane is the plane spanned by
+      At an interior point of a smooth regular patch, the tangent plane is spanned by
       <md>\mathbf r_u(u_0,v_0) \qquad\text{and}\qquad \mathbf r_v(u_0,v_0).</md>
       If
       <md>\mathbf p=\mathbf r(u_0,v_0),</md>
@@ -251,9 +331,10 @@
         <p>
           Let
           <md>\mathbf r:D\to\mathbb R^3</md>
-          be smooth and regular at <m>(u_0,v_0)</m>. Set
+          be smooth on a neighborhood of an interior point <m>(u_0,v_0)</m> and
+          regular there. Set
           <md>\mathbf p=\mathbf r(u_0,v_0).</md>
-          Then the tangent plane to the surface at <m>\mathbf p</m> is
+          Then the tangent plane to this local sheet at <m>\mathbf p</m> is
           <md>\boxed{ \mathbf X=\mathbf p+s\,\mathbf r_u(u_0,v_0)+t\,\mathbf r_v(u_0,v_0). }</md>
           Equivalently, if
           <md>\mathbf n=\mathbf r_u(u_0,v_0)\times \mathbf r_v(u_0,v_0),</md>
@@ -279,8 +360,12 @@
         So <m>\mathbf r_v</m> is also tangent.
       </p>
       <p>
-        Regularity says these two directions are not parallel, so they span a plane. Their
-        cross product is normal to that plane.
+        By the local linear approximation in <xref ref="c7s5-parametrized-surface" text="title"/>,
+        <md>\mathbf r(u_0+h,v_0+k)=\mathbf p+h\mathbf r_u+k\mathbf r_v+\mathbf E(h,k),
+        \qquad \frac{\|\mathbf E(h,k)\|}{\sqrt{h^2+k^2}}\longrightarrow0.</md>
+        Thus this plane approximates all nearby parameter displacements to first order,
+        not just the two coordinate curves. Regularity makes it a plane rather than a line;
+        the cross product is normal to it.
       </p>
     </proof>
 
@@ -314,9 +399,9 @@
     <title>Graphs as parametrized surfaces</title>
 
     <p>
-      A graph
+      If <m>g</m> has continuous first partial derivatives, its graph
       <md>z=g(x,y)</md>
-      is a surface. It has the natural parametrization
+      is a smooth surface. It has the natural parametrization
       <md>\boxed{ \mathbf r(x,y)=(x,y,g(x,y)). }</md>
       The two tangent vectors are
       <md>\mathbf r_x=(1,0,g_x), \qquad \mathbf r_y=(0,1,g_y).</md>
@@ -377,43 +462,64 @@
       slope <m>-1</m>. There is no single tangent plane along the crease.
     </p>
 
-    <exercise xml:id="checkpoint-15-1-why-regularity-is-needed">
-      <title>What goes wrong at the tip?</title>
-      <statement>
-        <p>
-          At the tip of the cone the cross product <m>\mathbf r_u\times\mathbf r_\theta</m>
-          becomes the zero vector. The cone still looks perfectly definite there, so why does a
-          zero normal vector tell us that a tangent plane cannot be defined?
-        </p>
-      </statement>
-      <hint>
-        <p>
-          A normal vector is supposed to single out one plane. Ask what a zero-length arrow can
-          possibly point at, and how many directions meet at the tip.
-        </p>
-      </hint>
-    </exercise>
 
     <p>
       The partial derivative with respect to <m>x</m> does not exist there. Smoothness was not
       a decoration; it prevented a hidden fold.
     </p>
 
-    <p>
-      Second, a parametrization can collapse. A cone can be parametrized by
-      <md>\mathbf r(u,\theta)=(u\cos\theta,u\sin\theta,u), \qquad u\ge0.</md>
-      The tangent vectors are
-      <md>\mathbf r_u=(\cos\theta,\sin\theta,1),</md>
-      and
-      <md>\mathbf r_\theta=(-u\sin\theta,u\cos\theta,0).</md>
-      Their cross product is
-      <md>\mathbf r_u\times\mathbf r_\theta = (-u\cos\theta,-u\sin\theta,u).</md>
-      At the tip, where <m>u=0</m>,
-      <md>\mathbf r_u\times\mathbf r_\theta=\mathbf 0.</md>
-      The cone has no unique tangent plane at its tip. Different straight lines on the cone
-      arrive at the tip with different tangent directions. Regularity is the condition that
-      rules out this kind of collapse.
+    <example xml:id="c4s5-ex-regularity-cone-tip">
+      <title>Why regularity matters: the tip of a cone</title>
+      <statement>
+        <p>
+          The upper cone
+          <md>z=\sqrt{x^2+y^2}</md>
+          has the parametrization
+          <md>\mathbf r(s,\theta) = (s\cos\theta,s\sin\theta,s), \qquad s\ge0,\quad 0\le\theta\le2\pi.</md>
+          For <m>s\gt0</m>, the parameters describe points away from the tip.
+        </p>
+        <p>
+          At the tip,
+          <md>s=0,</md>
+          all angles give the same point:
+          <md>\mathbf r(0,\theta)=(0,0,0).</md>
+          The tangent directions are
+          <md>\mathbf r_s=(\cos\theta,\sin\theta,1),</md>
+          and
+          <md>\mathbf r_\theta=(-s\sin\theta,s\cos\theta,0).</md>
+          At <m>s=0</m>,
+          <md>\mathbf r_\theta=(0,0,0).</md>
+          So
+          <md>\mathbf r_s\times\mathbf r_\theta=\mathbf 0.</md>
+          The parametrization is not regular at the tip.
+        </p>
+        <p>
+          Geometrically, this matches what we see. The cone has a sharp point. The three straight generators with directions
+          <m>(1,0,1)</m>, <m>(-1,0,1)</m>, and <m>(0,1,1)</m> all reach the tip.
+          Their determinant is <m>-2</m>, so they do not lie in one plane.
+          Thus no single tangent plane can contain all three directions.
+        </p>
+      </statement>
+    </example>
+
+    <p xml:id="c15s1-sphere-coordinate-defect">
+      Failure of regularity alone does not settle the geometry. The spherical coordinates
+      of <xref ref="c4s5-ex-latitude-longitude"/> collapse at a pole, but near the north
+      pole the same sphere has the regular graph patch
+      <md>\mathbf q(u,v)=(u,v,\sqrt{9-u^2-v^2}),\qquad u^2+v^2\lt9.</md>
+      At <m>(0,0)</m> its coordinate tangent vectors are <m>(1,0,0)</m> and <m>(0,1,0)</m>.
+      The sphere therefore has a tangent plane there. The cone's three independent
+      generator directions, rather than merely a zero cross product, rule out a plane at its tip.
     </p>
+
+    <exercise xml:id="checkpoint-15-1-why-regularity-is-needed">
+      <title>A coordinate defect or a sharp tip?</title>
+      <statement><p>Both the cone coordinates and the spherical coordinates have a zero
+      cross product at a collapsed edge. Why does this fact alone not decide whether
+      the image has a tangent plane? What additional argument distinguishes the cone?</p></statement>
+      <hint><p>Use the regular graph patch for the sphere and the three independent
+      generator directions for the cone.</p></hint>
+    </exercise>
 
     <p>
       So a smooth regular patch is the surface version of a smooth curve with nonzero

@@ -188,24 +188,7 @@
       <md>\left(H_x(2,1),H_y(2,1)\right)\cdot\left(\frac35,\frac45\right).</md>
       The vector of partial derivatives has a name.
     </p>
-    <exercise xml:id="checkpoint-7-2-gradient-dot-product">
-      <title>Why does one dot product capture every direction?</title>
-      <statement>
-        <p>
-          The gradient stores only the two coordinate slopes <m>f_x(\mathbf p)</m> and
-          <m>f_y(\mathbf p)</m>, yet the formula <m>D_{\mathbf u}f(\mathbf p)=\nabla f(\mathbf p)\cdot\mathbf u</m>
-          recovers the slope in <em>every</em> direction <m>\mathbf u</m>. Why should two numbers
-          be enough to determine the rate of change along infinitely many directions?
-        </p>
-      </statement>
-      <hint>
-        <p>
-          Write a unit direction as <m>\mathbf u=u_1\mathbf i+u_2\mathbf j</m> and think about how
-          a small step <m>t\mathbf u</m> splits into an <m>x</m>-step and a <m>y</m>-step. What does
-          continuity of the partials let you say about combining those two coordinate changes?
-        </p>
-      </hint>
-    </exercise>
+
 
 
     <definition xml:id="c7s2-def-gradient">
@@ -293,6 +276,26 @@
         <md>D_{\mathbf u}f(a,b)=u_1f_x(a,b)+u_2f_y(a,b).</md>
       </p>
     </proof>
+
+    <exercise xml:id="checkpoint-7-2-gradient-dot-product">
+      <title>Why does one dot product capture every direction?</title>
+      <statement>
+        <p>
+          Assume the partial derivatives exist near <m>\mathbf p</m> and are continuous there.
+          The gradient stores only the two coordinate slopes <m>f_x(\mathbf p)</m> and
+          <m>f_y(\mathbf p)</m>, yet the formula <m>D_{\mathbf u}f(\mathbf p)=\nabla f(\mathbf p)\cdot\mathbf u</m>
+          recovers the slope in <em>every</em> direction <m>\mathbf u</m>. Why should two numbers
+          be enough to determine the rate of change along infinitely many directions?
+        </p>
+      </statement>
+      <hint>
+        <p>
+          Write a unit direction as <m>\mathbf u=u_1\mathbf i+u_2\mathbf j</m> and think about how
+          a small step <m>t\mathbf u</m> splits into an <m>x</m>-step and a <m>y</m>-step. What does
+          continuity of the partials let you say about combining those two coordinate changes?
+        </p>
+      </hint>
+    </exercise>
 
     <p>
       The same formula holds in space:
@@ -471,17 +474,32 @@
     <p>The gradient also explains a feature of contour maps.</p>
 
     <p>
-      Suppose you walk along a level curve of <m>f</m>. The value of <m>f</m> stays constant, so
-      the rate of change along the curve is <m>0</m>. If <m>\mathbf t</m> is a unit tangent
-      direction to the level curve, then
-      <md>D_{\mathbf t}f=\nabla f\cdot\mathbf t=0.</md>
-      So the gradient is perpendicular to the tangent direction of the level curve.
+      Suppose <m>f</m> has continuous first partial derivatives near a point
+      <m>\mathbf p</m>, and a differentiable level curve <m>\mathbf r(t)=(x(t),y(t))</m>
+      passes through <m>\mathbf p=\mathbf r(t_0)</m> with <m>\mathbf r'(t_0)\ne\mathbf0</m>.
+      We must relate change along this curved path to change along its tangent line.
+    </p>
+
+    <p>
+      Use the same coordinate-increment decomposition as in the proof above, now with
+      <m>\Delta x=x(t_0+h)-x(t_0)</m> and <m>\Delta y=y(t_0+h)-y(t_0)</m>.
+      The one-variable Mean Value Theorem writes the change in <m>f</m> as
+      <m>f_x</m> at a nearby point times <m>\Delta x</m>, plus <m>f_y</m> at a nearby
+      point times <m>\Delta y</m>. Divide by <m>h</m> and let <m>h\to0</m>.
+      Continuity of the partials and differentiability of the curve give
+      <md>0=\frac{d}{dt}f(\mathbf r(t))\bigg|_{t=t_0}=f_x(\mathbf p)x'(t_0)+f_y(\mathbf p)y'(t_0)=\nabla f(\mathbf p)\cdot\mathbf r'(t_0).</md>
+      The left side is zero because <m>f</m> is constant on the curve. For the unit tangent
+      <m>\mathbf t=\mathbf r'(t_0)/\|\mathbf r'(t_0)\|</m>, this says
+      <m>\nabla f(\mathbf p)\cdot\mathbf t=0</m>. If the gradient is nonzero, it therefore
+      points perpendicular to the tangent. This special case uses the same one-variable
+      argument; the general chain rule will be developed in Chapter 8.
     </p>
     <exercise xml:id="checkpoint-7-2-perpendicular-contour">
       <title>Why does the gradient cut straight across a contour?</title>
       <statement>
         <p>
-          Walking along a level curve keeps the value of <m>f</m> constant, so the rate of change
+          Under the smoothness and nonzero-gradient assumptions just stated, walking along a
+          level curve keeps the value of <m>f</m> constant, so the rate of change
           along the curve is <m>0</m>. Explain why this single fact forces the gradient to be
           perpendicular to the level curve, rather than tilted at some other angle to it.
         </p>

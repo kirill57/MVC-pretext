@@ -179,7 +179,40 @@
       </statement>
     </example>
 
-    <p>On a rectangle, the curl test is not only necessary. It is sufficient.</p>
+    <p>On a rectangle, the curl test is not only necessary. It is sufficient. Its proof uses
+      the following differentiation rule for an integral with a parameter.</p>
+
+    <lemma xml:id="c13s6-lem-parameter-integral">
+      <title>Differentiating an integral with a parameter</title>
+      <statement>
+        <p>Suppose <m>q(x,t)</m> and <m>q_x(x,t)</m> are continuous on a neighborhood of
+          <m>[a,b]\times[c,d]</m>. For <m>a\lt x\lt b</m>,
+          <md>H(x)=\int_c^d q(x,t)\,dt
+            \quad\Longrightarrow\quad
+            H'(x)=\int_c^d q_x(x,t)\,dt.</md>
+          The same conclusion holds for any fixed subinterval of <m>[c,d]</m>.
+        </p>
+      </statement>
+      <proof>
+        <p>Fix <m>x</m>. Continuity of <m>q_x</m> makes
+          <m>q_x(x+s,t)-q_x(x,t)</m> uniformly small for all <m>c\le t\le d</m>
+          when <m>s</m> is small. To justify the word <q>uniformly</q>, first use continuity
+          near each <m>(x,t_0)</m> to bound both values by their difference from
+          <m>q_x(x,t_0)</m>. The closed interval <m>[c,d]</m> is covered by finitely many
+          of these neighborhoods, so the smallest of their allowed positive bounds on
+          <m>|s|</m> works for the entire interval. This is the usual finite-cover argument
+          behind uniform continuity on a closed bounded interval.</p>
+        <p>The one-variable Mean Value Theorem, applied with <m>t</m> fixed, now gives
+          <md>\left|\frac{q(x+h,t)-q(x,t)}{h}-q_x(x,t)\right|\le\varepsilon</md>
+          for all <m>t\in[c,d]</m> and all sufficiently small nonzero <m>h</m>.
+          Integrating this inequality yields
+          <md>\left|\frac{H(x+h)-H(x)}{h}-\int_c^d q_x(x,t)\,dt\right|
+            \le(d-c)\varepsilon.</md>
+          Letting <m>h\to0</m> proves the derivative formula. Thus the interchange is
+          justified by the stated continuity hypotheses, not by a formal movement of symbols.
+        </p>
+      </proof>
+    </lemma>
 
     <theorem xml:id="c13s6-thm-curl-test-rectangle">
       <title>Curl test on a rectangle</title>
@@ -189,9 +222,9 @@
           <md>R=[a,b]\times[c,d]</md>
           be a rectangle, and let
           <md>\omega=P\,dx+Q\,dy</md>
-          be a <m>C^1</m> <m>1</m>-form on <m>R</m>. If
+          be a <m>C^1</m> <m>1</m>-form on an open neighborhood of <m>R</m>. If
           <md>\boxed{P_y=Q_x}</md>
-          throughout <m>R</m>, then <m>\omega</m> is exact on <m>R</m>.
+          throughout that neighborhood, then <m>\omega</m> is exact on <m>R</m>.
         </p>
       </statement>
       <proof>
@@ -200,7 +233,8 @@
           <md>\phi(x,y)=\int_a^x P(s,c)\,ds+\int_c^y Q(x,t)\,dt.</md>
           Then
           <md>\phi_y(x,y)=Q(x,y).</md>
-          For the <m>x</m>-partial derivative,
+          For the <m>x</m>-partial derivative, apply
+          <xref ref="c13s6-lem-parameter-integral"/> with <m>y</m> held fixed:
           <md>
             <mrow>\phi_x(x,y) \amp= P(x,c)+\int_c^y Q_x(x,t)\,dt</mrow>
             <mrow>\amp= P(x,c)+\int_c^y P_y(x,t)\,dt</mrow>
@@ -306,7 +340,8 @@
       is always a necessary test, under the usual smoothness hypotheses.
     </p>
 
-    <p>The reverse direction needs one more geometric condition.</p>
+    <p>A useful sufficient condition for the reverse direction is a geometric condition on
+      the domain.</p>
   </subsection>
 
   <subsection xml:id="c13s6-simply-connected-regions">
@@ -318,8 +353,9 @@
     </p>
 
     <p>
-      A region <m>D</m> is called <term>simply connected</term> if every closed curve in
-      <m>D</m> can be shrunk continuously to a point while staying inside <m>D</m>.
+      A region <m>D</m> is called <term>simply connected</term> if it is path connected
+      (any two points can be joined by a continuous path in <m>D</m>) and every closed
+      curve in <m>D</m> can be shrunk continuously to a point while staying inside <m>D</m>.
     </p>
 
     <p>
@@ -408,15 +444,19 @@
     </theorem>
 
     <p>
-      The proof for rectangles was given above by constructing a potential directly. The full
-      simply connected version is best understood after Green's theorem and Stokes' theorem.
-      Those theorems explain why zero local curl prevents circulation around every closed curve,
-      as long as no hole or singularity is hiding inside the curve.
+      The rectangle case was proved above by constructing a potential directly. We state the
+      full simply connected theorem here for use, with its proof postponed to
+      <xref ref="c17s5-thm-simply-connected-potential"/>. That proof constructs potentials
+      on balls and then uses a subdivided continuous contraction to show that every closed
+      curve has zero integral. Green's theorem and Stokes' theorem give related geometric
+      interpretations; merely saying that a loop shrinks is not yet the proof in space.
     </p>
 
     <p>
       Without the simply connected condition, the test can pass and still fail to produce a
-      global potential.
+      global potential. Simple connectivity is sufficient to guarantee a potential for every
+      curl-free field on the domain; it is not necessary for a particular field. For example,
+      <m>(2x,2y)=\nabla(x^2+y^2)</m> has a potential even on the punctured plane.
     </p>
   </subsection>
 
@@ -512,8 +552,8 @@
           On every small patch, <m>\alpha</m> equals <m>d\theta</m> for an honest potential, so the
           curl test passes everywhere and local potentials genuinely exist. What goes wrong when you
           try to stitch all these local angle functions into one continuous potential on the whole
-          punctured plane, and how does this story illustrate that the curl test is necessary but
-          only sufficient once the domain is simply connected?
+          punctured plane, and how does this story show that zero curl alone does not guarantee
+          a global potential on every domain?
         </p>
       </statement>
       <hint>

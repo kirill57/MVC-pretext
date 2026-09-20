@@ -318,34 +318,24 @@
     </p>
 
     <p>
-      For polar coordinates,
-      <md>x=r\cos\theta, \qquad y=r\sin\theta.</md>
-      We already found
-      <md>dx=\cos\theta\,dr-r\sin\theta\,d\theta,</md>
-      and
-      <md>dy=\sin\theta\,dr+r\cos\theta\,d\theta.</md>
-      Take the wedge product:
-      <md>
-        <mrow>dx\wedge dy \amp= (\cos\theta\,dr-r\sin\theta\,d\theta) \wedge (\sin\theta\,dr+r\cos\theta\,d\theta)</mrow>
-        <mrow>\amp= r\cos^2\theta\,dr\wedge d\theta + r\sin^2\theta\,dr\wedge d\theta</mrow>
-        <mrow>\amp= r\,dr\wedge d\theta.</mrow>
-      </md>
-      Thus
-      <md>\boxed{dx\wedge dy=r\,dr\wedge d\theta.}</md>
-      The factor <m>r</m> is the Jacobian determinant:
-      <md>\boxed{\frac{\partial(x,y)}{\partial(r,\theta)} = \det \begin{pmatrix} \cos\theta \amp -r\sin\theta\\ \sin\theta \amp r\cos\theta \end{pmatrix} = r.}</md>
-      A tiny polar rectangle with side lengths <m>dr</m> and <m>d\theta</m> maps to a tiny
-      sector whose area is approximately
-      <md>r\,dr\,d\theta.</md>
+      For the polar map <m>G(r,\theta)=(r\cos\theta,r\sin\theta)</m>, the derivative matrix is
+      <md>J_G(r,\theta)=\begin{pmatrix}\cos\theta\amp-r\sin\theta\\\sin\theta\amp r\cos\theta\end{pmatrix}.</md>
+      Its determinant is
+      <md>\boxed{\frac{\partial(x,y)}{\partial(r,\theta)}=\det J_G=r.}</md>
+      At a point with <m>r&gt;0</m>, the derivative sends finite parameter increments
+      <m>(\Delta r,0)</m> and <m>(0,\Delta\theta)</m> to the vectors
+      <md>\Delta r(\cos\theta,\sin\theta),\qquad \Delta\theta(-r\sin\theta,r\cos\theta).</md>
+      Their parallelogram has signed area <m>r\,\Delta r\,\Delta\theta</m>.
+      This is the area prediction from the local linear approximation. For small positive
+      increments, the curved polar sector has approximately this area.
     </p>
 
     <exercise xml:id="checkpoint-8-4-jacobian-area-factor">
       <title>Why does the Jacobian scale area?</title>
       <statement>
         <p>
-          The Jacobian determinant came out of an algebraic wedge-product computation, yet it ends
-          up being exactly the factor <m>r</m> that scales a tiny polar rectangle into a tiny
-          sector. Why should a determinant of partial derivatives have anything to do with how
+          The determinant of the derivative matrix is <m>r</m>, the factor that gives
+          the first-order area prediction for a small polar rectangle. Why should a determinant of partial derivatives have anything to do with how
           much area or volume gets stretched? What is it about a determinant that makes it the
           right measure of local size change?
         </p>
@@ -360,37 +350,32 @@
     </exercise>
 
     <p>
-      For cylindrical coordinates,
-      <md>x=r\cos\theta, \qquad y=r\sin\theta, \qquad z=z.</md>
-      The volume form becomes
-      <md>\boxed{dx\wedge dy\wedge dz = r\,dr\wedge d\theta\wedge dz.}</md>
-      So the local volume stretching factor is
-      <md>\boxed{r.}</md>
+      For cylindrical coordinates the derivative matrix is
+      <md>\begin{pmatrix}\cos\theta\amp-r\sin\theta\amp0\\\sin\theta\amp r\cos\theta\amp0\\0\amp0\amp1\end{pmatrix},</md>
+      with determinant <m>r</m>. Thus its ordinary volume scale is <m>r</m> for <m>r&gt;0</m>.
     </p>
 
     <p>
-      For spherical coordinates in the order
-      <md>(\rho,\theta,\phi),</md>
-      the Jacobian determinant is
-      <md>\boxed{\frac{\partial(x,y,z)}{\partial(\rho,\theta,\phi)} = -\rho^2\sin\phi.}</md>
-      The negative sign is an orientation sign. It says that the ordered coordinate directions
-      <md>(\rho,\theta,\phi)</md>
-      have the opposite orientation from
-      <md>(x,y,z).</md>
-      The size of the local volume stretching is
-      <md>\boxed{\rho^2\sin\phi.}</md>
-      Equivalently,
-      <md>\boxed{dx\wedge dy\wedge dz = -\rho^2\sin\phi\, d\rho\wedge d\theta\wedge d\phi.}</md>
-      If we order the spherical coordinates as
-      <md>(\rho,\phi,\theta),</md>
-      then the sign becomes positive:
-      <md>\boxed{dx\wedge dy\wedge dz = \rho^2\sin\phi\, d\rho\wedge d\phi\wedge d\theta.}</md>
+      For spherical coordinates in the order <m>(\rho,\theta,\phi)</m>, the derivative matrix is
+      <md>J=\begin{pmatrix}
+        \sin\phi\cos\theta\amp-\rho\sin\phi\sin\theta\amp\rho\cos\phi\cos\theta\\
+        \sin\phi\sin\theta\amp\rho\sin\phi\cos\theta\amp\rho\cos\phi\sin\theta\\
+        \cos\phi\amp0\amp-\rho\sin\phi
+      \end{pmatrix}.</md>
+      Expanding its determinant gives
+      <md>\boxed{\frac{\partial(x,y,z)}{\partial(\rho,\theta,\phi)}=-\rho^2\sin\phi.}</md>
+      For <m>\rho&gt;0</m> and <m>0&lt;\phi&lt;\pi</m>, the negative sign says that the
+      ordered coordinate directions <m>(\rho,\theta,\phi)</m> have the opposite
+      orientation from <m>(x,y,z)</m>. The ordinary volume scale of the derivative is
+      its absolute determinant, <m>\rho^2\sin\phi</m>. Reordering the inputs as
+      <m>(\rho,\phi,\theta)</m> exchanges two columns and gives the positive signed
+      determinant <m>\rho^2\sin\phi</m>.
     </p>
 
     <p>
-      The absolute value is what appears in ordinary volume computations:
-      <md>dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
-      The wedge product keeps the orientation information too.
+      These are statements about derivative matrices and their local linear predictions.
+      The corresponding substitution rules for integrals, and their relation to oriented
+      area and volume forms, will be developed in Chapter 12.
     </p>
   </subsection>
 
@@ -480,7 +465,8 @@
     <p>
       A coordinate system is a tool, not part of the space itself. When its Jacobian determinant
       is nonzero, the tool behaves locally like a reversible linear map. When the determinant
-      vanishes, something has collapsed: an angle, an area, a volume, or a direction.
+      vanishes, the linear approximation collapses at least one direction. This alone
+      does not decide whether the original nonlinear map is one-to-one.
     </p>
 
     <p>

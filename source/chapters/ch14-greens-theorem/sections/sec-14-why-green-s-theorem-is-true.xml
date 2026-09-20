@@ -282,13 +282,13 @@
             \draw[gray!55] (5,1) -- (5,4);
             \draw[gray!55] (6,1) -- (6,4);
 
-            \draw[-&gt;, very thick, red!65!black] (0,1) -- (0,2.1);
-            \draw[-&gt;, very thick, red!65!black] (0.3,4) -- (0.8,4);
-            \draw[-&gt;, very thick, red!65!black] (1,4.3) -- (1,4.8);
-            \draw[-&gt;, very thick, red!65!black] (2.1,5) -- (3.1,5);
-            \draw[-&gt;, very thick, red!65!black] (7,3.5) -- (7,2.5);
-            \draw[-&gt;, very thick, red!65!black] (6,0) -- (5,0);
-            \draw[-&gt;, very thick, red!65!black] (2,0.8) -- (2,0.2);
+            \draw[&lt;-, very thick, red!65!black] (0,1) -- (0,2.1);
+            \draw[&lt;-, very thick, red!65!black] (0.3,4) -- (0.8,4);
+            \draw[&lt;-, very thick, red!65!black] (1,4.3) -- (1,4.8);
+            \draw[&lt;-, very thick, red!65!black] (2.1,5) -- (3.1,5);
+            \draw[&lt;-, very thick, red!65!black] (7,3.5) -- (7,2.5);
+            \draw[&lt;-, very thick, red!65!black] (6,0) -- (5,0);
+            \draw[&lt;-, very thick, red!65!black] (2,0.8) -- (2,0.2);
 
             \node at (3.5,-0.85) {only the outer staircase boundary remains};
         \end{tikzpicture}
@@ -336,7 +336,9 @@
     <p>
       Let
       <md>R=\{(x,y):a\le x\le b,\ g(x)\le y\le h(x)\},</md>
-      where <m>g</m> and <m>h</m> are smooth. This is a vertically simple region.
+      where <m>g</m> and <m>h</m> are continuously differentiable and
+      <m>g(x)\le h(x)</m>. This is a vertically simple region. The coefficient
+      functions are <m>C^1</m> on an open neighborhood of its closure.
     </p>
 
     <p>
@@ -369,15 +371,45 @@
       <md>\boxed{\oint_{\partial R}Q\,dy = \iint_R Q_x\,dA.}</md>
     </p>
 
-    <p>
-      If a region can be cut into finitely many pieces that are both vertically and horizontally
-      simple, then the two formulas apply on each piece. Adding the pieces cancels the new
-      internal boundaries, exactly as with rectangles.
+    <p xml:id="c14s5-type-i-complete-proof">
+      A vertically simple region need not also be horizontally simple. To finish its
+      proof without that extra condition, set
+      <md>H(x)=\int_{g(x)}^{h(x)}Q(x,y)\,dy.</md>
+      Split <m>H(x+s)-H(x)</m> into the change over the fixed interval
+      <m>[g(x),h(x)]</m> and the two short intervals created by the moving endpoints.
+      The fixed-interval term is handled by <xref ref="c13s6-lem-parameter-integral"/>;
+      the Fundamental Theorem of Calculus and the chain rule handle the endpoints. Thus
+      <md>H'(x)=\int_{g(x)}^{h(x)}Q_x(x,y)\,dy
+        +Q(x,h(x))h'(x)-Q(x,g(x))g'(x).</md>
+      Directly parametrizing the four boundary pieces gives
+      <md>\oint_{\partial R}Q\,dy
+        =H(b)-H(a)+\int_a^b
+        \bigl(Q(x,g(x))g'(x)-Q(x,h(x))h'(x)\bigr)\,dx.</md>
+      Substitute <m>H(b)-H(a)=\int_a^b H'(x)\,dx</m>. The endpoint terms cancel,
+      leaving <m>\oint_{\partial R}Q\,dy=\iint_R Q_x\,dA</m>.
+      Together with the earlier <m>P\,dx</m> calculation, this proves the full formula
+      for a vertically simple region. Interchanging the coordinates proves it for a
+      horizontally simple region. Piecewise continuously differentiable boundary
+      functions are handled by subdividing at their finitely many breakpoints.
     </p>
 
     <p>
-      This proves Green's theorem for many familiar regions: disks, ellipses, polygons, and
-      regions with piecewise smooth boundary after a finite number of cuts.
+      Adding finitely many such pieces cancels their internal boundaries. This proves
+      Green's theorem for regions admitting this decomposition, including the disks,
+      ellipses, polygons, and annuli used in this chapter. At an endpoint where a graph
+      representation of a circle or ellipse has an unbounded derivative, truncate just
+      before that endpoint and pass to the limit: the removed boundary arc has length
+      tending to zero, so its integral is bounded by that length times a bound for the
+      field, and the removed area also tends to zero.
+    </p>
+
+    <p xml:id="c14s5-proof-scope">
+      The theorem was stated for general piecewise smooth boundaries. The finite-piece
+      proof above does not establish that every such boundary has the required
+      decomposition; a smooth arc can oscillate infinitely often. The following
+      approximation discussion explains the general theorem but is a proof sketch.
+      We use the full standard theorem as stated, and do not claim that the sketch
+      supplies all its approximation estimates.
     </p>
   </subsection>
 

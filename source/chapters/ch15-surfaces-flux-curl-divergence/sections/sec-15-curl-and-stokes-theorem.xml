@@ -111,7 +111,12 @@
     </p>
 
     <p>
-      Indeed, compute:
+      For this space special case, define <m>d\omega</m> to have the three curl
+      coefficients displayed below, just as the plane operation was defined in
+      <xref ref="sec-14-green-s-theorem-in-differential-form-language"/>.
+      The first line is a way to verify that coordinate definition using scalar
+      differentials and the alternating algebra of Chapter 2; it does not assume a
+      general product rule for exterior derivatives. Thus:
       <md>
         <mrow>d(P\,dx+Q\,dy+R\,dz) \amp= dP\wedge dx+dQ\wedge dy+dR\wedge dz</mrow>
         <mrow>\amp= (R_y-Q_z)\,dy\wedge dz</mrow>
@@ -299,7 +304,7 @@
       <title>Stokes' theorem</title>
       <statement>
         <p>
-          Let <m>S</m> be an oriented piecewise smooth surface with piecewise smooth boundary
+          Let <m>S</m> be a compact oriented piecewise smooth surface with piecewise smooth boundary
           <md>\partial S.</md>
           Let
           <md>\mathbf F=(P,Q,R)</md>
@@ -326,11 +331,14 @@
         </p>
       </statement>
       <proof>
-        <title>Proof idea</title>
+        <title>Proof for smooth patches; scope of the general statement</title>
         <p>
-          Parametrize the surface by
+          First suppose one regular parametrization has continuous second partial
+          derivatives and covers the surface once, with the usual boundary identifications.
+          Parametrize this patch by
           <md>\mathbf r:D\to S,</md>
-          with orientation given by
+          where <m>D</m> is a compact planar region with piecewise smooth boundary,
+          and the parametrization is <m>C^2</m> on a neighborhood of <m>D</m>. Use the orientation given by
           <md>\mathbf r_u\times\mathbf r_v.</md>
           The boundary of <m>S</m> is the image of the boundary of <m>D</m>, with the induced
           orientation.
@@ -340,13 +348,32 @@
           <md>\mathbf r^*\omega.</md>
           This is now a <m>1</m>-form on a region in the <m>uv</m>-plane. By Green's theorem,
           <md>\int_{\partial D}\mathbf r^*\omega = \int_D d(\mathbf r^*\omega).</md>
-          The exterior derivative commutes with pullback:
-          <md>d(\mathbf r^*\omega)=\mathbf r^*(d\omega).</md>
-          This identity is the chain rule written in form language. Therefore
+          Here is the required chain-rule calculation. Write
+          <md>\mathbf r^*\omega=A\,du+B\,dv,\qquad
+          A=\mathbf F(\mathbf r)\cdot\mathbf r_u,\quad
+          B=\mathbf F(\mathbf r)\cdot\mathbf r_v.</md>
+          The product and chain rules give
+          <md>B_u-A_v=(D\mathbf F(\mathbf r)\mathbf r_u)\cdot\mathbf r_v
+          -(D\mathbf F(\mathbf r)\mathbf r_v)\cdot\mathbf r_u.</md>
+          The terms <m>\mathbf F(\mathbf r)\cdot(\mathbf r_{vu}-\mathbf r_{uv})</m>
+          cancel by equality of continuous mixed partials. Expanding the remaining
+          dot products gives
+          <md>B_u-A_v=(\nabla\times\mathbf F)(\mathbf r)\cdot
+          (\mathbf r_u\times\mathbf r_v).</md>
+          By the plane definition of <m>d</m> and the flux pullback formula of
+          <xref ref="sec-15-flux-2-forms"/>, this proves the particular identity
+          <md>d(\mathbf r^*\omega)=\mathbf r^*(d\omega)</md>
+          used here, without assuming its later general version. Therefore
           <md>\int_{\partial D}\mathbf r^*\omega = \int_D \mathbf r^*(d\omega).</md>
           Translating back to the surface gives
           <md>\int_{\partial S}\omega = \int_S d\omega.</md>
         </p>
+        <p>For a surface divided into finitely many such patches, add these identities.
+        The line integrals on shared edges cancel because the induced directions are
+        opposite. This proves the result for that class of surfaces. The more general
+        piecewise smooth statement above is accepted here; extending this argument to
+        arbitrary admissible patches requires an approximation argument not supplied
+        in this book. Chapter 18 develops the unified theorem and its local mechanism.</p>
       </proof>
     </theorem>
 
@@ -357,7 +384,8 @@
 
     <p>
       The surprise is that the boundary is enough. The surface can bend, stretch, or sag. As long
-      as the boundary curve and orientation stay the same, the total curl flux is the same.
+      as both surfaces and the field satisfy the theorem's hypotheses and have the same
+      oriented boundary, the total curl flux is the same.
     </p>
   </subsection>
 
@@ -637,7 +665,8 @@
       <hint>
         <p>
           In each case, information on the inside is recovered by looking only at the edge. Ask
-          yourself what <m>d</m> does to the dimension of the object it acts on.
+          yourself how the degree of the integrand changes when applying <m>d</m>;
+          the geometric region itself is not being differentiated.
         </p>
       </hint>
     </exercise>

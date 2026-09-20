@@ -89,6 +89,12 @@
       <md>\text{arc length}=(\text{radius})(\text{angle}).</md>
       Therefore
       <md>\Delta A \approx (r\,\Delta\theta)(\Delta r) = r\,\Delta r\,\Delta\theta.</md>
+      More precisely, subtracting two circular-sector areas gives
+      <md>\Delta A=\tfrac12\bigl((r+\Delta r)^2-r^2\bigr)\Delta\theta
+        =r\,\Delta r\,\Delta\theta+\tfrac12(\Delta r)^2\Delta\theta.</md>
+      On a bounded parameter region, the total error from the second term is bounded by
+      a constant times the largest radial width. It therefore tends to zero as the grid
+      is refined. This supplies the area factor directly, before the general substitution theorem.
     </p>
 
     <figure xml:id="c10s5-fig-polar-rectangle">
@@ -140,19 +146,23 @@
     <p>
       From
       <md>x=r\cos\theta, \qquad y=r\sin\theta,</md>
-      we get
-      <md>dx=\cos\theta\,dr-r\sin\theta\,d\theta,</md>
+      regard <m>x(r,\theta)</m> and <m>y(r,\theta)</m> as scalar functions on the parameter
+      plane. Their differentials there are
+      <md>d(x(r,\theta))=\cos\theta\,dr-r\sin\theta\,d\theta,</md>
       and
-      <md>dy=\sin\theta\,dr+r\cos\theta\,d\theta.</md>
+      <md>d(y(r,\theta))=\sin\theta\,dr+r\cos\theta\,d\theta.</md>
       Now wedge:
       <md>
-        <mrow>dx\wedge dy \amp= (\cos\theta\,dr-r\sin\theta\,d\theta) \wedge (\sin\theta\,dr+r\cos\theta\,d\theta)</mrow>
+        <mrow>d(x(r,\theta))\wedge d(y(r,\theta)) \amp= (\cos\theta\,dr-r\sin\theta\,d\theta) \wedge (\sin\theta\,dr+r\cos\theta\,d\theta)</mrow>
         <mrow>\amp= r\cos^2\theta\,dr\wedge d\theta + r\sin^2\theta\,dr\wedge d\theta</mrow>
         <mrow>\amp= r(\cos^2\theta+\sin^2\theta)\,dr\wedge d\theta</mrow>
         <mrow>\amp= r\,dr\wedge d\theta.</mrow>
       </md>
       So the standard area form becomes
-      <md>\boxed{ dx\wedge dy=r\,dr\wedge d\theta. }</md>
+      <md>\boxed{ d(x(r,\theta))\wedge d(y(r,\theta))=r\,dr\wedge d\theta. }</md>
+      This expresses target signed area in parameter coordinates; the two forms are not
+      being identified on different planes. <xref ref="sec-12-pullbacks-of-area-and-volume-elements"/>
+      will name this operation <term>pullback</term>.
       For ordinary positive area,
       <md>\boxed{ dA=r\,dr\,d\theta. }</md>
     </p>
@@ -275,7 +285,8 @@
       <statement>
         <p>
           Suppose <m>D</m> is described in polar coordinates by
-          <md>D= \left\{ (r,\theta): \alpha\le\theta\le\beta,\ g(\theta)\le r\le h(\theta) \right\},</md>
+          <md>S= \left\{ (r,\theta): \alpha\le\theta\le\beta,\ g(\theta)\le r\le h(\theta) \right\},</md>
+          with <m>D</m> the image of this parameter region <m>S</m> in the <m>xy</m>-plane,
           where <m>g</m> and <m>h</m> are continuous, <m>0\le g(\theta)\le h(\theta)</m>, and
           the polar description covers the region once except possibly along boundary curves.
         </p>
@@ -300,8 +311,8 @@
         <md>\sum f(r\cos\theta,r\sin\theta)\,r\,\Delta r\,\Delta\theta.</md>
         As the polar pieces get small, this sum becomes
         <md>\int_\alpha^\beta \int_{g(\theta)}^{h(\theta)} f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta.</md>
-        The same conclusion follows from
-        <md>dx\wedge dy=r\,dr\wedge d\theta.</md>
+          The differential calculation above records the same signed factor. The sector-area
+          argument, rather than an unproved rule for integrating forms, justifies the integral here.
       </p>
     </proof>
 
