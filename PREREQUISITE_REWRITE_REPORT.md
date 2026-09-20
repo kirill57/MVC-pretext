@@ -243,3 +243,17 @@ Changed tracked files:
 - `source/chapters/ch20-capstone-projects/sections/sec-20-writing-projects.xml`
 - `source/docinfo.ptx`
 - `source/frontmatter.ptx`
+
+## Subsequent author-directed addition to5.2 (2026-09-20)
+
+Starting checkout: clean tracked tree at `2bcac42ed2d1224e9af62a048e31ca791c115883`, which incorporates the previous rewrite and specifies PreTeXt2.53.0. The author now requests first surface-grid differentiation at the end of5.2. This addendum supersedes the earlier first-introduction schedule and records the follow-up separately from the original rewrite.
+
+Added **Velocities along a surface grid**, using only alpha(s)=r(s,t0), beta(t)=r(s0,t) and their ordinary one-variable derivatives. A bowl provides a regular worked example. A definition introduces regular parameter points and the cross-product normal, with continuously varying nearby grid velocities required for the surface interpretation and a precise later tangent-plane proof reference. A double cone provides nonregular vertex parameters and an interactive Asymptote graphic. A cubed-coordinate parametrization of an ordinary plane demonstrates that a failed parametrization does not automatically make the image singular. The closing checkpoint has a hint and full solution. No partial-derivative notation occurs in this primer or its figure.
+
+Small connecting edits redirect4.5's verbal pointer, identify7.5 Jacobian columns with the familiar velocities, and make15.1 recall the primer before systematic theory. No chapter order or existing substantive XML ID was changed. Audit/concept, coverage and ID-map records were updated. An independent reviewer verified the cross products, cone-generator determinant+2, checkpoint answer and smoothness qualifications.
+
+Validation for this addition uses `.cache/grid-velocities-venv/Scripts/pretext.exe`2.53.0 (the current project requirement), with the existing local WSL Asymptote wrapper and lxml6.0.2. An initial2.48.1 build was superseded by the project-matched2.53.0 build. The new figure was regenerated from source with `generate asymptote -x c5s2-fig-double-cone-grid-velocities --force`; actual output freshness was verified. Browser inspection checked labels, colors, arrows, the collapsed vertex and interactive rotation. The camera and one label position were adjusted, and short alt text was supplied.
+
+Receipts: `logs/grid-velocities-figure.log`, `logs/grid-velocities-build.log`, `logs/grid-velocities-validation.log` and `logs/grid-velocities-validation-baseline.log`. The web build passes with exit0. XML/XInclude, duplicate-ID/xref checks and diff-whitespace checks pass:225 active files,194 sections,3505 IDs and285 references. The full2.53.0 schema/semantic validation remains below the pass threshold because of the existing backlog; compare1323 final messages (1077 schema+246 semantic) with1330 at this follow-up's unmodified HEAD. The seven removed messages are section-structure errors fixed by wrapping5.2's opening paragraphs as an introduction. No new validator message remains. The known Windows temporary-directory cleanup warning remains; the Asymptote wrapper also causes a version-detection warning, while the regenerated HTML asset is present and interactive. PreTeXt2.53.0 additionally reports10 deprecated exercise lists directly inside statement; the same10 objects are present in this follow-up baseline and were not introduced by the addition.
+
+The print target was not built. Original LaTeX/archive and generated files were not hand-edited. No commit or push was made for this addition.

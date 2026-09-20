@@ -64,3 +64,7 @@ New local proof anchors:
 
 Former17 chapter conclusion title changed to ordinary emphasized paragraph, retaining its prose purpose. The cone project retains c18s10-ex-cap3-cone and is corrected by truncation rather than moved. The writing project retains its IDs and replaces unsupported vector-wedge equality by the already-defined covector-form evaluation. All appendix/reference formula corrections remain in their original sections.
 
+
+## Author-directed5.2 addition (2026-09-20)
+
+No prior mathematical object was relocated again. New IDs `c5s2-subsec-surface-grid-velocities`, `c5s2-ex-bowl-grid-velocities`, `c5s2-def-regular-grid-point`, `c5s2-ex-double-cone-nonregular`, `c5s2-fig-double-cone-grid-velocities`, `c5s2-regularity-map-versus-image` and `checkpoint-5-2-grid-normal` introduce the ordinary-derivative surface-grid primer. Existing5.2 IDs and all section roots remain unchanged.4.5's final pointer leads to5.2;7.5 names the familiar velocities as partials/Jacobian columns;15.1 recalls the primer before its full regular-patch/tangent-plane development. This deliberately supplements the earlier relocation schedule under the author's new instruction.

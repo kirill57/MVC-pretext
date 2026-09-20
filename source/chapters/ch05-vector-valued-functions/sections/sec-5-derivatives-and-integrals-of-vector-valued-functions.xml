@@ -4,6 +4,7 @@
 <section xml:id="sec-5-derivatives-and-integrals-of-vector-valued-functions" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Derivatives and integrals of vector-valued functions</title>
 
+  <introduction>
   <p>
     <xref ref="sec-5-vector-valued-functions"/> made <m>\mathbf r(t)</m> a position record. A
     position record becomes useful when we compare nearby times. The difference
@@ -12,6 +13,8 @@
   </p>
 
   <p>Then the old single-variable idea returns: let the time interval shrink.</p>
+
+  </introduction>
 
   <subsection xml:id="c5s2-subsec-velocity-difference-quotient">
     <title>Velocity from a difference quotient</title>
@@ -595,7 +598,177 @@
       but she certainly did not run zero meters. To measure distance traveled, we must add up tiny
       lengths
       <md>\|\mathbf r'(t)\|\,dt.</md>
-      That question leads directly to arc length and speed.
+      We return to this question in <xref ref="sec-5-arc-length-and-speed"/>. First, the same
+      curve derivatives let us revisit the surface grids from Chapter 4.
     </p>
+  </subsection>
+
+  <subsection xml:id="c5s2-subsec-surface-grid-velocities">
+    <title>Velocities along a surface grid</title>
+
+    <p>In <xref ref="sec-4-parametric-surfaces"/>, we described a surface by
+    <m>\mathbf r(s,t)</m> and drew its grid curves by holding one parameter fixed.
+    We can now find the velocities along those curves. Each calculation uses an
+    ordinary derivative of a function with just one changing input.</p>
+
+    <p>Choose an interior parameter pair <m>(s_0,t_0)</m>, so that either parameter
+    can vary a little in both directions. The two grid curves through
+    <m>P=\mathbf r(s_0,t_0)</m> are
+    <md>\boldsymbol\alpha(s)=\mathbf r(s,t_0),\qquad
+    \boldsymbol\beta(t)=\mathbf r(s_0,t).</md>
+    In the first curve <m>t_0</m> is a constant; in the second <m>s_0</m> is a constant.
+    Their velocities at <m>P</m> are
+    <md>\boxed{\mathbf v=\boldsymbol\alpha'(s_0),\qquad
+    \mathbf w=\boldsymbol\beta'(t_0).}</md>
+    A nonzero velocity is a tangent vector to its grid curve, based at <m>P</m>.
+    The parameters need not measure physical time: velocity here means change of
+    position per unit change of the parameter.</p>
+
+    <example xml:id="c5s2-ex-bowl-grid-velocities">
+      <title>Two velocities on a bowl</title>
+      <statement>
+        <p>For <m>\mathbf r(s,t)=(s,t,s^2+t^2)</m>, freezing one input gives
+        <md>\boldsymbol\alpha(s)=(s,t_0,s^2+t_0^2),\qquad
+        \boldsymbol\beta(t)=(s_0,t,s_0^2+t^2).</md>
+        Differentiate these one-variable functions component by component:
+        <md>\mathbf v=(1,0,2s_0),\qquad \mathbf w=(0,1,2t_0).</md>
+        The vectors cannot be parallel: their first two coordinates already give
+        two independent directions. Their cross product is
+        <md>\mathbf v\times\mathbf w=(-2s_0,-2t_0,1),</md>
+        perpendicular to both grid-curve tangents and never zero.</p>
+      </statement>
+    </example>
+
+    <definition xml:id="c5s2-def-regular-grid-point">
+      <title>Regular parameter point and a normal vector</title>
+      <statement>
+        <p>Suppose the two grid-curve velocities exist at an interior pair
+        <m>(s_0,t_0)</m>. The parametrization is <term>regular</term> at this parameter
+        point when the velocities are linearly independent, equivalently when
+        <md>\boxed{\mathbf v\times\mathbf w\ne\mathbf0.}</md>
+        When they are dependent, the parameter point is <term>nonregular</term>.
+        Thus regularity is a property of the chosen parametrization at a parameter
+        pair, not just a test on the coordinates of its image point.</p>
+        <p>For surface geometry we work with parametrizations whose grid-curve
+        velocities exist nearby and vary continuously as the two parameters vary.
+        At a regular point they span the tangent plane to the local surface sheet;
+        a <term>normal vector</term> to this sheet at <m>P</m> is
+        <md>\boxed{\mathbf N=\mathbf v\times\mathbf w.}</md>
+        Any nonzero multiple of <m>\mathbf N</m> is also normal. Swapping the two
+        velocities changes its sign. The cross-product rule proves perpendicularity
+        to both grid tangents immediately; the full justification that their plane
+        describes the local sheet is given in
+        <xref ref="c15s1-thm-tangent-plane-to-a-parametrized-surface"/>.</p>
+      </statement>
+    </definition>
+
+    <p>The nearby-continuity assumption rules out erratic behavior between the grid
+    curves; two derivatives at a single pair alone do not control an entire surface.
+    For the polynomial and trigonometric parametrizations here, the displayed
+    velocity formulas vary continuously. On a surface that crosses itself, the
+    normal belongs to the sheet selected by the parameter pair.</p>
+
+    <example xml:id="c5s2-ex-double-cone-nonregular">
+      <title>A grid that collapses at a cone vertex</title>
+      <statement>
+        <p>Consider
+        <md>\mathbf r(s,t)=(s\cos t,s\sin t,s),\qquad s,t\in\mathbb R.</md>
+        Its image is the double cone <m>x^2+y^2=z^2</m>. Positive and negative
+        <m>s</m> describe its upper and lower halves. Both inputs can vary on either
+        side of every chosen value, including <m>s=0</m>.</p>
+        <p>Freezing <m>t=t_0</m> gives a straight grid line
+        <m>\boldsymbol\alpha(s)=(s\cos t_0,s\sin t_0,s)</m>.
+        Freezing <m>s=s_0</m> gives a circular grid curve
+        <m>\boldsymbol\beta(t)=(s_0\cos t,s_0\sin t,s_0)</m>. Their velocities are
+        <md>\mathbf v=(\cos t_0,\sin t_0,1),\qquad
+        \mathbf w=(-s_0\sin t_0,s_0\cos t_0,0).</md>
+        Hence
+        <md>\boxed{\mathbf N=(-s_0\cos t_0,-s_0\sin t_0,s_0).}</md>
+        The parametrization is regular exactly when <m>s_0\ne0</m>. At
+        <m>(0,t_0)</m>, the circular grid curve is the constant curve
+        <m>\boldsymbol\beta(t)=(0,0,0)</m>, so <m>\mathbf w=\mathbf0</m> and
+        <m>\mathbf N=\mathbf0</m>. The zero vector supplies no normal direction.</p>
+        <p>For this cone the vertex really has no single tangent plane. The straight
+        grid lines with <m>t_0=0,\pi/2,\pi</m> have velocities
+        <m>(1,0,1),(0,1,1),(-1,0,1)</m>. Their determinant is <m>2</m>, so these
+        three directions cannot lie in one plane. This geometric argument says
+        more than merely observing a zero cross product.</p>
+      </statement>
+    </example>
+
+    <figure xml:id="c5s2-fig-double-cone-grid-velocities">
+      <caption>Grid curves on the double cone. The blue straight grid line and orange
+      circular grid curve meet at the regular point <m>P</m>; the arrows show their
+      velocities <m>\mathbf v,\mathbf w</m> and a normal <m>\mathbf N</m>, scaled for
+      visibility. At the red vertex <m>O</m>, the circular grid has collapsed to a point.
+      (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="85%">
+        <shortdescription>Double cone with grid curves, tangent velocities and a normal at a regular point, and a red nonregular vertex.</shortdescription>
+        <asymptote>
+        import graph3;
+        size(11cm);
+        currentprojection=orthographic(7,1,3.8);
+        real extent=1.65;
+        surface cone=surface(new triple(pair q) {
+          return (q.x*cos(q.y),q.x*sin(q.y),q.x);
+        },(-extent,0),(extent,2pi),24,48);
+        draw(cone,rgb(0.75,0.84,0.91)+opacity(0.38),
+             meshpen=gray(0.6)+opacity(0.45)+linewidth(0.12pt));
+        real t0=pi/4, s0=1;
+        path3 generator=graph(new triple(real s) {
+          return (s*cos(t0),s*sin(t0),s);
+        },-extent,extent,2);
+        draw(generator,blue+linewidth(1.2pt));
+        path3 ring=graph(new triple(real t) {
+          return (s0*cos(t),s0*sin(t),s0);
+        },0,2pi,120,operator ..);
+        draw(ring,orange+linewidth(1.2pt));
+        triple P=(s0*cos(t0),s0*sin(t0),s0);
+        triple v=(cos(t0),sin(t0),1);
+        triple w=(-s0*sin(t0),s0*cos(t0),0);
+        triple n=(-s0*cos(t0),-s0*sin(t0),s0);
+        draw(P--(P+0.6v),blue+linewidth(1.2pt),Arrow3);
+        draw(P--(P+0.75w),orange+linewidth(1.2pt),Arrow3);
+        draw(P--(P+0.75n),deepgreen+linewidth(1.2pt),Arrow3);
+        dot(P,black+4bp); label("$P$",P,SE);
+        label("$\mathbf v$",P+0.6v,NE);
+        label("$\mathbf w$",P+0.75w,E);
+        label("$\mathbf N$",P+0.75n,NW);
+        dot(O,red+6bp); label("$O$: nonregular",O,W);
+        draw((0,0,-1.9)--(0,0,2.2),gray+linewidth(0.5pt),Arrow3);
+        label("$z$",(0,0,2.2),N);
+        </asymptote>
+      </image>
+    </figure>
+
+    <p xml:id="c5s2-regularity-map-versus-image">A nonregular parametrization does
+    not always mean that the image itself has a sharp point. For example,
+    <m>\mathbf q(s,t)=(s^3,t,0)</m> covers the ordinary <m>xy</m>-plane. Its grid
+    velocities at <m>(s_0,t_0)</m> are <m>(3s_0^2,0,0)</m> and <m>(0,1,0)</m>, so
+    their cross product vanishes when <m>s_0=0</m>. The first grid curve simply has
+    zero velocity there. The same plane has the regular parametrization
+    <m>\widetilde{\mathbf q}(a,b)=(a,b,0)</m>, whose grid velocities are
+    <m>(1,0,0)</m> and <m>(0,1,0)</m>.</p>
+
+    <exercise xml:id="checkpoint-5-2-grid-normal">
+      <title>Freeze, differentiate, and compare</title>
+      <statement><p>For the bowl <m>\mathbf r(s,t)=(s,t,s^2+t^2)</m>, write the two
+      frozen-parameter grid curves through the parameter pair <m>(1,-1)</m>.
+      Find their velocities and a normal at the image point. Is the parametrization
+      regular there? What happens to the normal if the two velocities are exchanged?</p></statement>
+      <hint><p>In one curve set <m>t=-1</m>; in the other set <m>s=1</m>. Differentiate
+      each curve in its remaining variable, then use the cross product.</p></hint>
+      <solution><p>The curves are <m>\boldsymbol\alpha(s)=(s,-1,s^2+1)</m> and
+      <m>\boldsymbol\beta(t)=(1,t,1+t^2)</m>. At <m>P=(1,-1,2)</m> their velocities
+      are <m>(1,0,2)</m> and <m>(0,1,-2)</m>. Their cross product <m>(-2,2,1)</m>
+      is nonzero, so the parameter point is regular and this vector is normal.
+      Exchanging the velocities gives the opposite normal <m>(2,-2,-1)</m>.</p></solution>
+    </exercise>
+
+    <p>The ordinary derivatives of two grid curves have given us two tangent
+    directions and, at regular points, a normal. <xref ref="sec-7-the-jacobian-matrix"/>
+    will collect the same velocities in a matrix and explain their role in a local
+    linear approximation. We next return to a single moving point and measure its
+    speed and distance traveled.</p>
   </subsection>
 </section>
