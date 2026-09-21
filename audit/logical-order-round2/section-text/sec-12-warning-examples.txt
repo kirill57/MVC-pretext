@@ -1,0 +1,325 @@
+[5-5 title sec-12-warning-examples default_required]
+Warning examples
+
+[7-10 p sec-12-warning-examples default_required]
+The determinant is a local measurement. It knows how one tiny tile changes near one point.
+    It does not know whether another tile lands on top of the same place.
+
+[12-16 p sec-12-warning-examples default_required]
+That is why the change-of-variables theorem had hypotheses: smoothness, one-to-one behavior,
+    and nonzero Jacobian in the interior. The examples below show what those conditions are
+    protecting.
+
+[19-19 title c12s6-not-one-to-one default_required]
+A transformation that is not one-to-one
+
+[21-21 p c12s6-not-one-to-one default_required]
+Polar coordinates give the cleanest warning.
+
+[23-32 p c12s6-not-one-to-one default_required]
+Use
+      x=r\cos\theta, \qquad y=r\sin\theta.
+      The Jacobian determinant is
+      J=r.
+      Now choose the parameter region
+      S=\{(r,\theta):0\le r\le1,\ 0\le\theta\le4\pi\}.
+      This region traces the unit disk twice. The angles from 0 to 2\pi cover the
+      disk once. The angles from 2\pi to 4\pi cover it again.
+
+[34-45 p c12s6-not-one-to-one default_required]
+If we blindly compute
+      \iint_S r\,dr\,d\theta,
+      we get
+      
+        \int_0^{4\pi}\int_0^1 r\,dr\,d\theta \amp= \int_0^{4\pi}\frac12\,d\theta
+        \amp= 2\pi.
+      
+      But the ordinary area of the unit disk is
+      \pi.
+      The answer is twice too large because the disk was counted twice.
+
+[48-49 caption c12s6-fig-polar-double-cover default_required]
+The determinant r is correct locally, but the chosen parameter region
+      covers the disk twice.
+
+[51-85 latex-image c12s6-fig-polar-double-cover default_required]
+\begin{tikzpicture}[scale=0.78, >=stealth]
+            \begin{scope}
+                \draw[->] (-0.3,0) -- (5.4,0) node[right] {\(\theta\)};
+                \draw[->] (0,-0.3) -- (0,2.3) node[above] {\(r\)};
+
+                \draw[fill=gray!12, thick] (0,0) rectangle (4.4,1.6);
+                \node[below] at (0,0) {\(0\)};
+                \node[below] at (2.2,0) {\(2\pi\)};
+                \node[below] at (4.4,0) {\(4\pi\)};
+                \node[left] at (0,1.6) {\(1\)};
+                \draw[dashed] (2.2,0) -- (2.2,1.6);
+
+                \node at (2.2,-0.9) {parameter rectangle};
+
+                \node[align=center, font=\small] at (1.1,0.8) {first\\copy};
+                \node[align=center, font=\small] at (3.3,0.8) {second\\copy};
+            \end{scope}
+
+            \draw[->, thick] (5.4,0.9) -- (6.8,0.9);
+            \node[above] at (6.1,0.9) {polar map};
+
+            \begin{scope}[shift={(8.6,0.8)}]
+                \draw[->] (-1.8,0) -- (1.9,0) node[right] {\(x\)};
+                \draw[->] (0,-1.8) -- (0,1.9) node[above] {\(y\)};
+
+                \draw[fill=blue!8, thick] (0,0) circle (1.4);
+
+                \draw[->, very thick] (1.4,0) arc[start angle=0,end angle=285,radius=1.4];
+                \draw[->, very thick] (1.15,0) arc[start angle=0,end angle=285,radius=1.15];
+
+                \node at (0,-2.35) {same disk traced twice};
+            \end{scope}
+        \end{tikzpicture}
+
+[89-92 p c12s6-not-one-to-one default_required]
+The formula did not fail locally. It counted exactly what the parametrization did: one disk
+      with multiplicity 2.
+
+[95-95 title checkpoint-12-6-multiplicity default_required]
+Where did the extra area come from?
+
+[97-102 p checkpoint-12-6-multiplicity default_required]
+The Jacobian J=r was correct at every single point, yet the integral over
+          0\le\theta\le4\pi reported twice the area of the disk. Which hypothesis of the
+          change-of-variables theorem was quietly violated here, and why can a perfectly correct
+          local measurement still add up to the wrong total?
+
+[105-108 p checkpoint-12-6-multiplicity hint]
+The determinant only ever looks at one tiny tile near one point. Ask yourself whether two
+          different parameter points were allowed to land on the same place in the disk.
+
+[112-117 p c12s6-not-one-to-one default_required]
+For ordinary area of the image, use a one-to-one parameter region, such as
+      0\le r\le1, \qquad 0\le\theta\le2\pi.
+      Then
+      \int_0^{2\pi}\int_0^1 r\,dr\,d\theta=\pi.
+
+[121-121 title c12s6-zero-jacobian default_required]
+A transformation with zero Jacobian at a point
+
+[123-129 p c12s6-zero-jacobian default_required]
+A zero Jacobian means that the derivative has crushed area or volume at that point.
+      Sometimes this is harmless for integration. Polar coordinates have
+      J=r,
+      which vanishes at r=0, and the origin is only one point. That single collapse does
+      not ruin the area formula.
+
+[131-131 p c12s6-zero-jacobian default_required]
+But a zero Jacobian often warns us that the map is not a clean coordinate system near that point.
+
+[133-154 p c12s6-zero-jacobian default_required]
+Consider
+      T(u,v)=(x,y)=(u^2-v^2,\;2uv).
+      This is the complex squaring map:
+      x+iy=(u+iv)^2.
+      The derivative matrix is
+      
+        DT(u,v)=
+        \begin{pmatrix}
+            2u&-2v\\
+            2v&2u
+        \end{pmatrix}.
+      
+      Its determinant is
+      
+        J_T(u,v) \amp= (2u)(2u)-(-2v)(2v)
+        \amp= 4u^2+4v^2
+        \amp= 4(u^2+v^2).
+      
+      So
+      J_T(0,0)=0.
+
+[156-167 p c12s6-zero-jacobian default_required]
+To see the geometry, write
+      u=s\cos\alpha, \qquad v=s\sin\alpha.
+      Then
+      x = s^2\cos^2\alpha-s^2\sin^2\alpha = s^2\cos(2\alpha),
+      and
+      y = 2s^2\cos\alpha\sin\alpha = s^2\sin(2\alpha).
+      So the map sends
+      \text{radius }s \quad\longmapsto\quad \text{radius }s^2,
+      and
+      \text{angle }\alpha \quad\longmapsto\quad \text{angle }2\alpha.
+
+[169-173 p c12s6-zero-jacobian default_required]
+A tiny circle around the origin is sent to an even tinier circle, and it is traced twice.
+      The map folds directions together near the origin. There is no smooth inverse coordinate
+      system through that point.
+
+[176-176 title checkpoint-12-6-zero-jacobian-meaning default_required]
+What is the vanishing Jacobian trying to tell us?
+
+[178-183 p checkpoint-12-6-zero-jacobian-meaning default_required]
+At the origin the determinant collapses to J_T(0,0)=0. We saw that for polar
+          coordinates a vanishing Jacobian at a single point did no harm. Here it does signal real
+          trouble. What is the geometric difference between the two situations, and what does a zero
+          Jacobian say about whether T can serve as a coordinate system near that point?
+
+[186-189 p checkpoint-12-6-zero-jacobian-meaning hint]
+A genuine coordinate chart needs a smooth inverse nearby. Think about what happens to two
+          directions leaving the origin once the map doubles every angle.
+
+[193-206 p c12s6-zero-jacobian default_required]
+If D_a is the disk
+      u^2+v^2\le a^2,
+      then T(D_a) is the disk
+      x^2+y^2\le a^4.
+      Its ordinary area is
+      \pi a^4.
+      But integrating the absolute Jacobian over the full parameter disk gives
+      
+        \iint_{D_a}4(u^2+v^2)\,du\,dv \amp= \int_0^{2\pi}\int_0^a 4s^2\,s\,ds\,d\alpha
+        \amp= 2\pi a^4.
+      
+      Again the answer is twice the image area, because the disk is covered twice.
+
+[208-212 p c12s6-zero-jacobian default_required]
+The zero Jacobian at the origin is not the only problem. The global problem is the double
+      covering. But the zero Jacobian is a visible warning: the map is not a regular coordinate
+      chart at the origin.
+
+[216-216 title c12s6-why-absolute-value default_required]
+Why absolute value appears for ordinary area and volume
+
+[218-227 p c12s6-why-absolute-value default_required]
+Now take a map that is perfectly one-to-one and has nonzero determinant everywhere:
+      T(u,v)=(x,y)=(u,\;1-v).
+      It sends the unit square
+      0\le u\le1,\qquad 0\le v\le1
+      onto the unit square
+      0\le x\le1,\qquad 0\le y\le1.
+      The image area is plainly
+      1.
+
+[229-243 p c12s6-why-absolute-value default_required]
+The Jacobian matrix is
+      
+        DT=
+        \begin{pmatrix}
+            1&0\\
+            0&-1
+        \end{pmatrix},
+      
+      so
+      J_T=-1.
+      If ordinary area used J_T instead of |J_T|, it would give
+      \int_0^1\int_0^1 (-1)\,dv\,du=-1.
+      That cannot be ordinary area.
+
+[245-250 p c12s6-why-absolute-value default_required]
+The correct ordinary area computation is
+      \int_0^1\int_0^1 |{-1}|\,dv\,du=1.
+      So the absolute value is not a technical afterthought. It is what turns signed area into
+      ordinary area.
+
+[252-261 p c12s6-why-absolute-value default_required]
+The same thing happens for volume. The reflection
+      T(u,v,w)=(u,v,-w)
+      has
+      J_T=-1.
+      It preserves ordinary volume, but it reverses orientation. So
+      dV=du\,dv\,dw,
+      while
+      T^*(dx\wedge dy\wedge dz)=-du\wedge dv\wedge dw.
+
+[265-265 title c12s6-oriented-integrals-remember-sign default_required]
+Why oriented integrals remember the sign
+
+[267-267 p c12s6-oriented-integrals-remember-sign default_required]
+The sign becomes useful as soon as orientation matters.
+
+[269-280 p c12s6-oriented-integrals-remember-sign default_required]
+Return to
+      T(u,v)=(u,1-v).
+      Pull back the signed area form:
+      T^*(dx)=du,
+      and
+      T^*(dy)=-dv.
+      Therefore
+      T^*(dx\wedge dy)=du\wedge(-dv)=-du\wedge dv.
+      So the parametrized unit square has signed area
+      -1.
+
+[282-284 p c12s6-oriented-integrals-remember-sign default_required]
+Why negative? Follow the boundary induced by the parameter square.
+
+[286-292 p c12s6-oriented-integrals-remember-sign default_required]
+The positive boundary of the uv-square goes counterclockwise:
+      (0,0)\to(1,0)\to(1,1)\to(0,1)\to(0,0).
+      Under T, these points become
+      (0,1)\to(1,1)\to(1,0)\to(0,0)\to(0,1).
+      That path goes clockwise around the xy-square.
+
+[295-295 title checkpoint-12-6-orientation-flip default_required]
+Why must we keep the minus sign?
+
+[297-303 p checkpoint-12-6-orientation-flip default_required]
+This map is one-to-one and its Jacobian never vanishes, so it breaks none of the
+          hypotheses that caused the earlier failures. Yet ordinary area uses |J_T|=1 while
+          the oriented form keeps J_T=-1. What information would be thrown away if oriented
+          integrals also took the absolute value, and why does the boundary's reversed direction
+          make that information worth keeping?
+
+[306-309 p checkpoint-12-6-orientation-flip hint]
+Notice that the counterclockwise uv-loop became a clockwise xy-loop. If both
+          loops gave the same answer, how would an integral ever tell the two directions apart?
+
+[314-315 caption c12s6-fig-orientation-reversal default_required]
+The reflection y=1-v reverses the orientation of the square and its
+      boundary.
+
+[317-348 latex-image c12s6-fig-orientation-reversal default_required]
+\begin{tikzpicture}[scale=0.9, >=stealth]
+            \begin{scope}
+                \draw[->] (-0.3,0) -- (2.2,0) node[right] {\(u\)};
+                \draw[->] (0,-0.3) -- (0,2.2) node[above] {\(v\)};
+
+                \draw[fill=gray!10, thick] (0,0) rectangle (1.5,1.5);
+                \draw[->, very thick] (0,0) -- (1.5,0);
+                \draw[->, very thick] (1.5,0) -- (1.5,1.5);
+                \draw[->, very thick] (1.5,1.5) -- (0,1.5);
+                \draw[->, very thick] (0,1.5) -- (0,0);
+
+                \node at (0.75,-0.75) {counterclockwise};
+            \end{scope}
+
+            \draw[->, thick] (3.0,0.8) -- (5.0,0.8);
+            \node[above] at (4.0,0.8) {\(T(u,v)=(u,1-v)\)};
+
+            \begin{scope}[shift={(6.5,0)}]
+                \draw[->] (-0.3,0) -- (2.2,0) node[right] {\(x\)};
+                \draw[->] (0,-0.3) -- (0,2.2) node[above] {\(y\)};
+
+                \draw[fill=blue!8, thick] (0,0) rectangle (1.5,1.5);
+                \draw[->, very thick] (0,1.5) -- (1.5,1.5);
+                \draw[->, very thick] (1.5,1.5) -- (1.5,0);
+                \draw[->, very thick] (1.5,0) -- (0,0);
+                \draw[->, very thick] (0,0) -- (0,1.5);
+
+                \node at (0.75,-0.75) {clockwise};
+            \end{scope}
+        \end{tikzpicture}
+
+[352-356 p c12s6-oriented-integrals-remember-sign default_required]
+The negative sign in
+      T^*(dx\wedge dy)=-du\wedge dv
+      is the same negative sign seen by walking around the boundary in the opposite direction.
+
+[358-363 p c12s6-oriented-integrals-remember-sign default_required]
+This is why oriented integrals do not use absolute value. If we replaced J by
+      |J|,
+      then clockwise and counterclockwise parametrizations would give the same answer. That would
+      destroy the bookkeeping needed for the theorems ahead.
+
+[365-371 p c12s6-oriented-integrals-remember-sign default_required]
+The change-of-variables formula has taught us how areas and volumes transform inside a
+      region. But the last example hints at another kind of transformation: the boundary itself
+      changes direction. The next time orientation appears, it will be attached not to a tiny
+      parallelogram, but to a curve we walk along. That is where vector fields, work integrals,
+      and 1-forms begin.

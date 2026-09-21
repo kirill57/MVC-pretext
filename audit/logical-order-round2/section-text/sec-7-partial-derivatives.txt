@@ -1,0 +1,369 @@
+[5-5 title sec-7-partial-derivatives default_required]
+Partial derivatives
+
+[7-11 p sec-7-partial-derivatives default_required]
+A contour map tells us where a function has the same value. It does not tell us, by
+    itself, how fast the function changes when we step east or north. To measure that,
+    we return to the single-variable derivative, but we use it on one slice at a time.
+
+[14-14 title c7s1-subsec-slicing-a-surface default_required]
+Slicing a surface by holding variables fixed
+
+[16-21 p c7s1-subsec-slicing-a-surface default_required]
+Picture a grassy hill behind an observatory. Let x measure distance east and
+      y measure distance north, and suppose the height of the hill is modeled by
+      H(x,y)=80+3x-y-\frac14 x^2-\frac12 y^2.
+      The height is measured in meters. The input point (x,y) is a point on the map.
+
+[23-28 p c7s1-subsec-slicing-a-surface default_required]
+At the point
+      P=(2,1),
+      the height is
+      H(2,1)=80+6-1-1-\frac12=\frac{169}{2}=84.5.
+
+[30-47 p c7s1-subsec-slicing-a-surface default_required]
+Now stand at P and walk directly east. That means y stays fixed at
+      1, while x changes. Along this east-west slice, the height becomes the
+      one-variable function
+      g(x)=H(x,1).
+      Compute:
+      
+        g(x) \amp= 80+3x-1-\frac14 x^2-\frac12
+        \amp= \frac{157}{2}+3x-\frac14 x^2.
+      
+      The slope of this slice at x=2 is
+      g'(x)=3-\frac12 x,
+      so
+      g'(2)=3-1=2.
+      At P, walking east raises the height at a rate of
+      2
+      meters per unit of eastward distance.
+
+[49-65 p c7s1-subsec-slicing-a-surface default_required]
+Now stand at the same point and walk directly north. This time x stays fixed at
+      2, while y changes. Along this north-south slice,
+      k(y)=H(2,y).
+      Compute:
+      
+        k(y) \amp= 80+6-y-1-\frac12y^2
+        \amp= 85-y-\frac12y^2.
+      
+      Thus
+      k'(y)=-1-y,
+      and
+      k'(1)=-2.
+      At P, walking north lowers the height at a rate of
+      2
+      meters per unit of northward distance.
+
+[67-70 p c7s1-subsec-slicing-a-surface default_required]
+The same point has two different coordinate slopes:
+      \text{east slope}=2, \qquad \text{north slope}=-2.
+
+[73-73 caption c7s1-fig-coordinate-slices default_required]
+To measure coordinate slopes, freeze one coordinate and let the other move.
+
+[75-96 latex-image c7s1-fig-coordinate-slices default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            \draw[->] (-0.4,0) -- (6.2,0) node[right] {\(x\) east};
+            \draw[->] (0,-0.4) -- (0,4.6) node[above] {\(y\) north};
+
+            \draw[gray!20, step=1] (0,0) grid (6,4);
+
+            \fill (2,1) circle (2.5pt);
+            \node[above right] at (2,1) {\(P=(2,1)\)};
+
+            \draw[very thick, blue!60!black] (0.4,1) -- (5.7,1);
+            \node[blue!60!black, below] at (5.0,1) {\(y=1\) slice};
+
+            \draw[very thick, red!65!black] (2,0.25) -- (2,4.25);
+            \node[red!65!black, left] at (2,3.6) {\(x=2\) slice};
+
+            \draw[->, thick] (2,1) -- (3.2,1) node[midway, below] {east};
+            \draw[->, thick] (2,1) -- (2,2.2) node[above, right] {north};
+
+            \node at (3,-0.9) {coordinate slices through one point};
+        \end{tikzpicture}
+
+[100-104 p c7s1-subsec-slicing-a-surface default_required]
+This is the whole idea of a partial derivative. We do not try to measure all possible
+      directions at once. We take one coordinate direction and use the ordinary derivative
+      there.
+
+[107-107 title checkpoint-7-1-slicing-meaning default_required]
+Why does a slice work?
+
+[109-114 p checkpoint-7-1-slicing-meaning default_required]
+When we hold y fixed and let only x move, the surface
+          z=H(x,y) becomes a single curve. Why does measuring the slope of that
+          one curve with an ordinary one-variable derivative give us exactly the partial
+          derivative we want, and what role does fixing y play in making this work?
+
+[117-120 p checkpoint-7-1-slicing-meaning hint]
+Think about what the graph looks like once y is frozen. You are walking
+          along a single trail carved through the hillside, not wandering the whole surface.
+
+[126-126 title c7s1-subsec-meanings-fx-fy-fz default_required]
+The meanings of f_x, f_y, and f_z
+
+[128-135 p c7s1-subsec-meanings-fx-fy-fz default_required]
+The east slope of H at (2,1) came from differentiating with respect to
+      x, while treating y as constant:
+      \frac{\partial H}{\partial x}(2,1)=2.
+      The north slope came from differentiating with respect to y, while treating
+      x as constant:
+      \frac{\partial H}{\partial y}(2,1)=-2.
+
+[137-139 p c7s1-subsec-meanings-fx-fy-fz default_required]
+The symbol \partial reminds us that only part of the input is allowed to move.
+
+[142-142 title c7s1-def-partial-derivatives-two-variables default_required]
+Partial derivatives in two variables
+
+[144-150 p c7s1-def-partial-derivatives-two-variables default_required]
+Let
+          f:D\subseteq\mathbb R^2\to\mathbb R.
+          The partial derivative of f with respect to x at (a,b) is
+          \boxed{ f_x(a,b) = \frac{\partial f}{\partial x}(a,b) = \lim_{h\to0}\frac{f(a+h,b)-f(a,b)}{h}, }
+          when this limit exists.
+
+[151-155 p c7s1-def-partial-derivatives-two-variables default_required]
+The partial derivative of f with respect to y at (a,b) is
+          \boxed{ f_y(a,b) = \frac{\partial f}{\partial y}(a,b) = \lim_{h\to0}\frac{f(a,b+h)-f(a,b)}{h}, }
+          when this limit exists.
+
+[159-161 p c7s1-subsec-meanings-fx-fy-fz default_required]
+These are ordinary derivatives hidden inside a two-variable function.
+
+[164-164 title checkpoint-7-1-what-fx-holds-fixed default_required]
+What does f_x freeze?
+
+[166-170 p checkpoint-7-1-what-fx-holds-fixed default_required]
+When you compute f_x, which variable is held fixed, and which one is
+          allowed to change? Explain why this makes f_x a rate of change in just one
+          direction, rather than a measure of how f changes overall.
+
+[173-176 p checkpoint-7-1-what-fx-holds-fixed hint]
+Look back at the limit defining f_x(a,b): notice which input is nudged by
+          h and which input never moves at all.
+
+[180-188 p c7s1-subsec-meanings-fx-fy-fz default_required]
+For the hill
+      H(x,y)=80+3x-y-\frac14 x^2-\frac12 y^2,
+      we compute
+      H_x(x,y)=3-\frac12x,
+      because y is treated as constant. Also,
+      H_y(x,y)=-1-y,
+      because x is treated as constant.
+
+[190-193 p c7s1-subsec-meanings-fx-fy-fz default_required]
+At (2,1),
+      H_x(2,1)=2, \qquad H_y(2,1)=-2.
+
+[196-196 title c7s1-ex-canopy-two-coordinate-slopes default_required]
+A canopy with two coordinate slopes
+
+[198-205 p c7s1-ex-canopy-two-coordinate-slopes default_required]
+A slanted fabric canopy over a market stall has height
+          C(x,y)=2+\frac{x}{4}+\frac{y}{6}.
+          Then
+          C_x(x,y)=\frac14, \qquad C_y(x,y)=\frac16.
+          So moving one meter east raises the canopy by \frac14 meter, while moving
+          one meter north raises it by \frac16 meter.
+
+[206-208 p c7s1-ex-canopy-two-coordinate-slopes default_required]
+This canopy is a plane, so the coordinate slopes are the same at every point.
+
+[213-213 title c7s1-ex-curved-surface-changing-slopes default_required]
+A curved surface has slopes that change from point to point
+
+[215-223 p c7s1-ex-curved-surface-changing-slopes default_required]
+Let
+          B(x,y)=10-\frac{x^2}{4}-y^2.
+          Then
+          B_x(x,y)=-\frac{x}{2}, \qquad B_y(x,y)=-2y.
+          At the top point (0,0),
+          B_x(0,0)=0, \qquad B_y(0,0)=0.
+          The surface is level in both coordinate directions.
+
+[224-228 p c7s1-ex-curved-surface-changing-slopes default_required]
+At the point (2,1),
+          B_x(2,1)=-1, \qquad B_y(2,1)=-2.
+          There, the surface is descending eastward and descending more steeply northward.
+
+[234-234 title c7s1-subsec-units-and-interpretation default_required]
+Units and interpretation in applications
+
+[236-238 p c7s1-subsec-units-and-interpretation default_required]
+A partial derivative is a rate. Its units tell the story.
+
+[240-245 p c7s1-subsec-units-and-interpretation default_required]
+Recall the bakery cost model from :
+      C(u,v)=400+3u+4v+0.01uv,
+      where u is the number of sourdough loaves and v is the number of rye
+      loaves. The output C(u,v) is measured in dollars.
+
+[247-253 p c7s1-subsec-units-and-interpretation default_required]
+Differentiate with respect to u:
+      C_u(u,v)=3+0.01v.
+      This means:
+      C_u(u,v) = \text{approximate extra cost per additional sourdough loaf,}
+      while the number of rye loaves is held fixed.
+
+[255-261 p c7s1-subsec-units-and-interpretation default_required]
+Differentiate with respect to v:
+      C_v(u,v)=4+0.01u.
+      This means:
+      C_v(u,v) = \text{approximate extra cost per additional rye loaf,}
+      while the number of sourdough loaves is held fixed.
+
+[263-272 p c7s1-subsec-units-and-interpretation default_required]
+At
+      (u,v)=(200,100),
+      we get
+      C_u(200,100)=3+1=4,
+      and
+      C_v(200,100)=4+2=6.
+      Near that production level, one more sourdough loaf costs about 4 dollars, while
+      one more rye loaf costs about 6 dollars.
+
+[274-277 p c7s1-subsec-units-and-interpretation default_required]
+The phrase holding the other variable fixed is not decoration. It is part of the
+      meaning of the derivative.
+
+[281-281 title c7s1-subsec-partial-derivatives-three-variables default_required]
+Partial derivatives in three variables
+
+[283-290 p c7s1-subsec-partial-derivatives-three-variables default_required]
+For a function of three variables,
+      f(x,y,z),
+      there are three coordinate partial derivatives:
+      f_x,\qquad f_y,\qquad f_z.
+      Each one measures the rate of change when one coordinate moves and the other two stay
+      fixed.
+
+[293-293 title c7s1-def-partial-derivatives-three-variables default_required]
+Partial derivatives in three variables
+
+[295-304 p c7s1-def-partial-derivatives-three-variables default_required]
+Let
+          f:D\subseteq\mathbb R^3\to\mathbb R.
+          At a point (a,b,c),
+          \boxed{ f_x(a,b,c) = \lim_{h\to0} \frac{f(a+h,b,c)-f(a,b,c)}{h}, }
+          \boxed{ f_y(a,b,c) = \lim_{h\to0} \frac{f(a,b+h,c)-f(a,b,c)}{h}, }
+          and
+          \boxed{ f_z(a,b,c) = \lim_{h\to0} \frac{f(a,b,c+h)-f(a,b,c)}{h}, }
+          when the limits exist.
+
+[309-309 title c7s1-ex-temperature-storage-room default_required]
+Temperature in a storage room
+
+[311-316 p c7s1-ex-temperature-storage-room default_required]
+Let
+          T(x,y,z)=18+\frac{4}{1+x^2+y^2}-0.7z,
+          where z is height above the floor in meters. The last term says that higher
+          shelves are cooler.
+
+[317-322 p c7s1-ex-temperature-storage-room default_required]
+The partial derivative with respect to z is
+          T_z(x,y,z)=-0.7.
+          So, at every point, increasing height by one meter lowers the temperature by about
+          0.7^\circC.
+
+[323-329 p c7s1-ex-temperature-storage-room default_required]
+The x-partial derivative is
+          T_x(x,y,z) = -\frac{8x}{(1+x^2+y^2)^2}.
+          The y-partial derivative is
+          T_y(x,y,z) = -\frac{8y}{(1+x^2+y^2)^2}.
+          Those rates depend on where you are horizontally.
+
+[333-336 p c7s1-subsec-partial-derivatives-three-variables default_required]
+A vector-valued function can also have partial derivatives. We differentiate each
+      component.
+
+[339-339 title c7s1-ex-partial-derivatives-vector-field default_required]
+Partial derivatives of a vector field
+
+[341-352 p c7s1-ex-partial-derivatives-vector-field default_required]
+The swirling field
+          \mathbf W(x,y)=(-y,x)
+          has two components:
+          W_1(x,y)=-y, \qquad W_2(x,y)=x.
+          So
+          \mathbf W_x(x,y) = \left(\frac{\partial}{\partial x}(-y),\frac{\partial}{\partial x}x\right) = (0,1),
+          and
+          \mathbf W_y(x,y) = \left(\frac{\partial}{\partial y}(-y),\frac{\partial}{\partial y}x\right) = (-1,0).
+          These vector partial derivatives tell us how the output arrow changes as the input
+          point moves east or north.
+
+[353-356 p c7s1-ex-partial-derivatives-vector-field default_required]
+Later, in , we will arrange these component
+          derivatives into a matrix. That matrix is the Jacobian.
+
+[362-362 title c7s1-subsec-warning-coordinate-slopes default_required]
+A warning: coordinate slopes are not the whole surface
+
+[364-367 p c7s1-subsec-warning-coordinate-slopes default_required]
+It is tempting to believe that if the two coordinate slopes exist, then the function
+      must behave nicely near the point. That is false.
+
+[369-379 p c7s1-subsec-warning-coordinate-slopes default_required]
+Define
+      
+        S(x,y)=
+        \begin{cases}
+        \dfrac{xy}{x^2+y^2}, & (x,y)\ne(0,0),\\[2mm]
+        0, & (x,y)=(0,0).
+        \end{cases}
+      
+      Compute the partial derivatives at the origin.
+
+[381-388 p c7s1-subsec-warning-coordinate-slopes default_required]
+For the x-partial,
+      S_x(0,0) = \lim_{h\to0}\frac{S(h,0)-S(0,0)}{h}.
+      But
+      S(h,0)=0
+      for h\ne0. Therefore
+      S_x(0,0)=\lim_{h\to0}\frac{0-0}{h}=0.
+
+[390-393 p c7s1-subsec-warning-coordinate-slopes default_required]
+Similarly,
+      S_y(0,0) = \lim_{h\to0}\frac{S(0,h)-S(0,0)}{h} = 0.
+
+[395-397 p c7s1-subsec-warning-coordinate-slopes default_required]
+So both partial derivatives exist at the origin, and both are 0.
+
+[399-405 p c7s1-subsec-warning-coordinate-slopes default_required]
+But the function is not continuous at the origin. Along the line y=x,
+      S(x,x)=\frac{x^2}{2x^2}=\frac12
+      for x\ne0. Along the x-axis,
+      S(x,0)=0.
+      The two path limits disagree.
+
+[407-410 p c7s1-subsec-warning-coordinate-slopes default_required]
+So the coordinate slices missed the problem. The function looks flat along the two
+      axes, but it does not settle down near the origin.
+
+[413-413 title checkpoint-7-1-no-diagonal-slope default_required]
+Why no diagonal slope?
+
+[415-419 p checkpoint-7-1-no-diagonal-slope default_required]
+The two partials f_x and f_y report only the east and north slopes.
+          Why is it that knowing these two numbers does not, by itself, tell you the slope
+          you would feel walking in a diagonal direction such as northeast?
+
+[422-426 p checkpoint-7-1-no-diagonal-slope hint]
+A diagonal step changes x and y at the same time. The example above
+          shows a surface whose coordinate slopes are both 0, yet which is far from
+          flat along the line y=x.
+
+[430-434 p c7s1-subsec-warning-coordinate-slopes default_required]
+This is the derivative version of the warning from
+      : checking only coordinate
+      directions does not check the whole plane.
+
+[436-441 p c7s1-subsec-warning-coordinate-slopes default_required]
+Partial derivatives give the east and north slopes. But a hiker is not limited to east
+      and north. If the trail points northeast, the slope along the trail mixes the two
+      coordinate slopes. The next question is how to measure the rate of change in a chosen
+      direction.

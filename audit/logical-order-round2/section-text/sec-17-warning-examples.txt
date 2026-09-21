@@ -1,0 +1,325 @@
+[5-5 title sec-17-warning-examples default_required]
+Warning examples
+
+[7-10 p sec-17-warning-examples default_required]
+The words closed and exact are short, but they hide the most common
+    mistake in vector calculus: checking a derivative and forgetting the domain.
+
+[12-15 p sec-17-warning-examples default_required]
+A derivative sees what happens near each point. An integral can walk around a hole.
+    Those are different powers.
+
+[18-18 title c17s6-closed-1-form-punctured-plane default_required]
+A closed 1-form on a punctured plane that is not exact
+
+[20-25 p c17s6-closed-1-form-punctured-plane default_required]
+Return to the punctured plane
+      D=\mathbb R^2\setminus\{(0,0)\}
+      and the 1-form
+      \boxed{\alpha=\frac{-y}{x^2+y^2}\,dx+\frac{x}{x^2+y^2}\,dy.}
+
+[27-31 p c17s6-closed-1-form-punctured-plane default_required]
+We already computed
+      d\alpha=0
+      on D. So \alpha is closed.
+
+[33-40 p c17s6-closed-1-form-punctured-plane default_required]
+But around the unit circle,
+      C:\quad \mathbf r(t)=(\cos t,\sin t),\qquad 0\le t\le2\pi,
+      we get
+      \mathbf r^*\alpha=dt.
+      Hence
+      \boxed{\oint_C\alpha=2\pi.}
+
+[42-48 p c17s6-closed-1-form-punctured-plane default_required]
+This one number proves that \alpha is not exact on D. If
+      \alpha=d\theta
+      on all of D, then the integral around every closed curve would be zero:
+      \oint_C d\theta=\theta(C_{\text{end}})-\theta(C_{\text{start}})=0.
+      But C_{\text{end}}=C_{\text{start}}, and the integral is 2\pi.
+
+[50-56 p c17s6-closed-1-form-punctured-plane default_required]
+So the form satisfies
+      d\alpha=0
+      but fails
+      \alpha=d\theta
+      globally.
+
+[58-61 p c17s6-closed-1-form-punctured-plane default_required]
+The missing point matters. The loop cannot shrink to a point without crossing the
+      place where the form is not defined.
+
+[63-63 title checkpoint-17-6-loop-and-hole default_required]
+Why does the loop notice the hole?
+
+[65-69 p checkpoint-17-6-loop-and-hole default_required]
+The derivative d\alpha=0 everywhere on D, yet the integral around
+          the unit circle is not zero. Explain, in words, what the loop is detecting that the
+          local condition d\alpha=0 simply cannot see.
+
+[72-75 p checkpoint-17-6-loop-and-hole hint]
+Ask yourself whether the loop could be shrunk down to a single point while staying
+          inside D. What stands in the way?
+
+[81-81 title c17s6-locally-exact-global-obstruction default_required]
+A locally exact form with a global obstruction
+
+[83-87 p c17s6-locally-exact-global-obstruction default_required]
+The same form
+      \alpha=\frac{-y}{x^2+y^2}\,dx+\frac{x}{x^2+y^2}\,dy
+      really is an angle differential locally.
+
+[89-109 p c17s6-locally-exact-global-obstruction default_required]
+On the right half-plane
+      D_+=\{(x,y):x\gt 0\},
+      define
+      \theta(x,y)=\arctan\left(\frac{y}{x}\right).
+      Then
+      
+        \theta_x \amp= \frac{1}{1+(y/x)^2}\left(-\frac{y}{x^2}\right)
+        \amp= \frac{x^2}{x^2+y^2}\left(-\frac{y}{x^2}\right)
+        \amp= \frac{-y}{x^2+y^2},
+      
+      and
+      
+        \theta_y \amp= \frac{1}{1+(y/x)^2}\left(\frac1x\right)
+        \amp= \frac{x^2}{x^2+y^2}\left(\frac1x\right)
+        \amp= \frac{x}{x^2+y^2}.
+      
+      Therefore
+      \boxed{d\theta=\alpha}
+      on D_+.
+
+[111-111 p c17s6-locally-exact-global-obstruction default_required]
+So \alpha is exact on the right half-plane.
+
+[113-119 p c17s6-locally-exact-global-obstruction default_required]
+The problem is not local. Near any point of the punctured plane, we can choose a
+      small neighborhood and a continuous angle function there. On that small neighborhood,
+      \alpha=d\theta.
+      The problem is global. No single continuous angle function can be chosen on the whole
+      punctured plane.
+
+[121-135 p c17s6-locally-exact-global-obstruction default_required]
+Here is the obstruction in one line. Suppose there were a global function \theta
+      on D with
+      d\theta=\alpha.
+      Along the unit circle,
+      \mathbf r^*(d\theta)=\mathbf r^*\alpha=dt,\qquad
+      \frac{d}{dt}\theta(\cos t,\sin t)=1.
+      So
+      \theta(\cos t,\sin t)=t+C.
+      At t=0 and t=2\pi, the point on the circle is the same:
+      (1,0).
+      But the formula would give values differing by 2\pi:
+      C\qquad\text{and}\qquad 2\pi+C.
+      A single-valued function cannot do that.
+
+[138-139 caption c17s6-fig-half-plane-angle default_required]
+The angle function works on a half-plane. It cannot be made single-valued
+      around a full loop.
+
+[141-155 latex-image c17s6-fig-half-plane-angle default_required]
+\begin{tikzpicture}[scale=0.88, >=stealth]
+            \draw[->] (-3.4,0) -- (3.6,0) node[right] {\(x\)};
+            \draw[->] (0,-3.4) -- (0,3.6) node[above] {\(y\)};
+            \fill[gray!10] (0,-3.1) rectangle (3.2,3.1);
+            \draw[very thick, blue!65!black] (0,-3.1) -- (0,3.1);
+            \node[blue!65!black, rotate=90] at (0.25,2.1) {boundary of \(x>0\)};
+            \draw[very thick, red!65!black] (0,0) circle (2.0);
+            \draw[->, very thick, red!65!black] (2.0,0) arc[start angle=0,end angle=55,radius=2.0];
+            \fill[white] (0,0) circle (7pt);
+            \draw[thick] (0,0) circle (7pt);
+            \node at (1.7,-3.9)
+                {an angle can be chosen on \(x>0\), but not around the whole puncture};
+        \end{tikzpicture}
+
+[159-162 p c17s6-locally-exact-global-obstruction default_required]
+This is the difference between local and global exactness:
+      \boxed{\begin{array}{c}\text{locally exact: potentials exist in small neighborhoods},\\[1mm]\text{globally exact: one potential works on the whole domain.}\end{array}}
+
+[164-164 p c17s6-locally-exact-global-obstruction default_required]
+A hole can prevent local potentials from gluing into one global potential.
+
+[168-168 title c17s6-singular-form-breaks-theorem default_required]
+A singular form that breaks the theorem if the singularity is ignored
+
+[170-170 p c17s6-singular-form-breaks-theorem default_required]
+The same warning appears in space, one degree higher.
+
+[172-181 p c17s6-singular-form-breaks-theorem default_required]
+Let
+      r=\sqrt{x^2+y^2+z^2},
+      and define the vector field
+      \mathbf G(x,y,z)=\frac{(x,y,z)}{r^3}
+      on
+      \mathbb R^3\setminus\{(0,0,0)\}.
+      Its flux 2-form is
+      \boxed{\Phi=\frac{x}{r^3}\,dy\wedge dz+\frac{y}{r^3}\,dz\wedge dx+\frac{z}{r^3}\,dx\wedge dy.}
+
+[183-198 p c17s6-singular-form-breaks-theorem default_required]
+Away from the origin,
+      d\Phi=(\nabla\cdot\mathbf G)\,dx\wedge dy\wedge dz.
+      Compute the divergence. Since
+      \frac{\partial}{\partial x}\left(\frac{x}{r^3}\right)=\frac1{r^3}-\frac{3x^2}{r^5},
+      and similarly for y and z,
+      
+        \nabla\cdot\mathbf G \amp= \left(\frac1{r^3}-\frac{3x^2}{r^5}\right)+\left(\frac1{r^3}-\frac{3y^2}{r^5}\right)+\left(\frac1{r^3}-\frac{3z^2}{r^5}\right)
+        \amp= \frac3{r^3}-\frac{3(x^2+y^2+z^2)}{r^5}
+        \amp= \frac3{r^3}-\frac{3r^2}{r^5}
+        \amp= 0.
+      
+      Thus
+      \boxed{d\Phi=0}
+      wherever \Phi is defined.
+
+[200-210 p c17s6-singular-form-breaks-theorem default_required]
+Now integrate over the sphere S_a of radius a, oriented outward. On that
+      sphere,
+      \widehat{\mathbf n}=\frac{(x,y,z)}{a},
+      and
+      \mathbf G=\frac{(x,y,z)}{a^3}.
+      Therefore
+      \mathbf G\cdot\widehat{\mathbf n}=\frac{x^2+y^2+z^2}{a^4}=\frac{a^2}{a^4}=\frac1{a^2}.
+      So
+      \boxed{\int_{S_a}\Phi=\iint_{S_a}\mathbf G\cdot\widehat{\mathbf n}\,dS=\frac1{a^2}\cdot 4\pi a^2=4\pi.}
+
+[212-217 p c17s6-singular-form-breaks-theorem default_required]
+It is tempting to say:
+      d\Phi=0,\qquad \text{so the flux through the sphere should be }0.
+      That is the mistake. The form is not defined at the origin, and the origin lies inside
+      the sphere.
+
+[219-223 p c17s6-singular-form-breaks-theorem default_required]
+The divergence theorem cannot be applied to the whole ball
+      x^2+y^2+z^2\le a^2,
+      because \Phi is not smooth on that ball. It is not even defined at the center.
+
+[225-232 p c17s6-singular-form-breaks-theorem default_required]
+If we remove a small ball around the origin, the theorem works perfectly. Let
+      E_{\varepsilon,a}=\{(x,y,z):\varepsilon\le r\le a\}.
+      This is a spherical shell. Its boundary has two pieces:
+      \partial E_{\varepsilon,a}=S_a- S_\varepsilon.
+      The minus sign appears because the outward normal for the shell on the inner sphere
+      points toward the origin.
+
+[234-241 p c17s6-singular-form-breaks-theorem default_required]
+Since
+      d\Phi=0
+      on the shell,
+      \int_{\partial E_{\varepsilon,a}}\Phi=\int_{E_{\varepsilon,a}}d\Phi=0.
+      And indeed,
+      \int_{S_a}\Phi-\int_{S_\varepsilon}\Phi=4\pi-4\pi=0.
+
+[243-243 p c17s6-singular-form-breaks-theorem default_required]
+The singularity is not a minor defect. It carries the missing flux.
+
+[245-245 title checkpoint-17-6-where-flux-lives default_required]
+Where does the flux come from?
+
+[247-252 p checkpoint-17-6-where-flux-lives default_required]
+We found d\Phi=0 at every point where \Phi is defined, and yet the
+          flux through the sphere is 4\pi. If the local source density vanishes
+          everywhere, where is the flux coming from, and why does removing a tiny ball
+          make the divergence theorem behave again?
+
+[255-258 p checkpoint-17-6-where-flux-lives hint]
+Think about the one point that the form refuses to talk about. Is it inside the
+          sphere? Is it inside the shell?
+
+[263-264 caption c17s6-fig-spherical-shell default_required]
+Removing the singular point turns the ball into a shell. The boundary now has
+      two spheres with opposite induced orientations.
+
+[266-278 latex-image c17s6-fig-spherical-shell default_required]
+\begin{tikzpicture}[scale=0.9, >=stealth]
+            \draw[fill=gray!8, thick] (0,0) circle (2.4);
+            \draw[fill=white, thick] (0,0) circle (0.8);
+            \draw[->, very thick, red!65!black] (2.4,0) -- (3.25,0)
+                node[right] {outward on \(S_a\)};
+            \draw[->, very thick, blue!65!black] (0.8,0) -- (0.05,0)
+                node[below] {outward for the shell};
+            \node [above right] at (0,0) {removed};
+            \node at (0,-3.15)
+                {on a shell, the outer and inner fluxes cancel};
+        \end{tikzpicture}
+
+[284-284 title c17s6-why-zero-derivative-hides-global default_required]
+Why zero derivative can hide global information
+
+[286-286 p c17s6-why-zero-derivative-hides-global default_required]
+The two examples have the same shape.
+
+[288-295 p c17s6-why-zero-derivative-hides-global default_required]
+In the punctured plane,
+      \alpha=\frac{-y}{x^2+y^2}\,dx+\frac{x}{x^2+y^2}\,dy
+      satisfies
+      d\alpha=0,
+      but
+      \int_{\text{unit circle}}\alpha=2\pi.
+
+[297-304 p c17s6-why-zero-derivative-hides-global default_required]
+In punctured space,
+      \Phi=\frac{x}{r^3}\,dy\wedge dz+\frac{y}{r^3}\,dz\wedge dx+\frac{z}{r^3}\,dx\wedge dy
+      satisfies
+      d\Phi=0,
+      but
+      \int_{\text{unit sphere}}\Phi=4\pi.
+
+[306-315 p c17s6-why-zero-derivative-hides-global default_required]
+Put side by side:
+      
+      \begin{array}{c|c|c|c}
+      \text{Domain} \amp \text{Closed form} \amp \text{Closed object} \amp \text{Integral} \\ \hline
+      \mathbb R^2\setminus\{0\} \amp \displaystyle \frac{-y\,dx+x\,dy}{x^2+y^2} \amp \text{circle around the missing point} \amp 2\pi \\[4mm]
+      \mathbb R^3\setminus\{0\} \amp \displaystyle \frac{x}{r^3}\,dy\wedge dz+\frac{y}{r^3}\,dz\wedge dx+\frac{z}{r^3}\,dx\wedge dy \amp \text{sphere around the missing point} \amp 4\pi
+      \end{array}
+
+[317-317 p c17s6-why-zero-derivative-hides-global default_required]
+The word closed has two meanings in this discussion, and both matter.
+
+[319-319 title checkpoint-17-6-two-closeds default_required]
+Two kinds of closed, one role for the hole?
+
+[321-327 p checkpoint-17-6-two-closeds default_required]
+A form being closed (d\omega=0) and a curve or surface being closed
+          (\partial C=0) are different statements. Yet in both the plane and space
+          examples, it is a closed object wrapped around a missing point that exposes the
+          failure of exactness. Why is it precisely the hole that lets these two
+          notions of closed meet and produce a nonzero answer?
+
+[330-334 p checkpoint-17-6-two-closeds hint]
+Imagine filling in the missing point. Could the closed loop or sphere then be the
+          boundary of something living entirely inside the domain? What would that force the
+          integral to be?
+
+[338-343 p c17s6-why-zero-derivative-hides-global default_required]
+A form is closed when
+      d\alpha=0.
+      A curve or surface is closed when it has no boundary:
+      \partial C=0,\qquad \partial S=0.
+
+[345-352 p c17s6-why-zero-derivative-hides-global default_required]
+If a form is exact, then its integral over a closed object must vanish. For a closed
+      curve,
+      \int_C d\phi=0.
+      For a closed surface,
+      \int_S d\omega=0.
+      The boundary of the boundary has nothing left to measure.
+
+[354-357 p c17s6-why-zero-derivative-hides-global default_required]
+So a nonzero integral over a closed loop or closed surface is a certificate:
+      \boxed{\text{the form is not exact on that domain.}}
+
+[359-363 p c17s6-why-zero-derivative-hides-global default_required]
+The derivative d checks local density: local curl, local source, local change. A
+      closed loop or surface can check something larger: whether the domain has a missing
+      piece that the form winds around.
+
+[365-372 p c17s6-why-zero-derivative-hides-global default_required]
+That is why the next theorem has to mention both objects:
+      \text{a form}\qquad\text{and}\qquad\text{the boundary of the region where it is integrated.}
+      The next section will put the whole chapter into one translation table. Then
+       gives the single boundary theorem that explains why
+      all these local and global pieces fit together:
+      \int_{\partial M}\omega=\int_M d\omega.

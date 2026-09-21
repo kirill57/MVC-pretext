@@ -1,0 +1,462 @@
+[5-5 title sec-14-green-s-theorem-flux-form default_required]
+Green's theorem: flux form
+
+[7-12 p sec-14-green-s-theorem-flux-form default_required]
+measured circulation. A field
+    could push us around a closed curve, and Green's theorem turned that boundary
+    circulation into the area integral of the scalar curl:
+    \oint_{\partial R} P\,dx+Q\,dy = \iint_R (Q_x-P_y)\,dA.
+
+[14-18 p sec-14-green-s-theorem-flux-form default_required]
+But a field near a boundary can do something else. It can cross the boundary. Fluid
+    can flow out of a pond. Heat can leave a plate. Air can escape through a closed
+    fence. This measurement is called flux.
+
+[21-21 title c14s3-subsec-outward-normal default_required]
+Outward normal in the plane
+
+[23-46 p c14s3-subsec-outward-normal default_required]
+Begin with a field that looks like a source:
+      \mathbf F(x,y)=(x,y).
+      At every point, the arrow points away from the origin. Let C be the circle
+      of radius a, oriented counterclockwise:
+      \mathbf r(t)=(a\cos t,a\sin t), \qquad 0\le t\le 2\pi.
+      The outward unit normal on the circle is
+      \mathbf n(t)=(\cos t,\sin t).
+      Along the circle,
+      \mathbf F(\mathbf r(t))=(a\cos t,a\sin t)=a\mathbf n(t).
+      So the outward component of the field is
+      \mathbf F\cdot\mathbf n=a.
+      Also,
+      ds=a\,dt.
+      Therefore the total outward flux is
+      
+        \int_C \mathbf F\cdot\mathbf n\,ds \amp= \int_0^{2\pi} a(a\,dt)
+        \amp= 2\pi a^2.
+      
+      The disk inside the circle has area
+      \pi a^2.
+      So in this example,
+      \boxed{ \int_C \mathbf F\cdot\mathbf n\,ds = 2\,\operatorname{Area}(\text{disk}). }
+
+[48-51 p c14s3-subsec-outward-normal default_required]
+The number 2 will soon get a name. It is the divergence of
+      \mathbf F(x,y)=(x,y).
+
+[54-55 caption c14s3-fig-radial-flux default_required]
+For the radial field \mathbf F=(x,y), the arrows point outward
+      through the circle.
+
+[57-83 latex-image c14s3-fig-radial-flux default_required]
+\begin{tikzpicture}[scale=0.9, >=stealth]
+            \draw[->] (-3.4,0) -- (3.8,0) node[right] {\(x\)};
+            \draw[->] (0,-3.4) -- (0,3.8) node[above] {\(y\)};
+
+            \draw[thick, fill=gray!8] (0,0) circle (2.4);
+
+            \foreach \ang in {20,65,110,155,205,250,295,340} {
+                \draw[->, blue!65!black, thick]
+                    ({0.75*cos(\ang)},{0.75*sin(\ang)})
+                    -- ({1.35*cos(\ang)},{1.35*sin(\ang)});
+            }
+
+            \coordinate (P) at ({2.4*cos(35)},{2.4*sin(35)});
+            \fill (P) circle (2pt);
+
+            \draw[->, very thick, red!65!black]
+                (P) -- ++({0.9*cos(35)},{0.9*sin(35)})
+                node[right] {\(\mathbf n\)};
+
+            \draw[->, very thick]
+                (P) -- ++({-0.75*sin(35)},{0.75*cos(35)})
+                node[above] {\(\mathbf T\)};
+
+            \node at (0,-3.9) {outward flux measures how much field crosses the boundary};
+        \end{tikzpicture}
+
+[87-90 p c14s3-subsec-outward-normal default_required]
+For a general positively oriented boundary curve, the outward normal has a simple
+      formula.
+
+[92-109 p c14s3-subsec-outward-normal default_required]
+Suppose
+      C=\partial R
+      is positively oriented, so the region stays on the left as we walk. Let
+      \mathbf T=\left(\frac{dx}{ds},\frac{dy}{ds}\right)
+      be the unit tangent vector. Since the region is on the left, the left normal points
+      inward. The outward normal is the right normal:
+      \boxed{ \mathbf n= \left( \frac{dy}{ds}, -\frac{dx}{ds} \right). }
+      Therefore, if
+      \mathbf F=(M,N),
+      then
+      
+        \mathbf F\cdot\mathbf n\,ds \amp= (M,N)\cdot \left( \frac{dy}{ds}, -\frac{dx}{ds} \right)ds
+        \amp= M\,dy-N\,dx.
+      
+      So for a positively oriented boundary,
+      \boxed{ \int_{\partial R}\mathbf F\cdot\mathbf n\,ds = \oint_{\partial R} M\,dy-N\,dx. }
+
+[111-114 p c14s3-subsec-outward-normal default_required]
+This formula is useful because it removes the square root hidden in ds. It
+      also reveals that flux is another 1-form integral.
+
+[117-117 title c14s3-def-flux-plane-curve default_required]
+Flux across a plane curve
+
+[119-126 p c14s3-def-flux-plane-curve default_required]
+Let C be an oriented curve with a chosen unit normal \mathbf n,
+          and let
+          \mathbf F=(M,N)
+          be a vector field. The flux of \mathbf F across C is
+          \boxed{ \int_C \mathbf F\cdot\mathbf n\,ds. }
+          If C=\partial R, the normal is usually chosen to be the outward normal.
+
+[130-133 p c14s3-subsec-outward-normal default_required]
+For a closed curve, outward flux is positive when more field leaves the region than
+      enters it. It is negative when more field enters than leaves.
+
+[137-137 title c14s3-subsec-divergence-2d default_required]
+Divergence in two dimensions
+
+[139-146 p c14s3-subsec-divergence-2d default_required]
+Now look at a small rectangle
+      S=[a,a+h]\times[b,b+k].
+      Let
+      \mathbf F=(M,N).
+      The horizontal component M contributes to flux through the vertical sides.
+      The vertical component N contributes to flux through the horizontal sides.
+
+[148-155 p c14s3-subsec-divergence-2d default_required]
+On the right side, the outward normal points right, so the contribution is roughly
+      M(a+h,b)\,k.
+      On the left side, the outward normal points left, so the contribution is roughly
+      -M(a,b)\,k.
+      Together the vertical sides contribute approximately
+      \bigl(M(a+h,b)-M(a,b)\bigr)k \approx M_x(a,b)\,h\,k.
+
+[157-164 p c14s3-subsec-divergence-2d default_required]
+On the top side, the outward normal points up, so the contribution is roughly
+      N(a,b+k)\,h.
+      On the bottom side, the outward normal points down, so the contribution is roughly
+      -N(a,b)\,h.
+      Together the horizontal sides contribute approximately
+      \bigl(N(a,b+k)-N(a,b)\bigr)h \approx N_y(a,b)\,k\,h.
+
+[166-169 p c14s3-subsec-divergence-2d default_required]
+Adding all four sides,
+      \boxed{ \int_{\partial S}\mathbf F\cdot\mathbf n\,ds \approx (M_x+N_y)\,\Delta A. }
+
+[171-171 p c14s3-subsec-divergence-2d default_required]
+This coefficient is the local net outflow per unit area.
+
+[175-175 title c14s3-def-divergence-plane default_required]
+Divergence in the plane
+
+[177-183 p c14s3-def-divergence-plane default_required]
+Let
+          \mathbf F(x,y)=(M(x,y),N(x,y))
+          be a vector field in the plane. The divergence of
+          \mathbf F is
+          \boxed{ \operatorname{div}\mathbf F = \nabla\cdot\mathbf F = M_x+N_y. }
+
+[188-188 title checkpoint-14-3-zero-div-meaning default_required]
+What does zero divergence really say?
+
+[190-195 p checkpoint-14-3-zero-div-meaning default_required]
+Suppose a field has \operatorname{div}\mathbf F=0 at a point. Does that
+          mean nothing is happening there, or could the field still be doing something
+          interesting near that point? Explain in your own words what the zero is
+          actually measuring.
+
+[198-202 p checkpoint-14-3-zero-div-meaning hint]
+Remember that \operatorname{div}\mathbf F records net outflow per unit
+          area. Think about a tiny box: what must be true about what enters versus what
+          leaves, and is that the same as the field being still?
+
+[207-214 p c14s3-subsec-divergence-2d default_required]
+For the radial source
+      \mathbf F(x,y)=(x,y),
+      we get
+      \operatorname{div}\mathbf F=1+1=2,
+      which matches the circle computation:
+      \text{outward flux}=2\cdot\text{area}.
+
+[216-220 p c14s3-subsec-divergence-2d default_required]
+The divergence measures source strength. Positive divergence means local net
+      outflow. Negative divergence means local net inflow. Zero divergence means that, to
+      first order, what flows into a tiny region also flows out.
+
+[223-223 title c14s3-ex-circulation-no-divergence default_required]
+A field with circulation but no divergence
+
+[225-231 p c14s3-ex-circulation-no-divergence default_required]
+Let
+          \mathbf F(x,y)=(-y,x).
+          Then
+          \operatorname{div}\mathbf F = \frac{\partial}{\partial x}(-y) + \frac{\partial}{\partial y}(x) = 0.
+          This field circulates around the origin, but it has no local source or sink.
+
+[232-243 p c14s3-ex-circulation-no-divergence default_required]
+In , the same field had
+          scalar curl
+          Q_x-P_y=1-(-1)=2.
+          So curl and divergence measure different behavior:
+          
+            \begin{array}{c|c}
+            \text{curl} \amp \text{tendency to circulate}\\[1mm]
+            \text{divergence} \amp \text{tendency to flow outward}
+            \end{array}
+
+[249-249 title c14s3-subsec-green-flux-form default_required]
+Green's theorem in flux form
+
+[251-254 p c14s3-subsec-green-flux-form default_required]
+The small-rectangle calculation suggests the theorem. The flux through the boundary
+      should equal the integral of divergence over the inside.
+
+[258-258 title c14s3-thm-green-flux-form default_required]
+Green's theorem, flux form
+
+[260-264 p c14s3-thm-green-flux-form default_required]
+Let R be a bounded closed plane region whose boundary \partial R consists
+        of finitely many disjoint piecewise smooth simple closed curves. Give \partial R
+          the positive orientation, and let \mathbf n be the outward unit normal.
+
+[265-273 p c14s3-thm-green-flux-form default_required]
+Let
+          \mathbf F=(M,N)
+          be a vector field whose component functions have continuous first partial
+          derivatives on an open region containing R. Then
+          \boxed{ \oint_{\partial R}\mathbf F\cdot\mathbf n\,ds = \iint_R (M_x+N_y)\,dA. }
+          Equivalently,
+          \boxed{ \oint_{\partial R} M\,dy-N\,dx = \iint_R (M_x+N_y)\,dA. }
+
+[278-278 title checkpoint-14-3-same-theorem default_required]
+One theorem wearing two hats?
+
+[280-285 p checkpoint-14-3-same-theorem default_required]
+The flux form and the circulation form of Green's theorem look like two
+          different results, yet the text obtains one from the other just by changing the
+          1-form being integrated. Why is it reasonable that a single theorem can
+          describe both circulation and flux?
+
+[288-292 p checkpoint-14-3-same-theorem hint]
+Look at what both boundary integrals have in common. Each turns a measurement
+          along \partial R into an integral of a derivative density over R.
+          What is the object that is really being integrated around the boundary?
+
+[297-308 p c14s3-subsec-green-flux-form default_required]
+This is not a separate miracle from the circulation form of Green's theorem. It is
+      the same theorem applied to the 1-form
+      \omega=-N\,dx+M\,dy.
+      For this form,
+      P=-N, \qquad Q=M.
+      So
+      Q_x-P_y = M_x-(-N_y) = M_x+N_y.
+      The circulation form says
+      \oint_{\partial R} -N\,dx+M\,dy = \iint_R (M_x+N_y)\,dA,
+      which is exactly the flux form.
+
+[312-312 title c14s3-subsec-examples-net-outflow default_required]
+Examples of net outflow
+
+[315-315 title c14s3-ex-steady-wind-fence default_required]
+A steady wind through a closed fence
+
+[317-326 p c14s3-ex-steady-wind-fence default_required]
+Let
+          \mathbf F(x,y)=(5,2)
+          be a constant wind field. Then
+          \operatorname{div}\mathbf F=0+0=0.
+          For any region R to which Green's theorem applies,
+          \boxed{ \oint_{\partial R}\mathbf F\cdot\mathbf n\,ds=0. }
+          This does not mean no wind crosses the fence. Wind enters one side and leaves
+          another. The theorem says the total entering and total leaving cancel.
+
+[331-331 title c14s3-ex-flux-ellipse default_required]
+Flux through an ellipse without parametrizing the ellipse
+
+[333-340 p c14s3-ex-flux-ellipse default_required]
+Let E be the elliptical region
+          \frac{x^2}{a^2}+\frac{y^2}{b^2}\le 1,
+          where a,b\gt0. Let
+          \mathbf F(x,y)=(x+\sin y,\;y+e^x).
+          A direct flux integral around the ellipse would be unpleasant. Green's theorem
+          makes it short.
+
+[341-358 p c14s3-ex-flux-ellipse default_required]
+Here
+          M=x+\sin y, \qquad N=y+e^x.
+          Therefore
+          M_x=1, \qquad N_y=1.
+          So
+          \operatorname{div}\mathbf F=2.
+          Hence
+          
+            \oint_{\partial E}\mathbf F\cdot\mathbf n\,ds \amp= \iint_E 2\,dA
+            \amp= 2\,\operatorname{Area}(E)
+            \amp= 2\pi ab.
+          
+          Thus
+          \boxed{ \oint_{\partial E}\mathbf F\cdot\mathbf n\,ds=2\pi ab. }
+          The extra terms \sin y and e^x affect the boundary arrows, but
+          they do not change the divergence in this example.
+
+[363-363 title c14s3-ex-sink default_required]
+A sink
+
+[365-382 p c14s3-ex-sink default_required]
+Let
+          R=[0,2]\times[0,1]
+          and
+          \mathbf F(x,y)=(-2x,-3y).
+          Then
+          \operatorname{div}\mathbf F=-2-3=-5.
+          Green's theorem gives
+          
+            \oint_{\partial R}\mathbf F\cdot\mathbf n\,ds \amp= \iint_R (-5)\,dA
+            \amp= -5\cdot 2
+            \amp= -10.
+          
+          So
+          \boxed{ \oint_{\partial R}\mathbf F\cdot\mathbf n\,ds=-10. }
+          The negative sign says that, in total, more field enters the rectangle than
+          leaves it.
+
+[388-388 title c14s3-subsec-why-hypotheses default_required]
+Why the hypotheses are doing work
+
+[390-393 p c14s3-subsec-why-hypotheses default_required]
+The flux form has the same kind of hypotheses as the circulation form. They keep
+      hidden sources and hidden boundaries from being smuggled into the region.
+
+[396-396 title checkpoint-14-3-hidden-source default_required]
+Where could a hidden source hide?
+
+[398-403 p checkpoint-14-3-hidden-source default_required]
+The hypotheses ask \mathbf F to have continuous partial derivatives on an
+          open region containing R. If we quietly ignored a singularity or a jump
+          inside R, why might the interior integral of \operatorname{div}\mathbf F
+          come out too small compared to the true boundary flux?
+
+[406-410 p checkpoint-14-3-hidden-source hint]
+A place where the field is not smooth can act like an extra, unseen boundary.
+          Ask yourself where flux could be entering or leaving that the integral over the
+          smooth part of R never gets to count.
+
+[415-415 title c14s3-subsubsec-outward-not-inward default_required]
+The outward normal cannot be replaced by the inward normal
+
+[416-426 p c14s3-subsubsec-outward-not-inward default_required]
+For
+        \mathbf F=(x,y)
+        on the disk of radius a,
+        \oint_{\partial R}\mathbf F\cdot\mathbf n\,ds=2\pi a^2
+        with the outward normal. If we use the inward normal instead, the answer becomes
+        -2\pi a^2.
+        The interior integral
+        \iint_R 2\,dA
+        does not change. The theorem is about outward flux.
+
+[430-430 title c14s3-subsubsec-jump-source-line default_required]
+A jump inside the region can hide a source line
+
+[431-437 p c14s3-subsubsec-jump-source-line default_required]
+Let
+        R=[-1,1]\times[0,1]
+        and define
+        \mathbf F(x,y)= \begin{cases} (0,0), \amp x\le0,\\ (1,0), \amp x\gt0. \end{cases}
+        This field jumps across the line x=0. It is not C^1.
+
+[438-445 p c14s3-subsubsec-jump-source-line default_required]
+The boundary flux is easy. The right side has outward normal (1,0), so it
+        contributes
+        1.
+        The left side has field (0,0), and the top and bottom have normals
+        perpendicular to the field. Therefore
+        \boxed{ \oint_{\partial R}\mathbf F\cdot\mathbf n\,ds=1. }
+
+[446-453 p c14s3-subsubsec-jump-source-line default_required]
+Away from the jump line,
+        M_x+N_y=0.
+        If we illegally ignored the jump and integrated 0, we would get
+        \iint_R 0\,dA=0.
+        The missing contribution lives on the internal jump line. The smoothness
+        hypothesis prevents an unseen boundary from appearing inside the region.
+
+[457-457 title c14s3-subsubsec-singularity-point-source default_required]
+A singularity can hide a point source
+
+[458-473 p c14s3-subsubsec-singularity-point-source default_required]
+Consider the radial field
+        \mathbf F(x,y)=\frac{1}{x^2+y^2}(x,y).
+        It is defined on the punctured plane, but not at the origin. Away from the origin,
+        \operatorname{div}\mathbf F=0.
+        On the unit circle,
+        \mathbf F=(\cos t,\sin t)=\mathbf n,
+        and
+        ds=dt.
+        So
+        \boxed{ \oint_C \mathbf F\cdot\mathbf n\,ds=2\pi. }
+        If we tried to apply Green's theorem to the whole unit disk, the right side would
+        seem to be 0, while the boundary flux is 2\pi. The theorem did not
+        fail. The field is not defined on an open region containing the disk. The origin
+        is a hidden source.
+
+[474-484 p c14s3-subsubsec-singularity-point-source default_required]
+If we instead use the annulus
+        \varepsilon\le x^2+y^2\le1,
+        then the field is defined on the region. The outer boundary contributes
+        2\pi, and the inner boundary, whose outward normal points into the hole,
+        contributes
+        -2\pi.
+        The total flux is 0, exactly matching
+        \iint_{\text{annulus}}0\,dA=0.
+        The inner boundary is what records the missing point.
+
+[489-489 title c14s3-subsec-source-sink-interpretations default_required]
+Source, sink, and net outflow interpretations
+
+[491-495 p c14s3-subsec-source-sink-interpretations default_required]
+For a small region around a point,
+      \operatorname{div}\mathbf F
+      is the net outward flux per unit area.
+
+[497-501 p c14s3-subsec-source-sink-interpretations default_required]
+If
+      \operatorname{div}\mathbf F\gt0,
+      the point behaves like a source. More field leaves a tiny box than enters it.
+
+[503-507 p c14s3-subsec-source-sink-interpretations default_required]
+If
+      \operatorname{div}\mathbf F\lt0,
+      the point behaves like a sink. More field enters than leaves.
+
+[509-514 p c14s3-subsec-source-sink-interpretations default_required]
+If
+      \operatorname{div}\mathbf F=0,
+      there is no first-order net creation or loss. The field may still move, shear,
+      stretch, or rotate, but it is not locally adding or removing material.
+
+[516-533 p c14s3-subsec-source-sink-interpretations default_required]
+Green's theorem now has two faces:
+      
+        \begin{array}{c|c|c}
+        \text{Boundary measurement} \amp \text{Interior density} \amp \text{Name}\\ \hline
+        \displaystyle \oint_{\partial R} P\,dx+Q\,dy
+        \amp
+        \displaystyle Q_x-P_y
+        \amp
+        \text{circulation / curl}\\[3mm]
+        \displaystyle \oint_{\partial R} M\,dy-N\,dx
+        \amp
+        \displaystyle M_x+N_y
+        \amp
+        \text{flux / divergence}
+        \end{array}
+
+[535-540 p c14s3-subsec-source-sink-interpretations default_required]
+The two formulas look different, but the boundary integrals are both 1-form
+      integrals. The real unifying object is not the vector field. It is the form being
+      integrated around the boundary. Once we focus on that form, Green's theorem becomes
+      one sentence.

@@ -1,0 +1,346 @@
+[5-5 title sec-7-sufficient-conditions-and-warning-examples default_required]
+Sufficient conditions and warning examples
+
+[7-11 p sec-7-sufficient-conditions-and-warning-examples default_required]
+The Jacobian matrix in  was built from partial
+    derivatives. That is natural, but it hides a danger. Partial derivatives are measured along
+    coordinate slices. The total derivative must work for every small displacement at once.
+
+[13-13 p sec-7-sufficient-conditions-and-warning-examples default_required]
+So we need a test that says when the slices fit together.
+
+[16-16 title c7s6-subsec-a-safe-example-first default_required]
+A safe example first
+
+[18-26 p c7s6-subsec-a-safe-example-first default_required]
+Return to the rubber sheet map
+      F(x,y)=\left(x+\frac15xy,\;y+\frac1{10}x^2\right).
+      Its partial derivatives are
+      F_{1x}=1+\frac15y,\qquad F_{1y}=\frac15x,
+      and
+      F_{2x}=\frac15x,\qquad F_{2y}=1.
+      These are polynomial functions. They are continuous everywhere.
+
+[28-32 p c7s6-subsec-a-safe-example-first default_required]
+That means the entries of the Jacobian matrix do not jump or oscillate near the point. A
+      nearby point has nearby coordinate slopes. The local grid is not being asked to change its
+      linear behavior abruptly at microscopic scale.
+
+[34-34 p c7s6-subsec-a-safe-example-first default_required]
+This is the good situation. In it, the Jacobian matrix is the total derivative.
+
+[37-37 title c7s6-thm-continuous-partials-imply-differentiability default_required]
+Continuous partial derivatives imply differentiability
+
+[39-47 p c7s6-thm-continuous-partials-imply-differentiability default_required]
+Let
+          f:D\subseteq\mathbb R^2\to\mathbb R,
+          and let (a,b) be an interior point of D. Suppose f_x and
+          f_y exist in a small disk around (a,b), and suppose both partial
+          derivatives are continuous at (a,b). Then f is differentiable at
+          (a,b), and
+          \boxed{Df(a,b)(\Delta x,\Delta y)=f_x(a,b)\Delta x+f_y(a,b)\Delta y.}
+
+[50-88 p c7s6-thm-continuous-partials-imply-differentiability default_required]
+We compare
+          f(a+\Delta x,b+\Delta y)
+          to
+          f(a,b).
+          Split the change into two coordinate moves:
+          
+            \amp f(a+\Delta x,b+\Delta y)-f(a,b)
+            \amp\qquad = \bigl[f(a+\Delta x,b+\Delta y)-f(a,b+\Delta y)\bigr]+\bigl[f(a,b+\Delta y)-f(a,b)\bigr].
+          
+          For the first bracket, only x changes. By the one-variable Mean Value Theorem,
+          there is a number \theta between 0 and 1 such that
+          f(a+\Delta x,b+\Delta y)-f(a,b+\Delta y)=\Delta x\,f_x(a+\theta\Delta x,b+\Delta y).
+          For the second bracket, only y changes. There is a number \eta between
+          0 and 1 such that
+          f(a,b+\Delta y)-f(a,b)=\Delta y\,f_y(a,b+\eta\Delta y).
+          Subtract the proposed linear part:
+          f_x(a,b)\Delta x+f_y(a,b)\Delta y.
+          The error is
+          
+            R(\Delta x,\Delta y) \amp= \Delta x\bigl[f_x(a+\theta\Delta x,b+\Delta y)-f_x(a,b)\bigr]
+            \amp\qquad + \Delta y\bigl[f_y(a,b+\eta\Delta y)-f_y(a,b)\bigr].
+          
+          Let
+          r=\sqrt{(\Delta x)^2+(\Delta y)^2}.
+          Since
+          |\Delta x|\le r,\qquad |\Delta y|\le r,
+          we get
+          
+            \frac{|R(\Delta x,\Delta y)|}{r} \amp\le \left|f_x(a+\theta\Delta x,b+\Delta y)-f_x(a,b)\right|
+            \amp\qquad+ \left|f_y(a,b+\eta\Delta y)-f_y(a,b)\right|.
+          
+          As
+          (\Delta x,\Delta y)\to(0,0),
+          the points inside f_x and f_y approach (a,b). Since f_x and
+          f_y are continuous at (a,b), the right side approaches 0. Therefore
+          \frac{|R(\Delta x,\Delta y)|}{r}\to0,
+          which is exactly differentiability.
+
+[92-92 p c7s6-subsec-a-safe-example-first default_required]
+The same test works in any finite number of variables and for vector-valued maps.
+
+[95-95 title c7s6-thm-jacobian-test-for-differentiability default_required]
+Jacobian test for differentiability
+
+[97-107 p c7s6-thm-jacobian-test-for-differentiability default_required]
+Let
+          F:D\subseteq\mathbb R^n\to\mathbb R^m
+          have component functions
+          F_1,\ldots,F_m.
+          Suppose all first partial derivatives
+          \frac{\partial F_i}{\partial x_j}
+          exist in a small ball around \mathbf p, and suppose all of them are continuous
+          at \mathbf p. Then F is differentiable at \mathbf p, and
+          \boxed{DF(\mathbf p)(\mathbf h)=J_F(\mathbf p)\mathbf h.}
+
+[111-114 p c7s6-subsec-a-safe-example-first default_required]
+The proof is just the scalar theorem applied to each component. The component errors are
+      each smaller than first order, so the vector error is also smaller than first order.
+
+[116-121 p c7s6-subsec-a-safe-example-first default_required]
+This theorem is one of the most useful tests in the course. For polynomials, trigonometric
+      functions, exponentials, logarithms on their domains, and rational functions away from zero
+      denominators, the partial derivatives are continuous. In those settings, the Jacobian
+      matrix really is the derivative.
+
+[123-123 p c7s6-subsec-a-safe-example-first default_required]
+Now come the warnings.
+
+[127-127 title c7s6-subsec-sufficient-not-necessary default_required]
+Continuous partials are sufficient, not necessary
+
+[129-132 p c7s6-subsec-sufficient-not-necessary default_required]
+The theorem gives a reliable test. It is not an if-and-only-if statement. A function can be
+      differentiable even when its partial derivatives are not continuous.
+
+[134-142 p c7s6-subsec-sufficient-not-necessary default_required]
+Define
+      f(x,y)=\begin{cases}x^2\sin\left(\dfrac1x\right), & x\ne0,\\[2mm]0, & x=0.\end{cases}
+      This function does not depend on y. At the origin,
+      f_x(0,0)=\lim_{h\to0}\frac{h^2\sin(1/h)-0}{h}=\lim_{h\to0}h\sin(1/h)=0,
+      and
+      f_y(0,0)=0.
+      So the candidate total derivative at the origin is the zero linear function.
+
+[144-152 p c7s6-subsec-sufficient-not-necessary default_required]
+To check differentiability, estimate the error:
+      |f(x,y)|=\left|x^2\sin\left(\frac1x\right)\right|\le x^2
+      when x\ne0, and the same inequality is true when x=0. Since
+      x^2\le x^2+y^2,
+      we get
+      \frac{|f(x,y)-0|}{\sqrt{x^2+y^2}}\le\sqrt{x^2+y^2}\to0.
+      Therefore f is differentiable at the origin.
+
+[154-160 p c7s6-subsec-sufficient-not-necessary default_required]
+But f_x is not continuous at the origin. For x\ne0,
+      f_x(x,y)=2x\sin\left(\frac1x\right)-\cos\left(\frac1x\right).
+      The term
+      \cos\left(\frac1x\right)
+      oscillates as x\to0. So f_x(x,y) does not approach f_x(0,0)=0.
+
+[162-162 p c7s6-subsec-sufficient-not-necessary default_required]
+The moral is one-way:
+
+[164-168 p c7s6-subsec-sufficient-not-necessary default_required]
+\text{continuous partial derivatives guarantee differentiability,}
+      but
+      \text{differentiability does not require continuous partial derivatives.}
+
+[170-170 p c7s6-subsec-sufficient-not-necessary default_required]
+The theorem is a safe test, not the only possible route.
+
+[173-173 title checkpoint-7-6-sufficient-vs-necessary default_required]
+Sufficient or necessary?
+
+[175-181 p checkpoint-7-6-sufficient-vs-necessary default_required]
+The continuous-partials test is a sufficient condition for differentiability,
+          not a necessary one. In your own words, what is the difference between a
+          sufficient condition and a necessary condition, and why does that distinction matter
+          when you fail the test? If a function's partial derivatives turn out not to be
+          continuous at a point, what may you conclude about differentiability there?
+
+[184-189 p checkpoint-7-6-sufficient-vs-necessary hint]
+A sufficient condition is enough to guarantee the conclusion; a necessary condition is
+          one the conclusion cannot do without. Try filling in the implication arrow:
+          \text{continuous partials} \Rightarrow \text{differentiable}. Does the arrow run
+          the other way too? Think about what the x^2\sin(1/x) example just showed you.
+
+[195-195 title c7s6-subsec-partials-without-continuity default_required]
+Partial derivatives can exist without continuity
+
+[197-207 p c7s6-subsec-partials-without-continuity default_required]
+A sharper warning comes from the function
+      S(x,y)=\begin{cases}\dfrac{xy}{x^2+y^2}, & (x,y)\ne(0,0),\\[2mm]0, & (x,y)=(0,0).\end{cases}
+      We met this kind of example when studying limits. Along the x-axis,
+      S(x,0)=0.
+      Along the y-axis,
+      S(0,y)=0.
+      Therefore
+      S_x(0,0)=0,\qquad S_y(0,0)=0.
+      Both partial derivatives exist at the origin.
+
+[209-215 p c7s6-subsec-partials-without-continuity default_required]
+But S is not continuous at the origin. Along the diagonal y=x,
+      S(x,x)=\frac{x^2}{2x^2}=\frac12
+      for x\ne0. Along the x-axis,
+      S(x,0)=0.
+      The function does not settle down to one value near the origin.
+
+[217-223 p c7s6-subsec-partials-without-continuity default_required]
+Differentiability implies continuity: the linear part satisfies
+      |Df(\mathbf p)(\mathbf h)|\le\|\nabla f(\mathbf p)\|\,\|\mathbf h\|
+      by CauchySchwarz, and both it and the remainder tend to zero with \mathbf h.
+      Therefore S cannot be differentiable at the
+      origin.
+
+[225-228 p c7s6-subsec-partials-without-continuity default_required]
+So partial derivatives at a point do not even guarantee continuity. They only check two
+      coordinate slices.
+
+[232-232 title c7s6-subsec-partials-without-differentiability default_required]
+Partial derivatives can exist without differentiability
+
+[234-238 p c7s6-subsec-partials-without-differentiability default_required]
+The previous example failed because the function was not continuous. The next one is more
+      subtle: the function is continuous, and the partial derivatives exist, but the total
+      derivative still fails.
+
+[240-251 p c7s6-subsec-partials-without-differentiability default_required]
+Define
+      G(x,y)=\begin{cases}\dfrac{x^2y}{x^2+y^2}, & (x,y)\ne(0,0),\\[2mm]0, & (x,y)=(0,0).\end{cases}
+      First, G is continuous at the origin. For (x,y)\ne(0,0),
+      |G(x,y)|=\frac{|x|^2|y|}{x^2+y^2}\le|y|.
+      Since
+      |y|\le\sqrt{x^2+y^2},
+      we get
+      |G(x,y)|\to0
+      as (x,y)\to(0,0). Thus
+      G(x,y)\to G(0,0).
+
+[253-266 p c7s6-subsec-partials-without-differentiability default_required]
+Now compute the partial derivatives at the origin. Along the x-axis,
+      G(h,0)=0,
+      so
+      G_x(0,0)=\lim_{h\to0}\frac{G(h,0)-G(0,0)}{h}=0.
+      Along the y-axis,
+      G(0,h)=0,
+      so
+      G_y(0,0)=0.
+      If G were differentiable at the origin, its total derivative would have to be
+      DG(0,0)(\Delta x,\Delta y)=0.
+      The tangent plane formula would predict
+      z=0.
+
+[268-280 p c7s6-subsec-partials-without-differentiability default_required]
+Now test the diagonal path
+      y=x.
+      For x\ne0,
+      G(x,x)=\frac{x^3}{2x^2}=\frac{x}{2}.
+      The proposed linear approximation is 0, so the error along this path is
+      R(x,x)=\frac{x}{2}.
+      The input step length is
+      \sqrt{x^2+x^2}=\sqrt2\,|x|.
+      Therefore
+      \frac{|R(x,x)|}{\sqrt{x^2+x^2}}=\frac{|x|/2}{\sqrt2\,|x|}=\frac1{2\sqrt2}.
+      This does not approach 0.
+
+[282-282 p c7s6-subsec-partials-without-differentiability default_required]
+So G is not differentiable at the origin.
+
+[285-285 title checkpoint-7-6-partials-without-differentiability default_required]
+Both partials exist, yet no derivative?
+
+[287-292 p checkpoint-7-6-partials-without-differentiability default_required]
+For this G, both partial derivatives exist at the origin, yet the function is not
+          differentiable there. How can that happen? What does each partial derivative actually
+          measure, and what does it miss? Explain why knowing the behavior along the two coordinate
+          axes is not enough to pin down the behavior in every direction at once.
+
+[295-300 p checkpoint-7-6-partials-without-differentiability hint]
+A partial derivative only watches the function along one coordinate slice, where the
+          other variable is held fixed. Differentiability is a stronger demand: a single linear map
+          must approximate the change for every small displacement. Look at what the
+          diagonal path y=x did that the axes could not see.
+
+[304-307 p c7s6-subsec-partials-without-differentiability default_required]
+The function is continuous. The two coordinate partial derivatives exist. But no linear
+      approximation works in all small directions at once.
+
+[311-311 title c7s6-subsec-tangent-plane-can-fail default_required]
+The tangent plane formula can fail without differentiability
+
+[313-313 p c7s6-subsec-tangent-plane-can-fail default_required]
+The graph of G gives the geometric warning.
+
+[315-326 p c7s6-subsec-tangent-plane-can-fail default_required]
+Since
+      G_x(0,0)=0,\qquad G_y(0,0)=0,
+      the formal tangent plane formula would give
+      z=0.
+      Along the coordinate axes, that plane looks correct:
+      G(x,0)=0,\qquad G(0,y)=0.
+      But along the diagonal,
+      G(x,x)=\frac{x}{2}.
+      The graph rises with a nonzero first-order slope along a direction that the coordinate
+      slices missed.
+
+[328-332 p c7s6-subsec-tangent-plane-can-fail default_required]
+A tangent plane is not a plane that matches two coordinate traces. It is a plane that
+      matches the whole surface to first order. That is why differentiability is the real
+      condition behind the tangent plane.
+
+[335-335 title checkpoint-7-6-tangent-plane-can-fail default_required]
+Why might the plane not be tangent?
+
+[337-343 p checkpoint-7-6-tangent-plane-can-fail default_required]
+The plane z=0 is built from the partial derivatives
+          G_x(0,0)=0 and G_y(0,0)=0, and it hugs the graph perfectly along both
+          coordinate axes. Yet it is not a genuine tangent plane. Why can a plane assembled from
+          the partials fail to be tangent to the surface? What would a true tangent plane have to
+          do that this one does not?
+
+[346-351 p checkpoint-7-6-tangent-plane-can-fail hint]
+The partials only certify the fit along two special directions. A true tangent plane must
+          match the surface to first order in all directions. Ask yourself how the graph
+          behaves along the diagonal y=x: does the plane z=0 still cling to the
+          surface there, or does the surface peel away with a nonzero slope?
+
+[355-365 p c7s6-subsec-tangent-plane-can-fail default_required]
+For (x,y)\ne(0,0), the partial derivatives of G are
+      G_x(x,y)=\frac{2xy^3}{(x^2+y^2)^2},
+      and
+      G_y(x,y)=\frac{x^2(x^2-y^2)}{(x^2+y^2)^2}.
+      These partial derivatives are not continuous at the origin. For example, along y=x,
+      G_x(x,x)=\frac12,
+      while
+      G_x(0,0)=0.
+      So the continuous-partials theorem did not apply, and the failure was real.
+
+[369-369 title c7s6-subsec-what-the-test-gives-us default_required]
+What the test gives us
+
+[371-381 p c7s6-subsec-what-the-test-gives-us default_required]
+For most functions built from familiar smooth pieces, the Jacobian matrix can be trusted.
+      For example,
+      F(x,y,z)=\left(e^{xy}+z,\;\sin(xz)+y^2\right)
+      has continuous partial derivatives everywhere. So F is differentiable everywhere, and
+      DF(x,y,z)(\Delta x,\Delta y,\Delta z)=J_F(x,y,z)\begin{pmatrix}\Delta x\\\Delta y\\\Delta z\end{pmatrix}.
+      The Jacobian is
+      \boxed{J_F(x,y,z)=\begin{pmatrix}ye^{xy} & xe^{xy} & 1\\z\cos(xz) & 2y & x\cos(xz)\end{pmatrix}.}
+      This is a 2\times3 matrix because the input has three coordinates and the output has
+      two.
+
+[383-386 p c7s6-subsec-what-the-test-gives-us default_required]
+Near any point, this matrix gives the first-order response of the two outputs to a small
+      movement in space.
+
+[388-394 p c7s6-subsec-what-the-test-gives-us default_required]
+The chapter has now turned derivatives into linear maps. That viewpoint changes how the
+      chain rule looks. If a moving particle passes through a temperature field, or if one
+      coordinate change follows another, the nonlinear functions should first be replaced by their
+      local linear parts. Linear parts compose by matrix multiplication. That is the next return
+      of the single-variable chain rule, now written in the language of Jacobian matrices.

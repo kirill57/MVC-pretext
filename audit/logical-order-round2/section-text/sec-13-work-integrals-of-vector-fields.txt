@@ -1,0 +1,467 @@
+[5-5 title sec-13-work-integrals-of-vector-fields default_required]
+Work integrals of vector fields
+
+[7-13 p sec-13-work-integrals-of-vector-fields default_required]
+added scalar quantities along a
+    curve. Density, temperature, and length used
+    ds,
+    so direction did not matter. Walking along a wire from left to right or right to left does
+    not change its mass.
+
+[15-19 p sec-13-work-integrals-of-vector-fields default_required]
+Force is different. A force that helps you move one way resists you in the opposite way. So a
+    work integral cannot use only the unsigned length ds. It must remember the actual
+    displacement.
+
+[22-22 title c13s3-subsec-force-dotted-displacement default_required]
+Force dotted with displacement
+
+[24-42 p c13s3-subsec-force-dotted-displacement default_required]
+Start with a constant force. A cart is pulled across a warehouse floor by the force
+      \mathbf F=(4,1)
+      newtons. The cart moves from
+      A=(0,0)
+      to
+      B=(3,2).
+      Its displacement is
+      \Delta \mathbf r=B-A=(3,2).
+      The work done by the force is
+      
+        W \amp= \mathbf F\cdot \Delta \mathbf r
+        \amp= (4,1)\cdot(3,2)
+        \amp= 12+2
+        \amp= 14.
+      
+      The force has a large eastward component and a small northward component. Both help this
+      displacement.
+
+[44-50 p c13s3-subsec-force-dotted-displacement default_required]
+If the same cart moves backward from B to A, the displacement is
+      -\Delta \mathbf r=(-3,-2).
+      The work becomes
+      \mathbf F\cdot(-\Delta \mathbf r)=-14.
+      The same force now resists the motion.
+
+[52-52 p c13s3-subsec-force-dotted-displacement default_required]
+This is the first difference between scalar line integrals and work integrals:
+
+[54-56 p c13s3-subsec-force-dotted-displacement default_required]
+\boxed{\text{Scalar line integrals ignore orientation.  Work integrals remember it.}}
+
+[58-58 p c13s3-subsec-force-dotted-displacement default_required]
+Now let the force vary from point to point, and let the cart move along a curved track.
+
+[60-65 p c13s3-subsec-force-dotted-displacement default_required]
+Suppose the force field is
+      \mathbf F(x,y)=(2x,1).
+      The eastward force grows as x increases, and the northward force is constantly
+      1.
+
+[67-89 p c13s3-subsec-force-dotted-displacement default_required]
+Let the track be
+      \mathbf r(t)=(t,t^2), \qquad 0\le t\le2.
+      A tiny time step dt produces the tiny displacement
+      d\mathbf r\approx \mathbf r'(t)\,dt.
+      Since
+      \mathbf r'(t)=(1,2t),
+      and
+      \mathbf F(\mathbf r(t))=\mathbf F(t,t^2)=(2t,1),
+      the tiny work is approximately
+      
+        dW \amp= \mathbf F(\mathbf r(t))\cdot \mathbf r'(t)\,dt
+        \amp= (2t,1)\cdot(1,2t)\,dt
+        \amp= (2t+2t)\,dt
+        \amp= 4t\,dt.
+      
+      Adding all the tiny work pieces gives
+      
+        W \amp= \int_0^2 4t\,dt
+        \amp= \left[2t^2\right]_0^2
+        \amp= 8.
+
+[92-92 caption c13s3-fig-work-along-curve default_required]
+Work adds the component of the force in the direction of motion.
+
+[94-117 latex-image c13s3-fig-work-along-curve default_required]
+\begin{tikzpicture}[scale=0.95, >=stealth]
+            \draw[->] (-0.3,0) -- (3.2,0) node[right] {\(x\)};
+            \draw[->] (0,-0.3) -- (0,4.6) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (0,0) grid (3,4);
+
+            \draw[very thick, domain=0:2, samples=100, variable=\t]
+                plot ({\t},{\t*\t});
+
+            \node[above left] at (1.15,1.3225) {\(\mathbf r(t)=(t,t^2)\)};
+
+            \foreach \x in {0.3, 0.9, 1.4, 1.9} {
+                \draw[->, blue!65!black, thick]
+                    (\x,{\x*\x}) -- ++({0.25*(2*\x)},{0.25});
+                \draw[->, red!65!black, thick]
+                    (\x,{\x*\x}) -- ++(0.12,{0.12*2*\x});
+            }
+
+            \node[red!65!black, left] at ({1.4+0.12},{1.4*1.4+0.12*2*1.4}) {\(d\mathbf{r}\)};
+
+            \node[blue!65!black] at (3.0,1.0) {\(\mathbf F(x,y)=(2x,1)\)};
+        \end{tikzpicture}
+
+[121-125 p c13s3-subsec-force-dotted-displacement default_required]
+The dot product is doing the physical filtering. Only the part of the force pointing along
+      the displacement contributes positive work. The part perpendicular to the motion does no
+      work.
+
+[128-128 title checkpoint-13-3-perpendicular-no-work default_required]
+No work?
+
+[130-135 p checkpoint-13-3-perpendicular-no-work default_required]
+Suppose at every instant the force \mathbf F happens to point exactly
+          perpendicular to the direction the cart is moving. Without computing anything, what
+          should the total work be, and why does the dot product give you that answer
+          automatically?
+
+[138-142 p checkpoint-13-3-perpendicular-no-work hint]
+Think about \mathbf F\cdot d\mathbf r at a single instant when the two
+          vectors are at right angles. What does the dot product of perpendicular vectors equal,
+          and what does adding up many copies of that give you?
+
+[148-148 title c13s3-subsec-work-integral-definition default_required]
+\int_C \mathbf F\cdot d\mathbf r
+
+[150-150 p c13s3-subsec-work-integral-definition default_required]
+The previous computation is the model for the definition.
+
+[152-165 p c13s3-subsec-work-integral-definition default_required]
+Let
+      \mathbf F(x,y)=(P(x,y),Q(x,y))
+      be a vector field in the plane, and let
+      \mathbf r(t)=(x(t),y(t)), \qquad a\le t\le b,
+      parametrize an oriented curve C. Then
+      \mathbf r'(t)=(x'(t),y'(t)).
+      The force at the point \mathbf r(t) is
+      \mathbf F(\mathbf r(t)).
+      The tiny displacement is
+      d\mathbf r=\mathbf r'(t)\,dt.
+      So the tiny work is
+      \mathbf F(\mathbf r(t))\cdot \mathbf r'(t)\,dt.
+
+[168-168 title c13s3-def-work-integral default_required]
+Work integral of a vector field
+
+[170-176 p c13s3-def-work-integral default_required]
+Let C be a piecewise smooth oriented curve parametrized by
+          \mathbf r(t), \qquad a\le t\le b.
+          Let \mathbf F be a continuous vector field on C. The
+          work integral of \mathbf F along C is
+          \boxed{ \int_C \mathbf F\cdot d\mathbf r = \int_a^b \mathbf F(\mathbf r(t))\cdot \mathbf r'(t)\,dt. }
+
+[180-183 p c13s3-subsec-work-integral-definition default_required]
+In the plane, this means
+      \boxed{ \int_C \mathbf F\cdot d\mathbf r = \int_a^b \left[ P(x(t),y(t))x'(t) + Q(x(t),y(t))y'(t) \right]dt. }
+
+[185-194 p c13s3-subsec-work-integral-definition default_required]
+In space, if
+      \mathbf F(x,y,z)=(P(x,y,z),Q(x,y,z),R(x,y,z))
+      and
+      \mathbf r(t)=(x(t),y(t),z(t)),
+      then
+      \boxed{ \int_C \mathbf F\cdot d\mathbf r = \int_a^b \left[ P x'(t)+Q y'(t)+R z'(t) \right]dt, }
+      where P,Q,R are evaluated at
+      (x(t),y(t),z(t)).
+
+[196-201 p c13s3-subsec-work-integral-definition default_required]
+The notation
+      d\mathbf r
+      is a reminder of the tiny displacement. Along a parametrized curve,
+      d\mathbf r=\mathbf r'(t)\,dt.
+
+[204-204 title c13s3-ex-work-along-helix default_required]
+Work along a helix
+
+[206-212 p c13s3-ex-work-along-helix default_required]
+A particle moves along the helix
+          \mathbf r(t)=(\cos t,\sin t,t), \qquad 0\le t\le2\pi.
+          A force field is
+          \mathbf F(x,y,z)=(-y,x,2).
+          Find the work done along the helix.
+
+[213-228 p c13s3-ex-work-along-helix default_required]
+First,
+          \mathbf r'(t)=(-\sin t,\cos t,1).
+          Along the curve,
+          \mathbf F(\mathbf r(t)) = \mathbf F(\cos t,\sin t,t) = (-\sin t,\cos t,2).
+          Therefore
+          
+            \mathbf F(\mathbf r(t))\cdot\mathbf r'(t) \amp= (-\sin t,\cos t,2)\cdot(-\sin t,\cos t,1)
+            \amp= \sin^2t+\cos^2t+2
+            \amp= 3.
+          
+          So
+          \boxed{ \int_C \mathbf F\cdot d\mathbf r = \int_0^{2\pi}3\,dt = 6\pi. }
+          The rotational part of the force helps the circular motion, and the constant vertical
+          force helps the upward motion.
+
+[234-234 title c13s3-subsec-parametrization-orientation default_required]
+Parametrization and orientation of a curve
+
+[236-242 p c13s3-subsec-parametrization-orientation default_required]
+A scalar line integral used
+      ds=\|\mathbf r'(t)\|\,dt.
+      The absolute value hidden in the norm erased direction. Work integrals use
+      d\mathbf r=\mathbf r'(t)\,dt.
+      No absolute value appears. Direction survives.
+
+[245-245 title checkpoint-13-3-direction-survives default_required]
+Why no absolute value?
+
+[247-252 p checkpoint-13-3-direction-survives default_required]
+A scalar line integral uses ds=\|\mathbf r'(t)\|\,dt, but a work integral
+          uses d\mathbf r=\mathbf r'(t)\,dt with no norm. In words, why does keeping the
+          velocity vector itself (instead of just its length) make the integral able to tell
+          forward travel from backward travel?
+
+[255-258 p checkpoint-13-3-direction-survives hint]
+A norm can never be negative, so it forgets which way the arrow points. Ask yourself
+          what happens to \mathbf r'(t) when you walk the same road the other way.
+
+[262-269 p c13s3-subsec-parametrization-orientation default_required]
+Return to the curved track
+      \mathbf r(t)=(t,t^2), \qquad 0\le t\le2,
+      with force field
+      \mathbf F(x,y)=(2x,1).
+      We found
+      \int_C \mathbf F\cdot d\mathbf r=8.
+
+[271-285 p c13s3-subsec-parametrization-orientation default_required]
+Now use a different clock:
+      \mathbf q(u)=(2u,4u^2), \qquad 0\le u\le1.
+      This traces the same curve in the same direction. Along this parametrization,
+      \mathbf q'(u)=(2,8u),
+      and
+      \mathbf F(\mathbf q(u))=(4u,1).
+      Therefore
+      
+        \int_0^1 \mathbf F(\mathbf q(u))\cdot\mathbf q'(u)\,du \amp= \int_0^1 (4u,1)\cdot(2,8u)\,du
+        \amp= \int_0^1 16u\,du
+        \amp= 8.
+      
+      The value did not change.
+
+[287-301 p c13s3-subsec-parametrization-orientation default_required]
+Now reverse the curve:
+      \overline{\mathbf r}(t)=\mathbf r(2-t) = (2-t,(2-t)^2), \qquad 0\le t\le2.
+      Then
+      \overline{\mathbf r}'(t)=(-1,-2(2-t)).
+      Also,
+      \mathbf F(\overline{\mathbf r}(t))=(2(2-t),1).
+      Thus
+      
+        \int_0^2 \mathbf F(\overline{\mathbf r}(t))\cdot \overline{\mathbf r}'(t)\,dt \amp= \int_0^2 \left[ -2(2-t)-2(2-t) \right]dt
+        \amp= \int_0^2 -4(2-t)\,dt
+        \amp= -8.
+      
+      Reversing the path reversed the sign.
+
+[304-304 title c13s3-thm-reparametrization-work default_required]
+Effect of reparametrization on work integrals
+
+[306-313 p c13s3-thm-reparametrization-work default_required]
+Let
+          \mathbf r(t),\qquad a\le t\le b,
+          parametrize a piecewise smooth curve C, and let
+          \mathbf q(u)=\mathbf r(\phi(u)), \qquad \alpha\le u\le\beta,
+          where \phi is continuously differentiable and traces [a,b] exactly once,
+          and \mathbf F is continuous along the curve.
+
+[314-317 p c13s3-thm-reparametrization-work default_required]
+If \phi is increasing, then \mathbf q gives the same orientation and
+          \boxed{ \int_\alpha^\beta \mathbf F(\mathbf q(u))\cdot\mathbf q'(u)\,du = \int_a^b \mathbf F(\mathbf r(t))\cdot\mathbf r'(t)\,dt. }
+
+[318-321 p c13s3-thm-reparametrization-work default_required]
+If \phi is decreasing, then \mathbf q gives the opposite orientation and
+          \boxed{ \int_\alpha^\beta \mathbf F(\mathbf q(u))\cdot\mathbf q'(u)\,du = - \int_a^b \mathbf F(\mathbf r(t))\cdot\mathbf r'(t)\,dt. }
+
+[326-337 p c13s3-subsec-parametrization-orientation default_required]
+By the chain rule,
+        \mathbf q'(u)=\mathbf r'(\phi(u))\phi'(u).
+        Therefore
+        
+          \mathbf F(\mathbf q(u))\cdot\mathbf q'(u) \amp= \mathbf F(\mathbf r(\phi(u)))\cdot \bigl(\mathbf r'(\phi(u))\phi'(u)\bigr)
+          \amp= \left[ \mathbf F(\mathbf r(\phi(u)))\cdot \mathbf r'(\phi(u)) \right]\phi'(u).
+        
+        If \phi is increasing, the substitution t=\phi(u) preserves the order of
+        the limits. If \phi is decreasing, the substitution reverses the order of the
+        limits, which introduces the minus sign.
+
+[340-343 p c13s3-subsec-parametrization-orientation default_required]
+The phrase exactly once matters. If the same curve is traced twice, the work is
+      counted twice.
+
+[346-346 title c13s3-ex-same-image-multiplicity default_required]
+Same image, different multiplicity
+
+[348-363 p c13s3-ex-same-image-multiplicity default_required]
+Let
+          \mathbf F(x,y)=(-y,x)
+          and trace the unit circle by
+          \mathbf r(t)=(\cos t,\sin t).
+          For one counterclockwise trip,
+          0\le t\le2\pi,
+          we have
+          \mathbf F(\mathbf r(t))=(-\sin t,\cos t)
+          and
+          \mathbf r'(t)=(-\sin t,\cos t).
+          Thus
+          \mathbf F(\mathbf r(t))\cdot\mathbf r'(t)=1,
+          so
+          \int_C \mathbf F\cdot d\mathbf r = \int_0^{2\pi}1\,dt = 2\pi.
+
+[364-371 p c13s3-ex-same-image-multiplicity default_required]
+If the same formula is used on
+          0\le t\le4\pi,
+          the image is still the unit circle, but it is traced twice. The integral becomes
+          \int_0^{4\pi}1\,dt=4\pi.
+          The work integral sees the traveled curve with its multiplicity, not just the set of
+          points.
+
+[375-375 p c13s3-subsec-parametrization-orientation default_required]
+The continuity assumption on the vector field is also there for a reason.
+
+[378-378 title c13s3-ex-field-integrable-along-path default_required]
+Why the field should be integrable along the path
+
+[380-392 p c13s3-ex-field-integrable-along-path default_required]
+On the line segment
+          \mathbf r(t)=(t,0), \qquad 0\le t\le1,
+          define
+          \mathbf F(x,y)=(D(x),0),
+          where
+          D(x)= \begin{cases} 1, \amp x \text{ rational},\\ 0, \amp x \text{ irrational}. \end{cases}
+          Then
+          \mathbf F(\mathbf r(t))\cdot\mathbf r'(t)=D(t).
+          This function has no Riemann integral on [0,1], because every interval contains
+          rational and irrational numbers. The work sums can be forced toward different values
+          by different sample points.
+
+[393-396 p c13s3-ex-field-integrable-along-path default_required]
+Continuity is more than a comfort condition. It prevents this kind of microscopic
+          jumping along the curve.
+
+[400-403 p c13s3-subsec-parametrization-orientation default_required]
+The curve itself must also be tame enough to have a velocity on finitely many smooth
+      pieces. Corners are allowed; infinitely wild motion is not part of the basic theory here.
+
+[407-407 title c13s3-subsec-circulation-closed-curve default_required]
+Circulation around a closed curve
+
+[409-409 p c13s3-subsec-circulation-closed-curve default_required]
+When the curve is closed, work has a special name.
+
+[412-412 title c13s3-def-circulation default_required]
+Circulation
+
+[414-418 p c13s3-def-circulation default_required]
+If C is a closed oriented curve and \mathbf F is a vector field, then
+          \boxed{ \oint_C \mathbf F\cdot d\mathbf r }
+          is called the circulation of \mathbf F around C.
+
+[422-426 p c13s3-subsec-circulation-closed-curve default_required]
+The circle on the integral sign reminds us that the curve is closed. In the plane, a
+      counterclockwise orientation is usually called positive. As you walk, the region inside the
+      curve stays on your left.
+
+[429-429 title c13s3-ex-swirling-field-positive-circulation default_required]
+A swirling field has positive circulation
+
+[431-441 p c13s3-ex-swirling-field-positive-circulation default_required]
+Let
+          \mathbf F(x,y)=(-y,x).
+          This field points tangent to circles centered at the origin. Around the unit circle,
+          parametrized counterclockwise by
+          \mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi,
+          we already computed
+          \mathbf F(\mathbf r(t))\cdot\mathbf r'(t)=1.
+          Therefore
+          \boxed{ \oint_C \mathbf F\cdot d\mathbf r=2\pi. }
+
+[442-442 p c13s3-ex-swirling-field-positive-circulation default_required]
+The arrows of the field point with the motion all the way around the circle.
+
+[447-447 caption c13s3-fig-circulation-field default_required]
+The field (-y,x) circulates counterclockwise around the origin.
+
+[449-468 latex-image c13s3-fig-circulation-field default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            \draw[->] (-3.3,0) -- (3.5,0) node[right] {\(x\)};
+            \draw[->] (0,-3.3) -- (0,3.5) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-3,-3) grid (3,3);
+
+            \foreach \x in {-2,-1,0,1,2} {
+                \foreach \y in {-2,-1,0,1,2} {
+                    \draw[->, blue!65!black, thick]
+                        (\x,\y) -- ++({-0.18*\y},{0.18*\x});
+                }
+            }
+
+            \draw[very thick, red!65!black] (0,0) circle (2);
+            \draw[->, very thick, red!65!black] (2,0) arc[start angle=0,end angle=45,radius=2];
+
+            \node at (0,-4.0) {\(\mathbf F(x,y)=(-y,x)\)};
+        \end{tikzpicture}
+
+[473-473 title c13s3-ex-radial-field-zero-circulation default_required]
+A radial field has zero circulation around a circle
+
+[475-492 p c13s3-ex-radial-field-zero-circulation default_required]
+Let
+          \mathbf G(x,y)=(x,y).
+          On the unit circle,
+          \mathbf r(t)=(\cos t,\sin t),
+          so
+          \mathbf G(\mathbf r(t))=(\cos t,\sin t).
+          But
+          \mathbf r'(t)=(-\sin t,\cos t).
+          Thus
+          
+            \mathbf G(\mathbf r(t))\cdot\mathbf r'(t) \amp= (\cos t,\sin t)\cdot(-\sin t,\cos t)
+            \amp= -\sin t\cos t+\sin t\cos t
+            \amp= 0.
+          
+          So
+          \boxed{ \oint_C \mathbf G\cdot d\mathbf r=0. }
+
+[493-496 p c13s3-ex-radial-field-zero-circulation default_required]
+The radial field points outward. The circular motion is tangent. A perpendicular force
+          does no work along the curve.
+
+[500-505 p c13s3-subsec-circulation-closed-curve default_required]
+The two fields
+      (-y,x) \qquad\text{and}\qquad (x,y)
+      look equally simple, but their closed-curve behavior is completely different. One carries
+      circulation. The other does not.
+
+[508-508 title checkpoint-13-3-swirl-vs-radial default_required]
+What does circulation feel?
+
+[510-514 p checkpoint-13-3-swirl-vs-radial default_required]
+The swirling field (-y,x) has nonzero circulation around a circle, while the
+          radial field (x,y) has zero. Geometrically, what is it about how each field sits
+          relative to the direction of travel around the circle that explains the difference?
+
+[517-521 p checkpoint-13-3-swirl-vs-radial hint]
+Picture the arrows of each field at a point on the circle and compare them with the
+          tangent direction of motion. Only the part of the field along the path does
+          any work.
+
+[525-536 p c13s3-subsec-circulation-closed-curve default_required]
+The dot-product notation
+      \mathbf F\cdot d\mathbf r
+      has brought us far enough to compute work. But it is hiding the actual integrand. When
+      \mathbf F=(P,Q,R)
+      and
+      d\mathbf r=(dx,dy,dz),
+      the expression is really
+      P\,dx+Q\,dy+R\,dz.
+      That object is not quite a vector field. It is a 1-form, and it is built from the
+      start to be integrated along a curve.

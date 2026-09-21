@@ -1,0 +1,465 @@
+[5-5 title sec-14-why-green-s-theorem-is-true default_required]
+Why Green's theorem is true
+
+[7-12 p sec-14-why-green-s-theorem-is-true default_required]
+compressed Green's
+    theorem into one line:
+    \int_{\partial R}\omega=\int_R d\omega.
+    The formula is short, but it is not magic. It comes from two old facts working together.
+
+[15-15 title c14s5-tab-two-old-facts default_required]
+Two old facts behind Green's theorem.
+
+[18-18 cell c14s5-tab-two-old-facts default_required]
+old fact
+
+[19-19 cell c14s5-tab-two-old-facts default_required]
+new role
+
+[22-22 cell c14s5-tab-two-old-facts default_required]
+the Fundamental Theorem of Calculus
+
+[23-23 cell c14s5-tab-two-old-facts default_required]
+turns edge differences into derivatives
+
+[26-26 cell c14s5-tab-two-old-facts default_required]
+opposite orientations cancel
+
+[27-27 cell c14s5-tab-two-old-facts default_required]
+removes all interior edges
+
+[32-32 p sec-14-why-green-s-theorem-is-true default_required]
+Both facts can already be seen on one rectangle.
+
+[35-35 title c14s5-subsec-rectangle-vertical-motion default_required]
+A rectangle with only vertical motion
+
+[37-43 p c14s5-subsec-rectangle-vertical-motion default_required]
+Start with the form
+      \omega=(x^2+y)\,dy
+      on the rectangle
+      R=[0,2]\times[0,1].
+      Only the vertical sides matter, because dy=0 along horizontal sides.
+
+[45-62 p c14s5-subsec-rectangle-vertical-motion default_required]
+On the right side,
+      x=2,\qquad 0\le y\le1,
+      so
+      
+        \int_{\text{right}}\omega \amp= \int_0^1(4+y)\,dy
+        \amp= 4+\frac12.
+      
+      On the left side, positive orientation walks downward:
+      x=0,\qquad 1\ge y\ge0.
+      Thus
+      
+        \int_{\text{left}}\omega \amp= \int_1^0 y\,dy
+        \amp= -\frac12.
+      
+      Therefore
+      \boxed{\oint_{\partial R}(x^2+y)\,dy=4.}
+
+[64-77 p c14s5-subsec-rectangle-vertical-motion default_required]
+Now compute the interior side. Since
+      P=0,\qquad Q=x^2+y,
+      we have
+      d\omega=Q_x\,dx\wedge dy=2x\,dx\wedge dy.
+      So
+      
+        \iint_R d\omega \amp= \int_0^2\int_0^1 2x\,dy\,dx
+        \amp= \int_0^2 2x\,dx
+        \amp= 4.
+      
+      The two answers agree:
+      \boxed{\oint_{\partial R}\omega=\iint_R d\omega.}
+
+[79-86 p c14s5-subsec-rectangle-vertical-motion default_required]
+What happened? The boundary integral compared the value of Q on the right side
+      with the value of Q on the left side:
+      Q(2,y)-Q(0,y).
+      The Fundamental Theorem of Calculus rewrites that difference as
+      Q(2,y)-Q(0,y)=\int_0^2 Q_x(x,y)\,dx.
+      Then integrating over y gives the double integral.
+
+[90-90 title c14s5-subsec-proof-rectangle default_required]
+The proof for a rectangle
+
+[92-98 p c14s5-subsec-proof-rectangle default_required]
+Now let
+      R=[a,b]\times[c,d],
+      and let
+      \omega=P\,dx+Q\,dy
+      where P and Q have continuous first partial derivatives.
+
+[100-114 p c14s5-subsec-proof-rectangle default_required]
+First look at the Q\,dy part. Along the bottom and top edges, dy=0. The
+      right side contributes
+      \int_c^d Q(b,y)\,dy,
+      and the left side, walked downward, contributes
+      \int_d^c Q(a,y)\,dy = -\int_c^d Q(a,y)\,dy.
+      So
+      
+        \oint_{\partial R} Q\,dy \amp= \int_c^d \bigl(Q(b,y)-Q(a,y)\bigr)\,dy.
+      
+      For each fixed y, the single-variable Fundamental Theorem of Calculus gives
+      Q(b,y)-Q(a,y)=\int_a^b Q_x(x,y)\,dx.
+      Therefore
+      \boxed{\oint_{\partial R}Q\,dy = \int_c^d\int_a^b Q_x(x,y)\,dx\,dy.}
+
+[116-130 p c14s5-subsec-proof-rectangle default_required]
+Now look at the P\,dx part. Along the vertical sides, dx=0. The bottom side
+      is walked from a to b, and the top side is walked from b to
+      a. Hence
+      
+        \oint_{\partial R} P\,dx \amp= \int_a^b P(x,c)\,dx+\int_b^a P(x,d)\,dx
+        \amp= \int_a^b \bigl(P(x,c)-P(x,d)\bigr)\,dx.
+      
+      For each fixed x,
+      P(x,d)-P(x,c)=\int_c^d P_y(x,y)\,dy.
+      Thus
+      P(x,c)-P(x,d) = -\int_c^d P_y(x,y)\,dy.
+      So
+      \boxed{\oint_{\partial R}P\,dx = -\int_a^b\int_c^d P_y(x,y)\,dy\,dx.}
+
+[132-137 p c14s5-subsec-proof-rectangle default_required]
+Adding the two parts gives
+      \boxed{\oint_{\partial R}P\,dx+Q\,dy = \iint_R (Q_x-P_y)\,dA.}
+      In form language,
+      \boxed{\int_{\partial R}\omega=\int_R d\omega.}
+
+[139-142 p c14s5-subsec-proof-rectangle default_required]
+The rectangle proof is just the Fundamental Theorem of Calculus applied once in the
+      x-direction and once in the y-direction. The signs come from orientation.
+
+[146-146 title c14s5-subsec-two-rectangles-disappearing-edge default_required]
+Two rectangles and one disappearing edge
+
+[148-151 p c14s5-subsec-two-rectangles-disappearing-edge default_required]
+A single rectangle explains where Q_x-P_y comes from. The next idea explains why
+      only the outside boundary survives.
+
+[153-160 p c14s5-subsec-two-rectangles-disappearing-edge default_required]
+Put two rectangles side by side:
+      R_1=[0,1]\times[0,1],\qquad R_2=[1,2]\times[0,1].
+      They share the vertical edge
+      E=\{1\}\times[0,1].
+      For R_1, positive orientation walks up along E. For R_2, positive
+      orientation walks down along the same edge.
+
+[162-174 p c14s5-subsec-two-rectangles-disappearing-edge default_required]
+Along E,
+      x=1,\qquad dx=0.
+      So the contribution from R_1 is
+      \int_0^1 Q(1,y)\,dy.
+      The contribution from R_2 is
+      \int_1^0 Q(1,y)\,dy.
+      They add to zero.
+      \boxed{\int_E Q\,dy+\int_{-E}Q\,dy=0.}
+      The same cancellation happens for any shared edge. One rectangle walks the edge in one
+      direction; the neighboring rectangle walks it in the opposite direction. A line integral
+      changes sign when orientation reverses, so the two contributions cancel.
+
+[176-176 title checkpoint-14-5-edge-cancel-orientation default_required]
+Why does the shared edge vanish?
+
+[178-183 p checkpoint-14-5-edge-cancel-orientation default_required]
+The two rectangles compute the same integrand Q(1,y) along the same
+          edge E, yet the contributions add to zero. Without doing any new computation,
+          explain what feature of the boundary, other than the integrand, is responsible for the
+          cancellation.
+
+[186-189 p checkpoint-14-5-edge-cancel-orientation hint]
+Ask what is different about how R_1 and R_2 each walk along E, and
+          recall how a line integral responds to that difference.
+
+[194-194 caption c14s5-fig-shared-edge-cancels default_required]
+Interior edges are walked twice in opposite directions.
+
+[196-218 latex-image c14s5-fig-shared-edge-cancels default_required]
+\begin{tikzpicture}[scale=0.95, >=stealth]
+            \draw[fill=gray!8] (0,0) rectangle (2,1.4);
+            \draw[thick] (0,0) rectangle (2,1.4);
+            \draw[thick] (1,0) -- (1,1.4);
+
+            \node at (0.5,0.7) {\(R_1\)};
+            \node at (1.5,0.7) {\(R_2\)};
+
+            \draw[->, very thick, red!65!black] (1,0.25) -- (1,0.95);
+            \draw[->, very thick, blue!65!black] (1,1.15) -- (1,0.45);
+
+            \node[red!65!black, right] at (1.05,1.25) {\(R_1\) walks up};
+            \node[blue!65!black, right] at (1.05,0.35) {\(R_2\) walks down};
+
+            \draw[->, thick] (0,0) -- (0.55,0);
+            \draw[->, thick] (2,0) -- (2,0.55);
+            \draw[->, thick] (2,1.4) -- (1.45,1.4);
+            \draw[->, thick] (0,1.4) -- (0,0.85);
+
+            \node at (1,-0.55) {the shared edge cancels};
+        \end{tikzpicture}
+
+[222-227 p c14s5-subsec-two-rectangles-disappearing-edge default_required]
+Therefore
+      \boxed{\oint_{\partial R_1}\omega+\oint_{\partial R_2}\omega = \oint_{\partial(R_1\cup R_2)}\omega.}
+      The left side contains the shared edge twice. The right side contains only the outside
+      boundary.
+
+[229-240 p c14s5-subsec-two-rectangles-disappearing-edge default_required]
+The area integrals add even more plainly:
+      \iint_{R_1}d\omega+\iint_{R_2}d\omega = \iint_{R_1\cup R_2}d\omega.
+      Since Green's theorem is true on each rectangle, it is true on their union:
+      
+        \oint_{\partial(R_1\cup R_2)}\omega \amp= \oint_{\partial R_1}\omega+\oint_{\partial R_2}\omega
+        \amp= \iint_{R_1}d\omega+\iint_{R_2}d\omega
+        \amp= \iint_{R_1\cup R_2}d\omega.
+      
+      This is the proof mechanism in one line:
+      \boxed{\text{add small Green formulas}\quad\Longrightarrow\quad\text{interior boundaries cancel.}}
+
+[244-244 title c14s5-subsec-many-rectangles default_required]
+Regions made from many rectangles
+
+[246-262 p c14s5-subsec-many-rectangles default_required]
+Now tile a region S by finitely many nonoverlapping rectangles
+      R_1,R_2,\ldots,R_N.
+      Assume two rectangles meet only along whole edges or at corners. Green's theorem is true
+      on each rectangle:
+      \int_{\partial R_i}\omega=\int_{R_i}d\omega.
+      Add all N formulas:
+      \sum_{i=1}^N\int_{\partial R_i}\omega = \sum_{i=1}^N\int_{R_i}d\omega.
+      On the right,
+      \sum_{i=1}^N\int_{R_i}d\omega = \int_S d\omega.
+      On the left, every shared interior edge cancels with its neighbor. Only the outside
+      boundary remains:
+      \sum_{i=1}^N\int_{\partial R_i}\omega = \int_{\partial S}\omega.
+      Thus
+      \boxed{\int_{\partial S}\omega=\int_S d\omega.}
+      This is already Green's theorem for any region built from finitely many rectangles.
+
+[265-265 caption c14s5-fig-staircase-interior-cancel default_required]
+For a finite union of rectangles, all interior edges cancel in pairs.
+
+[267-295 latex-image c14s5-fig-staircase-interior-cancel default_required]
+\begin{tikzpicture}[scale=0.62, >=stealth]
+            \draw[step=1, gray!30, very thin] (0,0) grid (7,5);
+
+            \draw[fill=gray!10, thick]
+                (0,1) -- (0,4) -- (1,4) -- (1,5) -- (5,5) -- (5,4) --
+                (7,4) -- (7,1) -- (6,1) -- (6,0) -- (2,0) -- (2,1) -- cycle;
+
+            \draw[gray!55] (1,1) -- (6,1);
+            \draw[gray!55] (1,2) -- (7,2);
+            \draw[gray!55] (0,3) -- (7,3);
+            \draw[gray!55] (1,4) -- (5,4);
+            \draw[gray!55] (2,0) -- (2,5);
+            \draw[gray!55] (3,0) -- (3,5);
+            \draw[gray!55] (4,0) -- (4,5);
+            \draw[gray!55] (5,1) -- (5,4);
+            \draw[gray!55] (6,1) -- (6,4);
+
+            \draw[<-, very thick, red!65!black] (0,1) -- (0,2.1);
+            \draw[<-, very thick, red!65!black] (0.3,4) -- (0.8,4);
+            \draw[<-, very thick, red!65!black] (1,4.3) -- (1,4.8);
+            \draw[<-, very thick, red!65!black] (2.1,5) -- (3.1,5);
+            \draw[<-, very thick, red!65!black] (7,3.5) -- (7,2.5);
+            \draw[<-, very thick, red!65!black] (6,0) -- (5,0);
+            \draw[<-, very thick, red!65!black] (2,0.8) -- (2,0.2);
+
+            \node at (3.5,-0.85) {only the outer staircase boundary remains};
+        \end{tikzpicture}
+
+[299-307 p c14s5-subsec-many-rectangles default_required]
+This cancellation is the two-dimensional version of a familiar one-dimensional fact. When
+      we add
+      \int_{x_0}^{x_1}f'(x)\,dx + \int_{x_1}^{x_2}f'(x)\,dx + \cdots + \int_{x_{n-1}}^{x_n}f'(x)\,dx,
+      the intermediate endpoint values cancel:
+      f(x_1)-f(x_0)+f(x_2)-f(x_1)+\cdots+f(x_n)-f(x_{n-1}) = f(x_n)-f(x_0).
+      Green's theorem does the same thing one dimension higher. Interior edges are the new
+      intermediate endpoints.
+
+[309-309 title checkpoint-14-5-telescoping-analogy default_required]
+What plays the role of the endpoints?
+
+[311-316 p checkpoint-14-5-telescoping-analogy default_required]
+In the one-dimensional sum, the intermediate values f(x_1),\ldots,f(x_{n-1})
+          cancel and only f(x_n)-f(x_0) survives. In the tiled region, what is the
+          two-dimensional analogue of those vanishing intermediate values, and what survives in
+          their place?
+
+[319-322 p checkpoint-14-5-telescoping-analogy hint]
+Each interior edge belongs to exactly two rectangles, while each piece of the outer
+          boundary belongs to only one. Let that asymmetry guide you.
+
+[328-328 title c14s5-subsec-curved-slicing default_required]
+Curved boundaries by slicing
+
+[330-334 p c14s5-subsec-curved-slicing default_required]
+Rectangles explain the theorem's engine. Curved boundaries require one more idea: slice
+      the region into pieces where the one-variable Fundamental Theorem of Calculus can still
+      see the edge differences.
+
+[336-342 p c14s5-subsec-curved-slicing default_required]
+Let
+      R=\{(x,y):a\le x\le b,\ g(x)\le y\le h(x)\},
+      where g and h are continuously differentiable and
+      g(x)\le h(x). This is a vertically simple region. The coefficient
+      functions are C^1 on an open neighborhood of its closure.
+
+[344-358 p c14s5-subsec-curved-slicing default_required]
+For the form
+      P\,dx,
+      the vertical sides do not contribute, because dx=0 there. The bottom curve is
+      walked from a to b, and the top curve is walked from b to a.
+      Therefore
+      
+        \oint_{\partial R}P\,dx \amp= \int_a^b P(x,g(x))\,dx - \int_a^b P(x,h(x))\,dx
+        \amp= -\int_a^b\bigl(P(x,h(x))-P(x,g(x))\bigr)\,dx.
+      
+      For each fixed x, the Fundamental Theorem of Calculus gives
+      P(x,h(x))-P(x,g(x)) = \int_{g(x)}^{h(x)}P_y(x,y)\,dy.
+      So
+      \boxed{\oint_{\partial R}P\,dx = -\int_a^b\int_{g(x)}^{h(x)}P_y(x,y)\,dy\,dx.}
+
+[360-372 p c14s5-subsec-curved-slicing default_required]
+The Q\,dy part is proved the same way on a horizontally simple region
+      R=\{(x,y):c\le y\le d,\ \ell(y)\le x\le r(y)\}.
+      The horizontal sides do not contribute, because dy=0. The right boundary is walked
+      upward, and the left boundary is walked downward. Thus
+      
+        \oint_{\partial R}Q\,dy \amp= \int_c^d Q(r(y),y)\,dy - \int_c^d Q(\ell(y),y)\,dy
+        \amp= \int_c^d\bigl(Q(r(y),y)-Q(\ell(y),y)\bigr)\,dy
+        \amp= \int_c^d\int_{\ell(y)}^{r(y)}Q_x(x,y)\,dx\,dy.
+      
+      So
+      \boxed{\oint_{\partial R}Q\,dy = \iint_R Q_x\,dA.}
+
+[374-394 p c14s5-type-i-complete-proof default_required]
+A vertically simple region need not also be horizontally simple. To finish its
+      proof without that extra condition, set
+      H(x)=\int_{g(x)}^{h(x)}Q(x,y)\,dy.
+      Split H(x+s)-H(x) into the change over the fixed interval
+      [g(x),h(x)] and the two short intervals created by the moving endpoints.
+      The fixed-interval term is handled by ;
+      the Fundamental Theorem of Calculus and the chain rule handle the endpoints. Thus
+      H'(x)=\int_{g(x)}^{h(x)}Q_x(x,y)\,dy
+        +Q(x,h(x))h'(x)-Q(x,g(x))g'(x).
+      Directly parametrizing the four boundary pieces gives
+      \oint_{\partial R}Q\,dy
+        =H(b)-H(a)+\int_a^b
+        \bigl(Q(x,g(x))g'(x)-Q(x,h(x))h'(x)\bigr)\,dx.
+      Substitute H(b)-H(a)=\int_a^b H'(x)\,dx. The endpoint terms cancel,
+      leaving \oint_{\partial R}Q\,dy=\iint_R Q_x\,dA.
+      Together with the earlier P\,dx calculation, this proves the full formula
+      for a vertically simple region. Interchanging the coordinates proves it for a
+      horizontally simple region. Piecewise continuously differentiable boundary
+      functions are handled by subdividing at their finitely many breakpoints.
+
+[396-404 p c14s5-subsec-curved-slicing default_required]
+Adding finitely many such pieces cancels their internal boundaries. This proves
+      Green's theorem for regions admitting this decomposition, including the disks,
+      ellipses, polygons, and annuli used in this chapter. At an endpoint where a graph
+      representation of a circle or ellipse has an unbounded derivative, truncate just
+      before that endpoint and pass to the limit: the removed boundary arc has length
+      tending to zero, so its integral is bounded by that length times a bound for the
+      field, and the removed area also tends to zero.
+
+[406-413 p c14s5-proof-scope default_required]
+The theorem was stated for general piecewise smooth boundaries. The finite-piece
+      proof above does not establish that every such boundary has the required
+      decomposition; a smooth arc can oscillate infinitely often. The following
+      approximation discussion explains the general theorem but is a proof sketch.
+      We use the full standard theorem as stated, and do not claim that the sketch
+      supplies all its approximation estimates.
+
+[417-417 title c14s5-subsec-curved-approximation default_required]
+Curved boundaries by approximation
+
+[419-425 p c14s5-subsec-curved-approximation default_required]
+There is another way to picture the last step. Overlay a fine grid on a curved region
+      R. Keep the grid squares that lie inside. The result is a staircase region
+      R_h made from finitely many rectangles. For R_h,
+      \int_{\partial R_h}\omega=\int_{R_h}d\omega
+      is already proved.
+
+[427-427 p c14s5-subsec-curved-approximation default_required]
+As the grid becomes finer, two things happen.
+
+[429-434 p c14s5-subsec-curved-approximation default_required]
+First, the area integral over R_h approaches the area integral over R:
+      \int_{R_h}d\omega\longrightarrow \int_R d\omega.
+      Continuity of Q_x-P_y keeps the values from jumping unpredictably in the thin strip
+      near the boundary.
+
+[436-441 p c14s5-subsec-curved-approximation default_required]
+Second, the staircase boundary approaches the curved boundary. On a smooth arc, a tiny
+      stair step has almost the same first-order effect as the tiny curve segment it replaces.
+      Adding those small differences along the boundary makes the boundary integral approach
+      \int_{\partial R}\omega.
+
+[444-444 caption c14s5-fig-curved-staircase default_required]
+A curved region can be approximated by regions made from rectangles.
+
+[446-480 latex-image c14s5-fig-curved-staircase default_required]
+\begin{tikzpicture}[scale=0.72, >=stealth]
+            \begin{scope}
+                \draw[step=0.5, gray!25, very thin] (-0.5,-0.5) grid (5,4);
+
+                \draw[fill=gray!8, thick]
+                    plot[smooth cycle] coordinates {
+                        (0.4,0.5)
+                        (1.5,0.1)
+                        (3.6,0.5)
+                        (4.4,1.6)
+                        (3.9,3.1)
+                        (2.2,3.5)
+                        (0.7,2.8)
+                        (0.0,1.5)
+                    };
+
+                \node at (2.2,-1.0) {curved region \(R\)};
+            \end{scope}
+
+            \begin{scope}[shift={(7,0)}]
+                \draw[step=0.5, gray!25, very thin] (-0.5,-0.5) grid (5,4);
+
+                \draw[fill=gray!12, thick]
+                    (0.5,0.5) -- (1.5,0.5) -- (1.5,0.0) -- (3.5,0.0) --
+                    (3.5,0.5) -- (4.0,0.5) -- (4.0,1.0) -- (4.5,1.0) --
+                    (4.5,2.0) -- (4.0,2.0) -- (4.0,3.0) -- (3.5,3.0) --
+                    (3.5,3.5) -- (2.0,3.5) -- (2.0,3.0) -- (1.0,3.0) --
+                    (1.0,2.5) -- (0.5,2.5) -- (0.5,2.0) -- (0.0,2.0) --
+                    (0.0,1.0) -- (0.5,1.0) -- cycle;
+
+                \node at (2.2,-1.0) {staircase region \(R_h\)};
+            \end{scope}
+        \end{tikzpicture}
+
+[484-487 p c14s5-subsec-curved-approximation default_required]
+This approximation picture is not a full proof by itself. It tells us where the hypotheses
+      enter.
+
+[489-489 title checkpoint-14-5-hypotheses-role default_required]
+Where could the cancellation hide trouble?
+
+[491-496 p checkpoint-14-5-hypotheses-role default_required]
+The cancellation of interior edges seems automatic, so why must we still insist that the
+          boundary include every component of the region? Describe, conceptually, what
+          could go wrong with the argument if a hole in the region were left without a boundary
+          curve.
+
+[499-503 p checkpoint-14-5-hypotheses-role hint]
+A hole's edge is also an interior edge of the surrounding tiles. Think about whether that
+          edge finds a partner to cancel with, or whether it should have remained as part of
+          \partial S.
+
+[507-512 p c14s5-subsec-curved-approximation default_required]
+The boundary must be piecewise smooth so the staircase boundary really approaches a curve
+      with well-defined line integrals. The partial derivatives must be continuous so the
+      interior integral behaves predictably as the boundary strip shrinks. The boundary must
+      include every component so cancellation does not leave a hidden edge behind.
+
+[514-519 p c14s5-subsec-curved-approximation default_required]
+Those words are carrying real work. If we reverse orientation, hide a singularity, forget
+      a hole, or ask the theorem to handle a boundary too wild for our definition of line
+      integral, the formula can give the wrong sign, the wrong number, or no number at all. The
+      proof has shown us exactly where to look for the trouble.

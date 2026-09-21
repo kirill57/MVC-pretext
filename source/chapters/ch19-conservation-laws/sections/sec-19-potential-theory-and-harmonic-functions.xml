@@ -127,7 +127,7 @@
       <title>Harmonic function</title>
       <statement>
         <p>
-          A <m>C^2</m> function <m>u</m> is called <term>harmonic</term> on an open region <m>D</m> if
+          A <m>C^2</m> function <m>u</m> (one whose partial derivatives through order two exist and are continuous) is called <term>harmonic</term> on an open region <m>D</m> if
           <md>\boxed{\Delta u=0}</md>
           at every point of <m>D</m>.
         </p>
@@ -378,27 +378,62 @@
       <statement>
         <p>
           Let <m>R</m> be a bounded connected open region in the plane, and let <m>u</m>
-          be continuous on its closure and harmonic on <m>R</m>. If <m>u</m> reaches its
+          be continuous on its closure and <m>C^2</m> and harmonic on <m>R</m>. If <m>u</m> reaches its
           maximum at a point of <m>R</m>, then <m>u</m> is constant on <m>R</m>.
         </p>
         <p>The same statement holds for an interior minimum.</p>
       </statement>
-      <proof>
-        <title>Proof idea</title>
-        <p>
-          If <m>u(a,b)</m> is a maximum, every value on a small circle around <m>(a,b)</m> is at most
-          <m>u(a,b)</m>. But the average around that circle must equal <m>u(a,b)</m>. The only way an
-          average of numbers all no larger than <m>u(a,b)</m> can equal <m>u(a,b)</m> is if all those
-          numbers equal <m>u(a,b)</m>.
-        </p>
-        <p>
-          So <m>u</m> is constant on every sufficiently small circle around the point, hence
-          on a disk. The set of points in <m>R</m> attaining this maximum is therefore open
-          in <m>R</m>; it is also closed in <m>R</m> by continuity. It is nonempty, so
-          connectedness forces it to be all of <m>R</m>.
-        </p>
-      </proof>
+
     </theorem>
+    <p>We use this theorem on the core route. Its local mechanism is circle
+      averaging, developed in the next exercise. We also supply the global
+      propagation fact: if the maximum is attained and every point attaining it
+      has a disk of points attaining it, continuity on a connected open region
+      forces every point to attain it. Connected means the region consists of
+      one piece; the optional argument below makes that precise.</p>
+    <exercise xml:id="c19s5-ex-averaging-forces-local-constancy">
+      <title>Why averaging forces local constancy</title>
+      <statement><p>A continuous temperature on a circle is everywhere at most
+        <m>M</m>, and its average is <m>M</m>. If its value is smaller than
+        <m>M</m> somewhere, continuity makes it at most <m>M-\varepsilon</m>
+        on a small arc for some <m>\varepsilon&gt;0</m>. Use the positive
+        length of that arc to show the average would be less than <m>M</m>.
+        Now let a harmonic function attain its maximum <m>M</m> at an
+        interior point. Apply the argument to every sufficiently small centered
+        circle, using the mean value property, and show that it is constant
+        on a whole disk. Does this local argument alone prove constancy
+        throughout the entire region?</p></statement>
+      <solution><p>Using angular coordinates, choose an arc of angle
+        <m>\ell&gt;0</m> on which the deficit is at least
+        <m>\varepsilon</m>. The integral over the full circle is at most
+        <m>2\pi M-\varepsilon\ell</m>, so the average is strictly less
+        than <m>M</m>, a contradiction. Thus all values on that circle
+        equal <m>M</m>. Choose a radius whose closed disk stays inside
+        the harmonic domain. Every point of its open disk other than the
+        center lies on one of the smaller centered circles. All these points,
+        and the center itself, have value <m>M</m>. This proves local
+        constancy; the supplied propagation fact is still needed for the
+        conclusion on the whole connected region.</p></solution>
+    </exercise>
+    <aside xml:id="c19s5-optional-global-propagation">
+      <title>Optional: why local constancy spreads through the region</title>
+      <p>A subset <m>A</m> is relatively open in <m>R</m> when each of its
+        points has a small ball whose intersection with <m>R</m> lies in
+        <m>A</m>. It is relatively closed when its complement in <m>R</m>
+        is relatively open. Precisely, connectedness means that <m>R</m>
+        cannot be split into two disjoint nonempty relatively open subsets.</p>
+      <p>Let <m>A=\{x\in R:u(x)=M\}</m>. The maximum is attained, so
+        <m>A</m> is nonempty. The local averaging argument in
+        <xref ref="c19s5-ex-averaging-forces-local-constancy"/> shows that
+        every point of <m>A</m> has a disk contained in <m>A</m>;
+        hence <m>A</m> is relatively open. If <m>u(x)&lt;M</m>,
+        continuity gives a neighborhood where <m>u&lt;M</m>. Thus
+        <m>R\setminus A</m> is relatively open as well. If that complement
+        were nonempty, these two sets would give the forbidden separation
+        of <m>R</m>. Consequently <m>A=R</m>. Apply the same argument to
+        <m>-u</m> for a minimum.</p>
+    </aside>
+
 
     <p>
       A steady temperature with no internal heat sources cannot have a lonely hot spot inside.
@@ -410,9 +445,10 @@
       <title>Why can the hot spot only live on the edge?</title>
       <statement>
         <p>
-          Using the mean value property as your guide, explain intuitively why a harmonic
-          temperature cannot reach its highest value at an interior point unless it is
-          constant. What goes wrong at a would-be interior peak?
+          Use the mean value property to explain why an interior maximum forces
+          constancy on a small disk. Then use the supplied maximum-principle
+          theorem to state the conclusion on a connected region. What goes
+          wrong at a would-be isolated interior peak?
         </p>
       </statement>
       <hint>

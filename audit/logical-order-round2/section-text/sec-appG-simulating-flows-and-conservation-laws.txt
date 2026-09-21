@@ -1,0 +1,288 @@
+[5-5 title sec-appG-simulating-flows-and-conservation-laws default_required]
+Simulating flows and conservation laws
+
+[8-8 title appG-flow-subsec-flow-lines default_required]
+Flow lines
+
+[10-15 p appG-flow-subsec-flow-lines default_required]
+A flow line of a vector field
+      \mathbf F
+      solves the differential equation
+      \frac{d\mathbf r}{dt}=\mathbf F(\mathbf r(t)).
+
+[17-20 p appG-flow-subsec-flow-lines default_required]
+In the plane:
+      x'=P(x,y), \qquad y'=Q(x,y).
+
+[22-25 p appG-flow-subsec-flow-lines default_required]
+In space:
+      x'=P(x,y,z), \qquad y'=Q(x,y,z), \qquad z'=R(x,y,z).
+
+[29-29 title appG-flow-subsec-euler-method default_required]
+Euler method
+
+[31-36 p appG-flow-subsec-euler-method default_required]
+For
+      \mathbf r'=\mathbf F(\mathbf r),
+      Euler's method is
+      \mathbf r_{n+1} = \mathbf r_n+\Delta t\,\mathbf F(\mathbf r_n).
+
+[38-40 p appG-flow-subsec-euler-method default_required]
+It is simple but not very accurate.
+
+[44-44 title appG-flow-subsec-euler-method-code default_required]
+Euler method code
+
+[46-56 program appG-flow-subsec-euler-method-code default_required]
+def euler_flow(F, r0, dt, steps):
+    r = np.array(r0, dtype=float)
+    points = [r.copy()]
+
+    for _ in range(steps):
+        r = r + dt*np.array(F(r))
+        points.append(r.copy())
+
+    return np.array(points)
+
+[60-60 title appG-flow-subsec-using-an-ode-solver default_required]
+Using an ODE solver
+
+[62-79 program appG-flow-subsec-using-an-ode-solver default_required]
+from scipy.integrate import solve_ivp
+
+def ode(t, r):
+    x, y = r
+    return [Pfun(x, y), Qfun(x, y)]
+
+sol = solve_ivp(
+    ode,
+    [t0, t1],
+    [x0, y0],
+    max_step=0.02
+)
+
+plt.plot(sol.y[0], sol.y[1])
+plt.axis("equal")
+plt.show()
+
+[83-83 title appG-flow-subsec-several-initial-points default_required]
+Several initial points
+
+[85-92 program appG-flow-subsec-several-initial-points default_required]
+for r0 in initial_points:
+    sol = solve_ivp(ode, [t0, t1], r0, max_step=0.02)
+    plt.plot(sol.y[0], sol.y[1])
+
+plt.axis("equal")
+plt.show()
+
+[96-96 title appG-flow-subsec-equilibrium-points default_required]
+Equilibrium points
+
+[98-101 p appG-flow-subsec-equilibrium-points default_required]
+Equilibrium points satisfy
+      \mathbf F(\mathbf p)=\mathbf 0.
+
+[103-106 p appG-flow-subsec-equilibrium-points default_required]
+In the plane:
+      P(x,y)=0, \qquad Q(x,y)=0.
+
+[108-110 p appG-flow-subsec-equilibrium-points default_required]
+Use symbolic solving:
+
+[112-114 program appG-flow-subsec-equilibrium-points default_required]
+solutions = sp.solve([P, Q], [x, y])
+
+[116-118 p appG-flow-subsec-equilibrium-points default_required]
+Or numerical root finding if symbolic solving is too hard.
+
+[122-122 title appG-flow-subsec-linearization-near-an-equilibrium default_required]
+Linearization near an equilibrium
+
+[124-129 p appG-flow-subsec-linearization-near-an-equilibrium default_required]
+If
+      \mathbf F(\mathbf p)=\mathbf 0,
+      then near \mathbf p,
+      \mathbf r' \approx J_{\mathbf F}(\mathbf p)(\mathbf r-\mathbf p).
+
+[131-137 p appG-flow-subsec-linearization-near-an-equilibrium default_required]
+The eigenvalues of
+      J_{\mathbf F}(\mathbf p)
+      describe the associated linear system. The table below records that linear behavior;
+      applying it to a nonlinear field requires additional differential-equation results.
+      In particular, purely imaginary eigenvalues do not determine nonlinear stability.
+
+[140-140 title appG-flow-table-eigenvalue-patterns default_required]
+Eigenvalue patterns for a real two-dimensional linear system
+
+[143-143 cell appG-flow-table-eigenvalue-patterns default_required]
+Eigenvalue pattern
+
+[144-144 cell appG-flow-table-eigenvalue-patterns default_required]
+Typical behavior
+
+[147-147 cell appG-flow-table-eigenvalue-patterns default_required]
+both negative real parts
+
+[148-148 cell appG-flow-table-eigenvalue-patterns default_required]
+sink
+
+[151-151 cell appG-flow-table-eigenvalue-patterns default_required]
+both positive real parts
+
+[152-152 cell appG-flow-table-eigenvalue-patterns default_required]
+source
+
+[155-155 cell appG-flow-table-eigenvalue-patterns default_required]
+opposite signs
+
+[156-156 cell appG-flow-table-eigenvalue-patterns default_required]
+saddle
+
+[159-159 cell appG-flow-table-eigenvalue-patterns default_required]
+nonzero pure imaginary pair
+
+[160-160 cell appG-flow-table-eigenvalue-patterns default_required]
+center or rotation-type behavior
+
+[163-163 cell appG-flow-table-eigenvalue-patterns default_required]
+complex with negative real part
+
+[164-164 cell appG-flow-table-eigenvalue-patterns default_required]
+spiral sink
+
+[167-167 cell appG-flow-table-eigenvalue-patterns default_required]
+complex with positive real part
+
+[168-168 cell appG-flow-table-eigenvalue-patterns default_required]
+spiral source
+
+[172-176 p appG-flow-subsec-linearization-near-an-equilibrium default_required]
+For example, the nonlinear field
+      \mathbf F=(-y+x(x^2+y^2),x+y(x^2+y^2)) has eigenvalues \pm i
+      at the origin. Nevertheless, along its nonconstant trajectories,
+      \frac{d}{dt}(x^2+y^2)=2(x^2+y^2)^2\gt0, so they move outward rather
+      than forming closed orbits. A plot of the linearized rotation misses this effect.
+
+[180-180 title appG-flow-subsec-conservation-law default_required]
+Conservation law
+
+[182-185 p appG-flow-subsec-conservation-law default_required]
+A conservation law has the form
+      \frac{\partial \rho}{\partial t} + \nabla\cdot\mathbf J = s.
+
+[187-189 p appG-flow-subsec-conservation-law default_required]
+Here:
+
+[192-192 title appG-flow-table-conservation-law-symbols default_required]
+Symbols in the conservation law
+
+[195-195 cell appG-flow-table-conservation-law-symbols default_required]
+\rho
+
+[196-196 cell appG-flow-table-conservation-law-symbols default_required]
+density
+
+[199-199 cell appG-flow-table-conservation-law-symbols default_required]
+\mathbf J
+
+[200-200 cell appG-flow-table-conservation-law-symbols default_required]
+flux density
+
+[203-203 cell appG-flow-table-conservation-law-symbols default_required]
+s
+
+[204-204 cell appG-flow-table-conservation-law-symbols default_required]
+source rate
+
+[209-212 p appG-flow-subsec-conservation-law default_required]
+If there are no sources or sinks:
+      \rho_t+\nabla\cdot\mathbf J=0.
+
+[216-216 title appG-flow-subsec-integral-balance-law default_required]
+Integral balance law
+
+[218-221 p appG-flow-subsec-integral-balance-law default_required]
+For a fixed region E,
+      \frac{d}{dt}\iiint_E \rho\,dV = -\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS + \iiint_E s\,dV.
+
+[223-226 p appG-flow-subsec-integral-balance-law default_required]
+In words:
+      \text{rate of stored amount} = -\text{outward flux} + \text{source production}.
+
+[230-230 title appG-flow-subsec-numerical-balance-check default_required]
+Numerical balance check
+
+[232-237 p appG-flow-subsec-numerical-balance-check default_required]
+At two nearby times,
+      \frac{A(t+\Delta t)-A(t)}{\Delta t}
+      approximates
+      \frac{dA}{dt}.
+
+[239-242 p appG-flow-subsec-numerical-balance-check default_required]
+Compare it to
+      -\text{outward flux}+\text{source integral}.
+
+[244-246 p appG-flow-subsec-numerical-balance-check default_required]
+This is a useful diagnostic for simulations.
+
+[250-250 title appG-flow-subsec-discrete-divergence-two-dimensions default_required]
+Discrete divergence in two dimensions
+
+[252-257 p appG-flow-subsec-discrete-divergence-two-dimensions default_required]
+On a grid with spacing \Delta x,\Delta y, for
+      \mathbf J=(M,N),
+      a central-difference approximation is
+      \nabla\cdot\mathbf J \approx \frac{M(x+\Delta x,y)-M(x-\Delta x,y)}{2\Delta x} + \frac{N(x,y+\Delta y)-N(x,y-\Delta y)}{2\Delta y}.
+
+[261-261 title appG-flow-subsec-discrete-divergence-code default_required]
+Discrete divergence code
+
+[263-268 program appG-flow-subsec-discrete-divergence-code default_required]
+def divergence2(M, N, dx, dy):
+    M_y, M_x = np.gradient(M, dy, dx)
+    N_y, N_x = np.gradient(N, dy, dx)
+    return M_x + N_y
+
+[270-273 p appG-flow-subsec-discrete-divergence-code default_required]
+Array-axis warning:
+      \texttt{np.gradient} \text{ usually returns } y\text{-derivatives first.}
+
+[277-277 title appG-flow-subsec-advection-by-a-velocity-field default_required]
+Advection by a velocity field
+
+[279-284 p appG-flow-subsec-advection-by-a-velocity-field default_required]
+If density moves with velocity
+      \mathbf v,
+      then the flux density is
+      \mathbf J=\rho\mathbf v.
+
+[286-289 p appG-flow-subsec-advection-by-a-velocity-field default_required]
+With no sources:
+      \rho_t+\nabla\cdot(\rho\mathbf v)=0.
+
+[291-295 p appG-flow-subsec-advection-by-a-velocity-field default_required]
+If
+      \nabla\cdot\mathbf v=0
+      and \rho is constant along moving particles, the flow is incompressible.
+
+[299-299 title appG-flow-subsec-common-simulation-warnings default_required]
+Common simulation warnings
+
+[302-304 p appG-flow-subsec-common-simulation-warnings default_required]
+Euler's method can be unstable for large time steps.
+
+[306-308 p appG-flow-subsec-common-simulation-warnings default_required]
+A good-looking picture may violate conservation.
+
+[310-312 p appG-flow-subsec-common-simulation-warnings default_required]
+Numerical diffusion can smear sharp features.
+
+[314-316 p appG-flow-subsec-common-simulation-warnings default_required]
+Boundary conditions matter.
+
+[318-320 p appG-flow-subsec-common-simulation-warnings default_required]
+A vector field with a singularity should not be simulated through the singular point.
+
+[322-324 p appG-flow-subsec-common-simulation-warnings default_required]
+Always test a simulation on a case with a known answer.

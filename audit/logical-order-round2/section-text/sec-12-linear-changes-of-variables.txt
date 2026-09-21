@@ -1,0 +1,386 @@
+[5-5 title sec-12-linear-changes-of-variables default_required]
+Linear changes of variables
+
+[7-13 p sec-12-linear-changes-of-variables default_required]
+found the local rule:
+    \text{area scale factor}=\left|\frac{\partial(x,y)}{\partial(u,v)}\right|.
+    For a linear map, this factor is constant. There is no approximation to manage. A square
+    becomes a parallelogram, a rectangle becomes a parallelogram, and every small piece is
+    scaled by the same amount.
+
+[16-16 title c12s2-subsec-parallelograms-from-squares default_required]
+Parallelograms from squares
+
+[18-45 p c12s2-subsec-parallelograms-from-squares default_required]
+Let
+      T(u,v)=(x,y)=(2u+v,\;u+3v).
+      The unit square
+      0\le u\le1,\qquad 0\le v\le1
+      has two edge directions:
+      \mathbf e_u=(1,0), \qquad \mathbf e_v=(0,1).
+      Under T, these become
+      T(1,0)-T(0,0)=(2,1),
+      and
+      T(0,1)-T(0,0)=(1,3).
+      So the unit square becomes the parallelogram spanned by
+      \mathbf a=(2,1), \qquad \mathbf b=(1,3).
+      Its signed area is
+      
+        \det[\mathbf a\ \mathbf b]
+        =
+        \begin{vmatrix}
+            2 \amp 1\\
+            1 \amp 3
+        \end{vmatrix}
+        =
+        6-1
+        =
+        5.
+      
+      Thus the ordinary area is 5.
+
+[47-61 p c12s2-subsec-parallelograms-from-squares default_required]
+The matrix of the map is
+      
+        A=
+        \begin{pmatrix}
+            2 \amp 1\\
+            1 \amp 3
+        \end{pmatrix}.
+      
+      Its determinant is
+      \det A=5.
+      The columns of A are exactly the images of the two coordinate directions:
+      \begin{pmatrix}2\\1\end{pmatrix}, \qquad \begin{pmatrix}1\\3\end{pmatrix}.
+      So \det A measures the signed area of the image of the unit square.
+
+[64-64 title checkpoint-12-2-why-columns-are-images default_required]
+Why columns?
+
+[66-70 p checkpoint-12-2-why-columns-are-images default_required]
+We read the area scale factor straight off the matrix A, yet A is just a
+          box of numbers. What is it about the columns of A that lets them carry
+          the geometry of the unit square, no matter which square we start with?
+
+[73-76 p checkpoint-12-2-why-columns-are-images hint]
+Ask what A does to the two coordinate directions \mathbf e_u=(1,0) and
+          \mathbf e_v=(0,1), and where those images show up inside A.
+
+[81-81 caption c12s2-fig-determinant-area-scale default_required]
+The determinant of a linear map is the signed area of the image of the unit square.
+
+[83-116 latex-image c12s2-fig-determinant-area-scale default_required]
+\begin{tikzpicture}[scale=0.75, >=stealth]
+            \begin{scope}
+                \draw[->] (-0.4,0) -- (3.0,0) node[right] {\(u\)};
+                \draw[->] (0,-0.4) -- (0,3.0) node[above] {\(v\)};
+
+                \draw[fill=gray!12, thick] (0,0) rectangle (1.5,1.5);
+                \node at (0.75,0.75) {\(1\)};
+                \node at (1.1,-0.8) {unit square};
+            \end{scope}
+
+            \draw[->, thick] (3.4,1.2) -- (5.2,1.2);
+            \node[above] at (4.6,1.2) {\(T\)};
+
+            \begin{scope}[shift={(7.2,0)}]
+                \draw[->] (-0.5,0) -- (5.2,0) node[right] {\(x\)};
+                \draw[->] (0,-0.5) -- (0,5.2) node[above] {\(y\)};
+
+                \coordinate (O) at (0,0);
+                \coordinate (A) at (2,1);
+                \coordinate (B) at (1,3);
+                \coordinate (AB) at (3,4);
+
+                \draw[fill=blue!8, thick] (O) -- (A) -- (AB) -- (B) -- cycle;
+                \draw[->, very thick] (O) -- (A) node[midway, below right] {\((2,1)\)};
+                \draw[->, very thick] (O) -- (B) node[midway, left] {\((1,3)\)};
+                \draw[dashed] (A) -- (AB);
+                \draw[dashed] (B) -- (AB);
+
+                \node at (2.2,1.9) {\(5\)};
+                \node at (2.3,-0.8) {image parallelogram};
+            \end{scope}
+        \end{tikzpicture}
+
+[120-127 p c12s2-subsec-parallelograms-from-squares default_required]
+If the original square had side length 0.1, its area would be 0.01, and the
+      image area would be
+      5(0.01)=0.05.
+      If the original rectangle had area 7, the image area would be
+      5(7)=35.
+      A linear map uses the same scale factor everywhere.
+
+[131-131 title c12s2-subsec-area-scaling-det default_required]
+Area scaling by |\det A|
+
+[133-156 p c12s2-subsec-area-scaling-det default_required]
+Now write a general linear change of variables as
+      
+        \begin{pmatrix}
+        x\\y
+        \end{pmatrix}
+        =
+        A
+        \begin{pmatrix}
+        u\\v
+        \end{pmatrix}
+        +
+        \mathbf p_0,
+      
+      where
+      
+        A=
+        \begin{pmatrix}
+            a \amp b\\
+            c \amp d
+        \end{pmatrix}
+      
+      and \mathbf p_0 is a fixed translation.
+
+[158-161 p c12s2-subsec-area-scaling-det default_required]
+The translation moves the region. It does not change its area. The matrix A does the
+      stretching, shearing, rotating, reflecting, or collapsing.
+
+[163-170 p c12s2-subsec-area-scaling-det default_required]
+The coordinate directions become
+      \mathbf a=(a,c), \qquad \mathbf b=(b,d).
+      The signed area of the parallelogram spanned by them is
+      \det A=ad-bc.
+      So the ordinary area scale factor is
+      |\det A|.
+
+[173-173 title c12s2-thm-area-scaling-linear default_required]
+Area scaling by a linear map
+
+[175-187 p c12s2-thm-area-scaling-linear default_required]
+Let
+          T(\mathbf u)=A\mathbf u+\mathbf p_0
+          be a linear change followed by a translation, where A is a 2\times2 matrix
+          with
+          \det A\ne0.
+          If S is a region in the (u,v)-plane and
+          R=T(S)
+          is its image in the (x,y)-plane, then
+          \boxed{\operatorname{Area}(R)=|\det A|\,\operatorname{Area}(S).}
+          More generally, for any function f for which the integrals exist,
+          \boxed{\iint_R f(x,y)\,dA = \iint_S f(T(u,v))\,|\det A|\,du\,dv.}
+
+[190-200 p c12s2-thm-area-scaling-linear default_required]
+Cut S into many small rectangles. A rectangle with side lengths
+          \Delta u,\qquad \Delta v
+          has area
+          \Delta u\,\Delta v.
+          The map T sends its side directions to
+          \mathbf a\,\Delta u \qquad\text{and}\qquad \mathbf b\,\Delta v.
+          The image is a parallelogram with ordinary area
+          |\det[\mathbf a\ \mathbf b]|\,\Delta u\,\Delta v = |\det A|\,\Delta u\,\Delta v.
+          Adding these image pieces gives the area formula.
+
+[201-206 p c12s2-thm-area-scaling-linear default_required]
+For the integral formula, the contribution from one small image piece is approximately
+          f(T(u^*,v^*))\,|\det A|\,\Delta u\,\Delta v.
+          Adding all pieces and passing to the integral gives
+          \iint_R f(x,y)\,dA = \iint_S f(T(u,v))\,|\det A|\,du\,dv.
+
+[210-214 p c12s2-subsec-area-scaling-det default_required]
+The condition
+      \det A\ne0
+      is the condition that the map does not collapse the plane.
+
+[216-234 p c12s2-subsec-area-scaling-det default_required]
+Here is what breaks without it. Let
+      
+        A=
+        \begin{pmatrix}
+            1 \amp 1\\
+            2 \amp 2
+        \end{pmatrix}.
+      
+      Then
+      T(u,v)=(u+v,\;2u+2v).
+      The unit square in the (u,v)-plane does not become a two-dimensional region. It
+      collapses onto the line segment
+      y=2x, \qquad 0\le x\le2.
+      The determinant is
+      \det A=1\cdot2-1\cdot2=0.
+      A two-dimensional area has been crushed to area 0. This is not a valid
+      two-dimensional change of variables for a double integral over a region with area.
+
+[237-237 title checkpoint-12-2-meaning-of-det-zero default_required]
+What does collapse mean?
+
+[239-244 p checkpoint-12-2-meaning-of-det-zero default_required]
+The formula \operatorname{Area}(R)=|\det A|\,\operatorname{Area}(S) still
+          gives an answer when \det A=0 -- it just says the image has area 0. So why
+          is \det A=0 forbidden for a change of variables, rather than simply being an
+          interesting special case?
+
+[247-251 p checkpoint-12-2-meaning-of-det-zero hint]
+A change of variables has to be reversible: every point of R should come from
+          exactly one point of S. What happens to that requirement when a whole region is
+          crushed onto a line?
+
+[257-257 title c12s2-subsec-orientation-sign default_required]
+Orientation and the sign of the determinant
+
+[259-264 p c12s2-subsec-orientation-sign default_required]
+Ordinary area uses
+      |\det A|.
+      Oriented area uses
+      \det A.
+
+[266-281 p c12s2-subsec-orientation-sign default_required]
+The simplest example is reflection across the x-axis:
+      T(u,v)=(u,-v).
+      Here
+      
+        A=
+        \begin{pmatrix}
+            1 \amp 0\\
+            0 \amp -1
+        \end{pmatrix},
+        \qquad
+        \det A=-1.
+      
+      The unit square still has ordinary area 1. Its image still has ordinary area
+      1. But the orientation has reversed.
+
+[283-290 p c12s2-subsec-orientation-sign default_required]
+The ordered pair
+      \mathbf e_u,\mathbf e_v
+      turns counterclockwise in the (u,v)-plane. Its image is
+      (1,0),(0,-1),
+      which turns clockwise in the (x,y)-plane. That is why the signed area scale factor is
+      -1.
+
+[293-293 title checkpoint-12-2-why-keep-the-sign default_required]
+Why keep the sign?
+
+[295-299 p checkpoint-12-2-why-keep-the-sign default_required]
+For computing ordinary area we throw the sign away and use |\det A|. So what
+          information is the sign of \det A actually recording about the map, and why might
+          we want to hold on to it rather than discard it?
+
+[302-305 p checkpoint-12-2-why-keep-the-sign hint]
+Picture the ordered pair of arrows \mathbf e_u,\mathbf e_v before and after the
+          map. The sign is not about how big the image is -- it is about which way it turns.
+
+[309-326 p c12s2-subsec-orientation-sign default_required]
+In form language, this sign is automatic. As in the preceding section, dx and
+      dy in this calculation mean the scalar differentials of the substituted
+      coordinate functions on the uv-plane. If
+      x=au+bv, \qquad y=cu+dv,
+      then
+      dx=a\,du+b\,dv,
+      and
+      dy=c\,du+d\,dv.
+      Therefore
+      
+        dx\wedge dy \amp= (a\,du+b\,dv)\wedge(c\,du+d\,dv)
+        \amp= (ad-bc)\,du\wedge dv
+        \amp= (\det A)\,du\wedge dv.
+      
+      So
+      \boxed{dx\wedge dy=(\det A)\,du\wedge dv.}
+
+[328-331 p c12s2-subsec-orientation-sign default_required]
+This is the oriented change-of-variables rule. The ordinary area rule takes absolute value:
+      \boxed{dA=|\det A|\,du\,dv.}
+
+[333-337 p c12s2-subsec-orientation-sign default_required]
+The sign is not an inconvenience. It carries information. Later, when we integrate forms over
+      oriented curves and surfaces, this sign will become the reason boundary orientation works
+      cleanly.
+
+[341-341 title c12s2-subsec-rotated-skewed-examples default_required]
+Examples with rotated and skewed regions
+
+[343-346 p c12s2-subsec-rotated-skewed-examples default_required]
+A linear change of variables is useful when the region is a parallelogram, a rotated
+      rectangle, or any shape whose boundaries become simpler after a linear transformation.
+
+[349-349 title c12s2-ex-density-skewed-tile default_required]
+A density over a skewed floor tile
+
+[351-356 p c12s2-ex-density-skewed-tile default_required]
+Let R be the parallelogram spanned by
+          (2,1) \qquad\text{and}\qquad (1,3),
+          starting at the origin. Find
+          \iint_R (x+y)\,dA.
+
+[357-385 p c12s2-ex-density-skewed-tile default_required]
+Use the square
+          S=\{(u,v):0\le u\le1,\ 0\le v\le1\}
+          and the map
+          x=2u+v, \qquad y=u+3v.
+          Then
+          
+            A=
+            \begin{pmatrix}
+                2 \amp 1\\
+                1 \amp 3
+            \end{pmatrix},
+            \qquad
+            |\det A|=5.
+          
+          Also,
+          x+y=(2u+v)+(u+3v)=3u+4v.
+          Therefore
+          
+            \iint_R (x+y)\,dA \amp= \int_0^1\int_0^1 (3u+4v)\,5\,dv\,du
+            \amp= 5\int_0^1\left[3uv+2v^2\right]_{0}^{1}\,du
+            \amp= 5\int_0^1(3u+2)\,du
+            \amp= 5\left(\frac32+2\right)
+            \amp= \frac{35}{2}.
+          
+          So
+          \boxed{\iint_R (x+y)\,dA=\frac{35}{2}.}
+          The parallelogram became a square, and the determinant supplied the area correction.
+
+[390-390 title c12s2-ex-rotated-rectangle default_required]
+A rotated rectangle
+
+[392-406 p c12s2-ex-rotated-rectangle default_required]
+A rectangle has been rotated by 45^\circ. Instead of describing its slanted sides
+          in x and y, use coordinates u and v along the rotated axes:
+          x=\frac{u-v}{\sqrt2}, \qquad y=\frac{u+v}{\sqrt2}.
+          This is a rotation, so it should preserve area. The determinant confirms it:
+          
+            A=
+            \begin{pmatrix}
+                1/\sqrt2 \amp -1/\sqrt2\\
+                1/\sqrt2 \amp 1/\sqrt2
+            \end{pmatrix},
+          
+          and
+          \det A = \frac12+\frac12 = 1.
+
+[407-427 p c12s2-ex-rotated-rectangle default_required]
+Let R be the image of
+          0\le u\le3, \qquad 0\le v\le1.
+          Compute
+          \iint_R (x^2+y^2)\,dA.
+          Under the rotation,
+          
+            x^2+y^2 \amp= \left(\frac{u-v}{\sqrt2}\right)^2 + \left(\frac{u+v}{\sqrt2}\right)^2
+            \amp= u^2+v^2.
+          
+          Since |\det A|=1,
+          
+            \iint_R (x^2+y^2)\,dA \amp= \int_0^3\int_0^1 (u^2+v^2)\,dv\,du
+            \amp= \int_0^3\left(u^2+\frac13\right)\,du
+            \amp= 9+1
+            \amp= 10.
+          
+          So
+          \boxed{\iint_R (x^2+y^2)\,dA=10.}
+          The region was slanted in x,y, but rectangular in u,v.
+
+[431-438 p c12s2-subsec-rotated-skewed-examples default_required]
+Linear maps are now under control. Their scale factor is constant because their grid lines
+      stay straight and evenly spaced. But polar coordinates do not behave that way. Near the
+      origin, angular wedges are tiny; far from the origin, the same angle covers a long arc. The
+      determinant must change from point to point. The next step is to let the matrix of partial
+      derivatives vary across the region and to trust the same local parallelogram idea everywhere
+      at once.

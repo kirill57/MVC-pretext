@@ -104,6 +104,46 @@
       </image>
     </figure>
 
+    <theorem xml:id="c11s3-thm-cylindrical-integration">
+      <title>Cylindrical integration</title>
+      <statement><p>Let <m>U</m> be a bounded closed parameter region with
+        piecewise smooth boundary, using <m>r\ge0</m> and an angular interval of
+        length at most <m>2\pi</m>. Suppose
+        <m>T(r,\theta,z)=(r\cos\theta,r\sin\theta,z)</m> covers
+        <m>E=T(U)</m> once except for boundary seams and the axis.
+        For a continuous function <m>f</m> on a neighborhood of <m>E</m>,
+        <md>\iiint_E f(x,y,z)\,dV
+          =\iiint_U f(r\cos\theta,r\sin\theta,z)\,r\,dr\,d\theta\,dz.</md>
+        Use bounds describing <m>U</m> in the chosen order of iterated integration.
+        The axis and seam do not affect the integral. Repeated coverage of the
+        interior would count volume more than once.</p></statement>
+    </theorem>
+    <p>We supply this general rule for use. The tiny-box picture explains its
+      factor; the next exercise proves it for every continuous integrand on a
+      specified cylinder, using planar polar integration. The exercise does not
+      prove the rule for every region.</p>
+    <exercise xml:id="c11s3-ex-justify-cylindrical-integration">
+      <title>Derive the rule on a cylinder by slicing</title>
+      <statement><p>Let <m>E=\{(x,y,z):x^2+y^2\le1,\ 0\le z\le1\}</m>,
+        and let <m>f</m> be continuous on a neighborhood of <m>E</m>.
+        Cartesian slicing gives
+        <md>\iiint_E f\,dV=\iint_{x^2+y^2\le1}G(x,y)\,dA,\qquad
+          G(x,y)=\int_0^1 f(x,y,z)\,dz.</md>
+        You may use this fact: integrating a continuous function over a fixed
+        closed interval gives a continuous function of the remaining variables
+        on this closed base. Apply planar polar integration to <m>G</m>, then
+        substitute its definition to obtain the cylindrical formula for
+        <m>f</m> on this cylinder. Which step supplies the factor <m>r</m>?</p></statement>
+      <solution><p>The supplied continuity fact allows the planar polar rule:
+        <md>\iint_{x^2+y^2\le1}G\,dA
+          =\int_0^{2\pi}\int_0^1G(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta
+          =\int_0^{2\pi}\int_0^1\int_0^1
+            f(r\cos\theta,r\sin\theta,z)\,r\,dz\,dr\,d\theta.</md>
+        The factor comes from the planar polar theorem. This argument works for
+        every such <m>f</m>, rather than checking only the volume case
+        <m>f=1</m>.</p></solution>
+    </exercise>
+
     <p>
       Now compute the cylinder's volume:
       <md>
@@ -123,29 +163,55 @@
       pieces near the axis and angular pieces far from the axis have the same width. They do not.
     </p>
 
-    <p>
-      The same fact can be written with forms. In the following substitution calculation,
-      <m>dx</m> abbreviates the differential of the scalar function <m>x(r,\theta,z)</m>
-      on the parameter domain; <m>dy</m> is interpreted in the same way. Thus all the forms
-      being equated live on that domain. <xref ref="sec-12-pullbacks-of-area-and-volume-elements"/>
-      will introduce explicit pullback notation for this convention. Since
-      <md>x=r\cos\theta, \qquad y=r\sin\theta,</md>
-      we have
-      <md>dx=\cos\theta\,dr-r\sin\theta\,d\theta,</md>
-      and
-      <md>dy=\sin\theta\,dr+r\cos\theta\,d\theta.</md>
-      Therefore
-      <md>
-        <mrow>dx\wedge dy \amp= (\cos\theta\,dr-r\sin\theta\,d\theta) \wedge (\sin\theta\,dr+r\cos\theta\,d\theta)</mrow>
-        <mrow>\amp= r\cos^2\theta\,dr\wedge d\theta + r\sin^2\theta\,dr\wedge d\theta</mrow>
-        <mrow>\amp= r\,dr\wedge d\theta.</mrow>
-      </md>
-      So
-      <md>\boxed{dx\wedge dy\wedge dz = r\,dr\wedge d\theta\wedge dz.}</md>
-      For ordinary positive volume, we write this as
-      <md>dV=r\,dr\,d\theta\,dz.</md>
-      The wedge version remembers orientation. The <m>dV</m> version remembers positive volume.
-    </p>
+    <aside xml:id="c11s3-optional-oriented-volume">
+      <title>Optional: oriented-volume connection</title>
+      <p>A covector is a linear scalar measurement on vectors. If
+        <m>\alpha,\beta,\gamma</m> are three covectors on the same vector space,
+        define their triple wedge by its value on an ordered triple
+        <m>(u,v,w)</m>:
+        <md>(\alpha\wedge\beta\wedge\gamma)(u,v,w)=
+          \det\begin{pmatrix}
+          \alpha(u)&amp;\alpha(v)&amp;\alpha(w)\\
+          \beta(u)&amp;\beta(v)&amp;\beta(w)\\
+          \gamma(u)&amp;\gamma(v)&amp;\gamma(w)
+          \end{pmatrix}.</md>
+        Linearity in each row makes this expression linear in each covector.
+        Swapping two covectors changes its sign, and repeated covectors give zero.
+        We also use <m>(\alpha\wedge\beta)\wedge\gamma</m> for this triple
+        determinant. This convention suffices here; it is not a construction of
+        wedge multiplication in all degrees.</p>
+      <p>For variable coefficients, evaluate all covectors at the same fixed
+        parameter point. Here <m>dx</m> means the differential of the scalar
+        function <m>x(r,\theta,z)</m> on the parameter domain, and similarly
+        for <m>dy</m>; <m>dz</m> is its height-coordinate measurement.
+        Thus all three act on the same parameter vectors. We have
+        <md>dx=\cos\theta\,dr-r\sin\theta\,d\theta,\qquad
+          dy=\sin\theta\,dr+r\cos\theta\,d\theta.</md>
+        Multilinearity, alternation and the two-covector rule give
+        <md>dx\wedge dy=r\,dr\wedge d\theta,\qquad
+          dx\wedge dy\wedge dz=r\,dr\wedge d\theta\wedge dz.</md>
+        The wedge expression records orientation in order <m>(r,\theta,z)</m>;
+        ordinary volume uses the absolute determinant. Iterated integration order
+        alone does not specify orientation. <xref ref="sec-12-pullbacks-of-area-and-volume-elements"/>
+        develops explicit pullback notation for this substitution.</p>
+    </aside>
+    <exercise xml:id="c11s3-ex-three-measurement-volume">
+      <title>Optional: three measurements and signed volume</title>
+      <statement><p>Using the determinant definition in
+        <xref ref="c11s3-optional-oriented-volume" text="title"/>, justify
+        linearity in each covector, sign reversal on swapping two covectors, and
+        vanishing when two agree. Then use the displayed expressions for
+        <m>dx,dy,dz</m> to verify the cylindrical triple-wedge identity.
+        This extension is independent of the ordinary integration exercises.</p></statement>
+      <solution><p>These are respectively multilinearity in a determinant row,
+        change of sign on interchanging rows, and vanishing for equal rows.
+        Expansion gives coefficients <m>r\cos^2\theta</m> and
+        <m>r\sin^2\theta</m> in front of
+        <m>dr\wedge d\theta\wedge dz</m>; the two repeated-factor terms
+        vanish. Their sum is <m>r</m>. This proves the local triple identity
+        under the stated convention, without asserting a general associativity
+        theorem.</p></solution>
+    </exercise>
   </subsection>
 
   <subsection xml:id="c11s3-subsec-cylinders-cones-symmetry">

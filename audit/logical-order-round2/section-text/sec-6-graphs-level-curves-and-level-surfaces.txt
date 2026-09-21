@@ -1,0 +1,444 @@
+[5-5 title sec-6-graphs-level-curves-and-level-surfaces default_required]
+Graphs, level curves, and level surfaces
+
+[7-10 p sec-6-graphs-level-curves-and-level-surfaces default_required]
+gave us scalar fields and vector fields. Vector
+    fields are best drawn with arrows. Scalar fields need a different kind of picture.
+
+[12-17 p sec-6-graphs-level-curves-and-level-surfaces default_required]
+For a scalar-valued function
+    f(x,y),
+    the input lives in the plane and the output is a number. We can use the output as a height.
+    That turns the function into a surface in space.
+
+[20-20 title c6s2-subsec-graphs-of-functions default_required]
+Graphs of functions z=f(x,y)
+
+[22-33 p c6s2-subsec-graphs-of-functions default_required]
+A market stall has a flat rectangular floor,
+      0\le x\le 4,\qquad 0\le y\le 3.
+      A slanted canopy above it has height
+      f(x,y)=2+\frac{x}{4}+\frac{y}{6}.
+      At the corner (0,0),
+      f(0,0)=2.
+      At the corner (4,3),
+      f(4,3)=2+1+\frac12=3.5.
+      The canopy is higher as we move in the positive x-direction and also higher as we
+      move in the positive y-direction.
+
+[35-39 p c6s2-subsec-graphs-of-functions default_required]
+To draw the graph, we place the point
+      (x,y,f(x,y))
+      above each floor point (x,y).
+
+[42-43 caption c6s2-fig-graph-canopy default_required]
+The graph of z=f(x,y) is made by placing height f(x,y) above each
+      input point (x,y).
+
+[45-76 latex-image c6s2-fig-graph-canopy default_required]
+\begin{tikzpicture}[scale=0.95, >=stealth]
+            % projected floor coordinates
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (4,0);
+            \coordinate (C) at (5.35,0.75);
+            \coordinate (D) at (1.35,0.75);
+
+            % projected surface coordinates
+            \coordinate (Ap) at (0,2);
+            \coordinate (Bp) at (4,3);
+            \coordinate (Cp) at (5.35,4.25);
+            \coordinate (Dp) at (1.35,3.25);
+
+            \draw[->] (-0.4,0) -- (6,0) node[right] {\(x\)};
+            \draw[->] (0,-0.3) -- (0,4.8) node[above] {\(z\)};
+            \draw[->] (0,0) -- (1.6,0.9) node[above right] {\(y\)};
+
+            \draw[fill=gray!10] (A) -- (B) -- (C) -- (D) -- cycle;
+            \draw[dashed] (A) -- (Ap);
+            \draw[dashed] (B) -- (Bp);
+            \draw[dashed] (C) -- (Cp);
+            \draw[dashed] (D) -- (Dp);
+
+            \draw[fill=blue!12, thick] (Ap) -- (Bp) -- (Cp) -- (Dp) -- cycle;
+
+            \node[left] at (Ap) {\(2\)};
+            \node[right] at (Cp) {\(3.5\)};
+            \node at (3,4.8) {\(z=2+\dfrac{x}{4}+\dfrac{y}{6}\)};
+            \node at (3,-0.8) {floor domain in the \(xy\)-plane};
+        \end{tikzpicture}
+
+[81-81 title c6s2-def-graph-two-variables default_required]
+Graph of a function of two variables
+
+[83-90 p c6s2-def-graph-two-variables default_required]
+Let
+          f:D\subseteq\mathbb R^2\to\mathbb R.
+          The graph of f is the set of points in \mathbb R^3
+          \boxed{\{(x,y,z): (x,y)\in D,\ z=f(x,y)\}.}
+          In the examples considered here, this set describes the surface
+          z=f(x,y).
+
+[94-99 p c6s2-subsec-graphs-of-functions default_required]
+This definition is the direct descendant of the graph of a single-variable function. For
+      y=f(x),
+      we placed the output y above the input x. Now we place the output z
+      above the input point (x,y).
+
+[102-102 title checkpoint-6-2-graph-lives-in-3d default_required]
+Why does the graph need a third dimension?
+
+[104-108 p checkpoint-6-2-graph-lives-in-3d default_required]
+The domain of f(x,y) is a flat region in the plane, yet we draw its graph as a
+          surface floating in three-dimensional space. Where does the extra dimension come from,
+          and what does a single point (x,y,f(x,y)) of the graph record about the function?
+
+[111-115 p checkpoint-6-2-graph-lives-in-3d hint]
+Two coordinates locate the input, but the output f(x,y) still has to go
+          somewhere. Picture stacking that output as a height above the floor point
+          (x,y).
+
+[120-120 title c6s2-ex-dome-as-graph default_required]
+A dome as a graph
+
+[122-134 p c6s2-ex-dome-as-graph default_required]
+The function
+          h(x,y)=\sqrt{16-x^2-y^2}
+          has domain
+          x^2+y^2\le 16.
+          Its graph is
+          z=\sqrt{16-x^2-y^2}.
+          Squaring gives
+          x^2+y^2+z^2=16,
+          with
+          z\ge0.
+          So the graph is the upper half of a sphere of radius 4.
+
+[138-144 p c6s2-subsec-graphs-of-functions default_required]
+Graphs are useful, but they have limits. A function of three variables
+      f(x,y,z)
+      would have a graph made of points
+      (x,y,z,f(x,y,z)).
+      That graph lives in four-dimensional space. We cannot draw it in the same direct way.
+
+[146-149 p c6s2-subsec-graphs-of-functions default_required]
+For scalar fields in the plane, there is another picture that is often even more useful
+      than the graph: the contour map.
+
+[153-153 title c6s2-subsec-contour-maps-level-curves default_required]
+Contour maps and level curves
+
+[155-158 p c6s2-subsec-contour-maps-level-curves default_required]
+A hiker does not need a three-dimensional plastic model of a mountain to plan a route. A
+      topographic map is usually better. It joins points of equal height.
+
+[160-172 p c6s2-subsec-contour-maps-level-curves default_required]
+Consider a hill whose height is
+      H(x,y)=120-x^2-4y^2,
+      where height is measured in meters. The highest point is at
+      (0,0),
+      where
+      H(0,0)=120.
+      The set of points at height 116 satisfies
+      120-x^2-4y^2=116,
+      so
+      x^2+4y^2=4.
+      This is an ellipse.
+
+[174-180 p c6s2-subsec-contour-maps-level-curves default_required]
+The set of points at height 104 satisfies
+      x^2+4y^2=16.
+      The set of points at height 84 satisfies
+      x^2+4y^2=36.
+      Each height gives an ellipse around the summit.
+
+[183-184 caption c6s2-fig-level-curves-hill default_required]
+Level curves of a stretched hill. The long direction of the ellipses shows that
+      the hill changes more slowly east-west than north-south.
+
+[186-206 latex-image c6s2-fig-level-curves-hill default_required]
+\begin{tikzpicture}[scale=0.72, >=stealth]
+            \draw[->] (-7,0) -- (7.4,0) node[right] {\(x\)};
+            \draw[->] (0,-3.8) -- (0,3.9) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-6,-3) grid (6,3);
+
+            \draw[thick] (0,0) ellipse (2 and 1);
+            \draw[thick] (0,0) ellipse (4 and 2);
+            \draw[thick] (0,0) ellipse (6 and 3);
+
+            \node[fill=white, inner sep=1pt] at (2.2,0.7) {\(116\)};
+            \node[fill=white, inner sep=1pt] at (4.2,1.55) {\(104\)};
+            \node[fill=white, inner sep=1pt] at (5.8,2.7) {\(84\)};
+
+            \fill (0,0) circle (2pt);
+            \node[above right] at (0,0) {summit \(120\)};
+
+            \node at (0,-4.7) {level curves of \(H(x,y)=120-x^2-4y^2\)};
+        \end{tikzpicture}
+
+[210-214 p c6s2-subsec-contour-maps-level-curves default_required]
+The picture tells a story. To lose the same amount of height, you can travel farther in
+      the x-direction than in the y-direction. So the hill is gentler east-west and
+      steeper north-south.
+
+[216-216 p c6s2-subsec-contour-maps-level-curves default_required]
+Now we name the idea.
+
+[219-219 title c6s2-def-level-curve default_required]
+Level curve
+
+[221-229 p c6s2-def-level-curve default_required]
+Let
+          f:D\subseteq\mathbb R^2\to\mathbb R.
+          For a constant c, the level curve of f at level c is
+          the set
+          \boxed{\{(x,y)\in D:f(x,y)=c\}.}
+          A contour map is a drawing of several level curves, usually labeled by their values of
+          c.
+
+[233-236 p c6s2-subsec-contour-maps-level-curves default_required]
+The word curve is traditional, but it comes with a warning. A level set may be a
+      curve, several curves, a point, or even empty.
+
+[239-239 title c6s2-ex-level-curve-shrinks default_required]
+A level curve can shrink to a point or disappear
+
+[241-249 p c6s2-ex-level-curve-shrinks default_required]
+For
+          H(x,y)=120-x^2-4y^2,
+          the level c=120 gives
+          x^2+4y^2=0.
+          The only solution is
+          (0,0).
+          So this level set is just one point.
+
+[250-256 p c6s2-ex-level-curve-shrinks default_required]
+The level c=130 gives
+          120-x^2-4y^2=130,
+          or
+          x^2+4y^2=-10.
+          There are no real solutions. So this level set is empty.
+
+[261-261 title c6s2-ex-level-curves-plane default_required]
+Level curves of a plane
+
+[263-271 p c6s2-ex-level-curves-plane default_required]
+Let
+          f(x,y)=6-3x-2y.
+          The level curve at height c is
+          6-3x-2y=c.
+          Rearranging,
+          3x+2y=6-c.
+          So the level curves are parallel lines.
+
+[272-275 p c6s2-ex-level-curves-plane default_required]
+This makes sense: the graph of f is a plane. Slicing a tilted plane by
+          horizontal planes gives parallel lines.
+
+[280-280 title c6s2-ex-saddle-from-above default_required]
+A saddle seen from above
+
+[282-292 p c6s2-ex-saddle-from-above default_required]
+Let
+          S(x,y)=y^2-x^2.
+          The level curve S(x,y)=0 is
+          y^2-x^2=0,
+          so
+          (y-x)(y+x)=0.
+          Thus
+          y=x \qquad\text{or}\qquad y=-x.
+          The zero level set is two crossing lines.
+
+[293-298 p c6s2-ex-saddle-from-above default_required]
+For c>0, the curves
+          y^2-x^2=c
+          are hyperbolas opening upward and downward. For c<0, they open left and
+          right. This crossing pattern is a top-down signal of a saddle surface.
+
+[302-305 p c6s2-subsec-contour-maps-level-curves default_required]
+Level curves are not merely flat drawings. They are the shadows of horizontal slices of
+      the graph.
+
+[308-308 title c6s2-thm-level-curves-horizontal-slices default_required]
+Level curves are horizontal slices of the graph
+
+[310-320 p c6s2-thm-level-curves-horizontal-slices default_required]
+Let
+          f:D\subseteq\mathbb R^2\to\mathbb R.
+          The intersection of the graph
+          z=f(x,y)
+          with the horizontal plane
+          z=c
+          is
+          \{(x,y,c):(x,y)\in D,\ f(x,y)=c\}.
+          Thus it is the level curve f(x,y)=c, lifted to height c.
+
+[323-333 p c6s2-thm-level-curves-horizontal-slices default_required]
+A point (x,y,z) lies on the graph exactly when
+          z=f(x,y).
+          It also lies in the horizontal plane z=c exactly when
+          z=c.
+          Both conditions hold exactly when
+          f(x,y)=c
+          and
+          z=c.
+          So the intersection is the level curve f(x,y)=c, placed in the plane z=c.
+
+[337-340 p c6s2-subsec-contour-maps-level-curves default_required]
+This is why a contour map can help us imagine a surface. Draw several level curves, then
+      imagine each one lifted to its labeled height.
+
+[343-343 title checkpoint-6-2-flat-map-captures-hill default_required]
+How can a flat map hold a whole hill?
+
+[345-347 p checkpoint-6-2-flat-map-captures-hill default_required]
+A contour map is flat, yet its labels convey heights on a three-dimensional hill. Explain how. Why does a finite collection of contours leave some information between the curves undetermined? If neighboring contours have equal height increments, what does close spacing tell you about the average height change across them?
+
+[350-355 p checkpoint-6-2-flat-map-captures-hill hint]
+Each curve carries a label c, so a height is attached to it even though the
+          drawing is flat. Now think about moving across two nearby labels: if the labels differ
+          by a lot but the curves are only a tiny distance apart, how fast must the height be
+          changing?
+
+[361-361 title c6s2-subsec-level-surfaces default_required]
+Level surfaces
+
+[363-368 p c6s2-subsec-level-surfaces default_required]
+For a function of three variables,
+      f(x,y,z),
+      the graph would live in four dimensions. But the level sets live in ordinary
+      three-dimensional space.
+
+[371-371 title c6s2-ex-pressure-levels-tank default_required]
+Pressure levels in a tank
+
+[373-383 p c6s2-ex-pressure-levels-tank default_required]
+Let
+          p(x,y,z)=120-3z.
+          The level surface
+          p(x,y,z)=90
+          satisfies
+          120-3z=90.
+          So
+          z=10.
+          That level surface is a horizontal plane.
+
+[384-390 p c6s2-ex-pressure-levels-tank default_required]
+More generally,
+          p(x,y,z)=c
+          gives
+          z=\frac{120-c}{3}.
+          So the pressure levels are horizontal planes stacked above one another.
+
+[395-395 title c6s2-def-level-surface default_required]
+Level surface
+
+[397-403 p c6s2-def-level-surface default_required]
+Let
+          f:D\subseteq\mathbb R^3\to\mathbb R.
+          For a constant c, the level surface of f at level c
+          is the set
+          \boxed{\{(x,y,z)\in D:f(x,y,z)=c\}.}
+
+[408-408 title c6s2-ex-distance-radio-beacon default_required]
+Distance from a radio beacon
+
+[410-420 p c6s2-ex-distance-radio-beacon default_required]
+A radio beacon is located at
+          B=(1,-2,3).
+          The squared distance from the beacon is
+          R(x,y,z)=(x-1)^2+(y+2)^2+(z-3)^2.
+          The level surface
+          R(x,y,z)=9
+          is
+          (x-1)^2+(y+2)^2+(z-3)^2=9.
+          This is a sphere centered at (1,-2,3) with radius 3.
+
+[421-426 p c6s2-ex-distance-radio-beacon default_required]
+More generally,
+          R(x,y,z)=c
+          is a sphere of radius \sqrt c when c>0, a single point when
+          c=0, and empty when c<0.
+
+[431-431 caption c6s2-fig-level-surfaces-spheres default_required]
+Level surfaces of squared distance are spheres centered at the source.
+
+[433-454 latex-image c6s2-fig-level-surfaces-spheres default_required]
+\begin{tikzpicture}[scale=0.8, >=stealth]
+            \draw[->] (-4,0) -- (4.5,0) node[right] {\(x\)};
+            \draw[->] (0,-3.2) -- (0,3.8) node[above] {\(z\)};
+
+            \draw[gray!25] (-3,-2.5) -- (3,2.5);
+            \draw[gray!25] (-3,2.5) -- (3,-2.5);
+
+            \fill (0,0) circle (2pt);
+            \node[below right] at (0,0) {beacon};
+
+            \draw[thick] (0,0) ellipse (1.2 and 0.75);
+            \draw[thick] (0,0) ellipse (2.2 and 1.4);
+            \draw[thick] (0,0) ellipse (3.2 and 2.05);
+
+            \node[fill=white, inner sep=1pt] at (1.15,0.55) {\(R=1\)};
+            \node[fill=white, inner sep=1pt] at (2.15,1.1) {\(R=4\)};
+            \node[fill=white, inner sep=1pt] at (3.15,1.7) {\(R=9\)};
+
+            \node at (0,-4) {a two-dimensional sketch of nested spherical level surfaces};
+        \end{tikzpicture}
+
+[458-461 p c6s2-subsec-level-surfaces default_required]
+Level surfaces are the three-dimensional version of contour lines. Instead of drawing
+      curves of equal height on a map, we draw surfaces on which a quantity stays constant.
+
+[465-465 title c6s2-subsec-reading-geometry-level-sets default_required]
+Reading geometry from level sets
+
+[467-467 p c6s2-subsec-reading-geometry-level-sets default_required]
+Level sets let us read geometry without always drawing the graph.
+
+[469-469 p c6s2-subsec-reading-geometry-level-sets default_required]
+Here are three important habits.
+
+[471-475 p c6s2-subsec-reading-geometry-level-sets default_required]
+First, when successive levels differ by the same amount, level curves that are close together indicate rapid change across them. On a topographic map,
+      tightly packed contour lines mean a steep slope. Widely spaced contour lines mean a gentle
+      slope.
+
+[477-482 p c6s2-subsec-reading-geometry-level-sets default_required]
+Second, the shape of a level curve tells us which directions change slowly. For
+      H(x,y)=120-x^2-4y^2,
+      the level curves are long in the x-direction and short in the y-direction.
+      That means the hill changes more slowly east-west and more quickly north-south.
+
+[484-490 p c6s2-subsec-reading-geometry-level-sets default_required]
+Third, different level curves of the same function cannot cross. If one point lay on both
+      f(x,y)=10
+      and
+      f(x,y)=12,
+      then the same input (x,y) would have two outputs. That is not a function.
+
+[492-498 p c6s2-subsec-reading-geometry-level-sets default_required]
+The warning is that one level set can have several pieces. For
+      S(x,y)=y^2-x^2,
+      the level set S=0 is the pair of lines
+      y=x \qquad\text{and}\qquad y=-x.
+      Those two lines meet, but they belong to the same level value. There is no contradiction.
+
+[500-504 p c6s2-subsec-reading-geometry-level-sets default_required]
+A graph, a contour map, and a formula are three ways of seeing the same scalar field. Each
+      has strengths. The formula computes. The graph shows height. The level curves show how
+      height is arranged across the input region.
+
+[507-507 title checkpoint-6-2-reading-steepness-and-shape default_required]
+Reading steepness and shape from contours?
+
+[509-511 p checkpoint-6-2-reading-steepness-and-shape default_required]
+You are handed a contour map you have never seen before, with no formula attached. Using both the labels and the spacing, how would you estimate where height changes most rapidly across neighboring contours? What happens to the function value if you travel along one level curve?
+
+[514-516 p checkpoint-6-2-reading-steepness-and-shape hint]
+Compare the change in labeled height with the distance between contours. Along a single contour the height is constant; the shape of one contour alone does not determine rates across it.
+
+[520-525 p c6s2-subsec-reading-geometry-level-sets default_required]
+But pictures can also hide danger. A surface can look calm from several straight-line
+      approaches to a point and still behave badly along a curved approach. Once inputs can
+      approach a point from infinitely many directions, the old one-dimensional idea of a limit
+      needs a sharper eye. That is the next problem.

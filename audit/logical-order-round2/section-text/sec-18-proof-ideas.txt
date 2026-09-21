@@ -1,0 +1,337 @@
+[5-5 title sec-18-proof-ideas default_required]
+Proof ideas
+
+[7-13 p sec-18-proof-ideas default_required]
+The generalized Stokes theorem now has four familiar faces:
+    \text{FTC},\qquad \text{Green},\qquad \text{classical Stokes},\qquad \text{divergence theorem}.
+    The proof idea is the same in all of them. First prove the theorem on a simple coordinate
+    piece. Then cut a complicated object into many simple pieces. Interior boundary
+    contributions cancel. The outside boundary remains.
+
+[15-15 p sec-18-proof-ideas default_required]
+We start with the cleanest two-dimensional calculation.
+
+[18-18 title c18s7-subsec-proof-on-a-rectangle default_required]
+Proof on a rectangle
+
+[20-26 p c18s7-subsec-proof-on-a-rectangle default_required]
+Let
+      R=[a,b]\times[c,d]
+      with the standard orientation
+      dx\wedge dy.
+      Then \partial R is oriented counterclockwise.
+
+[28-34 p c18s7-subsec-proof-on-a-rectangle default_required]
+Take a C^1 1-form
+      \omega=P(x,y)\,dx+Q(x,y)\,dy.
+      We will prove
+      \int_{\partial R}\omega=\int_R d\omega
+      directly.
+
+[36-36 p c18s7-subsec-proof-on-a-rectangle default_required]
+The boundary has four sides.
+
+[38-42 p c18s7-subsec-proof-on-a-rectangle default_required]
+On the bottom side y=c, x goes from a to b, and dy=0.
+      The contribution is
+      \int_a^b P(x,c)\,dx.
+
+[44-48 p c18s7-subsec-proof-on-a-rectangle default_required]
+On the right side x=b, y goes from c to d, and dx=0.
+      The contribution is
+      \int_c^d Q(b,y)\,dy.
+
+[50-54 p c18s7-subsec-proof-on-a-rectangle default_required]
+On the top side y=d, x goes from b back to a, and dy=0.
+      The contribution is
+      -\int_a^b P(x,d)\,dx.
+
+[56-60 p c18s7-subsec-proof-on-a-rectangle default_required]
+On the left side x=a, y goes from d back to c, and dx=0.
+      The contribution is
+      -\int_c^d Q(a,y)\,dy.
+
+[62-69 p c18s7-subsec-proof-on-a-rectangle default_required]
+Add them:
+      
+        \int_{\partial R}\omega \amp= \int_a^b P(x,c)\,dx + \int_c^d Q(b,y)\,dy
+        \amp\qquad - \int_a^b P(x,d)\,dx - \int_c^d Q(a,y)\,dy
+        \amp= \int_c^d\bigl(Q(b,y)-Q(a,y)\bigr)\,dy - \int_a^b\bigl(P(x,d)-P(x,c)\bigr)\,dx.
+
+[71-85 p c18s7-subsec-proof-on-a-rectangle default_required]
+Now the single-variable Fundamental Theorem of Calculus enters twice:
+      Q(b,y)-Q(a,y)=\int_a^b Q_x(x,y)\,dx,
+      and
+      P(x,d)-P(x,c)=\int_c^d P_y(x,y)\,dy.
+      Therefore
+      
+        \int_{\partial R}\omega \amp= \int_c^d\int_a^b Q_x(x,y)\,dx\,dy - \int_a^b\int_c^d P_y(x,y)\,dy\,dx
+        \amp= \iint_R (Q_x-P_y)\,dx\wedge dy.
+      
+      But
+      d\omega=(Q_x-P_y)\,dx\wedge dy.
+      So
+      \boxed{\int_{\partial R}\omega=\int_R d\omega.}
+
+[87-91 p c18s7-subsec-proof-on-a-rectangle default_required]
+This proof is Green's theorem on a rectangle. It is also Stokes' theorem on a flat
+      coordinate patch. The tools were the one-dimensional Fundamental Theorem of Calculus
+      and Fubini's theorem for continuous functions, which identifies the two orders of integration.
+
+[95-95 title c18s7-subsec-proof-on-a-box default_required]
+Proof on a box
+
+[97-97 p c18s7-subsec-proof-on-a-box default_required]
+The three-dimensional box calculation is the same idea with one more pair of faces.
+
+[99-108 p c18s7-subsec-proof-on-a-box default_required]
+Let
+      B=[a,b]\times[c,d]\times[e,f]
+      with the standard orientation
+      dx\wedge dy\wedge dz.
+      Let
+      \Phi=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy.
+      Then
+      d\Phi=(P_x+Q_y+R_z)\,dx\wedge dy\wedge dz.
+
+[110-117 p c18s7-subsec-proof-on-a-box default_required]
+The x-faces contribute
+      
+        \int_{\text{\(x\)-faces}}\Phi \amp= \int_c^d\int_e^f \bigl(P(b,y,z)-P(a,y,z)\bigr)\,dz\,dy
+        \amp= \int_c^d\int_e^f\int_a^b P_x(x,y,z)\,dx\,dz\,dy.
+      
+      The last equality is the Fundamental Theorem of Calculus in the x-direction.
+
+[119-126 p c18s7-subsec-proof-on-a-box default_required]
+Similarly, the y-faces contribute
+      \int_B Q_y\,dx\,dy\,dz,
+      and the z-faces contribute
+      \int_B R_z\,dx\,dy\,dz.
+      Adding the three pairs of opposite faces gives
+      \boxed{\int_{\partial B}\Phi = \int_B (P_x+Q_y+R_z)\,dx\wedge dy\wedge dz = \int_B d\Phi.}
+
+[128-131 p c18s7-subsec-proof-on-a-box default_required]
+So the divergence theorem on a rectangular box is also just the Fundamental Theorem of
+      Calculus, used once in each coordinate direction.
+
+[135-135 title c18s7-subsec-interior-faces-cancel default_required]
+Interior faces cancel
+
+[137-142 p c18s7-subsec-interior-faces-cancel default_required]
+Now cut a larger rectangle into smaller rectangles. Apply the rectangle proof to each
+      small rectangle:
+      \int_{\partial R_{ij}}\omega=\int_{R_{ij}}d\omega.
+      Then add the equations.
+
+[144-147 p c18s7-subsec-interior-faces-cancel default_required]
+On the right side, the small integrals combine:
+      \sum_{i,j}\int_{R_{ij}}d\omega=\int_R d\omega.
+
+[149-154 p c18s7-subsec-interior-faces-cancel default_required]
+On the left side, every interior edge is counted twice. One neighboring rectangle walks
+      that shared edge in one direction. The other neighboring rectangle walks it in the
+      opposite direction. A 1-form integral changes sign when direction reverses, so the
+      two contributions cancel.
+
+[157-157 title checkpoint-18-7-why-interior-edges-cancel default_required]
+Why does the inside disappear?
+
+[159-164 p checkpoint-18-7-why-interior-edges-cancel default_required]
+Every interior edge is shared by two neighboring rectangles. Without computing
+          anything, explain why those two contributions cancel rather than add. What feature of
+          the shared edge is different for the two rectangles, and why does that difference flip
+          the sign of a 1-form integral?
+
+[167-171 p checkpoint-18-7-why-interior-edges-cancel hint]
+Ask yourself which direction each rectangle walks along that shared edge as it traces
+          its own counterclockwise boundary. They are neighbors looking at the same wall from
+          opposite sides.
+
+[175-178 p c18s7-subsec-interior-faces-cancel default_required]
+Only the outer boundary remains:
+      \sum_{i,j}\int_{\partial R_{ij}}\omega = \int_{\partial R}\omega.
+
+[180-185 p c18s7-subsec-interior-faces-cancel default_required]
+The same cancellation happens in three dimensions. If a solid is cut into small boxes,
+      then every interior face belongs to two neighboring boxes. One box gives the face one
+      orientation; the other gives the opposite orientation. A 2-form integral changes
+      sign when the surface orientation reverses, so the two face integrals cancel.
+
+[187-187 p c18s7-subsec-interior-faces-cancel default_required]
+This is the geometric reason that only the outside boundary appears in Stokes' theorem.
+
+[189-191 p c18s7-subsec-interior-faces-cancel default_required]
+\boxed{\text{interior boundaries cancel; exterior boundaries survive.}}
+
+[195-195 title c18s7-subsec-pullback-to-parameter-domains default_required]
+Pullback to parameter domains
+
+[197-200 p c18s7-subsec-pullback-to-parameter-domains default_required]
+The rectangle and box proofs live in coordinate space. A curved surface or a curved solid
+      is usually handled by parametrizing it.
+
+[202-212 p c18s7-subsec-pullback-to-parameter-domains default_required]
+For a surface, suppose
+      \mathbf r:D\subseteq\mathbb R^2\to S\subseteq\mathbb R^3
+      is a smooth oriented parametrization. A 1-form \omega in space pulls back to
+      a 1-form on the parameter region:
+      \mathbf r^*\omega.
+      Surface integrals also pull back:
+      \int_S d\omega=\int_D \mathbf r^*(d\omega).
+      Boundary integrals pull back as well:
+      \int_{\partial S}\omega=\int_{\partial D}\mathbf r^*\omega.
+
+[214-220 p c18s7-subsec-pullback-to-parameter-domains default_required]
+The link between the two sides is the identity
+      \boxed{\mathbf r^*(d\omega)=d(\mathbf r^*\omega).}
+      For a C^2 regular patch this follows from the product and chain rules and
+      equality of mixed partials, as calculated in
+      the coordinate calculation for a parametrized surface.
+
+[222-229 p c18s7-subsec-pullback-to-parameter-domains default_required]
+Now apply Green's theorem on the parameter region D:
+      \int_{\partial D}\mathbf r^*\omega = \int_D d(\mathbf r^*\omega).
+      Using the pullback identity,
+      \int_D d(\mathbf r^*\omega) = \int_D \mathbf r^*(d\omega).
+      Translating back to the surface gives
+      \boxed{\int_{\partial S}\omega=\int_S d\omega.}
+
+[231-231 p c18s7-subsec-pullback-to-parameter-domains default_required]
+This is classical Stokes' theorem on a parametrized surface.
+
+[233-240 p c18s7-subsec-pullback-to-parameter-domains default_required]
+For a solid coordinate map
+      T:C\subseteq\mathbb R^3\to E\subseteq\mathbb R^3,
+      the same pattern gives
+      T^*(d\Phi)=d(T^*\Phi).
+      So Stokes on the coordinate box C becomes Stokes on the curved solid E, with
+      the Jacobian and orientation signs carried automatically by the pullback.
+
+[244-244 title c18s7-subsec-approximation-by-small-pieces default_required]
+Approximation by small pieces
+
+[246-249 p c18s7-subsec-approximation-by-small-pieces default_required]
+A general region is not one rectangle. A general surface is not one parameter patch. A
+      general solid is not one box.
+
+[251-257 p c18s7-subsec-approximation-by-small-pieces default_required]
+But many of the objects in this book can be cut into finitely many simple pieces, or
+      approximated by many small simple pieces:
+      \text{rectangles in the plane}, \qquad \text{parameter patches on a surface}, \qquad \text{boxes in space}.
+      On each piece, the theorem is a coordinate calculation. When the pieces are added, the
+      interior boundaries cancel.
+
+[260-260 title checkpoint-18-7-why-pieces-assemble default_required]
+From local to global?
+
+[262-267 p checkpoint-18-7-why-pieces-assemble default_required]
+On a single rectangle the theorem is just the Fundamental Theorem of Calculus. Yet
+          adding many such local statements produces a fact about the one outer boundary.
+          Conceptually, what does the cancellation of interior boundaries accomplish that lets a
+          pile of tiny local equalities become a single global one?
+
+[270-274 p checkpoint-18-7-why-pieces-assemble hint]
+Track what happens to the two sides of the equation separately. The right sides simply
+          add up to the whole region. Something special must happen on the left so that the
+          interior bookkeeping vanishes and only the rim is left to speak.
+
+[278-283 p c18s7-subsec-approximation-by-small-pieces default_required]
+For a curved boundary, there is a small extra step. A grid of rectangles does not fit the
+      boundary perfectly. Some small pieces near the edge are cut off. As the grid becomes
+      finer, the leftover boundary error shrinks. The C^1 condition on the form and the
+      piecewise smooth condition on the boundary make that shrinking error controllable.
+
+[285-290 p c18s7-subsec-approximation-by-small-pieces default_required]
+That is why the theorem allows corners but not wild boundaries. A polygon is fine. A box
+      is fine. A smooth surface made from finitely many patches is fine. A boundary so jagged
+      that it has no tangent direction in any ordinary sense is outside the rules of this
+      course.
+
+[294-294 title c18s7-subsec-what-is-hidden-in-a-fully-rigorous-proof default_required]
+What is hidden in a fully rigorous proof
+
+[296-300 p c18s7-subsec-what-is-hidden-in-a-fully-rigorous-proof default_required]
+The proof idea is simple enough to see:
+      \text{prove on simple pieces, then cancel interior boundaries.}
+      A fully rigorous proof has to check several details.
+
+[302-306 p c18s7-subsec-what-is-hidden-in-a-fully-rigorous-proof default_required]
+First, the object must be covered by pieces whose parameter maps are well behaved. For
+      surfaces, this means smooth regular patches. For solids, this means pieces that can be
+      handled by coordinate maps or by limits of boxes.
+
+[308-313 p c18s7-subsec-what-is-hidden-in-a-fully-rigorous-proof default_required]
+Second, overlaps must be counted with the right signs. If two pieces share an interior
+      edge or face, their induced orientations must be opposite. This is exactly what the
+      boundary orientation rules in  were
+      designed to guarantee.
+
+[315-320 p c18s7-subsec-what-is-hidden-in-a-fully-rigorous-proof default_required]
+Third, the integrals over small leftover pieces must go to zero as the pieces shrink. This
+      is where compactness, piecewise smoothness, and C^1 coefficients enter the proof.
+      They keep the quantities being integrated from behaving wildly while the mesh gets
+      smaller.
+
+[322-330 p c18s7-subsec-what-is-hidden-in-a-fully-rigorous-proof default_required]
+Fourth, the form must be defined on an open set containing the whole object. A singularity
+      inside the region cannot be ignored. The punctured-plane form
+      \frac{-y}{x^2+y^2}\,dx+\frac{x}{x^2+y^2}\,dy
+      and the inverse-square flux form
+      \frac{x}{r^3}\,dy\wedge dz + \frac{y}{r^3}\,dz\wedge dx + \frac{z}{r^3}\,dx\wedge dy
+      showed exactly what goes wrong. A missing point can be detected by a loop or a closed
+      surface around it.
+
+[332-335 p c18s7-subsec-what-is-hidden-in-a-fully-rigorous-proof default_required]
+These details are not new ideas. They are the careful bookkeeping needed to make the
+      cancellation proof honest.
+
+[339-339 title c18s7-subsec-two-twin-facts default_required]
+Two twin facts: \partial^2=0 and d^2=0
+
+[341-346 p c18s7-subsec-two-twin-facts default_required]
+proved the algebraic fact
+      \boxed{d^2=0.}
+      This chapter keeps using the geometric fact
+      \boxed{\partial(\partial M)=\emptyset.}
+
+[348-348 p c18s7-subsec-two-twin-facts default_required]
+They are twins.
+
+[351-351 title checkpoint-18-7-twin-facts default_required]
+Why are the twins twins?
+
+[353-359 p checkpoint-18-7-twin-facts default_required]
+The algebraic fact d^2=0 and the geometric fact
+          \partial(\partial M)=\emptyset look like they belong to different worlds, one
+          about forms and one about shapes. Using only the idea that Stokes' theorem links
+          d with \partial, explain why these two facts are forced to mirror each
+          other rather than being a lucky coincidence.
+
+[362-366 p checkpoint-18-7-twin-facts hint]
+Imagine applying Stokes' theorem twice in a row to \omega. Each application can
+          push a d across to a \partial. What must the two zeros on the two sides
+          be saying about each other?
+
+[370-376 p c18s7-subsec-two-twin-facts default_required]
+If Stokes' theorem is applied twice, it says
+      \int_M d(d\omega) = \int_{\partial M}d\omega = \int_{\partial(\partial M)}\omega.
+      The left side is zero because
+      d^2\omega=0.
+      The right side is zero because a boundary has no boundary.
+
+[378-383 p c18s7-subsec-two-twin-facts default_required]
+So the two slogans match:
+      \boxed{\text{the derivative of a derivative is zero}}
+      and
+      \boxed{\text{the boundary of a boundary is empty.}}
+
+[385-389 p c18s7-subsec-two-twin-facts default_required]
+This is more than a coincidence. The operator d is the algebraic mirror of the
+      boundary operator \partial. Stokes' theorem is the bridge between them:
+      \int_{\partial M}\omega=\int_M d\omega.
+
+[391-396 p c18s7-subsec-two-twin-facts default_required]
+The theorem has now been stated, used, and partly explained. What remains is to strip away
+      the old names and place the four disguises side by side. The next section is the
+      translation table: intervals, plane regions, surfaces, and solids all saying the same
+      sentence in their own dialect.

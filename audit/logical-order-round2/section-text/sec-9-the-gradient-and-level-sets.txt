@@ -1,0 +1,351 @@
+[5-5 title sec-9-the-gradient-and-level-sets default_required]
+The gradient and level sets
+
+[7-14 p sec-9-the-gradient-and-level-sets default_required]
+Recall from  that the
+    gradient gives directional derivatives:
+    D_{\mathbf u}f(\mathbf p)=\nabla f(\mathbf p)\cdot \mathbf u.
+    So if a direction \mathbf u produces no first-order change in f, then
+    \nabla f(\mathbf p)\cdot \mathbf u=0.
+    That one dot product explains why gradients cross contour lines at right angles.
+
+[17-17 title c9s1-subsec-contour-line-on-a-hill default_required]
+A contour line on a hill
+
+[19-29 p c9s1-subsec-contour-line-on-a-hill default_required]
+Picture a hill behind an observatory. Let x measure meters east and y measure
+      meters north. Suppose the height is modeled by
+      h(x,y)=100+4x+3y-x^2-xy-y^2.
+      At the point
+      P=(1,0),
+      the height is
+      h(1,0)=100+4-1=103.
+      So P lies on the contour line
+      h(x,y)=103.
+
+[31-36 p c9s1-subsec-contour-line-on-a-hill default_required]
+The gradient is
+      \nabla h(x,y)=\left(4-2x-y,\ 3-x-2y\right).
+      At P=(1,0),
+      \nabla h(1,0)=(2,2).
+
+[38-53 p c9s1-subsec-contour-line-on-a-hill default_required]
+Now suppose a hiker starts at P and walks along the contour line h=103.
+      Along that walk, the height does not change. So any tangent direction to the contour
+      must give directional derivative 0. If
+      \mathbf v=(a,b)
+      is a tangent vector at P, then
+      \nabla h(P)\cdot \mathbf v=0.
+      Here that says
+      (2,2)\cdot(a,b)=0,
+      or
+      2a+2b=0.
+      Thus
+      a+b=0.
+      One tangent direction is
+      (1,-1).
+
+[55-60 p c9s1-subsec-contour-line-on-a-hill default_required]
+The tangent line through P=(1,0) is therefore
+      (x,y)=(1,0)+t(1,-1),
+      or
+      \boxed{x+y=1.}
+
+[63-64 caption c9s1-fig-gradient-normal-contour default_required]
+The gradient points normal to the contour line. The tangent direction gives
+      zero first-order change.
+
+[66-92 latex-image c9s1-fig-gradient-normal-contour default_required]
+\begin{tikzpicture}[scale=0.95, >=stealth]
+            \draw[->] (-0.5,0) -- (5.5,0) node[right] {\(x\)};
+            \draw[->] (0,-2.5) -- (0,4.0) node[above] {\(y\)};
+
+            \coordinate (C) at (1.667,0.667);
+            \coordinate (P) at (1,0);
+
+            \begin{scope}[rotate around={45:(C)}]
+                % Corrected dimensions to precisely intersect P(1,0) and fix the stretch orientation
+                \draw[gray!45, thick] (C) ellipse (0.943 and 1.633);
+                \draw[gray!35, thick] (C) ellipse (1.414 and 2.449);
+                \draw[gray!25, thick] (C) ellipse (1.886 and 3.266);
+            \end{scope}
+
+            \draw[very thick, red!65!black] (-0.6,1.6) -- (3.6,-2.6)
+                node[below right] {\(x+y=1\)};
+
+            \draw[->, very thick, blue!60!black] (P) -- ++(1.25,1.25)
+                node[right] {\(\nabla h(P)=(2,2)\)};
+
+            \fill (P) circle (2.5pt);
+            \node[below left] at (P) {\(P=(1,0)\)};
+
+            \node[gray!70!black] at (4.0,2.5) {contours \(h=c\)};
+        \end{tikzpicture}
+
+[96-104 p c9s1-subsec-contour-line-on-a-hill default_required]
+Notice what the tangent line is saying. It is not saying that the whole straight line
+      x+y=1 stays on the same contour. In fact, if we move along that line by writing
+      (x,y)=(1+t,-t),
+      then
+      h(1+t,-t)=103-t^2.
+      The height changes by a second-order amount. The tangent line only captures the
+      first-order behavior of the contour at P.
+
+[106-106 p c9s1-subsec-contour-line-on-a-hill default_required]
+That is exactly what a tangent line should do.
+
+[110-110 title c9s1-subsec-gradient-normal-level-curve default_required]
+The gradient as normal to a level curve
+
+[112-112 p c9s1-subsec-gradient-normal-level-curve default_required]
+The example gives the general pattern.
+
+[114-128 p c9s1-subsec-gradient-normal-level-curve default_required]
+Suppose
+      f(x,y)=c
+      is a level curve, and suppose a differentiable parametrization of part of the curve is
+      \mathbf r(t)=(x(t),y(t)).
+      Since the curve stays on one level set,
+      f(\mathbf r(t))=c
+      for all t. Differentiate both sides with respect to t. The left side uses the
+      chain rule from :
+      \frac{d}{dt}f(\mathbf r(t))=\nabla f(\mathbf r(t))\cdot \mathbf r'(t).
+      The right side is constant, so its derivative is 0. Therefore
+      \boxed{\nabla f(\mathbf r(t))\cdot \mathbf r'(t)=0.}
+      The velocity vector \mathbf r'(t) is tangent to the level curve. The gradient is
+      orthogonal to it.
+
+[131-131 title checkpoint-9-1-gradient-perp-level-curve default_required]
+Why perpendicular?
+
+[133-138 p checkpoint-9-1-gradient-perp-level-curve default_required]
+A curve that stays on the level set f(x,y)=c never lets f change as you
+          travel along it. Use that single fact to explain, in your own words, why
+          \nabla f(\mathbf p) must be perpendicular to the level curve at a point
+          \mathbf p (where \nabla f(\mathbf p)\ne\mathbf 0).
+
+[141-145 p checkpoint-9-1-gradient-perp-level-curve hint]
+Walking along the curve means the directional derivative in the tangent direction is
+          zero. What does \nabla f(\mathbf p)\cdot \mathbf r'(t)=0 say about the angle
+          between those two vectors?
+
+[150-150 title c9s1-thm-gradient-normal-level-curve default_required]
+Gradient normal to a level curve
+
+[152-162 p c9s1-thm-gradient-normal-level-curve default_required]
+Let f be differentiable near a point
+          \mathbf p=(a,b),
+          and suppose
+          \nabla f(\mathbf p)\ne \mathbf 0.
+          If the level set
+          f(x,y)=f(a,b)
+          is a smooth curve near \mathbf p, then
+          \boxed{\nabla f(\mathbf p)}
+          is normal to the level curve at \mathbf p.
+
+[163-168 p c9s1-thm-gradient-normal-level-curve default_required]
+The tangent line is
+          \boxed{\nabla f(\mathbf p)\cdot \bigl((x,y)-\mathbf p\bigr)=0.}
+          In coordinates,
+          \boxed{f_x(a,b)(x-a)+f_y(a,b)(y-b)=0.}
+
+[171-183 p c9s1-thm-gradient-normal-level-curve default_required]
+Let
+          \mathbf r(t)
+          be a differentiable parametrization of the level curve, with
+          \mathbf r(t_0)=\mathbf p.
+          Since
+          f(\mathbf r(t))=f(\mathbf p),
+          the chain rule gives
+          \nabla f(\mathbf r(t_0))\cdot \mathbf r'(t_0)=0.
+          Thus the gradient is perpendicular to the tangent direction. A line through
+          \mathbf p with normal vector \nabla f(\mathbf p) has equation
+          \nabla f(\mathbf p)\cdot \bigl((x,y)-\mathbf p\bigr)=0.
+
+[187-191 p c9s1-subsec-gradient-normal-level-curve default_required]
+The condition
+      \nabla f(\mathbf p)\ne\mathbf 0
+      is not decoration. Without it, the level set may fail to have one clean tangent line.
+
+[194-194 title c9s1-ex-nonzero-gradient-condition default_required]
+Why the nonzero-gradient condition is needed
+
+[196-209 p c9s1-ex-nonzero-gradient-condition default_required]
+Let
+          f(x,y)=x^2-y^2.
+          At the origin,
+          \nabla f(0,0)=(0,0).
+          The level set
+          f(x,y)=0
+          is
+          x^2-y^2=0,
+          so
+          (x-y)(x+y)=0.
+          Thus the level set is the crossing of two lines:
+          y=x \qquad\text{and}\qquad y=-x.
+
+[210-213 p c9s1-ex-nonzero-gradient-condition default_required]
+At the origin there is no single tangent line to the whole level set. One branch has
+          tangent direction (1,1), and the other has tangent direction (1,-1).
+
+[214-216 p c9s1-ex-nonzero-gradient-condition default_required]
+The zero gradient warned us that the ordinary tangent-line picture might break.
+
+[220-228 p c9s1-subsec-gradient-normal-level-curve default_required]
+A different failure can also happen. For
+      f(x,y)=x^2+y^2,
+      the level set
+      f(x,y)=0
+      is only the single point (0,0). Again
+      \nabla f(0,0)=\mathbf 0,
+      and there is no ordinary curve to draw.
+
+[230-235 p c9s1-subsec-gradient-normal-level-curve default_required]
+When the gradient is nonzero, the implicit function theorem from
+      
+      says the level set really does behave locally like a smooth curve. The tangent formula
+      then tells us its first-order direction.
+
+[239-239 title c9s1-subsec-gradient-normal-level-surface default_required]
+The gradient as normal to a level surface
+
+[241-241 p c9s1-subsec-gradient-normal-level-surface default_required]
+The same reasoning works in space.
+
+[243-253 p c9s1-subsec-gradient-normal-level-surface default_required]
+Suppose
+      F(x,y,z)=c
+      is a level surface. A curve
+      \mathbf r(t)=(x(t),y(t),z(t))
+      lying on that surface satisfies
+      F(\mathbf r(t))=c.
+      Differentiating gives
+      \nabla F(\mathbf r(t))\cdot \mathbf r'(t)=0.
+      Every tangent direction to the surface is perpendicular to the gradient.
+
+[256-256 title checkpoint-9-1-gradient-normal-tangent-plane default_required]
+From normal to plane?
+
+[258-264 p checkpoint-9-1-gradient-normal-tangent-plane default_required]
+Many different curves can pass through a point \mathbf p on the level surface
+          F(x,y,z)=c, yet \nabla F(\mathbf p) is perpendicular to every one of their
+          tangent directions at once. Why does that force \nabla F(\mathbf p) to be a
+          normal vector to the whole surface, and how does knowing one normal vector hand you the
+          tangent plane?
+
+[267-271 p checkpoint-9-1-gradient-normal-tangent-plane hint]
+All those tangent directions sweep out a single plane through \mathbf p. A plane
+          is pinned down by one point and one normal vector. Picture the gradient as the spoke that
+          sticks straight out of that plane.
+
+[276-276 title c9s1-ex-tangent-plane-ellipsoidal-shell default_required]
+A tangent plane to an ellipsoidal shell
+
+[278-285 p c9s1-ex-tangent-plane-ellipsoidal-shell default_required]
+A thin ellipsoidal shell is modeled by the level surface
+          F(x,y,z)=x^2+2y^2+3z^2=6.
+          The point
+          P=(1,1,1)
+          lies on the shell because
+          1^2+2(1)^2+3(1)^2=6.
+
+[286-292 p c9s1-ex-tangent-plane-ellipsoidal-shell default_required]
+The gradient is
+          \nabla F(x,y,z)=(2x,4y,6z),
+          so
+          \nabla F(1,1,1)=(2,4,6).
+          This is a normal vector to the surface at P.
+
+[293-300 p c9s1-ex-tangent-plane-ellipsoidal-shell default_required]
+The tangent plane is
+          (2,4,6)\cdot\bigl((x,y,z)-(1,1,1)\bigr)=0.
+          So
+          2(x-1)+4(y-1)+6(z-1)=0.
+          Dividing by 2,
+          \boxed{x+2y+3z=6.}
+
+[305-305 title c9s1-thm-gradient-normal-level-surface default_required]
+Gradient normal to a level surface
+
+[307-317 p c9s1-thm-gradient-normal-level-surface default_required]
+Let F be differentiable near
+          \mathbf p=(a,b,c),
+          and suppose
+          \nabla F(\mathbf p)\ne\mathbf 0.
+          If the level set
+          F(x,y,z)=F(a,b,c)
+          is a smooth surface near \mathbf p, then
+          \boxed{\nabla F(\mathbf p)}
+          is normal to the surface at \mathbf p.
+
+[318-323 p c9s1-thm-gradient-normal-level-surface default_required]
+The tangent plane is
+          \boxed{\nabla F(\mathbf p)\cdot \bigl((x,y,z)-\mathbf p\bigr)=0.}
+          In coordinates,
+          \boxed{F_x(a,b,c)(x-a)+F_y(a,b,c)(y-b)+F_z(a,b,c)(z-c)=0.}
+
+[327-337 p c9s1-subsec-gradient-normal-level-surface default_required]
+In the language of differentials, the same statement is shorter. A tangent vector
+      \mathbf v
+      to the level surface must satisfy
+      \boxed{dF_{\mathbf p}(\mathbf v)=0.}
+      Since
+      dF=F_x\,dx+F_y\,dy+F_z\,dz,
+      this says
+      F_x(a,b,c)v_1+F_y(a,b,c)v_2+F_z(a,b,c)v_3=0.
+      The tangent plane is the set of first-order motions that dF sends to zero.
+
+[341-341 title c9s1-subsec-orthogonality-flow-lines-contours default_required]
+Orthogonality of flow lines and contours
+
+[343-343 p c9s1-subsec-orthogonality-flow-lines-contours default_required]
+Contour maps show level curves. The gradient points across them.
+
+[345-352 p c9s1-subsec-orthogonality-flow-lines-contours default_required]
+If a hiker walks in the direction of steepest uphill motion, the velocity is parallel to
+      \nabla h.
+      If rainwater runs downhill, its velocity is often modeled as parallel to
+      -\nabla h.
+      Either way, the motion crosses contours at right angles, because each contour's tangent
+      direction is perpendicular to the gradient.
+
+[355-355 title checkpoint-9-1-steepest-path-crosses-contours default_required]
+Right-angle crossings?
+
+[357-361 p checkpoint-9-1-steepest-path-crosses-contours default_required]
+A path of steepest ascent moves along \nabla f, and steepest descent moves along
+          -\nabla f. Explain why both kinds of path cross the contour lines at right angles,
+          and why that makes intuitive sense for the path of fastest possible climb or descent.
+
+[364-369 p checkpoint-9-1-steepest-path-crosses-contours hint]
+Each contour's tangent direction is perpendicular to \nabla f. If your velocity is
+          parallel to \nabla f (or -\nabla f), how can it sit relative to that tangent
+          direction? Sliding any bit along a contour would waste effort on motion that does
+          not change height.
+
+[373-383 p c9s1-subsec-orthogonality-flow-lines-contours default_required]
+A curve satisfying
+      \mathbf r'(t)=\nabla f(\mathbf r(t))
+      is called a gradient flow line. Along such a curve,
+      
+        \frac{d}{dt}f(\mathbf r(t)) \amp= \nabla f(\mathbf r(t))\cdot \mathbf r'(t)
+        \amp= \nabla f(\mathbf r(t))\cdot \nabla f(\mathbf r(t))
+        \amp= \|\nabla f(\mathbf r(t))\|^2.
+      
+      So unless the gradient is zero, f increases along its own gradient flow.
+
+[385-391 p c9s1-subsec-orthogonality-flow-lines-contours default_required]
+For downhill flow,
+      \mathbf r'(t)=-\nabla f(\mathbf r(t)),
+      we get
+      \frac{d}{dt}f(\mathbf r(t))=-\|\nabla f(\mathbf r(t))\|^2.
+      So f decreases unless the gradient is zero.
+
+[393-401 p c9s1-subsec-orthogonality-flow-lines-contours default_required]
+This is a beautiful place for the story to pause. Level curves show where the function
+      is constant. Gradient flow lines show the directions where the function changes as fast
+      as possible. But both descriptions lose their direction when
+      \nabla f=\mathbf 0.
+      At such a point, first-order motion goes silent. The point might be the top of a hill,
+      the bottom of a bowl, or a mountain pass. Those silent points are where optimization
+      begins.

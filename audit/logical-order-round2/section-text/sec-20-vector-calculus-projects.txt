@@ -1,0 +1,841 @@
+[5-5 title sec-20-vector-calculus-projects default_required]
+Vector calculus projects
+
+[8-13 p sec-20-vector-calculus-projects default_required]
+The previous projects added quantities over regions. Vector calculus asks what happens
+      along boundaries and through surfaces. Work follows curves. Flux crosses surfaces.
+      Green's theorem, Stokes' theorem, and the divergence theorem say that boundary
+      measurements can reveal interior information.
+
+[14-16 p sec-20-vector-calculus-projects default_required]
+The projects below are meant to make that principle measurable.
+
+[20-20 title c20s4-project-work-around-closed-curves default_required]
+Project 1: work around closed curves
+
+[22-26 p c20s4-project-work-around-closed-curves default_required]
+A closed curve returns to where it started. A conservative field does no net work
+      around such a curve. A rotating field may do positive or negative work, depending on
+      the direction of travel.
+
+[27-29 p c20s4-project-work-around-closed-curves default_required]
+The line integral detects the difference.
+
+[31-41 p c20s4-project-work-around-closed-curves default_required]
+A seed example: a field that measures area. Let
+      
+        \mathbf F(x,y)=\left(-\frac y2,\frac x2\right),
+      
+      and let
+      
+        \omega=-\frac y2\,dx+\frac x2\,dy
+      
+      be its work 1-form.
+
+[42-48 p c20s4-project-work-around-closed-curves default_required]
+Walk counterclockwise around the rectangle
+      
+        R=[0,4]\times[0,3].
+      
+      We compute the work around the four sides.
+
+[50-56 p c20s4-project-work-around-closed-curves default_required]
+Bottom side. Here y=0 and dy=0. So
+      
+        \omega=0.
+      
+      The bottom contributes 0.
+
+[58-64 p c20s4-project-work-around-closed-curves default_required]
+Right side. Here x=4, dx=0, and y goes from 0 to 3. Thus
+      
+        \int_{\text{right}}\omega \amp = \int_0^3 \frac{4}{2}\,dy
+        \amp = 6.
+
+[66-72 p c20s4-project-work-around-closed-curves default_required]
+Top side. Here y=3, dy=0, and x goes from 4 back to 0. Thus
+      
+        \int_{\text{top}}\omega \amp = \int_4^0 -\frac32\,dx
+        \amp = 6.
+
+[74-80 p c20s4-project-work-around-closed-curves default_required]
+Left side. Here x=0, dx=0, and y goes downward. Thus
+      
+        \omega=0.
+      
+      The left side contributes 0.
+
+[82-100 p c20s4-project-work-around-closed-curves default_required]
+So
+      
+        \boxed{
+        \oint_{\partial R}\omega=12.
+        }
+      
+      The rectangle has area
+      
+        4\cdot3=12.
+      
+      This is not a coincidence. Compute the exterior derivative:
+      
+        d\omega \amp = d\left(-\frac y2\,dx+\frac x2\,dy\right)
+        \amp = \left(\frac{\partial}{\partial x}\frac x2 - \frac{\partial}{\partial y}\left(-\frac y2\right) \right)dx\wedge dy
+        \amp = \left(\frac12+\frac12\right)dx\wedge dy
+        \amp = dx\wedge dy.
+
+[101-115 p c20s4-project-work-around-closed-curves default_required]
+Green's theorem gives
+      
+        \boxed{
+        \oint_{\partial R}\omega
+        =
+        \iint_R d\omega
+        =
+        \iint_R dx\wedge dy
+        =
+        \operatorname{Area}(R).
+        }
+      
+      The work form is secretly an area-measuring instrument.
+
+[118-118 caption c20s4-fig-rotational-work-rectangle default_required]
+A rotational field can do positive work around a closed curve.
+
+[120-141 latex-image c20s4-img-rotational-work-rectangle default_required]
+\begin{tikzpicture}[scale=0.8, >=stealth]
+    \draw[->] (-0.5,0) -- (5.2,0) node[right] {\(x\)};
+    \draw[->] (0,-0.5) -- (0,4.2) node[above] {\(y\)};
+
+    \draw[fill=gray!10, thick] (0,0) rectangle (4,3);
+
+    \draw[->, very thick, red!65!black] (0,0) -- (1.4,0);
+    \draw[->, very thick, red!65!black] (4,0) -- (4,1.2);
+    \draw[->, very thick, red!65!black] (4,3) -- (2.6,3);
+    \draw[->, very thick, red!65!black] (0,3) -- (0,1.8);
+
+    \foreach \x in {0.8,1.6,2.4,3.2} {
+        \foreach \y in {0.7,1.5,2.3} {
+            \draw[->, blue!65!black, thick]
+                (\x,\y) -- ++({-0.14*\y},{0.14*\x});
+        }
+    }
+
+    \node at (2,-0.85) {counterclockwise work equals area for this field};
+\end{tikzpicture}
+
+[145-160 p c20s4-project-work-around-closed-curves default_required]
+Your task. Choose one field and one closed curve.
+      
+        \begin{array}{c|c}
+        \text{Field} \amp \text{Feature} \\ \hline
+        \mathbf F=(-y,x) \amp \text{constant positive scalar curl }2\\[1mm]
+        \mathbf F=\left(-\dfrac y2,\dfrac x2\right) \amp \text{work equals area}\\[4mm]
+        \mathbf F=(2x,2y) \amp \text{gradient field}\\[1mm]
+        \mathbf F=(y^2,x) \amp \text{nonconstant scalar curl}\\[1mm]
+        \mathbf F=\left(\dfrac{-y}{x^2+y^2},\dfrac{x}{x^2+y^2}\right)
+        \amp \text{punctured-plane warning}
+        \end{array}
+      
+      For curves, use a circle, ellipse, rectangle, triangle, or a piecewise smooth curve of
+      your own.
+
+[162-164 p c20s4-project-work-around-closed-curves default_required]
+Required steps.
+
+[166-168 li c20s4-project-work-around-closed-curves default_required]
+Draw the vector field and the closed curve.
+
+[169-171 li c20s4-project-work-around-closed-curves default_required]
+Choose an orientation for the curve.
+
+[172-179 li c20s4-project-work-around-closed-curves default_required]
+Write the work form
+          
+            \omega=P\,dx+Q\,dy.
+
+[180-182 li c20s4-project-work-around-closed-curves default_required]
+Compute the line integral directly, if possible.
+
+[183-190 li c20s4-project-work-around-closed-curves default_required]
+Compute
+          
+            d\omega=(Q_x-P_y)\,dx\wedge dy.
+
+[191-193 li c20s4-project-work-around-closed-curves default_required]
+Use Green's theorem if the field is defined on the region enclosed by the curve.
+
+[194-196 li c20s4-project-work-around-closed-curves default_required]
+Compare the direct calculation with the theorem calculation.
+
+[197-199 li c20s4-project-work-around-closed-curves default_required]
+Reverse the curve orientation and state what changes.
+
+[202-204 p c20s4-project-work-around-closed-curves default_required]
+Questions to answer.
+
+[206-208 li c20s4-project-work-around-closed-curves default_required]
+Is the work positive, negative, or zero?
+
+[209-211 li c20s4-project-work-around-closed-curves default_required]
+Does the field help the chosen direction of travel?
+
+[212-214 li c20s4-project-work-around-closed-curves default_required]
+Is the field a gradient field?
+
+[215-220 li c20s4-project-work-around-closed-curves default_required]
+If the field has zero curl away from a missing point, can the closed integral still
+          be nonzero?
+
+[221-223 li c20s4-project-work-around-closed-curves default_required]
+What does the answer say about the domain?
+
+[226-228 p c20s4-project-work-around-closed-curves default_required]
+What to hand in. Your report should include:
+
+[230-232 li c20s4-project-work-around-closed-curves default_required]
+the chosen field and curve,
+
+[233-235 li c20s4-project-work-around-closed-curves default_required]
+the parametrization of the curve,
+
+[236-238 li c20s4-project-work-around-closed-curves default_required]
+the line integral,
+
+[239-241 li c20s4-project-work-around-closed-curves default_required]
+the exterior derivative d\omega,
+
+[242-244 li c20s4-project-work-around-closed-curves default_required]
+the Green's theorem calculation, when allowed,
+
+[245-247 li c20s4-project-work-around-closed-curves default_required]
+a paragraph explaining the role of orientation and domain holes.
+
+[250-253 p c20s4-project-work-around-closed-curves default_required]
+A closed curve can hide a surprise. Even if every local test looks harmless, a missing
+      point inside the loop can change the answer.
+
+[257-257 title c20s4-project-flux-through-complicated-surfaces default_required]
+Project 2: flux through complicated surfaces
+
+[259-262 p c20s4-project-flux-through-complicated-surfaces default_required]
+Flux measures how much a vector field crosses a surface. A flat disk is friendly. A
+      curved dome is less friendly. A surface made of several pieces can look intimidating.
+
+[263-265 p c20s4-project-flux-through-complicated-surfaces default_required]
+The divergence theorem offers a shortcut, but only after the surface is closed.
+
+[267-279 p c20s4-project-flux-through-complicated-surfaces default_required]
+A seed example: flux through a paraboloid dome. Let S be the dome
+      
+        z=4-x^2-y^2,
+        \qquad
+        x^2+y^2\le4,
+      
+      oriented upward. Together with the disk
+      
+        D:\quad z=0,\qquad x^2+y^2\le4,
+      
+      the dome bounds a solid E.
+
+[280-286 p c20s4-project-flux-through-complicated-surfaces default_required]
+Let
+      
+        \mathbf F(x,y,z)=(x,y,z).
+      
+      We want the flux through the dome S.
+
+[287-294 p c20s4-project-flux-through-complicated-surfaces default_required]
+The closed surface is
+      
+        \partial E=S\cup D,
+      
+      with outward orientation. On the dome, outward means upward and outward. On the
+      bottom disk, outward means downward.
+
+[295-312 p c20s4-project-flux-through-complicated-surfaces default_required]
+The divergence is
+      
+        \nabla\cdot\mathbf F
+        =
+        1+1+1
+        =
+        3.
+      
+      By the divergence theorem,
+      
+        \iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E 3\,dV
+        =
+        3\operatorname{Volume}(E).
+
+[313-325 p c20s4-project-flux-through-complicated-surfaces default_required]
+Find the volume of E:
+      
+        \operatorname{Volume}(E) \amp = \int_0^{2\pi}\int_0^2(4-r^2)r\,dr\,d\theta
+        \amp = 2\pi\left[ 2r^2-\frac14r^4 \right]_0^2
+        \amp = 2\pi(8-4)
+        \amp = 8\pi.
+      
+      So the total outward flux through the closed surface is
+      
+        3(8\pi)=24\pi.
+
+[326-347 p c20s4-project-flux-through-complicated-surfaces default_required]
+Now check the bottom disk. On D,
+      
+        z=0,
+        \qquad
+        \widehat{\mathbf n}=(0,0,-1).
+      
+      Thus
+      
+        \mathbf F\cdot\widehat{\mathbf n}
+        =
+        (x,y,0)\cdot(0,0,-1)
+        =
+        0.
+      
+      So the bottom disk contributes 0. Therefore the flux through the dome is
+      
+        \boxed{
+        \iint_S \mathbf F\cdot\widehat{\mathbf n}\,dS=24\pi.
+        }
+
+[348-371 p c20s4-project-flux-through-complicated-surfaces default_required]
+In forms language, the flux form is
+      
+        \Phi_{\mathbf F}
+        =
+        x\,dy\wedge dz
+        +
+        y\,dz\wedge dx
+        +
+        z\,dx\wedge dy,
+      
+      and
+      
+        d\Phi_{\mathbf F}
+        =
+        3\,dx\wedge dy\wedge dz.
+      
+      The same computation says
+      
+        \int_{\partial E}\Phi_{\mathbf F}
+        =
+        \int_E d\Phi_{\mathbf F}.
+
+[373-385 p c20s4-project-flux-through-complicated-surfaces default_required]
+Your task. Choose one surface.
+      
+        \begin{array}{c|c}
+        \text{Surface} \amp \text{Suggested field} \\ \hline
+        \text{paraboloid cap} \amp (x,y,z)\\[1mm]
+        \text{hemisphere with disk base} \amp (0,0,z)\\[1mm]
+        \text{cylinder side plus caps} \amp (x,y,1)\\[1mm]
+        \text{box with one face removed} \amp (x^2,y,z)\\[1mm]
+        \text{triangulated surface or mesh} \amp \text{constant or radial field}
+        \end{array}
+
+[387-389 p c20s4-project-flux-through-complicated-surfaces default_required]
+Required steps.
+
+[391-393 li c20s4-project-flux-through-complicated-surfaces default_required]
+Draw the surface and state its orientation.
+
+[394-396 li c20s4-project-flux-through-complicated-surfaces default_required]
+Decide whether the surface is closed.
+
+[397-399 li c20s4-project-flux-through-complicated-surfaces default_required]
+If it is not closed, add simple pieces to close it.
+
+[400-405 li c20s4-project-flux-through-complicated-surfaces default_required]
+Compute the flux through the closed surface using the divergence theorem, if
+          possible.
+
+[406-408 li c20s4-project-flux-through-complicated-surfaces default_required]
+Compute or subtract the flux through the added pieces.
+
+[409-411 li c20s4-project-flux-through-complicated-surfaces default_required]
+State the flux through the original surface.
+
+[412-425 li c20s4-project-flux-through-complicated-surfaces default_required]
+Translate the flux integral into a 2-form:
+          
+            \Phi_{\mathbf F}
+            =
+            F_1\,dy\wedge dz
+            +
+            F_2\,dz\wedge dx
+            +
+            F_3\,dx\wedge dy.
+
+[428-430 p c20s4-project-flux-through-complicated-surfaces default_required]
+Questions to answer.
+
+[432-434 li c20s4-project-flux-through-complicated-surfaces default_required]
+Is the surface open or closed?
+
+[435-437 li c20s4-project-flux-through-complicated-surfaces default_required]
+What does outward mean for each piece?
+
+[438-440 li c20s4-project-flux-through-complicated-surfaces default_required]
+Which pieces contribute zero flux by symmetry or by the direction of the field?
+
+[441-443 li c20s4-project-flux-through-complicated-surfaces default_required]
+Is the divergence theorem faster than a direct surface integral?
+
+[444-446 li c20s4-project-flux-through-complicated-surfaces default_required]
+What would change if the orientation were reversed?
+
+[449-451 p c20s4-project-flux-through-complicated-surfaces default_required]
+What to hand in. Your report should include:
+
+[453-455 li c20s4-project-flux-through-complicated-surfaces default_required]
+a drawing of the surface,
+
+[456-458 li c20s4-project-flux-through-complicated-surfaces default_required]
+the vector field,
+
+[459-461 li c20s4-project-flux-through-complicated-surfaces default_required]
+the orientation,
+
+[462-464 li c20s4-project-flux-through-complicated-surfaces default_required]
+the closed-surface construction,
+
+[465-467 li c20s4-project-flux-through-complicated-surfaces default_required]
+the divergence calculation,
+
+[468-470 li c20s4-project-flux-through-complicated-surfaces default_required]
+the flux through any added pieces,
+
+[471-473 li c20s4-project-flux-through-complicated-surfaces default_required]
+the final flux through the requested surface.
+
+[476-480 p c20s4-project-flux-through-complicated-surfaces default_required]
+A surface integral can be hard because the surface is curved. The divergence theorem
+      moves the difficulty into the solid it bounds. Sometimes the inside is easier than the
+      skin.
+
+[484-484 title c20s4-project-greens-theorem-area-from-gps default_required]
+Project 3: Green's theorem and area from GPS boundary data
+
+[486-489 p c20s4-project-greens-theorem-area-from-gps default_required]
+A region's area can be found without filling the region with a grid. It can be found by
+      walking around the boundary.
+
+[490-492 p c20s4-project-greens-theorem-area-from-gps default_required]
+Green's theorem explains why.
+
+[493-512 p c20s4-project-greens-theorem-area-from-gps default_required]
+Let
+      
+        \eta=\frac12(x\,dy-y\,dx).
+      
+      Then
+      
+        d\eta \amp = \frac12(dx\wedge dy-dy\wedge dx)
+        \amp = dx\wedge dy.
+      
+      So, for a positively oriented boundary,
+      
+        \boxed{
+        \operatorname{Area}(R)
+        =
+        \oint_{\partial R}\frac12(x\,dy-y\,dx).
+        }
+      
+      This formula is the continuous version of the shoelace formula for polygons.
+
+[514-527 p c20s4-project-greens-theorem-area-from-gps default_required]
+A seed example: four boundary points. Suppose a surveyor records four boundary
+      points of a small field, measured in meters from a local reference point:
+      
+        \begin{array}{c|cc}
+        \text{Point} \amp x \amp y \\ \hline
+        P_0 \amp 0 \amp 0\\
+        P_1 \amp 5 \amp 1\\
+        P_2 \amp 4 \amp 4\\
+        P_3 \amp 1 \amp 3
+        \end{array}
+      
+      Assume the points are listed counterclockwise and connected by straight segments.
+
+[528-557 p c20s4-project-greens-theorem-area-from-gps default_required]
+On a line segment from
+      
+        (x_i,y_i)
+      
+      to
+      
+        (x_{i+1},y_{i+1}),
+      
+      the integral of \eta is
+      
+        \boxed{
+        \frac12(x_i y_{i+1}-y_i x_{i+1}).
+        }
+      
+      Therefore
+      
+        \operatorname{Area} \amp = \frac12\sum_{i=0}^{3} (x_i y_{i+1}-y_i x_{i+1})
+        \amp = \frac12\Bigl[ (0\cdot1-0\cdot5) + (5\cdot4-1\cdot4)
+        \amp \qquad + (4\cdot3-4\cdot1) + (1\cdot0-3\cdot0) \Bigr]
+        \amp = \frac12(0+16+8+0)
+        \amp = 12.
+      
+      So the field has area
+      
+        \boxed{
+        12\text{ m}^2.
+        }
+
+[558-565 p c20s4-project-greens-theorem-area-from-gps default_required]
+If the points were listed clockwise, the same calculation would give
+      
+        -12.
+      
+      The negative sign would not mean negative physical area. It would mean the boundary
+      orientation was reversed.
+
+[568-568 caption c20s4-fig-shoelace-boundary default_required]
+Green's theorem turns a boundary walk into an area calculation.
+
+[570-591 latex-image c20s4-img-shoelace-boundary default_required]
+\begin{tikzpicture}[scale=0.75, >=stealth]
+    \draw[->] (-0.5,0) -- (6.2,0) node[right] {\(x\)};
+    \draw[->] (0,-0.5) -- (0,5.2) node[above] {\(y\)};
+
+    \draw[gray!20, step=1] (0,0) grid (6,5);
+
+    \draw[fill=green!10, thick] (0,0) -- (5,1) -- (4,4) -- (1,3) -- cycle;
+
+    \draw[->, very thick, red!65!black] (0,0) -- (2.3,0.46);
+    \draw[->, very thick, red!65!black] (5,1) -- (4.55,2.35);
+    \draw[->, very thick, red!65!black] (4,4) -- (2.55,3.55);
+    \draw[->, very thick, red!65!black] (1,3) -- (0.45,1.35);
+
+    \foreach \p/\name in {(0,0)/P_0,(5,1)/P_1,(4,4)/P_2,(1,3)/P_3} {
+        \fill \p circle (2.5pt);
+        \node[above right] at \p {\(\name\)};
+    }
+
+    \node at (3,-0.9) {area from boundary data};
+\end{tikzpicture}
+
+[595-597 p c20s4-project-greens-theorem-area-from-gps default_required]
+Your task. Choose one boundary data set.
+
+[599-602 p c20s4-project-greens-theorem-area-from-gps default_required]
+Option A. Use provided data. Use the four-point data from the seed example. Then
+      add more points to create a six-point or eight-point polygon and compute its area.
+
+[604-607 p c20s4-project-greens-theorem-area-from-gps default_required]
+Option B. Create a boundary. Draw an irregular region on graph paper. Record its
+      boundary points in order. Compute the area using the shoelace formula.
+
+[609-613 p c20s4-project-greens-theorem-area-from-gps default_required]
+Option C. Use local GPS-style data. Record boundary points of a small region.
+      Convert the locations to local planar coordinates measured in meters before using the
+      formula. Latitude and longitude degrees are not distances.
+
+[615-619 p c20s4-project-greens-theorem-area-from-gps default_required]
+Option D. Region with a hole. Use an outer boundary and an inner boundary. Orient
+      the outer boundary counterclockwise and the inner boundary clockwise. Compute the area
+      of the region with the hole removed.
+
+[621-623 p c20s4-project-greens-theorem-area-from-gps default_required]
+Required steps.
+
+[625-627 li c20s4-project-greens-theorem-area-from-gps default_required]
+List the boundary points in order.
+
+[628-630 li c20s4-project-greens-theorem-area-from-gps default_required]
+Plot the polygon.
+
+[631-633 li c20s4-project-greens-theorem-area-from-gps default_required]
+Check the orientation.
+
+[634-641 li c20s4-project-greens-theorem-area-from-gps default_required]
+Compute
+          
+            \frac12\sum_i (x_i y_{i+1}-y_i x_{i+1}).
+
+[642-644 li c20s4-project-greens-theorem-area-from-gps default_required]
+Interpret the sign.
+
+[645-647 li c20s4-project-greens-theorem-area-from-gps default_required]
+Compare with a rough grid-counting estimate.
+
+[648-657 li c20s4-project-greens-theorem-area-from-gps default_required]
+Explain how this formula comes from Green's theorem:
+          
+            \oint_{\partial R}\frac12(x\,dy-y\,dx)
+            =
+            \iint_R dx\wedge dy.
+
+[660-662 p c20s4-project-greens-theorem-area-from-gps default_required]
+Questions to answer.
+
+[664-666 li c20s4-project-greens-theorem-area-from-gps default_required]
+What happens if two boundary points are listed in the wrong order?
+
+[667-669 li c20s4-project-greens-theorem-area-from-gps default_required]
+What happens if the boundary crosses itself?
+
+[670-672 li c20s4-project-greens-theorem-area-from-gps default_required]
+How does the sign detect clockwise versus counterclockwise order?
+
+[673-675 li c20s4-project-greens-theorem-area-from-gps default_required]
+Why must an inner boundary be oriented clockwise?
+
+[676-678 li c20s4-project-greens-theorem-area-from-gps default_required]
+How accurate is the polygon area if the true boundary is curved?
+
+[681-683 p c20s4-project-greens-theorem-area-from-gps default_required]
+What to hand in. Your report should include:
+
+[685-687 li c20s4-project-greens-theorem-area-from-gps default_required]
+a table of boundary points,
+
+[688-690 li c20s4-project-greens-theorem-area-from-gps default_required]
+a plot of the boundary,
+
+[691-693 li c20s4-project-greens-theorem-area-from-gps default_required]
+the shoelace computation,
+
+[694-696 li c20s4-project-greens-theorem-area-from-gps default_required]
+the area with units,
+
+[697-699 li c20s4-project-greens-theorem-area-from-gps default_required]
+a Green's theorem explanation,
+
+[700-702 li c20s4-project-greens-theorem-area-from-gps default_required]
+a short error discussion.
+
+[705-708 p c20s4-project-greens-theorem-area-from-gps default_required]
+This project is a good example of the book's main theme. The area lies inside the
+      region, but the calculation only walks around the edge.
+
+[712-712 title c20s4-project-divergence-theorem-flux-balance default_required]
+Project 4: divergence theorem and numerical flux balance
+
+[714-724 p c20s4-project-divergence-theorem-flux-balance default_required]
+The divergence theorem says that outward flux through a closed surface equals total
+      divergence inside:
+      
+        \boxed{
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E \nabla\cdot\mathbf J\,dV.
+        }
+
+[725-728 p c20s4-project-divergence-theorem-flux-balance default_required]
+In , this became a conservation law. If \mathbf J is a flux
+      density, then outward flux is loss from the region unless sources replace it.
+
+[729-731 p c20s4-project-divergence-theorem-flux-balance default_required]
+This project checks that balance numerically.
+
+[733-757 p c20s4-project-divergence-theorem-flux-balance default_required]
+A seed example: flux through a unit cube. Let
+      
+        E=[0,1]\times[0,1]\times[0,1],
+      
+      and let
+      
+        \mathbf J(x,y,z)=(x^2,y,z).
+      
+      First compute the divergence:
+      
+        \nabla\cdot\mathbf J
+        =
+        2x+1+1
+        =
+        2x+2.
+      
+      The volume integral is
+      
+        \iiint_E(2x+2)\,dV \amp = \int_0^1\int_0^1\int_0^1(2x+2)\,dz\,dy\,dx
+        \amp = \int_0^1(2x+2)\,dx
+        \amp = \left[x^2+2x\right]_0^1
+        \amp = 3.
+
+[758-786 p c20s4-project-divergence-theorem-flux-balance default_required]
+Now compute the outward flux through the six faces.
+      
+        \begin{array}{c|c|c|c}
+        \text{Face} \amp \widehat{\mathbf n} \amp \mathbf J\cdot\widehat{\mathbf n}
+        \amp \text{Flux} \\ \hline
+        x=1 \amp (1,0,0) \amp 1 \amp 1\\
+        x=0 \amp (-1,0,0) \amp 0 \amp 0\\
+        y=1 \amp (0,1,0) \amp 1 \amp 1\\
+        y=0 \amp (0,-1,0) \amp 0 \amp 0\\
+        z=1 \amp (0,0,1) \amp 1 \amp 1\\
+        z=0 \amp (0,0,-1) \amp 0 \amp 0
+        \end{array}
+      
+      So the total outward flux is
+      
+        1+0+1+0+1+0=3.
+      
+      The two sides match:
+      
+        \boxed{
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E\nabla\cdot\mathbf J\,dV
+        =
+        3.
+        }
+
+[788-811 p c20s4-project-divergence-theorem-flux-balance default_required]
+Numerical flux balance. In a numerical calculation, the two sides may not match
+      exactly. We can measure the error by the residual
+      
+        \boxed{
+        \mathcal R
+        =
+        \left(
+        \text{estimated outward boundary flux}
+        \right)
+        -
+        \left(
+        \text{estimated interior divergence}
+        \right).
+        }
+      
+      For an exact calculation,
+      
+        \mathcal R=0.
+      
+      For a numerical calculation, a small residual means the discretization is respecting the
+      balance law well. A large residual means that the grid, the data, or the orientation may
+      be wrong.
+
+[813-815 p c20s4-project-divergence-theorem-flux-balance default_required]
+Your task. Choose one version.
+
+[817-820 p c20s4-project-divergence-theorem-flux-balance default_required]
+Option A. Exact cube check. Use a rectangular box and a polynomial field. Compute
+      both sides exactly.
+
+[822-825 p c20s4-project-divergence-theorem-flux-balance default_required]
+Option B. Numerical cube check. Use midpoint or trapezoid sums on the six faces
+      and inside the box. Estimate both sides and compute the residual.
+
+[827-838 p c20s4-project-divergence-theorem-flux-balance default_required]
+Option C. Incompressible flow. Choose a divergence-free field, such as
+      
+        \mathbf J=(-y,x,0)
+      
+      or
+      
+        \mathbf J=(yz,xz,xy)
+      
+      after checking its divergence. Estimate the outward flux through a closed surface and
+      explain why it should be close to 0.
+
+[840-851 p c20s4-project-divergence-theorem-flux-balance default_required]
+Option D. Flux balance with sources. Use a source function s(x,y,z). Compare
+      the conservation law
+      
+        \frac{d}{dt}\iiint_E\rho\,dV
+        +
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E s\,dV.
+      
+      Use simple functions so the terms can be computed by hand or by a small program.
+
+[853-855 p c20s4-project-divergence-theorem-flux-balance default_required]
+Required steps.
+
+[857-859 li c20s4-project-divergence-theorem-flux-balance default_required]
+State the region E.
+
+[860-862 li c20s4-project-divergence-theorem-flux-balance default_required]
+Draw or describe the boundary orientation.
+
+[863-865 li c20s4-project-divergence-theorem-flux-balance default_required]
+State the vector field \mathbf J.
+
+[866-873 li c20s4-project-divergence-theorem-flux-balance default_required]
+Compute
+          
+            \nabla\cdot\mathbf J.
+
+[874-881 li c20s4-project-divergence-theorem-flux-balance default_required]
+Estimate or compute the volume integral:
+          
+            \iiint_E\nabla\cdot\mathbf J\,dV.
+
+[882-889 li c20s4-project-divergence-theorem-flux-balance default_required]
+Estimate or compute the boundary flux:
+          
+            \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS.
+
+[890-901 li c20s4-project-divergence-theorem-flux-balance default_required]
+Compute the residual:
+          
+            \mathcal R
+            =
+            \text{boundary flux}
+            -
+            \text{interior divergence}.
+
+[902-904 li c20s4-project-divergence-theorem-flux-balance default_required]
+Explain the sign convention.
+
+[907-909 p c20s4-project-divergence-theorem-flux-balance default_required]
+Questions to answer.
+
+[911-913 li c20s4-project-divergence-theorem-flux-balance default_required]
+Which faces contribute positive flux?
+
+[914-916 li c20s4-project-divergence-theorem-flux-balance default_required]
+Which faces contribute negative flux?
+
+[917-919 li c20s4-project-divergence-theorem-flux-balance default_required]
+Which faces contribute zero flux?
+
+[920-922 li c20s4-project-divergence-theorem-flux-balance default_required]
+Does the residual shrink when the grid is refined?
+
+[923-928 li c20s4-project-divergence-theorem-flux-balance default_required]
+If the residual is large, is the likely problem numerical error, orientation error, or
+          a wrong formula?
+
+[929-936 li c20s4-project-divergence-theorem-flux-balance default_required]
+How does this project connect to the continuity equation
+          
+            \rho_t+\nabla\cdot\mathbf J=s?
+
+[939-941 p c20s4-project-divergence-theorem-flux-balance default_required]
+What to hand in. Your report should include:
+
+[943-945 li c20s4-project-divergence-theorem-flux-balance default_required]
+the region and vector field,
+
+[946-948 li c20s4-project-divergence-theorem-flux-balance default_required]
+the divergence calculation,
+
+[949-951 li c20s4-project-divergence-theorem-flux-balance default_required]
+the boundary flux calculation,
+
+[952-954 li c20s4-project-divergence-theorem-flux-balance default_required]
+a table of face contributions,
+
+[955-957 li c20s4-project-divergence-theorem-flux-balance default_required]
+the residual,
+
+[958-960 li c20s4-project-divergence-theorem-flux-balance default_required]
+a short paragraph explaining what the balance law means.
+
+[965-973 p sec-20-vector-calculus-projects default_required]
+Vector calculus has two dialects. One uses gradients, curls, divergences, dot products,
+      and normal vectors. The other uses 1-forms, 2-forms, 3-forms, and the single
+      operator d. The next group of projects asks you to translate between those dialects
+      and to check, by examples, that the theorem underneath them is the same:
+      
+        \int_{\partial M}\omega=\int_M d\omega.

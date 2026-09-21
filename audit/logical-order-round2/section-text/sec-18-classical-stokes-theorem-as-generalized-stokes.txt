@@ -1,0 +1,459 @@
+[5-5 title sec-18-classical-stokes-theorem-as-generalized-stokes default_required]
+Classical Stokes' theorem as generalized Stokes
+
+[7-13 p sec-18-classical-stokes-theorem-as-generalized-stokes default_required]
+kept everything flat. A plane region
+    R had a boundary curve \partial R, and Green's theorem became
+    \int_{\partial R}\omega=\int_R d\omega.
+    Now the region is allowed to bend into space. The boundary is still a curve, but the inside is
+    a surface.
+
+[15-15 p sec-18-classical-stokes-theorem-as-generalized-stokes default_required]
+This is classical Stokes' theorem.
+
+[18-18 title c18s5-subsec-tilted-sheet-boundary-integral default_required]
+A tilted sheet and a boundary integral
+
+[20-31 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+Start with a tilted rectangular sheet in space:
+      \mathbf r(u,v)=(u,v,u+2v), \qquad 0\le u\le2,\quad 0\le v\le1.
+      The parameter rectangle is
+      D=[0,2]\times[0,1].
+      The surface orientation is determined by
+      \mathbf r_u\times\mathbf r_v.
+      Since
+      \mathbf r_u=(1,0,1), \qquad \mathbf r_v=(0,1,2),
+      we get
+      \mathbf r_u\times\mathbf r_v=(-1,-2,1).
+
+[33-37 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+Now take the 1-form
+      \omega=z\,dy.
+      This form is built to be integrated along the boundary curve of the tilted sheet.
+
+[39-47 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+Instead of parametrizing the four boundary curves directly in space, pull the form back to the
+      parameter rectangle. On the surface,
+      x=u,\qquad y=v,\qquad z=u+2v.
+      So
+      dy=dv,
+      and
+      \mathbf r^*\omega=(u+2v)\,dv.
+
+[49-52 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+The boundary of D is positively oriented counterclockwise. Compute the integral around
+      its four sides.
+
+[54-54 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+On the bottom side v=0, dv=0, so the contribution is 0.
+
+[56-59 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+On the right side u=2, v goes from 0 to 1, so
+      \int_{\text{right}}(u+2v)\,dv = \int_0^1(2+2v)\,dv = 3.
+
+[61-61 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+On the top side v=1, dv=0, so the contribution is 0.
+
+[63-66 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+On the left side u=0, v goes from 1 down to 0, so
+      \int_{\text{left}}(u+2v)\,dv = \int_1^0 2v\,dv = -1.
+
+[68-71 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+Adding the four sides gives
+      \boxed{ \int_{\partial S}\omega = \int_{\partial D}\mathbf r^*\omega = 3-1 = 2. }
+
+[73-94 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+Now compute the surface side. Since
+      \omega=z\,dy,
+      we have
+      d\omega=dz\wedge dy.
+      Pull this back:
+      dz=d(u+2v)=du+2\,dv,
+      so
+      
+        \mathbf r^*(d\omega) \amp= (du+2\,dv)\wedge dv\\
+        \amp= du\wedge dv.
+      
+      Therefore
+      
+        \int_S d\omega \amp= \int_D \mathbf r^*(d\omega)\\
+        \amp= \int_D du\wedge dv\\
+        \amp= \operatorname{Area}(D)\\
+        \amp= 2.
+      
+      So
+      \boxed{ \int_{\partial S}\omega=\int_S d\omega. }
+
+[97-100 caption c18s5-fig-tilted-sheet-orientation default_required]
+A positively oriented parameter rectangle induces the compatible orientation on the boundary
+        of the surface.
+
+[102-140 latex-image c18s5-fig-tilted-sheet-orientation default_required]
+\begin{tikzpicture}[scale=0.82, >=stealth]
+            \begin{scope}
+                \draw[->] (-0.35,0) -- (3.1,0) node[right] {\(u\)};
+                \draw[->] (0,-0.35) -- (0,2.25) node[above] {\(v\)};
+
+                \draw[fill=gray!10, thick] (0,0) rectangle (2.4,1.4);
+
+                \draw[->, very thick, red!65!black] (0,0) -- (1.0,0);
+                \draw[->, very thick, red!65!black] (2.4,0) -- (2.4,0.75);
+                \draw[->, very thick, red!65!black] (2.4,1.4) -- (1.4,1.4);
+                \draw[->, very thick, red!65!black] (0,1.4) -- (0,0.65);
+
+                \node at (1.2,-0.75) {parameter rectangle \(D\)};
+            \end{scope}
+
+            \draw[->, thick] (3.4,0.75) -- (4.8,0.75);
+            \node[above] at (4.1,0.75) {\(\mathbf r\)};
+
+            \begin{scope}[shift={(6.1,-0.1)}]
+                \coordinate (A) at (0,0);
+                \coordinate (B) at (3.1,0.45);
+                \coordinate (C) at (3.55,1.75);
+                \coordinate (D) at (0.45,1.30);
+
+                \draw[fill=blue!7, thick] (A)--(B)--(C)--(D)--cycle;
+
+                \draw[->, very thick, red!65!black] (A)--($(A)!0.42!(B)$);
+                \draw[->, very thick, red!65!black] (B)--($(B)!0.55!(C)$);
+                \draw[->, very thick, red!65!black] (C)--($(C)!0.42!(D)$);
+                \draw[->, very thick, red!65!black] (D)--($(D)!0.55!(A)$);
+
+                \draw[->, very thick, blue!65!black] (1.8,0.8) -- ++(-0.4, 1.4)
+                    node[above] {\(\mathbf r_u\times\mathbf r_v\)};
+
+                \node at (1.85,-0.95) {tilted surface \(S\)};
+            \end{scope}
+        \end{tikzpicture}
+
+[144-147 p c18s5-subsec-tilted-sheet-boundary-integral default_required]
+The computation contains the whole theorem. The boundary integral on the surface was turned
+      into a boundary integral on the parameter rectangle. Then Green's theorem took over.
+
+[151-151 title c18s5-subsec-pullback-parameter-domain default_required]
+Pullback to a parameter domain
+
+[153-158 p c18s5-subsec-pullback-parameter-domain default_required]
+A C^2 regular parametrization, one-to-one in the interior and tracing the
+      patch's boundary once,
+      \mathbf r(u,v)=(x(u,v),y(u,v),z(u,v))
+      lets us translate forms in space into forms in the parameter plane.
+
+[160-170 p c18s5-subsec-pullback-parameter-domain default_required]
+For a 1-form
+      \omega=P\,dx+Q\,dy+R\,dz,
+      the pullback is
+      \boxed{ \mathbf r^*\omega = P(\mathbf r(u,v))\,d x(u,v) + Q(\mathbf r(u,v))\,d y(u,v) + R(\mathbf r(u,v))\,d z(u,v). }
+      Here
+      dx=x_u\,du+x_v\,dv,
+      dy=y_u\,du+y_v\,dv,
+      and
+      dz=z_u\,du+z_v\,dv.
+
+[172-175 p c18s5-subsec-pullback-parameter-domain default_required]
+The pullback does two jobs at once. It substitutes the parametrization into the coefficients,
+      and it replaces dx,dy,dz by the coordinate changes caused by du and dv.
+
+[177-181 p c18s5-subsec-pullback-parameter-domain default_required]
+For integrals, the rule is
+      \boxed{ \int_S \alpha=\int_D \mathbf r^*\alpha, }
+      when \alpha is a form of degree 2 on the surface.
+
+[183-188 p c18s5-subsec-pullback-parameter-domain default_required]
+For boundary integrals,
+      \boxed{ \int_{\partial S}\omega=\int_{\partial D}\mathbf r^*\omega, }
+      provided the boundary orientation on S is induced from the boundary orientation on
+      D.
+
+[190-195 p c18s5-subsec-pullback-parameter-domain default_required]
+The most important identity is
+      \boxed{ d(\mathbf r^*\omega)=\mathbf r^*(d\omega). }
+      This is the chain rule in form language. It says that pulling back and differentiating fit
+      together.
+
+[197-209 p c18s5-pullback-derivative-justification default_required]
+Here is the coordinate justification. Write
+      \omega=\sum_i F_i\,dx_i and
+      \mathbf r^*\omega=A\,du+B\,dv, where
+      A=\sum_i F_i(\mathbf r)(x_i)_u and
+      B=\sum_i F_i(\mathbf r)(x_i)_v. The product and chain rules give
+      B_u-A_v=\sum_{i,j}(\partial_jF_i)(\mathbf r)
+      \bigl((x_j)_u(x_i)_v-(x_j)_v(x_i)_u\bigr).
+      Terms containing (x_i)_{uv}-(x_i)_{vu} cancel because \mathbf r
+      is C^2. The displayed coefficient is exactly the coefficient obtained by
+      pulling back d\omega=\sum_{i,j}\partial_jF_i\,dx_j\wedge dx_i.
+      This proves the identity used here without assuming Stokes' theorem.
+
+[211-220 p c18s5-subsec-pullback-parameter-domain default_required]
+Now apply Green's theorem on D:
+      \int_{\partial D}\mathbf r^*\omega = \int_D d(\mathbf r^*\omega).
+      Using
+      d(\mathbf r^*\omega)=\mathbf r^*(d\omega),
+      we get
+      \int_{\partial D}\mathbf r^*\omega = \int_D \mathbf r^*(d\omega).
+      Translated back to the surface, this becomes
+      \int_{\partial S}\omega=\int_S d\omega.
+
+[222-222 p c18s5-subsec-pullback-parameter-domain default_required]
+That is Stokes' theorem.
+
+[226-226 title c18s5-subsec-curl-exterior-derivative default_required]
+Curl as the exterior derivative of a 1-form
+
+[228-234 p c18s5-subsec-curl-exterior-derivative default_required]
+Let
+      \mathbf F=(P,Q,R)
+      be a vector field, and let
+      \omega=P\,dx+Q\,dy+R\,dz
+      be its work 1-form.
+
+[236-244 p c18s5-subsec-curl-exterior-derivative default_required]
+Compute d\omega:
+      
+        d\omega \amp= dP\wedge dx+dQ\wedge dy+dR\wedge dz\\
+        \amp= (R_y-Q_z)\,dy\wedge dz\\
+        \amp\quad+ (P_z-R_x)\,dz\wedge dx\\
+        \amp\quad+ (Q_x-P_y)\,dx\wedge dy.
+
+[246-254 p c18s5-subsec-curl-exterior-derivative default_required]
+The coefficients are exactly the components of the curl:
+      \boxed{ \nabla\times\mathbf F = (R_y-Q_z,\;P_z-R_x,\;Q_x-P_y). }
+      So
+      \boxed{ d\omega=\Phi_{\nabla\times\mathbf F}, }
+      where
+      \Phi_{\nabla\times\mathbf F}
+      is the flux 2-form of the vector field \nabla\times\mathbf F.
+
+[256-259 p c18s5-subsec-curl-exterior-derivative default_required]
+In words:
+      \boxed{ \text{the exterior derivative of the work form is the flux form of the curl.} }
+
+[261-261 p c18s5-subsec-curl-exterior-derivative default_required]
+This is why the right side of classical Stokes' theorem contains curl.
+
+[264-264 title checkpoint-18-5-why-curl-appears default_required]
+Why does curl show up at all?
+
+[266-270 p checkpoint-18-5-why-curl-appears default_required]
+The right-hand side of Stokes' theorem could have been any combination of derivatives of
+          P,Q,R. Why is it exactly the curl that appears, rather than, say, the divergence or
+          some other mixture? What feature of d\omega forces this particular answer?
+
+[273-276 p checkpoint-18-5-why-curl-appears hint]
+Look back at the coefficients that came out of computing d\omega for a work
+          1-form. Nobody chose them by hand — ask what produced them.
+
+[282-282 title c18s5-subsec-boundary-circulation-surface-curl default_required]
+Boundary circulation equals surface curl
+
+[284-284 p c18s5-subsec-boundary-circulation-surface-curl default_required]
+Now the theorem can be written in both languages.
+
+[287-287 title c18s5-thm-classical-stokes-as-generalized default_required]
+Classical Stokes' theorem as generalized Stokes
+
+[289-293 p c18s5-thm-classical-stokes-as-generalized default_required]
+Let S be an oriented compact piecewise smooth surface in space, with piecewise
+          smooth boundary \partial S. Give \partial S the boundary orientation
+          compatible with the orientation of S.
+
+[294-299 p c18s5-thm-classical-stokes-as-generalized default_required]
+Let
+          \omega=P\,dx+Q\,dy+R\,dz
+          be a C^1 1-form on an open set containing S. Then
+          \boxed{ \int_{\partial S}\omega=\int_S d\omega. }
+
+[300-304 p c18s5-thm-classical-stokes-as-generalized default_required]
+Equivalently, for the vector field
+          \mathbf F=(P,Q,R),
+          \boxed{ \oint_{\partial S}\mathbf F\cdot d\mathbf r = \iint_S(\nabla\times\mathbf F)\cdot \widehat{\mathbf n}\,dS. }
+
+[308-312 p c18s5-subsec-boundary-circulation-surface-curl default_required]
+The forms statement is the generalized Stokes theorem with
+      M=S, \qquad \omega\text{ a }1\text{-form}.
+      The vector statement is the classical formula students often learn first.
+
+[314-316 p c18s5-subsec-boundary-circulation-surface-curl default_required]
+The left side is boundary circulation. The right side is curl passing through the surface.
+
+[320-320 title c18s5-subsec-curved-surface-same-boundary default_required]
+A curved surface with the same boundary
+
+[322-327 p c18s5-subsec-curved-surface-same-boundary default_required]
+Let
+      \omega=-\frac y2\,dx+\frac x2\,dy.
+      Then
+      d\omega=dx\wedge dy.
+
+[329-335 p c18s5-subsec-curved-surface-same-boundary default_required]
+Let S be the upper hemisphere
+      x^2+y^2+z^2=a^2, \qquad z\ge0,
+      oriented by the upward/outward normal. Its boundary is the circle
+      C:\quad x^2+y^2=a^2,\qquad z=0,
+      oriented counterclockwise as viewed from above.
+
+[337-350 p c18s5-subsec-curved-surface-same-boundary default_required]
+Compute the boundary integral. Parametrize C by
+      x=a\cos t,\qquad y=a\sin t,\qquad z=0, \qquad 0\le t\le2\pi.
+      Then
+      dx=-a\sin t\,dt, \qquad dy=a\cos t\,dt.
+      So
+      
+        \omega \amp= -\frac{a\sin t}{2}(-a\sin t\,dt) + \frac{a\cos t}{2}(a\cos t\,dt)\\
+        \amp= \frac{a^2}{2}(\sin^2 t+\cos^2 t)\,dt\\
+        \amp= \frac{a^2}{2}\,dt.
+      
+      Thus
+      \boxed{ \int_C\omega=\pi a^2. }
+
+[352-364 p c18s5-subsec-curved-surface-same-boundary default_required]
+Now compute the surface integral. Since
+      d\omega=dx\wedge dy,
+      the integral
+      \int_S dx\wedge dy
+      measures the signed area of the shadow of S on the xy-plane. With upward
+      orientation, that shadow is the disk
+      x^2+y^2\le a^2
+      with positive orientation. Therefore
+      \boxed{ \int_S d\omega=\int_S dx\wedge dy=\pi a^2. }
+      Again,
+      \boxed{ \int_{\partial S}\omega=\int_S d\omega. }
+
+[366-369 p c18s5-subsec-curved-surface-same-boundary default_required]
+The hemisphere and the flat disk have the same boundary. For this form, both surfaces give the
+      same answer because Stokes' theorem only sees the boundary.
+
+[372-372 title checkpoint-18-5-only-the-boundary default_required]
+What does “only sees the boundary” mean?
+
+[374-379 p checkpoint-18-5-only-the-boundary default_required]
+We bent the surface from a flat disk into a dome, yet the value of \int_S d\omega
+          did not budge. What is the theorem really telling us about which features of a
+          surface affect the answer and which are irrelevant? Could you replace the hemisphere with
+          a wildly crumpled sheet and still get \pi a^2?
+
+[382-385 p checkpoint-18-5-only-the-boundary hint]
+Both sides of \int_{\partial S}\omega=\int_S d\omega share one curve. Think
+          about what would have to change for the answer to change.
+
+[391-391 title c18s5-subsec-why-hypotheses-matter default_required]
+Why the hypotheses matter
+
+[393-395 p c18s5-subsec-why-hypotheses-matter default_required]
+Stokes' theorem is a sign-sensitive theorem. It is also sensitive to holes and singularities.
+
+[397-397 p c18s5-subsec-why-hypotheses-matter default_required]
+The boundary orientation must be compatible.
+
+[399-408 p c18s5-subsec-why-hypotheses-matter default_required]
+Use the disk
+      x^2+y^2\le1,\qquad z=0,
+      with upward orientation, and use
+      \omega=-\frac y2\,dx+\frac x2\,dy.
+      Then
+      d\omega=dx\wedge dy,
+      so
+      \int_S d\omega=\pi.
+
+[410-413 p c18s5-subsec-why-hypotheses-matter default_required]
+The compatible boundary orientation is counterclockwise. With that orientation,
+      \int_{\partial S}\omega=\pi.
+
+[415-420 p c18s5-subsec-why-hypotheses-matter default_required]
+If we walk the same boundary clockwise, the boundary integral becomes
+      -\pi.
+      The surface integral has not changed. The problem is not the theorem; the boundary orientation
+      was wrong.
+
+[422-422 p c18s5-subsec-why-hypotheses-matter default_required]
+Every boundary component must be included.
+
+[424-433 p c18s5-subsec-why-hypotheses-matter default_required]
+Let
+      A=\{(x,y,0):1\le x^2+y^2\le4\}
+      be a flat annulus with upward orientation. Its boundary has two components:
+      C_{\text{outer}}:\ x^2+y^2=4,
+      and
+      C_{\text{inner}}:\ x^2+y^2=1.
+      The compatible orientation is counterclockwise on the outer circle and clockwise on the inner
+      circle.
+
+[435-442 p c18s5-subsec-why-hypotheses-matter default_required]
+For
+      \omega=-\frac y2\,dx+\frac x2\,dy,
+      we have
+      d\omega=dx\wedge dy.
+      Therefore
+      \int_A d\omega=\operatorname{Area}(A)=4\pi-\pi=3\pi.
+
+[444-453 p c18s5-subsec-why-hypotheses-matter default_required]
+On a counterclockwise circle of radius r,
+      \int\omega=\pi r^2.
+      So the outer boundary contributes
+      4\pi,
+      while the clockwise inner boundary contributes
+      -\pi.
+      Thus
+      \int_{\partial A}\omega=4\pi-\pi=3\pi.
+
+[455-458 p c18s5-subsec-why-hypotheses-matter default_required]
+If we forgot the inner boundary, the left side would be 4\pi, not 3\pi. The hole
+      has a rim, and Stokes' theorem counts that rim with its induced sign.
+
+[460-460 p c18s5-subsec-why-hypotheses-matter default_required]
+The form must be defined on the whole surface.
+
+[462-467 p c18s5-subsec-why-hypotheses-matter default_required]
+Consider
+      \alpha= -\frac{y}{x^2+y^2}\,dx + \frac{x}{x^2+y^2}\,dy.
+      This form is defined away from the z-axis. Where it is defined,
+      d\alpha=0.
+
+[469-481 p c18s5-subsec-why-hypotheses-matter default_required]
+On the unit circle in the plane z=0,
+      x=\cos t,\qquad y=\sin t,
+      so
+      dx=-\sin t\,dt,\qquad dy=\cos t\,dt.
+      Then
+      
+        \alpha \amp= -\sin t(-\sin t\,dt)+\cos t(\cos t\,dt)\\
+        \amp= dt.
+      
+      Therefore
+      \boxed{ \int_C\alpha=2\pi. }
+
+[483-488 p c18s5-subsec-why-hypotheses-matter default_required]
+A careless use of Stokes' theorem on the flat unit disk would say
+      \int_C\alpha=\int_D d\alpha=0.
+      But the form is not defined at the origin, and the origin lies in the disk. Stokes' theorem
+      cannot be used there.
+
+[490-496 p c18s5-subsec-why-hypotheses-matter default_required]
+If we remove a small disk around the origin, the theorem works again. The new surface is an
+      annulus. Its outer boundary contributes 2\pi, and its inner boundary contributes
+      -2\pi. The total boundary integral is 0, matching
+      \int d\alpha=0
+      on the annulus.
+
+[498-498 p c18s5-subsec-why-hypotheses-matter default_required]
+The missing point was not harmless. It carried the circulation.
+
+[501-501 title checkpoint-18-5-missing-point-circulation default_required]
+How can one point matter?
+
+[503-508 p checkpoint-18-5-missing-point-circulation default_required]
+The form \alpha satisfies d\alpha=0 everywhere it is defined, so its
+          exterior derivative seems to contribute nothing. Yet the loop integral came out to
+          2\pi, not 0. How can a single excluded point at the origin be responsible
+          for all of that circulation, when the surface integrand vanishes everywhere it exists?
+
+[511-514 p checkpoint-18-5-missing-point-circulation hint]
+Stokes' theorem needs \alpha defined on the whole surface. Ask what the disk
+          contains that the form refuses to live at.
+
+[518-523 p c18s5-subsec-why-hypotheses-matter default_required]
+Stokes' theorem compares a boundary curve with a surface. But some surfaces have no boundary
+      curve at all. A sphere has no rim. A closed box surface has no edge. Still, flux can pass
+      through them. To read that situation as Stokes' theorem, the object inside must be one
+      dimension higher: a solid region, with a 2-form on its boundary.

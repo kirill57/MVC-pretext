@@ -1,0 +1,530 @@
+[5-5 title sec-18-green-s-theorem-as-stokes default_required]
+Green's Theorem as Stokes
+
+[7-12 p sec-18-green-s-theorem-as-stokes default_required]
+The previous section turned the Fundamental Theorem of Calculus into
+    \int_{\partial[a,b]}f=\int_{[a,b]}df.
+    Now the object M becomes a plane region R. Its boundary is no longer two
+    endpoints. It is a closed curve.
+
+[14-20 p sec-18-green-s-theorem-as-stokes default_required]
+The form on the boundary is no longer a function. It is a 1-form:
+    \omega=P\,dx+Q\,dy.
+    Its derivative is a 2-form:
+    d\omega=(Q_x-P_y)\,dx\wedge dy.
+    That is Green's theorem in Stokes form.
+
+[23-23 title c18s4-subsec-triangular-region-area default_required]
+A triangular region that measures area from its boundary
+
+[25-31 p c18s4-subsec-triangular-region-area default_required]
+Let R be the triangle with vertices
+      (0,0),\qquad (3,0),\qquad (0,2),
+      oriented by the standard area form
+      dx\wedge dy.
+      Then \partial R is walked counterclockwise.
+
+[33-41 p c18s4-subsec-triangular-region-area default_required]
+Take the 1-form
+      \omega=x\,dy.
+      Its exterior derivative is
+      d\omega=dx\wedge dy.
+      So the right-hand side of Stokes should be
+      \int_R dx\wedge dy=\operatorname{Area}(R)=3.
+      Now compute the boundary integral directly.
+
+[43-43 p c18s4-subsec-triangular-region-area default_required]
+The boundary has three sides.
+
+[45-52 p c18s4-subsec-triangular-region-area default_required]
+Bottom side. Parametrize the bottom edge by
+      \mathbf r_1(t)=(t,0), \qquad 0\le t\le3.
+      Here
+      dy=0,
+      so
+      \int_{\mathbf r_1}x\,dy=0.
+
+[54-66 p c18s4-subsec-triangular-region-area default_required]
+Slanted side. Parametrize the slanted side from (3,0) to (0,2)
+      by
+      \mathbf r_2(t)=(3-3t,2t), \qquad 0\le t\le1.
+      Then
+      x=3-3t, \qquad dy=2\,dt.
+      Therefore
+      
+        \int_{\mathbf r_2}x\,dy \amp= \int_0^1 (3-3t)\,2\,dt
+        \amp= \int_0^1 (6-6t)\,dt
+        \amp= 3.
+
+[68-76 p c18s4-subsec-triangular-region-area default_required]
+Left side. Parametrize the left side from (0,2) back to (0,0)
+      by
+      \mathbf r_3(t)=(0,2-2t), \qquad 0\le t\le1.
+      Here
+      x=0,
+      so
+      \int_{\mathbf r_3}x\,dy=0.
+
+[78-85 p c18s4-subsec-triangular-region-area default_required]
+Adding the three sides gives
+      \boxed{\int_{\partial R}x\,dy=3.}
+      And the interior integral gives
+      \boxed{\int_R d(x\,dy)=\int_R dx\wedge dy=3.}
+      Thus
+      \boxed{\int_{\partial R}\omega=\int_R d\omega.}
+
+[88-88 caption c18s4-fig-triangle-area-boundary default_required]
+For this triangle, the boundary integral of x\,dy measures area.
+
+[90-112 latex-image c18s4-fig-triangle-area-boundary default_required]
+\begin{tikzpicture}[scale=0.95, >=stealth]
+            \draw[->] (-0.4,0) -- (4.2,0) node[right] {\(x\)};
+            \draw[->] (0,-0.4) -- (0,3.2) node[above] {\(y\)};
+
+            \draw[fill=gray!10, thick] (0,0) -- (3,0) -- (0,2) -- cycle;
+
+            \draw[->, very thick, red!65!black] (0.4,0) -- (1.7,0);
+            \draw[->, very thick, red!65!black] (2.3,0.47) -- (1.3,1.13);
+            \draw[->, very thick, red!65!black] (0,1.5) -- (0,0.7);
+
+            \fill (0,0) circle (2pt);
+            \fill (3,0) circle (2pt);
+            \fill (0,2) circle (2pt);
+
+            \node[below left] at (0,0) {\((0,0)\)};
+            \node[below] at (3,0) {\((3,0)\)};
+            \node[left] at (0,2) {\((0,2)\)};
+
+            \node at (1.25,0.75) {\(R\)};
+            \node at (1.7,-0.8) {\(\displaystyle \int_{\partial R}x\,dy=\operatorname{Area}(R)\)};
+        \end{tikzpicture}
+
+[116-119 p c18s4-subsec-triangular-region-area default_required]
+This example is Green's theorem in its cleanest form. The boundary form x\,dy
+      turns into the area form dx\wedge dy.
+
+[123-123 title c18s4-subsec-exterior-derivative-scalar-curl default_required]
+Exterior derivative and scalar curl
+
+[125-148 p c18s4-subsec-exterior-derivative-scalar-curl default_required]
+Let
+      \omega=P(x,y)\,dx+Q(x,y)\,dy
+      be a 1-form on a plane region. To compute d\omega, use
+      d(P\,dx)=dP\wedge dx,
+      and
+      d(Q\,dy)=dQ\wedge dy.
+      Since
+      dP=P_x\,dx+P_y\,dy,
+      we get
+      
+        d(P\,dx) \amp= (P_x\,dx+P_y\,dy)\wedge dx
+        \amp= P_x\,dx\wedge dx+P_y\,dy\wedge dx
+        \amp= -P_y\,dx\wedge dy.
+      
+      Similarly,
+      
+        d(Q\,dy) \amp= (Q_x\,dx+Q_y\,dy)\wedge dy
+        \amp= Q_x\,dx\wedge dy+Q_y\,dy\wedge dy
+        \amp= Q_x\,dx\wedge dy.
+      
+      Therefore
+      \boxed{d\omega=(Q_x-P_y)\,dx\wedge dy.}
+
+[150-156 p c18s4-subsec-exterior-derivative-scalar-curl default_required]
+The coefficient
+      Q_x-P_y
+      is the scalar curl in the plane. It measures local counterclockwise circulation per
+      unit area.
+      \boxed{\text{exterior derivative of a plane }1\text{-form}=\text{scalar curl}\times\text{area form}.}
+
+[159-159 title checkpoint-18-4-curl-meaning default_required]
+What does the coefficient measure?
+
+[161-166 p checkpoint-18-4-curl-meaning default_required]
+The number Q_x-P_y appears as the lone coefficient in d\omega. Without
+          computing anything, what is this coefficient telling you about the flow described by
+          \omega=P\,dx+Q\,dy at a single point, and why is it sensible that the rest of
+          d\omega is just the area form dx\wedge dy?
+
+[169-173 p checkpoint-18-4-curl-meaning hint]
+Think of d\omega as a local rate. The area form supplies the per unit area
+          part; the coefficient supplies the how much circulation part. What spinning motion
+          would make this coefficient large and positive?
+
+[179-179 title c18s4-subsec-green-circulation-form default_required]
+Green's theorem in circulation form
+
+[181-181 p c18s4-subsec-green-circulation-form default_required]
+We can now read Green's theorem as one row of the generalized Stokes theorem.
+
+[184-184 title c18s4-thm-green-as-stokes default_required]
+Green's theorem as Stokes
+
+[186-190 p c18s4-thm-green-as-stokes default_required]
+Let R be a compact, oriented, piecewise smooth plane region. Give
+          \partial R the positive boundary orientation, so that R stays on the
+          left as the boundary is traveled.
+
+[191-200 p c18s4-thm-green-as-stokes default_required]
+Let
+          \omega=P\,dx+Q\,dy
+          be a C^1 1-form on an open set containing R. Then
+          \boxed{\int_{\partial R}\omega=\int_R d\omega.}
+          Equivalently,
+          \boxed{\oint_{\partial R}P\,dx+Q\,dy=\iint_R (Q_x-P_y)\,dx\wedge dy.}
+          Using ordinary area notation,
+          \boxed{\oint_{\partial R}P\,dx+Q\,dy=\iint_R (Q_x-P_y)\,dA.}
+
+[204-210 p c18s4-subsec-green-circulation-form default_required]
+This is the same theorem students usually meet as Green's theorem. The forms version
+      only makes the structure visible:
+      \omega\quad\text{lives on the boundary curve,}
+      while
+      d\omega\quad\text{lives on the plane region.}
+
+[214-214 title c18s4-subsec-rectangle-changing-curl default_required]
+A rectangle with changing curl
+
+[216-227 p c18s4-subsec-rectangle-changing-curl default_required]
+Let
+      R=[0,2]\times[0,1],
+      with positive orientation, and let
+      \omega=xy\,dx+x^2\,dy.
+      Then
+      P=xy, \qquad Q=x^2.
+      So
+      P_y=x, \qquad Q_x=2x.
+      Therefore
+      d\omega=(2x-x)\,dx\wedge dy=x\,dx\wedge dy.
+
+[229-237 p c18s4-subsec-rectangle-changing-curl default_required]
+The interior integral is
+      
+        \int_R d\omega \amp= \int_0^2\int_0^1 x\,dy\,dx
+        \amp= \int_0^2 x\,dx
+        \amp= 2.
+      
+      Now check the boundary integral.
+
+[239-243 p c18s4-subsec-rectangle-changing-curl default_required]
+On the bottom edge, y=0 and dy=0, so
+      \omega=0.
+      The bottom contributes 0.
+
+[245-251 p c18s4-subsec-rectangle-changing-curl default_required]
+On the right edge, x=2, dx=0, and y goes from 0 to 1.
+      Thus
+      \omega=4\,dy,
+      so the right edge contributes
+      \int_0^1 4\,dy=4.
+
+[253-259 p c18s4-subsec-rectangle-changing-curl default_required]
+On the top edge, y=1, dy=0, and x goes from 2 back to
+      0. Thus
+      \omega=x\,dx,
+      so the top edge contributes
+      \int_2^0 x\,dx=-2.
+
+[261-263 p c18s4-subsec-rectangle-changing-curl default_required]
+On the left edge, x=0, so \omega=0. The left edge contributes 0.
+
+[265-270 p c18s4-subsec-rectangle-changing-curl default_required]
+Therefore
+      \boxed{\int_{\partial R}\omega=4-2=2.}
+      Again,
+      \boxed{\int_{\partial R}\omega=\int_R d\omega.}
+
+[273-273 caption c18s4-fig-rectangle-changing-curl default_required]
+The boundary contributions add to the integral of d\omega=x\,dx\wedge dy inside the rectangle.
+
+[275-295 latex-image c18s4-fig-rectangle-changing-curl default_required]
+\begin{tikzpicture}[scale=1.0, >=stealth]
+            \draw[->] (-0.4,0) -- (3.0,0) node[right] {\(x\)};
+            \draw[->] (0,-0.4) -- (0,2.0) node[above] {\(y\)};
+
+            \draw[fill=gray!10, thick] (0,0) rectangle (2,1);
+
+            \draw[->, very thick, red!65!black] (0.25,0) -- (1.25,0);
+            \draw[->, very thick, red!65!black] (2,0.15) -- (2,0.75);
+            \draw[->, very thick, red!65!black] (1.75,1) -- (0.75,1);
+            \draw[->, very thick, red!65!black] (0,0.85) -- (0,0.25);
+
+            \node[below] at (1,0) {bottom};
+            \node[right] at (2,0.5) {right};
+            \node[above] at (1,1) {top};
+            \node[left] at (0,0.5) {left};
+
+            \node at (1,0.5) {\(R\)};
+            \node at (1,-0.8) {\(\omega=xy\,dx+x^2\,dy\)};
+        \end{tikzpicture}
+
+[301-301 title c18s4-subsec-why-interior-edges-cancel default_required]
+Why interior edges cancel
+
+[303-303 p c18s4-subsec-why-interior-edges-cancel default_required]
+The proof idea is the same as in one dimension.
+
+[305-308 p c18s4-subsec-why-interior-edges-cancel default_required]
+Cut R into many small rectangles. Apply Green's theorem on each small rectangle.
+      Now add all the small boundary integrals.
+
+[310-315 p c18s4-subsec-why-interior-edges-cancel default_required]
+Every interior edge is traveled twice:
+      \text{once in one direction, once in the opposite direction.}
+      A 1-form integral changes sign when the direction reverses. So the two
+      contributions cancel.
+
+[317-317 p c18s4-subsec-why-interior-edges-cancel default_required]
+Only the outer boundary remains.
+
+[319-321 p c18s4-subsec-why-interior-edges-cancel default_required]
+\boxed{\text{interior edges cancel; exterior edges survive.}}
+
+[323-326 p c18s4-subsec-why-interior-edges-cancel default_required]
+That is the same cancellation we saw for an interval, where interior endpoints canceled.
+      Green's theorem is the two-dimensional version of the same boundary bookkeeping.
+
+[330-330 title c18s4-subsec-holes-boundary-components default_required]
+Holes and boundary components
+
+[332-335 p c18s4-subsec-holes-boundary-components default_required]
+If a region has a hole, the boundary has more than one component. Green's theorem
+      uses all of them.
+
+[337-337 p c18s4-subsec-holes-boundary-components default_required]
+The outer boundary is counterclockwise. The inner boundary is clockwise.
+
+[340-340 title checkpoint-18-4-inner-orientation default_required]
+Why does the hole turn the other way?
+
+[342-347 p checkpoint-18-4-inner-orientation default_required]
+The outer rim is traveled counterclockwise, yet the rim of the hole is traveled
+          clockwise. What goes wrong with the identity \int_{\partial R}\omega=\int_R d\omega
+          if you instead orient both boundary circles the same way, and what is the shared rule
+          about the region that both orientations are obeying?
+
+[350-354 p checkpoint-18-4-inner-orientation hint]
+Picture walking along each boundary curve. The positive convention asks you to keep the
+          region R on one fixed side the whole time. Stand inside the annulus and ask which
+          way is region on your left for the inner circle.
+
+[358-358 p c18s4-subsec-holes-boundary-components default_required]
+Here is a compact example that shows why.
+
+[360-371 p c18s4-subsec-holes-boundary-components default_required]
+Let
+      A=\{(x,y):1\le x^2+y^2\le4\}
+      be the annulus between the circles of radius 1 and 2. Consider the
+      1-form
+      \alpha=\frac{-y}{x^2+y^2}\,dx+\frac{x}{x^2+y^2}\,dy.
+      This form is defined on the annulus, because the origin is not included. On that
+      domain,
+      d\alpha=0.
+      So Green's theorem predicts
+      \int_{\partial A}\alpha=0.
+
+[373-386 p c18s4-subsec-holes-boundary-components default_required]
+Now compute the boundary. On a counterclockwise circle of radius r,
+      x=r\cos t, \qquad y=r\sin t, \qquad 0\le t\le2\pi.
+      Then
+      dx=-r\sin t\,dt, \qquad dy=r\cos t\,dt.
+      Substitute:
+      
+        \alpha \amp= \frac{-r\sin t}{r^2}(-r\sin t\,dt)+\frac{r\cos t}{r^2}(r\cos t\,dt)
+        \amp= \sin^2t\,dt+\cos^2t\,dt
+        \amp= dt.
+      
+      So a counterclockwise circle contributes
+      \int_0^{2\pi}dt=2\pi.
+
+[388-397 p c18s4-subsec-holes-boundary-components default_required]
+The outer boundary of the annulus is counterclockwise, so it contributes
+      2\pi.
+      The inner boundary is clockwise, so it contributes
+      -2\pi.
+      Thus
+      \boxed{\int_{\partial A}\alpha=2\pi-2\pi=0,}
+      which matches
+      \int_A d\alpha=0.
+
+[399-402 p c18s4-subsec-holes-boundary-components default_required]
+If we forgot the inner boundary, we would get 2\pi, which would contradict the
+      theorem. The theorem did not fail. The boundary was incomplete.
+
+[406-406 title c18s4-subsec-singularity-inside-not-allowed default_required]
+A singularity inside the region is not allowed
+
+[408-419 p c18s4-subsec-singularity-inside-not-allowed default_required]
+The same form
+      \alpha=\frac{-y}{x^2+y^2}\,dx+\frac{x}{x^2+y^2}\,dy
+      is closed wherever it is defined:
+      d\alpha=0 \qquad \text{on }\mathbb R^2\setminus\{(0,0)\}.
+      But on the unit circle,
+      \int_{x^2+y^2=1}\alpha=2\pi.
+      A careless person might try to apply Green's theorem to the unit disk and say
+      \int_{\partial D}\alpha=\int_D d\alpha=0.
+      That is not allowed. The form is not defined at the origin, and the origin lies inside
+      the disk.
+
+[421-421 p c18s4-subsec-singularity-inside-not-allowed default_required]
+The missing point is exactly what the boundary circle detects.
+
+[423-425 p c18s4-subsec-singularity-inside-not-allowed default_required]
+\boxed{\text{Green's theorem requires the form to be defined on the whole region, not only on the boundary.}}
+
+[429-429 title c18s4-subsec-jump-hidden-edge default_required]
+A jump in the coefficients creates a hidden edge
+
+[431-434 p c18s4-subsec-jump-hidden-edge default_required]
+The C^1 condition on P and Q also matters. If the coefficients jump,
+      the usual formula can miss an internal boundary.
+
+[436-450 p c18s4-subsec-jump-hidden-edge default_required]
+Let
+      R=[-1,1]\times[-1,1],
+      and define
+      
+        H(y)=
+        \begin{cases}
+        0, & y\lt 0,\\
+        1, & y\ge 0.
+        \end{cases}
+      
+      Consider the form
+      \omega=H(y)\,dx.
+      This form jumps across the line y=0, so it is not C^1 on R.
+
+[452-458 p c18s4-subsec-jump-hidden-edge default_required]
+If we ignore the jump and only look away from y=0, then H is constant on
+      each side, so a careless computation would say
+      d\omega=0.
+      That would predict
+      \int_{\partial R}\omega=0.
+
+[460-470 p c18s4-subsec-jump-hidden-edge default_required]
+But the boundary integral is not zero. On the bottom edge y=-1,
+      H(y)=0,
+      so the bottom contributes 0. On the top edge y=1, the boundary is traveled
+      from x=1 to x=-1, and
+      H(y)=1.
+      So the top contributes
+      \int_1^{-1} dx=-2.
+      The vertical sides have dx=0. Hence
+      \boxed{\int_{\partial R}\omega=-2.}
+
+[472-475 p c18s4-subsec-jump-hidden-edge default_required]
+The jump along y=0 is hiding an internal edge. The ordinary C^1 theorem is
+      not designed to handle it.
+
+[479-479 title c18s4-subsec-flux-form-green default_required]
+Flux form of Green's theorem
+
+[481-481 p c18s4-subsec-flux-form-green default_required]
+Green's theorem also has a flux version.
+
+[483-489 p c18s4-subsec-flux-form-green default_required]
+Let
+      \mathbf F=(A,B)
+      be a vector field in the plane. The outward flux of \mathbf F across a positively
+      oriented boundary is represented by the 1-form
+      \boxed{\phi=A\,dy-B\,dx.}
+
+[491-499 p c18s4-subsec-flux-form-green default_required]
+To see why, parametrize the boundary by
+      \mathbf r(t)=(x(t),y(t))
+      in positive orientation. Then the tangent direction keeps the region on the left, so the
+      outward normal points to the right. A right normal times ds is
+      (dy,-dx).
+      Therefore
+      \mathbf F\cdot\mathbf n_{\text{out}}\,ds=(A,B)\cdot(dy,-dx)=A\,dy-B\,dx.
+
+[501-512 p c18s4-subsec-flux-form-green default_required]
+Now compute the exterior derivative:
+      
+        d\phi \amp= d(A\,dy-B\,dx)
+        \amp= dA\wedge dy-dB\wedge dx
+        \amp= A_x\,dx\wedge dy+B_y\,dx\wedge dy
+        \amp= (A_x+B_y)\,dx\wedge dy.
+      
+      The coefficient
+      A_x+B_y
+      is the divergence of \mathbf F.
+
+[514-520 p c18s4-subsec-flux-form-green default_required]
+So Green's theorem becomes
+      \boxed{\int_{\partial R} A\,dy-B\,dx=\int_R (A_x+B_y)\,dx\wedge dy.}
+      In vector notation,
+      \boxed{\oint_{\partial R}\mathbf F\cdot\mathbf n_{\text{out}}\,ds=\iint_R \nabla\cdot\mathbf F\,dA.}
+      This is the two-dimensional divergence theorem.
+
+[523-523 title c18s4-ex-flux-circular-pond default_required]
+Flux out of a circular pond
+
+[525-532 p c18s4-ex-flux-circular-pond default_required]
+Let
+          \mathbf F(x,y)=(x,y),
+          the radial field pointing away from the origin. The flux form is
+          \phi=x\,dy-y\,dx.
+          Its exterior derivative is
+          d\phi=2\,dx\wedge dy.
+
+[533-551 p c18s4-ex-flux-circular-pond default_required]
+Let D_a be the disk of radius a. The interior integral is
+          \int_{D_a}2\,dx\wedge dy=2\pi a^2.
+          Now compute the boundary flux directly. Parametrize the boundary circle
+          counterclockwise:
+          x=a\cos t, \qquad y=a\sin t, \qquad 0\le t\le2\pi.
+          Then
+          dx=-a\sin t\,dt, \qquad dy=a\cos t\,dt.
+          So
+          
+            x\,dy-y\,dx \amp= (a\cos t)(a\cos t\,dt)-(a\sin t)(-a\sin t\,dt)
+            \amp= a^2(\cos^2t+\sin^2t)\,dt
+            \amp= a^2\,dt.
+          
+          Thus
+          \int_{\partial D_a}\phi=\int_0^{2\pi}a^2\,dt=2\pi a^2.
+          Again,
+          \boxed{\int_{\partial D_a}\phi=\int_{D_a}d\phi.}
+
+[557-557 title c18s4-subsec-two-greens-one-stokes default_required]
+Two Green's theorems, one Stokes theorem
+
+[559-564 p c18s4-subsec-two-greens-one-stokes default_required]
+The circulation form of Green's theorem uses
+      \omega=P\,dx+Q\,dy.
+      It gives
+      \boxed{\oint_{\partial R}P\,dx+Q\,dy=\iint_R (Q_x-P_y)\,dA.}
+
+[566-571 p c18s4-subsec-two-greens-one-stokes default_required]
+The flux form uses
+      \phi=A\,dy-B\,dx.
+      It gives
+      \boxed{\oint_{\partial R}\mathbf F\cdot\mathbf n_{\text{out}}\,ds=\iint_R \nabla\cdot\mathbf F\,dA.}
+
+[573-578 p c18s4-subsec-two-greens-one-stokes default_required]
+They look like two different vector calculus formulas. In forms language, they are the
+      same theorem:
+      \boxed{\int_{\partial R}\text{form}=\int_R d(\text{form}).}
+      The only difference is which 1-form we choose for the boundary measurement.
+
+[581-581 title checkpoint-18-4-one-theorem default_required]
+One theorem wearing two costumes?
+
+[583-588 p checkpoint-18-4-one-theorem default_required]
+The circulation form and the flux form look like two separate results, but here they
+          collapse into the single statement \int_{\partial R}\omega=\int_R d\omega. In
+          your own words, what is the one structural fact that both forms share, and what is the
+          only thing you actually changed to pass from one to the other?
+
+[591-595 p checkpoint-18-4-one-theorem hint]
+Both statements integrate something on \partial R on the left and its exterior
+          derivative d\omega on R on the right. Look only at which 1-form you
+          fed in: P\,dx+Q\,dy versus A\,dy-B\,dx.
+
+[599-605 p c18s4-subsec-two-greens-one-stokes default_required]
+Green's theorem is Stokes' theorem on a flat surface. But a boundary curve in space
+      does not have to lie flat. A wire loop can bend and twist, and a soap film can stretch
+      across it in many possible shapes. The boundary is still a curve, but the inside is now
+      a surface. The next disguise of the same theorem is the one that carries curl from a
+      flat region into space.

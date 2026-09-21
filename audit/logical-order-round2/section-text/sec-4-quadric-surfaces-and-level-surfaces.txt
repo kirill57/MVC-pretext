@@ -1,0 +1,868 @@
+[5-5 title sec-4-quadric-surfaces-and-level-surfaces default_required]
+Quadric surfaces and level surfaces
+
+[7-13 p sec-4-quadric-surfaces-and-level-surfaces default_required]
+A sphere can be written in spherical coordinates as
+    \rho=3.
+    The same sphere can be written in rectangular coordinates as
+    x^2+y^2+z^2=9.
+    One surface, two languages.
+
+[15-20 p sec-4-quadric-surfaces-and-level-surfaces default_required]
+The next surfaces are the three-dimensional relatives of conic sections. In the plane,
+    second-degree equations gave circles, ellipses, parabolas, and hyperbolas. In space,
+    second-degree equations give cylinders, cones, paraboloids, ellipsoids, hyperboloids,
+    and saddles.
+
+[22-22 p sec-4-quadric-surfaces-and-level-surfaces default_required]
+The trick is not to memorize a gallery. The trick is to slice.
+
+[25-25 title c4s4-first-surface default_required]
+A first surface from an equation
+
+[27-32 p c4s4-first-surface default_required]
+Start with the equation
+      x^2+y^2=4.
+      In the plane, this is a circle of radius 2. But in space, the equation does not
+      mention z. That means z is free.
+
+[34-41 p c4s4-first-surface default_required]
+If
+      (x,y)
+      lies on the circle, then every point
+      (x,y,z)
+      lies on the surface, no matter how high or low z is. The circle is lifted upward
+      and downward forever.
+
+[43-47 p c4s4-first-surface default_required]
+So
+      x^2+y^2=4
+      is a circular cylinder in space.
+
+[50-50 title c4s4-ex-missing-variable-cylinder default_required]
+A missing variable creates a cylinder
+
+[52-59 p c4s4-ex-missing-variable-cylinder default_required]
+The equation
+          y=x^2
+          is a parabola in the xy-plane. In space, if the equation is still
+          y=x^2,
+          then z is free. Every point on the parabola can move up and down parallel to
+          the z-axis.
+
+[60-60 p c4s4-ex-missing-variable-cylinder default_required]
+The result is a parabolic cylinder.
+
+[64-67 p c4s4-first-surface default_required]
+A cylinder does not have to be circular. In multivariable calculus, a cylinder
+      means a surface made by dragging a plane curve along a straight direction.
+
+[71-71 caption c4s4-fig-cylinders default_required]
+If an equation in space is missing one variable, a plane curve is dragged along that missing direction.
+
+[73-201 latex-image c4s4-fig-cylinders default_required]
+\begin{tikzpicture}[>=latex]
+
+    % --- LEFT COLUMN: CIRCULAR ---
+
+    % Text at very top
+    \node[anchor=north, font=\Large] (eq1) at (-4, 4) {\(x^2 + y^2 = 1\)};
+
+    % 2D Circle Graph
+    \draw[->] (-6, 0) -- (-2, 0) node[right] {\(x\)};
+    \draw[->] (-4, -2) -- (-4, 2) node[above] {\(y\)};
+    \node[below left] at (-4, 0) {0};
+    \draw[thick, blue] (-4, 0) circle (1.5cm);
+    \node[anchor=west] (label2d1) at (-3.2, 1.3) {2D \(\rightarrow\) Circle};
+    \draw[->] (-4.6, 1.4) -- (label2d1);
+
+    % 3D Cylinder Graph
+    \begin{axis}[
+        name=plot1,
+        standard 3d,
+        at={(-6.5cm, -9cm)}, % Shifted down 3cm
+        xlabel={\(x\)}, ylabel={\(y\)}, zlabel={\(z\)},
+        ]
+        % Base circle on xy plane
+        \addplot3[
+            smooth,
+            thin, dashed,
+            domain=0:2*pi,
+            samples=30,
+            samples y=1,
+            ] ({cos(deg(x))}, {sin(deg(x))}, {0});
+
+        % Main surface (uses parameters and viridis map)
+        \addplot3[
+            surf,
+            samples=30,
+            samples y=2,
+            domain=0:2*pi,
+            domain y=0:2,
+            z buffer=sort,
+            opacity=0.6,
+            colormap/viridis
+        ] ({cos(deg(x))}, {sin(deg(x))}, {y});
+
+        % Dotted axis inside
+        \draw[dotted, thick] (0,0,0) -- (0,0,2.2);
+        % Top rim edge (hidden lines removal is automatic in surf)
+        \addplot3[
+            smooth,
+            blue, thick,
+            domain=0:2*pi,
+            samples=30,
+            samples y=1,
+            ] ({cos(deg(x))}, {sin(deg(x))}, {2});
+    \end{axis}
+    \node at (-3.3,-7.5) {0}; % Shifted down 3cm
+
+    % Bottom label and arrow
+    \node[anchor=north, font=\large] (label3d1) at (-4, -9.5) {3D \(\rightarrow\) Cylinder}; % Shifted down 3cm
+    \draw[thick, ->] (label2d1.south) -- ++(0,-10.3); % Arrow lengthened by 3cm
+
+
+    % --- RIGHT COLUMN: PARABOLIC ---
+
+    % Text at very top
+    \node[anchor=north, font=\Large] (eq2) at (4, 4) {\(y = x^2\)};
+
+    % 2D Parabola Graph
+    \draw[->] (2, 0) -- (6, 0) node[right] {\(x\)};
+    \draw[->] (4, -1) -- (4, 3) node[above] {\(y\)};
+    \node[below right] at (4, 0) {0};
+    \draw[thick, blue, samples=30, domain=2.6:5.4] plot (\x, {(\x-4)^2});
+    \node[anchor=west] (label2d2) at (3.5, 2.3) {2D \(\rightarrow\) Parabola};
+    \draw[->] (3.0, 1.4) -- (label2d2);
+
+    % 3D Parabolic Cylinder Graph
+    \begin{axis}[
+        name=plot2,
+        standard 3d,
+        at={(1.5cm, -9cm)}, % Shifted down 3cm
+        % adjust limits for this plot shape
+        ymin=0, ymax=2,
+        xmin=-1.5, xmax=1.5,
+        xlabel={\(x\)}, ylabel={\(y\)}, zlabel={\(z\)},
+        ]
+        % Main folded surface
+        \addplot3[
+            surf,
+            samples=30,
+            samples y=2,
+            domain=-1.25:1.25,
+            domain y=0:2,
+            z buffer=sort,
+            opacity=0.6,
+            colormap/cool
+        ] (x, {x^2}, {y});
+
+        % Base curve
+        \addplot3[
+            smooth,
+            thin, dashed,
+            domain=-1.25:1.25,
+            samples=30,
+            samples y=1,
+            ] (x, {x^2}, {0});
+
+        % Dotted internal dashed lines (manually drawn vertical lines)
+        \draw[dotted, thick] (0,0,0) -- (0,0,2);
+        \draw[dotted, thick] (0.8,0.64,0) -- (0.8,0.64,2);
+        \draw[dotted, thick] (-0.8,0.64,0) -- (-0.8,0.64,2);
+
+        % Top rim edge
+        \addplot3[
+            smooth,
+            blue, thick,
+            domain=-1.25:1.25,
+            samples=30,
+            samples y=1,
+            ] (x, {x^2}, {2});
+    \end{axis}
+    \node at (4.7,-7.5) {0}; % Shifted down 3cm
+
+    % Bottom label and arrow
+    \node[anchor=north, font=\large] (label3d2) at (4, -9.5) {3D \(\rightarrow\) Cylinder}; % Shifted down 3cm
+    % Long arrow from Parabola 2D label to Cylinder 3D label
+    \draw[thick, ->] (label2d2.south) -- ++(0,-11.3); % Arrow lengthened by 3cm
+
+\end{tikzpicture}
+
+[207-207 title c4s4-cylinders-cones-paraboloids-ellipsoids default_required]
+Cylinders, cones, paraboloids, and ellipsoids
+
+[209-212 p c4s4-cylinders-cones-paraboloids-ellipsoids default_required]
+A quadric surface is a surface in space described by a second-degree equation
+      in x,y,z. The simplest examples use squares and no mixed terms.
+
+[215-215 title c4s4-def-quadric-surface default_required]
+Quadric surface
+
+[217-222 p c4s4-def-quadric-surface default_required]
+A quadric surface is the graph or level set of a second-degree equation in
+          x,y,z. Typical terms include
+          x^2,\qquad y^2,\qquad z^2,\qquad xy,\qquad xz,\qquad yz,
+          together with possible linear and constant terms.
+
+[226-228 p c4s4-cylinders-cones-paraboloids-ellipsoids default_required]
+The word surface is a little generous. Some second-degree equations degenerate.
+
+[230-242 p c4s4-cylinders-cones-paraboloids-ellipsoids default_required]
+For example,
+      x^2+y^2+z^2=-1
+      has no real points at all. The equation
+      x^2+y^2+z^2=0
+      has only one point, the origin. And
+      x^2-y^2=0
+      factors as
+      (x-y)(x+y)=0,
+      so it gives two planes:
+      x=y \qquad\text{and}\qquad x=-y.
+      These warning examples remind us that equations must be read, not merely classified.
+
+[244-244 p c4s4-cylinders-cones-paraboloids-ellipsoids default_required]
+Now let us look at the main shapes.
+
+[247-247 title c4s4-ex-elliptic-paraboloid default_required]
+An elliptic paraboloid: a bowl
+
+[249-259 p c4s4-ex-elliptic-paraboloid default_required]
+Consider
+          z=\frac{x^2}{4}+y^2.
+          At z=0, the only point is
+          (0,0,0).
+          At z=1, we get
+          \frac{x^2}{4}+y^2=1,
+          an ellipse. At z=4, we get
+          \frac{x^2}{4}+y^2=4,
+          a larger ellipse.
+
+[260-263 p c4s4-ex-elliptic-paraboloid default_required]
+So horizontal slices are ellipses that grow as z increases. The surface is a
+          bowl opening upward. It is called an elliptic paraboloid.
+
+[267-272 p c4s4-cylinders-cones-paraboloids-ellipsoids default_required]
+The circular paraboloid
+      z=x^2+y^2
+      is the special case where the horizontal slices are circles. But most bowls are not
+      perfectly round; their slices may be ellipses.
+
+[275-275 title c4s4-ex-ellipsoid default_required]
+An ellipsoid: a stretched sphere
+
+[277-281 p c4s4-ex-ellipsoid default_required]
+The equation
+          \frac{x^2}{9}+\frac{y^2}{4}+z^2=1
+          describes a stretched sphere, called an ellipsoid.
+
+[282-282 p c4s4-ex-ellipsoid default_required]
+To see the stretches, set two variables to zero.
+
+[283-291 p c4s4-ex-ellipsoid default_required]
+If
+          y=0,\qquad z=0,
+          then
+          \frac{x^2}{9}=1,
+          so
+          x=\pm3.
+          Along the x-axis, the ellipsoid reaches 3 units.
+
+[292-300 p c4s4-ex-ellipsoid default_required]
+If
+          x=0,\qquad z=0,
+          then
+          \frac{y^2}{4}=1,
+          so
+          y=\pm2.
+          Along the y-axis, it reaches 2 units.
+
+[301-309 p c4s4-ex-ellipsoid default_required]
+If
+          x=0,\qquad y=0,
+          then
+          z^2=1,
+          so
+          z=\pm1.
+          Along the z-axis, it reaches 1 unit.
+
+[313-317 p c4s4-cylinders-cones-paraboloids-ellipsoids default_required]
+So the ellipsoid
+      \frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c^2}=1
+      is stretched by a, b, and c along the coordinate axes.
+
+[320-320 title c4s4-ex-double-cone default_required]
+A double cone
+
+[322-326 p c4s4-ex-double-cone default_required]
+The equation
+          z^2=x^2+y^2
+          describes a double cone.
+
+[327-331 p c4s4-ex-double-cone default_required]
+For z=0, we get
+          x^2+y^2=0,
+          so the slice is only the origin.
+
+[332-336 p c4s4-ex-double-cone default_required]
+For z=2, we get
+          x^2+y^2=4,
+          a circle of radius 2.
+
+[337-342 p c4s4-ex-double-cone default_required]
+For z=-2, we again get
+          x^2+y^2=4.
+          So the surface has one cone opening upward and one cone opening downward, meeting at
+          the origin.
+
+[348-348 caption c4s4-fig-paraboloid-ellipsoid-cone default_required]
+Several common quadric surfaces can be recognized from their slices. (Interactive: drag to rotate, scroll to zoom.)
+
+[351-351 caption c4s4-fig-paraboloid default_required]
+elliptic paraboloid z=x^2+y^2
+
+[353-362 asymptote c4s4-fig-paraboloid default_required]
+// 3-D interactive (WebGL) surface.
+import graph3;
+        size(7cm);
+        currentprojection=orthographic(5,4,3);
+        surface s=surface(new triple(pair t){real r=t.y; return (r*cos(t.x), r*sin(t.x), r*r);},(0,0),(2pi,1.35),32,14);
+        draw(s, rgb(0.30,0.65,0.75)+opacity(0.85), meshpen=rgb(0.10,0.30,0.40)+linewidth(0.2pt));
+        draw(O--(1.8,0,0),gray,Arrow3); draw(O--(0,1.8,0),gray,Arrow3); draw(O--(0,0,2.1),gray,Arrow3);
+        label("$x$",(1.8,0,0),S); label("$y$",(0,1.8,0),E); label("$z$",(0,0,2.1),N);
+
+[366-366 caption c4s4-fig-ellipsoid default_required]
+ellipsoid
+
+[368-378 asymptote c4s4-fig-ellipsoid default_required]
+// 3-D interactive (WebGL) surface.
+import graph3;
+        size(7cm);
+        currentprojection=orthographic(5,4,3);
+        real A=1.1,B=1.1,C=1.7;
+        surface s=surface(new triple(pair t){real th=t.x, ph=t.y; return (A*sin(ph)*cos(th), B*sin(ph)*sin(th), C*cos(ph));},(0,0),(2pi,pi),32,16);
+        draw(s, rgb(0.95,0.70,0.30)+opacity(0.85), meshpen=rgb(0.55,0.35,0.05)+linewidth(0.2pt));
+        draw((-2.0,0,0)--(2.0,0,0),gray,Arrow3); draw((0,-2.0,0)--(0,2.0,0),gray,Arrow3); draw((0,0,-2.0)--(0,0,2.0),gray,Arrow3);
+        label("$x$",(2.0,0,0),S); label("$y$",(0,2.0,0),E); label("$z$",(0,0,2.0),N);
+
+[382-382 caption c4s4-fig-double-cone default_required]
+double cone z^2=x^2+y^2
+
+[384-396 asymptote c4s4-fig-double-cone default_required]
+// 3-D interactive (WebGL) surface.
+import graph3;
+        size(7cm);
+        currentprojection=orthographic(5,4,3);
+        real R=1.5;
+        surface s=surface(new triple(pair t){real r=t.y; return (r*cos(t.x), r*sin(t.x), r);},(0,0),(2pi,R),28,10);
+        draw(s, rgb(0.65,0.45,0.85)+opacity(0.85), meshpen=rgb(0.30,0.15,0.45)+linewidth(0.2pt));
+        surface s2=surface(new triple(pair t){real r=t.y; return (r*cos(t.x), r*sin(t.x), -r);},(0,0),(2pi,R),28,10);
+        draw(s2, rgb(0.65,0.45,0.85)+opacity(0.85), meshpen=rgb(0.30,0.15,0.45)+linewidth(0.2pt));
+        draw((-1.9,0,0)--(1.9,0,0),gray,Arrow3); draw((0,-1.9,0)--(0,1.9,0),gray,Arrow3); draw((0,0,-1.9)--(0,0,1.9),gray,Arrow3);
+        label("$x$",(1.9,0,0),S); label("$y$",(0,1.9,0),E); label("$z$",(0,0,1.9),N);
+
+[404-404 title c4s4-hyperboloids-saddle default_required]
+Hyperboloids and saddle surfaces
+
+[406-409 p c4s4-hyperboloids-saddle default_required]
+The signs in a quadric equation matter. Positive square terms tend to make ellipses. A
+      mixture of positive and negative square terms tends to create hyperbolas.
+
+[412-412 title c4s4-ex-hyperboloid-one-sheet default_required]
+A hyperboloid of one sheet
+
+[414-420 p c4s4-ex-hyperboloid-one-sheet default_required]
+Consider
+          x^2+y^2-z^2=1.
+          At z=0, the horizontal slice is
+          x^2+y^2=1,
+          a circle of radius 1.
+
+[421-427 p c4s4-ex-hyperboloid-one-sheet default_required]
+At z=2, the slice is
+          x^2+y^2-4=1,
+          so
+          x^2+y^2=5,
+          a larger circle.
+
+[428-428 p c4s4-ex-hyperboloid-one-sheet default_required]
+At z=-2, we get the same circle.
+
+[429-432 p c4s4-ex-hyperboloid-one-sheet default_required]
+The surface is connected, with a narrow waist at z=0. It is called a
+          hyperboloid of one sheet.
+
+[437-437 title c4s4-ex-hyperboloid-two-sheets default_required]
+A hyperboloid of two sheets
+
+[439-445 p c4s4-ex-hyperboloid-two-sheets default_required]
+Now change the signs:
+          z^2-x^2-y^2=1.
+          At z=0, the equation becomes
+          -x^2-y^2=1,
+          which has no real solutions.
+
+[446-452 p c4s4-ex-hyperboloid-two-sheets default_required]
+At z=2, we get
+          4-x^2-y^2=1,
+          so
+          x^2+y^2=3.
+          At z=-2, we get the same circle.
+
+[453-456 p c4s4-ex-hyperboloid-two-sheets default_required]
+The surface has two disconnected pieces: one above and one below. It is called a
+          hyperboloid of two sheets.
+
+[460-466 p c4s4-hyperboloids-saddle default_required]
+The difference between
+      x^2+y^2-z^2=1
+      and
+      z^2-x^2-y^2=1
+      is not cosmetic. It changes a connected surface into two separated pieces.
+
+[469-469 title c4s4-ex-saddle default_required]
+A saddle surface
+
+[471-475 p c4s4-ex-saddle default_required]
+The equation
+          z=x^2-y^2
+          describes a hyperbolic paraboloid, often called a saddle.
+
+[476-476 p c4s4-ex-saddle default_required]
+Look at two vertical slices.
+
+[477-483 p c4s4-ex-saddle default_required]
+If
+          y=0,
+          then
+          z=x^2.
+          This is an upward-opening parabola.
+
+[484-490 p c4s4-ex-saddle default_required]
+If
+          x=0,
+          then
+          z=-y^2.
+          This is a downward-opening parabola.
+
+[491-494 p c4s4-ex-saddle default_required]
+So in one direction the surface bends upward, while in the perpendicular direction it
+          bends downward. That is the saddle shape.
+
+[500-500 caption c4s4-fig-hyperboloids-saddle default_required]
+Three surfaces defined by equations with mixed signs. (Interactive: drag to rotate, scroll to zoom.)
+
+[503-503 caption c4s4-fig-hyperboloid-one default_required]
+hyperboloid of one sheet x^2+y^2-z^2=1
+
+[505-514 asymptote c4s4-fig-hyperboloid-one default_required]
+// 3-D interactive (WebGL) surface.
+import graph3;
+        size(7cm);
+        currentprojection=orthographic(5,4,3);
+        surface s=surface(new triple(pair t){real u=t.x, v=t.y; return (cosh(v)*cos(u), cosh(v)*sin(u), sinh(v));},(0,-1.1),(2pi,1.1),32,14);
+        draw(s, rgb(0.40,0.75,0.55)+opacity(0.85), meshpen=rgb(0.10,0.40,0.25)+linewidth(0.2pt));
+        draw((-2.0,0,0)--(2.0,0,0),gray,Arrow3); draw((0,-2.0,0)--(0,2.0,0),gray,Arrow3); draw((0,0,-2.0)--(0,0,2.0),gray,Arrow3);
+        label("$x$",(2.0,0,0),S); label("$y$",(0,2.0,0),E); label("$z$",(0,0,2.0),N);
+
+[518-518 caption c4s4-fig-hyperboloid-two default_required]
+hyperboloid of two sheets z^2-x^2-y^2=1
+
+[520-531 asymptote c4s4-fig-hyperboloid-two default_required]
+// 3-D interactive (WebGL) surface.
+import graph3;
+        size(7cm);
+        currentprojection=orthographic(5,4,3);
+        surface s=surface(new triple(pair t){real u=t.x, v=t.y; return (sinh(v)*cos(u), sinh(v)*sin(u), cosh(v));},(0,0),(2pi,1.15),28,10);
+        draw(s, rgb(0.85,0.45,0.55)+opacity(0.85), meshpen=rgb(0.45,0.15,0.20)+linewidth(0.2pt));
+        surface s2=surface(new triple(pair t){real u=t.x, v=t.y; return (sinh(v)*cos(u), sinh(v)*sin(u), -cosh(v));},(0,0),(2pi,1.15),28,10);
+        draw(s2, rgb(0.85,0.45,0.55)+opacity(0.85), meshpen=rgb(0.45,0.15,0.20)+linewidth(0.2pt));
+        draw((-2.0,0,0)--(2.0,0,0),gray,Arrow3); draw((0,-2.0,0)--(0,2.0,0),gray,Arrow3); draw((0,0,-2.0)--(0,0,2.0),gray,Arrow3);
+        label("$x$",(2.0,0,0),S); label("$y$",(0,2.0,0),E); label("$z$",(0,0,2.0),N);
+
+[535-535 caption c4s4-fig-saddle default_required]
+saddle z=x^2-y^2
+
+[537-546 asymptote c4s4-fig-saddle default_required]
+// 3-D interactive (WebGL) surface.
+import graph3;
+        size(7cm);
+        currentprojection=orthographic(5,4,3);
+        surface s=surface(new triple(pair t){return (t.x, t.y, t.x*t.x - t.y*t.y);},(-1.2,-1.2),(1.2,1.2),24,24);
+        draw(s, rgb(0.55,0.60,0.85)+opacity(0.85), meshpen=rgb(0.20,0.25,0.50)+linewidth(0.2pt));
+        draw((-1.8,0,0)--(1.8,0,0),gray,Arrow3); draw((0,-1.8,0)--(0,1.8,0),gray,Arrow3); draw((0,0,-1.8)--(0,0,1.8),gray,Arrow3);
+        label("$x$",(1.8,0,0),S); label("$y$",(0,1.8,0),E); label("$z$",(0,0,1.8),N);
+
+[553-553 caption c4s4-fig-saddle-traces default_required]
+Families of traces for the saddle surface z=x^2-y^2.
+
+[555-605 latex-image c4s4-fig-saddle-traces default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+
+    % --- LEFT: Traces y=c ---
+    \begin{scope}
+        \draw[->] (-3.2,0) -- (3.2,0) node[right] {\(x\)};
+        \draw[->] (0,-2.8) -- (0,3.0) node[above] {\(z\)};
+
+        % y = \pm 2
+        \draw[thick, gray!40, domain=-2.1:2.1, samples=60, variable=\x]
+            plot ({\x},{0.55*\x*\x - 2.2});
+        \node[right, gray] at (2.1, 0.22) {\(y=\pm 2\)};
+
+        % y = \pm 1
+        \draw[thick, gray!70, domain=-2.1:2.1, samples=60, variable=\x]
+            plot ({\x},{0.55*\x*\x - 0.55});
+        \node[right, gray!70!black] at (2.1, 1.87) {\(y=\pm 1\)};
+
+        % y = 0
+        \draw[thick, black, domain=-2.1:2.1, samples=60, variable=\x]
+            plot ({\x},{0.55*\x*\x});
+        \node[right] at (2.1, 2.42) {\(y=0\)};
+        
+        \node at (0, -3.6) {Traces in planes \(y=c\)};
+    \end{scope}
+
+    % --- RIGHT: Traces x=c ---
+    \begin{scope}[shift={(7.8,0)}]
+        \draw[->] (-3.2,0) -- (3.2,0) node[right] {\(y\)};
+        \draw[->] (0,-2.8) -- (0,3.0) node[above] {\(z\)};
+
+        % x = \pm 2
+        \draw[thick, gray!40, domain=-2.1:2.1, samples=60, variable=\y]
+            plot ({\y},{2.2 - 0.55*\y*\y});
+        \node[right, gray] at (2.1, -0.22) {\(x=\pm 2\)};
+
+        % x = \pm 1
+        \draw[thick, gray!70, domain=-2.1:2.1, samples=60, variable=\y]
+            plot ({\y},{0.55 - 0.55*\y*\y});
+        \node[right, gray!70!black] at (2.1, -1.87) {\(x=\pm 1\)};
+
+        % x = 0
+        \draw[thick, black, domain=-2.1:2.1, samples=60, variable=\y]
+            plot ({\y},{-0.55*\y*\y});
+        \node[right] at (2.1, -2.42) {\(x=0\)};
+        
+        \node at (0, -3.6) {Traces in planes \(x=c\)};
+    \end{scope}
+
+\end{tikzpicture}
+
+[609-613 p c4s4-hyperboloids-saddle default_required]
+A saddle is one of the most important shapes in multivariable calculus. Later, when we
+      study optimization, saddle points will be the places where a surface is level to first
+      order but is neither a maximum nor a minimum.
+
+[617-617 title c4s4-traces-cross-sections default_required]
+Traces and cross-sections
+
+[619-622 p c4s4-traces-cross-sections default_required]
+A trace is a slice of a surface by a coordinate plane or by a plane parallel
+      to a coordinate plane.
+
+[624-624 p c4s4-traces-cross-sections default_required]
+The basic method is simple:
+
+[627-627 title c4s4-tab-trace-method default_required]
+The trace method.
+
+[629-629 cell c4s4-tab-trace-method default_required]
+Set one coordinate equal to a constant.
+
+[630-630 cell c4s4-tab-trace-method default_required]
+Simplify the equation.
+
+[631-631 cell c4s4-tab-trace-method default_required]
+Recognize the curve left in the slice.
+
+[636-636 title c4s4-ex-traces-ellipsoid default_required]
+Traces of an ellipsoid
+
+[638-642 p c4s4-ex-traces-ellipsoid default_required]
+Consider
+          \frac{x^2}{9}+\frac{y^2}{4}+z^2=1.
+          Horizontal traces come from fixing z.
+
+[643-649 p c4s4-ex-traces-ellipsoid default_required]
+If
+          z=0,
+          then
+          \frac{x^2}{9}+\frac{y^2}{4}=1.
+          This is an ellipse.
+
+[650-658 p c4s4-ex-traces-ellipsoid default_required]
+If
+          z=\frac12,
+          then
+          \frac{x^2}{9}+\frac{y^2}{4}+\frac14=1,
+          so
+          \frac{x^2}{9}+\frac{y^2}{4}=\frac34.
+          This is a smaller ellipse.
+
+[659-669 p c4s4-ex-traces-ellipsoid default_required]
+If
+          z=1,
+          then
+          \frac{x^2}{9}+\frac{y^2}{4}=0,
+          so the slice is only the point
+          (0,0,1).
+          If
+          |z|\gt 1,
+          there are no points.
+
+[670-673 p c4s4-ex-traces-ellipsoid default_required]
+These slices tell us that the ellipsoid is widest at the middle and closes at the top
+          and bottom.
+
+[678-678 title c4s4-ex-identify-from-traces default_required]
+Identifying a surface from traces
+
+[680-694 p c4s4-ex-identify-from-traces default_required]
+Identify the surface
+          z=9-x^2-4y^2.
+          Fix z=c. Then
+          c=9-x^2-4y^2,
+          so
+          x^2+4y^2=9-c.
+          For
+          c\lt 9,
+          this is an ellipse. For
+          c=9,
+          it is a single point. For
+          c\gt 9,
+          there are no points.
+
+[695-700 p c4s4-ex-identify-from-traces default_required]
+So the surface has elliptical horizontal slices, with the largest slices lower down and
+          a top point at
+          (0,0,9).
+          It is an elliptic paraboloid opening downward.
+
+[704-712 p c4s4-traces-cross-sections default_required]
+The same surface can often be recognized in several ways. For
+      z=9-x^2-4y^2,
+      fixing y=0 gives
+      z=9-x^2,
+      a downward-opening parabola. Fixing x=0 gives
+      z=9-4y^2,
+      another downward-opening parabola, steeper in the y-direction.
+
+[714-714 p c4s4-traces-cross-sections default_required]
+That extra steepness is visible in the coefficient 4.
+
+[717-717 title checkpoint-4-4-traces-identify default_required]
+Why do traces reveal the surface?
+
+[719-724 p checkpoint-4-4-traces-identify default_required]
+For the given equation z=9-x^2-4y^2, describe the complete family
+          of horizontal traces z=c. How does that family, together with the
+          equation, identify a downward-opening elliptic paraboloid? Would a few isolated
+          slices determine an arbitrary surface?
+
+[727-731 p checkpoint-4-4-traces-identify hint]
+Think about how each trace changes as you move the cutting plane. It is not one slice
+          that identifies the surface. Here the formula describes every horizontal slice;
+          a finite selection alone could miss changes between the selected planes.
+
+[737-737 title c4s4-gallery default_required]
+A small gallery of standard quadric surfaces
+
+[739-742 p c4s4-gallery default_required]
+The following table is not meant to replace slicing. It is a quick reference after slicing
+      has shown where the shapes come from.
+
+[745-745 title c4s4-tab-gallery default_required]
+A small gallery of standard quadric surfaces.
+
+[750-750 cell c4s4-tab-gallery default_required]
+Equation
+
+[751-751 cell c4s4-tab-gallery default_required]
+Surface
+
+[754-754 cell c4s4-tab-gallery default_required]
+x^2+y^2=a^2
+
+[755-755 cell c4s4-tab-gallery default_required]
+circular cylinder along the z-axis
+
+[758-758 cell c4s4-tab-gallery default_required]
+z=x^2+y^2
+
+[759-759 cell c4s4-tab-gallery default_required]
+elliptic paraboloid opening upward
+
+[762-762 cell c4s4-tab-gallery default_required]
+z=-(x^2+y^2)
+
+[763-763 cell c4s4-tab-gallery default_required]
+elliptic paraboloid opening downward
+
+[766-766 cell c4s4-tab-gallery default_required]
+z=x^2-y^2
+
+[767-767 cell c4s4-tab-gallery default_required]
+hyperbolic paraboloid, or saddle
+
+[770-770 cell c4s4-tab-gallery default_required]
+\dfrac{x^2}{a^2}+\dfrac{y^2}{b^2}+\dfrac{z^2}{c^2}=1
+
+[771-771 cell c4s4-tab-gallery default_required]
+ellipsoid
+
+[774-774 cell c4s4-tab-gallery default_required]
+x^2+y^2-z^2=1
+
+[775-775 cell c4s4-tab-gallery default_required]
+hyperboloid of one sheet
+
+[778-778 cell c4s4-tab-gallery default_required]
+z^2-x^2-y^2=1
+
+[779-779 cell c4s4-tab-gallery default_required]
+hyperboloid of two sheets
+
+[782-782 cell c4s4-tab-gallery default_required]
+z^2=x^2+y^2
+
+[783-783 cell c4s4-tab-gallery default_required]
+double cone
+
+[788-793 p c4s4-gallery default_required]
+A coefficient changes the stretching. A sign changes the shape. A missing variable usually
+      means a cylinder. A shifted expression, such as
+      (x-2)^2+y^2+z^2=9,
+      moves the surface away from the origin.
+
+[796-796 title c4s4-ex-shifted-sphere default_required]
+A shifted sphere
+
+[798-805 p c4s4-ex-shifted-sphere default_required]
+The equation
+          (x-2)^2+(y+1)^2+(z-3)^2=16
+          is a sphere of radius 4, centered at
+          (2,-1,3).
+          The shifted terms tell us the center:
+          x-2,\qquad y+1=y-(-1),\qquad z-3.
+
+[811-811 title c4s4-level-surfaces default_required]
+Level surfaces as three-dimensional contour maps
+
+[813-817 p c4s4-level-surfaces default_required]
+A topographic map of a mountain uses level curves:
+      h(x,y)=c.
+      Each curve connects points with the same elevation.
+
+[819-825 p c4s4-level-surfaces default_required]
+In space, a function
+      F(x,y,z)
+      can have level surfaces:
+      F(x,y,z)=c.
+      Each surface connects points where F has the same value.
+
+[828-828 title c4s4-def-level-surface default_required]
+Level surface
+
+[830-839 p c4s4-def-level-surface default_required]
+Let
+          F:\mathbb R^3\to\mathbb R
+          be a scalar-valued function. A level surface of F is a set of the
+          form
+          F(x,y,z)=c,
+          where c is a constant. More generally this is a level set: it
+          need not be a smooth sheet, or even two-dimensional. For example,
+          x^2+y^2+z^2=0 contains only the origin.
+
+[844-844 title c4s4-ex-temperature default_required]
+Temperature around a hot source
+
+[846-850 p c4s4-ex-temperature default_required]
+Suppose the temperature near a small heater at the origin is modeled by
+          T(x,y,z)=\frac{100}{1+x^2+y^2+z^2}.
+          The temperature depends only on distance from the origin.
+
+[851-861 p c4s4-ex-temperature default_required]
+The level surface where
+          T=20
+          satisfies
+          \frac{100}{1+x^2+y^2+z^2}=20.
+          So
+          1+x^2+y^2+z^2=5,
+          and therefore
+          x^2+y^2+z^2=4.
+          This is a sphere of radius 2.
+
+[862-865 p c4s4-ex-temperature default_required]
+So all points at distance 2 from the heater have the same temperature
+          20.
+
+[870-870 title c4s4-ex-distance-z-axis default_required]
+Distance from the z-axis
+
+[872-880 p c4s4-ex-distance-z-axis default_required]
+Let
+          F(x,y,z)=x^2+y^2.
+          Then the level surface
+          F(x,y,z)=9
+          is
+          x^2+y^2=9.
+          This is a cylinder of radius 3 around the z-axis.
+
+[881-884 p c4s4-ex-distance-z-axis default_required]
+The function F measures squared distance from the z-axis, so its level
+          surfaces are cylinders.
+
+[888-892 p c4s4-level-surfaces default_required]
+Level surfaces are not just a way to draw shapes. They are a way to understand scalar
+      fields in space: temperature, pressure, density, electric potential, gravitational
+      potential, and many others.
+
+[895-895 title checkpoint-4-4-level-vs-graph default_required]
+Level surface or graph?
+
+[897-903 p checkpoint-4-4-level-vs-graph default_required]
+A graph z=g(x,y) and a level set f(x,y,z)=c
+          describe sets in space in different ways. In z=g(x,y) one coordinate is
+          singled out and expressed in terms of the other two; in f(x,y,z)=c all three coordinates
+          appear on equal footing. How does this difference show up in the shapes each can
+          describe, and why can a level surface represent something a graph cannot?
+
+[906-910 p checkpoint-4-4-level-vs-graph hint]
+Ask whether a vertical line can ever cross the surface more than once. A graph
+          z=g(x,y) assigns exactly one height to each (x,y). Could a sphere, written
+          as a level surface, ever be a graph of that kind?
+
+[914-915 p c4s4-level-surfaces default_required]
+For these examples, the equation F(x,y,z)=c identifies points of
+      equal value. Later we will learn to find slopes and measure surface patches.
+
+[919-919 title c4s4-equations-not-motion default_required]
+Equations describe surfaces, but not how to move on them
+
+[921-927 p c4s4-equations-not-motion default_required]
+An equation like
+      x^2+y^2+z^2=9
+      tells us which points lie on a sphere. But it does not tell us how to draw a grid on the
+      sphere. It does not tell us how to walk across it using two parameters. It does not tell
+      us, at least not directly, how a tiny patch of the surface should be measured.
+
+[930-930 title checkpoint-4-4-equation-vs-motion default_required]
+Equation versus motion
+
+[932-938 p checkpoint-4-4-equation-vs-motion default_required]
+A curve was described by motion: a single parameter t moves a point along, and
+          you could ask how fast it travels. A surface, by contrast, is described by an equation
+          that simply tests whether a point belongs. Why is it natural that a curve comes with a
+          built-in sense of motion while a surface, given only by an equation like
+          x^2+y^2+z^2=9, does not?
+
+[941-945 p checkpoint-4-4-equation-vs-motion hint]
+Count the dimensions, or the degrees of freedom. A curve is one-dimensional, so one
+          moving number can trace it out. How many independent numbers would you need to roam
+          freely over a surface, and what does that suggest an equation alone is leaving out?
+
+[949-955 p c4s4-equations-not-motion default_required]
+For that, we need another description. Instead of saying which points satisfy an equation,
+      we will build the surface from two moving parameters:
+      \mathbf r(u,v).
+      A curve was a moving point. A surface will be a moving curve, or equivalently, a point that
+      depends on two inputs. We begin by locating points and drawing coordinate grids.

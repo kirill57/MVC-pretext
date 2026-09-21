@@ -1,0 +1,443 @@
+[5-5 title sec-9-critical-points default_required]
+Critical points
+
+[7-11 p sec-9-critical-points default_required]
+ended at the places where the gradient
+    disappears. A gradient flow line has no direction there. A contour map may pinch, cross, or
+    close up there. For optimization, those points are the first ones we must find.
+
+[14-14 title c9s2-hill-highest-nearby default_required]
+A hill with a highest nearby point
+
+[16-29 p c9s2-hill-highest-nearby default_required]
+Return to the hill
+      h(x,y)=100+4x+3y-x^2-xy-y^2.
+      Its gradient is
+      \nabla h(x,y)=\left(4-2x-y,\ 3-x-2y\right).
+      Set the gradient equal to zero:
+      4-2x-y=0, \qquad 3-x-2y=0.
+      Equivalently,
+      2x+y=4, \qquad x+2y=3.
+      Solving gives
+      y=\frac23, \qquad x=\frac53.
+      So first-order change disappears at
+      P=\left(\frac53,\frac23\right).
+
+[31-45 p c9s2-hill-highest-nearby default_required]
+At that point,
+      h(P)=\frac{313}{3}.
+      To see what kind of point it is, write
+      x=\frac53+u, \qquad y=\frac23+v.
+      A direct substitution gives
+      \boxed{ h\left(\frac53+u,\frac23+v\right) = \frac{313}{3}-(u^2+uv+v^2). }
+      Now
+      u^2+uv+v^2 = \left(u+\frac12v\right)^2+\frac34v^2.
+      This is always nonnegative, and it is zero only when
+      u=0,\qquad v=0.
+      Therefore every nearby point has height at most
+      \frac{313}{3},
+      with equality only at P. The point P is a local maximum.
+
+[47-50 p c9s2-hill-highest-nearby default_required]
+The gradient equation found the candidate. The completed square told us what kind of
+      candidate it was.
+
+[54-54 title c9s2-local-maxima-minima default_required]
+Local maxima and minima
+
+[56-60 p c9s2-local-maxima-minima default_required]
+The word local means nearby. A local maximum does not have to be the highest
+      point in the whole domain. It only has to be the highest point in some small region around
+      the point.
+
+[63-63 title c9s2-def-local-max-min default_required]
+Local maximum and local minimum
+
+[65-73 p c9s2-def-local-max-min default_required]
+Let
+          f:D\subseteq\mathbb R^n\to\mathbb R.
+          A point \mathbf p\in D is a local maximum of f if there is
+          some radius r\gt 0 such that
+          f(\mathbf x)\le f(\mathbf p)
+          for every \mathbf x\in D with
+          \|\mathbf x-\mathbf p\|\lt r.
+
+[74-80 p c9s2-def-local-max-min default_required]
+A point \mathbf p\in D is a local minimum of f if there is
+          some radius r\gt 0 such that
+          f(\mathbf x)\ge f(\mathbf p)
+          for every \mathbf x\in D with
+          \|\mathbf x-\mathbf p\|\lt r.
+
+[81-83 p c9s2-def-local-max-min default_required]
+A local maximum or local minimum is called a local extremum.
+
+[88-88 title c9s2-ex-quiet-spot default_required]
+A quiet spot in a sound model
+
+[90-102 p c9s2-ex-quiet-spot default_required]
+Suppose the loudness near a quiet spot in a room is modeled by
+          L(x,y)=5+(x-2)^2+3(y+1)^2.
+          At
+          (2,-1),
+          we have
+          L(2,-1)=5.
+          Every other nearby point gives
+          (x-2)^2+3(y+1)^2\gt 0.
+          So
+          L(x,y)\gt 5
+          nearby, except at (2,-1) itself. Thus (2,-1) is a local minimum.
+
+[103-108 p c9s2-ex-quiet-spot default_required]
+The gradient agrees:
+          \nabla L(x,y)=\left(2(x-2),6(y+1)\right),
+          so
+          \nabla L(2,-1)=\mathbf 0.
+
+[114-114 title c9s2-saddle-points default_required]
+Saddle points
+
+[116-116 p c9s2-saddle-points default_required]
+A critical point does not have to be a maximum or a minimum.
+
+[118-126 p c9s2-saddle-points default_required]
+Consider the mountain-pass model
+      S(x,y)=80+x^2-y^2.
+      The gradient is
+      \nabla S(x,y)=(2x,-2y).
+      At the origin,
+      \nabla S(0,0)=\mathbf 0.
+      But the origin is not a local maximum or a local minimum.
+
+[128-134 p c9s2-saddle-points default_required]
+Along the x-axis,
+      S(x,0)=80+x^2,
+      which is larger than 80 when x\ne0. Along the y-axis,
+      S(0,y)=80-y^2,
+      which is smaller than 80 when y\ne0.
+
+[136-139 p c9s2-saddle-points default_required]
+So every small disk around the origin contains points higher than the origin and points
+      lower than the origin. This is a saddle point.
+
+[142-142 title checkpoint-9-2-zero-gradient-not-enough default_required]
+Why isn't a zero gradient enough?
+
+[144-148 p checkpoint-9-2-zero-gradient-not-enough default_required]
+We just saw a point where \nabla f=\mathbf 0 that is neither a maximum nor a
+          minimum. In your own words, why does \nabla f=\mathbf 0 fail to guarantee an
+          extremum, and what feature of a saddle point makes it different from a peak or a valley?
+
+[151-154 p checkpoint-9-2-zero-gradient-not-enough hint]
+Walk away from the point in two different directions. At a saddle, what happens to the
+          value of f along one direction compared with the other?
+
+[159-159 caption c9s2-fig-saddle default_required]
+Near a saddle point, some directions go up and others go down.
+
+[161-196 latex-image c9s2-fig-saddle default_required]
+\begin{tikzpicture}[scale=0.8, >=stealth]
+            \draw[->] (-3.2,0) -- (3.4,0) node[right] {\(x\)};
+            \draw[->] (0,-3.2) -- (0,3.4) node[above] {\(y\)};
+
+            \draw[thick, gray!55] (-3,-3) -- (3,3);
+            \draw[thick, gray!55] (-3,3) -- (3,-3);
+            \node[gray!70!black] at (2.4,2.8) {\(S=80\)};
+
+           \foreach \c in {0.5,1.1,1.8} {
+            \draw[blue!55!black, thick, domain={sqrt(\c)}:3, samples=80]
+                plot (\x,{sqrt(abs(\x*\x-\c))});
+            \draw[blue!55!black, thick, domain={sqrt(\c)}:3, samples=80]
+                plot (\x,{-sqrt(abs(\x*\x-\c))});
+            \draw[blue!55!black, thick, domain=-3:{-sqrt(\c)}, samples=80]
+                plot (\x,{sqrt(abs(\x*\x-\c))});
+            \draw[blue!55!black, thick, domain=-3:{-sqrt(\c)}, samples=80]
+                plot (\x,{-sqrt(abs(\x*\x-\c))});
+
+            \draw[red!60!black, thick, domain={sqrt(\c)}:3, samples=80]
+                plot ({sqrt(abs(\x*\x-\c))}, \x);
+            \draw[red!60!black, thick, domain={sqrt(\c)}:3, samples=80]
+                plot ({-sqrt(abs(\x*\x-\c))}, \x);
+            \draw[red!60!black, thick, domain=-3:{-sqrt(\c)}, samples=80]
+                plot ({sqrt(abs(\x*\x-\c))}, \x);
+            \draw[red!60!black, thick, domain=-3:{-sqrt(\c)}, samples=80]
+                plot ({-sqrt(abs(\x*\x-\c))}, \x);
+        }
+
+            \fill (0,0) circle (2.5pt);
+            \node[below right] at (0,0) {\((0,0)\)};
+
+            \node[blue!55!black] at (3.2,-2.1) {higher};
+            \node[red!60!black] at (-1.5,2.6) {lower};
+        \end{tikzpicture}
+
+[201-201 title c9s2-def-saddle-point default_required]
+Saddle point
+
+[203-208 p c9s2-def-saddle-point default_required]
+A point \mathbf p is a saddle point of f if \mathbf p
+          is a critical point and every small ball around \mathbf p contains points where
+          f is larger than f(\mathbf p) and points where f is smaller than
+          f(\mathbf p).
+
+[212-217 p c9s2-saddle-points default_required]
+The saddle point is the first warning that
+      \nabla f=\mathbf 0
+      does not mean maximum or minimum. It means that the first-order test has gone
+      silent. We need more information to classify the point.
+
+[221-221 title c9s2-critical-points-grad-zero default_required]
+Critical points from \nabla f=0
+
+[223-227 p c9s2-critical-points-grad-zero default_required]
+Single-variable calculus had Fermat's theorem: if a differentiable function has a local
+      maximum or minimum at an interior point, then its derivative is zero. The same idea works
+      in several variables by looking at one coordinate slice at a time.
+
+[230-230 title c9s2-thm-fermat default_required]
+Fermat's theorem for functions of several variables
+
+[232-237 p c9s2-thm-fermat default_required]
+Let
+          f:D\subseteq\mathbb R^n\to\mathbb R.
+          Suppose \mathbf p is an interior point of D, and suppose f has a
+          local maximum or local minimum at \mathbf p.
+
+[238-243 p c9s2-thm-fermat default_required]
+If all first partial derivatives of f exist at \mathbf p, then
+          \boxed{ \nabla f(\mathbf p)=\mathbf 0. }
+          If f is differentiable at \mathbf p, this is equivalently
+          \boxed{ df_{\mathbf p}=0. }
+
+[246-260 p c9s2-thm-fermat default_required]
+Write
+          \mathbf p=(p_1,\ldots,p_n).
+          Hold every variable fixed except x_i. This gives a one-variable slice through
+          \mathbf p:
+          g_i(t)=f(p_1,\ldots,p_{i-1},t,p_{i+1},\ldots,p_n).
+          Since f has a local maximum or minimum at \mathbf p, the slice g_i
+          has a local maximum or minimum at
+          t=p_i.
+          By the one-variable Fermat theorem,
+          g_i'(p_i)=0.
+          But
+          g_i'(p_i)=f_{x_i}(\mathbf p).
+          So every first partial derivative is zero.
+
+[264-268 p c9s2-critical-points-grad-zero default_required]
+This theorem gives necessary conditions, not sufficient ones. Local maxima and minima must
+      occur among the points where the first-order test fails, but not every such point is an
+      extremum.
+
+[271-271 title checkpoint-9-2-why-gradient-zero default_required]
+Why does the gradient vanish at an interior peak?
+
+[273-278 p checkpoint-9-2-why-gradient-zero default_required]
+Suppose f has a local maximum or local minimum at an interior point
+          \mathbf p, and all its first partial derivatives exist there. Why must
+          \nabla f(\mathbf p)=\mathbf 0? Try to explain it in terms of one-variable
+          slices through \mathbf p.
+
+[281-285 p checkpoint-9-2-why-gradient-zero hint]
+Freeze every variable but one. What kind of point does the resulting single-variable
+          slice have at \mathbf p, and what did Fermat's theorem say about its derivative
+          there?
+
+[290-290 title c9s2-def-critical-point default_required]
+Critical point
+
+[292-299 p c9s2-def-critical-point default_required]
+Let
+          f:D\subseteq\mathbb R^n\to\mathbb R.
+          An interior point \mathbf p\in D is called a critical point of
+          f if either
+          \nabla f(\mathbf p)=\mathbf 0,
+          or one of the first partial derivatives fails to exist at \mathbf p.
+
+[300-304 p c9s2-def-critical-point default_required]
+When f is differentiable, the critical points are exactly the interior points
+          where
+          \nabla f=\mathbf 0.
+
+[308-311 p c9s2-critical-points-grad-zero default_required]
+The definition includes points where derivatives fail to exist because extrema can hide
+      there.
+
+[314-314 title c9s2-ex-sharp-peak default_required]
+A sharp peak
+
+[316-324 p c9s2-ex-sharp-peak default_required]
+The function
+          f(x,y)=-|x|-|y|
+          has a local maximum at the origin. But
+          f_x(0,0)
+          does not exist, since along the x-axis
+          f(h,0)=-|h|.
+          The one-variable derivative of -|h| at 0 does not exist.
+
+[325-329 p c9s2-ex-sharp-peak default_required]
+So the origin must still be checked in an optimization problem, even though
+          \nabla f(0,0)
+          does not exist.
+
+[333-333 p c9s2-critical-points-grad-zero default_required]
+The hypotheses in Fermat's theorem cannot be dropped.
+
+[336-336 title c9s2-ex-interior default_required]
+Why the point must be interior
+
+[338-348 p c9s2-ex-interior default_required]
+Let
+          f(x,y)=x
+          on the closed disk
+          D=\{(x,y):x^2+y^2\le1\}.
+          The maximum value occurs at
+          (1,0),
+          because no point in the disk has x\gt 1. But
+          \nabla f(1,0)=(1,0),
+          not \mathbf 0.
+
+[349-353 p c9s2-ex-interior default_required]
+There is no contradiction. The point (1,0) is a boundary point, not an interior
+          point. At the boundary, many directions are not allowed. The function would increase if
+          we moved farther east, but the disk does not allow that move.
+
+[358-358 title c9s2-ex-partials-exist default_required]
+Why the partial derivatives must exist
+
+[360-365 p c9s2-ex-partials-exist default_required]
+The function
+          f(x,y)=-|x|-|y|
+          has a local maximum at the origin, but the first partial derivatives do not exist
+          there. So Fermat's theorem does not apply.
+
+[366-369 p c9s2-ex-partials-exist default_required]
+The theorem says: if the derivatives exist at an interior local extremum, then they
+          must be zero. If the derivatives do not exist, the point is still a candidate.
+
+[375-375 title c9s2-finding-reading-critical default_required]
+Finding and reading critical points
+
+[377-377 p c9s2-finding-reading-critical default_required]
+Here is a small example where the critical equation finds more than one point.
+
+[379-390 p c9s2-finding-reading-critical default_required]
+Let
+      f(x,y)=x^3-3x+y^2.
+      Then
+      f_x(x,y)=3x^2-3, \qquad f_y(x,y)=2y.
+      Set both equal to zero:
+      3x^2-3=0, \qquad 2y=0.
+      Thus
+      x=\pm1, \qquad y=0.
+      The critical points are
+      (1,0) \qquad\text{and}\qquad (-1,0).
+
+[392-406 p c9s2-finding-reading-critical default_required]
+At (1,0), write
+      x=1+u,\qquad y=v.
+      Then
+      
+        f(1+u,v) \amp =(1+u)^3-3(1+u)+v^2
+        \amp =-2+3u^2+u^3+v^2
+        \amp =-2+u^2(3+u)+v^2.
+      
+      For |u|\lt 1,
+      3+u\gt 0.
+      So nearby,
+      f(1+u,v)\ge -2,
+      with equality only at u=v=0. Thus (1,0) is a local minimum.
+
+[408-421 p c9s2-finding-reading-critical default_required]
+At (-1,0), write
+      x=-1+u,\qquad y=v.
+      Then
+      
+        f(-1+u,v) \amp =(-1+u)^3-3(-1+u)+v^2
+        \amp =2-3u^2+u^3+v^2.
+      
+      Along the line u=0,
+      f(-1,v)=2+v^2,
+      which is larger than 2 for v\ne0. Along the line v=0,
+      f(-1+u,0)=2-3u^2+u^3.
+      For small nonzero u, this is less than 2. So (-1,0) is a saddle point.
+
+[423-426 p c9s2-finding-reading-critical default_required]
+This classification was possible by hand, but it took separate local algebra around each
+      point. The next sections will build a faster tool for this job.
+
+[430-430 title c9s2-boundary-points-separately default_required]
+Boundary points must be checked separately
+
+[432-435 p c9s2-boundary-points-separately default_required]
+Critical points are interior candidates. Boundary points have their own rules, because not
+      every direction is available.
+
+[437-445 p c9s2-boundary-points-separately default_required]
+A rectangular roof is described by
+      0\le x\le 4, \qquad 0\le y\le 3.
+      Suppose sunlight intensity on the roof is modeled by
+      B(x,y)=3x+2y.
+      The gradient is
+      \nabla B=(3,2),
+      so there are no interior critical points.
+
+[447-456 p c9s2-boundary-points-separately default_required]
+But the function still has a maximum and a minimum on the rectangle. Since
+      B(x,y)
+      increases as x increases and also as y increases, the minimum occurs at
+      (0,0),
+      and the maximum occurs at
+      (4,3).
+      The values are
+      B(0,0)=0, \qquad B(4,3)=18.
+
+[458-463 p c9s2-boundary-points-separately default_required]
+The maximum is not detected by
+      \nabla B=\mathbf 0
+      because the maximum occurs at a corner. The direction of increasing sunlight points
+      northeast, but at the corner (4,3) the roof ends.
+
+[466-466 title checkpoint-9-2-why-boundary-separate default_required]
+Why examine the boundary on its own?
+
+[468-473 p checkpoint-9-2-why-boundary-separate default_required]
+The condition \nabla f=\mathbf 0 found no candidates here, yet the maximum is
+          real and sits on the boundary. Why can a maximum or minimum live at a boundary point
+          even when \nabla f is never zero, so that boundary points must be examined
+          separately from interior critical points?
+
+[476-479 p checkpoint-9-2-why-boundary-separate hint]
+Fermat's theorem needs the point to be interior, so that motion is allowed in every
+          direction. At a boundary point, which directions are no longer available to you?
+
+[483-483 p c9s2-boundary-points-separately default_required]
+So an optimization problem on a region has two kinds of candidates:
+
+[486-486 title c9s2-tab-candidates default_required]
+Two kinds of optimization candidates.
+
+[491-491 cell c9s2-tab-candidates default_required]
+interior candidates
+
+[492-492 cell c9s2-tab-candidates default_required]
+\nabla f=\mathbf 0 or derivatives fail
+
+[495-495 cell c9s2-tab-candidates default_required]
+boundary candidates
+
+[496-496 cell c9s2-tab-candidates default_required]
+optimize on the boundary separately
+
+[501-506 p c9s2-boundary-points-separately default_required]
+For a rectangular boundary, this usually means checking four edges and four corners. For a
+      circular boundary, it means optimizing along a circle. For a surface constraint, it means
+      something subtler: the gradient of f may not be zero, but it must be perpendicular
+      to every motion allowed by the constraint.
+
+[508-514 p c9s2-boundary-points-separately default_required]
+We have found the first-order candidates. What we do not yet have is a reliable way to tell
+      peak from valley from saddle without inventing a new trick each time. The missing
+      information is hidden in the second-order part of the local approximation. In one variable,
+      that information was f''. In two variables, it becomes a matrix of second partials:
+      the Hessian.

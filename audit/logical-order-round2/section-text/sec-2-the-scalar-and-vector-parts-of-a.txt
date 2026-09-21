@@ -1,0 +1,454 @@
+[5-5 title sec-2-the-scalar-and-vector-parts-of-a default_required]
+The scalar and vector parts of a quaternion product
+
+[7-12 p sec-2-the-scalar-and-vector-parts-of-a default_required]
+At the end of the last section, something surprising happened. When we multiplied two
+    pure imaginary quaternions, the answer did not usually stay pure imaginary. It split
+    into two pieces:
+    \text{a real part} \qquad\text{and}\qquad \text{a pure imaginary vector part}.
+
+[15-15 title c2s3-subsec-multiplying-two-pure-imaginary default_required]
+Multiplying two pure imaginary quaternions
+
+[17-30 p c2s3-subsec-multiplying-two-pure-imaginary default_required]
+Start with two simple vectors in the plane, but write them as pure imaginary
+      quaternions:
+      U=2i+j, \qquad V=i+3j.
+      Their product is
+      
+        UV \amp=(2i+j)(i+3j)
+        \amp=2i^2+6ij+ji+3j^2
+        \amp=-2+6k-k-3
+        \amp=-5+5k.
+      
+      The product has two parts:
+      -5 \qquad\text{and}\qquad 5k.
+
+[32-37 p c2s3-subsec-multiplying-two-pure-imaginary default_required]
+The real part is
+      -5=-(2\cdot 1+1\cdot 3).
+      The vector part is
+      5k=(2\cdot3-1\cdot1)k.
+
+[39-46 p c2s3-subsec-multiplying-two-pure-imaginary default_required]
+So quaternion multiplication has found two different measurements at once. The number
+      2\cdot1+1\cdot3=5
+      measures how much the two vectors are aligned together in the same direction (it also  
+       accounts for their magnitudes). The number
+      2\cdot3-1\cdot1=5
+      measures the signed area of the parallelogram they make in the xy-plane.
+
+[49-49 caption c2s3-fig-signed-area-parallelogram default_required]
+The vector part 5k records the signed area of the parallelogram.
+
+[51-78 latex-image c2s3-fig-signed-area-parallelogram default_required]
+\begin{tikzpicture}[scale=0.75, >=stealth]
+            \draw[->] (-0.5,0) -- (5.5,0) node[right] {\(x\)};
+            \draw[->] (0,-0.5) -- (0,4.5) node[above] {\(y\)};
+
+            \draw[step=1, gray!18, very thin] (0,0) grid (5,4);
+
+            \coordinate (O) at (0,0);
+            \coordinate (U) at (2,1);
+            \coordinate (V) at (1,3);
+            \coordinate (UV) at (3,4);
+
+            \draw[->, very thick] (O) -- (U) node[midway, below right] {\((2,1)\)};
+            \draw[->, very thick] (O) -- (V) node[midway, left] {\((1,3)\)};
+
+            \draw[thick, dashed] (U) -- (UV);
+            \draw[thick, dashed] (V) -- (UV);
+            \draw[fill=gray!12, opacity=0.55] (O) -- (U) -- (UV) -- (V) -- cycle;
+
+            \fill (O) circle (2pt);
+            \fill (U) circle (2pt);
+            \fill (V) circle (2pt);
+            \fill (UV) circle (2pt);
+
+            \node at (3.7,2.1) {\(\text{signed area}=5\)};
+            \node[below left] at (O) {\(0\)};
+        \end{tikzpicture}
+
+[82-86 p c2s3-subsec-multiplying-two-pure-imaginary default_required]
+The direction k matters. The parallelogram lies in the xy-plane, so its
+      oriented area points perpendicular to that plane. The order (2,1) then
+      (1,3) gives the positive k-direction.
+
+[88-97 p c2s3-subsec-multiplying-two-pure-imaginary default_required]
+If we reverse the order, the real part stays the same, but the vector part changes sign:
+      
+        VU \amp=(i+3j)(2i+j)
+        \amp=2i^2+ij+6ji+3j^2
+        \amp=-2+k-6k-3
+        \amp=-5-5k.
+      
+      The same two arrows make the same area, but the opposite orientation.
+
+[99-99 p c2s3-subsec-multiplying-two-pure-imaginary default_required]
+This is exactly the kind of behavior an oriented area should have.
+
+[103-103 title c2s3-subsec-the-general-product default_required]
+The general product
+
+[105-105 p c2s3-subsec-the-general-product default_required]
+Now do the same multiplication without choosing numbers.
+
+[107-133 p c2s3-subsec-the-general-product default_required]
+Let
+      \mathbf u=(u_1,u_2,u_3), \qquad \mathbf v=(v_1,v_2,v_3),
+      and write the corresponding pure imaginary quaternions as
+      U=u_1i+u_2j+u_3k, \qquad V=v_1i+v_2j+v_3k.
+      Expanding UV gives
+      
+        UV \amp=(u_1i+u_2j+u_3k)(v_1i+v_2j+v_3k)
+        \amp=u_1v_1i^2+u_1v_2ij+u_1v_3ik
+        \amp\qquad +u_2v_1ji+u_2v_2j^2+u_2v_3jk
+        \amp\qquad +u_3v_1ki+u_3v_2kj+u_3v_3k^2.
+      
+      Using
+      i^2=j^2=k^2=-1,
+      and
+      ij=k,\quad jk=i,\quad ki=j,
+      while reversing order changes the sign, we get
+      
+        \boxed{\begin{aligned}
+        UV
+        \amp=-(u_1v_1+u_2v_2+u_3v_3)\\
+        \amp\qquad +(u_2v_3-u_3v_2)i\\
+        \amp\qquad +(u_3v_1-u_1v_3)j\\
+        \amp\qquad +(u_1v_2-u_2v_1)k.
+        \end{aligned}}
+
+[135-138 p c2s3-subsec-the-general-product default_required]
+This formula is long, but it has a simple structure:
+      UV = \text{scalar part} + \text{vector part}.
+
+[141-141 title c2s3-def-scalar-part-vector-part default_required]
+Scalar part and vector part
+
+[143-150 p c2s3-def-scalar-part-vector-part default_required]
+For a quaternion
+          q=a+bi+cj+dk,
+          the scalar part is
+          \operatorname{Scal}(q)=a,
+          and the vector part is
+          \operatorname{Vec}(q)=bi+cj+dk.
+
+[154-159 p c2s3-subsec-the-general-product default_required]
+For the product of two pure imaginary quaternions, the scalar part is
+      \operatorname{Scal}(UV)=-(u_1v_1+u_2v_2+u_3v_3),
+      and the vector part is
+      \operatorname{Vec}(UV) = (u_2v_3-u_3v_2)i +(u_3v_1-u_1v_3)j +(u_1v_2-u_2v_1)k.
+
+[161-161 p c2s3-subsec-the-general-product default_required]
+The two expressions are important enough to receive their own names.
+
+[164-164 title c2s3-def-dot-cross-from-quaternions default_required]
+Dot product and cross product from quaternions
+
+[166-173 p c2s3-def-dot-cross-from-quaternions default_required]
+For vectors
+          \mathbf u=(u_1,u_2,u_3), \qquad \mathbf v=(v_1,v_2,v_3),
+          the dot product is
+          \mathbf u\cdot\mathbf v = u_1v_1+u_2v_2+u_3v_3.
+          The cross product is
+          \mathbf u\times\mathbf v = (u_2v_3-u_3v_2)i +(u_3v_1-u_1v_3)j +(u_1v_2-u_2v_1)k.
+
+[177-180 p c2s3-subsec-the-general-product default_required]
+With these names, the quaternion product becomes beautifully short:
+      \boxed{ UV= -\mathbf u\cdot\mathbf v+\mathbf u\times\mathbf v. }
+
+[183-183 title c2s3-thm-product-splits-dot-cross default_required]
+The quaternion product splits into dot and cross
+
+[185-196 p c2s3-thm-product-splits-dot-cross default_required]
+Let
+          U=u_1i+u_2j+u_3k, \qquad V=v_1i+v_2j+v_3k
+          be pure imaginary quaternions, corresponding to vectors
+          \mathbf u=(u_1,u_2,u_3), \qquad \mathbf v=(v_1,v_2,v_3).
+          Then
+          UV= -\mathbf u\cdot\mathbf v+\mathbf u\times\mathbf v.
+          The scalar part of UV is
+          -\mathbf u\cdot\mathbf v,
+          and the vector part of UV is
+          \mathbf u\times\mathbf v.
+
+[201-210 p c2s3-subsec-the-general-product default_required]
+This is exactly the expansion above. The real terms are
+        -u_1v_1-u_2v_2-u_3v_3 = -\mathbf u\cdot\mathbf v.
+        The i, j, and k terms are
+        (u_2v_3-u_3v_2)i,
+        (u_3v_1-u_1v_3)j,
+        and
+        (u_1v_2-u_2v_1)k,
+        which together form \mathbf u\times\mathbf v.
+
+[213-216 p c2s3-subsec-the-general-product default_required]
+The hypothesis that U and V are pure imaginary matters. If real
+      parts are present, new terms appear.
+
+[218-229 p c2s3-subsec-the-general-product default_required]
+For example, let
+      q=1+i, \qquad r=j.
+      Then
+      qr=(1+i)j=j+ij=j+k.
+      But if we only used the vector parts i and j, the formula would give
+      -\mathbf i\cdot\mathbf j+\mathbf i\times\mathbf j=k.
+      It misses the extra j, which came from the real part 1 multiplying
+      j. So the clean split
+      UV=-\mathbf u\cdot\mathbf v+\mathbf u\times\mathbf v
+      belongs to products of pure imaginary quaternions.
+
+[233-233 title c2s3-subsec-scalar-part-dot-product default_required]
+The scalar part and the dot product
+
+[235-235 p c2s3-subsec-scalar-part-dot-product default_required]
+The scalar part is easiest to feel when two vectors point in the same direction.
+
+[237-248 p c2s3-subsec-scalar-part-dot-product default_required]
+Let
+      U=3i+4j, \qquad V=6i+8j.
+      These represent
+      \mathbf u=(3,4,0), \qquad \mathbf v=(6,8,0).
+      The second vector is twice the first:
+      \mathbf v=2\mathbf u.
+      Their dot product is
+      \mathbf u\cdot\mathbf v = 3\cdot6+4\cdot8+0\cdot0 = 18+32 = 50.
+      The scalar part of UV is therefore
+      -50.
+
+[250-254 p c2s3-subsec-scalar-part-dot-product default_required]
+The minus sign is not a mistake. It comes from the fact that
+      i^2=j^2=k^2=-1.
+      When a direction multiplies itself, it contributes a negative real number.
+
+[256-261 p c2s3-subsec-scalar-part-dot-product default_required]
+This is why we define
+      \mathbf u\cdot\mathbf v
+      as the negative of the scalar part of UV. The dot product is positive
+      when vectors point together.
+
+[264-264 title checkpoint-2-3-scalar-part-dot default_required]
+Why does the scalar part carry the dot product?
+
+[266-272 p checkpoint-2-3-scalar-part-dot default_required]
+When you multiply two pure imaginary quaternions, the scalar part of the product
+          turns out to be -\mathbf u\cdot\mathbf v. Without computing anything,
+          can you explain where that minus sign comes from, and why a quantity built from a
+          product of directions ends up measuring how much the two vectors point the
+          same way?
+
+[275-279 p checkpoint-2-3-scalar-part-dot hint]
+Think about what happens when a single direction multiplies itself. What is
+          i^2, j^2, or k^2? Those self-products are exactly the terms
+          that survive in the scalar part when \mathbf u and \mathbf v line up.
+
+[283-291 p c2s3-subsec-scalar-part-dot-product default_required]
+Now compare that with a perpendicular vector:
+      W=-4i+3j.
+      Then
+      \mathbf u=(3,4,0), \qquad \mathbf w=(-4,3,0),
+      and
+      \mathbf u\cdot\mathbf w = 3(-4)+4(3)+0 = -12+12 = 0.
+      So the scalar part of UW is zero.
+
+[293-293 p c2s3-subsec-scalar-part-dot-product default_required]
+The dot product measures directional agreement:
+
+[296-296 title c2s3-tab-dot-product-sign default_required]
+What the sign of the dot product means.
+
+[298-298 cell c2s3-tab-dot-product-sign default_required]
+\mathbf u\cdot\mathbf v>0
+
+[298-298 cell c2s3-tab-dot-product-sign default_required]
+the vectors point somewhat together
+
+[299-299 cell c2s3-tab-dot-product-sign default_required]
+\mathbf u\cdot\mathbf v=0
+
+[299-299 cell c2s3-tab-dot-product-sign default_required]
+the vectors are perpendicular, if both are nonzero
+
+[300-300 cell c2s3-tab-dot-product-sign default_required]
+\mathbf u\cdot\mathbf v<0
+
+[300-300 cell c2s3-tab-dot-product-sign default_required]
+the vectors point somewhat against each other
+
+[306-306 title c2s3-subsec-vector-part-cross-product default_required]
+The vector part and the cross product
+
+[308-308 p c2s3-subsec-vector-part-cross-product default_required]
+The vector part remembers orientation.
+
+[310-317 p c2s3-subsec-vector-part-cross-product default_required]
+The basic quaternion products give
+      ij=k, \qquad ji=-k.
+      So
+      \mathbf i\times\mathbf j=\mathbf k, \qquad \mathbf j\times\mathbf i=-\mathbf k.
+      This is the seed of the right-hand rule. The ordered pair i,j points toward
+      k. Reverse the order, and the direction reverses.
+
+[320-320 title checkpoint-2-3-vector-part-cross default_required]
+Why does the vector part carry the cross product?
+
+[322-328 p checkpoint-2-3-vector-part-cross default_required]
+The vector part of UV is \mathbf u\times\mathbf v, and swapping the
+          order of the two quaternions flips its sign. Why is it natural that the
+          vector part of a product should reverse direction when you reverse the
+          order, while the scalar part does not? What feature of an oriented area is the
+          quaternion product faithfully recording?
+
+[331-335 p checkpoint-2-3-vector-part-cross hint]
+Compare ij=k with ji=-k. Picture the parallelogram spanned by the two
+          vectors and ask what should happen to its orientation when you trace its edges in
+          the opposite order.
+
+[340-340 title c2s3-ex-three-dimensional-product default_required]
+A three-dimensional product
+
+[342-351 p c2s3-ex-three-dimensional-product default_required]
+Let
+          U=2i-j+3k, \qquad V=i+4j+2k.
+          The corresponding vectors are
+          \mathbf u=(2,-1,3), \qquad \mathbf v=(1,4,2).
+          Their dot product is
+          \mathbf u\cdot\mathbf v = 2\cdot1+(-1)\cdot4+3\cdot2 = 2-4+6 = 4.
+          So the scalar part of UV is
+          -4.
+
+[352-361 p c2s3-ex-three-dimensional-product default_required]
+The cross product is
+          
+            \mathbf u\times\mathbf v \amp= ((-1)(2)-3(4))i +(3(1)-2(2))j +(2(4)-(-1)(1))k
+            \amp= (-2-12)i+(3-4)j+(8+1)k
+            \amp= -14i-j+9k.
+          
+          Therefore
+          UV=-4-14i-j+9k.
+
+[365-369 p c2s3-subsec-vector-part-cross-product default_required]
+This product has packed two answers into one line:
+      \text{directional agreement} \qquad \text{and} \qquad \text{oriented area}.
+      The dot product is the scalar measurement. The cross product is the vector measurement.
+
+[373-373 title c2s3-subsec-symmetric-antisymmetric-parts default_required]
+Symmetric and antisymmetric parts of multiplication
+
+[375-380 p c2s3-subsec-symmetric-antisymmetric-parts default_required]
+Quaternion multiplication is not commutative:
+      UV\neq VU
+      in general. But if we add and subtract UV and VU, the two pieces separate
+      cleanly.
+
+[382-398 p c2s3-subsec-symmetric-antisymmetric-parts default_required]
+For the example
+      U=2i+j, \qquad V=i+3j,
+      we found
+      UV=-5+5k,
+      and
+      VU=-5-5k.
+      Adding gives
+      UV+VU=-10.
+      Subtracting gives
+      UV-VU=10k.
+      So
+      \frac{UV+VU}{2}=-5,
+      and
+      \frac{UV-VU}{2}=5k.
+      The average keeps the scalar part. The half-difference keeps the vector part.
+
+[400-400 p c2s3-subsec-symmetric-antisymmetric-parts default_required]
+This always happens.
+
+[403-403 title c2s3-thm-symmetric-antisymmetric-parts default_required]
+Symmetric and antisymmetric parts
+
+[405-411 p c2s3-thm-symmetric-antisymmetric-parts default_required]
+Let U and V be pure imaginary quaternions corresponding to vectors
+          \mathbf u and \mathbf v. Then
+          \frac{UV+VU}{2} = -\mathbf u\cdot\mathbf v,
+          and
+          \frac{UV-VU}{2} = \mathbf u\times\mathbf v.
+
+[416-430 p c2s3-subsec-symmetric-antisymmetric-parts default_required]
+From the product formula,
+        UV=-\mathbf u\cdot\mathbf v+\mathbf u\times\mathbf v.
+        If we reverse the order, the dot product stays the same:
+        \mathbf v\cdot\mathbf u=\mathbf u\cdot\mathbf v.
+        But the cross product changes sign:
+        \mathbf v\times\mathbf u=-(\mathbf u\times\mathbf v).
+        Therefore
+        VU=-\mathbf u\cdot\mathbf v-\mathbf u\times\mathbf v.
+        Adding,
+        UV+VU=-2\mathbf u\cdot\mathbf v.
+        Subtracting,
+        UV-VU=2\mathbf u\times\mathbf v.
+        Dividing by 2 gives the result.
+
+[433-436 p c2s3-subsec-symmetric-antisymmetric-parts default_required]
+The words symmetric and antisymmetric describe what happens
+      when we swap the two inputs.
+
+[438-443 p c2s3-subsec-symmetric-antisymmetric-parts default_required]
+The dot product is symmetric:
+      \mathbf u\cdot\mathbf v=\mathbf v\cdot\mathbf u.
+      The cross product is antisymmetric:
+      \mathbf u\times\mathbf v=-(\mathbf v\times\mathbf u).
+
+[445-449 p c2s3-subsec-symmetric-antisymmetric-parts default_required]
+This sign change is the same sign change we saw in oriented area:
+      \text{area}(\mathbf u,\mathbf v) = -\text{area}(\mathbf v,\mathbf u).
+      That idea will return later in a more flexible form as the wedge product.
+
+[452-452 title checkpoint-2-3-symmetric-antisymmetric default_required]
+What do the two halves of a product measure?
+
+[454-461 p checkpoint-2-3-symmetric-antisymmetric default_required]
+Any product UV can be split into a symmetric piece
+          \tfrac{1}{2}(UV+VU) and an antisymmetric piece
+          \tfrac{1}{2}(UV-VU). In plain words, what does each half measure about the
+          relationship between \mathbf u and \mathbf v, and why does it make
+          sense that the symmetric half ignores order while the antisymmetric half depends on
+          it?
+
+[464-468 p checkpoint-2-3-symmetric-antisymmetric hint]
+One half survives a swap unchanged; the other flips sign. Match each half to a
+          quantity you have already met in this section, and ask which of those quantities
+          cares about which vector comes first.
+
+[474-474 title c2s3-subsec-better-than-memorized-determinant default_required]
+What this explains better than a memorized determinant
+
+[476-480 p c2s3-subsec-better-than-memorized-determinant default_required]
+Many calculus books introduce the dot product by a formula and the cross product by a
+      determinant. Those formulas are useful, and we will use them. But by themselves they can
+      feel like two unrelated tricks.
+
+[482-482 p c2s3-subsec-better-than-memorized-determinant default_required]
+Quaternion multiplication tells a more coherent story.
+
+[484-488 p c2s3-subsec-better-than-memorized-determinant default_required]
+Multiplying two pure imaginary quaternions gives
+      UV=-\mathbf u\cdot\mathbf v+\mathbf u\times\mathbf v.
+      One product splits into two geometric measurements.
+
+[490-493 p c2s3-subsec-better-than-memorized-determinant default_required]
+The scalar part measures how much the two vectors point in the same direction. The vector
+      part measures the oriented area they create.
+
+[495-499 p c2s3-subsec-better-than-memorized-determinant default_required]
+That explains why the dot product is symmetric:
+      \mathbf u\cdot\mathbf v=\mathbf v\cdot\mathbf u.
+      Pointing together does not depend on order.
+
+[501-505 p c2s3-subsec-better-than-memorized-determinant default_required]
+It also explains why the cross product is antisymmetric:
+      \mathbf u\times\mathbf v=-(\mathbf v\times\mathbf u).
+      Oriented area does depend on order.
+
+[507-511 p c2s3-subsec-better-than-memorized-determinant default_required]
+The dot product deserves its own closer look. It has no direction, but it controls
+      length, angle, perpendicularity, projection, and work. Before following the vector part
+      into areas and normal directions, we should understand this scalar measurement well.

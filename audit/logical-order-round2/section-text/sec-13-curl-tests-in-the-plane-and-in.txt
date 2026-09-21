@@ -1,0 +1,538 @@
+[5-5 title sec-13-curl-tests-in-the-plane-and-in default_required]
+Curl tests in the plane and in space
+
+[7-12 p sec-13-curl-tests-in-the-plane-and-in default_required]
+showed the reward for
+    finding a potential: line integrals become endpoint differences. But finding a potential by
+    guessing is not a method. We need a test that can say, quickly, whether a field could be
+    conservative.
+
+[14-14 p sec-13-curl-tests-in-the-plane-and-in default_required]
+The test begins with mixed partial derivatives.
+
+[17-17 title c13s6-test-py-qx-plane default_required]
+The test P_y=Q_x in the plane
+
+[19-34 p c13s6-test-py-qx-plane default_required]
+Suppose
+      \omega=P\,dx+Q\,dy
+      is exact. Then
+      \omega=d\phi
+      for some potential \phi. That means
+      P=\phi_x, \qquad Q=\phi_y.
+      Differentiate the first equation with respect to y:
+      P_y=\phi_{xy}.
+      Differentiate the second equation with respect to x:
+      Q_x=\phi_{yx}.
+      If the mixed partial derivatives are continuous, then
+      \phi_{xy}=\phi_{yx}.
+      So every smooth exact form must satisfy
+      \boxed{P_y=Q_x.}
+
+[37-37 title c13s6-ex-form-passes default_required]
+A form that passes the test
+
+[39-50 p c13s6-ex-form-passes default_required]
+Let
+          \omega=(2xy+3)\,dx+(x^2+2y)\,dy.
+          Here
+          P(x,y)=2xy+3, \qquad Q(x,y)=x^2+2y.
+          Then
+          P_y=2x, \qquad Q_x=2x.
+          The test passes. In
+          , we found the
+          potential
+          \phi(x,y)=x^2y+3x+y^2.
+
+[55-55 title c13s6-ex-swirling-fails default_required]
+A swirling form that fails the test
+
+[57-65 p c13s6-ex-swirling-fails default_required]
+Let
+          \eta=-y\,dx+x\,dy.
+          Then
+          P=-y, \qquad Q=x.
+          So
+          P_y=-1, \qquad Q_x=1.
+          The test fails. Therefore \eta is not exact on the plane.
+
+[66-69 p c13s6-ex-swirling-fails default_required]
+This agrees with what we already know:
+          \oint_{\text{unit circle}} -y\,dx+x\,dy=2\pi\ne0.
+
+[73-82 p c13s6-test-py-qx-plane default_required]
+The difference
+      Q_x-P_y
+      is called the scalar curl of the plane field
+      \mathbf F=(P,Q).
+      So the condition
+      P_y=Q_x
+      is the same as
+      \boxed{Q_x-P_y=0.}
+
+[85-85 title c13s6-def-closed-1form-plane default_required]
+Closed 1-form in the plane
+
+[87-94 p c13s6-def-closed-1form-plane default_required]
+A C^1 1-form
+          \omega=P\,dx+Q\,dy
+          is called closed if
+          \boxed{Q_x-P_y=0.}
+          Equivalently,
+          P_y=Q_x.
+
+[98-102 p c13s6-test-py-qx-plane default_required]
+Exact forms are closed, provided the coefficients are smooth enough. This is the first
+      appearance of a pattern that will return later as
+      d^2=0.
+
+[105-105 title checkpoint-13-6-direction-of-the-arrow default_required]
+Which way does the arrow point?
+
+[107-112 p checkpoint-13-6-direction-of-the-arrow default_required]
+We just argued that every exact form satisfies P_y=Q_x. Suppose a friend computes
+          P_y=Q_x for some form and announces, “Great, so it’s exact!” What
+          is the logical gap in that announcement, and why does the implication we proved only run
+          in one direction?
+
+[115-120 p checkpoint-13-6-direction-of-the-arrow hint]
+Reread the theorem as “exact \Rightarrow closed.” Passing the test is a
+          necessary condition. Ask yourself whether necessary and sufficient are the same
+          thing here—and recall that the upcoming rectangle theorem needs an extra hypothesis
+          before it can turn the arrow around.
+
+[125-125 title c13s6-thm-exact-implies-closed-plane default_required]
+Exact implies closed in the plane
+
+[127-135 p c13s6-thm-exact-implies-closed-plane default_required]
+Let
+          \omega=P\,dx+Q\,dy
+          be a C^1 1-form on a region D. If
+          \omega=d\phi
+          for a C^2 potential \phi, then
+          \boxed{P_y=Q_x}
+          throughout D.
+
+[138-147 p c13s6-thm-exact-implies-closed-plane default_required]
+Since
+          \omega=d\phi,
+          we have
+          P=\phi_x, \qquad Q=\phi_y.
+          Therefore
+          P_y=\phi_{xy}, \qquad Q_x=\phi_{yx}.
+          The mixed partial derivatives of a C^2 function are equal, so
+          P_y=Q_x.
+
+[151-151 p c13s6-test-py-qx-plane default_required]
+The smoothness condition is real. Without it, mixed partials can misbehave.
+
+[154-154 title c13s6-ex-smoothness-matters default_required]
+Why smoothness matters in the mixed-partial test
+
+[156-162 p c13s6-ex-smoothness-matters default_required]
+Define
+          \Phi(x,y)=\begin{cases}\dfrac{xy(x^2-y^2)}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm] 0, \amp (x,y)=(0,0).\end{cases}
+          This function has first partial derivatives at the origin, and we may form
+          d\Phi=\Phi_x\,dx+\Phi_y\,dy.
+          So d\Phi is exact wherever these derivatives are defined.
+
+[163-174 p c13s6-ex-smoothness-matters default_required]
+But the mixed partials at the origin are not equal. First compute
+          \Phi_x(0,y)=-y,
+          so
+          \Phi_{xy}(0,0)=\lim_{y\to0}\frac{\Phi_x(0,y)-\Phi_x(0,0)}{y}=\lim_{y\to0}\frac{-y}{y}=-1.
+          Also,
+          \Phi_y(x,0)=x,
+          so
+          \Phi_{yx}(0,0)=\lim_{x\to0}\frac{\Phi_y(x,0)-\Phi_y(0,0)}{x}=\lim_{x\to0}\frac{x}{x}=1.
+          Thus
+          \Phi_{xy}(0,0)\ne \Phi_{yx}(0,0).
+
+[175-178 p c13s6-ex-smoothness-matters default_required]
+The problem is not exactness. The problem is lack of sufficient smoothness. The
+          coefficient functions of d\Phi are not C^1 near the origin.
+
+[182-183 p c13s6-test-py-qx-plane default_required]
+On a rectangle, the curl test is not only necessary. It is sufficient. Its proof uses
+      the following differentiation rule for an integral with a parameter.
+
+[186-186 title c13s6-lem-parameter-integral default_required]
+Differentiating an integral with a parameter
+
+[188-194 p c13s6-lem-parameter-integral default_required]
+Suppose q(x,t) and q_x(x,t) are continuous on a neighborhood of
+          [a,b]\times[c,d]. For a\lt x\lt b,
+          H(x)=\int_c^d q(x,t)\,dt
+            \quad\Longrightarrow\quad
+            H'(x)=\int_c^d q_x(x,t)\,dt.
+          The same conclusion holds for any fixed subinterval of [c,d].
+
+[197-204 p c13s6-lem-parameter-integral default_required]
+Fix x. Continuity of q_x makes
+          q_x(x+s,t)-q_x(x,t) uniformly small for all c\le t\le d
+          when s is small. To justify the word uniformly, first use continuity
+          near each (x,t_0) to bound both values by their difference from
+          q_x(x,t_0). The closed interval [c,d] is covered by finitely many
+          of these neighborhoods, so the smallest of their allowed positive bounds on
+          |s| works for the entire interval. This is the usual finite-cover argument
+          behind uniform continuity on a closed bounded interval.
+
+[205-213 p c13s6-lem-parameter-integral default_required]
+The one-variable Mean Value Theorem, applied with t fixed, now gives
+          \left|\frac{q(x+h,t)-q(x,t)}{h}-q_x(x,t)\right|\le\varepsilon
+          for all t\in[c,d] and all sufficiently small nonzero h.
+          Integrating this inequality yields
+          \left|\frac{H(x+h)-H(x)}{h}-\int_c^d q_x(x,t)\,dt\right|
+            \le(d-c)\varepsilon.
+          Letting h\to0 proves the derivative formula. Thus the interchange is
+          justified by the stated continuity hypotheses, not by a formal movement of symbols.
+
+[218-218 title c13s6-thm-curl-test-rectangle default_required]
+Curl test on a rectangle
+
+[220-228 p c13s6-thm-curl-test-rectangle default_required]
+Let
+          R=[a,b]\times[c,d]
+          be a rectangle, and let
+          \omega=P\,dx+Q\,dy
+          be a C^1 1-form on an open neighborhood of R. If
+          \boxed{P_y=Q_x}
+          throughout that neighborhood, then \omega is exact on R.
+
+[231-246 p c13s6-thm-curl-test-rectangle default_required]
+Choose the lower-left corner (a,c) as a base point, and define
+          \phi(x,y)=\int_a^x P(s,c)\,ds+\int_c^y Q(x,t)\,dt.
+          Then
+          \phi_y(x,y)=Q(x,y).
+          For the x-partial derivative, apply
+           with y held fixed:
+          
+            \phi_x(x,y) \amp= P(x,c)+\int_c^y Q_x(x,t)\,dt
+            \amp= P(x,c)+\int_c^y P_y(x,t)\,dt
+            \amp= P(x,c)+\bigl(P(x,y)-P(x,c)\bigr)
+            \amp= P(x,y).
+          
+          So
+          d\phi=P\,dx+Q\,dy=\omega.
+
+[250-254 p c13s6-test-py-qx-plane default_required]
+This proof also tells us why the condition works. The equality
+      P_y=Q_x
+      makes the two ways of building \phi compatible.
+
+[258-258 title c13s6-curl-zero-in-space default_required]
+Curl zero in space
+
+[260-269 p c13s6-curl-zero-in-space default_required]
+In space, a 1-form has three coefficients:
+      \omega=P\,dx+Q\,dy+R\,dz.
+      If it is exact, then
+      \omega=d\phi
+      for some potential \phi, so
+      P=\phi_x,\qquad Q=\phi_y,\qquad R=\phi_z.
+      The mixed partial derivatives force three compatibility conditions:
+      \boxed{P_y=Q_x,\qquad P_z=R_x,\qquad Q_z=R_y.}
+
+[271-278 p c13s6-curl-zero-in-space default_required]
+For the associated vector field
+      \mathbf F=(P,Q,R),
+      these three equations are usually packaged into the curl:
+      \boxed{\nabla\times\mathbf F=\left(R_y-Q_z,\, P_z-R_x,\, Q_x-P_y\right).}
+      So the compatibility condition is
+      \boxed{\nabla\times\mathbf F=\mathbf 0.}
+
+[281-281 title c13s6-def-closed-1form-space default_required]
+Closed 1-form in space
+
+[283-290 p c13s6-def-closed-1form-space default_required]
+A C^1 1-form
+          \omega=P\,dx+Q\,dy+R\,dz
+          is called closed if
+          \boxed{\nabla\times(P,Q,R)=\mathbf 0.}
+          Equivalently,
+          P_y=Q_x,\qquad P_z=R_x,\qquad Q_z=R_y.
+
+[295-295 title c13s6-ex-space-zero-curl default_required]
+A space field with zero curl
+
+[297-313 p c13s6-ex-space-zero-curl default_required]
+Let
+          \mathbf F(x,y,z)=(yz,xz,xy).
+          Then
+          P=yz,\qquad Q=xz,\qquad R=xy.
+          Compute:
+          R_y=x,\qquad Q_z=x,
+          P_z=y,\qquad R_x=y,
+          and
+          Q_x=z,\qquad P_y=z.
+          Therefore
+          \nabla\times\mathbf F=\mathbf 0.
+          In fact,
+          \mathbf F=\nabla(xyz),
+          because
+          d(xyz)=yz\,dx+xz\,dy+xy\,dz.
+
+[318-318 title c13s6-ex-space-nonzero-curl default_required]
+A space field with nonzero curl
+
+[320-333 p c13s6-ex-space-nonzero-curl default_required]
+Let
+          \mathbf G(x,y,z)=(-y,x,0).
+          Then
+          P=-y,\qquad Q=x,\qquad R=0.
+          The curl is
+          
+            \nabla\times\mathbf G \amp= \left(R_y-Q_z,\, P_z-R_x,\, Q_x-P_y\right)
+            \amp= (0-0,\ 0-0,\ 1-(-1))
+            \amp= (0,0,2).
+          
+          So \mathbf G is not conservative on all of space. Its arrows rotate around the
+          z-axis, and the curl sees that rotation.
+
+[337-341 p c13s6-curl-zero-in-space default_required]
+The rule
+      \text{conservative} \quad\Longrightarrow\quad \text{curl zero}
+      is always a necessary test, under the usual smoothness hypotheses.
+
+[343-344 p c13s6-curl-zero-in-space default_required]
+A useful sufficient condition for the reverse direction is a geometric condition on
+      the domain.
+
+[348-348 title c13s6-simply-connected-regions default_required]
+Simply connected regions
+
+[350-353 p c13s6-simply-connected-regions default_required]
+A curl test is local. It looks at what happens in tiny neighborhoods. But a line integral
+      can feel the shape of the whole domain.
+
+[355-359 p c13s6-simply-connected-regions default_required]
+A region D is called simply connected if it is path connected
+      (any two points can be joined by a continuous path in D) and every closed
+      curve in D can be shrunk continuously to a point while staying inside D.
+
+[361-364 p c13s6-simply-connected-regions default_required]
+For the regions in this book, this means:
+      \boxed{\text{connected, with no holes that a closed curve can wrap around.}}
+
+[366-366 p c13s6-simply-connected-regions default_required]
+Examples of simply connected regions include:
+
+[369-369 title c13s6-tab-simply-connected default_required]
+Simply connected regions.
+
+[372-372 cell c13s6-tab-simply-connected default_required]
+Plane examples
+
+[372-372 cell c13s6-tab-simply-connected default_required]
+Space examples
+
+[374-374 cell c13s6-tab-simply-connected default_required]
+a disk
+
+[374-374 cell c13s6-tab-simply-connected default_required]
+a ball
+
+[375-375 cell c13s6-tab-simply-connected default_required]
+a rectangle
+
+[375-375 cell c13s6-tab-simply-connected default_required]
+a box
+
+[376-376 cell c13s6-tab-simply-connected default_required]
+the whole plane
+
+[376-376 cell c13s6-tab-simply-connected default_required]
+all of space
+
+[377-377 cell c13s6-tab-simply-connected default_required]
+a half-plane
+
+[377-377 cell c13s6-tab-simply-connected default_required]
+a half-space
+
+[381-381 p c13s6-simply-connected-regions default_required]
+Examples that are not simply connected include:
+
+[384-384 title c13s6-tab-not-simply-connected default_required]
+Regions that are not simply connected.
+
+[387-387 cell c13s6-tab-not-simply-connected default_required]
+Plane examples
+
+[387-387 cell c13s6-tab-not-simply-connected default_required]
+Space examples
+
+[390-390 cell c13s6-tab-not-simply-connected default_required]
+\mathbb R^2\setminus\{(0,0)\}
+
+[391-391 cell c13s6-tab-not-simply-connected default_required]
+\mathbb R^3\setminus\text{the }z\text{-axis}
+
+[393-393 cell c13s6-tab-not-simply-connected default_required]
+an annulus
+
+[393-393 cell c13s6-tab-not-simply-connected default_required]
+a solid torus
+
+[395-395 cell c13s6-tab-not-simply-connected default_required]
+a disk with a smaller disk removed
+
+[396-396 cell c13s6-tab-not-simply-connected default_required]
+space with a tunnel removed
+
+[401-404 p c13s6-simply-connected-regions default_required]
+The hole matters because a closed curve can wrap around it and refuse to shrink to a
+      point.
+
+[407-407 title checkpoint-13-6-what-the-hole-feels-like default_required]
+What does the hole actually break?
+
+[409-414 p checkpoint-13-6-what-the-hole-feels-like default_required]
+The curl test P_y=Q_x only looks inside tiny neighborhoods, yet the conclusion we
+          want—“\omega is exact on all of D”—is a statement about
+          the whole region. In your own words, why should the presence of a hole be able to spoil a
+          global conclusion even when the local test passes at every single point?
+
+[417-421 p checkpoint-13-6-what-the-hole-feels-like hint]
+Think about a closed curve that wraps around the hole. Simple connectivity is exactly the
+          permission to shrink such a curve to a point. If you cannot shrink it, what guarantee about
+          line integrals over closed loops are you no longer entitled to?
+
+[426-426 title c13s6-thm-curl-test-simply-connected default_required]
+Curl test on simply connected regions
+
+[428-428 p c13s6-thm-curl-test-simply-connected default_required]
+Let D be an open simply connected region.
+
+[429-435 p c13s6-thm-curl-test-simply-connected default_required]
+In the plane, let
+          \omega=P\,dx+Q\,dy
+          be a C^1 1-form on D. If
+          P_y=Q_x
+          throughout D, then \omega is exact on D.
+
+[436-442 p c13s6-thm-curl-test-simply-connected default_required]
+In space, let
+          \mathbf F=(P,Q,R)
+          be a C^1 vector field on D. If
+          \nabla\times\mathbf F=\mathbf 0
+          throughout D, then \mathbf F is conservative on D.
+
+[446-453 p c13s6-simply-connected-regions default_required]
+The rectangle case was proved above by constructing a potential directly. We state the
+      full simply connected theorem here for use, with its proof postponed to
+      . That proof constructs potentials
+      on balls and then uses a subdivided continuous contraction to show that every closed
+      curve has zero integral. Green's theorem and Stokes' theorem give related geometric
+      interpretations; merely saying that a loop shrinks is not yet the proof in space.
+
+[455-460 p c13s6-simply-connected-regions default_required]
+Without the simply connected condition, the test can pass and still fail to produce a
+      global potential. Simple connectivity is sufficient to guarantee a potential for every
+      curl-free field on the domain; it is not necessary for a particular field. For example,
+      (2x,2y)=\nabla(x^2+y^2) has a potential even on the punctured plane.
+
+[464-464 title c13s6-local-versus-global-potentials default_required]
+Local versus global potentials
+
+[466-480 p c13s6-local-versus-global-potentials default_required]
+Return to the form
+      \alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}
+      on the punctured plane
+      D=\mathbb R^2\setminus\{(0,0)\}.
+      Here
+      P(x,y)=\frac{-y}{x^2+y^2}, \qquad Q(x,y)=\frac{x}{x^2+y^2}.
+      A calculation gives
+      P_y=\frac{y^2-x^2}{(x^2+y^2)^2},
+      and
+      Q_x=\frac{y^2-x^2}{(x^2+y^2)^2}.
+      So
+      P_y=Q_x
+      everywhere in the punctured plane.
+
+[482-482 p c13s6-local-versus-global-potentials default_required]
+The local curl test passes.
+
+[484-493 p c13s6-local-versus-global-potentials default_required]
+But around the unit circle,
+      \mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi,
+      we have
+      \alpha=dt.
+      Therefore
+      \boxed{\oint_C \alpha=2\pi.}
+      If \alpha were exact on the whole punctured plane, every closed curve integral
+      would be zero. So \alpha is not exact on D.
+
+[496-499 caption c13s6-fig-punctured-plane-loop default_required]
+The form \alpha=\frac{-y\,dx+x\,dy}{x^2+y^2} has zero curl away from the origin,
+        but its integral around a loop enclosing the origin is 2\pi.
+
+[501-517 latex-image c13s6-fig-punctured-plane-loop default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            \draw[->] (-3.2,0) -- (3.4,0) node[right] {\(x\)};
+            \draw[->] (0,-3.2) -- (0,3.4) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-3,-3) grid (3,3);
+
+            \draw[very thick, red!65!black] (0,0) circle (2);
+            \draw[->, very thick, red!65!black] (2,0) arc[start angle=0,end angle=45,radius=2];
+
+            \fill[white] (0,0) circle (6pt);
+            \draw[thick] (0,0) circle (6pt);
+            \node[below right] at (0.15,-0.15) {hole};
+
+            \node at (0,-3.8) {a loop in the punctured plane cannot shrink through the missing origin};
+        \end{tikzpicture}
+
+[521-521 p c13s6-local-versus-global-potentials default_required]
+So what is going on?
+
+[523-532 p c13s6-local-versus-global-potentials default_required]
+Locally, \alpha really is a differential. On the right half-plane x\gt 0,
+      define
+      \theta=\arctan\left(\frac{y}{x}\right).
+      Then
+      \theta_x=\frac{-y}{x^2+y^2}, \qquad \theta_y=\frac{x}{x^2+y^2}.
+      Therefore
+      \boxed{d\theta=\alpha}
+      on the right half-plane.
+
+[534-537 p c13s6-local-versus-global-potentials default_required]
+The same thing works on many other smaller patches. We can choose a continuous angle
+      function on a patch that does not wrap all the way around the origin.
+
+[539-544 p c13s6-local-versus-global-potentials default_required]
+But there is no single continuous angle function on the whole punctured plane. After one
+      full counterclockwise trip around the origin, the angle has increased by
+      2\pi.
+      It has not returned to its original value as an ordinary single-valued function should.
+
+[546-546 p c13s6-local-versus-global-potentials default_required]
+This is the difference between local and global.
+
+[549-549 title checkpoint-13-6-why-gluing-fails default_required]
+Why won’t the patches glue?
+
+[551-557 p checkpoint-13-6-why-gluing-fails default_required]
+On every small patch, \alpha equals d\theta for an honest potential, so the
+          curl test passes everywhere and local potentials genuinely exist. What goes wrong when you
+          try to stitch all these local angle functions into one continuous potential on the whole
+          punctured plane, and how does this story show that zero curl alone does not guarantee
+          a global potential on every domain?
+
+[560-565 p checkpoint-13-6-why-gluing-fails hint]
+Follow \theta once around the origin and watch its value when you return to the
+          start. A single-valued function must come back to where it began—does the angle? The
+          missing point is what prevents the loop from shrinking, and that is precisely the failure
+          of simple connectivity.
+
+[569-571 p c13s6-local-versus-global-potentials default_required]
+\boxed{\begin{aligned} \amp\text{Zero curl gives local potentials.}\\ \amp\text{A simply connected domain lets those local potentials glue into one global potential.}\\ \amp\text{A hole can prevent the gluing.} \end{aligned}}
+
+[573-580 p c13s6-local-versus-global-potentials default_required]
+The scalar curl
+      Q_x-P_y
+      is therefore a local measurement. It detects tiny rotation. It cannot, by itself, see a
+      missing point that a large loop winds around. The next chapter supplies the missing global
+      bookkeeping: Green's theorem will add the local curl over a region and compare it to
+      circulation around the boundary. That is where the hidden hole finally has to show itself.

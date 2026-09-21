@@ -1,0 +1,379 @@
+[5-5 title sec-13-warning-examples default_required]
+Warning examples
+
+[7-14 p sec-13-warning-examples default_required]
+gave a useful test:
+    P_y=Q_x
+    in the plane, or
+    \nabla\times\mathbf F=\mathbf 0
+    in space. But it also gave a warning: this test is local. It checks tiny rotation near
+    each point. It does not, by itself, know the shape of the whole domain.
+
+[16-19 p sec-13-warning-examples default_required]
+This section collects the traps in one place. They are worth seeing slowly, because most
+    mistakes with conservative fields come from forgetting one of them.
+
+[22-22 title c13s7-subsec-curl-zero-no-global-potential default_required]
+Curl zero but no global potential on a punctured plane
+
+[24-30 p c13s7-subsec-curl-zero-no-global-potential default_required]
+Consider the 1-form
+      \alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}
+      on the punctured plane
+      D=\mathbb R^2\setminus\{(0,0)\}.
+      The origin is missing, so the denominator is never zero on D.
+
+[32-50 p c13s7-subsec-curl-zero-no-global-potential default_required]
+Write
+      \alpha=P\,dx+Q\,dy,
+      where
+      P(x,y)=\frac{-y}{x^2+y^2}, \qquad Q(x,y)=\frac{x}{x^2+y^2}.
+      Compute:
+      
+        P_y \amp= \frac{-(x^2+y^2)+2y^2}{(x^2+y^2)^2}
+        \amp= \frac{y^2-x^2}{(x^2+y^2)^2},
+      
+      and
+      
+        Q_x \amp= \frac{(x^2+y^2)-2x^2}{(x^2+y^2)^2}
+        \amp= \frac{y^2-x^2}{(x^2+y^2)^2}.
+      
+      Thus
+      P_y=Q_x
+      everywhere on D.
+
+[52-52 p c13s7-subsec-curl-zero-no-global-potential default_required]
+So the local curl test passes.
+
+[55-55 title checkpoint-13-7-local-test-misses-hole default_required]
+What did the test not check?
+
+[57-62 p checkpoint-13-7-local-test-misses-hole default_required]
+The condition P_y=Q_x only looks at derivatives at each individual point.
+          Why is it possible for this point-by-point test to pass everywhere on D
+          and still leave room for a loop integral like \oint_C\alpha=2\pi to be
+          nonzero? What feature of D is the local test simply unable to notice?
+
+[65-69 p checkpoint-13-7-local-test-misses-hole hint]
+A derivative only knows what happens in a tiny neighborhood of a point. Ask yourself
+          whether any such neighborhood can ever “feel” the missing origin, and what a
+          whole loop can sense that a single point cannot.
+
+[73-87 p c13s7-subsec-curl-zero-no-global-potential default_required]
+Now integrate around the unit circle
+      C:\quad \mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi.
+      Along this circle,
+      x=\cos t,\qquad y=\sin t,
+      so
+      dx=-\sin t\,dt, \qquad dy=\cos t\,dt.
+      Then
+      
+        \alpha \amp= \frac{-(\sin t)(-\sin t\,dt)+(\cos t)(\cos t\,dt)}{\cos^2t+\sin^2t}
+        \amp= dt.
+      
+      Therefore
+      \boxed{\oint_C \alpha=2\pi.}
+
+[89-96 p c13s7-subsec-curl-zero-no-global-potential default_required]
+If \alpha were exact on all of D, then
+      \alpha=d\phi
+      for some potential \phi, and every closed-curve integral would be zero:
+      \oint_C d\phi=0.
+      But this closed-curve integral is 2\pi. So \alpha is not exact on the
+      punctured plane.
+
+[99-100 caption c13s7-fig-punctured-plane-circulation default_required]
+The form \alpha has zero curl away from the origin, but a loop around the
+      missing origin has integral 2\pi.
+
+[102-125 latex-image c13s7-fig-punctured-plane-circulation default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            \draw[->] (-3.2,0) -- (3.4,0) node[right] {\(x\)};
+            \draw[->] (0,-3.2) -- (0,3.4) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-3,-3) grid (3,3);
+
+            \foreach \a in {0,30,...,330} {
+                \pgfmathsetmacro{\x}{2*cos(\a)}
+                \pgfmathsetmacro{\y}{2*sin(\a)}
+                \draw[->, blue!65!black, thick]
+                    (\x,\y) -- ++({-0.35*sin(\a)},{0.35*cos(\a)});
+            }
+
+            \draw[very thick, red!65!black] (0,0) circle (2);
+            \draw[->, very thick, red!65!black] (2,0) arc[start angle=0,end angle=45,radius=2];
+
+            \fill[white] (0,0) circle (6pt);
+            \draw[thick] (0,0) circle (6pt);
+            \node[below right] at (0.15,-0.15) {missing};
+
+            \node at (0,-4.0) {\(\alpha=\dfrac{-y\,dx+x\,dy}{x^2+y^2}\)};
+        \end{tikzpicture}
+
+[129-132 p c13s7-subsec-curl-zero-no-global-potential default_required]
+The moral is not that the curl test is wrong. The moral is that the curl test is local.
+      A loop can detect a hole that no tiny derivative sees.
+
+[136-136 title c13s7-subsec-path-dependent-same-endpoints default_required]
+A path-dependent integral with the same endpoints
+
+[138-141 p c13s7-subsec-path-dependent-same-endpoints default_required]
+Path independence is a strong property. It says that every path from A to B
+      gives the same integral. Here is a simple field where that fails.
+
+[143-150 p c13s7-subsec-path-dependent-same-endpoints default_required]
+Let
+      \eta=-y\,dx+x\,dy.
+      Move from
+      A=(0,0)
+      to
+      B=(1,1).
+
+[152-161 p c13s7-subsec-path-dependent-same-endpoints default_required]
+First take the straight path
+      C_1:\quad \mathbf r(t)=(t,t), \qquad 0\le t\le1.
+      Then
+      x=t,\qquad y=t,\qquad dx=dt,\qquad dy=dt.
+      So
+      \eta=-t\,dt+t\,dt=0.
+      Therefore
+      \boxed{\int_{C_1}\eta=0.}
+
+[163-166 p c13s7-subsec-path-dependent-same-endpoints default_required]
+Now take the broken path C_2: first go east from (0,0) to (1,0), then
+      go north from (1,0) to (1,1).
+
+[168-181 p c13s7-subsec-path-dependent-same-endpoints default_required]
+On the eastward segment,
+      y=0,\qquad dy=0,
+      so
+      -y\,dx+x\,dy=0.
+      On the northward segment,
+      x=1,\qquad dx=0,
+      so
+      -y\,dx+x\,dy=dy.
+      Thus
+      \int_{C_2}\eta = \int_0^1 dy = 1.
+      So
+      \boxed{\int_{C_2}\eta=1.}
+
+[183-187 p c13s7-subsec-path-dependent-same-endpoints default_required]
+The endpoints are the same, but the integrals are different:
+      \int_{C_1}\eta=0, \qquad \int_{C_2}\eta=1.
+      So \eta is not exact, and its integral is not path independent.
+
+[189-195 p c13s7-subsec-path-dependent-same-endpoints default_required]
+The curl test sees the problem immediately:
+      P=-y,\qquad Q=x,
+      so
+      Q_x-P_y=1-(-1)=2.
+      This form carries rotation everywhere.
+
+[198-198 caption c13s7-fig-path-dependence-endpoints default_required]
+The same endpoints can give different work when the field is not conservative.
+
+[200-226 latex-image c13s7-fig-path-dependence-endpoints default_required]
+\begin{tikzpicture}[scale=2.2, >=stealth]
+            \draw[->] (-0.15,0) -- (1.35,0) node[right] {\(x\)};
+            \draw[->] (0,-0.15) -- (0,1.35) node[above] {\(y\)};
+
+            \draw[gray!25, step=0.5] (0,0) grid (1,1);
+
+            \coordinate (A) at (0,0);
+            \coordinate (B) at (1,1);
+            \coordinate (M) at (1,0);
+
+            \draw[very thick, blue!65!black] (A) -- (B);
+            \draw[->, very thick, blue!65!black] (0.42,0.42) -- (0.58,0.58);
+            \node[blue!65!black, left] at (0.58,0.7) {\(C_1\)};
+
+            \draw[very thick, red!65!black] (A) -- (M) -- (B);
+            \draw[->, very thick, red!65!black] (0.35,0) -- (0.65,0);
+            \draw[->, very thick, red!65!black] (1,0.35) -- (1,0.65);
+            \node[red!65!black, right] at (1,0.55) {\(C_2\)};
+
+            \fill (A) circle (1.2pt);
+            \fill (B) circle (1.2pt);
+
+            \node[below left] at (A) {\(A\)};
+            \node[above right] at (B) {\(B\)};
+        \end{tikzpicture}
+
+[230-230 p c13s7-subsec-path-dependent-same-endpoints default_required]
+A conservative field has no memory of the route. This one does.
+
+[234-234 title c13s7-subsec-singularity-hidden-at-origin default_required]
+A vector field with a singularity hidden at the origin
+
+[236-239 p c13s7-subsec-singularity-hidden-at-origin default_required]
+The most dangerous mistake is to compute a curl on the points where a field is defined
+      and then silently pretend the field is defined everywhere.
+
+[241-247 p c13s7-subsec-singularity-hidden-at-origin default_required]
+Return to
+      \mathbf A(x,y)= \left( \frac{-y}{x^2+y^2}, \frac{x}{x^2+y^2} \right).
+      This is the vector field associated with
+      \alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}.
+      It is not defined at the origin.
+
+[249-266 p c13s7-subsec-singularity-hidden-at-origin default_required]
+Around a circle of radius R\gt 0,
+      \mathbf r(t)=(R\cos t,R\sin t), \qquad 0\le t\le2\pi,
+      we have
+      dx=-R\sin t\,dt, \qquad dy=R\cos t\,dt.
+      The numerator becomes
+      
+        -y\,dx+x\,dy \amp= -(R\sin t)(-R\sin t\,dt)+(R\cos t)(R\cos t\,dt)
+        \amp= R^2\,dt.
+      
+      The denominator is
+      x^2+y^2=R^2.
+      So
+      \alpha=dt,
+      and therefore
+      \boxed{\oint_{C_R}\alpha=2\pi}
+      for every radius R\gt 0.
+
+[268-273 p c13s7-subsec-singularity-hidden-at-origin default_required]
+This is strange at first. The circle can be tiny:
+      R=10^{-6}.
+      The circulation is still
+      2\pi.
+
+[275-281 p c13s7-subsec-singularity-hidden-at-origin default_required]
+The reason is that the field gets stronger near the missing point. Its length is
+      \|\mathbf A(x,y)\| = \frac{1}{\sqrt{x^2+y^2}}.
+      On a circle of radius R, the field has size 1/R. The circumference is
+      2\pi R. Their product stays roughly
+      \frac1R\cdot 2\pi R=2\pi.
+
+[283-283 p c13s7-subsec-singularity-hidden-at-origin default_required]
+The origin is not a harmless missing point. It is where the circulation is hiding.
+
+[286-286 title checkpoint-13-7-shrinking-loop-keeps-circulation default_required]
+Why won't shrinking help?
+
+[288-293 p checkpoint-13-7-shrinking-loop-keeps-circulation default_required]
+We found \oint_{C_R}\alpha=2\pi for every radius R\gt 0,
+          no matter how tiny. If we could only contract the loop down to a single point, the
+          integral would have to vanish. Conceptually, why can't we ever finish shrinking the
+          loop here, and what does that stubborn 2\pi reveal about the hole at the origin?
+
+[296-300 p checkpoint-13-7-shrinking-loop-keeps-circulation hint]
+Imagine pulling the loop tighter and tighter toward the center. Is the point you are
+          trying to reach actually part of the domain? A loop that cannot be shrunk to a point
+          inside D is exactly what detects something the formula alone hides.
+
+[304-310 p c13s7-subsec-singularity-hidden-at-origin default_required]
+So the statement
+      \nabla\times\mathbf A=\mathbf 0
+      is true only on the punctured plane. It is not a statement about the whole disk
+      containing the origin, because \mathbf A is not a vector field there.
+      \boxed{\text{Before applying any theorem, check the domain of the field.}}
+
+[314-314 title c13s7-subsec-domain-matters-as-much-as-formula default_required]
+Why the domain matters as much as the formula
+
+[316-316 p c13s7-subsec-domain-matters-as-much-as-formula default_required]
+The same formula can behave differently on different domains.
+
+[319-319 title checkpoint-13-7-half-plane-vs-punctured-plane default_required]
+Same formula, different fate?
+
+[321-327 p checkpoint-13-7-half-plane-vs-punctured-plane default_required]
+On the right half-plane D_+ the form \alpha is exact, with potential
+          \theta=\arctan(y/x), yet on the punctured plane D the identical
+          formula is closed but not exact. The local rule never changed. Conceptually, what is
+          it about D_+ that lets a single-valued potential exist, and what does the hole
+          in D do to that same potential?
+
+[330-334 p checkpoint-13-7-half-plane-vs-punctured-plane hint]
+Think about whether you can loop all the way around the origin while staying inside
+          D_+. Then picture following \theta continuously once around the origin
+          in D and ask whether you arrive back at the same value you started with.
+
+[338-341 p c13s7-subsec-domain-matters-as-much-as-formula default_required]
+Again take
+      \alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}.
+
+[343-353 p c13s7-subsec-domain-matters-as-much-as-formula default_required]
+On the right half-plane
+      D_+=\{(x,y):x\gt 0\},
+      define
+      \theta(x,y)=\arctan\left(\frac{y}{x}\right).
+      Then
+      \theta_x= \frac{-y}{x^2+y^2}, \qquad \theta_y= \frac{x}{x^2+y^2}.
+      So
+      \boxed{d\theta=\alpha}
+      on D_+. On the right half-plane, the form is exact.
+
+[355-360 p c13s7-subsec-domain-matters-as-much-as-formula default_required]
+But on the punctured plane
+      D=\mathbb R^2\setminus\{(0,0)\},
+      the same formula is not exact, because
+      \oint_{\text{unit circle}}\alpha=2\pi.
+
+[362-367 p c13s7-subsec-domain-matters-as-much-as-formula default_required]
+And on the whole plane
+      \mathbb R^2,
+      the same formula does not even define a 1-form, because it is undefined at
+      (0,0).
+
+[370-370 title c13s7-tab-domain-status-of-alpha default_required]
+The status of \alpha depends on its domain.
+
+[373-373 cell c13s7-tab-domain-status-of-alpha default_required]
+Domain
+
+[374-374 cell c13s7-tab-domain-status-of-alpha default_required]
+Status of \alpha
+
+[375-375 cell c13s7-tab-domain-status-of-alpha default_required]
+Reason
+
+[378-378 cell c13s7-tab-domain-status-of-alpha default_required]
+x\gt 0
+
+[379-379 cell c13s7-tab-domain-status-of-alpha default_required]
+exact
+
+[380-380 cell c13s7-tab-domain-status-of-alpha default_required]
+\alpha=d\arctan(y/x)
+
+[383-383 cell c13s7-tab-domain-status-of-alpha default_required]
+\mathbb R^2\setminus\{(0,0)\}
+
+[384-384 cell c13s7-tab-domain-status-of-alpha default_required]
+closed but not exact
+
+[385-385 cell c13s7-tab-domain-status-of-alpha default_required]
+\oint \alpha=2\pi
+
+[388-388 cell c13s7-tab-domain-status-of-alpha default_required]
+\mathbb R^2
+
+[389-389 cell c13s7-tab-domain-status-of-alpha default_required]
+not defined
+
+[390-390 cell c13s7-tab-domain-status-of-alpha default_required]
+denominator is 0 at the origin
+
+[395-400 p c13s7-subsec-domain-matters-as-much-as-formula default_required]
+This is why we never say only
+      \omega=P\,dx+Q\,dy.
+      We say:
+      \omega=P\,dx+Q\,dy \quad\text{on a domain }D.
+
+[402-407 p c13s7-subsec-domain-matters-as-much-as-formula default_required]
+The formula tells us the local measuring rule. The domain tells us which paths are
+      allowed, which loops can shrink, and which singularities have been removed. A
+      potential function is not just a formula. It is a formula that works continuously and
+      single-valuedly on the whole domain.
+
+[409-416 p c13s7-subsec-domain-matters-as-much-as-formula default_required]
+These warnings look like exceptions, but they are really pointing toward a theorem.
+      The form
+      \alpha
+      has no local curl away from the origin, yet a loop around the origin detects something
+      global. To connect local curl with boundary circulation, we need a theorem that adds
+      curl over a whole region. That theorem is Green's theorem.

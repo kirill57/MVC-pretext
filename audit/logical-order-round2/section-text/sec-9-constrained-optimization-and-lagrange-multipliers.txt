@@ -1,0 +1,633 @@
+[5-5 title sec-9-constrained-optimization-and-lagrange-multipliers default_required]
+Constrained optimization and Lagrange multipliers
+
+[7-14 p sec-9-constrained-optimization-and-lagrange-multipliers default_required]
+classified interior critical points. There
+    the point was free to move in every direction, so a local extremum forced
+    \nabla f=\mathbf 0.
+    But many optimization problems do not allow every direction. A marble on a circular track
+    cannot move off the track. A box with a fixed amount of material cannot choose any side
+    lengths it wants. A point on a surface must stay on the surface.
+
+[16-20 p sec-9-constrained-optimization-and-lagrange-multipliers default_required]
+The first-order condition changes from
+    \nabla f=\mathbf 0
+    to a condition about the directions that are allowed.
+
+[23-23 title c9s5-subsec-circular-walking-path default_required]
+A circular walking path across a sloped field
+
+[25-31 p c9s5-subsec-circular-walking-path default_required]
+A park has a circular walking path of radius 5 meters, centered at the origin. The
+      sunlight score at a point on the ground is modeled by
+      S(x,y)=6x+8y.
+      We want the brightest and darkest points on the circular path
+      x^2+y^2=25.
+
+[33-46 p c9s5-subsec-circular-walking-path default_required]
+Without calculus, we can already guess the answer. The function
+      S(x,y)=6x+8y
+      increases most strongly in the direction
+      (6,8).
+      The vector (6,8) has length
+      \sqrt{6^2+8^2}=10.
+      The point on the circle of radius 5 in that direction is
+      5\frac{(6,8)}{10}=(3,4).
+      So the brightest point should be
+      (3,4),
+      and the darkest point should be the opposite point
+      (-3,-4).
+
+[48-48 p c9s5-subsec-circular-walking-path default_required]
+Now let us find the same points by looking at gradients.
+
+[50-58 p c9s5-subsec-circular-walking-path default_required]
+The constraint function is
+      g(x,y)=x^2+y^2.
+      The circular path is the level curve
+      g(x,y)=25.
+      From , the gradient
+      \nabla g(x,y)=(2x,2y)
+      is normal to this circle.
+
+[60-92 p c9s5-subsec-circular-walking-path default_required]
+At a highest or lowest point on the circle, motion along the circle cannot change S
+      to first order. So the gradient of S must also be normal to the circle. Since
+      \nabla S=(6,8),
+      we should have
+      \nabla S=\lambda \nabla g
+      for some number \lambda. That is,
+      (6,8)=\lambda(2x,2y).
+      So
+      6=2\lambda x, \qquad 8=2\lambda y.
+      If \lambda\ne0, then
+      x=\frac{3}{\lambda}, \qquad y=\frac{4}{\lambda}.
+      Now use the constraint:
+      x^2+y^2=25.
+      Thus
+      \frac{9}{\lambda^2}+\frac{16}{\lambda^2}=25,
+      so
+      \frac{25}{\lambda^2}=25.
+      Therefore
+      \lambda=\pm1.
+      When \lambda=1,
+      (x,y)=(3,4).
+      When \lambda=-1,
+      (x,y)=(-3,-4).
+      The values are
+      S(3,4)=18+32=50,
+      and
+      S(-3,-4)=-18-32=-50.
+      So
+      \boxed{\text{maximum value }50\text{ at }(3,4),}
+      and
+      \boxed{\text{minimum value }-50\text{ at }(-3,-4).}
+
+[95-96 caption c9s5-fig-circle-constraint default_required]
+On the circle, allowed motion is tangent to the circle. At a constrained maximum
+      or minimum, the gradient of the objective is normal to the allowed motion.
+
+[98-124 latex-image c9s5-fig-circle-constraint default_required]
+\begin{tikzpicture}[scale=0.72, >=stealth]
+            \draw[->] (-6.2,0) -- (6.7,0) node[right] {\(x\)};
+            \draw[->] (0,-6.2) -- (0,6.7) node[above] {\(y\)};
+
+            \draw[gray!25, step=1] (-6,-6) grid (6,6);
+            \draw[thick] (0,0) circle (5);
+
+            \fill (3,4) circle (2.5pt);
+            \node[above right] at (3,4) {\((3,4)\)};
+
+            \fill (-3,-4) circle (2.5pt);
+            \node[below left] at (-3,-4) {\((-3,-4)\)};
+
+            \draw[->, very thick, blue!60!black] (3,4) -- ++(1.2,1.6)
+                node[above right] {\(\nabla g\)};
+            \draw[->, very thick, red!65!black] (3,4) -- ++(1.8,2.4)
+                node[right] {\(\nabla S\)};
+
+            \draw[->, very thick, blue!60!black] (-3,-4) -- ++(-1.2,-1.6)
+                node[below left] {\(\nabla g\)};
+            \draw[->, very thick, red!65!black] (-3,-4) -- ++(1.8,2.4)
+                node[right] {\(\nabla S\)};
+
+            \node at (0,-7.0) {At a constrained extremum, \(\nabla S\) is parallel to the constraint normal.};
+        \end{tikzpicture}
+
+[128-132 p c9s5-subsec-circular-walking-path default_required]
+The number \lambda is called a Lagrange multiplier. The important part
+      is not the number itself yet. The important part is the geometry:
+      \text{gradient of objective} \quad \text{is parallel to} \quad \text{gradient of constraint}.
+
+[136-136 title c9s5-subsec-why-gradient-perpendicular default_required]
+Why the gradient is perpendicular to a constraint
+
+[138-149 p c9s5-subsec-why-gradient-perpendicular default_required]
+Suppose the constraint is
+      g(x,y)=c.
+      A curve
+      \mathbf r(t)
+      lying on the constraint satisfies
+      g(\mathbf r(t))=c.
+      Differentiating gives
+      \nabla g(\mathbf r(t))\cdot \mathbf r'(t)=0.
+      So every allowed tangent direction is perpendicular to
+      \nabla g.
+
+[151-160 p c9s5-subsec-why-gradient-perpendicular default_required]
+Now suppose f has a local maximum or minimum while the point is forced to stay on
+      the constraint. Along every allowed curve through the point, the one-variable function
+      f(\mathbf r(t))
+      has a local maximum or minimum. Therefore
+      \frac{d}{dt}f(\mathbf r(t))=0
+      at that point. By the chain rule,
+      \nabla f\cdot \mathbf r'(t)=0.
+      So \nabla f is also perpendicular to every allowed tangent direction.
+
+[162-166 p c9s5-subsec-why-gradient-perpendicular default_required]
+If the constraint is a smooth curve in the plane, then there is one tangent line. Two
+      vectors perpendicular to the same tangent line must be parallel. Therefore
+      \nabla f=\lambda\nabla g.
+
+[169-169 title checkpoint-9-5-gradients-parallel default_required]
+Why parallel, not just perpendicular?
+
+[171-175 p checkpoint-9-5-gradients-parallel default_required]
+At a constrained maximum or minimum on a smooth curve, why must \nabla f be
+          parallel to \nabla g? Try to say it in terms of the tangent
+          direction the constraint allows, rather than by quoting the formula.
+
+[178-182 p checkpoint-9-5-gradients-parallel hint]
+Both gradients are perpendicular to the same allowed tangent direction. In the plane
+          that tangent line is one-dimensional, so how much freedom is left for a vector forced
+          to be perpendicular to it?
+
+[186-201 p c9s5-subsec-why-gradient-perpendicular default_required]
+In differential-form language, the same idea is even shorter. Allowed tangent vectors
+      \mathbf v satisfy
+      dg(\mathbf v)=0.
+      At a constrained extremum,
+      df(\mathbf v)=0
+      for every allowed tangent vector. Thus the kernel of dg is contained in the
+      kernel of df. If dg\ne0, choose a vector \mathbf w with
+      dg(\mathbf w)=1. For any \mathbf v, the vector
+      \mathbf v-dg(\mathbf v)\mathbf w is in that kernel, so
+      df(\mathbf v)=df(\mathbf w)dg(\mathbf v). Setting
+      \lambda=df(\mathbf w) proves
+      \boxed{df=\lambda\,dg.}
+      In coordinates, this is
+      \boxed{\nabla f=\lambda\nabla g.}
+
+[204-204 title c9s5-thm-lagrange-one-constraint default_required]
+Lagrange multiplier condition: one constraint
+
+[206-215 p c9s5-thm-lagrange-one-constraint default_required]
+Let f and g have continuous first partial derivatives near a point
+          \mathbf p.
+          Suppose \mathbf p is a local maximum or local minimum of f subject to
+          the constraint
+          g(\mathbf x)=c.
+          Suppose also that
+          \nabla g(\mathbf p)\ne\mathbf 0,
+          so the constraint is a smooth level curve or level surface near \mathbf p.
+
+[216-221 p c9s5-thm-lagrange-one-constraint default_required]
+Then there is a number \lambda such that
+          \boxed{\nabla f(\mathbf p)=\lambda\nabla g(\mathbf p).}
+          Equivalently,
+          \boxed{df_{\mathbf p}=\lambda\,dg_{\mathbf p}.}
+
+[226-229 p c9s5-subsec-why-gradient-perpendicular default_required]
+At the constrained extremum, f has zero first-order change in every tangent
+        direction allowed by the constraint.
+
+[230-240 p c9s5-subsec-why-gradient-perpendicular default_required]
+The allowed tangent vectors \mathbf v are the vectors satisfying
+        dg_{\mathbf p}(\mathbf v)=0.
+        The extremum condition says
+        df_{\mathbf p}(\mathbf v)=0
+        for all such \mathbf v. Since dg_{\mathbf p}\ne0, the constraint has a
+        well-defined normal direction. The linear-functional argument above therefore gives
+        df_{\mathbf p}=\lambda\,dg_{\mathbf p}
+        for some number \lambda. In gradient notation, this becomes
+        \nabla f(\mathbf p)=\lambda\nabla g(\mathbf p).
+
+[243-248 p c9s5-subsec-why-gradient-perpendicular default_required]
+The condition
+      \nabla g(\mathbf p)\ne\mathbf 0
+      is not a technical decoration. If the constraint gradient vanishes, the level set may not
+      have an ordinary tangent direction.
+
+[251-251 title c9s5-ex-constraint-gradient-nonvanishing default_required]
+Why the constraint gradient must not vanish
+
+[253-264 p c9s5-ex-constraint-gradient-nonvanishing default_required]
+Let
+          g(x,y)=x^2+y^2.
+          The constraint
+          g(x,y)=0
+          contains only the point
+          (0,0).
+          Now take
+          f(x,y)=x.
+          On the constraint set, f has both a maximum and a minimum, because the
+          constraint set has only one point.
+
+[265-274 p c9s5-ex-constraint-gradient-nonvanishing default_required]
+But
+          \nabla f(0,0)=(1,0),
+          while
+          \nabla g(0,0)=(0,0).
+          There is no number \lambda such that
+          (1,0)=\lambda(0,0).
+          The multiplier condition fails because the constraint is singular. The level set is
+          not a smooth curve near the origin.
+
+[280-280 title c9s5-subsec-one-constraint-three-variables default_required]
+One constraint in three variables
+
+[282-282 p c9s5-subsec-one-constraint-three-variables default_required]
+The same condition works for surfaces in space.
+
+[285-285 title c9s5-ex-closest-point-on-plane default_required]
+Closest point on a plane
+
+[287-293 p c9s5-ex-closest-point-on-plane default_required]
+A sensor is located at
+          A=(1,2,3).
+          A flat metal sheet lies in the plane
+          x+2y+2z=6.
+          We want the point on the sheet closest to the sensor.
+
+[294-327 p c9s5-ex-closest-point-on-plane default_required]
+Instead of minimizing the distance, minimize the squared distance:
+          f(x,y,z)=(x-1)^2+(y-2)^2+(z-3)^2.
+          The constraint is
+          g(x,y,z)=x+2y+2z=6.
+          Compute the gradients:
+          \nabla f=\bigl(2(x-1),2(y-2),2(z-3)\bigr),
+          and
+          \nabla g=(1,2,2).
+          The multiplier equation is
+          \nabla f=\lambda\nabla g.
+          So
+          2(x-1)=\lambda,
+          2(y-2)=2\lambda,
+          and
+          2(z-3)=2\lambda.
+          Thus
+          x=1+\frac{\lambda}{2}, \qquad y=2+\lambda, \qquad z=3+\lambda.
+          Use the constraint:
+          x+2y+2z=6.
+          Substitute:
+          \left(1+\frac{\lambda}{2}\right)+2(2+\lambda)+2(3+\lambda)=6.
+          So
+          11+\frac{9}{2}\lambda=6.
+          Therefore
+          \lambda=-\frac{10}{9}.
+          The closest point is
+          x=1-\frac59=\frac49,
+          y=2-\frac{10}{9}=\frac89,
+          and
+          z=3-\frac{10}{9}=\frac{17}{9}.
+          So
+          \boxed{P=\left(\frac49,\frac89,\frac{17}{9}\right).}
+
+[328-331 p c9s5-ex-closest-point-on-plane default_required]
+Geometrically, the vector from the sheet to the sensor is normal to the sheet. The
+          Lagrange equation is just that fact written in gradient form.
+
+[335-339 p c9s5-subsec-one-constraint-three-variables default_required]
+The multiplier method gives candidates. It does not, by itself, decide whether a candidate
+      is a maximum, a minimum, or something else. In the closest-point example, the geometry
+      tells us the answer: distance squared from a fixed point to a plane has a unique minimum.
+
+[343-343 title c9s5-subsec-multiple-constraints default_required]
+Multiple constraints
+
+[345-345 p c9s5-subsec-multiple-constraints default_required]
+Sometimes a point must satisfy more than one constraint.
+
+[347-355 p c9s5-subsec-multiple-constraints default_required]
+A curve in space can be described as the intersection of two surfaces:
+      g(x,y,z)=c, \qquad h(x,y,z)=d.
+      At a point on the curve, the allowed tangent direction must be perpendicular to both
+      \nabla g \qquad\text{and}\qquad \nabla h.
+      So the normal plane to the curve is spanned by
+      \nabla g \quad\text{and}\quad \nabla h,
+      provided these two gradients are independent.
+
+[357-362 p c9s5-subsec-multiple-constraints default_required]
+At a constrained extremum, \nabla f must also be perpendicular to the allowed
+      tangent direction. Therefore \nabla f must lie in the plane spanned by the two
+      constraint gradients:
+      \boxed{\nabla f=\lambda\nabla g+\mu\nabla h.}
+
+[365-365 title c9s5-thm-lagrange-two-constraints default_required]
+Lagrange multiplier condition: two constraints in space
+
+[367-375 p c9s5-thm-lagrange-two-constraints default_required]
+Let f,g,h have continuous first partial derivatives near a point
+          \mathbf p\in\mathbb R^3.
+          Suppose \mathbf p is a local maximum or local minimum of f subject to
+          g(\mathbf x)=c, \qquad h(\mathbf x)=d.
+          Suppose also that
+          \nabla g(\mathbf p) \quad\text{and}\quad \nabla h(\mathbf p)
+          are linearly independent.
+
+[376-381 p c9s5-thm-lagrange-two-constraints default_required]
+Then there are numbers \lambda and \mu such that
+          \boxed{\nabla f(\mathbf p)=\lambda\nabla g(\mathbf p)+\mu\nabla h(\mathbf p).}
+          Equivalently,
+          \boxed{df_{\mathbf p}=\lambda\,dg_{\mathbf p}+\mu\,dh_{\mathbf p}.}
+
+[386-386 title c9s5-ex-circle-in-space default_required]
+Optimizing on a circle in space
+
+[388-396 p c9s5-ex-circle-in-space default_required]
+A sensor ring lies where the cylinder
+          x^2+y^2=1
+          meets the plane
+          z=1.
+          On that ring, the signal strength is
+          F(x,y,z)=x+2y+3z.
+          Find the maximum and minimum signal values.
+
+[397-424 p c9s5-ex-circle-in-space default_required]
+Let
+          g(x,y,z)=x^2+y^2, \qquad h(x,y,z)=z.
+          The constraints are
+          g=1, \qquad h=1.
+          The gradients are
+          \nabla F=(1,2,3),
+          \nabla g=(2x,2y,0),
+          and
+          \nabla h=(0,0,1).
+          The multiplier equation is
+          (1,2,3)=\lambda(2x,2y,0)+\mu(0,0,1).
+          So
+          1=2\lambda x,
+          2=2\lambda y,
+          and
+          3=\mu.
+          Thus
+          x=\frac{1}{2\lambda}, \qquad y=\frac{1}{\lambda}.
+          Use
+          x^2+y^2=1.
+          Then
+          \frac{1}{4\lambda^2}+\frac{1}{\lambda^2}=1,
+          so
+          \frac{5}{4\lambda^2}=1.
+          Therefore
+          \lambda=\pm\frac{\sqrt5}{2}.
+
+[425-434 p c9s5-ex-circle-in-space default_required]
+When
+          \lambda=\frac{\sqrt5}{2},
+          we get
+          x=\frac{1}{\sqrt5}, \qquad y=\frac{2}{\sqrt5}, \qquad z=1.
+          When
+          \lambda=-\frac{\sqrt5}{2},
+          we get
+          x=-\frac{1}{\sqrt5}, \qquad y=-\frac{2}{\sqrt5}, \qquad z=1.
+
+[435-445 p c9s5-ex-circle-in-space default_required]
+The corresponding values are
+          F\left(\frac{1}{\sqrt5},\frac{2}{\sqrt5},1\right)=\frac{1}{\sqrt5}+\frac{4}{\sqrt5}+3=3+\sqrt5,
+          and
+          F\left(-\frac{1}{\sqrt5},-\frac{2}{\sqrt5},1\right)=3-\sqrt5.
+          The ring is closed and bounded, so a continuous function on it has an absolute maximum
+          and minimum. Thus
+          \boxed{\text{maximum value }3+\sqrt5}
+          and
+          \boxed{\text{minimum value }3-\sqrt5.}
+
+[451-451 title c9s5-subsec-boundary-constraints-compactness default_required]
+Boundary constraints and compactness
+
+[453-456 p c9s5-subsec-boundary-constraints-compactness default_required]
+Lagrange multipliers find candidates on smooth constraint pieces. Boundary points must
+      still be checked separately.
+
+[458-461 p c9s5-subsec-boundary-constraints-compactness default_required]
+The guiding theorem is the same extreme-value theorem from single-variable calculus, now
+      used in the plane and in space.
+
+[464-464 title c9s5-thm-extreme-value default_required]
+Extreme-value theorem
+
+[466-472 p c9s5-thm-extreme-value default_required]
+Let D be a closed and bounded set in \mathbb R^2 or \mathbb R^3.
+          If
+          f:D\to\mathbb R
+          is continuous, then f attains an absolute maximum and an absolute minimum on
+          D.
+
+[476-480 p c9s5-subsec-boundary-constraints-compactness default_required]
+Here closed and bounded is the practical meaning of compact in the spaces of this
+      book. Closed means the boundary is included. Bounded means the set fits inside some large
+      ball.
+
+[482-482 p c9s5-subsec-boundary-constraints-compactness default_required]
+Each hypothesis matters.
+
+[485-485 title checkpoint-9-5-compactness-attains-extrema default_required]
+Why a compact set guarantees a winner
+
+[487-492 p checkpoint-9-5-compactness-attains-extrema default_required]
+A continuous function on a closed and bounded constraint set is guaranteed to attain
+          its maximum and minimum. Why does that guarantee let us simply compare the values of
+          f at our finite list of candidate points and trust the largest and smallest we
+          find?
+
+[495-499 p checkpoint-9-5-compactness-attains-extrema hint]
+If an extreme value is certain to occur somewhere on the set, and every place
+          it could occur is already on your candidate list, what could possibly be hiding
+          between the candidates?
+
+[504-504 title c9s5-ex-why-closed-matters default_required]
+Why closed matters
+
+[506-513 p c9s5-ex-why-closed-matters default_required]
+The function
+          f(x)=x
+          on the open interval
+          0\lt x\lt 1
+          has no maximum and no minimum. The values get close to 1 and close to 0,
+          but the endpoints are missing.
+
+[518-518 title c9s5-ex-why-bounded-matters default_required]
+Why bounded matters
+
+[520-525 p c9s5-ex-why-bounded-matters default_required]
+The function
+          f(x)=x
+          on the real line has no maximum and no minimum. The domain is closed, but it is not
+          bounded.
+
+[530-530 title c9s5-ex-why-continuity-matters default_required]
+Why continuity matters
+
+[532-545 p c9s5-ex-why-continuity-matters default_required]
+Define
+          f(x)=
+          \begin{cases}
+          \dfrac1x, \amp 0\lt x\le1,\\[2mm]
+          0, \amp x=0.
+          \end{cases}
+          The domain
+          [0,1]
+          is closed and bounded. But f is not continuous at 0, and it has no
+          maximum: as x\to0^+, the values
+          \frac1x
+          grow without bound.
+
+[549-551 p c9s5-subsec-boundary-constraints-compactness default_required]
+For practical optimization on a region, the candidate list usually has several parts:
+
+[554-554 title c9s5-tab-candidate-list default_required]
+Where to look for constrained extrema.
+
+[557-557 cell c9s5-tab-candidate-list default_required]
+Place
+
+[557-557 cell c9s5-tab-candidate-list default_required]
+What to do
+
+[559-559 cell c9s5-tab-candidate-list default_required]
+interior
+
+[559-559 cell c9s5-tab-candidate-list default_required]
+\nabla f=\mathbf 0
+
+[560-560 cell c9s5-tab-candidate-list default_required]
+smooth boundary pieces
+
+[560-560 cell c9s5-tab-candidate-list default_required]
+use Lagrange multipliers or one-variable calculus
+
+[561-561 cell c9s5-tab-candidate-list default_required]
+corners and endpoints
+
+[561-561 cell c9s5-tab-candidate-list default_required]
+check directly
+
+[566-566 title c9s5-ex-semicircular-courtyard default_required]
+A semicircular courtyard
+
+[568-574 p c9s5-ex-semicircular-courtyard default_required]
+A solar sensor can be placed anywhere in the upper half-disk
+          D=\{(x,y):x^2+y^2\le25,\ y\ge0\}.
+          Its score is
+          S(x,y)=6x+8y.
+          Find the absolute maximum and minimum.
+
+[575-578 p c9s5-ex-semicircular-courtyard default_required]
+The domain is closed and bounded, and S is continuous. Therefore the absolute
+          maximum and minimum exist.
+
+[579-582 p c9s5-ex-semicircular-courtyard default_required]
+There are no interior critical points, because
+          \nabla S=(6,8)\ne\mathbf 0.
+
+[583-595 p c9s5-ex-semicircular-courtyard default_required]
+Now check the curved boundary
+          x^2+y^2=25, \qquad y\ge0.
+          Using
+          g(x,y)=x^2+y^2,
+          the multiplier equation is
+          (6,8)=\lambda(2x,2y).
+          As before, this gives
+          (x,y)=(3,4) \qquad\text{or}\qquad (x,y)=(-3,-4).
+          Only
+          (3,4)
+          lies on the upper semicircle.
+
+[596-603 p c9s5-ex-semicircular-courtyard default_required]
+Now check the flat boundary
+          y=0, \qquad -5\le x\le5.
+          There
+          S(x,0)=6x.
+          On the interval [-5,5], this has endpoint values
+          S(5,0)=30, \qquad S(-5,0)=-30.
+
+[604-614 p c9s5-ex-semicircular-courtyard default_required]
+Compare the candidates:
+          S(3,4)=50,
+          S(5,0)=30,
+          and
+          S(-5,0)=-30.
+          Therefore
+          \boxed{\text{absolute maximum }50\text{ at }(3,4),}
+          and
+          \boxed{\text{absolute minimum }-30\text{ at }(-5,0).}
+
+[615-618 p c9s5-ex-semicircular-courtyard default_required]
+The minimum occurs at an endpoint of a boundary piece. It is not found by the smooth
+          circle multiplier equation.
+
+[624-624 title c9s5-subsec-interpreting-the-multiplier default_required]
+Interpreting the multiplier
+
+[626-629 p c9s5-subsec-interpreting-the-multiplier default_required]
+The multiplier \lambda often has a useful meaning. It measures how the best value
+      changes when the constraint level changes.
+
+[631-641 p c9s5-subsec-interpreting-the-multiplier default_required]
+Return to the circular path problem:
+      S(x,y)=6x+8y, \qquad x^2+y^2=25.
+      More generally, suppose the constraint is
+      x^2+y^2=c,
+      where c\gt 0. This is a circle of radius
+      \sqrt c.
+      The maximum of S on that circle is
+      M(c)=10\sqrt c,
+      because the vector (6,8) has length 10.
+
+[643-652 p c9s5-subsec-interpreting-the-multiplier default_required]
+Differentiate:
+      M'(c)=\frac{5}{\sqrt c}.
+      At
+      c=25,
+      we get
+      M'(25)=1.
+      That matches the multiplier at the maximum point (3,4), where
+      \lambda=1.
+
+[654-659 p c9s5-subsec-interpreting-the-multiplier default_required]
+So if the allowed squared radius c increases slightly, the maximum sunlight score
+      increases by about
+      1
+      unit of score per unit of c.
+
+[662-662 title checkpoint-9-5-what-lambda-measures default_required]
+What is \lambda really telling you?
+
+[664-668 p checkpoint-9-5-what-lambda-measures default_required]
+Beyond being a number that makes \nabla f=\lambda\nabla g work, what does the
+          Lagrange multiplier \lambda actually measure about the constrained
+          problem?
+
+[671-675 p checkpoint-9-5-what-lambda-measures hint]
+Think of the constraint level c as a dial you could turn. How does \lambda
+          relate to the rate at which the best value of f responds when you nudge that
+          dial?
+
+[679-690 p c9s5-subsec-interpreting-the-multiplier default_required]
+The unit matters. If instead we write the constraint as
+      \sqrt{x^2+y^2}=R,
+      then the maximum value is
+      10R.
+      At
+      R=5,
+      its derivative is
+      10.
+      The multiplier changes because the constraint parameter changed. One version measures
+      change per unit of squared radius. The other measures change per unit of radius.
+
+[692-698 p c9s5-subsec-interpreting-the-multiplier default_required]
+This is one reason Lagrange multipliers appear in economics, physics, and design problems.
+      They do not only find candidates. They also tell how valuable it would be to relax a
+      constraint. But the method is easy to over-trust. It speaks only under its hypotheses, and
+      it speaks only about the pieces where those hypotheses hold. The next section collects the
+      traps, because most wrong optimization solutions fail in exactly these places.

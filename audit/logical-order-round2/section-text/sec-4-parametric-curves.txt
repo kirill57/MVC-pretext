@@ -1,0 +1,447 @@
+[5-5 title sec-4-parametric-curves default_required]
+Parametric curves
+
+[7-14 p sec-4-parametric-curves default_required]
+A graph like
+    y=f(x)
+    describes a curve by using x as the input. That works well for many curves, but it
+    is not how a moving object usually reports its position. A boat, a drone, a planet, and a
+    particle do not usually say, here is my y-coordinate as a function of my
+    x-coordinate. They say where they are at each time.
+
+[16-16 p sec-4-parametric-curves default_required]
+That is the idea of a parametric curve.
+
+[19-19 title c4s1-subsec-moving-points default_required]
+Curves as moving points
+
+[21-27 p c4s1-subsec-moving-points default_required]
+Imagine an ant walking around the rim of a circular fountain of radius 3. Put the
+      center of the fountain at the origin. Let t denote the angle in radians, increasing as the ant moves. Suppose the
+      ant is at
+      \mathbf r(t)=(3\cos t,3\sin t).
+      A few parameter values give:
+
+[30-30 title c4s1-tab-circle-values default_required]
+Values of \mathbf r(t) at selected times.
+
+[33-33 cell c4s1-tab-circle-values default_required]
+t
+
+[34-34 cell c4s1-tab-circle-values default_required]
+\mathbf r(t)
+
+[36-36 cell c4s1-tab-circle-values default_required]
+0
+
+[36-36 cell c4s1-tab-circle-values default_required]
+(3,0)
+
+[37-37 cell c4s1-tab-circle-values default_required]
+\dfrac{\pi}{2}
+
+[37-37 cell c4s1-tab-circle-values default_required]
+(0,3)
+
+[38-38 cell c4s1-tab-circle-values default_required]
+\pi
+
+[38-38 cell c4s1-tab-circle-values default_required]
+(-3,0)
+
+[39-39 cell c4s1-tab-circle-values default_required]
+\dfrac{3\pi}{2}
+
+[39-39 cell c4s1-tab-circle-values default_required]
+(0,-3)
+
+[40-40 cell c4s1-tab-circle-values default_required]
+2\pi
+
+[40-40 cell c4s1-tab-circle-values default_required]
+(3,0)
+
+[44-44 p c4s1-subsec-moving-points default_required]
+The point moves counterclockwise and returns to where it started.
+
+[47-47 title checkpoint-4-1-graph-vs-curve default_required]
+What does the motion add?
+
+[49-54 p checkpoint-4-1-graph-vs-curve default_required]
+The equation x^2+y^2=9 and the parametrization
+          \mathbf r(t)=(3\cos t,3\sin t), 0\le t\le2\pi,
+          describe the same circle. What does the parametrization capture about the ant's
+          journey that the equation alone does not specify?
+
+[57-61 p checkpoint-4-1-graph-vs-curve hint]
+Think about what changes as t increases: where the point begins, which way it
+          heads, and how fast it sweeps around. Could a graph y=f(x) even represent a full
+          circle?
+
+[66-66 caption c4s1-fig-circle-parametrization default_required]
+A parametrization of a circle records a moving point, not just a set of points.
+
+[68-92 latex-image c4s1-fig-circle-parametrization default_required]
+\begin{tikzpicture}[scale=0.8, >=stealth]
+            \draw[->] (-4,0) -- (4.4,0) node[right] {\(x\)};
+            \draw[->] (0,-4) -- (0,4.4) node[above] {\(y\)};
+
+            \draw[gray!25, step=1] (-3.5,-3.5) grid (3.5,3.5);
+
+            \draw[thick, domain=0:6.283, samples=160, smooth, variable=\t]
+                plot ({3*cos(\t r)}, {3*sin(\t r)});
+
+            \draw[->, very thick] (3,0) arc[start angle=0,end angle=55,radius=3];
+
+            \fill (3,0) circle (2pt);
+            \fill (0,3) circle (2pt);
+            \fill (-3,0) circle (2pt);
+            \fill (0,-3) circle (2pt);
+
+            \node[below right] at (3,0) {\(t=0\)};
+            \node[above right] at (0,3) {\(t=\pi/2\)};
+            \node[below left] at (-3,0) {\(t=\pi\)};
+            \node[below right] at (0,-3) {\(t=3\pi/2\)};
+
+            \node at (0,-4.7) {\(\mathbf r(t)=(3\cos t,3\sin t)\)};
+        \end{tikzpicture}
+
+[96-106 p c4s1-subsec-moving-points default_required]
+The coordinates satisfy
+      x=3\cos t,\qquad y=3\sin t.
+      Using
+      \cos^2t+\sin^2t=1,
+      we get
+      x^2+y^2=9.
+      So the image is the circle of radius 3. But the parametrization gives more
+      information than the equation x^2+y^2=9. It tells us where the ant starts, which
+      direction it walks, and how the point is traced.
+
+[109-109 title c4s1-def-parametric-curve default_required]
+Parametric curve
+
+[111-116 p c4s1-def-parametric-curve default_required]
+A parametric curve in \mathbb R^n is a function
+          \mathbf r:I\to\mathbb R^n,
+          where I is an interval of real numbers. The input is called the
+          parameter. Usually we write it as t.
+
+[117-122 p c4s1-def-parametric-curve default_required]
+In the plane,
+          \mathbf r(t)=(x(t),y(t)).
+          In space,
+          \mathbf r(t)=(x(t),y(t),z(t)).
+
+[123-126 p c4s1-def-parametric-curve default_required]
+The image of the curve is the set of points
+          \{\mathbf r(t):t\in I\}.
+
+[130-133 p c4s1-subsec-moving-points default_required]
+The parameter often represents time, but it does not have to. It might represent an angle,
+      a distance along a track, or simply a label that tells us where we are on the curve.
+
+[135-138 p c4s1-subsec-moving-points default_required]
+There is one quiet condition we usually want: the coordinate functions should be
+      continuous. A curve should not teleport.
+
+[141-141 title c4s1-ex-continuity-matters default_required]
+Why continuity matters
+
+[143-154 p c4s1-ex-continuity-matters default_required]
+Define
+          
+            \mathbf r(t)=
+            \begin{cases}
+            (0,0), & t<0,\\
+            (1,0), & t\ge 0.
+            \end{cases}
+          
+          This rule gives a point for every t, but it does not describe a continuous
+          motion. At t=0, the point jumps from (0,0) to (1,0).
+
+[155-159 p c4s1-ex-continuity-matters default_required]
+So when we speak of a curve as a moving point, we usually mean that the component
+          functions are continuous. Later, when we want velocity, we will ask for
+          differentiability as well.
+
+[165-165 title c4s1-subsec-plane-space-curves default_required]
+Plane curves and space curves
+
+[167-167 p c4s1-subsec-plane-space-curves default_required]
+A plane curve has two coordinate functions. A space curve has three.
+
+[170-170 title c4s1-ex-line-segment default_required]
+A line segment as a parametric curve
+
+[172-186 p c4s1-ex-line-segment default_required]
+The straight path from
+          P=(1,2)
+          to
+          Q=(5,4)
+          can be written as
+          \mathbf r(t)=P+t(Q-P),\qquad 0\le t\le1.
+          Since
+          Q-P=(4,2),
+          this becomes
+          \mathbf r(t)=(1,2)+t(4,2)=(1+4t,2+2t).
+          At t=0, the curve is at P. At t=1, it is at Q. At
+          t=1/2, it is halfway between them:
+          \mathbf r(1/2)=(3,3).
+
+[190-194 p c4s1-subsec-plane-space-curves default_required]
+This formula is the affine line from Chapter 1 with a restricted range of t. If we
+      let t run through all real numbers, we get the whole line. If we keep
+      0\le t\le1, we get only the segment.
+
+[197-197 title c4s1-ex-helix default_required]
+A helix around a spiral staircase
+
+[199-214 p c4s1-ex-helix default_required]
+A point moving around a circular staircase may have position
+          
+            \mathbf r(t)=
+            \left(
+                2\cos t,\,
+                2\sin t,\,
+                \frac{t}{2\pi}
+            \right),
+            \qquad 0\le t\le 6\pi.
+          
+          The x- and y-coordinates move around a circle of radius 2. The
+          z-coordinate rises steadily. One full turn raises the point by
+          \frac{2\pi}{2\pi}=1.
+          The image is a helix.
+
+[218-218 caption c4s1-fig-helix default_required]
+A helix can be viewed as circular motion together with steady upward motion.
+
+[220-269 latex-image c4s1-fig-helix default_required]
+\begin{tikzpicture}[>=latex]
+
+                \begin{axis}[
+                    name=helixplot,
+                    view={35}{25},
+                    width=8.5cm, height=8.5cm,
+                    axis lines=center,
+                    axis line style={gray, thin},
+                    xlabel={\(x\)}, ylabel={\(y\)}, zlabel={\(z\)},
+                    ticks=none,
+                    xmin=-3.2, xmax=3.5,
+                    ymin=-3.2, ymax=3.5,
+                    zmin=0, zmax=3.8,
+                ]
+
+                    % Bounding cylinder base for depth perception
+                    \addplot3[
+                        gray!40, dashed,
+                        domain=0:360,
+                        samples=60,
+                        samples y=0,
+                        variable=\t
+                    ] ({2*cos(\t)}, {2*sin(\t)}, 0);
+
+                    % Vertical bounding lines
+                    \draw[gray!40, dashed] (2,0,0) -- (2,0,3);
+                    \draw[gray!40, dashed] (-2,0,0) -- (-2,0,3);
+
+                    % 3D Helix
+                    % 3 full turns = 1080 degrees. z = t/(2pi) -> t/360.
+                    \addplot3[
+                        thick, blue!50!black,
+                        domain=0:1080,
+                        samples=250,
+                        samples y=0,
+                        variable=\t,
+                        smooth
+                    ] ({2*cos(\t)}, {2*sin(\t)}, {\t/360});
+
+                    % Displacement vector from t=0 to t=0.6 radians
+                    \draw[->, very thick] (2,0,0) -- ({2*cos(deg(0.6))}, {2*sin(deg(0.6))}, {0.6/(2*pi)});
+
+                \end{axis}
+
+                % Label positioned neatly below the axis environment
+                \node[align=center] at ([yshift=-0.5cm]helixplot.south) {a three-dimensional drawing of a space helix};
+
+            \end{tikzpicture}
+
+[275-279 p c4s1-subsec-plane-space-curves default_required]
+The helix is not the graph of a single function y=f(x). It can pass over the same
+      x-value many times. Parametric equations are more flexible than ordinary graph
+      equations because each coordinate is allowed to depend on the parameter.
+
+[283-283 title c4s1-subsec-eliminating-parameter default_required]
+Eliminating the parameter when possible
+
+[285-285 p c4s1-subsec-eliminating-parameter default_required]
+Sometimes a parametric curve can be rewritten as a familiar Cartesian equation.
+
+[288-288 title c4s1-ex-parabola default_required]
+A parabola from a moving point
+
+[290-299 p c4s1-ex-parabola default_required]
+Let
+          \mathbf r(t)=(t,t^2),\qquad -2\le t\le2.
+          Then
+          x=t,\qquad y=t^2.
+          Since x=t, we get
+          y=x^2.
+          So this parametrization traces the part of the parabola y=x^2 with
+          -2\le x\le2.
+
+[303-303 p c4s1-subsec-eliminating-parameter default_required]
+The parameter was easy to eliminate because one coordinate was just t.
+
+[306-306 title checkpoint-4-1-elimination-loss default_required]
+What gets erased?
+
+[308-313 p checkpoint-4-1-elimination-loss default_required]
+Suppose you eliminate the parameter and arrive at a clean Cartesian equation such as
+          y=x^2 or x^2+y^2=9. The equation is tidy, but something about the
+          original moving point has been thrown away. What kind of information disappears when you
+          trade \mathbf r(t) for an equation in x and y alone?
+
+[316-320 p checkpoint-4-1-elimination-loss hint]
+An equation in x and y records which points belong to the curve. Does it
+          remember the order in which they are visited, the starting point, the direction, or
+          whether some points are passed more than once?
+
+[325-325 title c4s1-ex-circle-trig default_required]
+A circle from trigonometry
+
+[327-337 p c4s1-ex-circle-trig default_required]
+For
+          \mathbf r(t)=(3\cos t,3\sin t),
+          we have
+          x=3\cos t,\qquad y=3\sin t.
+          Squaring and adding gives
+          x^2+y^2=9\cos^2t+9\sin^2t=9.
+          So the image lies on
+          x^2+y^2=9.
+          If 0\le t\le2\pi, every point on this circle is reached.
+
+[341-344 p c4s1-subsec-eliminating-parameter default_required]
+Eliminating the parameter can help us recognize the shape. But it can also hide important
+      information.
+
+[347-347 title c4s1-ex-elimination-loses-info default_required]
+Elimination can lose information
+
+[349-364 p c4s1-ex-elimination-loses-info default_required]
+Consider
+          \mathbf r(t)=(t^2,t^4),\qquad -2\le t\le2.
+          Then
+          x=t^2,\qquad y=t^4.
+          Since
+          y=(t^2)^2,
+          we get
+          y=x^2.
+          But this parametrization does not trace the whole parabola y=x^2.
+          Because
+          x=t^2\ge0,
+          it only traces the right-hand half:
+          y=x^2,\qquad 0\le x\le4.
+          Also, most points are traced twice: once by t and once by -t.
+
+[368-371 p c4s1-subsec-eliminating-parameter default_required]
+The Cartesian equation tells us the set of points. The parametrization tells us how the
+      set is traveled.
+
+[375-375 title c4s1-subsec-different-parametrizations default_required]
+Different parametrizations of the same curve
+
+[377-377 p c4s1-subsec-different-parametrizations default_required]
+The same geometric curve may have many different parametrizations.
+
+[380-380 title checkpoint-4-1-shared-image default_required]
+Many clocks, one road?
+
+[382-386 p checkpoint-4-1-shared-image default_required]
+One curve can be described by many different parametrizations. Why is a single
+          geometric shape able to support so many different rules \mathbf r(t), and what
+          is the one thing all parametrizations of that curve must have in common?
+
+[389-392 p checkpoint-4-1-shared-image hint]
+Two travelers can drive the same road using different speedometers and clocks. What do
+          their trips necessarily agree on, and what are they free to choose differently?
+
+[397-397 title c4s1-ex-same-circle-clocks default_required]
+Same circle, different clocks
+
+[399-405 p c4s1-ex-same-circle-clocks default_required]
+The two parametrizations
+          \mathbf r_1(t)=(\cos t,\sin t),\qquad 0\le t\le2\pi,
+          and
+          \mathbf r_2(s)=(\cos 2s,\sin 2s),\qquad 0\le s\le\pi,
+          trace the same unit circle once in the counterclockwise direction.
+
+[406-409 p c4s1-ex-same-circle-clocks default_required]
+The second curve uses a different clock. When s increases by \pi, the
+          angle 2s increases by 2\pi, so the point completes one full turn.
+
+[414-414 title c4s1-ex-same-circle-opposite default_required]
+Same circle, opposite direction
+
+[416-420 p c4s1-ex-same-circle-opposite default_required]
+The parametrization
+          \mathbf r_3(t)=(\cos t,-\sin t),\qquad 0\le t\le2\pi,
+          also traces the unit circle. But it moves clockwise.
+
+[421-427 p c4s1-ex-same-circle-opposite default_required]
+At t=0,
+          \mathbf r_3(0)=(1,0).
+          At t=\pi/2,
+          \mathbf r_3(\pi/2)=(0,-1).
+          So the point goes downward first, not upward.
+
+[432-432 title c4s1-def-orientation default_required]
+Orientation of a parametrized curve
+
+[434-437 p c4s1-def-orientation default_required]
+The direction in which a parametrized curve is traced as the parameter increases is
+          called its orientation.
+
+[441-442 p c4s1-subsec-different-parametrizations default_required]
+Orientation records the direction of traversal. Later we will use that choice
+      when measuring work along a path.
+
+[445-445 title c4s1-def-closed-simple default_required]
+Closed and simple curves
+
+[447-452 p c4s1-def-closed-simple default_required]
+A parametrized curve
+          \mathbf r:[a,b]\to\mathbb R^n
+          is called closed if
+          \mathbf r(a)=\mathbf r(b).
+
+[453-456 p c4s1-def-closed-simple default_required]
+It is called simple if it does not pass through the same point twice,
+          except possibly at the endpoints of a closed curve.
+
+[460-463 p c4s1-subsec-different-parametrizations default_required]
+A circle traced once is closed and simple. A figure-eight curve is closed but not simple,
+      because it crosses itself.
+
+[466-466 title c4s1-ex-self-crossing default_required]
+A curve with a self-crossing
+
+[468-476 p c4s1-ex-self-crossing default_required]
+Let
+          \mathbf r(t)=(\sin t,\sin 2t),\qquad 0\le t\le2\pi.
+          At
+          t=0,\quad t=\pi,\quad t=2\pi,
+          the point is
+          (0,0).
+          The curve returns to the origin in the middle of its trip, so it has a self-crossing.
+
+[480-483 p c4s1-subsec-different-parametrizations default_required]
+A curve is therefore more than its equation and more than its picture. It is a moving point
+      with a chosen parameter and a chosen direction.
+
+[485-492 p c4s1-subsec-different-parametrizations default_required]
+Rectangular coordinates describe many curves well, but they are clumsy for curves that
+      circle around a point. The circle
+      x^2+y^2=9
+      looks simpler as distance from the origin equals 3. That sentence is not
+      written in x and y. It is written in distance and angle. The next coordinate
+      system is built for exactly that language.

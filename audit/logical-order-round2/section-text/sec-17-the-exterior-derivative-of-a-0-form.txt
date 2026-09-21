@@ -1,0 +1,376 @@
+[5-5 title sec-17-the-exterior-derivative-of-a-0-form default_required]
+The exterior derivative of a 0-form
+
+[7-13 p sec-17-the-exterior-derivative-of-a-0-form default_required]
+A 0-form is a function. So the first case of the exterior derivative is the one we
+    already know:
+    f \longmapsto df.
+    But now df is not just a symbol from single-variable calculus. It is a 1-form:
+    a rule that measures tangent vectors.
+
+[16-16 title c17s1-from-function-to-differential default_required]
+From a function f to its differential df
+
+[18-26 p c17s1-from-function-to-differential default_required]
+Picture a metal plate on a laboratory table. The point (x,y) gives a location on
+      the plate, measured in centimeters. The temperature is modeled by
+      T(x,y)=18+4x-y-\frac12x^2+\frac13xy.
+      At the point
+      P=(2,3),
+      the temperature is
+      T(2,3)=23.
+
+[28-40 p c17s1-from-function-to-differential default_required]
+Now move a tiny amount
+      (\Delta x,\Delta y)=(h,k)
+      from P. The new point is
+      (2+h,3+k).
+      Substitute into T:
+      
+        T(2+h,3+k) \amp= 18+4(2+h)-(3+k)-\frac12(2+h)^2+\frac13(2+h)(3+k)
+        \amp= 23+3h-\frac13k+\frac13hk-\frac12h^2.
+      
+      So the temperature change is
+      T(2+h,3+k)-T(2,3)=3h-\frac13k+\frac13hk-\frac12h^2.
+
+[42-49 p c17s1-from-function-to-differential default_required]
+The first-order part is
+      3h-\frac13k.
+      The other terms,
+      \frac13hk-\frac12h^2,
+      are smaller than the displacement when (h,k) is very small. So, near P,
+      \Delta T\approx 3\,\Delta x-\frac13\,\Delta y.
+
+[51-58 p c17s1-from-function-to-differential default_required]
+This linear measuring rule is the differential at P:
+      \boxed{dT_P=3\,dx-\frac13\,dy.}
+      It measures a tiny tangent vector
+      \mathbf v=(v_x,v_y)
+      by
+      dT_P(\mathbf v)=3v_x-\frac13v_y.
+
+[60-70 p c17s1-from-function-to-differential default_required]
+For example, suppose a small sensor is moving through P with velocity
+      \mathbf v=(2,-3)
+      centimeters per second. Then
+      
+        dT_P(\mathbf v) \amp= 3(2)-\frac13(-3)
+        \amp= 7.
+      
+      So the sensor sees temperature increasing at
+      7^\circ\text{C per second}.
+
+[73-73 title checkpoint-17-1-measures-not-stores default_required]
+A rule, not a reading?
+
+[75-80 p checkpoint-17-1-measures-not-stores default_required]
+We found dT_P=3\,dx-\frac13\,dy, and feeding it the velocity
+          \mathbf v=(2,-3) returned the single number 7. So why do we call
+          dT_P a 1-form rather than just saying the temperature is changing at
+          7^\circ per second at P?
+
+[83-87 p checkpoint-17-1-measures-not-stores hint]
+The number 7 belonged to one particular direction. Ask what dT_P would
+          report for a different velocity, and what kind of object can answer that for every
+          direction at once.
+
+[92-97 caption c17s1-fig-differential-level-curves default_required]
+The parallel lines are levels of the affine approximation
+      T_{\mathrm{lin}}(x,y)=23+3(x-2)-\frac13(y-3), not of the nonlinear
+      temperature function itself. The blue arrow is the gradient vector
+      \nabla T(P)=(3,-\frac13), perpendicular to those lines. The differential
+      dT_P is the covector that measures displacement across them. The red vector
+      spans seven unit level increments, illustrating dT_P(\mathbf v)=7.
+
+[99-143 latex-image c17s1-fig-differential-level-curves default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            \draw[->] (-0.5,0) -- (6.2,0) node[right] {\(x\)};
+            \draw[->] (0,-0.5) -- (0,5.3) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (0,0) grid (6,5);
+
+            \coordinate (P) at (2,3);
+
+            % 8 levels of the affine approximation, from 23 to 30
+            % Based on the linear approximation: dT = 3dx - 1/3dy
+            % Endpoints calculated at y=0 and y=4.5 to fit the grid perfectly
+            \foreach \T in {23, 24, 25, 26, 27, 28, 29, 30} {
+                \draw[gray!45] ({(3*\T - 54)/9}, 0) node[below, font=\tiny, text=gray] {\T}
+                            -- ({(3*\T - 49.5)/9}, 4.5);
+            }
+
+            \node[gray!50, font=\scriptsize, rotate=83.6] at (1.8, 3.8) {levels of \(T_{\mathrm{lin}}\)};
+
+            % Curly brace indicating the total change of 7
+            % (Requires \usetikzlibrary{decorations.pathreplacing} in preamble)
+            \draw[decorate, decoration={brace, amplitude=6pt}, thick, gray!80]
+                ({(3*23 - 49.5)/9}, 4.55) -- ({(3*30 - 49.5)/9}, 4.55)
+                node[midway, above=6pt, text=gray, font=\footnotesize] {\(dT_P(\mathbf{v}) = 7\)};
+
+            % Sensor path strictly tangent to v=(2,-3) at P
+            \draw[dashed, thick, gray!80] (0.5, 4.8)
+                .. controls (1.0, 4.5) and (1.6, 3.6) .. (P)
+                .. controls (2.4, 2.4) and (3.3, 0.8) .. (4.5, 0.3)
+                node[above left, font=\scriptsize] {sensor path};
+
+            \fill (P) circle[radius=2.5pt];
+            \node[below left] at (P) {\(P=(2,3)\)};
+
+            % Velocity vector v = (2,-3), drawn strictly to scale so it ends at (4,0)
+            % This lands exactly on the affine temperature level 30
+            \draw[->, very thick, red!65!black] (P) -- ++(2,-3)
+                node[above right] {\(\mathbf{v}=(2,-3)\)};
+
+            % The gradient vector representing the covector dT_P
+            % Drawn geometrically accurately so it is strictly perpendicular to the level curves
+            \draw[->, very thick, blue!65!black] (P) -- ++(3,-0.333)
+                node[right] {\(\nabla T(P)=(3,-\frac{1}{3})\)};
+        \end{tikzpicture}
+
+[147-151 p c17s1-from-function-to-differential default_required]
+The calculation did two things at once. It found the best linear approximation to the
+      change in temperature, and it produced a 1-form. That is exactly what d does
+      to a 0-form.
+
+[155-155 title c17s1-df-formula default_required]
+df=f_x\,dx+f_y\,dy+f_z\,dz
+
+[157-162 p c17s1-df-formula default_required]
+In one variable, the differential is
+      df=f'(x)\,dx.
+      That says a small change dx in the input produces the first-order output change
+      df\approx f'(x)\,dx.
+
+[164-171 p c17s1-df-formula default_required]
+In two variables, there are two coordinate changes:
+      dx \qquad\text{and}\qquad dy.
+      So a differentiable function
+      f(x,y)
+      has differential
+      \boxed{df=f_x\,dx+f_y\,dy.}
+
+[173-177 p c17s1-df-formula default_required]
+In three variables,
+      \boxed{df=f_x\,dx+f_y\,dy+f_z\,dz.}
+      This is the first case of the exterior derivative.
+
+[180-180 title c17s1-def-exterior-derivative-0-form default_required]
+Exterior derivative of a 0-form
+
+[182-182 p c17s1-def-exterior-derivative-0-form default_required]
+Let f be a differentiable scalar function.
+
+[183-186 p c17s1-def-exterior-derivative-0-form default_required]
+In the plane,
+          \boxed{d f=f_x\,dx+f_y\,dy.}
+
+[187-192 p c17s1-def-exterior-derivative-0-form default_required]
+In space,
+          \boxed{d f=f_x\,dx+f_y\,dy+f_z\,dz.}
+          The form df is called the exterior derivative of the 0-form
+          f.
+
+[196-201 p c17s1-df-formula default_required]
+When f has continuous first partial derivatives, this formula behaves smoothly from
+      point to point. We will often say that f is C^1. That means:
+      f_x,\ f_y,\ f_z \quad\text{exist and are continuous}
+      on the region under discussion.
+
+[203-206 p c17s1-df-formula default_required]
+The continuity condition is not just politeness. Partial derivatives at a single point do
+      not automatically produce a true differential there.
+
+[209-209 title c17s1-ex-partials-not-enough default_required]
+Why partial derivatives alone are not enough
+
+[211-220 p c17s1-ex-partials-not-enough default_required]
+Define
+          f(x,y)=\begin{cases}\dfrac{xy}{\sqrt{x^2+y^2}}, \amp (x,y)\ne(0,0),\\ 0, \amp (x,y)=(0,0).\end{cases}
+          At the origin, the coordinate partial derivatives exist:
+          f_x(0,0)=\lim_{h\to0}\frac{f(h,0)-f(0,0)}{h}=0,
+          and
+          f_y(0,0)=\lim_{k\to0}\frac{f(0,k)-f(0,0)}{k}=0.
+          If those two numbers were enough, the differential at the origin would be
+          df_{(0,0)}=0.
+
+[221-231 p c17s1-ex-partials-not-enough default_required]
+But along the diagonal path (t,t),
+          f(t,t)=\frac{t^2}{\sqrt{2t^2}}=\frac{|t|}{\sqrt2}.
+          The proposed linear approximation gives 0, and the error is
+          \frac{|t|}{\sqrt2}.
+          Compare this to the size of the displacement:
+          \|(t,t)\|=\sqrt2\,|t|.
+          The ratio is
+          \frac{|t|/\sqrt2}{\sqrt2\,|t|}=\frac12.
+          It does not approach 0.
+
+[232-237 p c17s1-ex-partials-not-enough default_required]
+So f is not differentiable at the origin. The partial derivatives exist there,
+          but there is no true differential df_{(0,0)}. A differential is a linear
+          approximation to all nearby directions at once, not only to the two coordinate
+          directions.
+
+[241-247 p c17s1-df-formula default_required]
+This is the same warning from , now in the
+      language of forms. The form
+      f_x\,dx+f_y\,dy
+      deserves to be called df at a point only when it really gives the first-order change
+      of f there.
+
+[251-251 title c17s1-relation-to-gradient default_required]
+Relation to the gradient
+
+[253-255 p c17s1-relation-to-gradient default_required]
+The differential df is a 1-form. The gradient \nabla f is a vector.
+
+[257-270 p c17s1-relation-to-gradient default_required]
+In Euclidean space, the dot product lets us translate between them. If
+      f=f(x,y,z),
+      then
+      df=f_x\,dx+f_y\,dy+f_z\,dz.
+      On a tangent vector
+      \mathbf v=(v_x,v_y,v_z),
+      this gives
+      df_{\mathbf p}(\mathbf v)=f_x(\mathbf p)v_x+f_y(\mathbf p)v_y+f_z(\mathbf p)v_z.
+      The gradient vector is
+      \nabla f(\mathbf p)=\bigl(f_x(\mathbf p),f_y(\mathbf p),f_z(\mathbf p)\bigr).
+      Therefore
+      \boxed{df_{\mathbf p}(\mathbf v)=\nabla f(\mathbf p)\cdot \mathbf v.}
+
+[273-273 title c17s1-thm-gradient-represents-df default_required]
+The gradient represents df when a dot product is chosen
+
+[275-280 p c17s1-thm-gradient-represents-df default_required]
+Let f be differentiable at a point \mathbf p\in\mathbb R^3, and use the
+          usual Euclidean dot product. Then
+          \boxed{df_{\mathbf p}(\mathbf v)=\nabla f(\mathbf p)\cdot\mathbf v}
+          for every tangent vector \mathbf v.
+
+[283-291 p c17s1-thm-gradient-represents-df default_required]
+Write
+          \mathbf v=(v_x,v_y,v_z).
+          By the definition of df,
+          df_{\mathbf p}(\mathbf v)=f_x(\mathbf p)v_x+f_y(\mathbf p)v_y+f_z(\mathbf p)v_z.
+          By the definition of the dot product,
+          \nabla f(\mathbf p)\cdot\mathbf v=\bigl(f_x(\mathbf p),f_y(\mathbf p),f_z(\mathbf p)\bigr)\cdot(v_x,v_y,v_z),
+          which is the same number.
+
+[295-298 p c17s1-relation-to-gradient default_required]
+The theorem says the gradient and the differential contain the same coordinate numbers in
+      ordinary Euclidean space. But they are different kinds of objects.
+
+[300-306 md c17s1-relation-to-gradient default_required]
+\begin{array}{c|c|c}
+      \text{Object} \amp \text{Kind} \amp \text{What it does} \\ \hline
+      df \amp 1\text{-form} \amp \text{measures tangent vectors}\\
+      \nabla f \amp \text{vector} \amp \text{points in the steepest direction}
+      \end{array}
+
+[308-311 p c17s1-relation-to-gradient default_required]
+The dot product is the bridge between the two. Without a dot product, the covector
+      df still makes sense. The gradient vector needs that extra geometric structure.
+
+[314-314 title checkpoint-17-1-why-dot-product default_required]
+Why does the gradient need a dot product?
+
+[316-321 p checkpoint-17-1-why-dot-product default_required]
+The differential df happily measures tangent vectors without any mention of a
+          dot product, yet to even speak of the gradient \nabla f we had to choose one.
+          What does the dot product supply that turns the covector df into the vector
+          \nabla f?
+
+[324-328 p checkpoint-17-1-why-dot-product hint]
+A 1-form takes a vector and returns a number. To go the other way, from a
+          measuring rule back to an arrow, you need a way to match directions with lengths and
+          angles. Which structure carries that information?
+
+[334-334 title c17s1-directional-derivatives default_required]
+Directional derivatives from evaluating df
+
+[336-343 p c17s1-directional-derivatives default_required]
+The differential answers the question:
+      \text{How fast does } f \text{ change in this tangent direction?}
+      If the direction is a unit vector \mathbf u, then
+      \boxed{D_{\mathbf u}f(\mathbf p)=df_{\mathbf p}(\mathbf u).}
+      Using the dot product, the same formula becomes
+      \boxed{D_{\mathbf u}f(\mathbf p)=\nabla f(\mathbf p)\cdot\mathbf u.}
+
+[345-350 p c17s1-directional-derivatives default_required]
+More generally, if \mathbf v is a velocity vector, not necessarily a unit vector,
+      then
+      df_{\mathbf p}(\mathbf v)
+      is the rate of change of f along motion with velocity \mathbf v.
+
+[353-353 title checkpoint-17-1-speed-scales-rate default_required]
+What if you double your speed?
+
+[355-361 p checkpoint-17-1-speed-scales-rate default_required]
+Suppose you pass through \mathbf p along the same heading but twice as fast, so
+          your velocity is 2\mathbf v instead of \mathbf v. Without recomputing
+          anything, what does this say about df_{\mathbf p}(2\mathbf v) compared to
+          df_{\mathbf p}(\mathbf v), and why is that exactly what a rate of
+          change should do?
+
+[364-367 p checkpoint-17-1-speed-scales-rate hint]
+Remember that df_{\mathbf p} is a linear measuring rule. Think about
+          how the field looks the same along your path, but the clock is now running differently.
+
+[372-372 title c17s1-thm-chain-rule default_required]
+Chain rule in differential-form language
+
+[374-381 p c17s1-thm-chain-rule default_required]
+Let f be differentiable at \mathbf p, and let
+          \mathbf r(t)
+          be a differentiable curve with
+          \mathbf r(t_0)=\mathbf p.
+          Then
+          \boxed{\frac{d}{dt}f(\mathbf r(t))\bigg|_{t=t_0}=df_{\mathbf p}\bigl(\mathbf r'(t_0)\bigr).}
+
+[384-394 p c17s1-thm-chain-rule default_required]
+The curve supplies a tangent vector
+          \mathbf r'(t_0).
+          The differential df_{\mathbf p} is the best linear measurement of how f
+          changes from \mathbf p. Applying that linear measurement to the curve's velocity
+          gives the first-order rate of change along the curve. In coordinates, this is the chain
+          rule:
+          \frac{d}{dt}f(x(t),y(t),z(t))=f_xx'(t)+f_yy'(t)+f_zz'(t).
+          The right side is exactly
+          df_{\mathbf r(t)}(\mathbf r'(t)).
+
+[399-399 title c17s1-ex-drone default_required]
+A drone flying through a concentration field
+
+[401-410 p c17s1-ex-drone default_required]
+A drone flies through a room where the concentration of smoke is modeled by
+          C(x,y,z)=10+xz-y^2+\frac12x^2.
+          The exterior derivative of C is
+          dC=(z+x)\,dx-2y\,dy+x\,dz.
+          At the point
+          P=(1,2,3),
+          this becomes
+          dC_P=4\,dx-4\,dy+dz.
+
+[411-423 p c17s1-ex-drone default_required]
+Suppose the drone passes through P with velocity
+          \mathbf v=(2,1,-3)
+          meters per second. Then the rate of change of the smoke concentration measured by the
+          drone is
+          
+            dC_P(\mathbf v) \amp= 4(2)-4(1)+1(-3)
+            \amp= 1.
+          
+          So, at that instant, the concentration reading is increasing at
+          1
+          concentration unit per second.
+
+[424-429 p c17s1-ex-drone default_required]
+In gradient notation, this is the same computation:
+          \nabla C(P)=(4,-4,1),
+          and
+          \nabla C(P)\cdot\mathbf v=(4,-4,1)\cdot(2,1,-3)=1.
+
+[433-438 p c17s1-directional-derivatives default_required]
+A 0-form changes as we move along a curve, and df measures that change. But a
+      1-form is already something we integrate along curves. Its derivative should not
+      measure change along a single tangent vector. It should measure what happens when we walk
+      around a tiny loop. That is why the next form of d produces curl.

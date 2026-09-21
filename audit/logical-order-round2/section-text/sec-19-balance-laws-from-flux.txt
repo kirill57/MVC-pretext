@@ -1,0 +1,381 @@
+[5-5 title sec-19-balance-laws-from-flux default_required]
+Balance laws from flux
+
+[7-14 p sec-19-balance-laws-from-flux default_required]
+Recall from  that the divergence theorem is Stokes'
+    theorem for a solid:
+    \int_{\partial E}\Phi=\int_E d\Phi.
+    When \Phi is a flux form, the boundary integral measures what crosses the surface
+    \partial E. A conservation law begins by asking what that crossing does to the amount
+    stored inside E.
+
+[17-17 title c19s1-subsec-fixed-window-moving-dye default_required]
+A fixed window in moving dye
+
+[19-26 p c19s1-subsec-fixed-window-moving-dye default_required]
+Imagine a clear box sitting inside a tank of water. The box is not a physical wall. It is
+      only a measuring window:
+      E=[0,3]\times[0,1]\times[0,1].
+      Dye flows through the tank. Let
+      \rho(x,y,z,t)
+      be the dye density at time t, measured in grams per cubic meter.
+
+[28-31 p c19s1-subsec-fixed-window-moving-dye default_required]
+The amount of dye inside the window is
+      \boxed{A(t)=\iiint_E \rho(x,y,z,t)\,dV.}
+
+[33-40 p c19s1-subsec-fixed-window-moving-dye default_required]
+Now suppose that, for 0\le t\lt 10,
+      \rho(x,y,z,t)=10-t
+      and that the dye flux field is
+      \mathbf J(x,y,z,t)=(x,0,0).
+      The vector \mathbf J measures dye transported per unit area per unit time. It is not
+      just a velocity. It is the actual transported amount.
+
+[42-54 p c19s1-subsec-fixed-window-moving-dye default_required]
+First compute the stored amount:
+      \boxed{\begin{aligned}
+        A(t)
+        &=
+        \int_0^3\int_0^1\int_0^1 (10-t)\,dz\,dy\,dx\\
+        &=
+        3(10-t).
+      \end{aligned}}
+      Therefore
+      \boxed{A'(t)=-3.}
+      The window is losing dye at rate 3.
+
+[56-60 p c19s1-subsec-fixed-window-moving-dye default_required]
+Now compute the outward flux across the boundary. Since
+      \mathbf J=(x,0,0),
+      only the left and right faces can contribute.
+
+[62-69 p c19s1-subsec-fixed-window-moving-dye default_required]
+On the right face x=3, the outward normal is
+      \widehat{\mathbf n}=(1,0,0),
+      so
+      \mathbf J\cdot\widehat{\mathbf n}=3.
+      The face has area 1, so the outward flux through the right face is
+      3.
+
+[71-78 p c19s1-subsec-fixed-window-moving-dye default_required]
+On the left face x=0, the outward normal is
+      \widehat{\mathbf n}=(-1,0,0),
+      but
+      \mathbf J=(0,0,0),
+      so the flux is 0. The other four faces also have zero flux because their normals are
+      perpendicular to (x,0,0).
+
+[80-83 p c19s1-subsec-fixed-window-moving-dye default_required]
+Thus
+      \boxed{\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS=3.}
+
+[85-92 p c19s1-subsec-fixed-window-moving-dye default_required]
+The two calculations match the bookkeeping rule:
+      \boxed{\frac{d}{dt}\iiint_E \rho\,dV
+        =
+        -\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS.}
+      Outward flux is positive, but it decreases what remains inside. That is why the minus sign
+      is there.
+
+[94-94 title checkpoint-19-1-why-the-minus-sign default_required]
+Why a minus sign?
+
+[96-101 p checkpoint-19-1-why-the-minus-sign default_required]
+Suppose every reading of \mathbf J\cdot\widehat{\mathbf n} on the boundary is
+          positive. Without computing anything, is the stored amount inside E going up or
+          down at that instant, and why does the balance law need a minus sign in front of the
+          flux to record that?
+
+[104-107 p checkpoint-19-1-why-the-minus-sign hint]
+Picture the arrows: positive normal flux means stuff is heading out through the
+          surface. Ask yourself what leaving does to the count of what is still inside.
+
+[112-115 caption c19s1-fig-balance-law-window default_required]
+With no sources or sinks, for a fixed region E, the rate at which the stored quantity
+      decreases is exactly equal to the net outward flux through the boundary \partial E.
+      The negative sign accounts for the fact that a positive outward flux results in a loss of
+      internal density.
+
+[117-158 latex-image c19s1-fig-balance-law-window default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            % Coordinates for the box E
+            \coordinate (O) at (0,0);
+            \coordinate (A) at (3.6,0);
+            \coordinate (B) at (4.6,0.8);
+            \coordinate (C) at (1.0,0.8);
+            \coordinate (D) at (0,1.7);
+            \coordinate (Ept) at (3.6,1.7);
+            \coordinate (F) at (4.6,2.5);
+            \coordinate (G) at (1.0,2.5);
+
+            % Draw the "measuring window" box
+            \draw[fill=blue!5, thick] (O)--(A)--(B)--(C)--cycle;
+            \draw[fill=blue!8, thick] (D)--(Ept)--(F)--(G)--cycle;
+            \draw[thick] (O)--(D);
+            \draw[thick] (A)--(Ept);
+            \draw[thick] (B)--(F);
+            \draw[thick] (C)--(G);
+
+            % Interior state
+            \node at (2.1,1.15) {\textbf{Region} \(E\)};
+            \node at (2.1,0.75) {\(\rho(t)\) density};
+
+            % Inward flux (aligned with the center of the left face)
+            \draw[->, very thick, blue!65!black] (-0.4,1.45) -- ++(0.9,0);
+            \draw[->, very thick, blue!65!black] (-0.4,1.05) -- ++(0.9,0);
+            \node[blue!65!black, align=right, font=\small, anchor=east] at (-0.5, 1.25) {Inward flux \\ density \(\mathbf{J}\)};
+
+            % Outward flux (aligned with the center of the right face)
+            \draw[->, very thick, red!65!black] (4.1,1.45) -- ++(0.9,0);
+            \draw[->, very thick, red!65!black] (4.1,1.05) -- ++(0.9,0);
+
+            % Text safely spaced away from the arrow tips
+            \node[red!65!black, font=\small, anchor=west, align=left] at (5.1,1.25) {Outward flux\\[1mm] \(\displaystyle \iint_{\partial E} \mathbf{J} \cdot \widehat{\mathbf{n}} \, dS > 0\)};
+
+            % The fundamental balance equation
+            \node at (2.4,-1.2)
+                {\(\displaystyle \underbrace{\frac{d}{dt}\iiint_E\rho\,dV}_{\text{Rate of Change}}
+                = \underbrace{-\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS}_{\text{Net Transport across boundary}}\)};
+        \end{tikzpicture}
+
+[164-164 title c19s1-subsec-stored-amount-flux-density default_required]
+Stored amount and flux density
+
+[166-166 p c19s1-subsec-stored-amount-flux-density default_required]
+The example contains the main objects.
+
+[168-172 p c19s1-subsec-stored-amount-flux-density default_required]
+The density
+      \rho
+      measures how much material is stored per unit volume.
+
+[174-178 p c19s1-subsec-stored-amount-flux-density default_required]
+The flux density
+      \mathbf J
+      measures how much material is transported through a unit area per unit time.
+
+[180-188 p c19s1-subsec-stored-amount-flux-density default_required]
+If the material has density \rho and moves with velocity
+      \mathbf v,
+      then the flux density is
+      \boxed{\mathbf J=\rho\mathbf v.}
+      A fast flow in a nearly empty region may carry little material. A slow flow in a dense
+      region may carry a lot. The product \rho\mathbf v measures what is actually being
+      transported.
+
+[190-195 p c19s1-subsec-stored-amount-flux-density default_required]
+For a fixed solid region E, the stored amount is
+      \boxed{\iiint_E \rho\,dV.}
+      The outward flux through the boundary is
+      \boxed{\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS.}
+
+[198-198 title c19s1-def-flux-density default_required]
+Flux density
+
+[200-206 p c19s1-def-flux-density default_required]
+A flux density is a vector field
+          \mathbf J
+          whose normal component
+          \mathbf J\cdot\widehat{\mathbf n}
+          measures the amount crossing a unit area per unit time in the normal direction.
+
+[210-217 p c19s1-subsec-stored-amount-flux-density default_required]
+The sign convention is important:
+      \begin{array}{c|c}
+        \mathbf J\cdot\widehat{\mathbf n}\gt 0 \amp \text{net flow outward}\\[1mm]
+        \mathbf J\cdot\widehat{\mathbf n}\lt 0 \amp \text{net flow inward}\\[1mm]
+        \mathbf J\cdot\widehat{\mathbf n}=0 \amp \text{no crossing through that surface}
+      \end{array}
+
+[219-222 p c19s1-subsec-stored-amount-flux-density default_required]
+A vector tangent to the boundary may be large, but it contributes no flux across the
+      boundary. It slides along the boundary instead of crossing it.
+
+[224-224 title checkpoint-19-1-flow-along-the-wall default_required]
+Fast flow, no flux?
+
+[226-231 p checkpoint-19-1-flow-along-the-wall default_required]
+A strong current runs parallel to one face of E, never pointing into or
+          out of it. The flow is fast, yet it contributes nothing to the flux across that face.
+          What feature of \mathbf J\cdot\widehat{\mathbf n} explains how something so
+          vigorous can still cross no boundary?
+
+[234-238 p checkpoint-19-1-flow-along-the-wall hint]
+The dot product only listens to the part of \mathbf J that lines up with
+          \widehat{\mathbf n}. What is that component when the flow and the normal are at
+          right angles?
+
+[244-244 title c19s1-subsec-the-flux-form default_required]
+The flux form
+
+[246-246 p c19s1-subsec-the-flux-form default_required]
+The same flux can be written in the language of forms.
+
+[248-263 p c19s1-subsec-the-flux-form default_required]
+For a vector field
+      \mathbf J=(J_1,J_2,J_3),
+      the corresponding flux 2-form is
+      \boxed{\Phi_{\mathbf J}
+        =
+        J_1\,dy\wedge dz
+        +
+        J_2\,dz\wedge dx
+        +
+        J_3\,dx\wedge dy.}
+      Then
+      \boxed{\int_{\partial E}\Phi_{\mathbf J}
+        =
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS.}
+
+[265-274 p c19s1-subsec-the-flux-form default_required]
+For the previous example,
+      \mathbf J=(x,0,0),
+      so
+      \Phi_{\mathbf J}=x\,dy\wedge dz.
+      On the right face x=3, this becomes
+      3\,dy\wedge dz.
+      The face has y,z-area 1, so its contribution is 3. On the left face
+      x=0, the form is zero. The form gives the same outward flux.
+
+[276-279 p c19s1-subsec-the-flux-form default_required]
+This is why flux forms were worth building. They remember which oriented area pieces a
+      vector field crosses.
+
+[281-294 p c19s1-subsec-the-flux-form default_required]
+In the plane, the matching formula is simpler. If
+      \mathbf J=(M,N),
+      then the outward flux form on a positively oriented boundary is
+      \boxed{\phi_{\mathbf J}=M\,dy-N\,dx.}
+      Indeed,
+      \int_{\partial R}\phi_{\mathbf J}
+        =
+        \int_{\partial R}\mathbf J\cdot\widehat{\mathbf n}\,ds.
+      The small vector
+      (dy,-dx)
+      is the outward normal times arclength when \partial R is walked with the region on
+      the left.
+
+[298-298 title c19s1-subsec-sources-and-sinks default_required]
+Sources and sinks
+
+[300-304 p c19s1-subsec-sources-and-sinks default_required]
+Some quantities are not conserved by transport alone. Ink may be injected into water. Heat
+      may be produced by a heater. A chemical reaction may produce a tracked chemical species;
+      total electric charge, unlike an individual species, remains conserved.
+
+[306-311 p c19s1-subsec-sources-and-sinks default_required]
+Let
+      s(x,y,z,t)
+      be the source rate per unit volume. Positive s means creation. Negative s
+      means destruction.
+
+[313-322 p c19s1-subsec-sources-and-sinks default_required]
+For a fixed solid E, the total source inside E is
+      \iiint_E s\,dV.
+      The full balance law becomes
+      \boxed{\frac{d}{dt}\iiint_E \rho\,dV
+        =
+        -\iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        +
+        \iiint_E s\,dV.}
+
+[324-331 p c19s1-subsec-sources-and-sinks default_required]
+Equivalently,
+      \boxed{\frac{d}{dt}\iiint_E \rho\,dV
+        +
+        \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+        =
+        \iiint_E s\,dV.}
+
+[333-338 p c19s1-subsec-sources-and-sinks default_required]
+The left side says:
+      \text{accumulation inside}+\text{outflow through boundary}.
+      The right side says:
+      \text{creation inside}.
+
+[341-341 title c19s1-def-integral-balance-law default_required]
+Integral balance law
+
+[343-355 p c19s1-def-integral-balance-law default_required]
+Let E be a fixed solid region. A density \rho, flux density
+          \mathbf J, and source rate s satisfy the integral balance law
+          on E if
+          \boxed{\frac{d}{dt}\iiint_E \rho\,dV
+            +
+            \iint_{\partial E}\mathbf J\cdot\widehat{\mathbf n}\,dS
+            =
+            \iiint_E s\,dV.}
+          When
+          s=0,
+          the quantity is locally conserved by transport alone.
+
+[359-366 p c19s1-subsec-sources-and-sinks default_required]
+In form language, the same law is
+      \boxed{\frac{d}{dt}\int_E \rho\,dx\wedge dy\wedge dz
+        +
+        \int_{\partial E}\Phi_{\mathbf J}
+        =
+        \int_E s\,dx\wedge dy\wedge dz.}
+
+[369-369 title c19s1-ex-source-in-still-water default_required]
+A source in still water
+
+[371-384 p c19s1-ex-source-in-still-water default_required]
+Suppose the water is still, so
+          \mathbf J=\mathbf 0.
+          Let
+          s(x,y,z,t)=2
+          inside a box E of volume 5. Then the balance law says
+          \frac{d}{dt}\iiint_E \rho\,dV
+            =
+            \iiint_E 2\,dV
+            =
+            10.
+          The amount inside increases at rate 10. Nothing crossed the boundary. The
+          increase came from a source inside.
+
+[390-390 title c19s1-subsec-fixed-region-assumption default_required]
+What the fixed-region assumption means
+
+[392-395 p c19s1-subsec-fixed-region-assumption default_required]
+The region E in the balance law is fixed in space. It is a window, not a moving blob
+      of material.
+
+[397-397 p c19s1-subsec-fixed-region-assumption default_required]
+This matters.
+
+[399-403 p c19s1-subsec-fixed-region-assumption default_required]
+Suppose a cloud of dye moves to the right with constant velocity. If we follow the dye cloud
+      itself, the total dye in that moving blob may stay constant. But a fixed window on the table
+      may first gain dye, then lose dye, as the cloud passes through.
+
+[405-405 title checkpoint-19-1-window-versus-blob default_required]
+Window or blob?
+
+[407-412 p checkpoint-19-1-window-versus-blob default_required]
+The dye in a moving cloud can stay constant while the dye in our fixed window rises and
+          then falls as the cloud drifts by. What is the balance law actually keeping track of
+          here—the contents of a fixed place in space, or the contents of a chosen lump of
+          material—and why does that choice change the story?
+
+[415-419 p checkpoint-19-1-window-versus-blob hint]
+The boundary \partial E never moves in our setup. Think about whose perspective
+          you are taking: someone standing still watching one window, or someone riding along with
+          the dye.
+
+[423-426 p c19s1-subsec-fixed-region-assumption default_required]
+So the balance law above is a statement for fixed control regions:
+      \text{watch this place, and count what enters, leaves, or is created there.}
+
+[428-433 p c19s1-subsec-fixed-region-assumption default_required]
+That is exactly the viewpoint needed for the divergence theorem. The boundary
+      \partial E is fixed, so flux through it is well-defined. Moving regions require an
+      extra transport correction. That correction is important in fluid mechanics, but it is not
+      needed for the first form of conservation laws.
+
+[435-440 p c19s1-subsec-fixed-region-assumption default_required]
+The balance law is still global. It speaks about a whole region E. But if the same
+      balance holds for every small box we could draw inside space, then the law should have a
+      pointwise version. The next step is to shrink the bookkeeping until only one local equation
+      remains.

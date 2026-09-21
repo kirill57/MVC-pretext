@@ -1,0 +1,367 @@
+[5-5 title sec-15-surface-area-and-scalar-surface-integrals default_required]
+Surface area and scalar surface integrals
+
+[7-14 p sec-15-surface-area-and-scalar-surface-integrals default_required]
+gave us the two tangent
+    vectors
+    \mathbf r_u,\qquad \mathbf r_v.
+    Their cross product points normal to the surface. Its length has another meaning: it
+    measures the area scale from parameter space. For a small parameter rectangle,
+    its sides scale to \Delta u\,\mathbf r_u and \Delta v\,\mathbf r_v.
+
+[16-16 p sec-15-surface-area-and-scalar-surface-integrals default_required]
+That is how surface area becomes a double integral.
+
+[19-19 title c15s2-subsec-rectangle-to-parallelogram default_required]
+A small parameter rectangle becomes a small parallelogram
+
+[21-32 p c15s2-subsec-rectangle-to-parallelogram default_required]
+Let
+      \mathbf r(u,v)
+      be a smooth surface patch. Take a tiny rectangle in the (u,v)-plane with side
+      lengths
+      \Delta u,\qquad \Delta v.
+      Near a point (u_0,v_0), the two sides of its image are approximately
+      \mathbf r_u(u_0,v_0)\,\Delta u
+      and
+      \mathbf r_v(u_0,v_0)\,\Delta v.
+      So the tiny surface patch is approximately a parallelogram.
+
+[34-42 p c15s2-subsec-rectangle-to-parallelogram default_required]
+The area of a parallelogram spanned by vectors \mathbf a and \mathbf b
+      is
+      \|\mathbf a\times\mathbf b\|.
+      Therefore the tiny surface area is approximately
+      \boxed{\Delta S\approx\|\mathbf r_u\times\mathbf r_v\|\,\Delta u\,\Delta v.}
+      In differential notation,
+      \boxed{dS=\|\mathbf r_u\times\mathbf r_v\|\,du\,dv.}
+
+[45-45 title checkpoint-15-2-why-cross-product-length default_required]
+Why a length, not a vector?
+
+[47-53 p checkpoint-15-2-why-cross-product-length default_required]
+The cross product \mathbf r_u\times\mathbf r_v is a vector with a direction,
+          yet the area element dS keeps only its length
+          \|\mathbf r_u\times\mathbf r_v\|. What goes wrong if you tried to call the
+          whole vector the area? What is the length alone telling you about the little patch of
+          surface?
+
+[56-60 p checkpoint-15-2-why-cross-product-length hint]
+Think about what a number like area should and should not depend on. Where does
+          the direction of \mathbf r_u\times\mathbf r_v point, and is that the same kind
+          of information as how big is the parallelogram?
+
+[65-65 caption c15s2-fig-area-scale-factor default_required]
+The area scale factor is \|\mathbf r_u\times\mathbf r_v\|. (Interactive: drag to rotate, scroll to zoom.)
+
+[67-85 asymptote c15s2-fig-area-scale-factor default_required]
+// 3-D interactive (WebGL) figure.
+        import graph3; size(9cm); currentprojection=orthographic(5,2.6,3);
+        real f(pair p){return 1+0.35*sin(1.1*p.x)-0.12*(p.y-1.5)^2;}
+        surface s=surface(f,(0,0),(3,3),24,24);
+        draw(s, rgb(0.6,0.78,0.95)+opacity(0.55), meshpen=rgb(0.4,0.5,0.7)+linewidth(0.15pt));
+        real u0=1.2,v0=1.1; triple P=(u0,v0,f((u0,v0)));
+        triple ru=(1,0,0.385*cos(1.1*u0)), rv=(0,1,-0.24*(v0-1.5));
+        real a=0.95;
+        path3 par=P--(P+a*ru)--(P+a*ru+a*rv)--(P+a*rv)--cycle;
+        draw(surface(par), rgb(0.95,0.8,0.4)+opacity(0.6)); draw(par, black+0.4pt);
+        draw(P--(P+a*ru), blue+linewidth(1.4pt), Arrow3); label("$\mathbf r_u$", P+a*ru, S);
+        draw(P--(P+a*rv), heavygreen+linewidth(1.4pt), Arrow3); label("$\mathbf r_v$", P+a*rv, E);
+        triple n=cross(ru,rv); n=0.9*n/abs(n);
+        draw(P--(P+n), red+linewidth(1.4pt), Arrow3); label("$\mathbf r_u\times\mathbf r_v$", P+n, N);
+        dot(P);
+        draw(O--(3.4,0,0),gray,Arrow3); draw(O--(0,3.4,0),gray,Arrow3); draw(O--(0,0,2.2),gray,Arrow3);
+        label("$x$",(3.4,0,0),S); label("$y$",(0,3.4,0),E); label("$z$",(0,0,2.2),N);
+
+[91-91 title c15s2-subsec-surface-area-from-parametrization default_required]
+Surface area from a parametrization
+
+[93-100 p c15s2-subsec-surface-area-from-parametrization default_required]
+Assume the patch is regular on the interior and covers the surface once, apart
+      from boundary curves, with continuous derivatives on the parameter closure.
+      If we add all the tiny surface pieces, we get surface area:
+      \sum \Delta S\approx\sum \|\mathbf r_u\times\mathbf r_v\|\,\Delta u\,\Delta v.
+      Taking the limit gives the formula
+      \boxed{\operatorname{Area}(S)=\iint_D \|\mathbf r_u\times\mathbf r_v\|\,du\,dv.}
+
+[103-103 title c15s2-ex-cylinder-side-area default_required]
+The side area of a cylinder
+
+[105-124 p c15s2-ex-cylinder-side-area default_required]
+The side of a cylinder of radius 2 and height 5 is parametrized by
+          \mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),
+          where
+          0\le\theta\le2\pi,\qquad 0\le z\le5.
+          We already computed
+          \mathbf r_\theta=(-2\sin\theta,2\cos\theta,0),\qquad \mathbf r_z=(0,0,1).
+          Thus
+          \mathbf r_\theta\times\mathbf r_z=(2\cos\theta,2\sin\theta,0),
+          and
+          \|\mathbf r_\theta\times\mathbf r_z\|=2.
+          So
+          
+            \operatorname{Area}(S) \amp= \int_0^{2\pi}\int_0^5 2\,dz\,d\theta
+            \amp= \int_0^{2\pi}10\,d\theta
+            \amp= 20\pi.
+          
+          This matches the familiar formula
+          \text{circumference}\times\text{height}=(4\pi)(5)=20\pi.
+
+[128-131 p c15s2-subsec-surface-area-from-parametrization default_required]
+The formula did not need us to remember the cylinder area formula. It found the same
+      answer by measuring the stretching of the parameter rectangle.
+
+[135-135 title c15s2-subsec-scalar-surface-integrals default_required]
+Scalar surface integrals
+
+[137-142 p c15s2-subsec-scalar-surface-integrals default_required]
+Surface area adds
+      1\,dS
+      over the surface. If a quantity varies across the surface, we multiply by its value
+      before adding.
+
+[144-151 p c15s2-subsec-scalar-surface-integrals default_required]
+Suppose a thin shell has surface density
+      \sigma(x,y,z)
+      in kilograms per square meter. A small surface patch has mass approximately
+      \sigma(x,y,z)\,\Delta S.
+      Adding gives
+      M=\iint_S \sigma\,dS.
+
+[154-154 title c15s2-def-scalar-surface-integral default_required]
+Scalar surface integral
+
+[156-165 p c15s2-def-scalar-surface-integral default_required]
+Let S be parametrized by a smooth regular map
+          \mathbf r:D\to\mathbb R^3
+          that covers the surface once, except possibly along boundary curves. For a scalar
+          function f on S for which the integral below exists (in particular,
+          a continuous function on a compact patch), the scalar surface integral of
+          f over S is
+          \boxed{\iint_S f\,dS=\iint_D f(\mathbf r(u,v))\,\|\mathbf r_u(u,v)\times\mathbf r_v(u,v)\|\,du\,dv.}
+          When f=1, this gives the surface area of S.
+
+[170-170 title c15s2-ex-cylindrical-shell-mass default_required]
+Mass of a cylindrical shell
+
+[172-189 p c15s2-ex-cylindrical-shell-mass default_required]
+A thin cylindrical shell has radius 2 and height 5. Its density
+          depends on height:
+          \sigma(x,y,z)=1+\frac{z}{10}\qquad \text{kg/m}^2.
+          Using
+          \mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),
+          we have
+          dS=2\,d\theta\,dz.
+          Therefore
+          
+            M \amp= \int_0^{2\pi}\int_0^5 \left(1+\frac{z}{10}\right)2\,dz\,d\theta
+            \amp= \int_0^{2\pi}\left[2z+\frac{z^2}{10}\right]_0^5\,d\theta
+            \amp= \int_0^{2\pi}\frac{25}{2}\,d\theta
+            \amp= 25\pi.
+          
+          So the total mass is
+          \boxed{M=25\pi\text{ kg}.}
+
+[193-198 p c15s2-subsec-scalar-surface-integrals default_required]
+A scalar surface integral does not care which side of the surface is chosen. It uses
+      positive area. That is why
+      \|\mathbf r_u\times\mathbf r_v\|
+      appears, not the vector \mathbf r_u\times\mathbf r_v itself.
+
+[201-201 title checkpoint-15-2-why-density-times-dS default_required]
+Why multiply before adding?
+
+[203-208 p checkpoint-15-2-why-density-times-dS default_required]
+To find the mass of a thin shell we compute \iint_S \sigma\,dS rather than
+          just multiplying a single density value by the total area. Why does a varying density
+          \sigma(x,y,z) force us to multiply inside the integral, patch by
+          patch, instead of multiplying once at the end?
+
+[211-215 p checkpoint-15-2-why-density-times-dS hint]
+Imagine the shell is heavy near the top and light near the bottom. Would one single
+          number for density honestly describe every patch? Picture what each tiny
+          \sigma\,\Delta S contributes before the sum.
+
+[221-221 title c15s2-subsec-surface-area-of-graphs default_required]
+Surface area of graphs
+
+[223-238 p c15s2-subsec-surface-area-of-graphs default_required]
+For a graph
+      z=g(x,y),
+      use the parametrization
+      \mathbf r(x,y)=(x,y,g(x,y)).
+      Then
+      \mathbf r_x=(1,0,g_x),\qquad \mathbf r_y=(0,1,g_y).
+      Their cross product is
+      \mathbf r_x\times \mathbf r_y=(-g_x,-g_y,1),
+      so
+      \|\mathbf r_x\times \mathbf r_y\|=\sqrt{1+g_x^2+g_y^2}.
+      Thus
+      \boxed{dS=\sqrt{1+g_x^2+g_y^2}\,dx\,dy.}
+      For a graph over a region R in the xy-plane,
+      \boxed{\operatorname{Area}(S)=\iint_R \sqrt{1+g_x^2+g_y^2}\,dA.}
+
+[241-241 title c15s2-ex-slanted-roof-area default_required]
+Area of a slanted roof
+
+[243-260 p c15s2-ex-slanted-roof-area default_required]
+A flat roof over the rectangle
+          0\le x\le6,\qquad 0\le y\le4
+          has height
+          z=2+\frac{x}{3}-\frac{y}{4}.
+          Here
+          g_x=\frac13,\qquad g_y=-\frac14.
+          So
+          \sqrt{1+g_x^2+g_y^2}=\sqrt{1+\frac19+\frac1{16}}=\sqrt{\frac{169}{144}}=\frac{13}{12}.
+          Therefore the roof area is
+          
+            \operatorname{Area} \amp= \int_0^6\int_0^4 \frac{13}{12}\,dy\,dx
+            \amp= \frac{13}{12}\cdot24
+            \amp= 26.
+          
+          The flat floor area is 24. The roof area is larger because the roof is
+          tilted.
+
+[264-270 p c15s2-subsec-surface-area-of-graphs default_required]
+The formula
+      \sqrt{1+g_x^2+g_y^2}
+      is the local stretching factor from the floor to the graph. When the graph is nearly
+      flat, this factor is close to 1. When the graph is steep, the surface uses more
+      area over the same floor region.
+
+[274-274 title c15s2-subsec-area-cylindrical-spherical default_required]
+Surface area in cylindrical and spherical coordinates
+
+[276-276 p c15s2-subsec-area-cylindrical-spherical default_required]
+Many surfaces are easiest to describe with cylindrical or spherical coordinates.
+
+[279-279 title c15s2-subsubsec-horizontal-disk default_required]
+A horizontal disk
+
+[281-295 p c15s2-subsubsec-horizontal-disk default_required]
+A horizontal disk of radius a at height z=c can be parametrized by
+        \mathbf r(s,\theta)=(s\cos\theta,s\sin\theta,c),
+        where
+        0\le s\le a,\qquad 0\le\theta\le2\pi.
+        Then
+        \mathbf r_s=(\cos\theta,\sin\theta,0),
+        and
+        \mathbf r_\theta=(-s\sin\theta,s\cos\theta,0).
+        So
+        \|\mathbf r_s\times\mathbf r_\theta\|=s.
+        Thus
+        \boxed{dS=s\,ds\,d\theta.}
+        This is the same area element used for polar coordinates in the plane.
+
+[299-299 title c15s2-subsubsec-side-of-cylinder default_required]
+The side of a cylinder
+
+[301-308 p c15s2-subsubsec-side-of-cylinder default_required]
+A cylinder of radius a has parametrization
+        \mathbf r(\theta,z)=(a\cos\theta,a\sin\theta,z).
+        Then
+        \|\mathbf r_\theta\times\mathbf r_z\|=a,
+        so
+        \boxed{dS=a\,d\theta\,dz.}
+
+[312-312 title c15s2-subsubsec-sphere default_required]
+A sphere
+
+[314-320 p c15s2-subsubsec-sphere default_required]
+A sphere of radius a can be parametrized by
+        \mathbf r(\phi,\theta)=(a\sin\phi\cos\theta,\,a\sin\phi\sin\theta,\,a\cos\phi),
+        where
+        0\le \phi\le\pi,\qquad 0\le \theta\le2\pi.
+        Here \phi is the angle down from the positive z-axis.
+
+[322-331 p c15s2-subsubsec-sphere default_required]
+Compute:
+        \mathbf r_\phi=(a\cos\phi\cos\theta,\,a\cos\phi\sin\theta,\,-a\sin\phi),
+        and
+        \mathbf r_\theta=(-a\sin\phi\sin\theta,\,a\sin\phi\cos\theta,\,0).
+        A direct cross product gives
+        \|\mathbf r_\phi\times\mathbf r_\theta\|=a^2\sin\phi.
+        Therefore
+        \boxed{dS=a^2\sin\phi\,d\phi\,d\theta.}
+
+[333-341 p c15s2-subsubsec-sphere default_required]
+The area of the sphere is then
+        
+          \operatorname{Area} \amp= \int_0^{2\pi}\int_0^\pi a^2\sin\phi\,d\phi\,d\theta
+          \amp= \int_0^{2\pi}\left[-a^2\cos\phi\right]_0^\pi d\theta
+          \amp= \int_0^{2\pi}2a^2\,d\theta
+          \amp= 4\pi a^2.
+
+[343-352 p c15s2-subsubsec-sphere default_required]
+At the poles, where \phi=0 or \phi=\pi, the factor
+        \sin\phi
+        is 0. The longitude lines all meet there, so the parametrization collapses in
+        the \theta-direction. This is not a problem for the area integral because the
+        collapse happens only along the boundary of the parameter rectangle. It would be a
+        problem if we tried to use this particular spherical-coordinate map as a regular
+        patch with the pole as an interior point. A different graph patch is regular there;
+        see the pole comparison.
+
+[357-357 title c15s2-subsec-parametrizations-count-too-much default_required]
+When parametrizations count too much
+
+[359-359 p c15s2-subsec-parametrizations-count-too-much default_required]
+The surface integral formula counts what the parametrization covers.
+
+[361-372 p c15s2-subsec-parametrizations-count-too-much default_required]
+For the cylinder, if we used
+      0\le\theta\le4\pi
+      instead of
+      0\le\theta\le2\pi,
+      then the parametrization would wrap around the same cylinder twice. The formula would
+      give
+      40\pi
+      instead of
+      20\pi.
+      The calculation is not broken. It has computed the area with multiplicity.
+
+[374-378 p c15s2-subsec-parametrizations-count-too-much default_required]
+This is why the definition said that the parametrization should cover the surface once,
+      except possibly along boundary curves. When the same physical sheet is covered twice by
+      the parameter region, the integral counts it twice.
+
+[381-381 title checkpoint-15-2-counting-with-multiplicity default_required]
+Whose fault is the extra area?
+
+[383-388 p checkpoint-15-2-counting-with-multiplicity default_required]
+Letting \theta run from 0 to 4\pi gave 40\pi for a
+          cylinder whose true area is 20\pi. The physical cylinder never changed. So what
+          did the integral actually measure, and what does this tell you about the difference
+          between a surface and a way of sweeping it out?
+
+[391-395 p checkpoint-15-2-counting-with-multiplicity hint]
+The formula faithfully adds up area for every (u,v) in the parameter region. Ask
+          not is the answer wrong? but how many times did my map pass over each point of
+          the cylinder?
+
+[401-401 title c15s2-subsec-scalar-versus-oriented-area default_required]
+Scalar area versus oriented area
+
+[403-411 p c15s2-subsec-scalar-versus-oriented-area default_required]
+The scalar surface integral uses
+      dS=\|\mathbf r_u\times\mathbf r_v\|\,du\,dv.
+      The norm removes the sign. If we swap the order of the parameters, then
+      \mathbf r_v\times\mathbf r_u=-\mathbf r_u\times\mathbf r_v,
+      but
+      \|\mathbf r_v\times\mathbf r_u\|=\|\mathbf r_u\times\mathbf r_v\|.
+      So surface area and mass do not depend on which side of the surface we call positive.
+
+[413-413 p c15s2-subsec-scalar-versus-oriented-area default_required]
+That will change for flux.
+
+[415-421 p c15s2-subsec-scalar-versus-oriented-area default_required]
+If water flows through a net, it matters whether we count flow through the net upward as
+      positive or downward as positive. The scalar area element dS cannot remember that
+      choice. The full vector
+      \mathbf r_u\times\mathbf r_v
+      can.
+
+[423-427 p c15s2-subsec-scalar-versus-oriented-area default_required]
+The same cross product that measured area has been quietly carrying orientation all
+      along. Once we decide which side of a surface is positive, a surface integral can count
+      flow through the surface with a sign. That signed quantity is called flux.

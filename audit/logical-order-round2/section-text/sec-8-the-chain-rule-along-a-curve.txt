@@ -1,0 +1,355 @@
+[5-5 title sec-8-the-chain-rule-along-a-curve default_required]
+The chain rule along a curve
+
+[7-16 p sec-8-the-chain-rule-along-a-curve default_required]
+A curve from  gives position:
+    \mathbf r(t).
+    A scalar field from  gives a number at each point:
+    f(x,y)\qquad\text{or}\qquad f(x,y,z).
+    If a moving object passes through the field, then the object experiences the
+    single-variable function
+    f(\mathbf r(t)).
+    The chain rule tells us how fast that experienced value changes.
+
+[19-19 title c8s1-subsec-temperature-moving-path default_required]
+Temperature along a moving path
+
+[21-29 p c8s1-subsec-temperature-moving-path default_required]
+A small robot rolls across a greenhouse floor. Let x measure meters east and
+      y measure meters north. Suppose the floor temperature is
+      T(x,y)=20+3x-y-\frac12x^2-\frac14y^2.
+      At time t, the robot is at
+      \mathbf r(t)=(1+2t,\;2-t).
+      So the temperature recorded by the robot is the one-variable function
+      A(t)=T(\mathbf r(t))=T(1+2t,\;2-t).
+
+[31-43 p c8s1-subsec-temperature-moving-path default_required]
+We can compute A'(0) directly. Substitute:
+      A(t)=20+3(1+2t)-(2-t)-\frac12(1+2t)^2-\frac14(2-t)^2.
+      Differentiate:
+      
+        A'(t) \amp= 6+1-\frac12\cdot 2(1+2t)\cdot 2-\frac14\cdot 2(2-t)(-1)
+        \amp= 7-2(1+2t)+\frac12(2-t).
+      
+      At t=0,
+      A'(0)=7-2+1=6.
+      So, at that instant, the robot's thermometer reads a temperature increasing at
+      6^\circ\text{C per second}.
+
+[45-45 p c8s1-subsec-temperature-moving-path default_required]
+Now compute the same number without expanding the whole composition.
+
+[47-61 p c8s1-subsec-temperature-moving-path default_required]
+At t=0, the robot is at
+      \mathbf r(0)=(1,2).
+      Its velocity is
+      \mathbf r'(t)=(2,-1),
+      so
+      \mathbf r'(0)=(2,-1).
+      The gradient of the temperature field is
+      \nabla T(x,y)=\left(3-x,\;-1-\frac12y\right).
+      At the robot's position,
+      \nabla T(1,2)=(2,-2).
+      The dot product with the robot's velocity gives
+      \nabla T(1,2)\cdot \mathbf r'(0)=(2,-2)\cdot(2,-1)=4+2=6.
+      The same number appears.
+
+[63-67 p c8s1-subsec-temperature-moving-path default_required]
+This calculation has a plain meaning. The gradient says how the temperature changes
+      per meter of displacement. The velocity says how many meters of displacement happen
+      per second. Applying one to the other gives degrees per second.
+
+[71-71 title c8s1-subsec-derivative-of-composition default_required]
+The derivative of f(x(t),y(t))
+
+[73-89 p c8s1-subsec-derivative-of-composition default_required]
+The greenhouse computation suggests the general rule. Let
+      z=f(x,y)
+      and suppose
+      x=x(t),\qquad y=y(t).
+      Then
+      z(t)=f(x(t),y(t)).
+      A small time change dt produces the small coordinate changes
+      dx=x'(t)\,dt,\qquad dy=y'(t)\,dt.
+      The differential of f predicts
+      dz=f_x\,dx+f_y\,dy.
+      Substituting the changes caused by time gives
+      dz=f_x(x(t),y(t))x'(t)\,dt+f_y(x(t),y(t))y'(t)\,dt.
+      Divide by dt:
+      \boxed{\frac{d}{dt}f(x(t),y(t))=f_x(x(t),y(t))x'(t)+f_y(x(t),y(t))y'(t).}
+      This is the two-variable chain rule along a curve.
+
+[92-92 title checkpoint-8-1-adding-coordinate-contributions default_required]
+Why a sum?
+
+[94-100 p checkpoint-8-1-adding-coordinate-contributions default_required]
+The chain rule for f(x(t),y(t)) adds two pieces:
+          f_x\,x'(t) and f_y\,y'(t). Why should we add the
+          contribution from the changing x and the contribution from
+          the changing y, rather than, say, multiply them or keep only
+          the larger one?
+
+[103-108 p checkpoint-8-1-adding-coordinate-contributions hint]
+Picture a single small time step dt. It nudges both
+          coordinates at once, and each nudge moves the value of f a
+          little. Think about how the differential dz=f_x\,dx+f_y\,dy
+          accumulates those independent nudges into one total change.
+
+[113-113 title c8s1-ex-pressure-pipe default_required]
+A pressure reading along a pipe
+
+[115-121 p c8s1-ex-pressure-pipe default_required]
+A sensor moves along a pipe laid across a factory floor. The pressure field is
+          p(x,y)=50+xy-2y^2,
+          and the sensor position is
+          x(t)=2+t^2,\qquad y(t)=1-t.
+          Find the rate of change of pressure at t=1.
+
+[122-140 p c8s1-ex-pressure-pipe default_required]
+First compute the partial derivatives:
+          p_x(x,y)=y,\qquad p_y(x,y)=x-4y.
+          At t=1,
+          x(1)=3,\qquad y(1)=0.
+          So
+          p_x(3,0)=0,\qquad p_y(3,0)=3.
+          Also,
+          x'(t)=2t,\qquad y'(t)=-1,
+          so
+          x'(1)=2,\qquad y'(1)=-1.
+          Therefore
+          
+            \frac{d}{dt}p(x(t),y(t))\bigg|_{t=1} \amp= p_x(3,0)x'(1)+p_y(3,0)y'(1)
+            \amp= 0\cdot2+3(-1)
+            \amp= -3.
+          
+          At t=1, the sensor sees pressure decreasing at 3 pressure units per second.
+
+[146-146 title c8s1-subsec-gradient-form default_required]
+Gradient form of the chain rule
+
+[148-157 p c8s1-subsec-gradient-form default_required]
+The formula becomes shorter if we use vectors. Write
+      \mathbf r(t)=(x(t),y(t)).
+      Then
+      \mathbf r'(t)=(x'(t),y'(t)).
+      Also,
+      \nabla f(x,y)=\bigl(f_x(x,y),f_y(x,y)\bigr).
+      The chain rule becomes
+      \boxed{\frac{d}{dt}f(\mathbf r(t))=\nabla f(\mathbf r(t))\cdot \mathbf r'(t).}
+
+[160-160 title checkpoint-8-1-why-a-single-dot-product default_required]
+One dot product, two slopes?
+
+[162-168 p checkpoint-8-1-why-a-single-dot-product default_required]
+The two-variable chain rule has two separate terms,
+          f_x\,x'(t)+f_y\,y'(t), yet the gradient form collapses them
+          into the single dot product \nabla f\cdot\mathbf r'(t). What
+          feature of the dot product lets it carry exactly the same information
+          as that sum of products?
+
+[171-175 p checkpoint-8-1-why-a-single-dot-product hint]
+Write out \nabla f=(f_x,f_y) and \mathbf r'(t)=(x'(t),y'(t))
+          and recall how a dot product is defined component by component. The
+          collapse is really just a name for a pattern you already know.
+
+[179-186 p c8s1-subsec-gradient-form default_required]
+In three variables, the same pattern gives
+      \boxed{\frac{d}{dt}f(x(t),y(t),z(t))=f_xx'(t)+f_yy'(t)+f_zz'(t),}
+      where the partial derivatives are evaluated at
+      (x(t),y(t),z(t)).
+      Equivalently,
+      \boxed{\frac{d}{dt}f(\mathbf r(t))=\nabla f(\mathbf r(t))\cdot \mathbf r'(t).}
+
+[188-197 p c8s1-subsec-gradient-form default_required]
+There is also a differential form version:
+      \boxed{\frac{d}{dt}f(\mathbf r(t))=df_{\mathbf r(t)}\bigl(\mathbf r'(t)\bigr).}
+      Here df is the 1-form
+      df=f_x\,dx+f_y\,dy
+      in the plane, or
+      df=f_x\,dx+f_y\,dy+f_z\,dz
+      in space. The differential df eats the velocity vector and returns the observed
+      rate of change.
+
+[200-200 title c8s1-thm-chain-rule-curve default_required]
+Chain rule along a curve
+
+[202-215 p c8s1-thm-chain-rule-curve default_required]
+Let
+          f:D\subseteq\mathbb R^n\to\mathbb R
+          be differentiable at the point
+          \mathbf r(t_0),
+          and let
+          \mathbf r:I\to\mathbb R^n
+          be differentiable at t_0, with \mathbf r(t_0)\in D. Then the composite
+          t\longmapsto f(\mathbf r(t))
+          is differentiable at t_0, and
+          \boxed{\frac{d}{dt}f(\mathbf r(t))\bigg|_{t=t_0}=Df(\mathbf r(t_0))\bigl(\mathbf r'(t_0)\bigr).}
+          In gradient notation,
+          \boxed{\frac{d}{dt}f(\mathbf r(t))\bigg|_{t=t_0}=\nabla f(\mathbf r(t_0))\cdot \mathbf r'(t_0).}
+
+[218-229 p c8s1-thm-chain-rule-curve default_required]
+Let
+          \mathbf p=\mathbf r(t_0),\qquad \mathbf v=\mathbf r'(t_0).
+          Since \mathbf r is differentiable at t_0,
+          \mathbf r(t_0+h)=\mathbf p+h\mathbf v+\mathbf e(h),
+          where
+          \frac{\|\mathbf e(h)\|}{|h|}\to0.
+          So the displacement
+          \mathbf k(h)=\mathbf r(t_0+h)-\mathbf p
+          satisfies
+          \mathbf k(h)=h\mathbf v+\mathbf e(h).
+
+[230-244 p c8s1-thm-chain-rule-curve default_required]
+Since f is differentiable at \mathbf p,
+          f(\mathbf p+\mathbf k)=f(\mathbf p)+Df(\mathbf p)(\mathbf k)+R(\mathbf k),
+          where
+          \frac{|R(\mathbf k)|}{\|\mathbf k\|}\to0\quad\text{as}\quad \mathbf k\to\mathbf 0.
+          Apply this with \mathbf k=\mathbf k(h):
+          
+            f(\mathbf r(t_0+h))-f(\mathbf r(t_0)) \amp= Df(\mathbf p)(h\mathbf v+\mathbf e(h))+R(\mathbf k(h))
+            \amp= h\,Df(\mathbf p)(\mathbf v)+Df(\mathbf p)(\mathbf e(h))+R(\mathbf k(h)).
+          
+          Divide by h. The middle term approaches 0 because Df(\mathbf p) is
+          linear and \mathbf e(h)/h\to\mathbf 0. The last term also approaches 0, because
+          \mathbf k(h) is of size proportional to |h| for small h. Therefore
+          \lim_{h\to0}\frac{f(\mathbf r(t_0+h))-f(\mathbf r(t_0))}{h}=Df(\mathbf p)(\mathbf v).
+
+[248-252 p c8s1-subsec-gradient-form default_required]
+The hypothesis says f is differentiable, not merely that its partial derivatives
+      exist.  gave the reason. Here is the same
+      warning in chain-rule form.
+
+[255-255 title c8s1-ex-partials-not-enough default_required]
+Why partial derivatives are not enough
+
+[257-271 p c8s1-ex-partials-not-enough default_required]
+Define
+          Q(x,y)=\begin{cases}\dfrac{x^2y}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]0, \amp (x,y)=(0,0).\end{cases}
+          At the origin,
+          Q_x(0,0)=0,\qquad Q_y(0,0)=0.
+          Now take the smooth path
+          \mathbf r(t)=(t,t).
+          Then
+          Q(\mathbf r(t))=Q(t,t)=\frac{t^3}{2t^2}=\frac{t}{2}
+          for t\ne0, and the same formula has limiting value 0 at t=0. Thus
+          \frac{d}{dt}Q(\mathbf r(t))\bigg|_{t=0}=\frac12.
+          If we tried to use only the partial derivatives at the origin, we would get
+          Q_x(0,0)\cdot 1+Q_y(0,0)\cdot 1=0.
+          That is wrong.
+
+[272-276 p c8s1-ex-partials-not-enough default_required]
+The failure is exactly the one from :
+          Q is not differentiable at the origin. The chain rule needs the total derivative,
+          not only two coordinate slopes.
+
+[280-280 p c8s1-subsec-gradient-form default_required]
+The path also has to be differentiable.
+
+[283-283 title c8s1-ex-path-velocity default_required]
+Why the path must have a velocity
+
+[285-294 p c8s1-ex-path-velocity default_required]
+Let
+          f(x,y)=x
+          and
+          \mathbf r(t)=(|t|,0).
+          The scalar field f is smooth, but the path has no velocity at t=0. The
+          composite is
+          f(\mathbf r(t))=|t|,
+          which is not differentiable at 0.
+
+[295-298 p c8s1-ex-path-velocity default_required]
+So a smooth field cannot rescue a path that has a corner. The observer must have a
+          well-defined velocity if the observed rate is to be computed by the chain rule.
+
+[304-304 title c8s1-subsec-rate-moving-observer default_required]
+Rate seen by a moving observer
+
+[306-310 p c8s1-subsec-rate-moving-observer default_required]
+The formula
+      \frac{d}{dt}f(\mathbf r(t))=\nabla f(\mathbf r(t))\cdot\mathbf r'(t)
+      has a useful physical reading.
+
+[313-313 title c8s1-tab-moving-observer default_required]
+The chain rule as a rate seen by a moving observer.
+
+[315-315 cell c8s1-tab-moving-observer default_required]
+symbol
+
+[315-315 cell c8s1-tab-moving-observer default_required]
+meaning
+
+[316-316 cell c8s1-tab-moving-observer default_required]
+\nabla f(\mathbf r(t))
+
+[316-316 cell c8s1-tab-moving-observer default_required]
+how the field changes per unit displacement
+
+[317-317 cell c8s1-tab-moving-observer default_required]
+\mathbf r'(t)
+
+[317-317 cell c8s1-tab-moving-observer default_required]
+how the observer moves per unit time
+
+[318-318 cell c8s1-tab-moving-observer default_required]
+\nabla f(\mathbf r(t))\cdot\mathbf r'(t)
+
+[318-318 cell c8s1-tab-moving-observer default_required]
+how fast the observer sees the field change
+
+[322-325 p c8s1-subsec-rate-moving-observer default_required]
+If the observer moves across level curves, the value changes. If the observer moves
+      along a level curve, the value does not change.
+
+[328-328 title checkpoint-8-1-shape-meets-velocity default_required]
+Shape, or motion?
+
+[330-336 p checkpoint-8-1-shape-meets-velocity default_required]
+A moving observer's measured rate \nabla f(\mathbf r(t))\cdot\mathbf r'(t)
+          depends on both the field's gradient and the observer's
+          velocity. Could the observer report a rate of zero even while
+          standing in a region where the field genuinely varies from point to
+          point? What about the reverse?
+
+[339-343 p checkpoint-8-1-shape-meets-velocity hint]
+The dot product vanishes when the two vectors are perpendicular.
+          Think about what direction the observer would have to travel relative
+          to the gradient, and connect that to the level-curve idea just above.
+
+[348-348 title c8s1-ex-diver-salinity default_required]
+A diver moving through a salinity field
+
+[350-357 p c8s1-ex-diver-salinity default_required]
+Let the salinity in a tank be
+          S(x,y,z)=10+2x-y+3z+\frac12xz,
+          where x,y,z are measured in meters and S is measured in grams per liter.
+          A small diving probe moves along
+          \mathbf r(t)=(1+t,\;2-t,\;3+2t).
+          Find the salinity rate at t=0.
+
+[358-376 p c8s1-ex-diver-salinity default_required]
+The probe starts at
+          \mathbf r(0)=(1,2,3)
+          with velocity
+          \mathbf r'(0)=(1,-1,2).
+          The gradient is
+          \nabla S(x,y,z)=\left(2+\frac12z,\;-1,\;3+\frac12x\right).
+          At (1,2,3),
+          \nabla S(1,2,3)=\left(\frac72,\;-1,\;\frac72\right).
+          Therefore
+          
+            \frac{d}{dt}S(\mathbf r(t))\bigg|_{t=0} \amp= \left(\frac72,-1,\frac72\right)\cdot(1,-1,2)
+            \amp= \frac72+1+7
+            \amp= \frac{21}{2}.
+          
+          The probe sees salinity increasing at
+          \frac{21}{2}
+          grams per liter per second.
+
+[380-387 p c8s1-subsec-rate-moving-observer default_required]
+The chain rule along a curve is already a composition of linear maps:
+      \text{time step}\longmapsto\text{position step}\longmapsto\text{field change}.
+      But a curve is only a one-dimensional input. If one two-dimensional coordinate map
+      feeds into another, the same idea has to track several input directions at once. The
+      linear maps no longer appear as numbers or dot products. They appear as matrices,
+      and the chain rule becomes matrix multiplication.

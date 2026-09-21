@@ -1,0 +1,358 @@
+[5-5 title sec-11-higher-dimensional-integrals default_required]
+Higher-dimensional integrals
+
+[7-13 p sec-11-higher-dimensional-integrals default_required]
+The probability example at the end of  did
+    not really care that the random point had three coordinates. A system may have many coordinates:
+    x_1,x_2,\ldots,x_n.
+    A triple integral is the case n=3. Higher-dimensional integrals follow the same adding
+    rule, but the pictures become less trustworthy.
+
+[15-19 p sec-11-higher-dimensional-integrals default_required]
+This optional section uses ordinary unsigned volume notation. We write
+    dV_n
+    for positive n-dimensional volume.
+
+[22-22 title c11s6-subsec-what-changes-in-rn default_required]
+What changes in \mathbb R^n
+
+[24-33 p c11s6-subsec-what-changes-in-rn default_required]
+A point in \mathbb R^n is written
+      \mathbf x=(x_1,x_2,\ldots,x_n).
+      A rectangular box in \mathbb R^n has the form
+      B=[a_1,b_1]\times[a_2,b_2]\times\cdots\times[a_n,b_n].
+      Its side lengths are
+      b_1-a_1,\quad b_2-a_2,\quad \ldots,\quad b_n-a_n.
+      Its n-dimensional volume is
+      \boxed{\operatorname{Vol}_n(B)=(b_1-a_1)(b_2-a_2)\cdots(b_n-a_n).}
+
+[35-46 p c11s6-subsec-what-changes-in-rn default_required]
+A small coordinate box has side lengths
+      \Delta x_1,\Delta x_2,\ldots,\Delta x_n.
+      Its small volume is
+      \Delta V_n=\Delta x_1\Delta x_2\cdots\Delta x_n.
+      So the Riemann sum for a function
+      f(x_1,\ldots,x_n)
+      has the form
+      \sum f(\mathbf x_i^*)\,\Delta V_{n,i}.
+      If these sums settle to a single value, we write
+      \boxed{\int_E f(\mathbf x)\,dV_n.}
+
+[49-49 title c11s6-ex-four-dimensional-quality-control-box default_required]
+A four-dimensional quality-control box
+
+[51-59 p c11s6-ex-four-dimensional-quality-control-box default_required]
+A machine produces parts with four measured deviations:
+          x_1,\quad x_2,\quad x_3,\quad x_4.
+          Suppose each deviation is allowed to lie between -1 and 1. The acceptable
+          region is the four-dimensional box
+          B=[-1,1]^4.
+          Its volume is
+          \operatorname{Vol}_4(B)=2\cdot2\cdot2\cdot2=16.
+
+[60-72 p c11s6-ex-four-dimensional-quality-control-box default_required]
+If all points in B are equally likely, the probability density is constant:
+          p=\frac1{16}.
+          The probability that every deviation lies between -1/2 and 1/2 is
+          
+            \operatorname{Prob}\left([-1/2,1/2]^4\right) \amp= \int_{[-1/2,1/2]^4}\frac1{16}\,dV_4
+            \amp= \frac1{16}\cdot(1\cdot1\cdot1\cdot1)
+            \amp= \frac1{16}.
+          
+          Each coordinate range was cut in half, but the four-dimensional volume was cut by
+          \left(\frac12\right)^4.
+          This is the first hint that high-dimensional size shrinks faster than our eyes expect.
+
+[77-77 title c11s6-def-higher-dimensional-integral default_required]
+Higher-dimensional integral
+
+[79-85 p c11s6-def-higher-dimensional-integral default_required]
+Let E\subseteq\mathbb R^n. If Riemann sums
+          \sum f(\mathbf x_i^*)\,\Delta V_{n,i}
+          approach one number as the small n-dimensional boxes shrink, independent of the
+          sample points, then that number is the integral of f over E:
+          \boxed{\int_E f(\mathbf x)\,dV_n.}
+
+[89-92 p c11s6-subsec-what-changes-in-rn default_required]
+For n=1, this is an ordinary single-variable integral. For n=2, it is a double
+      integral. For n=3, it is a triple integral.
+
+[95-95 title checkpoint-11-6-what-stays-and-what-changes default_required]
+What carries over, what bends?
+
+[97-103 p checkpoint-11-6-what-stays-and-what-changes default_required]
+Moving from \mathbb R^3 to \mathbb R^n for large n, the integral is
+          still built by chopping the region into tiny boxes and adding up
+          f(\mathbf x_i^*)\,\Delta V_{n,i}. Which parts of this story stay exactly the same,
+          and which parts (the pictures, the geometry, the sizes of things) stop matching your
+          three-dimensional intuition?
+
+[106-109 p checkpoint-11-6-what-stays-and-what-changes hint]
+Separate the bookkeeping of the integral (Riemann sums, Fubini, the adding rule)
+          from the geometry it describes. One of these is dimension-blind; the other is not.
+
+[115-115 title c11s6-subsec-product-regions-and-fubinis-theorem default_required]
+Product regions and Fubini's theorem
+
+[117-120 p c11s6-subsec-product-regions-and-fubinis-theorem default_required]
+The easiest higher-dimensional regions are boxes and product regions, because each coordinate
+      has its own interval.
+
+[122-127 p c11s6-subsec-product-regions-and-fubinis-theorem default_required]
+For example, let
+      B=[0,2]\times[0,3]\times[0,1]\times[0,4].
+      Then
+      \operatorname{Vol}_4(B)=2\cdot3\cdot1\cdot4=24.
+
+[129-154 p c11s6-subsec-product-regions-and-fubinis-theorem default_required]
+Now compute
+      I=\int_B (x_1+x_4)\,dV_4.
+      Using iterated integrals,
+      I=\int_0^2\int_0^3\int_0^1\int_0^4(x_1+x_4)\,dx_4\,dx_3\,dx_2\,dx_1.
+      Split the integral into two pieces:
+      I=\int_B x_1\,dV_4+\int_B x_4\,dV_4.
+      For the x_1-piece,
+      
+        \int_B x_1\,dV_4 \amp= \left(\int_0^2 x_1\,dx_1\right)\left(\int_0^3 dx_2\right)\left(\int_0^1 dx_3\right)\left(\int_0^4 dx_4\right)
+        \amp= 2\cdot3\cdot1\cdot4
+        \amp= 24.
+      
+      For the x_4-piece,
+      
+        \int_B x_4\,dV_4 \amp= \left(\int_0^2 dx_1\right)\left(\int_0^3 dx_2\right)\left(\int_0^1 dx_3\right)\left(\int_0^4 x_4\,dx_4\right)
+        \amp= 2\cdot3\cdot1\cdot8
+        \amp= 48.
+      
+      Thus
+      \boxed{I=72.}
+      The average value of x_1+x_4 over the box is
+      \frac{72}{24}=3.
+      That is the average of x_1, which is 1, plus the average of x_4, which is
+      2.
+
+[157-157 title c11s6-thm-fubini-boxes-rn default_required]
+Fubini's theorem for boxes in \mathbb R^n
+
+[159-165 p c11s6-thm-fubini-boxes-rn default_required]
+Let
+          B=[a_1,b_1]\times\cdots\times[a_n,b_n],
+          and suppose f is continuous on B. Then
+          \boxed{\int_B f(\mathbf x)\,dV_n}
+          can be computed as an iterated integral in any order.
+
+[166-169 p c11s6-thm-fubini-boxes-rn default_required]
+For example,
+          \boxed{\int_B f\,dV_n=\int_{a_1}^{b_1}\cdots\int_{a_n}^{b_n}f(x_1,\ldots,x_n)\,dx_n\cdots dx_1.}
+
+[173-176 p c11s6-subsec-product-regions-and-fubinis-theorem default_required]
+Continuity is a safe condition. It is stronger than necessary, but it keeps the adding process
+      well-behaved.
+
+[179-179 title c11s6-ex-nonintegrable-function default_required]
+A nonintegrable function still breaks the story
+
+[181-189 p c11s6-ex-nonintegrable-function default_required]
+On the unit box
+          [0,1]^n,
+          define
+          q(x_1,\ldots,x_n)=\begin{cases}1, \amp x_1\text{ is rational},\\0, \amp x_1\text{ is irrational}.\end{cases}
+          Every small n-dimensional box contains points with rational x_1 and points
+          with irrational x_1. The upper sums are always 1, and the lower sums are
+          always 0.
+
+[190-193 p c11s6-ex-nonintegrable-function default_required]
+So the Riemann integral does not exist. Fubini's theorem cannot rescue an integral that
+          was never there.
+
+[197-203 p c11s6-subsec-product-regions-and-fubinis-theorem default_required]
+There is a useful special case when the function factors. If
+      f(x_1,\ldots,x_n)=g_1(x_1)g_2(x_2)\cdots g_n(x_n),
+      then on a box,
+      \boxed{\int_B f\,dV_n=\left(\int_{a_1}^{b_1}g_1(x_1)\,dx_1\right)\cdots\left(\int_{a_n}^{b_n}g_n(x_n)\,dx_n\right).}
+      The integral separates because the variables separate.
+
+[206-206 title c11s6-ex-separated-density default_required]
+A separated density
+
+[208-220 p c11s6-ex-separated-density default_required]
+Let
+          f(x_1,x_2,x_3,x_4)=e^{-x_1}(1+x_2)x_3^2
+          on
+          [0,1]\times[0,2]\times[0,3]\times[0,4].
+          The function does not depend on x_4, so the x_4-integral contributes a
+          factor of 4. We get
+          
+            \int f\,dV_4 \amp= \left(\int_0^1e^{-x_1}\,dx_1\right)\left(\int_0^2(1+x_2)\,dx_2\right)\left(\int_0^3x_3^2\,dx_3\right)\left(\int_0^4 dx_4\right)
+            \amp= (1-e^{-1})(4)(9)(4)
+            \amp= 144(1-e^{-1}).
+
+[224-227 p c11s6-subsec-product-regions-and-fubinis-theorem default_required]
+The arithmetic looks familiar because Fubini turns one higher-dimensional adding problem into
+      several one-dimensional ones.
+
+[231-231 title c11s6-subsec-volumes-balls-and-boxes default_required]
+Volumes of higher-dimensional balls and boxes
+
+[233-237 p c11s6-subsec-volumes-balls-and-boxes default_required]
+Boxes are easy in every dimension:
+      \operatorname{Vol}_n([0,L]^n)=L^n.
+      Balls are subtler.
+
+[240-240 title checkpoint-11-6-volume-near-the-surface default_required]
+Where did the middle go?
+
+[242-247 p checkpoint-11-6-volume-near-the-surface default_required]
+Take the cube [-1,1]^n and shrink it toward its center by halving each side, giving
+          the smaller cube [-1/2,1/2]^n. As n grows, why does almost all of the big
+          cube's volume end up near its surface, far from the center, leaving the inner cube with a
+          vanishing share?
+
+[250-254 p checkpoint-11-6-volume-near-the-surface hint]
+Compare the two volumes as a ratio. The inner cube keeps only a factor of
+          \left(\tfrac12\right)^n of the volume, and that fraction goes to 0. Ask
+          what is left over, and where it must sit.
+
+[258-270 p c11s6-subsec-volumes-balls-and-boxes default_required]
+The n-dimensional ball of radius R is
+      B_n(R)=\left\{(x_1,\ldots,x_n):x_1^2+\cdots+x_n^2\le R^2\right\}.
+      For the first few dimensions:
+      
+\begin{array}{c|c|c}
+n \amp B_n(R) \amp \operatorname{Vol}_n(B_n(R)) \\ \hline
+1 \amp \text{interval} \amp 2R\\[1mm]
+2 \amp \text{disk} \amp \pi R^2\\[1mm]
+3 \amp \text{solid ball} \amp \dfrac43\pi R^3
+\end{array}
+
+[272-274 p c11s6-subsec-volumes-balls-and-boxes default_required]
+The four-dimensional ball cannot be drawn, but it can be sliced.
+
+[276-299 p c11s6-subsec-volumes-balls-and-boxes default_required]
+Let
+      B_4(1)=\{(x,y,z,w):x^2+y^2+z^2+w^2\le1\}.
+      Fix w. Then the remaining variables satisfy
+      x^2+y^2+z^2\le1-w^2.
+      That is a three-dimensional ball of radius
+      \sqrt{1-w^2}.
+      Its volume is
+      \frac43\pi(1-w^2)^{3/2}.
+      So
+      \operatorname{Vol}_4(B_4(1))=\int_{-1}^{1}\frac43\pi(1-w^2)^{3/2}\,dw.
+      Use
+      w=\sin u.
+      Then
+      dw=\cos u\,du,\qquad (1-w^2)^{3/2}=\cos^3u,
+      and u runs from -\pi/2 to \pi/2. Therefore
+      \operatorname{Vol}_4(B_4(1))=\frac43\pi\int_{-\pi/2}^{\pi/2}\cos^4u\,du.
+      Since
+      \cos^4u=\frac{3+4\cos(2u)+\cos(4u)}{8},
+      we have
+      \int_{-\pi/2}^{\pi/2}\cos^4u\,du=\frac{3\pi}{8}.
+      Thus
+      \boxed{\operatorname{Vol}_4(B_4(1))=\frac43\pi\cdot\frac{3\pi}{8}=\frac{\pi^2}{2}.}
+
+[301-305 p c11s6-subsec-volumes-balls-and-boxes default_required]
+Scaling by R in all four coordinates multiplies four-dimensional volume by R^4.
+      So
+      \boxed{\operatorname{Vol}_4(B_4(R))=\frac{\pi^2}{2}R^4.}
+
+[307-319 p c11s6-subsec-volumes-balls-and-boxes default_required]
+The pattern continues:
+      
+\begin{array}{c|c}
+n \amp \operatorname{Vol}_n(B_n(R)) \\ \hline
+1 \amp 2R\\[1mm]
+2 \amp \pi R^2\\[1mm]
+3 \amp \dfrac43\pi R^3\\[2mm]
+4 \amp \dfrac{\pi^2}{2}R^4\\[2mm]
+5 \amp \dfrac{8\pi^2}{15}R^5
+\end{array}
+
+[321-324 p c11s6-subsec-volumes-balls-and-boxes default_required]
+The formula has a compact version involving the gamma function, but the main idea is already
+      visible: higher-dimensional balls can be studied by slicing them into lower-dimensional balls.
+
+[328-328 title c11s6-subsec-why-high-dimensional-geometry-feels-surprising default_required]
+Why high-dimensional geometry feels surprising
+
+[330-333 p c11s6-subsec-why-high-dimensional-geometry-feels-surprising default_required]
+High-dimensional geometry often disagrees with three-dimensional intuition. The reason is not
+      mysterious. Powers grow and shrink quickly.
+
+[335-349 p c11s6-subsec-why-high-dimensional-geometry-feels-surprising default_required]
+For an n-dimensional ball, scaling the radius by a scales volume by
+      a^n.
+      So the ball of half the radius has volume fraction
+      \boxed{\left(\frac12\right)^n.}
+      In three dimensions, that fraction is
+      \frac18.
+      In ten dimensions, it is
+      \frac1{1024}.
+      In one hundred dimensions, it is
+      2^{-100}.
+      More generally, for any fixed 0\lt\varepsilon\lt1, the fraction inside radius
+      1-\varepsilon is (1-\varepsilon)^n\to0. This precise statement says
+      that most volume lies in an outer shell of any fixed positive relative thickness.
+
+[351-362 p c11s6-unit-ball-volume-recurrence default_required]
+We can also justify what happens to the whole unit-ball volume. Write
+      V_n=\operatorname{Vol}_n(B_n(1)). For n\ge3, fix the last two
+      coordinates, with polar radius r. The remaining slice is an
+      (n-2)-ball of radius \sqrt{1-r^2}, hence volume
+      V_{n-2}(1-r^2)^{(n-2)/2}. Slicing and the already proved planar polar formula give
+      V_n=2\pi V_{n-2}\int_0^1r(1-r^2)^{(n-2)/2}\,dr
+        =\frac{2\pi}{n}V_{n-2}.
+      Once n\ge13, each step of two dimensions multiplies the volume by less
+      than 1/2. Both the even and the odd subsequences therefore tend to zero.
+      No gamma-function formula is needed for this conclusion.
+
+[365-365 title checkpoint-11-6-ball-volume-decreases default_required]
+The ball that fades away
+
+[367-372 p checkpoint-11-6-ball-volume-decreases default_required]
+The volumes 2R, \pi R^2, \tfrac43\pi R^3, \tfrac{\pi^2}{2}R^4,
+          \tfrac{8\pi^2}{15}R^5 seem to keep growing. Yet for a fixed radius such as
+          R=1, the volume of the unit ball eventually decreases toward 0 as the
+          dimension n grows. How can adding more dimensions make the unit ball smaller?
+
+[375-380 p checkpoint-11-6-ball-volume-decreases hint]
+A new dimension adds a slicing variable that ranges only over |x|\le 1, and each
+          slice is itself a ball of radius \sqrt{1-x^2}\le 1 in one fewer dimension. Picture
+          stacking many slices that are each smaller than the one you started with. Does the
+          stack have to grow?
+
+[384-393 p c11s6-subsec-why-high-dimensional-geometry-feels-surprising default_required]
+The cube gives another surprise. The cube
+      [-1,1]^n
+      has volume
+      2^n.
+      Its corners have distance
+      \sqrt{1^2+1^2+\cdots+1^2}=\sqrt n
+      from the origin. As n grows, the corners move farther and farther away, even though
+      every coordinate still lies between -1 and 1.
+
+[395-404 p c11s6-subsec-why-high-dimensional-geometry-feels-surprising default_required]
+In four dimensions, the ball of radius 1 inside the cube [-1,1]^4 has volume
+      \frac{\pi^2}{2}.
+      The cube has volume
+      16.
+      So the fraction occupied by the ball is
+      \frac{\pi^2/2}{16}=\frac{\pi^2}{32}\approx 0.31.
+      Already by dimension 4, much of the cube lies outside the inscribed ball, toward the
+      corners.
+
+[406-410 p c11s6-subsec-why-high-dimensional-geometry-feels-surprising default_required]
+These facts matter in probability, statistics, data science, and physics. A point with many
+      coordinates does not behave like a point in a drawing. Volume migrates toward boundaries,
+      corners, and shells.
+
+[412-422 p c11s6-subsec-why-high-dimensional-geometry-feels-surprising default_required]
+But the integral itself has not changed. It still adds tiny contributions. The hard part is
+      describing how a small coordinate box in one system becomes a small piece in another system.
+      We have already met two answers:
+      dV=r\,dr\,d\theta\,dz
+      and
+      dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.
+      Those factors were not tricks for cylinders and spheres. They are examples of a single rule.
+       finds that rule by looking at how a coordinate map
+      stretches tiny boxes, and the determinant returns as the scale factor.

@@ -1,0 +1,356 @@
+[5-5 title sec-11-cylindrical-coordinates-in-integrals default_required]
+Cylindrical coordinates in integrals
+
+[7-11 p sec-11-cylindrical-coordinates-in-integrals default_required]
+ended with a warning. Rectangular coordinates are
+    not always the natural language of a solid. A box likes x, y, and z. A
+    can, a pipe, a cone, and a round tank ask for radius, angle, and height.
+
+[13-20 p sec-11-cylindrical-coordinates-in-integrals default_required]
+Cylindrical coordinates keep the height z, but replace x and y by polar
+    coordinates:
+    x=r\cos\theta,\qquad y=r\sin\theta,\qquad z=z.
+    Here
+    r=\sqrt{x^2+y^2}
+    is the distance from the z-axis, and \theta is the angle around that axis.
+
+[22-26 p sec-11-cylindrical-coordinates-in-integrals default_required]
+The new coordinates make circular solids easier to describe. They also change the small
+    volume piece. A tiny box in r,\theta,z is not a rectangular box in ordinary space.
+    That is why the factor r appears.
+
+[29-29 title c11s3-subsec-volume-element default_required]
+The volume element r\,dr\,d\theta\,dz
+
+[31-36 p c11s3-subsec-volume-element default_required]
+Start with the simplest round solid: a cylinder of radius 3 and height 5:
+      x^2+y^2\le 9,\qquad 0\le z\le5.
+      In cylindrical coordinates this becomes
+      0\le r\le3,\qquad 0\le\theta\le2\pi,\qquad 0\le z\le5.
+
+[38-44 p c11s3-subsec-volume-element default_required]
+Now cut the cylinder into small coordinate pieces. One piece has:
+      \Delta r \quad\text{in the radial direction,}
+      \Delta\theta \quad\text{in the angular direction,}
+      and
+      \Delta z \quad\text{in the vertical direction.}
+
+[46-53 p c11s3-subsec-volume-element default_required]
+At radius r, an angular change \Delta\theta gives an arc length approximately
+      r\,\Delta\theta.
+      So the small piece has volume approximately
+      \Delta V \approx (\Delta r)(r\,\Delta\theta)(\Delta z) = r\,\Delta r\,\Delta\theta\,\Delta z.
+      Thus the cylindrical volume element is
+      \boxed{dV=r\,dr\,d\theta\,dz.}
+
+[56-56 title checkpoint-11-3-why-factor-r default_required]
+Where does the r come from?
+
+[58-63 p checkpoint-11-3-why-factor-r default_required]
+A small cylindrical piece spans \Delta r, \Delta\theta, and
+          \Delta z. Two such pieces share the same three numbers, but one sits near the
+          z-axis and the other sits far from it. Why are their volumes different, and why
+          does that difference force the factor r into dV=r\,dz\,dr\,d\theta?
+
+[66-70 p checkpoint-11-3-why-factor-r hint]
+Think about the arc swept out by a fixed angle \Delta\theta. How long is that
+          arc at radius r? The wider arc far from the axis is exactly what the factor
+          r records.
+
+[75-76 caption c11s3-fig-polar-rectangle default_required]
+The angular side of a small polar rectangle has length approximately
+      r\,\Delta\theta, not \Delta\theta.
+
+[78-103 latex-image c11s3-fig-polar-rectangle default_required]
+\begin{tikzpicture}[scale=1.0, >=stealth]
+            \draw[->] (-0.4,0) -- (5.2,0) node[right] {\(x\)};
+            \draw[->] (0,-0.4) -- (0,4.5) node[above] {\(y\)};
+
+            \draw[gray!25] (0,0) circle (1.8);
+            \draw[gray!25] (0,0) circle (2.5);
+
+            \draw[thick, fill=blue!10]
+                (35:1.8) arc[start angle=35,end angle=60,radius=1.8]
+                -- (60:2.5) arc[start angle=60,end angle=35,radius=2.5]
+                -- cycle;
+
+            \draw[->, thick] (0,0) -- (35:2.9) node[right] {\(r\)};
+            \draw[->, thick] (1.0,0) arc[start angle=0,end angle=35,radius=1.0];
+            \node at (1.2,0.35) {\(\theta\)};
+
+            \draw[<->] (60:1.8) -- (60:2.5);
+            \node[above left] at (59.9:2.1) {\(\Delta r\)};
+
+            \draw[<->] (35:2.75) arc[start angle=35,end angle=60,radius=2.75];
+            \node[above] at (47:2.95) {\(r\,\Delta\theta\)};
+
+            \node at (2.5,-0.85) {a small polar rectangle has area about \(r\,\Delta r\,\Delta\theta\)};
+        \end{tikzpicture}
+
+[107-117 p c11s3-subsec-volume-element default_required]
+Now compute the cylinder's volume:
+      
+        V \amp= \int_0^{2\pi}\int_0^3\int_0^5 r\,dz\,dr\,d\theta
+        \amp= \int_0^{2\pi}\int_0^3 5r\,dr\,d\theta
+        \amp= \int_0^{2\pi} \frac{45}{2}\,d\theta
+        \amp= 45\pi.
+      
+      This agrees with the familiar formula
+      \pi r^2h=\pi(3)^2(5)=45\pi.
+
+[119-124 p c11s3-subsec-volume-element default_required]
+The factor r is not optional. If we forgot it, we would get
+      \int_0^{2\pi}\int_0^3\int_0^5 1\,dz\,dr\,d\theta=30\pi,
+      which is not the volume of the cylinder. The error comes from pretending that angular
+      pieces near the axis and angular pieces far from the axis have the same width. They do not.
+
+[126-148 p c11s3-subsec-volume-element default_required]
+The same fact can be written with forms. In the following substitution calculation,
+      dx abbreviates the differential of the scalar function x(r,\theta,z)
+      on the parameter domain; dy is interpreted in the same way. Thus all the forms
+      being equated live on that domain. 
+      will introduce explicit pullback notation for this convention. Since
+      x=r\cos\theta, \qquad y=r\sin\theta,
+      we have
+      dx=\cos\theta\,dr-r\sin\theta\,d\theta,
+      and
+      dy=\sin\theta\,dr+r\cos\theta\,d\theta.
+      Therefore
+      
+        dx\wedge dy \amp= (\cos\theta\,dr-r\sin\theta\,d\theta) \wedge (\sin\theta\,dr+r\cos\theta\,d\theta)
+        \amp= r\cos^2\theta\,dr\wedge d\theta + r\sin^2\theta\,dr\wedge d\theta
+        \amp= r\,dr\wedge d\theta.
+      
+      So
+      \boxed{dx\wedge dy\wedge dz = r\,dr\wedge d\theta\wedge dz.}
+      For ordinary positive volume, we write this as
+      dV=r\,dr\,d\theta\,dz.
+      The wedge version remembers orientation. The dV version remembers positive volume.
+
+[152-152 title c11s3-subsec-cylinders-cones-symmetry default_required]
+Cylinders, cones, and rotational symmetry
+
+[154-159 p c11s3-subsec-cylinders-cones-symmetry default_required]
+Cylindrical coordinates are especially good when equations contain
+      x^2+y^2.
+      The translation is
+      x^2+y^2=r^2.
+
+[161-168 p c11s3-subsec-cylinders-cones-symmetry default_required]
+For example, the circular cylinder
+      x^2+y^2=9
+      becomes
+      r=3.
+      The solid inside the cylinder becomes
+      0\le r\le3.
+
+[170-189 p c11s3-subsec-cylinders-cones-symmetry default_required]
+A cone whose height decreases linearly with distance from the axis also becomes simple.
+      Consider a pile of sand whose top surface is
+      z=4-\sqrt{x^2+y^2},
+      above the floor z=0. In cylindrical coordinates, this is
+      z=4-r.
+      The solid is
+      0\le\theta\le2\pi,\qquad 0\le r\le4,\qquad 0\le z\le4-r.
+      Its volume is
+      
+        V \amp= \int_0^{2\pi}\int_0^4\int_0^{4-r} r\,dz\,dr\,d\theta
+        \amp= \int_0^{2\pi}\int_0^4 (4-r)r\,dr\,d\theta
+        \amp= 2\pi\int_0^4(4r-r^2)\,dr
+        \amp= 2\pi\left[2r^2-\frac{r^3}{3}\right]_0^4
+        \amp= 2\pi\left(32-\frac{64}{3}\right)
+        \amp= \frac{64\pi}{3}.
+      
+      So
+      \boxed{V=\frac{64\pi}{3}.}
+
+[191-194 p c11s3-subsec-cylinders-cones-symmetry default_required]
+The calculation was short because the solid did not care about the angle \theta.
+      Every vertical slice through the z-axis looked the same.
+
+[197-197 title checkpoint-11-3-why-round-shapes-fit default_required]
+Why do round shapes feel at home here?
+
+[199-204 p checkpoint-11-3-why-round-shapes-fit default_required]
+Cylinders, cones, and paraboloids all become tidy equations like r=3,
+          z=4-r, or z=r^2 in cylindrical coordinates, while a plain box turns
+          awkward. What do these round solids have in common that makes a coordinate built from
+          r, \theta, and z describe them so cleanly?
+
+[207-210 p checkpoint-11-3-why-round-shapes-fit hint]
+Ask what happens to each solid if you spin it around the z-axis. Which variable
+          does its boundary equation quietly ignore?
+
+[214-224 p c11s3-subsec-cylinders-cones-symmetry default_required]
+When the solid and the integrand do not depend on \theta, we can usually factor out
+      the full turn:
+      \int_0^{2\pi} d\theta=2\pi.
+      For a rotationally symmetric solid,
+      E=\{(r,\theta,z):0\le\theta\le2\pi,\ a\le r\le b,\ g_1(r)\le z\le g_2(r)\},
+      and an integrand depending only on r and z, we get
+      \boxed{\iiint_E f\,dV = 2\pi\int_a^b\int_{g_1(r)}^{g_2(r)} f(r,z)\,r\,dz\,dr.}
+      The factor 2\pi comes from going once around the axis. The factor r comes
+      from the widening of angular pieces.
+
+[227-227 title c11s3-ex-radially-denser-pipe default_required]
+A radially denser pipe
+
+[229-234 p c11s3-ex-radially-denser-pipe default_required]
+A metal pipe has inner radius 1, outer radius 2, and length 5. Its
+          density is
+          \delta(r)=4+r
+          kilograms per cubic meter. The density is larger near the outer wall.
+
+[235-249 p c11s3-ex-radially-denser-pipe default_required]
+The pipe is
+          1\le r\le2,\qquad 0\le\theta\le2\pi,\qquad 0\le z\le5.
+          Its mass is
+          
+            M \amp= \int_0^{2\pi}\int_0^5\int_1^2 (4+r)r\,dr\,dz\,d\theta
+            \amp= 2\pi\cdot5\int_1^2(4r+r^2)\,dr
+            \amp= 10\pi\left[2r^2+\frac{r^3}{3}\right]_1^2
+            \amp= 10\pi\left(8+\frac83-2-\frac13\right)
+            \amp= 10\pi\cdot\frac{25}{3}
+            \amp= \frac{250\pi}{3}.
+          
+          So
+          \boxed{M=\frac{250\pi}{3}\text{ kg}.}
+
+[255-255 title c11s3-subsec-choosing-bounds default_required]
+Choosing bounds in cylindrical coordinates
+
+[257-261 p c11s3-subsec-choosing-bounds default_required]
+The bounds still describe the solid. The coordinates have changed, but the habit from
+       stays the same:
+      \boxed{\text{Draw the shadow first.}}
+
+[263-266 p c11s3-subsec-choosing-bounds default_required]
+For cylindrical coordinates, the shadow is usually drawn in the xy-plane using polar
+      coordinates. Then z runs from a lower surface to an upper surface.
+
+[268-268 p c11s3-subsec-choosing-bounds default_required]
+A useful routine is:
+
+[271-276 li c11s3-subsec-choosing-bounds default_required]
+Rewrite the equations using
+          x=r\cos\theta,\qquad y=r\sin\theta,\qquad x^2+y^2=r^2.
+
+[277-279 li c11s3-subsec-choosing-bounds default_required]
+Describe the shadow in the xy-plane by bounds on r and \theta.
+
+[280-282 li c11s3-subsec-choosing-bounds default_required]
+Describe the vertical bounds for z.
+
+[283-285 li c11s3-subsec-choosing-bounds default_required]
+Insert the factor r.
+
+[288-293 p c11s3-subsec-choosing-bounds default_required]
+For a solid of the form
+      \alpha\le\theta\le\beta, \qquad a(\theta)\le r\le b(\theta), \qquad g_1(r,\theta)\le z\le g_2(r,\theta),
+      the integral becomes
+      \boxed{\iiint_E f(x,y,z)\,dV = \int_\alpha^\beta \int_{a(\theta)}^{b(\theta)} \int_{g_1(r,\theta)}^{g_2(r,\theta)} f(r\cos\theta,r\sin\theta,z)\,r\,dz\,dr\,d\theta.}
+
+[296-296 title c11s3-ex-cylinder-slanted-roof default_required]
+A cylinder cut by a slanted roof
+
+[298-309 p c11s3-ex-cylinder-slanted-roof default_required]
+Let E be the solid inside the cylinder
+          x^2+y^2\le4,
+          above the floor z=0, and below the plane
+          z=3+x.
+          In cylindrical coordinates,
+          x=r\cos\theta.
+          So the top surface is
+          z=3+r\cos\theta.
+          Since 0\le r\le2, this top height is at least 1, so it stays above the
+          floor.
+
+[310-324 p c11s3-ex-cylinder-slanted-roof default_required]
+The shadow is the disk
+          0\le r\le2,\qquad 0\le\theta\le2\pi.
+          Therefore
+          \boxed{V = \int_0^{2\pi}\int_0^2\int_0^{3+r\cos\theta} r\,dz\,dr\,d\theta.}
+          Compute:
+          
+            V \amp= \int_0^{2\pi}\int_0^2 (3+r\cos\theta)r\,dr\,d\theta
+            \amp= \int_0^{2\pi} \left[ \frac32 r^2+\frac13r^3\cos\theta \right]_0^2 d\theta
+            \amp= \int_0^{2\pi} \left( 6+\frac83\cos\theta \right)d\theta
+            \amp= 12\pi.
+          
+          The slanted part averages out around the full circle:
+          \int_0^{2\pi}\cos\theta\,d\theta=0.
+
+[328-335 p c11s3-subsec-choosing-bounds default_required]
+The bounds can also count too much if we are careless. For the full cylinder, the bounds
+      0\le\theta\le4\pi
+      go around the same solid twice. The integral then gives twice the volume. Coordinate seams
+      are harmless when they only repeat a boundary, such as \theta=0 and
+      \theta=2\pi. They are not harmless when they repeat a whole three-dimensional
+      region.
+
+[339-339 title c11s3-subsec-solids-revolution-tubes default_required]
+Applications to solids of revolution and tubes
+
+[341-344 p c11s3-subsec-solids-revolution-tubes default_required]
+A solid of revolution is often easiest to describe by drawing its rz-profile. The
+      angle \theta then spins that profile around the z-axis.
+
+[347-347 title c11s3-ex-vase-rotating-profile default_required]
+A vase from a rotating profile
+
+[349-353 p c11s3-ex-vase-rotating-profile default_required]
+A small vase has height 3. At height z, its radius is
+          R(z)=1+\frac z3.
+          So it widens linearly from radius 1 at the bottom to radius 2 at the top.
+
+[354-367 p c11s3-ex-vase-rotating-profile default_required]
+The solid is
+          0\le z\le3,\qquad 0\le\theta\le2\pi,\qquad 0\le r\le 1+\frac z3.
+          Its volume is
+          
+            V \amp= \int_0^3\int_0^{2\pi}\int_0^{1+z/3} r\,dr\,d\theta\,dz
+            \amp= \int_0^3 \pi\left(1+\frac z3\right)^2 dz
+            \amp= \pi\int_0^3 \left(1+\frac{2z}{3}+\frac{z^2}{9}\right)dz
+            \amp= \pi\left[ z+\frac{z^2}{3}+\frac{z^3}{27} \right]_0^3
+            \amp= 7\pi.
+          
+          Thus
+          \boxed{V=7\pi.}
+
+[371-378 p c11s3-subsec-solids-revolution-tubes default_required]
+This example also explains why the old disk method from single-variable calculus worked. At
+      height z, the cross-section is a disk of radius R(z), so its area is
+      \pi R(z)^2.
+      Cylindrical coordinates produce the same expression:
+      \int_0^{2\pi}\int_0^{R(z)} r\,dr\,d\theta = \pi R(z)^2.
+      The factor r is exactly what makes the circular area come out correctly.
+
+[380-386 p c11s3-subsec-solids-revolution-tubes default_required]
+A tube is similar, except the radial interval does not start at 0. If the inner
+      radius is a and the outer radius is b, then
+      a\le r\le b.
+      A washer cross-section comes from the same idea:
+      \int_0^{2\pi}\int_a^b r\,dr\,d\theta = \pi(b^2-a^2).
+
+[389-389 title checkpoint-11-3-tubes-and-revolution default_required]
+Tubes and turning profiles
+
+[391-397 p checkpoint-11-3-tubes-and-revolution default_required]
+A solid of revolution is made by spinning a flat profile around the z-axis. If
+          you slice the result into thin cylindrical tubes, each tube has a radius r and a
+          tiny thickness. Why does this picture of nested tubes match a solid of revolution so
+          naturally, and where in the volume integral does the factor r for each tube
+          appear?
+
+[400-404 p checkpoint-11-3-tubes-and-revolution hint]
+Imagine the surface of one thin tube at radius r. As you go once around in
+          \theta, how far does that surface travel? That circumference is what the
+          r in r\,dr\,d\theta is keeping track of.
+
+[408-415 p c11s3-subsec-solids-revolution-tubes default_required]
+Cylindrical coordinates solve every problem whose geometry is organized around an axis. But
+      they still treat height z differently from the other two coordinates. A ball does
+      not have a preferred height direction. Its natural coordinate is distance from the center.
+      Once we use that distance, two angles are needed to say which way we are looking. The price
+      is another scale factor:
+      \rho^2\sin\phi.

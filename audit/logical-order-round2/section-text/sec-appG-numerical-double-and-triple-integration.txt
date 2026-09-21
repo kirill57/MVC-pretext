@@ -1,0 +1,187 @@
+[5-5 title sec-appG-numerical-double-and-triple-integration default_required]
+Numerical double and triple integration
+
+[8-8 title appG-numint-midpoint-rule-one-variable default_required]
+Midpoint rule in one variable
+
+[10-12 p appG-numint-midpoint-rule-one-variable default_required]
+\int_a^b f(x)\,dx \approx \sum_{i=1}^{N} f(x_i^*)\,\Delta x.
+
+[14-18 p appG-numint-midpoint-rule-one-variable default_required]
+Here
+      \Delta x=\frac{b-a}{N},
+      and x_i^* is the midpoint of the ith subinterval.
+
+[22-22 title appG-numint-midpoint-rule-rectangle default_required]
+Midpoint rule over a rectangle
+
+[24-28 p appG-numint-midpoint-rule-rectangle default_required]
+For
+      R=[a,b]\times[c,d],
+      \iint_R f(x,y)\,dA \approx \sum_{i=1}^{M}\sum_{j=1}^{N} f(x_i^*,y_j^*)\,\Delta x\,\Delta y.
+
+[32-32 title appG-numint-code-rectangular-midpoint-rule default_required]
+Code for rectangular midpoint rule
+
+[34-47 program appG-numint-code-rectangular-midpoint-rule default_required]
+def midpoint_double(f, a, b, c, d, M=200, N=200):
+    dx = (b - a) / M
+    dy = (d - c) / N
+
+    x = a + (np.arange(M) + 0.5)*dx
+    y = c + (np.arange(N) + 0.5)*dy
+
+    X, Y = np.meshgrid(x, y)
+    values = np.broadcast_to(f(X, Y), X.shape)
+    return np.sum(values)*dx*dy
+
+[51-51 title appG-numint-region-variable-bounds default_required]
+Region under variable bounds
+
+[53-57 p appG-numint-region-variable-bounds default_required]
+For
+      a\le x\le b, \qquad g_1(x)\le y\le g_2(x),
+      \iint_R f\,dA = \int_a^b\int_{g_1(x)}^{g_2(x)}f(x,y)\,dy\,dx.
+
+[59-61 p appG-numint-region-variable-bounds default_required]
+Using dblquad:
+
+[63-74 program appG-numint-region-variable-bounds default_required]
+from scipy.integrate import dblquad
+
+value, error = dblquad(
+    lambda y, x: f(x, y),
+    a, b,
+    lambda x: g1(x),
+    lambda x: g2(x)
+)
+
+[76-80 p appG-numint-region-variable-bounds default_required]
+Notice the order in the function:
+      \texttt{lambda y, x}
+      because dblquad uses the inner variable first.
+
+[84-84 title appG-numint-polar-numerical-integration default_required]
+Polar numerical integration
+
+[86-91 p appG-numint-polar-numerical-integration default_required]
+If
+      x=r\cos\theta, \qquad y=r\sin\theta,
+      then
+      dA=r\,dr\,d\theta.
+
+[93-96 p appG-numint-polar-numerical-integration default_required]
+So
+      \iint_R f(x,y)\,dA = \iint_{\widetilde R} f(r\cos\theta,r\sin\theta)\,r\,dr\,d\theta.
+
+[98-100 p appG-numint-polar-numerical-integration default_required]
+Code pattern:
+
+[102-111 program appG-numint-polar-numerical-integration default_required]
+value, error = dblquad(
+    lambda r, theta: f(r*np.cos(theta), r*np.sin(theta))*r,
+    theta0, theta1,
+    lambda theta: r0(theta),
+    lambda theta: r1(theta)
+)
+
+[115-115 title appG-numint-triple-integral-box default_required]
+Triple integral over a box
+
+[117-121 p appG-numint-triple-integral-box default_required]
+For
+      B=[a,b]\times[c,d]\times[e,f],
+      \iiint_B F(x,y,z)\,dV \approx \sum F(x_i^*,y_j^*,z_k^*)\,\Delta x\,\Delta y\,\Delta z.
+
+[125-125 title appG-numint-triple-integral-variable-bounds default_required]
+Triple integral with variable bounds
+
+[127-133 p appG-numint-triple-integral-variable-bounds default_required]
+For
+      a\le x\le b,
+      g_1(x)\le y\le g_2(x),
+      h_1(x,y)\le z\le h_2(x,y),
+      \iiint_E F\,dV = \int_a^b\int_{g_1(x)}^{g_2(x)} \int_{h_1(x,y)}^{h_2(x,y)} F(x,y,z)\,dz\,dy\,dx.
+
+[135-137 p appG-numint-triple-integral-variable-bounds default_required]
+Using tplquad:
+
+[139-152 program appG-numint-triple-integral-variable-bounds default_required]
+from scipy.integrate import tplquad
+
+value, error = tplquad(
+    lambda z, y, x: F(x, y, z),
+    a, b,
+    lambda x: g1(x),
+    lambda x: g2(x),
+    lambda x, y: h1(x, y),
+    lambda x, y: h2(x, y)
+)
+
+[154-156 p appG-numint-triple-integral-variable-bounds default_required]
+Again, the innermost variable comes first.
+
+[160-160 title appG-numint-cylindrical-numerical-integration default_required]
+Cylindrical numerical integration
+
+[162-164 p appG-numint-cylindrical-numerical-integration default_required]
+dV=r\,dr\,d\theta\,dz.
+
+[166-168 p appG-numint-cylindrical-numerical-integration default_required]
+F(x,y,z) = F(r\cos\theta,r\sin\theta,z).
+
+[170-173 p appG-numint-cylindrical-numerical-integration default_required]
+Use the integrand
+      F(r\cos\theta,r\sin\theta,z)\,r.
+
+[177-177 title appG-numint-spherical-numerical-integration default_required]
+Spherical numerical integration
+
+[179-181 p appG-numint-spherical-numerical-integration default_required]
+dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.
+
+[183-186 p appG-numint-spherical-numerical-integration default_required]
+Use the integrand
+      F(\rho\sin\phi\cos\theta,\rho\sin\phi\sin\theta,\rho\cos\phi) \rho^2\sin\phi.
+
+[190-190 title appG-numint-monte-carlo-estimate default_required]
+Monte Carlo estimate
+
+[192-195 p appG-numint-monte-carlo-estimate default_required]
+For a region R inside a box B:
+      \iint_R f\,dA \approx \operatorname{Area}(B) \cdot \frac1N \sum_{i=1}^N f(x_i,y_i)\mathbf 1_R(x_i,y_i).
+
+[197-199 p appG-numint-monte-carlo-estimate default_required]
+Code pattern:
+
+[201-213 program appG-numint-monte-carlo-estimate default_required]
+def monte_carlo_double(f, inside, a, b, c, d, N=100000):
+    x = np.random.uniform(a, b, N)
+    y = np.random.uniform(c, d, N)
+
+    mask = inside(x, y)
+    box_area = (b - a)*(d - c)
+
+    values = np.broadcast_to(f(x[mask], y[mask]), x[mask].shape)
+    return box_area*np.sum(values)/N
+
+[215-217 p appG-numint-monte-carlo-estimate default_required]
+Monte Carlo is usually slow but useful in irregular regions or high dimensions.
+
+[221-221 title appG-numint-common-warnings default_required]
+Common warnings
+
+[223-225 p appG-numint-common-warnings default_required]
+Numerical integration returns an approximation and often an error estimate.
+
+[227-229 p appG-numint-common-warnings default_required]
+Singularities require special care.
+
+[231-233 p appG-numint-common-warnings default_required]
+Highly oscillatory functions require finer sampling.
+
+[235-237 p appG-numint-common-warnings default_required]
+Coordinate changes require Jacobian factors.
+
+[239-241 p appG-numint-common-warnings default_required]
+Improper integrals may appear finite on a finite sample but still diverge.

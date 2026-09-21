@@ -1,0 +1,378 @@
+[5-5 title sec-10-from-area-to-volume-by-slicing default_required]
+From area to volume by slicing
+
+[7-11 p sec-10-from-area-to-volume-by-slicing default_required]
+The single-variable integral began with area under a curve. A double integral begins
+    with the same idea, but the base is no longer an interval. The base is a region in the
+    plane, and the graph above it is a surface.
+
+[14-14 title c10s1-subsec-area-as-limit-of-sums default_required]
+Area as a limit of sums
+
+[16-20 p c10s1-subsec-area-as-limit-of-sums default_required]
+Imagine a garden bed whose edge is curved. The owner wants its area, but the shape is
+      not a rectangle, a triangle, or a circle. One practical method is to lay a square grid
+      over the garden and count squares.
+
+[22-22 p c10s1-subsec-area-as-limit-of-sums default_required]
+Large squares give a rough estimate. Smaller squares give a better one.
+
+[25-25 caption c10s1-fig-area-grid default_required]
+Area can be estimated by adding the areas of many small squares.
+
+[27-46 latex-image c10s1-fig-area-grid default_required]
+\begin{tikzpicture}[scale=0.72, >=stealth]
+            \draw[step=1, gray!25, very thin] (0,0) grid (8,5);
+
+            \draw[thick, fill=green!10]
+                plot[smooth cycle] coordinates {
+                    (1.0,0.8)
+                    (2.1,0.25)
+                    (4.3,0.55)
+                    (6.8,1.2)
+                    (7.25,2.7)
+                    (6.0,4.25)
+                    (3.6,4.65)
+                    (1.35,3.75)
+                    (0.55,2.1)
+                };
+
+            \node at (4,-0.7) {a curved region estimated by grid squares};
+        \end{tikzpicture}
+
+[50-59 p c10s1-subsec-area-as-limit-of-sums default_required]
+If each small square has area
+      \Delta A,
+      and N of them lie mostly inside the garden, then
+      \operatorname{Area} \approx N\Delta A.
+      This is only an estimate, because boundary squares are awkward. For the garden shapes
+      considered here, the boundary consists of finitely many smooth arcs. The boundary squares
+      lie in a strip whose area tends to zero as the grid is refined. Thus the boundary error
+      tends to zero. Arbitrarily complicated boundaries require additional hypotheses.
+
+[62-62 title checkpoint-10-1-why-refining-converges default_required]
+Why does a finer grid help?
+
+[64-69 p checkpoint-10-1-why-refining-converges default_required]
+We claim that shrinking the squares makes the estimate N\Delta A close in on
+          the true area. The interior squares are not the problem; the trouble lives in the
+          boundary squares, which are partly in and partly out. Why does refining the grid
+          shrink that error toward zero?
+
+[72-76 p checkpoint-10-1-why-refining-converges hint]
+Think about where the error lives. The boundary squares form a thin band
+          hugging the curved edge. As the squares shrink, how does the total area of that band
+          compare with the area of the whole region?
+
+[80-87 p c10s1-subsec-area-as-limit-of-sums default_required]
+The idea is not new. In single-variable calculus, we approximated area under a curve by
+      rectangles:
+      \sum f(x_i^*)\,\Delta x.
+      Now each small piece has area
+      \Delta A
+      instead of length \Delta x.
+
+[89-97 p c10s1-subsec-area-as-limit-of-sums default_required]
+For a plain area problem, every small piece contributes just its own area. So area is
+      the limit of sums like
+      \sum \Delta A.
+      Equivalently,
+      \boxed{\operatorname{Area}(R)=\iint_R 1\,dA.}
+      This formula says: add the constant value 1 over every tiny area piece in
+      R.
+
+[101-101 title c10s1-subsec-volume-under-a-surface default_required]
+Volume under a surface
+
+[103-110 p c10s1-subsec-volume-under-a-surface default_required]
+Now put a surface above the region. Suppose a slanted canopy covers a rectangular
+      market stall:
+      0\le x\le 4,\qquad 0\le y\le 3.
+      Its height in meters is
+      f(x,y)=2+\frac{x}{4}+\frac{y}{6}.
+      We want the volume of air under the canopy.
+
+[112-117 p c10s1-subsec-volume-under-a-surface default_required]
+Cut the floor into 1-meter by 1-meter squares. Over each small square,
+      pretend the canopy height is constant and equal to the height at the center of that
+      square. Then each piece is approximately a rectangular column:
+      \text{volume of one column} \approx \text{height at center}\times \text{base area}.
+
+[119-137 p c10s1-subsec-volume-under-a-surface default_required]
+The centers have
+      x=0.5,1.5,2.5,3.5
+      and
+      y=0.5,1.5,2.5.
+      Since each small square has area 1, the volume estimate is
+      \sum f(x_i^*,y_j^*)\cdot 1.
+      Compute the sum:
+      
+        \sum f(x_i^*,y_j^*) \amp= \sum\left(2+\frac{x_i^*}{4}+\frac{y_j^*}{6}\right)
+        \amp= 12\cdot 2 + \frac14\left(3(0.5+1.5+2.5+3.5)\right)
+        \amp\qquad + \frac16\left(4(0.5+1.5+2.5)\right)
+        \amp= 24+\frac14(24)+\frac16(18)
+        \amp= 24+6+3
+        \amp= 33.
+      
+      So the estimated volume is
+      33\text{ m}^3.
+
+[140-141 caption c10s1-fig-columns-volume default_required]
+A double integral adds many small column volumes.
+      (Interactive: drag to rotate, scroll to zoom.)
+
+[143-165 asymptote c10s1-fig-columns-volume default_required]
+// 3-D interactive (WebGL) figure.
+        import graph3;
+        size(10cm);
+        currentprojection=orthographic(5,2.4,3);
+        real f(real x, real y){return 0.8+0.30*x+0.22*y;}
+        real L=4; int n=4; real d=L/n;
+        void column(real x0,real y0,real h){
+          draw(shift((x0,y0,0))*scale(d,d,h)*unitcube, rgb(0.45,0.75,0.95)+opacity(0.55));
+          triple a=(x0,y0,h),b=(x0+d,y0,h),c=(x0+d,y0+d,h),e=(x0,y0+d,h);
+          draw(a--b--c--e--cycle, black+0.4pt);
+          draw((x0,y0,0)--a,black+0.3pt); draw((x0+d,y0,0)--b,black+0.3pt);
+          draw((x0+d,y0+d,0)--c,black+0.3pt); draw((x0,y0+d,0)--e,black+0.3pt);
+        }
+        for(int i=0;i<n;++i) for(int j=0;j<n;++j){
+          real x0=i*d,y0=j*d,xm=x0+d/2,ym=y0+d/2,h=f(xm,ym);
+          column(x0,y0,h); dot((xm,ym,h), red+3pt);
+        }
+        surface s=surface(new real(pair p){return f(p.x,p.y);},(0,0),(L,L),16,16);
+        draw(s, rgb(0.95,0.55,0.55)+opacity(0.30));
+        draw(O--(L+0.8,0,0),gray,Arrow3); draw(O--(0,L+0.8,0),gray,Arrow3); draw(O--(0,0,3.6),gray,Arrow3);
+        label("$x$",(L+0.8,0,0),S); label("$y$",(0,L+0.8,0),E); label("$z$",(0,0,3.6),N);
+
+[169-179 p c10s1-subsec-volume-under-a-surface default_required]
+The same pattern works for a nonnegative continuous height function
+      z=f(x,y)
+      above a region R. Divide R into many small pieces. On each piece, choose a
+      sample point (x^*,y^*). The small column has approximate volume
+      f(x^*,y^*)\,\Delta A.
+      Add all the columns:
+      \sum f(x^*,y^*)\,\Delta A.
+      If these sums settle down to one number as the pieces shrink, that number is the
+      volume under the surface.
+
+[183-183 title c10s1-subsec-riemann-sums-over-rectangles default_required]
+Riemann sums over rectangles
+
+[185-188 p c10s1-subsec-riemann-sums-over-rectangles default_required]
+The market canopy computation had the same shape as a one-variable Riemann sum, but
+      with area pieces instead of length pieces.
+
+[190-195 p c10s1-subsec-riemann-sums-over-rectangles default_required]
+For a rectangle
+      R=[a,b]\times[c,d],
+      we cut the x-interval into pieces and the y-interval into pieces. This
+      creates many small subrectangles.
+
+[197-206 p c10s1-subsec-riemann-sums-over-rectangles default_required]
+A typical subrectangle has side lengths
+      \Delta x_i,\qquad \Delta y_j,
+      so its area is
+      \Delta A_{ij}=\Delta x_i\,\Delta y_j.
+      Choose a sample point
+      (x_{ij}^*,y_{ij}^*)
+      inside that subrectangle. Then the Riemann sum is
+      \boxed{\sum_i\sum_j f(x_{ij}^*,y_{ij}^*)\,\Delta A_{ij}.}
+
+[208-208 p c10s1-subsec-riemann-sums-over-rectangles default_required]
+This expression has a simple meaning:
+
+[211-211 title c10s1-tab-riemann-factors default_required]
+The meaning of each factor in the Riemann sum.
+
+[214-214 cell c10s1-tab-riemann-factors default_required]
+factor
+
+[215-215 cell c10s1-tab-riemann-factors default_required]
+meaning
+
+[218-218 cell c10s1-tab-riemann-factors default_required]
+f(x_{ij}^*,y_{ij}^*)
+
+[219-219 cell c10s1-tab-riemann-factors default_required]
+height, density, temperature, or value on the piece
+
+[222-222 cell c10s1-tab-riemann-factors default_required]
+\Delta A_{ij}
+
+[223-223 cell c10s1-tab-riemann-factors default_required]
+area of the piece
+
+[226-226 cell c10s1-tab-riemann-factors default_required]
+f(x_{ij}^*,y_{ij}^*)\Delta A_{ij}
+
+[227-227 cell c10s1-tab-riemann-factors default_required]
+small contribution
+
+[232-237 p c10s1-subsec-riemann-sums-over-rectangles default_required]
+When the function is a height, the contribution is a small volume. When the function is
+      a density, the contribution is a small mass. When the function is temperature, the
+      contribution is temperature times area, which leads to average temperature after we
+      divide by total area.
+
+[240-240 title checkpoint-10-1-why-columns-give-exact-volume default_required]
+From thin columns to exact volume?
+
+[242-247 p checkpoint-10-1-why-columns-give-exact-volume default_required]
+Each flat-topped column only approximates the curved surface above its little
+          rectangle, so every single term f(x_{ij}^*,y_{ij}^*)\,\Delta A_{ij} is a bit
+          wrong. Yet we claim the limit of these sums is the surface's exact volume.
+          How can adding up many approximate pieces and taking a limit land on the true answer?
+
+[250-254 p checkpoint-10-1-why-columns-give-exact-volume hint]
+Notice that on a tiny rectangle the surface barely changes height, so the gap between
+          the flat top and the real surface is small compared to that piece. Picture
+          all those gaps shrinking faster than the pieces themselves as \Delta A_{ij}\to 0.
+
+[259-259 title c10s1-def-double-integral default_required]
+Double integral, first meaning
+
+[261-268 p c10s1-def-double-integral default_required]
+If the Riemann sums
+          \sum_i\sum_j f(x_{ij}^*,y_{ij}^*)\,\Delta A_{ij}
+          approach one number as the subrectangles get smaller, independent of the sample
+          points, then that number is called the double integral of f over
+          R, written
+          \boxed{\iint_R f(x,y)\,dA.}
+
+[272-272 p c10s1-subsec-riemann-sums-over-rectangles default_required]
+The symbol dA means a tiny positive area piece.
+
+[274-290 p c10s1-subsec-riemann-sums-over-rectangles default_required]
+There is also a differential-forms way to write the same object. In
+      , the form
+      dx\wedge dy
+      measured signed area in the xy-plane. On the usual orientation of the plane, a
+      tiny rectangle whose sides point in the positive x- and y-directions has
+      signed area
+      (dx\wedge dy)\bigl((\Delta x,0),(0,\Delta y)\bigr)=\Delta x\,\Delta y.
+      The left side evaluates a bilinear form on two finite edge vectors; it is not an
+      equality between a form and a number. For this standard orientation, we define the
+      oriented notation for the same integral to be
+      \boxed{\iint_R f(x,y)\,dx\wedge dy.}
+      For ordinary area, volume, mass, and average value, we usually write
+      f\,dA.
+      When orientation matters, especially near Green's theorem, the wedge notation will
+      return.
+
+[294-294 title c10s1-subsec-what-a-double-integral-measures default_required]
+What a double integral measures
+
+[296-299 p c10s1-subsec-what-a-double-integral-measures default_required]
+A double integral is not tied to one picture. It is an adding machine for quantities
+      spread over a region.
+
+[302-302 title checkpoint-10-1-what-does-f-stand-for default_required]
+More than volume?
+
+[304-309 p checkpoint-10-1-what-does-f-stand-for default_required]
+A double integral can give area, volume, mass, or total charge, all from the same
+          symbol \iint_R f\,dA. If f need not be a height, what role does it
+          actually play in each tiny piece, and why does that single idea cover so many
+          different physical quantities?
+
+[312-316 p checkpoint-10-1-what-does-f-stand-for hint]
+Look at the units of f\,dA in each row of the table. In every case f is
+          some quantity per unit area; multiplying by dA turns it into a small
+          amount of the thing you care about. What is being accumulated then?
+
+[321-321 title c10s1-tab-double-integral-meanings default_required]
+A double integral as an adding machine for different quantities.
+
+[324-324 cell c10s1-tab-double-integral-meanings default_required]
+Function
+
+[325-325 cell c10s1-tab-double-integral-meanings default_required]
+Units of f
+
+[326-326 cell c10s1-tab-double-integral-meanings default_required]
+Meaning of \displaystyle\iint_R f\,dA
+
+[329-329 cell c10s1-tab-double-integral-meanings default_required]
+f(x,y)=1
+
+[330-330 cell c10s1-tab-double-integral-meanings default_required]
+1
+
+[331-331 cell c10s1-tab-double-integral-meanings default_required]
+area of R
+
+[334-334 cell c10s1-tab-double-integral-meanings default_required]
+f(x,y)=\text{height}
+
+[335-335 cell c10s1-tab-double-integral-meanings default_required]
+meters
+
+[336-336 cell c10s1-tab-double-integral-meanings default_required]
+volume under a surface
+
+[339-339 cell c10s1-tab-double-integral-meanings default_required]
+\rho(x,y)=\text{density}
+
+[340-340 cell c10s1-tab-double-integral-meanings default_required]
+\text{kg/m}^2
+
+[341-341 cell c10s1-tab-double-integral-meanings default_required]
+mass of a plate
+
+[344-344 cell c10s1-tab-double-integral-meanings default_required]
+T(x,y)=\text{temperature}
+
+[345-345 cell c10s1-tab-double-integral-meanings default_required]
+{}^\circ\text{C}
+
+[346-346 cell c10s1-tab-double-integral-meanings default_required]
+temperature-area total
+
+[349-349 cell c10s1-tab-double-integral-meanings default_required]
+q(x,y)=\text{charge density}
+
+[350-350 cell c10s1-tab-double-integral-meanings default_required]
+\text{C/m}^2
+
+[351-351 cell c10s1-tab-double-integral-meanings default_required]
+total charge
+
+[357-357 title c10s1-ex-mass-of-thin-plate default_required]
+Mass of a thin plate
+
+[359-368 p c10s1-ex-mass-of-thin-plate default_required]
+A thin metal plate occupies a region R in the plane. Its density at
+          (x,y) is
+          \rho(x,y)\quad \text{kg/m}^2.
+          A tiny area piece \Delta A near (x,y) has mass approximately
+          \rho(x,y)\Delta A.
+          Adding all such pieces gives
+          \boxed{M=\iint_R \rho(x,y)\,dA.}
+          The double integral is not a volume here. It is mass.
+
+[373-373 title c10s1-ex-signed-volume-can-cancel default_required]
+Signed volume can cancel
+
+[375-382 p c10s1-ex-signed-volume-can-cancel default_required]
+Let
+          f(x,y)=x-y
+          on the unit square
+          R=[0,1]\times[0,1].
+          Below the diagonal y=x, the function is positive. Above the diagonal, it is
+          negative.
+
+[383-391 p c10s1-ex-signed-volume-can-cancel default_required]
+For every point (x,y), the reflected point (y,x) has value
+          f(y,x)=y-x=-(x-y).
+          The square is symmetric under this reflection. So the positive and negative
+          contributions cancel:
+          \boxed{\iint_R (x-y)\,dA=0.}
+          This does not mean the surface is flat. It means the signed volume above the square
+          equals the signed volume below it.
+
+[395-401 p c10s1-subsec-what-a-double-integral-measures default_required]
+The idea is now visible: choose small area pieces, multiply each by the value sitting on
+      it, and add. But the phrase small area pieces still needs a careful meaning. If
+      two people choose different sample points, will they get the same answer? If the function
+      jumps around wildly, can the sums refuse to settle? The next section turns the picture of
+      columns into a definition strong enough to compute with.

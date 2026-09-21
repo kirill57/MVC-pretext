@@ -1,0 +1,391 @@
+[5-5 title sec-5-vector-valued-functions default_required]
+Vector-valued functions
+
+[7-12 p sec-5-vector-valued-functions default_required]
+Chapter 4 used parametric curves to describe shapes. The circle
+    \mathbf r(t)=(3\cos t,3\sin t)
+    was a set of points traced by a moving point. Now we read the same notation in a more
+    physical way: at time t, where is the object?
+
+[14-17 p sec-5-vector-valued-functions default_required]
+A function like this has one input, but its output is a vector. That is why it is called
+    a vector-valued function.
+
+[20-20 title c5s1-subsec-position-as-function-of-time default_required]
+Position as a function of time
+
+[22-28 p c5s1-subsec-position-as-function-of-time default_required]
+Imagine a firefly circling a porch light while slowly rising. Put the light at the origin
+      of the xy-plane, and measure height by z. Suppose the firefly's position at
+      time t is
+      \mathbf r(t)=\left(2\cos t,\;2\sin t,\;1+\frac{t}{4}\right), \qquad 0\le t\le 4\pi.
+      At a few times,
+
+[31-31 title c5s1-tab-helix-positions default_required]
+Sample positions of the firefly.
+
+[34-34 cell c5s1-tab-helix-positions default_required]
+t
+
+[35-35 cell c5s1-tab-helix-positions default_required]
+\mathbf r(t)
+
+[38-38 cell c5s1-tab-helix-positions default_required]
+0
+
+[39-39 cell c5s1-tab-helix-positions default_required]
+(2,0,1)
+
+[42-42 cell c5s1-tab-helix-positions default_required]
+\dfrac{\pi}{2}
+
+[43-43 cell c5s1-tab-helix-positions default_required]
+\left(0,2,1+\dfrac{\pi}{8}\right)
+
+[46-46 cell c5s1-tab-helix-positions default_required]
+\pi
+
+[47-47 cell c5s1-tab-helix-positions default_required]
+\left(-2,0,1+\dfrac{\pi}{4}\right)
+
+[50-50 cell c5s1-tab-helix-positions default_required]
+2\pi
+
+[51-51 cell c5s1-tab-helix-positions default_required]
+\left(2,0,1+\dfrac{\pi}{2}\right)
+
+[56-59 p c5s1-subsec-position-as-function-of-time default_required]
+The x- and y-coordinates circle around the light. The z-coordinate
+      rises steadily. The path is a helix.
+
+[62-62 caption c5s1-fig-helix-position default_required]
+A vector-valued function can record the position of a moving point. (Interactive: drag to rotate, scroll to zoom.)
+
+[64-79 asymptote c5s1-fig-helix-position default_required]
+// 3-D interactive (WebGL) figure.
+        import graph3;
+        size(8.5cm);
+        currentprojection=orthographic(5,3,2.4);
+        real a=2;
+        path3 helix=graph(new triple(real t){return (a*cos(t), a*sin(t), 1+t/4);}, 0, 4pi, 220, operator ..);
+        draw(helix, blue+linewidth(1.1pt));
+        draw(circle((0,0,0), a, (0,0,1)), gray(0.6)+dashed);
+        dot((0,0,0), yellow+8pt); label("porch light", (0,0,0), 3*S);
+        real t0=1.7; triple Q=(a*cos(t0), a*sin(t0), 1+t0/4);
+        draw((0,0,0)--Q, black+linewidth(1.3pt), Arrow3); label("$\mathbf r(t)$", 0.6*Q, NW);
+        dot((a,0,1)); label("$t=0$", (a,0,1), 2*E);
+        draw(O--(3,0,0),gray,Arrow3); draw(O--(0,3,0),gray,Arrow3); draw(O--(0,0,4.6),gray,Arrow3);
+        label("$x$",(3,0,0),S); label("$y$",(0,3,0),E); label("$z$",(0,0,4.6),N);
+
+[83-89 p c5s1-subsec-position-as-function-of-time default_required]
+The input t is a number. The output
+      \mathbf r(t)
+      is a vector in \mathbb R^3. So this is not a real-valued function like
+      f(t)=t^2.
+      It is a function whose values are vectors.
+
+[92-92 title c5s1-def-vector-valued-function default_required]
+Vector-valued function
+
+[94-96 p c5s1-def-vector-valued-function default_required]
+A vector-valued function is a function whose output is a vector.
+
+[97-101 p c5s1-def-vector-valued-function default_required]
+A vector-valued function into \mathbb R^n has the form
+          \mathbf r(t)=\bigl(r_1(t),r_2(t),\ldots,r_n(t)\bigr),
+          where each r_i(t) is an ordinary real-valued function.
+
+[102-105 p c5s1-def-vector-valued-function default_required]
+When \mathbf r(t) describes motion, we call \mathbf r(t) the
+          position vector at time t.
+
+[109-114 p c5s1-subsec-position-as-function-of-time default_required]
+For plane motion,
+      \mathbf r(t)=(x(t),y(t)).
+      For space motion,
+      \mathbf r(t)=(x(t),y(t),z(t)).
+
+[116-121 p c5s1-subsec-position-as-function-of-time default_required]
+The coordinate functions
+      x(t),\qquad y(t),\qquad z(t)
+      are called the component functions. They are ordinary single-variable
+      functions, so the tools of single-variable calculus can act on them.
+
+[125-125 title c5s1-subsec-component-functions default_required]
+Component functions
+
+[127-138 p c5s1-subsec-component-functions default_required]
+A bird flying through a room might have position
+      \mathbf r(t)=(3+t,\;2+\sin t,\;5-\cos t).
+      This one vector equation is really three equations:
+      x(t)=3+t,
+      y(t)=2+\sin t,
+      and
+      z(t)=5-\cos t.
+      Each coordinate tells a different part of the motion. The x-coordinate increases
+      steadily. The y-coordinate oscillates. The z-coordinate also oscillates, but
+      with a different timing.
+
+[141-141 title c5s1-ex-reading-motion-component-by-component default_required]
+Reading a motion component by component
+
+[143-152 p c5s1-ex-reading-motion-component-by-component default_required]
+Let
+          \mathbf r(t)=(4\cos t,\;4\sin t,\;2t), \qquad 0\le t\le 2\pi.
+          Then
+          x(t)=4\cos t,\qquad y(t)=4\sin t,\qquad z(t)=2t.
+          The first two coordinates keep the point on the cylinder
+          x^2+y^2=16.
+          The third coordinate rises from 0 to 4\pi. So the image is one turn of a
+          helix on a cylinder of radius 4.
+
+[156-159 p c5s1-subsec-component-functions default_required]
+This way of reading a vector-valued function is simple, but important. Almost every
+      calculus operation in this chapter will happen component by component.
+
+[162-162 title checkpoint-5-1-why-components-suffice default_required]
+Why look at the pieces?
+
+[164-170 p checkpoint-5-1-why-components-suffice default_required]
+Suppose a friend says, “If I understand each of the component functions
+          x(t), y(t), and z(t) separately, then I understand the whole
+          vector-valued function \mathbf r(t).” Why is that a reasonable thing to
+          claim? What is it about how \mathbf r(t) is built that lets us study it one
+          coordinate at a time?
+
+[173-176 p checkpoint-5-1-why-components-suffice hint]
+Look again at how \mathbf r(t)=(x(t),y(t),z(t)) is assembled. Knowing where the
+          point is at time t means knowing each coordinate at that time, and nothing more.
+
+[182-182 title c5s1-subsec-limits-of-vector-valued-functions default_required]
+Limits of vector-valued functions
+
+[184-187 p c5s1-subsec-limits-of-vector-valued-functions default_required]
+A moving object has a limiting position as t approaches a if its whole
+      position settles down to one vector.
+
+[189-203 p c5s1-subsec-limits-of-vector-valued-functions default_required]
+For example, consider
+      \mathbf r(t)= \left( \frac{t^2-1}{t-1},\; \sin(\pi t),\; \sqrt{t+3} \right), \qquad t\ne 1.
+      The formula is not defined at t=1, because the first component contains
+      \frac{t^2-1}{t-1}.
+      But for t\ne1,
+      \frac{t^2-1}{t-1} = \frac{(t-1)(t+1)}{t-1} = t+1.
+      So as t\to1,
+      \frac{t^2-1}{t-1}\to2,
+      \sin(\pi t)\to \sin\pi=0,
+      and
+      \sqrt{t+3}\to2.
+      Therefore
+      \lim_{t\to1}\mathbf r(t)=(2,0,2).
+
+[206-206 title c5s1-def-limit-vector-valued-function default_required]
+Limit of a vector-valued function
+
+[208-214 p c5s1-def-limit-vector-valued-function default_required]
+We write
+          \lim_{t\to a}\mathbf r(t)=\mathbf L
+          if the distance
+          \|\mathbf r(t)-\mathbf L\|
+          approaches 0 as t approaches a.
+
+[218-221 p c5s1-subsec-limits-of-vector-valued-functions default_required]
+The definition says exactly what it should say: the vector \mathbf r(t) gets close
+      to \mathbf L if the distance between them gets small.
+
+[223-223 p c5s1-subsec-limits-of-vector-valued-functions default_required]
+The previous example suggests the main rule.
+
+[226-226 title c5s1-thm-limits-are-componentwise default_required]
+Limits are componentwise
+
+[228-238 p c5s1-thm-limits-are-componentwise default_required]
+Let
+          \mathbf r(t)=\bigl(r_1(t),r_2(t),\ldots,r_n(t)\bigr)
+          and
+          \mathbf L=(L_1,L_2,\ldots,L_n).
+          Then
+          \lim_{t\to a}\mathbf r(t)=\mathbf L
+          if and only if
+          \lim_{t\to a}r_i(t)=L_i
+          for every component i=1,2,\ldots,n.
+
+[241-245 p c5s1-thm-limits-are-componentwise default_required]
+The distance from \mathbf r(t) to \mathbf L is
+          \|\mathbf r(t)-\mathbf L\| = \sqrt{ (r_1(t)-L_1)^2+\cdots+(r_n(t)-L_n)^2 }.
+          If this distance goes to 0, then each component difference must go to 0.
+
+[246-250 p c5s1-thm-limits-are-componentwise default_required]
+Conversely, if every component difference goes to 0, then the sum of their
+          squares goes to 0, so the square root also goes to 0. Thus the whole
+          vector approaches \mathbf L.
+
+[254-254 p c5s1-subsec-limits-of-vector-valued-functions default_required]
+We really do need every component to settle down.
+
+[257-257 title c5s1-ex-one-bad-component-breaks-the-limit default_required]
+One bad component breaks the limit
+
+[259-267 p c5s1-ex-one-bad-component-breaks-the-limit default_required]
+Define
+          \mathbf r(t)=\left(t,\sin\frac{1}{t}\right), \qquad t\ne0.
+          The first component has a limit:
+          t\to0.
+          But the second component
+          \sin\frac{1}{t}
+          oscillates forever as t\to0. It does not approach one number.
+
+[268-271 p c5s1-ex-one-bad-component-breaks-the-limit default_required]
+So the vector-valued function has no limit at t=0. The first coordinate behaves
+          well, but the whole point does not settle down.
+
+[275-278 p c5s1-subsec-limits-of-vector-valued-functions default_required]
+This is the same lesson as in single-variable calculus, but now it can fail in any
+      coordinate.
+
+[281-281 title checkpoint-5-1-why-limits-are-componentwise default_required]
+Why does the limit split apart?
+
+[283-288 p checkpoint-5-1-why-limits-are-componentwise default_required]
+The theorem says \lim_{t\to a}\mathbf r(t) is just the vector whose entries are
+          the limits of the components. Give an intuitive reason why this should be true. Why does
+          asking the whole vector \mathbf r(t) to settle down to \mathbf L amount to
+          asking every component to settle down on its own?
+
+[291-294 p checkpoint-5-1-why-limits-are-componentwise hint]
+Think about the distance \|\mathbf r(t)-\mathbf L\|. For that single distance to
+          shrink to 0, what has to happen to each coordinate gap at once?
+
+[300-300 title c5s1-subsec-continuity default_required]
+Continuity
+
+[302-302 p c5s1-subsec-continuity default_required]
+A position function is continuous when the moving point does not jump.
+
+[305-305 title c5s1-def-continuity-vector-valued-function default_required]
+Continuity of a vector-valued function
+
+[307-312 p c5s1-def-continuity-vector-valued-function default_required]
+A vector-valued function \mathbf r(t) is continuous at a if
+          \lim_{t\to a}\mathbf r(t)=\mathbf r(a).
+          It is continuous on an interval if it is continuous at every point of that interval
+          with the usual one-sided interpretation at endpoints.
+
+[316-316 p c5s1-subsec-continuity default_required]
+By the componentwise limit theorem, continuity is also componentwise.
+
+[319-319 title c5s1-thm-continuity-is-componentwise default_required]
+Continuity is componentwise
+
+[321-326 p c5s1-thm-continuity-is-componentwise default_required]
+The vector-valued function
+          \mathbf r(t)=\bigl(r_1(t),r_2(t),\ldots,r_n(t)\bigr)
+          is continuous at a if and only if each component function r_i(t) is
+          continuous at a.
+
+[331-331 title c5s1-ex-a-continuous-motion default_required]
+A continuous motion
+
+[333-338 p c5s1-ex-a-continuous-motion default_required]
+The function
+          \mathbf r(t)=(\cos t,\sin t,t)
+          is continuous for every t, because \cos t, \sin t, and t
+          are continuous. The curve is a helix with no jumps.
+
+[342-342 p c5s1-subsec-continuity default_required]
+Here is why the continuity condition matters.
+
+[345-345 title c5s1-ex-a-jump-is-not-steady-motion default_required]
+A jump is not a curve of steady motion
+
+[347-352 p c5s1-ex-a-jump-is-not-steady-motion default_required]
+Define
+          \mathbf r(t)= \begin{cases} (t,0), & t<0,\\ (t,1), & t\ge0. \end{cases}
+          For t<0, the point moves along the line y=0. For t\ge0, it moves
+          along the line y=1.
+
+[353-360 p c5s1-ex-a-jump-is-not-steady-motion default_required]
+At t=0,
+          \mathbf r(0)=(0,1).
+          But as t\to0^-,
+          \mathbf r(t)\to(0,0).
+          The left-hand limiting position and the actual position at 0 do not agree. The
+          point teleports upward.
+
+[361-361 p c5s1-ex-a-jump-is-not-steady-motion default_required]
+So this function is not continuous at t=0.
+
+[365-368 p c5s1-subsec-continuity default_required]
+A curve used to model physical motion is usually continuous. Later, when we want velocity,
+      we will ask for more: differentiability.
+
+[372-372 title c5s1-subsec-space-curves-as-images-of-intervals default_required]
+Space curves as images of intervals
+
+[374-381 p c5s1-subsec-space-curves-as-images-of-intervals default_required]
+The image of a vector-valued function
+      \mathbf r:I\to\mathbb R^n
+      is the set of all points reached:
+      \{\mathbf r(t):t\in I\}.
+      This image is the geometric curve. But the function \mathbf r(t) contains more
+      information than the image alone.
+
+[384-384 title c5s1-ex-same-image-different-clocks default_required]
+The same image with different clocks
+
+[386-392 p c5s1-ex-same-image-different-clocks default_required]
+The two functions
+          \mathbf r_1(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi,
+          and
+          \mathbf r_2(s)=(\cos 2s,\sin 2s), \qquad 0\le s\le\pi,
+          have the same image: the unit circle.
+
+[393-397 p c5s1-ex-same-image-different-clocks default_required]
+But the clocks are different. In \mathbf r_1, the angle is t. In
+          \mathbf r_2, the angle is 2s. The second parametrization moves around the
+          circle twice as fast with respect to its parameter.
+
+[402-402 title c5s1-ex-same-circle-traced-twice default_required]
+The same circle traced twice
+
+[404-408 p c5s1-ex-same-circle-traced-twice default_required]
+The function
+          \mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le4\pi,
+          also has the unit circle as its image. But it traces the circle twice.
+
+[409-412 p c5s1-ex-same-circle-traced-twice default_required]
+The image does not remember how many times the curve is traced. The parametrization
+          does.
+
+[416-420 p c5s1-subsec-space-curves-as-images-of-intervals default_required]
+This distinction will matter whenever we integrate along a curve. If we walk around a
+      circle twice, an accumulated quantity may be twice as large. If we reverse direction, some
+      accumulated quantities change sign.
+
+[423-423 title checkpoint-5-1-function-versus-curve default_required]
+The map or the road?
+
+[425-431 p checkpoint-5-1-function-versus-curve default_required]
+Two different functions \mathbf r_1(t) and \mathbf r_2(t) can have exactly
+          the same image, yet we still treat them as different objects. In your own words, what does
+          the function \mathbf r(t) know that the curve it traces does not? Give one piece of
+          information carried by \mathbf r(t) that is invisible if you only look at the set
+          of points.
+
+[434-437 p checkpoint-5-1-function-versus-curve hint]
+A curve is just a set of points sitting in space. The function also records a clock: when
+          you arrive at each point, how fast you pass through, and how many times you return.
+
+[441-450 p c5s1-subsec-space-curves-as-images-of-intervals default_required]
+In the language of differentials, the components of a curve also tell us how dx,
+      dy, and dz change along the curve. If
+      x=x(t),
+      then later we will write
+      dx=x'(t)\,dt.
+      That is the first hint of how a 1-form like
+      P\,dx+Q\,dy+R\,dz
+      will be pulled back to an ordinary one-variable integral along a path.
+
+[452-455 p c5s1-subsec-space-curves-as-images-of-intervals default_required]
+For now, a vector-valued function gives us a position record. The next question is the one
+      every motion problem asks first: how fast is the position changing?

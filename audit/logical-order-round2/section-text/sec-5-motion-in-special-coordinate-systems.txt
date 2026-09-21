@@ -1,0 +1,530 @@
+[6-6 title sec-5-motion-in-special-coordinate-systems default_required]
+Motion in special coordinate systems
+
+[8-14 p sec-5-motion-in-special-coordinate-systems default_required]
+described a moving orthonormal
+    frame (\mathbf T,\mathbf N,\mathbf B) attached to a space curve.
+    Curvature and torsion record how that frame turns as distance is traveled.
+    Polar coordinates use a different moving frame,
+    (\mathbf e_r,\mathbf e_\theta), whose directions rotate as the point moves.
+
+[16-21 p sec-5-motion-in-special-coordinate-systems default_required]
+Rectangular coordinates are not always the friendliest language. A boat tracked by radar is
+    naturally described by distance and angle. A planet moving around the sun is naturally
+    described by distance from the sun and angle swept around it. For such motions, polar
+    coordinates do not merely shorten formulas. They reveal structure.
+
+[24-24 title c5s5-subsec-velocity-in-polar-coordinates default_required]
+Velocity in polar coordinates
+
+[26-34 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+A rescue boat leaves a harbor at sunset. Its radar position is recorded by
+      r(t)=4+t, \qquad \theta(t)=\frac{t}{2},
+      where r is measured in kilometers and t is measured in hours. The boat is
+      moving outward because
+      r'(t)=1.
+      It is also turning counterclockwise because
+      \theta'(t)=\frac12.
+
+[36-39 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+At time t, an increase in r moves the boat directly away from the harbor. An
+      increase in \theta moves the boat sideways along a circle centered at the harbor.
+
+[41-53 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+At t=0,
+      r=4.
+      The radial speed is
+      r'=1.
+      The sideways speed is not just \theta'. An angular change of \theta' radians
+      per hour along a circle of radius r gives tangential speed
+      r\theta'=4\cdot\frac12=2.
+      So at t=0, the velocity is made from two perpendicular pieces:
+      \text{radial part } 1, \qquad \text{angular part } 2.
+      The speed is therefore
+      \sqrt{1^2+2^2}=\sqrt5.
+
+[55-64 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+At t=2,
+      r=6.
+      The radial speed is still 1, but the sideways speed is now
+      r\theta'=6\cdot\frac12=3.
+      So the speed is
+      \sqrt{1^2+3^2}=\sqrt{10}.
+      The angular rate stayed the same, but the boat was farther from the center, so the
+      sideways motion became faster.
+
+[66-66 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+This example already contains the polar velocity formula.
+
+[69-69 title checkpoint-5-5-radial-and-transverse-velocity default_required]
+Why two pieces?
+
+[71-75 p checkpoint-5-5-radial-and-transverse-velocity default_required]
+In the boat example, the velocity has a radial part pointing away from the harbor and a transverse part pointing along a circle. Without computing anything, explain
+          in words why two different motions of the boat are needed to account for its velocity.
+          What does each piece describe about how the boat is moving?
+
+[78-82 p checkpoint-5-5-radial-and-transverse-velocity hint]
+Picture holding the angle fixed and only letting r grow, then holding r
+          fixed and only letting \theta grow. Where does the boat go in each case, and how
+          could it ever move in just one of these ways alone?
+
+[86-91 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+To write it cleanly, define two unit vectors that move with the point:
+      \boxed{ \mathbf e_r=(\cos\theta,\sin\theta), \qquad \mathbf e_\theta=(-\sin\theta,\cos\theta). }
+      The vector \mathbf e_r points outward from the origin. The vector
+      \mathbf e_\theta points in the direction of increasing angle.
+
+[94-95 caption c5s5-fig-polar-unit-vectors default_required]
+The unit vector \mathbf e_r points outward, and \mathbf e_\theta
+      points in the direction of increasing angle.
+
+[97-120 latex-image c5s5-fig-polar-unit-vectors default_required]
+\begin{tikzpicture}[scale=0.95, >=stealth]
+            \draw[->] (-0.5,0) -- (5.5,0) node[right] {\(x\)};
+            \draw[->] (0,-0.5) -- (0,4.5) node[above] {\(y\)};
+
+            \coordinate (O) at (0,0);
+            \coordinate (P) at ({4*cos(35)}, {4*sin(35)});
+
+            \draw[gray!35] (O) circle (4);
+            \draw[->, thick] (O) -- (P) node[midway, below right] {\(r\)};
+
+            \draw[thick] (1.1,0) arc[start angle=0,end angle=35,radius=1.1];
+            \node at (1.45,0.35) {\(\theta\)};
+
+            \fill (P) circle (2.5pt);
+
+            \draw[->, very thick] (P) -- ++({1.2*cos(35)}, {1.2*sin(35)})
+                node[above right] {\(\mathbf e_r\)};
+            \draw[->, very thick] (P) -- ++({-1.2*sin(35)}, {1.2*cos(35)})
+                node[above left] {\(\mathbf e_\theta\)};
+
+            \node at (2.6,-1.0) {The polar unit vectors move with the point.};
+        \end{tikzpicture}
+
+[124-129 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+The position vector is
+      \mathbf R(t)=r(t)\mathbf e_r(t).
+      Here \mathbf R is the actual position vector, while r(t) is the scalar
+      distance from the origin.
+
+[131-138 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+As \theta changes, the polar unit vectors rotate. Differentiating
+      \mathbf e_r=(\cos\theta,\sin\theta)
+      gives
+      \frac{d\mathbf e_r}{dt} = \theta'(-\sin\theta,\cos\theta) = \theta'\mathbf e_\theta.
+      Similarly,
+      \frac{d\mathbf e_\theta}{dt} = -\theta'\mathbf e_r.
+
+[140-147 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+Now differentiate the position:
+      
+        \mathbf v \amp= \frac{d}{dt}\bigl(r\mathbf e_r\bigr)
+        \amp= r'\mathbf e_r+r\frac{d\mathbf e_r}{dt}
+        \amp= r'\mathbf e_r+r\theta'\mathbf e_\theta.
+
+[150-150 title c5s5-thm-velocity-in-polar-coordinates default_required]
+Velocity in polar coordinates
+
+[152-159 p c5s5-thm-velocity-in-polar-coordinates default_required]
+Suppose a plane motion is written in polar form as
+          \mathbf R(t)=r(t)\mathbf e_r(t),
+          where r(t) and \theta(t) are differentiable. Then
+          \boxed{ \mathbf v(t)=r'(t)\mathbf e_r+r(t)\theta'(t)\mathbf e_\theta. }
+          The speed is
+          \boxed{ \|\mathbf v(t)\|= \sqrt{(r'(t))^2+\bigl(r(t)\theta'(t)\bigr)^2}. }
+
+[162-172 p c5s5-thm-velocity-in-polar-coordinates default_required]
+The first formula follows from the product rule:
+          \frac{d}{dt}\bigl(r\mathbf e_r\bigr) = r'\mathbf e_r+r\mathbf e_r'.
+          Since
+          \mathbf e_r'=\theta'\mathbf e_\theta,
+          we get
+          \mathbf v=r'\mathbf e_r+r\theta'\mathbf e_\theta.
+          The vectors \mathbf e_r and \mathbf e_\theta are perpendicular unit
+          vectors, so the length of the velocity is found by the Pythagorean theorem:
+          \|\mathbf v\|=\sqrt{(r')^2+(r\theta')^2}.
+
+[176-179 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+The hypotheses matter. We need r(t) and \theta(t) to be differentiable, and
+      we need a polar description that behaves well. The origin is a special danger point.
+
+[182-182 title c5s5-ex-origin-no-preferred-angle default_required]
+The origin has no preferred angle
+
+[184-195 p c5s5-ex-origin-no-preferred-angle default_required]
+The motion
+          \mathbf R(t)=(0,0)
+          for all t is perfectly still. Its velocity is
+          \mathbf v(t)=\mathbf 0.
+          But in polar coordinates this same motion can be written as
+          r(t)=0, \qquad \theta(t)=t^2,
+          or
+          r(t)=0, \qquad \theta(t)=\sin\frac1t
+          for t\ne0, or with almost any other angle function. The angle does not describe
+          anything real when r=0.
+
+[196-199 p c5s5-ex-origin-no-preferred-angle default_required]
+So polar formulas must be used with care at the origin. A point at the origin has no
+          well-defined radial direction and no well-defined angular direction.
+
+[203-206 p c5s5-subsec-velocity-in-polar-coordinates default_required]
+There is a second warning. A geometric path may be smooth while a bad polar description is
+      not.
+
+[209-209 title c5s5-ex-bad-polar-clock default_required]
+A bad polar clock can create a fake problem
+
+[211-217 p c5s5-ex-bad-polar-clock default_required]
+The line motion
+          \mathbf R(t)=(t,0)
+          is smooth. Its velocity is
+          \mathbf R'(t)=(1,0)
+          for every t.
+
+[218-224 p c5s5-ex-bad-polar-clock default_required]
+If we insist on r(t)\ge0, then one polar description is
+          r(t)=|t|, \qquad \theta(t)= \begin{cases} \pi, \amp t<0,\\ 0, \amp t>0. \end{cases}
+          At t=0, this polar description has a corner in r and a jump in
+          \theta. The problem is not the original motion. The problem is the polar
+          coordinate description at the origin.
+
+[225-225 p c5s5-ex-bad-polar-clock default_required]
+Coordinates are tools. At their singular points, they can misbehave.
+
+[231-231 title c5s5-subsec-acceleration-in-polar-coordinates default_required]
+Acceleration in polar coordinates
+
+[233-239 p c5s5-subsec-acceleration-in-polar-coordinates default_required]
+Velocity in polar coordinates has two pieces:
+      \mathbf v=r'\mathbf e_r+r\theta'\mathbf e_\theta.
+      Acceleration comes from differentiating this formula. Because the basis vectors
+      \mathbf e_r and \mathbf e_\theta rotate as the point moves, the result
+      contains more than just r'' and \theta''.
+
+[241-254 p c5s5-subsec-acceleration-in-polar-coordinates default_required]
+Differentiate:
+      
+        \mathbf a \amp= \frac{d}{dt}\left(r'\mathbf e_r+r\theta'\mathbf e_\theta\right)
+        \amp= r''\mathbf e_r+r'\mathbf e_r' +(r'\theta'+r\theta'')\mathbf e_\theta +r\theta'\mathbf e_\theta'.
+      
+      Use
+      \mathbf e_r'=\theta'\mathbf e_\theta, \qquad \mathbf e_\theta'=-\theta'\mathbf e_r.
+      Then
+      
+        \mathbf a \amp= r''\mathbf e_r +r'\theta'\mathbf e_\theta +(r'\theta'+r\theta'')\mathbf e_\theta -r(\theta')^2\mathbf e_r
+        \amp= \bigl(r''-r(\theta')^2\bigr)\mathbf e_r + \bigl(r\theta''+2r'\theta'\bigr)\mathbf e_\theta.
+
+[257-257 title c5s5-thm-acceleration-in-polar-coordinates default_required]
+Acceleration in polar coordinates
+
+[259-264 p c5s5-thm-acceleration-in-polar-coordinates default_required]
+Suppose
+          \mathbf R(t)=r(t)\mathbf e_r(t)
+          is a plane motion with r(t) and \theta(t) twice differentiable. Then
+          \boxed{ \mathbf a(t) = \bigl(r''-r(\theta')^2\bigr)\mathbf e_r + \bigl(r\theta''+2r'\theta'\bigr)\mathbf e_\theta. }
+
+[268-271 p c5s5-subsec-acceleration-in-polar-coordinates default_required]
+The twice differentiable condition is not decoration. Acceleration is a second derivative.
+      At an instant where the second derivative does not exist, this acceleration formula cannot be applied. A reversal by itself need not be a problem: a smooth motion can stop and reverse.
+
+[274-274 title c5s5-ex-corner-in-angle default_required]
+A corner in angle destroys velocity at the corner
+
+[276-286 p c5s5-ex-corner-in-angle default_required]
+Let
+          r(t)=1, \qquad \theta(t)=|t|.
+          The position is
+          \mathbf R(t)=(\cos|t|,\sin|t|).
+          For t>0, the point moves counterclockwise on the unit circle. For
+          t<0, it moves clockwise. At t=0, the point is
+          (1,0),
+          but the velocity from the left points downward while the velocity from the right
+          points upward.
+
+[287-291 p c5s5-ex-corner-in-angle default_required]
+So \mathbf R'(0) does not exist. The formula for acceleration cannot be used at
+          t=0. The hypothesis that r and \theta are differentiable is doing
+          real work.
+
+[297-297 title c5s5-subsec-circular-motion-and-angular-velocity default_required]
+Circular motion and angular velocity
+
+[299-306 p c5s5-subsec-circular-motion-and-angular-velocity default_required]
+Circular motion is the cleanest polar motion. The radius is constant:
+      r(t)=R.
+      The angle changes:
+      \theta=\theta(t).
+      The angular velocity is
+      \boxed{ \omega(t)=\theta'(t). }
+
+[308-314 p c5s5-subsec-circular-motion-and-angular-velocity default_required]
+From the polar velocity formula,
+      \mathbf v=R\omega\,\mathbf e_\theta.
+      So the speed is
+      \boxed{ \|\mathbf v\|=R|\omega|. }
+      A larger circle gives a larger speed for the same angular velocity.
+
+[316-324 p c5s5-subsec-circular-motion-and-angular-velocity default_required]
+The acceleration formula gives
+      \boxed{ \mathbf a=-R\omega^2\mathbf e_r+R\omega'\mathbf e_\theta. }
+      The radial term
+      -R\omega^2\mathbf e_r
+      points inward. The tangential term
+      R\omega'\mathbf e_\theta
+      appears only when the angular velocity changes.
+
+[327-327 title checkpoint-5-5-why-uniform-circular-motion-accelerates default_required]
+Constant speed, yet accelerating?
+
+[329-333 p checkpoint-5-5-why-uniform-circular-motion-accelerates default_required]
+A rider on the wheel moves at constant speed, so \omega never changes. Yet the
+          acceleration -R\omega^2\mathbf e_r is not zero. How can something accelerate
+          while its speed stays the same? What is actually changing from one instant to the next?
+
+[336-340 p checkpoint-5-5-why-uniform-circular-motion-accelerates hint]
+Acceleration measures the change in the velocity vector, not just in the speed.
+          Watch the direction of \mathbf e_\theta as the rider goes around: does the
+          velocity vector ever stop turning?
+
+[345-345 title c5s5-ex-spinning-observation-wheel default_required]
+A spinning observation wheel
+
+[347-354 p c5s5-ex-spinning-observation-wheel default_required]
+A seat on an observation wheel of radius 20 meters rotates with constant angular
+          velocity
+          \omega=\frac{\pi}{30}
+          radians per second. Its speed is
+          R|\omega| = 20\cdot\frac{\pi}{30} = \frac{2\pi}{3}
+          meters per second.
+
+[355-364 p c5s5-ex-spinning-observation-wheel default_required]
+Since \omega is constant,
+          \omega'=0.
+          So the acceleration is purely inward:
+          \mathbf a=-R\omega^2\mathbf e_r.
+          Its magnitude is
+          R\omega^2 = 20\left(\frac{\pi}{30}\right)^2 = \frac{\pi^2}{45}.
+          The rider is not speeding up, but the rider is accelerating because the direction of
+          motion is continuously changing.
+
+[368-377 p c5s5-subsec-circular-motion-and-angular-velocity default_required]
+This agrees with . A circle of radius
+      R has curvature
+      \kappa=\frac1R.
+      The speed is
+      \sigma=R|\omega|.
+      So the normal acceleration is
+      a_N=\kappa\sigma^2 = \frac1R(R^2\omega^2) = R\omega^2.
+      The same fact has appeared twice: once from curvature, and once from polar coordinates.
+
+[380-380 title c5s5-ex-circular-motion-speeds-up default_required]
+Circular motion that speeds up
+
+[382-393 p c5s5-ex-circular-motion-speeds-up default_required]
+Let
+          r(t)=3, \qquad \theta(t)=t^2.
+          Then
+          \omega(t)=2t, \qquad \omega'(t)=2.
+          The velocity is
+          \mathbf v=3(2t)\mathbf e_\theta=6t\mathbf e_\theta.
+          The acceleration is
+          \mathbf a = -3(2t)^2\mathbf e_r+3(2)\mathbf e_\theta = -12t^2\mathbf e_r+6\mathbf e_\theta.
+          For t\ge0, the inward part grows as t^2, because the speed is increasing. The tangential
+          part is constant, because the angular velocity increases at a constant rate.
+
+[399-399 title c5s5-subsec-planetary-motion-guiding-example default_required]
+Planetary motion as a guiding example
+
+[401-405 p c5s5-subsec-planetary-motion-guiding-example default_required]
+A planet moving around the sun is not usually best described by x(t) and
+      y(t). The natural questions are radial:
+      \text{How far from the sun?} \qquad \text{How fast is the radius vector turning?}
+
+[407-424 p c5s5-subsec-planetary-motion-guiding-example default_required]
+Put the sun at the origin. Suppose the planet has position
+      \mathbf R(t)=r(t)\mathbf e_r.
+      Gravity pulls along the line from the planet to the sun. That means the acceleration has no
+      \mathbf e_\theta component. In polar coordinates,
+      \mathbf a = \bigl(r''-r(\theta')^2\bigr)\mathbf e_r + \bigl(r\theta''+2r'\theta'\bigr)\mathbf e_\theta.
+      So a central force gives
+      r\theta''+2r'\theta'=0.
+      Multiply by r:
+      r^2\theta''+2rr'\theta'=0.
+      But the left side is the derivative of
+      r^2\theta':
+      indeed,
+      \frac{d}{dt}\bigl(r^2\theta'\bigr) = 2rr'\theta'+r^2\theta''.
+      Therefore
+      \boxed{ r^2\theta'=h }
+      for some constant h.
+
+[426-429 p c5s5-subsec-planetary-motion-guiding-example default_required]
+This quantity is the angular momentum per unit mass. It is also the key to a beautiful area
+      fact.
+
+[433-433 title c5s5-subsec-area-swept-out-by-radius-vector default_required]
+The area swept out by a radius vector
+
+[435-442 p c5s5-subsec-area-swept-out-by-radius-vector default_required]
+Imagine the planet at two nearby times. The radius vector from the sun to the planet sweeps
+      out a thin wedge. For a small angle change \Delta\theta, the area is approximately
+      \frac12 r^2\Delta\theta.
+      So the rate at which area is swept should be
+      \frac12 r^2\theta'.
+      The calculation above says this rate is constant for central-force motion.
+
+[445-445 title checkpoint-5-5-equal-areas-under-central-force default_required]
+Why equal areas?
+
+[447-453 p checkpoint-5-5-equal-areas-under-central-force default_required]
+Under a central force the quantity r^2\theta' stays constant, so the radius
+          vector sweeps equal areas in equal times. When the planet swings close to the sun and
+          r shrinks, what must \theta' do to keep the swept-area rate
+          \tfrac12 r^2\theta' unchanged? Use that to explain why a nearby planet races
+          along and a distant one dawdles.
+
+[456-460 p checkpoint-5-5-equal-areas-under-central-force hint]
+Think of \tfrac12 r^2\theta' as a fixed budget. If r drops, the only way
+          to keep the product the same is for \theta' to compensate. Which direction must
+          it move?
+
+[465-465 caption c5s5-fig-swept-area default_required]
+A radius vector sweeps out area as the angle changes.
+
+[467-496 latex-image c5s5-fig-swept-area default_required]
+\begin{tikzpicture}[scale=1.0, >=stealth]
+            \draw[->] (-0.4,0) -- (5.8,0) node[right] {\(x\)};
+            \draw[->] (0,-0.4) -- (0,4.5) node[above] {\(y\)};
+
+            \coordinate (O) at (0,0);
+            \coordinate (P) at (25:4);
+            \coordinate (Q) at (45:4.25);
+
+            % Smoothly interpolate the radius from 4 to 4.25
+            \fill[gray!20] (O) -- (P)
+                -- plot[domain=25:45, samples=30, variable=\t]
+                    ({(4 + 0.0125*(\t-25)) * cos(\t)}, {(4 + 0.0125*(\t-25)) * sin(\t)})
+                -- cycle;
+
+            \draw[->, thick] (O) -- (P) node[midway, below right] {\(r\)};
+            \draw[->, thick] (O) -- (Q);
+
+            \draw[thick] plot[domain=25:45, samples=30, variable=\t]
+                ({(4 + 0.0125*(\t-25)) * cos(\t)}, {(4 + 0.0125*(\t-25)) * sin(\t)});
+
+            \fill (O) circle (2.5pt);
+            \fill (P) circle (2.5pt);
+            \fill (Q) circle (2.5pt);
+
+            \node[below left] at (O) {sun};
+            \node[above right] at (Q) {planet};
+            \node at (2.6,1.4) {swept area};
+        \end{tikzpicture}
+
+[501-501 title c5s5-def-signed-swept-area default_required]
+Signed swept area
+
+[503-511 p c5s5-def-signed-swept-area default_required]
+For a plane motion
+          \mathbf R(t)=(x(t),y(t)),
+          the signed area swept out by the radius vector from time a to time
+          b is
+          \boxed{ A=\frac12\int_a^b \bigl(x(t)y'(t)-y(t)x'(t)\bigr)\,dt. }
+          In polar coordinates this becomes
+          \boxed{ A=\frac12\int_a^b r(t)^2\theta'(t)\,dt. }
+
+[515-523 p c5s5-subsec-area-swept-out-by-radius-vector default_required]
+Here is the polar calculation. If
+      x=r\cos\theta,\qquad y=r\sin\theta,
+      then
+      x'=r'\cos\theta-r\theta'\sin\theta,\qquad y'=r'\sin\theta+r\theta'\cos\theta.
+      Expanding and canceling the rr' terms gives
+      xy'-yx'=r^2\theta'.
+      Substitution into the single-variable integral above proves the polar formula.
+
+[525-530 p c5s5-subsec-area-swept-out-by-radius-vector default_required]
+This is our first clear appearance of a 1-form that measures an area swept along a
+      curve:
+      \boxed{ \omega_A=\frac12(x\,dy-y\,dx). }
+      At a fixed point (x,y), this is a linear measurement of a displacement vector (a,b), with value (xb-ya)/2, using the coordinate measurements from Chapter 2. Evaluating it on the velocity gives (xy'-yx')/2. This optional notation anticipates line integrals; the computations here use the displayed ordinary single-variable integrals.
+
+[533-533 title c5s5-thm-keplers-second-law default_required]
+Kepler's second law for central acceleration
+
+[535-543 p c5s5-thm-keplers-second-law default_required]
+Suppose a twice continuously differentiable plane motion, with twice continuously differentiable polar coordinates, satisfies
+          r(t)>0
+          and has acceleration always parallel to \mathbf e_r. Then
+          r(t)^2\theta'(t)
+          is constant. Therefore the signed area swept out per unit time,
+          \boxed{ \frac{dA}{dt}=\frac12r(t)^2\theta'(t), }
+          is constant.
+
+[544-544 p c5s5-thm-keplers-second-law default_required]
+In words: equal time intervals sweep out equal signed areas.
+
+[547-562 p c5s5-thm-keplers-second-law default_required]
+If the acceleration is always radial, then its \mathbf e_\theta-component is
+          zero:
+          r\theta''+2r'\theta'=0.
+          Since r>0, multiply by r:
+          r^2\theta''+2rr'\theta'=0.
+          But
+          \frac{d}{dt}(r^2\theta') = r^2\theta''+2rr'\theta'.
+          So
+          \frac{d}{dt}(r^2\theta')=0.
+          Thus
+          r^2\theta'
+          is constant. Since
+          \frac{dA}{dt}=\frac12r^2\theta',
+          the swept area rate is also constant.
+
+[566-566 p c5s5-subsec-area-swept-out-by-radius-vector default_required]
+The condition that the acceleration be radial is essential.
+
+[569-569 title c5s5-ex-tangential-acceleration-breaks-equal-areas default_required]
+Tangential acceleration breaks equal areas
+
+[571-579 p c5s5-ex-tangential-acceleration-breaks-equal-areas default_required]
+Let
+          r(t)=1, \qquad \theta(t)=t^2.
+          Then
+          r^2\theta'=2t,
+          which is not constant. The signed swept area rate is
+          \frac{dA}{dt}=\frac12(2t)=t.
+          The radius vector sweeps area faster as time passes.
+
+[580-585 p c5s5-ex-tangential-acceleration-breaks-equal-areas default_required]
+The polar acceleration has \mathbf e_\theta-component
+          r\theta''+2r'\theta'=1\cdot2+0=2.
+          So the acceleration is not purely radial. There is tangential acceleration, and equal
+          areas in equal times fail.
+
+[589-589 p c5s5-subsec-area-swept-out-by-radius-vector default_required]
+There is also a warning about the word signed.
+
+[592-592 title c5s5-ex-signed-swept-area-can-cancel default_required]
+Signed swept area can cancel
+
+[594-603 p c5s5-ex-signed-swept-area-can-cancel default_required]
+Let
+          r(t)=1, \qquad \theta(t)=\sin t, \qquad 0\le t\le2\pi.
+          Then
+          \theta'(t)=\cos t.
+          The signed swept area is
+          A=\frac12\int_0^{2\pi}\cos t\,dt=0.
+          But the radius vector did move. It swept forward and then backward, and the signed
+          areas canceled.
+
+[604-608 p c5s5-ex-signed-swept-area-can-cancel default_required]
+So the formula
+          \frac12\int r^2\theta'\,dt
+          measures signed swept area. If a ray backtracks, total swept area counted with repetitions is obtained by integrating the absolute value of the area rate. This need not equal the area of the union of the swept regions, which counts overlapping regions only once.
+
+[612-617 p c5s5-subsec-area-swept-out-by-radius-vector default_required]
+Special coordinates have now done two things for us. They shortened computations, and they
+      exposed hidden quantities: angular velocity, inward acceleration, and swept area. The
+      chapter has one more job: gather the whole toolbox and see how it works in larger motion
+      problems, from projectiles with air resistance to the curvature of roads.

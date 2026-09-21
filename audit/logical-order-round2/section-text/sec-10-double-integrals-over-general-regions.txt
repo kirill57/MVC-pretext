@@ -1,0 +1,549 @@
+[5-5 title sec-10-double-integrals-over-general-regions default_required]
+Double integrals over general regions
+
+[7-10 p sec-10-double-integrals-over-general-regions default_required]
+A rectangle is easy to slice because every vertical slice has the same y-limits, and
+    every horizontal slice has the same x-limits. A general region asks for more care.
+
+[12-12 p sec-10-double-integrals-over-general-regions default_required]
+The main rule is not a formula. It is a habit:
+
+[14-14 md sec-10-double-integrals-over-general-regions default_required]
+\boxed{\text{Draw the region before writing the integral.}}
+
+[16-16 p sec-10-double-integrals-over-general-regions default_required]
+The picture tells us the limits.
+
+[18-24 p sec-10-double-integrals-over-general-regions default_required]
+To give the integral a meaning before computing it by slices, enclose a bounded region
+    D in a rectangle R. Extend f to be zero on the part of R
+    outside D. When this extension is Riemann integrable, define
+    \iint_D f\,dA as its integral over R. A larger enclosing rectangle
+    adds only zeros. For the continuous functions and regions bounded by finitely many
+    piecewise smooth arcs used below, the boundary cells contribute an error tending to zero,
+    so this construction applies.
+
+[27-27 title c10s4-subsec-triangular-flower-bed default_required]
+A triangular flower bed
+
+[29-35 p c10s4-subsec-triangular-flower-bed default_required]
+A triangular flower bed is bounded by
+      y=0, \qquad x=4, \qquad y=\frac{x}{2}.
+      Suppose the height of a layer of mulch spread over the bed is modeled by
+      m(x,y)=6-y.
+      Find the total volume of mulch over the bed.
+
+[37-44 p c10s4-subsec-triangular-flower-bed default_required]
+The region is
+      D=\left\{(x,y):0\le x\le4,\ 0\le y\le \frac{x}{2}\right\}.
+      For each fixed x, the vertical slice runs from the bottom edge
+      y=0
+      to the slanted edge
+      y=\frac{x}{2}.
+
+[47-47 caption c10s4-fig-triangle-flower-bed default_required]
+For this triangle, a vertical slice has variable height x/2.
+
+[49-72 latex-image c10s4-fig-triangle-flower-bed default_required]
+\begin{tikzpicture}[scale=1.05, >=stealth]
+            \draw[->] (-0.3,0) -- (5.0,0) node[right] {\(x\)};
+            \draw[->] (0,-0.3) -- (0,3.0) node[above] {\(y\)};
+
+            \draw[fill=green!12, draw=green!45!black, thick]
+                (0,0) -- (4,0) -- (4,2) -- cycle;
+
+            \draw[thick] (0,0) -- (4,2);
+
+            \node[above left] at (3.6,1.8) {\(y=x/2\)};
+
+            \draw[fill=blue!25, draw=blue!60!black, thick]
+                (2.2,0) -- (2.55,0) -- (2.55,1.275) -- (2.2,1.1) -- cycle;
+
+            \node[blue!60!black] at (1.45,1.7) {vertical slice};
+            \draw[->, blue!60!black, thick] (1.75,1.55) -- (2.3,0.9);
+
+            \node[below] at (4,0) {\(4\)};
+            \node[left] at (0,2) {\(2\)};
+            \fill (4,2) circle (2pt);
+            \node[right] at (4,2) {\((4,2)\)};
+        \end{tikzpicture}
+
+[76-96 p c10s4-subsec-triangular-flower-bed default_required]
+Therefore
+      V=\iint_D (6-y)\,dA
+      becomes
+      V=\int_0^4\int_0^{x/2} (6-y)\,dy\,dx.
+      Compute the inner integral:
+      
+        \int_0^{x/2} (6-y)\,dy \amp= \left[6y-\frac12y^2\right]_0^{x/2}
+        \amp= 3x-\frac{x^2}{8}.
+      
+      Now integrate in x:
+      
+        V \amp= \int_0^4 \left( 3x-\frac{x^2}{8} \right)\,dx
+        \amp= \left[ \frac32x^2-\frac{x^3}{24} \right]_0^4
+        \amp= 24-\frac{64}{24}
+        \amp= 24-\frac{8}{3}
+        \amp= \frac{64}{3}.
+      
+      Thus
+      \boxed{V=\frac{64}{3}.}
+
+[98-102 p c10s4-subsec-triangular-flower-bed default_required]
+The only new feature was the upper limit
+      \frac{x}{2}.
+      The upper edge of the region became a limit of integration.
+
+[106-106 title c10s4-subsec-type-i-regions default_required]
+Type I regions
+
+[108-108 p c10s4-subsec-type-i-regions default_required]
+The triangular flower bed is an example of a region that is easy to slice vertically.
+
+[111-111 title c10s4-def-type-i-region default_required]
+Type I region
+
+[113-122 p c10s4-def-type-i-region default_required]
+A region D in the plane is called a Type I region if it can be
+          written as
+          \boxed{ D= \left\{ (x,y): a\le x\le b,\ \phi_1(x)\le y\le \phi_2(x) \right\}. }
+          Here the x-values run from a to b, and for each fixed x, the
+          y-values run from a lower curve
+          y=\phi_1(x)
+          to an upper curve
+          y=\phi_2(x).
+
+[126-129 p c10s4-subsec-type-i-regions default_required]
+For a Type I region,
+      \boxed{ \iint_D f(x,y)\,dA = \int_a^b \int_{\phi_1(x)}^{\phi_2(x)} f(x,y)\,dy\,dx. }
+
+[131-134 p c10s4-subsec-type-i-regions default_required]
+The inner integral moves along a vertical slice. The outer integral moves those slices from
+      left to right.
+
+[137-137 title checkpoint-10-4-inner-limits-functions default_required]
+Why can the inner limits move?
+
+[139-144 p checkpoint-10-4-inner-limits-functions default_required]
+In a Type I setup, the outer limits a and b are plain constants, but the
+          inner limits \phi_1(x) and \phi_2(x) are functions of x. Why must
+          it be this way? What would go wrong if you tried to use constant y-limits for a
+          region whose top and bottom edges are slanted?
+
+[147-151 p checkpoint-10-4-inner-limits-functions hint]
+Picture two different vertical slices, one at a small x and one at a large
+          x. Do they start and end at the same height? Think about what the inner limits are
+          describing versus what the outer limits are describing.
+
+[156-156 caption c10s4-fig-type-i-region default_required]
+A Type I region is described by vertical slices.
+
+[158-186 latex-image c10s4-fig-type-i-region default_required]
+\begin{tikzpicture}[scale=1.0, >=stealth]
+            \draw[->] (-0.4,0) -- (5.5,0) node[right] {\(x\)};
+            \draw[->] (0,-0.5) -- (0,4.2) node[above] {\(y\)};
+
+            \draw[fill=gray!10, draw=none]
+                plot[domain=0.8:4.6, samples=80] (\x,{0.65+0.10*(\x-1.2)^2})
+                -- plot[domain=4.6:0.8, samples=80] (\x,{3.1-0.18*(\x-2.8)^2})
+                -- cycle;
+
+            \draw[thick, blue!60!black, domain=0.8:4.6, samples=80]
+                plot (\x,{0.65+0.10*(\x-1.2)^2});
+            \draw[thick, red!65!black, domain=0.8:4.6, samples=80]
+                plot (\x,{3.1-0.18*(\x-2.8)^2});
+
+            \draw[dashed] (0.8,0) -- (0.8,{0.65+0.10*(0.8-1.2)^2});
+            \draw[dashed] (4.6,0) -- (4.6,{0.65+0.10*(4.6-1.2)^2});
+
+            \draw[very thick, green!50!black]
+                (2.7,{0.65+0.10*(2.7-1.2)^2})
+                -- (2.7,{3.1-0.18*(2.7-2.8)^2});
+
+            \node[blue!60!black] at (2.0,0.34) {\(y=\phi_1(x)\)};
+            \node[red!65!black] at (3.2,3.35) {\(y=\phi_2(x)\)};
+            \node[below] at (0.8,0) {\(a\)};
+            \node[below] at (4.6,0) {\(b\)};
+            \node[green!50!black, right] at (2.75,2.0) {vertical slice};
+        \end{tikzpicture}
+
+[191-191 title c10s4-thm-type-i default_required]
+Double integral over a Type I region
+
+[193-199 p c10s4-thm-type-i default_required]
+Suppose
+          D= \left\{ (x,y): a\le x\le b,\ \phi_1(x)\le y\le \phi_2(x) \right\},
+          where \phi_1 and \phi_2 are continuous with \phi_1\le\phi_2 on [a,b], and suppose f is continuous
+          on D. Then
+          \boxed{ \iint_D f(x,y)\,dA = \int_a^b \int_{\phi_1(x)}^{\phi_2(x)} f(x,y)\,dy\,dx. }
+
+[202-202 title c10s4-thm-type-i default_required]
+Idea of the proof
+
+[203-212 p c10s4-thm-type-i default_required]
+For each fixed x, the vertical cross-section of D has y-values from
+          \phi_1(x)
+          to
+          \phi_2(x).
+          So the inner integral
+          \int_{\phi_1(x)}^{\phi_2(x)} f(x,y)\,dy
+          adds f along that vertical slice. The outer integral then adds all those slices
+          from x=a to x=b.
+
+[213-216 p c10s4-thm-type-i default_required]
+This is the same slicing idea as Fubini's theorem, except now the slice endpoints can
+          move with x.
+
+[222-222 title c10s4-subsec-type-ii-regions default_required]
+Type II regions
+
+[224-224 p c10s4-subsec-type-ii-regions default_required]
+Some regions are easier to slice horizontally.
+
+[226-244 p c10s4-subsec-type-ii-regions default_required]
+The same triangular flower bed can also be described by horizontal slices. Since
+      y=\frac{x}{2}
+      is the same as
+      x=2y,
+      the triangle can be written as
+      D= \left\{ (x,y): 0\le y\le2,\ 2y\le x\le4 \right\}.
+      Thus
+      
+        V \amp= \int_0^2\int_{2y}^4 (6-y)\,dx\,dy
+        \amp= \int_0^2 (6-y)(4-2y)\,dy
+        \amp= \int_0^2 (24-16y+2y^2)\,dy
+        \amp= \left[ 24y-8y^2+\frac23y^3 \right]_0^2
+        \amp= 48-32+\frac{16}{3}
+        \amp= \frac{64}{3}.
+      
+      This matches the answer from vertical slices:
+      \boxed{\frac{64}{3}.}
+
+[247-247 title c10s4-def-type-ii-region default_required]
+Type II region
+
+[249-258 p c10s4-def-type-ii-region default_required]
+A region D in the plane is called a Type II region if it can be
+          written as
+          \boxed{ D= \left\{ (x,y): c\le y\le d,\ \psi_1(y)\le x\le \psi_2(y) \right\}. }
+          Here the y-values run from c to d, and for each fixed y, the
+          x-values run from a left curve
+          x=\psi_1(y)
+          to a right curve
+          x=\psi_2(y).
+
+[262-265 p c10s4-subsec-type-ii-regions default_required]
+For a Type II region,
+      \boxed{ \iint_D f(x,y)\,dA = \int_c^d \int_{\psi_1(y)}^{\psi_2(y)} f(x,y)\,dx\,dy. }
+
+[268-268 caption c10s4-fig-type-ii-region default_required]
+A Type II region is described by horizontal slices.
+
+[270-298 latex-image c10s4-fig-type-ii-region default_required]
+\begin{tikzpicture}[scale=1.0, >=stealth]
+            \draw[->] (-0.4,0) -- (5.5,0) node[right] {\(x\)};
+            \draw[->] (0,-0.5) -- (0,4.2) node[above] {\(y\)};
+
+            \draw[fill=gray!10, draw=none]
+                plot[domain=0.7:3.5, samples=80] ({0.7+0.18*(\x-2)^2},\x)
+                -- plot[domain=3.5:0.7, samples=80] ({4.7-0.25*(\x-2.2)^2},\x)
+                -- cycle;
+
+            \draw[thick, blue!60!black, domain=0.7:3.5, samples=80]
+                plot ({0.7+0.18*(\x-2)^2},\x);
+            \draw[thick, red!65!black, domain=0.7:3.5, samples=80]
+                plot ({4.7-0.25*(\x-2.2)^2},\x);
+
+            \draw[dashed] (0,0.7) -- ({0.7+0.18*(0.7-2)^2},0.7);
+            \draw[dashed] (0,3.5) -- ({0.7+0.18*(3.5-2)^2},3.5);
+
+            \draw[very thick, green!50!black]
+                ({0.7+0.18*(2.4-2)^2},2.4)
+                -- ({4.7-0.25*(2.4-2.2)^2},2.4);
+
+            \node[blue!60!black] at (1.45,1.1) {\(x=\psi_1(y)\)};
+            \node[red!65!black] at (4.2,3.45) {\(x=\psi_2(y)\)};
+            \node[left] at (0,0.7) {\(c\)};
+            \node[left] at (0,3.5) {\(d\)};
+            \node[green!50!black, above] at (3.0,2.45) {horizontal slice};
+        \end{tikzpicture}
+
+[303-303 title c10s4-thm-type-ii default_required]
+Double integral over a Type II region
+
+[305-311 p c10s4-thm-type-ii default_required]
+Suppose
+          D= \left\{ (x,y): c\le y\le d,\ \psi_1(y)\le x\le \psi_2(y) \right\},
+          where \psi_1 and \psi_2 are continuous with \psi_1\le\psi_2 on [c,d], and suppose f is continuous
+          on D. Then
+          \boxed{ \iint_D f(x,y)\,dA = \int_c^d \int_{\psi_1(y)}^{\psi_2(y)} f(x,y)\,dx\,dy. }
+
+[317-317 title c10s4-subsec-drawing-the-region default_required]
+Drawing the region before integrating
+
+[319-322 p c10s4-subsec-drawing-the-region default_required]
+The hardest part of many double integral problems is not the integration. It is setting up
+      the bounds.
+
+[324-324 p c10s4-subsec-drawing-the-region default_required]
+A reliable routine is:
+
+[327-327 li c10s4-subsec-drawing-the-region default_required]
+Draw the boundary curves.
+
+[328-328 li c10s4-subsec-drawing-the-region default_required]
+Mark the intersection points.
+
+[329-329 li c10s4-subsec-drawing-the-region default_required]
+Decide whether vertical slices or horizontal slices are simpler.
+
+[330-330 li c10s4-subsec-drawing-the-region default_required]
+Write the outer limits from the shadow of the region on the outer axis.
+
+[331-331 li c10s4-subsec-drawing-the-region default_required]
+Write the inner limits from the slice.
+
+[334-340 p c10s4-subsec-drawing-the-region default_required]
+The word shadow is useful. For a Type I setup, the region casts a shadow on the
+      x-axis:
+      a\le x\le b.
+      For a Type II setup, it casts a shadow on the y-axis:
+      c\le y\le d.
+
+[344-344 title c10s4-subsec-reversing-the-order default_required]
+Reversing the order of integration
+
+[346-349 p c10s4-subsec-reversing-the-order default_required]
+Sometimes one order leads to an integral we cannot evaluate with elementary functions. The
+      other order may be easy.
+
+[351-357 p c10s4-subsec-reversing-the-order default_required]
+Consider
+      I= \int_0^1\int_y^1 e^{x^2}\,dx\,dy.
+      The inner integral
+      \int_y^1 e^{x^2}\,dx
+      has no elementary antiderivative. But the region may save us.
+
+[359-366 p c10s4-subsec-reversing-the-order default_required]
+The bounds say
+      0\le y\le1, \qquad y\le x\le1.
+      So the region is the triangle
+      0\le y\le x\le1.
+      Equivalently,
+      0\le x\le1, \qquad 0\le y\le x.
+
+[369-370 caption c10s4-fig-reverse-order-triangle default_required]
+The integral \int_0^1\int_y^1 e^{x^2}\,dx\,dy is over the triangle
+      0\le y\le x\le1.
+
+[372-391 latex-image c10s4-fig-reverse-order-triangle default_required]
+\begin{tikzpicture}[scale=2.4, >=stealth]
+            \draw[->] (-0.08,0) -- (1.25,0) node[right] {\(x\)};
+            \draw[->] (0,-0.08) -- (0,1.25) node[above] {\(y\)};
+
+            \draw[fill=purple!13, draw=purple!60!black, thick]
+                (0,0) -- (1,0) -- (1,1) -- cycle;
+
+            \draw[thick] (0,0) -- (1,1);
+            \node[above left] at (0.52,0.52) {\(y=x\)};
+
+            \draw[very thick, blue!60!black] (0.62,0) -- (0.62,0.62);
+            \node[blue!60!black, right] at (0.63,0.33) {\(0\le y\le x\)};
+
+            \node[below] at (1,0) {\(1\)};
+            \node[left] at (0,1) {\(1\)};
+            \fill (1,1) circle (0.8pt);
+            \node[above right] at (1,1) {\((1,1)\)};
+        \end{tikzpicture}
+
+[395-411 p c10s4-subsec-reversing-the-order default_required]
+Now reverse the order:
+      I= \int_0^1\int_0^x e^{x^2}\,dy\,dx.
+      The inner integral is now easy because e^{x^2} is constant with respect to y:
+      \int_0^x e^{x^2}\,dy = xe^{x^2}.
+      So
+      I= \int_0^1 xe^{x^2}\,dx.
+      Let
+      u=x^2, \qquad du=2x\,dx.
+      Then
+      
+        I \amp= \frac12\int_0^1 e^u\,du
+        \amp= \frac12(e-1).
+      
+      Thus
+      \boxed{ \int_0^1\int_y^1 e^{x^2}\,dx\,dy = \frac{e-1}{2}. }
+
+[413-416 p c10s4-subsec-reversing-the-order default_required]
+The integral became possible not because the function changed, but because the slices
+      changed.
+
+[419-419 title checkpoint-10-4-redraw-when-reversing default_required]
+Why redraw, not just swap?
+
+[421-425 p checkpoint-10-4-redraw-when-reversing default_required]
+When you reverse the order of integration, it is tempting to simply exchange the inner and
+          outer limits. Why doesn't that shortcut work? What information about the region would you
+          miss if you never redrew the picture?
+
+[428-432 p checkpoint-10-4-redraw-when-reversing hint]
+The limits encode the shape of D, not just two numbers. Ask yourself: for a fixed
+          x, where does a vertical slice begin and end? Is that the same as where a horizontal
+          slice begins and ends for a fixed y?
+
+[438-438 title c10s4-subsec-region-must-be-split default_required]
+A region that must be split
+
+[440-444 p c10s4-subsec-region-must-be-split default_required]
+Not every region is Type I or Type II in one piece. Sometimes a slice hits the region in two
+      separate intervals. Then one pair of limits would fill in space that is not really part of
+      the region.
+
+[446-450 p c10s4-subsec-region-must-be-split default_required]
+For example, let
+      D= \bigl([0,1]\times[0,1]\bigr) \cup \bigl([0,1]\times[2,3]\bigr).
+      This is two square islands with a gap between them.
+
+[453-453 title checkpoint-10-4-why-split default_required]
+Why split at all?
+
+[455-459 p checkpoint-10-4-why-split default_required]
+Some regions force you to break the integral into two or more pieces. What feature of a
+          region tells you that a single pair of limits cannot describe it honestly? Why would one
+          set of limits accidentally include points that aren't in the region?
+
+[462-465 p checkpoint-10-4-why-split hint]
+Run a single slice across the region and watch where it enters and leaves. If it leaves
+          the region and then re-enters it, what does that say about the empty space in between?
+
+[469-479 p c10s4-subsec-region-must-be-split default_required]
+A vertical slice at a fixed x hits
+      0\le y\le1
+      and also
+      2\le y\le3.
+      It does not hit the gap
+      1\lt y\lt 2.
+      So writing
+      0\le x\le1, \qquad 0\le y\le3
+      would describe the full rectangle, not the two islands.
+
+[481-484 p c10s4-subsec-region-must-be-split default_required]
+The correct setup is a sum:
+      \boxed{ \iint_D f(x,y)\,dA = \int_0^1\int_0^1 f(x,y)\,dy\,dx + \int_0^1\int_2^3 f(x,y)\,dy\,dx. }
+
+[486-486 p c10s4-subsec-region-must-be-split default_required]
+The principle is simple:
+
+[488-488 md c10s4-subsec-region-must-be-split default_required]
+\boxed{\text{If one slice breaks into pieces, split the region.}}
+
+[492-492 title c10s4-subsec-regions-with-holes default_required]
+Regions with holes
+
+[494-494 p c10s4-subsec-regions-with-holes default_required]
+A hole is another reason to split or subtract.
+
+[496-500 p c10s4-subsec-regions-with-holes default_required]
+Imagine an L-shaped floor:
+      D= [0,3]\times[0,2] \setminus [1,3]\times[1,2].
+      It is a 3-by-2 rectangle with the upper-right rectangle removed.
+
+[502-528 p c10s4-subsec-regions-with-holes default_required]
+Suppose
+      f(x,y)=1+x
+      is the density of a thin coating on the floor. The total amount of coating is
+      \iint_D (1+x)\,dA.
+      One method is to split the L-shape into two rectangles:
+      D_1=[0,3]\times[0,1],
+      and
+      D_2=[0,1]\times[1,2].
+      Then
+      \iint_D (1+x)\,dA = \int_0^3\int_0^1 (1+x)\,dy\,dx + \int_0^1\int_1^2 (1+x)\,dy\,dx.
+      Compute:
+      
+        \int_0^3\int_0^1 (1+x)\,dy\,dx \amp= \int_0^3 (1+x)\,dx
+        \amp= \left[x+\frac12x^2\right]_0^3
+        \amp= 3+\frac92
+        \amp= \frac{15}{2}.
+      
+      Also,
+      
+        \int_0^1\int_1^2 (1+x)\,dy\,dx \amp= \int_0^1 (1+x)\,dx
+        \amp= \left[x+\frac12x^2\right]_0^1
+        \amp= \frac32.
+      
+      Therefore
+      \boxed{ \iint_D (1+x)\,dA = \frac{15}{2}+\frac32 = 9. }
+
+[531-531 caption c10s4-fig-l-shaped-region default_required]
+An L-shaped region is easiest to integrate over by splitting it into pieces.
+
+[533-557 latex-image c10s4-fig-l-shaped-region default_required]
+\begin{tikzpicture}[scale=1.1, >=stealth]
+            \draw[->] (-0.3,0) -- (4.0,0) node[right] {\(x\)};
+            \draw[->] (0,-0.3) -- (0,3.0) node[above] {\(y\)};
+
+            % The L-shaped region
+            \draw[fill=orange!18, draw=orange!60!black, thick]
+                (0,0) -- (3,0) -- (3,1) -- (1,1) -- (1,2) -- (0,2) -- cycle;
+
+            % Line splitting D1 and D2
+            \draw[dashed, thick] (0,1) -- (1,1);
+
+            % Dashed outline showing the missing part of the full 3x2 rectangle
+            \draw[dashed, gray!80, thick] (3,1) -- (3,2) -- (1,2);
+
+            \node at (1.5,0.5) {\(D_1\)};
+            \node at (0.5,1.5) {\(D_2\)};
+            \node[gray!80!black] at (2.0,1.5) {hole};
+
+            \node[below] at (1,0) {\(1\)};
+            \node[below] at (3,0) {\(3\)};
+            \node[left] at (0,1) {\(1\)};
+            \node[left] at (0,2) {\(2\)};
+        \end{tikzpicture}
+
+[561-570 p c10s4-subsec-regions-with-holes default_required]
+Another method is subtraction:
+      \iint_D (1+x)\,dA = \iint_{[0,3]\times[0,2]}(1+x)\,dA - \iint_{[1,3]\times[1,2]}(1+x)\,dA.
+      The full rectangle contributes
+      \int_0^3\int_0^2(1+x)\,dy\,dx = 2\int_0^3(1+x)\,dx = 15.
+      The removed rectangle contributes
+      \int_1^3\int_1^2(1+x)\,dy\,dx = \int_1^3(1+x)\,dx = 6.
+      So again
+      15-6=9.
+
+[572-575 p c10s4-subsec-regions-with-holes default_required]
+Both methods are correct. The good method is the one that makes the region easiest to
+      describe.
+
+[579-579 title c10s4-subsec-the-main-lesson default_required]
+The main lesson
+
+[581-588 p c10s4-subsec-the-main-lesson default_required]
+For rectangles, the limits are constant:
+      a\le x\le b, \qquad c\le y\le d.
+      For general regions, one pair of limits often depends on the other variable:
+      \phi_1(x)\le y\le\phi_2(x)
+      or
+      \psi_1(y)\le x\le\psi_2(y).
+
+[590-590 p c10s4-subsec-the-main-lesson default_required]
+So the calculation is still based on one idea:
+
+[592-592 md c10s4-subsec-the-main-lesson default_required]
+\boxed{\text{add slices.}}
+
+[594-594 p c10s4-subsec-the-main-lesson default_required]
+The only difference is that the slices may grow, shrink, split, or avoid holes.
+
+[596-600 p c10s4-subsec-the-main-lesson default_required]
+The next obstacle is circular geometry. A disk can be described with x- and
+      y-bounds, but the limits contain square roots. A circular ring is even less friendly
+      in rectangular coordinates.
+
+[602-605 p c10s4-subsec-the-main-lesson default_required]
+For circular regions, the natural slices are not vertical or horizontal. They are radial and
+      angular.
+
+[607-607 p c10s4-subsec-the-main-lesson default_required]
+That leads to polar coordinates.

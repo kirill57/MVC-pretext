@@ -1,0 +1,393 @@
+[5-5 title sec-12-nonlinear-changes-of-variables-in-the-plane default_required]
+Nonlinear changes of variables in the plane
+
+[7-12 p sec-12-nonlinear-changes-of-variables-in-the-plane default_required]
+treated linear changes of variables. A
+    square became a parallelogram, and one number,
+    |\det A|,
+    scaled every area in the same way.
+
+[14-18 p sec-12-nonlinear-changes-of-variables-in-the-plane default_required]
+Now the grid is allowed to bend. A small square may become a small curved tile. But if the
+    square is tiny, the curved tile is almost a parallelogram, and the determinant still measures
+    its area. The only difference is that the determinant may change from point to point.
+
+[21-21 title c12s3-subsec-cov-theorem-2d default_required]
+The change-of-variables theorem in two dimensions
+
+[23-34 p c12s3-subsec-cov-theorem-2d default_required]
+Start with a map that is nonlinear, but still easy to see:
+      T(u,v)=(x,y)=(u,uv).
+      Let
+      S=\{(u,v):1\le u\le3,\ 0\le v\le2\}.
+      Since
+      x=u,\qquad y=uv,
+      the image region R=T(S) satisfies
+      1\le x\le3, \qquad 0\le y\le 2x.
+      So a rectangle in the (u,v)-plane becomes a wedge-shaped region in the
+      (x,y)-plane.
+
+[37-37 caption c12s3-fig-uuv-rectangle-to-wedge default_required]
+The nonlinear map T(u,v)=(u,uv) sends a rectangle to a wedge.
+
+[39-67 latex-image c12s3-fig-uuv-rectangle-to-wedge default_required]
+\begin{tikzpicture}[scale=0.72, >=stealth]
+            \begin{scope}
+                \draw[->] (-0.4,0) -- (4.2,0) node[right] {\(u\)};
+                \draw[->] (0,-0.4) -- (0,3.2) node[above] {\(v\)};
+                \draw[fill=gray!12, thick] (1,0) rectangle (3,2);
+                \node[below] at (1,0) {\(1\)};
+                \node[below] at (3,0) {\(3\)};
+                \node[left] at (0,2) {\(2\)};
+                \node at (2,1) {\(S\)};
+                \node at (2,-0.9) {rectangle in \((u,v)\)};
+            \end{scope}
+            \draw[->, thick] (4.7,1.4) -- (6.2,1.4);
+            \node[above] at (5.45,1.4) {\(T\)};
+            \begin{scope}[shift={(7.2,0)}]
+                \draw[->] (-0.4,0) -- (4.3,0) node[right] {\(x\)};
+                \draw[->] (0,-0.4) -- (0,6.8) node[above] {\(y\)};
+                \draw[fill=blue!8, thick] (1,0) -- (3,0) -- (3,6) -- (1,2) -- cycle;
+                \draw[dashed] (1,0) -- (1,2);
+                \draw[dashed] (3,0) -- (3,6);
+                \draw[thick] (1,2) -- (3,6);
+                \node[below] at (1,0) {\(1\)};
+                \node[below] at (3,0) {\(3\)};
+                \node[right] at (3,6) {\(y=2x\)};
+                \node at (2.3,2.2) {\(R\)};
+                \node at (2.2,-0.9) {wedge in \((x,y)\)};
+            \end{scope}
+        \end{tikzpicture}
+
+[71-71 p c12s3-subsec-cov-theorem-2d default_required]
+Let us find the area of R in two ways.
+
+[73-83 p c12s3-subsec-cov-theorem-2d default_required]
+In x,y-coordinates, the region is
+      1\le x\le3,\qquad 0\le y\le2x.
+      So
+      
+        \operatorname{Area}(R) \amp= \int_1^3\int_0^{2x}1\,dy\,dx
+        \amp= \int_1^3 2x\,dx
+        \amp= \left[x^2\right]_1^3
+        \amp= 8.
+
+[85-99 p c12s3-subsec-cov-theorem-2d default_required]
+Now compute the same area from the rectangle S. The derivative vectors of the map
+      are
+      T_u=(1,v), \qquad T_v=(0,u).
+      The signed area scale factor is
+      J_T(u,v) = \det \begin{pmatrix} 1\amp0\\ v\amp u \end{pmatrix} = u.
+      Since u\ge1 on S, the ordinary area scale factor is
+      |J_T(u,v)|=u.
+      Therefore
+      
+        \operatorname{Area}(R) \amp= \int_1^3\int_0^2 u\,dv\,du
+        \amp= \int_1^3 2u\,du
+        \amp= 8.
+
+[101-107 p c12s3-subsec-cov-theorem-2d default_required]
+The computation says something geometric. The vertical v-direction is stretched by
+      the factor u. When u=1, a step of size \Delta v has image length
+      |\Delta v|. When u=3, the same step has length
+      3|\Delta v|. The grid spreads out as
+      u increases.
+
+[109-112 p c12s3-subsec-cov-theorem-2d default_required]
+The determinant is no longer one constant number. It is a function:
+      J_T(u,v)=u.
+
+[115-115 title checkpoint-12-3-varying-determinant default_required]
+Why does the scale factor wander?
+
+[117-122 p checkpoint-12-3-varying-determinant default_required]
+For a linear change of variables the area scale factor |\det A| was a single
+          number, but here |J_T(u,v)|=u changes from point to point. What is it about a
+          map that makes its scale factor depend on where you are? Is such variation inevitable
+          for every nonlinear map, or only possible? Check the shear (u,v)\mapsto(u,v+u^2).
+
+[125-129 p checkpoint-12-3-varying-determinant hint]
+Think about the derivative vectors T_u and T_v. For a linear map they are
+          the same everywhere; for a nonlinear map, how do they behave as you move from one point
+          to another?
+
+[134-134 title c12s3-def-jacobian-determinant-plane default_required]
+Jacobian determinant in the plane
+
+[136-143 p c12s3-def-jacobian-determinant-plane default_required]
+For a differentiable map
+          T(u,v)=(x(u,v),y(u,v)),
+          the Jacobian determinant is
+          \boxed{ J_T(u,v) = \frac{\partial(x,y)}{\partial(u,v)} = \det \begin{pmatrix} x_u \amp x_v\\ y_u \amp y_v \end{pmatrix} = x_u y_v-x_v y_u. }
+          The ordinary local area scale factor is
+          \boxed{ |J_T(u,v)|. }
+
+[147-150 p c12s3-subsec-cov-theorem-2d default_required]
+The change-of-variables theorem says that this local scale factor can be added over the
+      whole region.
+
+[153-153 title c12s3-thm-change-of-variables-plane default_required]
+Change of variables in the plane
+
+[155-160 p c12s3-thm-change-of-variables-plane default_required]
+Let S be a compact region in the (u,v)-plane whose boundary consists
+          of finitely many piecewise smooth arcs, and let
+          T(u,v)=(x(u,v),y(u,v))
+          be a coordinate map from S to a region R in the (x,y)-plane.
+
+[161-161 p c12s3-thm-change-of-variables-plane default_required]
+Assume:
+
+[163-165 li c12s3-thm-change-of-variables-plane default_required]
+T has continuous first partial derivatives on an open neighborhood of S;
+
+[166-171 li c12s3-thm-change-of-variables-plane default_required]
+T is one-to-one on the interior of S, except possibly along boundary
+              pieces;
+
+[172-174 li c12s3-thm-change-of-variables-plane default_required]
+J_T(u,v)\ne0 on the interior of S.
+
+[176-179 p c12s3-thm-change-of-variables-plane default_required]
+If f is continuous on R=T(S), then
+          \boxed{ \iint_R f(x,y)\,dA = \iint_S f(x(u,v),y(u,v))\,|J_T(u,v)|\,du\,dv. }
+
+[182-182 title c12s3-thm-change-of-variables-plane default_required]
+Proof idea
+
+[183-194 p c12s3-thm-change-of-variables-plane default_required]
+Cut S into many tiny rectangles. Near a point (u,v), the map T is
+          well approximated by its derivative:
+          T(u+\Delta u,v+\Delta v) \approx T(u,v)+T_u\,\Delta u+T_v\,\Delta v.
+          So a tiny rectangle in the (u,v)-plane maps almost to a parallelogram spanned by
+          T_u\,\Delta u \qquad\text{and}\qquad T_v\,\Delta v.
+          The area of that parallelogram is approximately
+          |J_T(u,v)|\,\Delta u\,\Delta v.
+          Thus a small contribution in the image is approximately
+          f(T(u,v))\,|J_T(u,v)|\,\Delta u\,\Delta v.
+          Adding all pieces and letting the rectangles shrink gives the formula.
+
+[198-202 p c12s3-subsec-cov-theorem-2d default_required]
+The theorem has hypotheses because the determinant is a local story. It measures how one
+      tiny tile is stretched near one point. A global change of variables must also avoid
+      overlapping the same image region more than once.
+
+[206-206 title c12s3-subsec-jacobian-determinant default_required]
+The Jacobian determinant
+
+[208-212 p c12s3-subsec-jacobian-determinant default_required]
+The map
+      T(u,v)=(u,uv)
+      was chosen because the geometry was visible. Now use the theorem on a real integral.
+
+[214-238 p c12s3-subsec-jacobian-determinant default_required]
+Let R be the wedge
+      1\le x\le3,\qquad 0\le y\le2x.
+      Compute
+      \iint_R (x+y)\,dA.
+      Use
+      x=u,\qquad y=uv,
+      with
+      1\le u\le3,\qquad 0\le v\le2.
+      The Jacobian determinant is
+      J_T(u,v)=u.
+      Also,
+      x+y=u+uv=u(1+v).
+      Therefore
+      
+        \iint_R (x+y)\,dA \amp= \int_1^3\int_0^2 u(1+v)\,u\,dv\,du
+        \amp= \int_1^3 u^2 \left[\int_0^2(1+v)\,dv\right]du
+        \amp= \int_1^3 u^2 \left[v+\frac{v^2}{2}\right]_0^2du
+        \amp= \int_1^3 4u^2\,du
+        \amp= 4\left[\frac{u^3}{3}\right]_1^3
+        \amp= \frac{104}{3}.
+      
+      So
+      \boxed{ \iint_R (x+y)\,dA=\frac{104}{3}. }
+
+[240-246 p c12s3-subsec-jacobian-determinant default_required]
+Notice the two substitutions that happened at once:
+      x+y \quad\longrightarrow\quad u+uv,
+      and
+      dA \quad\longrightarrow\quad u\,du\,dv.
+      The first substitution changes the function. The second changes the tiny area piece.
+
+[248-254 p c12s3-subsec-jacobian-determinant default_required]
+In differential form language, with dx=d(x(u,v)) and dy=d(y(u,v))
+      interpreted on the parameter domain as in the preceding sections, the signed area changes by
+      \boxed{ dx\wedge dy = J_T(u,v)\,du\wedge dv. }
+      For ordinary area integrals, we use the absolute value:
+      \boxed{ dA=|J_T(u,v)|\,du\,dv. }
+
+[258-258 title c12s3-subsec-one-to-one-splitting default_required]
+One-to-one conditions and splitting regions
+
+[260-263 p c12s3-subsec-one-to-one-splitting default_required]
+The one-to-one condition is easy to underestimate. A determinant can measure the right
+      local scale and still give the wrong global answer if the map covers the same region twice.
+
+[265-283 p c12s3-subsec-one-to-one-splitting default_required]
+Consider
+      T(u,v)=(u^2,v)
+      on the rectangle
+      S=[-1,1]\times[0,1].
+      The image is the unit square
+      R=[0,1]\times[0,1].
+      The Jacobian determinant is
+      J_T(u,v) = \det \begin{pmatrix} 2u\amp0\\ 0\amp1 \end{pmatrix} = 2u.
+      If we blindly integrate the area scale factor over all of S, we get
+      
+        \iint_S |2u|\,du\,dv \amp= \int_0^1\int_{-1}^1 |2u|\,du\,dv
+        \amp= 2.
+      
+      But the image square has area
+      1.
+      The formula counted most of the image twice: once from u\gt0, and once from
+      u\lt0.
+
+[286-286 title checkpoint-12-3-right-locally-wrong-globally default_required]
+Local truth, global error?
+
+[288-292 p checkpoint-12-3-right-locally-wrong-globally default_required]
+The Jacobian determinant correctly measured how each tiny tile was stretched, yet the
+          integral came out as 2 instead of the true area 1. How can a quantity be
+          right about every small piece and still give the wrong total?
+
+[295-299 p checkpoint-12-3-right-locally-wrong-globally hint]
+The Jacobian only knows about one tile at a time. It cannot tell whether two different
+          tiles land on the same spot in the image. What does the one-to-one condition
+          guarantee that the determinant alone cannot?
+
+[303-312 p c12s3-subsec-one-to-one-splitting default_required]
+The fix is not to throw away the Jacobian. The fix is to choose a one-to-one branch. For
+      example, on
+      0\le u\le1,\qquad 0\le v\le1,
+      the same map covers the unit square once, and
+      
+        \iint_{[0,1]\times[0,1]} 2u\,du\,dv \amp= 1.
+      
+      The determinant was right locally. The region was wrong globally.
+
+[314-325 p c12s3-subsec-one-to-one-splitting default_required]
+A second warning is smoothness. Take
+      T(u,v)=(u,\ v+|u|).
+      This map is one-to-one, but it has a crease along
+      u=0.
+      On the right side, where u\gt0,
+      T(u,v)=(u,v+u).
+      On the left side, where u\lt0,
+      T(u,v)=(u,v-u).
+      The derivative changes suddenly across the crease. There is no single linear map that
+      describes T at points with u=0.
+
+[327-332 p c12s3-subsec-one-to-one-splitting default_required]
+A tile crossing the crease does not have one clean tangent parallelogram. To use the
+      change-of-variables theorem, split the domain into two pieces:
+      u\ge0 \qquad\text{and}\qquad u\le0.
+      Each piece is smooth. Then compute on the pieces separately.
+
+[334-342 p c12s3-subsec-one-to-one-splitting default_required]
+The nonzero-Jacobian condition also has a geometric meaning. If
+      J_T=0
+      throughout a patch, then tiny area can be crushed to zero area. For example,
+      T(u,v)=(u,0)
+      sends the whole unit square onto a line segment. Its Jacobian determinant is
+      0,
+      and the image has no two-dimensional area.
+
+[344-350 p c12s3-subsec-one-to-one-splitting default_required]
+A zero Jacobian at a boundary point is often harmless. Polar coordinates have
+      J=r,
+      which vanishes at r=0. That single point does not ruin the area formula. But a
+      coordinate change should not collapse a whole two-dimensional piece if we want it to
+      describe a two-dimensional region.
+
+[354-354 title c12s3-subsec-polar-revisited default_required]
+Polar coordinates revisited as a theorem, not a trick
+
+[356-364 p c12s3-subsec-polar-revisited default_required]
+Polar coordinates are the most familiar nonlinear change of variables:
+      x=r\cos\theta, \qquad y=r\sin\theta.
+      Before, the factor
+      r
+      came from the length of a circular arc:
+      \text{arc length}\approx r\,\Delta\theta.
+      Now the same factor comes automatically from the Jacobian determinant.
+
+[366-381 p c12s3-subsec-polar-revisited default_required]
+Compute:
+      x_r=\cos\theta, \qquad x_\theta=-r\sin\theta,
+      and
+      y_r=\sin\theta, \qquad y_\theta=r\cos\theta.
+      Therefore
+      
+        \frac{\partial(x,y)}{\partial(r,\theta)} \amp= \det \begin{pmatrix} \cos\theta \amp -r\sin\theta\\ \sin\theta \amp r\cos\theta \end{pmatrix}
+        \amp= r\cos^2\theta+r\sin^2\theta
+        \amp= r.
+      
+      So
+      \boxed{ dA=r\,dr\,d\theta. }
+      This is the old polar area element, now explained by the same determinant rule used for
+      every coordinate change.
+
+[384-384 title checkpoint-12-3-polar-r-meaning default_required]
+Why exactly r?
+
+[386-390 p checkpoint-12-3-polar-r-meaning default_required]
+The factor r in dA=r\,dr\,d\theta once came from the length of a small
+          circular arc, and now it falls out of the Jacobian determinant. Why should these two
+          very different-looking arguments produce the very same r?
+
+[393-397 p checkpoint-12-3-polar-r-meaning hint]
+Both are measuring the area of one tiny tile of the polar grid. Picture the little patch
+          between radii r and r+\Delta r and angles \theta and
+          \theta+\Delta\theta — how do its two side lengths depend on r?
+
+[402-402 title c12s3-ex-dye-circular-spill default_required]
+Dye in a circular spill
+
+[404-410 p c12s3-ex-dye-circular-spill default_required]
+A circular spill occupies the disk
+          x^2+y^2\le4.
+          The dye concentration at (x,y) is
+          q(x,y)=12-x^2-y^2.
+          Find the total amount of dye.
+
+[411-429 p c12s3-ex-dye-circular-spill default_required]
+In polar coordinates,
+          x^2+y^2=r^2,
+          so
+          q=12-r^2.
+          The disk is
+          0\le r\le2,\qquad 0\le\theta\le2\pi.
+          Therefore
+          
+            Q \amp= \iint_R (12-x^2-y^2)\,dA
+            \amp= \int_0^{2\pi}\int_0^2 (12-r^2)\,r\,dr\,d\theta
+            \amp= 2\pi\int_0^2(12r-r^3)\,dr
+            \amp= 2\pi \left[ 6r^2-\frac{r^4}{4} \right]_0^2
+            \amp= 2\pi(24-4)
+            \amp= 40\pi.
+          
+          So
+          \boxed{ Q=40\pi. }
+
+[433-440 p c12s3-subsec-polar-revisited default_required]
+Polar coordinates are nearly one-to-one on the usual rectangle
+      0\le r\le a,\qquad 0\le\theta\le2\pi.
+      The only overlaps occur on the boundary:
+      \theta=0 \qquad\text{and}\qquad \theta=2\pi,
+      and all points with r=0 become the origin. These boundary overlaps do not change the
+      integral.
+
+[442-447 p c12s3-subsec-polar-revisited default_required]
+But if we use
+      0\le\theta\le4\pi,
+      then the disk is traced twice. The integral will be twice as large unless we intend to count
+      multiplicity. This is the same one-to-one warning in a familiar disguise.
+
+[449-454 p c12s3-subsec-polar-revisited default_required]
+The plane story is now complete enough to trust. A nonlinear map bends a grid, but each tiny
+      tile is still governed by a determinant. In space, the same idea has one more edge: tiny
+      boxes become tiny parallelepipeds, and the determinant becomes a 3\times3 volume
+      scale factor.

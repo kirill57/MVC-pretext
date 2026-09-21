@@ -194,25 +194,38 @@
         </p>
       </statement>
       <proof>
-        <p>Fix <m>x</m>. Continuity of <m>q_x</m> makes
-          <m>q_x(x+s,t)-q_x(x,t)</m> uniformly small for all <m>c\le t\le d</m>
-          when <m>s</m> is small. To justify the word <q>uniformly</q>, first use continuity
-          near each <m>(x,t_0)</m> to bound both values by their difference from
-          <m>q_x(x,t_0)</m>. The closed interval <m>[c,d]</m> is covered by finitely many
-          of these neighborhoods, so the smallest of their allowed positive bounds on
-          <m>|s|</m> works for the entire interval. This is the usual finite-cover argument
-          behind uniform continuity on a closed bounded interval.</p>
-        <p>The one-variable Mean Value Theorem, applied with <m>t</m> fixed, now gives
-          <md>\left|\frac{q(x+h,t)-q(x,t)}{h}-q_x(x,t)\right|\le\varepsilon</md>
-          for all <m>t\in[c,d]</m> and all sufficiently small nonzero <m>h</m>.
-          Integrating this inequality yields
+        <title>Explanation using a supplied uniform-control fact</title>
+        <p>We use this fact: a continuous function on a closed bounded rectangle
+          is uniformly continuous. This means that one allowed input distance works
+          at every point of the rectangle for a prescribed output error. The fact is
+          supplied here; <xref ref="appF-ex-uniform-continuity"/> gives an optional proof.</p>
+        <p>Fix an interior <m>x</m>. Applied to <m>q_x</m> on a small closed
+          rectangle around <m>\{x\}\times[c,d]</m>, the fact gives
+          <m>|q_x(x+s,t)-q_x(x,t)|\le\varepsilon</m> for all <m>t\in[c,d]</m>
+          whenever <m>|s|</m> is sufficiently small. The one-variable Mean Value
+          Theorem, with <m>t</m> fixed, therefore gives
+          <md>\left|\frac{q(x+h,t)-q(x,t)}{h}-q_x(x,t)\right|\le\varepsilon.</md>
+          One bound works for every integration-variable value at once. Hence
           <md>\left|\frac{H(x+h)-H(x)}{h}-\int_c^d q_x(x,t)\,dt\right|
             \le(d-c)\varepsilon.</md>
-          Letting <m>h\to0</m> proves the derivative formula. Thus the interchange is
-          justified by the stated continuity hypotheses, not by a formal movement of symbols.
-        </p>
+          As the error can be made arbitrarily small, this proves the formula using
+          the supplied fact. Pointwise convergence alone would not justify this step.</p>
       </proof>
     </lemma>
+
+
+    <exercise xml:id="c13s6-ex-parameter-integral-two-routes">
+      <title>One parameter integral, two routes</title>
+      <statement><p>For <m>H(x)=\int_0^1(xt^2+x^2t)\,dt</m>, first integrate and
+        then differentiate. Next differentiate the integrand with respect to <m>x</m>
+        and integrate. Compare the answers and explain why the lemma's hypotheses
+        hold. This checks an illustration, not the general interchange theorem.</p></statement>
+      <solution><p>Integration gives <m>H(x)=x/3+x^2/2</m>, so
+        <m>H'(x)=1/3+x</m>. The other route gives
+        <m>\int_0^1(t^2+2xt)\,dt=1/3+x</m>. The interval is fixed; the integrand
+        and its parameter derivative are polynomials, continuous on every required
+        neighborhood.</p></solution>
+    </exercise>
 
     <theorem xml:id="c13s6-thm-curl-test-rectangle">
       <title>Curl test on a rectangle</title>
@@ -445,8 +458,9 @@
 
     <p>
       The rectangle case was proved above by constructing a potential directly. We state the
-      full simply connected theorem here for use, with its proof postponed to
-      <xref ref="c17s5-thm-simply-connected-potential"/>. That proof constructs potentials
+      full simply connected theorem here for use. Its optional fuller proof accompanies
+      <xref ref="c17s5-thm-simply-connected-potential"/> in
+      <xref ref="c17s5-optional-potential-proof" text="title"/>. That proof constructs potentials
       on balls and then uses a subdivided continuous contraction to show that every closed
       curve has zero integral. Green's theorem and Stokes' theorem give related geometric
       interpretations; merely saying that a loop shrinks is not yet the proof in space.

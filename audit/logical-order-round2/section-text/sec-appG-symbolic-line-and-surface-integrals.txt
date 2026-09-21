@@ -1,0 +1,266 @@
+[5-5 title sec-appG-symbolic-line-and-surface-integrals default_required]
+Symbolic line and surface integrals
+
+[8-8 title appG-sym-symbolic-setup default_required]
+Symbolic setup
+
+[10-14 program appG-sym-symbolic-setup default_required]
+import sympy as sp
+
+[16-16 p appG-sym-symbolic-setup default_required]
+Define variables:
+
+[18-22 program appG-sym-symbolic-setup default_required]
+x, y, z, t, u, v = sp.symbols("x y z t u v")
+
+[26-26 title appG-sym-line-integral-1-form default_required]
+Line integral of a 1-form
+
+[28-29 p appG-sym-line-integral-1-form default_required]
+Let
+    \omega=P\,dx+Q\,dy+R\,dz.
+
+[31-34 p appG-sym-line-integral-1-form default_required]
+Let
+    \mathbf r(t)=(x(t),y(t),z(t)),
+    \qquad
+    a\le t\le b.
+
+[36-48 p appG-sym-line-integral-1-form default_required]
+Then
+    
+    \int_C\omega
+    =
+    \int_a^b
+    \left[
+    P(\mathbf r(t))x'(t)
+    +
+    Q(\mathbf r(t))y'(t)
+    +
+    R(\mathbf r(t))z'(t)
+    \right]\,dt.
+
+[52-52 title appG-sym-sympy-line-integral-pattern default_required]
+SymPy line integral pattern
+
+[54-74 program appG-sym-sympy-line-integral-pattern default_required]
+x, y, z, t = sp.symbols("x y z t")
+
+P = ...
+Q = ...
+R = ...
+
+xt = ...
+yt = ...
+zt = ...
+
+integrand = (
+    P.subs({x: xt, y: yt, z: zt})*sp.diff(xt, t)
+    + Q.subs({x: xt, y: yt, z: zt})*sp.diff(yt, t)
+    + R.subs({x: xt, y: yt, z: zt})*sp.diff(zt, t)
+)
+
+value = sp.integrate(integrand, (t, a, b))
+
+[78-78 title appG-sym-line-integral-vector-field default_required]
+Line integral of a vector field
+
+[80-84 p appG-sym-line-integral-vector-field default_required]
+For
+    \mathbf F=(P,Q,R),
+    \int_C\mathbf F\cdot d\mathbf r
+    uses the same formula as the 1-form
+    P\,dx+Q\,dy+R\,dz.
+
+[88-88 title appG-sym-surface-flux-integral default_required]
+Surface flux integral
+
+[90-91 p appG-sym-surface-flux-integral default_required]
+Let
+    \mathbf F=(P,Q,R).
+
+[93-94 p appG-sym-surface-flux-integral default_required]
+Let
+    \mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)).
+
+[96-105 p appG-sym-surface-flux-integral default_required]
+Then
+    
+    \iint_S\mathbf F\cdot\widehat{\mathbf n}\,dS
+    =
+    \iint_D
+    \mathbf F(\mathbf r(u,v))
+    \cdot
+    (\mathbf r_u\times\mathbf r_v)
+    \,du\,dv.
+
+[109-109 title appG-sym-sympy-surface-flux-pattern default_required]
+SymPy surface flux pattern
+
+[111-143 program appG-sym-sympy-surface-flux-pattern default_required]
+x, y, z, u, v = sp.symbols("x y z u v")
+
+P = ...
+Q = ...
+R = ...
+
+xu = ...
+yu = ...
+zu = ...
+
+r = sp.Matrix([xu, yu, zu])
+ru = r.diff(u)
+rv = r.diff(v)
+
+normal = ru.cross(rv)
+
+F = sp.Matrix([
+    P.subs({x: xu, y: yu, z: zu}),
+    Q.subs({x: xu, y: yu, z: zu}),
+    R.subs({x: xu, y: yu, z: zu})
+])
+
+integrand = sp.simplify(F.dot(normal))
+
+value = sp.integrate(
+    integrand,
+    (u, u0, u1),
+    (v, v0, v1)
+)
+
+[145-145 p appG-sym-sympy-surface-flux-pattern default_required]
+The order of (u,v) bounds must match the expression.
+
+[149-149 title appG-sym-surface-area default_required]
+Surface area
+
+[151-157 p appG-sym-surface-area default_required]
+\operatorname{Area}(S)
+    =
+    \iint_D
+    |\mathbf r_u\times\mathbf r_v|
+    \,du\,dv.
+
+[159-159 p appG-sym-surface-area default_required]
+Symbolic pattern:
+
+[161-166 program appG-sym-surface-area default_required]
+area_integrand = sp.sqrt(normal.dot(normal))
+area = sp.integrate(area_integrand, (u, u0, u1), (v, v0, v1))
+
+[170-170 title appG-sym-curl default_required]
+Curl
+
+[172-178 p appG-sym-curl default_required]
+For
+    \mathbf F=(P,Q,R),
+    
+    \nabla\times\mathbf F
+    =
+    (R_y-Q_z,\ P_z-R_x,\ Q_x-P_y).
+
+[180-180 p appG-sym-curl default_required]
+SymPy pattern:
+
+[182-190 program appG-sym-curl default_required]
+curlF = sp.Matrix([
+    sp.diff(R, y) - sp.diff(Q, z),
+    sp.diff(P, z) - sp.diff(R, x),
+    sp.diff(Q, x) - sp.diff(P, y)
+])
+
+[194-194 title appG-sym-divergence default_required]
+Divergence
+
+[196-198 p appG-sym-divergence default_required]
+\nabla\cdot\mathbf F=P_x+Q_y+R_z.
+
+[200-200 p appG-sym-divergence default_required]
+SymPy pattern:
+
+[202-206 program appG-sym-divergence default_required]
+divF = sp.diff(P, x) + sp.diff(Q, y) + sp.diff(R, z)
+
+[210-210 title appG-sym-gradient default_required]
+Gradient
+
+[212-214 p appG-sym-gradient default_required]
+\nabla f=(f_x,f_y,f_z).
+
+[216-216 p appG-sym-gradient default_required]
+SymPy pattern:
+
+[218-226 program appG-sym-gradient default_required]
+gradf = sp.Matrix([
+    sp.diff(f, x),
+    sp.diff(f, y),
+    sp.diff(f, z)
+])
+
+[230-230 title appG-sym-jacobian default_required]
+Jacobian
+
+[232-236 p appG-sym-jacobian default_required]
+For
+    F=(F_1,\ldots,F_m),
+    
+    J_F=\left(\frac{\partial F_i}{\partial x_j}\right).
+
+[238-238 p appG-sym-jacobian default_required]
+SymPy pattern:
+
+[240-245 program appG-sym-jacobian default_required]
+F = sp.Matrix([F1, F2, F3])
+J = F.jacobian([x, y, z])
+
+[249-249 title appG-sym-greens-theorem-check default_required]
+Green's theorem check
+
+[251-255 p appG-sym-greens-theorem-check default_required]
+For
+    \omega=P\,dx+Q\,dy,
+    
+    d\omega=(Q_x-P_y)\,dx\wedge dy.
+
+[257-257 p appG-sym-greens-theorem-check default_required]
+Symbolic scalar curl:
+
+[259-263 program appG-sym-greens-theorem-check default_required]
+scalar_curl = sp.diff(Q, x) - sp.diff(P, y)
+
+[267-267 title appG-sym-orientation-warnings default_required]
+Orientation warnings
+
+[269-269 p appG-sym-orientation-warnings default_required]
+For a curve, reversing the parametrization changes the sign of a 1-form integral.
+
+[271-274 p appG-sym-orientation-warnings default_required]
+For a surface, switching u and v changes
+    \mathbf r_u\times\mathbf r_v
+    to
+    -\mathbf r_u\times\mathbf r_v.
+
+[276-276 p appG-sym-orientation-warnings default_required]
+Flux changes sign when orientation reverses.
+
+[278-278 p appG-sym-orientation-warnings default_required]
+Surface area does not.
+
+[282-282 title appG-sym-symbolic-warnings default_required]
+Symbolic warnings
+
+[284-284 p appG-sym-symbolic-warnings default_required]
+A symbolic answer may be correct but hard to read.
+
+[286-287 p appG-sym-symbolic-warnings default_required]
+Use:
+    \texttt{sp.simplify}
+
+[289-289 p appG-sym-symbolic-warnings default_required]
+\texttt{sp.factor}
+
+[291-291 p appG-sym-symbolic-warnings default_required]
+\texttt{sp.expand}
+
+[293-293 p appG-sym-symbolic-warnings default_required]
+Always check assumptions, especially signs and parameter ranges.

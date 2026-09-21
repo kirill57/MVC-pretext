@@ -1,0 +1,242 @@
+[5-5 title sec-appG-plotting-surfaces-and-contour-maps default_required]
+Plotting surfaces and contour maps
+
+[8-8 title appG-plot-standard-imports default_required]
+Standard imports
+
+[10-13 program appG-plot-standard-imports default_required]
+import numpy as np
+import matplotlib.pyplot as plt
+
+[15-17 p appG-plot-standard-imports default_required]
+For symbolic work:
+
+[19-21 program appG-plot-standard-imports default_required]
+import sympy as sp
+
+[23-25 p appG-plot-standard-imports default_required]
+For numerical integration and ODEs:
+
+[27-29 program appG-plot-standard-imports default_required]
+from scipy.integrate import dblquad, tplquad, solve_ivp
+
+[33-33 title appG-plot-grid-function-two-variables default_required]
+Grid for a function of two variables
+
+[35-39 p appG-plot-grid-function-two-variables default_required]
+For
+      z=f(x,y),
+      make arrays of x- and y-values:
+
+[41-46 program appG-plot-grid-function-two-variables default_required]
+x = np.linspace(a, b, 200)
+y = np.linspace(c, d, 200)
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)
+
+[48-50 p appG-plot-grid-function-two-variables default_required]
+Here X, Y, and Z are arrays. The function f must accept arrays.
+
+[54-54 title appG-plot-surface-plot default_required]
+Surface plot
+
+[56-66 program appG-plot-surface-plot default_required]
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_surface(X, Y, Z)
+
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+ax.set_zlabel("z")
+plt.show()
+
+[70-70 title appG-plot-wireframe-plot default_required]
+Wireframe plot
+
+[72-79 program appG-plot-wireframe-plot default_required]
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+
+ax.plot_wireframe(X, Y, Z)
+
+plt.show()
+
+[81-83 p appG-plot-wireframe-plot default_required]
+A wireframe is often easier to read than a solid surface.
+
+[87-87 title appG-plot-contour-plot default_required]
+Contour plot
+
+[89-92 p appG-plot-contour-plot default_required]
+A contour plot shows level curves:
+      f(x,y)=c.
+
+[94-100 program appG-plot-contour-plot default_required]
+plt.contour(X, Y, Z, levels=20)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.axis("equal")
+plt.show()
+
+[102-104 p appG-plot-contour-plot default_required]
+Filled contour plot: contourf
+
+[106-111 program appG-plot-contour-plot default_required]
+plt.contourf(X, Y, Z, levels=30)
+plt.colorbar()
+plt.axis("equal")
+plt.show()
+
+[115-115 title appG-plot-implicit-curves default_required]
+Implicit curves
+
+[117-121 p appG-plot-implicit-curves default_required]
+To plot
+      F(x,y)=0,
+      plot the zero contour:
+
+[123-128 program appG-plot-implicit-curves default_required]
+Z = F(X, Y)
+plt.contour(X, Y, Z, levels=[0])
+plt.axis("equal")
+plt.show()
+
+[130-134 p appG-plot-implicit-curves default_required]
+To plot
+      F(x,y)=c,
+      use:
+
+[136-138 program appG-plot-implicit-curves default_required]
+plt.contour(X, Y, Z, levels=[c])
+
+[142-142 title appG-plot-common-examples default_required]
+Common examples
+
+[144-147 p appG-plot-common-examples default_required]
+Plane:
+      z=ax+by+c.
+
+[149-152 p appG-plot-common-examples default_required]
+Bowl:
+      z=x^2+y^2.
+
+[154-157 p appG-plot-common-examples default_required]
+Saddle:
+      z=x^2-y^2.
+
+[159-162 p appG-plot-common-examples default_required]
+Hill:
+      z=e^{-(x^2+y^2)}.
+
+[164-167 p appG-plot-common-examples default_required]
+Radial wave:
+      z=\sin\sqrt{x^2+y^2}.
+
+[171-171 title appG-plot-parametrized-surface default_required]
+Plotting a parametrized surface
+
+[173-177 p appG-plot-parametrized-surface default_required]
+For
+      \mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)),
+      use a parameter grid:
+
+[179-192 program appG-plot-parametrized-surface default_required]
+u = np.linspace(u0, u1, 150)
+v = np.linspace(v0, v1, 150)
+U, V = np.meshgrid(u, v)
+
+X = x(U, V)
+Y = y(U, V)
+Z = z(U, V)
+
+fig = plt.figure()
+ax = fig.add_subplot(projection="3d")
+ax.plot_surface(X, Y, Z)
+plt.show()
+
+[196-196 title appG-plot-cylinder default_required]
+Cylinder
+
+[198-200 p appG-plot-cylinder default_required]
+\mathbf r(\theta,z)=(R\cos\theta,R\sin\theta,z).
+
+[202-211 program appG-plot-cylinder default_required]
+theta = np.linspace(0, 2*np.pi, 150)
+z = np.linspace(z0, z1, 100)
+Theta, Z = np.meshgrid(theta, z)
+
+X = R*np.cos(Theta)
+Y = R*np.sin(Theta)
+
+ax.plot_surface(X, Y, Z)
+
+[215-215 title appG-plot-sphere default_required]
+Sphere
+
+[217-221 p appG-plot-sphere default_required]
+\mathbf r(\phi,\theta)
+=
+(R\sin\phi\cos\theta,\ R\sin\phi\sin\theta,\ R\cos\phi).
+
+[223-233 program appG-plot-sphere default_required]
+phi = np.linspace(0, np.pi, 150)
+theta = np.linspace(0, 2*np.pi, 150)
+Phi, Theta = np.meshgrid(phi, theta)
+
+X = R*np.sin(Phi)*np.cos(Theta)
+Y = R*np.sin(Phi)*np.sin(Theta)
+Z = R*np.cos(Phi)
+
+ax.plot_surface(X, Y, Z)
+
+[237-237 title appG-plot-plotting-checklist default_required]
+Plotting checklist
+
+[240-240 title appG-plot-checklist-table default_required]
+Plotting checklist
+
+[243-243 cell appG-plot-checklist-table default_required]
+1.
+
+[244-244 cell appG-plot-checklist-table default_required]
+Choose a domain large enough to show the important feature.
+
+[247-247 cell appG-plot-checklist-table default_required]
+2.
+
+[248-248 cell appG-plot-checklist-table default_required]
+Use enough grid points to avoid jagged artifacts.
+
+[251-251 cell appG-plot-checklist-table default_required]
+3.
+
+[252-252 cell appG-plot-checklist-table default_required]
+Use axis("equal") for planar geometry.
+
+[255-255 cell appG-plot-checklist-table default_required]
+4.
+
+[256-256 cell appG-plot-checklist-table default_required]
+Label axes.
+
+[259-259 cell appG-plot-checklist-table default_required]
+5.
+
+[260-260 cell appG-plot-checklist-table default_required]
+Check whether the plot hides singularities or holes.
+
+[267-267 title appG-plot-common-warnings default_required]
+Common warnings
+
+[270-272 p appG-plot-warning-sampling default_required]
+A computer plot is a sample, not a proof.
+
+[273-275 p appG-plot-warning-sampling default_required]
+A surface may look smooth because the grid is too coarse.
+
+[276-278 p appG-plot-warning-sampling default_required]
+A contour may disappear if the requested level is outside the range of plotted values.
+
+[279-281 p appG-plot-warning-sampling default_required]
+A 3-D plot may distort scale unless the axes are adjusted.

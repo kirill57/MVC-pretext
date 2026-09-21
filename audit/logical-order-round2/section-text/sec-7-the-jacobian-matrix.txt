@@ -1,0 +1,442 @@
+[5-5 title sec-7-the-jacobian-matrix default_required]
+The Jacobian matrix
+
+[7-13 p sec-7-the-jacobian-matrix default_required]
+turned the derivative of a scalar function into a
+    1-form:
+    df=f_x\,dx+f_y\,dy.
+    That was one linear function. But many transformations have several output components.
+    Each component has its own differential, and those differentials want to be stacked.
+
+[15-15 p sec-7-the-jacobian-matrix default_required]
+That stack is the Jacobian matrix.
+
+[18-18 title c7s5-rubber-sheet-map default_required]
+A rubber sheet map
+
+[20-28 p c7s5-rubber-sheet-map default_required]
+Imagine a square grid printed on a thin rubber sheet. The sheet is pulled so that a point
+      (x,y) moves to a new point
+      F(x,y)=(X(x,y),Y(x,y)).
+      Suppose the rule is
+      \boxed{ F(x,y)= \left( x+\frac15xy,\; y+\frac1{10}x^2 \right). }
+      This is not a linear transformation, because of the terms xy and x^2. But
+      near one point it should look almost linear if the point is viewed closely enough.
+
+[30-35 p c7s5-rubber-sheet-map default_required]
+Take
+      P=(2,1).
+      Then
+      F(2,1)= \left( 2+\frac25,\; 1+\frac4{10} \right) = \left(\frac{12}{5},\frac75\right).
+
+[37-49 p c7s5-rubber-sheet-map default_required]
+Now make a small step
+      (\Delta x,\Delta y)
+      from P. The new point is
+      (2+\Delta x,\;1+\Delta y).
+      Compute the change in the first output:
+      
+        X(2+\Delta x,1+\Delta y)-X(2,1) \amp= \left(2+\Delta x+\frac15(2+\Delta x)(1+\Delta y)\right)-\frac{12}{5}
+        \amp= \frac65\Delta x+\frac25\Delta y+\frac15\Delta x\,\Delta y.
+      
+      The linear part is
+      \frac65\Delta x+\frac25\Delta y.
+
+[51-59 p c7s5-rubber-sheet-map default_required]
+Now compute the change in the second output:
+      
+        Y(2+\Delta x,1+\Delta y)-Y(2,1) \amp= \left(1+\Delta y+\frac1{10}(2+\Delta x)^2\right)-\frac75
+        \amp= \frac25\Delta x+\Delta y+\frac1{10}(\Delta x)^2.
+      
+      The linear part is
+      \frac25\Delta x+\Delta y.
+
+[61-68 p c7s5-rubber-sheet-map default_required]
+So near P,
+      \boxed{ F(2+\Delta x,1+\Delta y) \approx F(2,1) + \left( \frac65\Delta x+\frac25\Delta y,\; \frac25\Delta x+\Delta y \right). }
+      The linear machine acting on the small displacement is
+      (\Delta x,\Delta y) \longmapsto \left( \frac65\Delta x+\frac25\Delta y,\; \frac25\Delta x+\Delta y \right).
+      As a matrix, this is
+      \boxed{ \begin{pmatrix} \frac65 \amp \frac25\\[1mm] \frac25 \amp 1 \end{pmatrix} \begin{pmatrix} \Delta x\\ \Delta y \end{pmatrix}. }
+
+[70-76 p c7s5-rubber-sheet-map default_required]
+That matrix is the derivative of the transformation F at P.
+      Write its columns as F_x(P)=(6/5,2/5) and F_y(P)=(2/5,1):
+      these are the componentwise rates of change when only the indicated input varies.
+      The image displacements predicted for steps of sizes \Delta x and
+      \Delta y are \Delta x\,F_x(P) and \Delta y\,F_y(P).
+
+[79-80 caption c7s5-fig-rubber-sheet default_required]
+Near one point, a nonlinear map sends a small square almost to a parallelogram.
+      The derivative matrix gives that parallelogram.
+
+[82-121 latex-image c7s5-fig-rubber-sheet default_required]
+\begin{tikzpicture}[scale=0.9, >=stealth]
+            \begin{scope}
+                \draw[->] (-0.4,0) -- (4.2,0) node[right] {\(x\)};
+                \draw[->] (0,-0.4) -- (0,3.6) node[above] {\(y\)};
+                \draw[gray!20, step=1] (0,0) grid (4,3);
+
+                \coordinate (P) at (2,1);
+                \draw[fill=gray!18] (2,1) -- (3,1) -- (3,2) -- (2,2) -- cycle;
+                \fill (P) circle (2pt);
+                \node[below left] at (P) {\(P\)};
+
+                \draw[->, thick] (2,1) -- (3,1) node[midway, below] {\(\Delta x\)};
+                \draw[->, thick] (2,1) -- (2,2) node[midway, left] {\(\Delta y\)};
+
+                \node at (2,-0.9) {small square before the map};
+            \end{scope}
+
+            \begin{scope}[shift={(7,0)}]
+                \draw[->] (-0.4,0) -- (4.8,0) node[right] {\(X\)};
+                \draw[->] (0,-0.4) -- (0,3.8) node[above] {\(Y\)};
+
+                \coordinate (Q) at (1.1,1.0);
+                \coordinate (A) at (2.3,1.4);
+                \coordinate (B) at (1.5,2.0);
+                \coordinate (AB) at (2.7,2.4);
+
+                \draw[fill=blue!12, thick] (Q) -- (A) -- (AB) -- (B) -- cycle;
+                \fill (Q) circle (2pt);
+                \node[below left] at (Q) {\(F(P)\)};
+
+                \draw[->, thick] (Q) -- (A) node[midway, below right] {\(\Delta x\,F_x(P)\)};
+                \draw[->, thick] (Q) -- (B) node[midway, left] {\(\Delta y\,F_y(P)\)};
+
+                \node at (2.3,-0.9) {linearized image near \(F(P)\)};
+            \end{scope}
+
+            \draw[->, thick] (4.6,1.6) -- (6.1,1.6) node[midway, above] {\(DF(P)\)};
+        \end{tikzpicture}
+
+[127-127 title c7s5-derivatives-of-transformations default_required]
+Derivatives of transformations
+
+[129-135 p c7s5-derivatives-of-transformations default_required]
+A scalar function has one output. A transformation
+      F:\mathbb R^n\to\mathbb R^m
+      has m output components:
+      F(\mathbf x)= \bigl(F_1(\mathbf x),F_2(\mathbf x),\ldots,F_m(\mathbf x)\bigr).
+      Each component F_i is a scalar-valued function.
+
+[137-140 p c7s5-derivatives-of-transformations default_required]
+The derivative should be the best linear map from input displacements to output
+      displacements.
+
+[143-143 title c7s5-def-differentiability-transformation default_required]
+Differentiability of a transformation
+
+[145-158 p c7s5-def-differentiability-transformation default_required]
+Let
+          F:D\subseteq\mathbb R^n\to\mathbb R^m,
+          and let \mathbf p be an interior point of D. We say that F is
+          differentiable at \mathbf p if there is a linear map
+          A:\mathbb R^n\to\mathbb R^m
+          such that
+          \boxed{ F(\mathbf p+\mathbf h) = F(\mathbf p)+A\mathbf h+\mathbf R(\mathbf h), }
+          where
+          \boxed{ \lim_{\mathbf h\to\mathbf 0} \frac{\norm{\mathbf R(\mathbf h)}}{\norm{\mathbf h}}=0. }
+          The linear map A is called the total derivative of F at
+          \mathbf p, and we write
+          A=DF(\mathbf p).
+
+[162-166 p c7s5-derivatives-of-transformations default_required]
+This is the vector-valued version of the definition in
+      . The only change is that the
+      error is now a vector, so we measure its size with a norm.
+
+[168-173 p c7s5-derivatives-of-transformations default_required]
+If
+      F=(F_1,\ldots,F_m)
+      is differentiable at \mathbf p, then each component F_i is differentiable at
+      \mathbf p. Its differential gives one row of the derivative matrix.
+
+[177-177 title c7s5-the-jacobian-matrix default_required]
+The Jacobian matrix
+
+[179-190 p c7s5-the-jacobian-matrix default_required]
+Let
+      F:\mathbb R^n\to\mathbb R^m
+      have component functions
+      F_1,\ldots,F_m.
+      Use input coordinates
+      x_1,x_2,\ldots,x_n.
+      The partial derivatives form an m\times n matrix:
+      \boxed{ J_F(\mathbf p) = \begin{pmatrix} \dfrac{\partial F_1}{\partial x_1}(\mathbf p) \amp \dfrac{\partial F_1}{\partial x_2}(\mathbf p) \amp \cdots \amp \dfrac{\partial F_1}{\partial x_n}(\mathbf p) \\[3mm] \dfrac{\partial F_2}{\partial x_1}(\mathbf p) \amp \dfrac{\partial F_2}{\partial x_2}(\mathbf p) \amp \cdots \amp \dfrac{\partial F_2}{\partial x_n}(\mathbf p) \\ \vdots \amp \vdots \amp \ddots \amp \vdots \\[1mm] \dfrac{\partial F_m}{\partial x_1}(\mathbf p) \amp \dfrac{\partial F_m}{\partial x_2}(\mathbf p) \amp \cdots \amp \dfrac{\partial F_m}{\partial x_n}(\mathbf p) \end{pmatrix}. }
+      This matrix is called the Jacobian matrix of F at \mathbf p. It
+      is also called the Jacobi matrix.
+
+[193-193 title checkpoint-7-5-why-a-matrix default_required]
+Why a whole matrix?
+
+[195-200 p checkpoint-7-5-why-a-matrix default_required]
+A map F:\mathbb R^n\to\mathbb R^m sends inputs to outputs, yet its derivative
+          turns out to be a whole m\times n matrix of partial derivatives rather than a
+          single number. Where do the m rows and the n columns come from? What is each
+          partial derivative \partial F_i/\partial x_j actually keeping track of?
+
+[203-207 p checkpoint-7-5-why-a-matrix hint]
+Think about what you must specify to predict an output change: there are m separate
+          output components to track, and each one can respond to a nudge in any of the n input
+          directions.
+
+[211-215 p c7s5-the-jacobian-matrix default_required]
+When F is differentiable at \mathbf p, the Jacobian matrix is the matrix of
+      the linear map DF(\mathbf p):
+      \boxed{ DF(\mathbf p)(\mathbf h)=J_F(\mathbf p)\mathbf h. }
+
+[217-231 p c7s5-the-jacobian-matrix default_required]
+For the rubber sheet map,
+      F(x,y)= \left( x+\frac15xy,\; y+\frac1{10}x^2 \right),
+      we have
+      F_1(x,y)=x+\frac15xy, \qquad F_2(x,y)=y+\frac1{10}x^2.
+      The partial derivatives are
+      \frac{\partial F_1}{\partial x}=1+\frac15y, \qquad \frac{\partial F_1}{\partial y}=\frac15x,
+      and
+      \frac{\partial F_2}{\partial x}=\frac15x, \qquad \frac{\partial F_2}{\partial y}=1.
+      So
+      \boxed{ J_F(x,y) = \begin{pmatrix} 1+\frac15y \amp \frac15x\\[1mm] \frac15x \amp 1 \end{pmatrix}. }
+      At P=(2,1),
+      \boxed{ J_F(2,1) = \begin{pmatrix} \frac65 \amp \frac25\\[1mm] \frac25 \amp 1 \end{pmatrix}. }
+      This is exactly the matrix found by expanding the map near P.
+
+[235-235 title c7s5-rows-as-differentials default_required]
+Rows as differentials of component functions
+
+[237-237 p c7s5-rows-as-differentials default_required]
+The row viewpoint is the one that connects directly to differentials.
+
+[239-251 p c7s5-rows-as-differentials default_required]
+For
+      F=(F_1,F_2),
+      the component differentials are
+      dF_1=F_{1x}\,dx+F_{1y}\,dy,
+      and
+      dF_2=F_{2x}\,dx+F_{2y}\,dy.
+      At a point P, these become
+      dF_{1,P}=F_{1x}(P)\,dx+F_{1y}(P)\,dy,
+      dF_{2,P}=F_{2x}(P)\,dx+F_{2y}(P)\,dy.
+      Stacking them gives
+      \boxed{ J_F(P) = \begin{pmatrix} \text{coefficients of }dF_{1,P}\\ \text{coefficients of }dF_{2,P} \end{pmatrix}. }
+
+[253-260 p c7s5-rows-as-differentials default_required]
+For the rubber sheet map at P=(2,1),
+      dF_{1,P}=\frac65\,dx+\frac25\,dy,
+      and
+      dF_{2,P}=\frac25\,dx+dy.
+      Therefore
+      J_F(P) = \begin{pmatrix} \frac65 \amp \frac25\\[1mm] \frac25 \amp 1 \end{pmatrix}.
+
+[262-262 p c7s5-rows-as-differentials default_required]
+Rows measure how each output coordinate changes.
+
+[264-274 p c7s5-rows-as-differentials default_required]
+Columns tell a different story. The first column is the output rate of change per unit
+      step in the x-direction:
+      F_x(P)= \begin{pmatrix} F_{1x}(P)\\ F_{2x}(P) \end{pmatrix}.
+      The second column is the output rate of change per unit step in the y-direction:
+      F_y(P)= \begin{pmatrix} F_{1y}(P)\\ F_{2y}(P) \end{pmatrix}.
+      A step of size \Delta x therefore produces approximately
+      \Delta x\,F_x(P), and similarly for \Delta y.
+      So the rows are differentials of component functions, while the columns are images of
+      unit coordinate directions under the derivative.
+
+[276-276 p c7s5-rows-as-differentials default_required]
+Both views are useful.
+
+[280-280 title c7s5-local-linearization default_required]
+Local linearization of nonlinear maps
+
+[282-295 p c7s5-local-linearization default_required]
+When F is differentiable at \mathbf p, the Jacobian matrix gives the linear approximation:
+      \boxed{ F(\mathbf p+\mathbf h) \approx F(\mathbf p)+J_F(\mathbf p)\mathbf h. }
+      In coordinates, for a map
+      F(x,y)=(F_1(x,y),F_2(x,y)),
+      near (a,b),
+      
+        \boxed{\begin{aligned}
+        F_1(a+\Delta x,b+\Delta y) \amp\approx F_1(a,b) + F_{1x}(a,b)\,\Delta x + F_{1y}(a,b)\,\Delta y,\\
+        F_2(a+\Delta x,b+\Delta y) \amp\approx F_2(a,b) + F_{2x}(a,b)\,\Delta x + F_{2y}(a,b)\,\Delta y.
+        \end{aligned}}
+      
+      This is just the scalar linear approximation applied to each component.
+
+[298-298 title checkpoint-7-5-near-a-point default_required]
+What does the Jacobian see?
+
+[300-305 p checkpoint-7-5-near-a-point default_required]
+The local linearization says F(\mathbf p+\mathbf h)\approx F(\mathbf p)+J_F(\mathbf p)\mathbf h.
+          In plain words, what is the Jacobian matrix J_F(\mathbf p) telling you about how the
+          map behaves in a tiny neighborhood of \mathbf p? What kind of map does F look
+          like up close, and why does the curving part of F not appear in this picture?
+
+[308-312 p checkpoint-7-5-near-a-point hint]
+Imagine zooming in on \mathbf p until the bending of F is too small to notice.
+          What is left of the map is captured entirely by J_F(\mathbf p) acting on the
+          displacement \mathbf h.
+
+[317-317 title c7s5-ex-small-displacement default_required]
+A small displacement through the rubber map
+
+[319-338 p c7s5-ex-small-displacement default_required]
+Use
+          F(x,y)= \left( x+\frac15xy,\; y+\frac1{10}x^2 \right)
+          at
+          P=(2,1),
+          and take
+          \mathbf h=(0.03,-0.04).
+          The linear prediction is
+          
+            J_F(P)\mathbf h \amp= \begin{pmatrix} \frac65 \amp \frac25\\[1mm] \frac25 \amp 1 \end{pmatrix} \begin{pmatrix} 0.03\\ -0.04 \end{pmatrix}
+            \amp= \begin{pmatrix} \frac65(0.03)+\frac25(-0.04)\\[1mm] \frac25(0.03)-0.04 \end{pmatrix}
+            \amp= \begin{pmatrix} 0.020\\ -0.028 \end{pmatrix}.
+          
+          So
+          F(2.03,0.96) \approx F(2,1)+(0.020,-0.028).
+          Since
+          F(2,1)=\left(\frac{12}{5},\frac75\right)=(2.4,1.4),
+          the prediction is
+          F(2.03,0.96)\approx(2.420,1.372).
+
+[339-347 p c7s5-ex-small-displacement default_required]
+The exact value is
+          
+            F(2.03,0.96) \amp= \left( 2.03+\frac15(2.03)(0.96),\; 0.96+\frac1{10}(2.03)^2 \right)
+            \amp= (2.41976,\;1.37209).
+          
+          The Jacobian gave the first-order change. The remaining error came from products and
+          squares of the small displacement components.
+
+[353-353 title c7s5-parametrized-surface default_required]
+A parametrized surface and its Jacobian
+
+[355-358 p c7s5-parametrized-surface default_required]
+The Jacobian matrix also works when the output dimension is larger than the input
+      dimension.
+
+[360-378 p c7s5-parametrized-surface default_required]
+In , holding one parameter fixed produced
+      a coordinate curve. In ,
+      we found its tangent velocity by taking an ordinary derivative while the other
+      parameter stayed fixed. The partial-derivative notation from
+       now names exactly that operation. For
+      \mathbf r(u,v)=(x(u,v),y(u,v),z(u,v)), the notation means
+      \mathbf r_u(u_0,v_0)=(x_u,y_u,z_u)(u_0,v_0)=\left.\frac{d}{du}\mathbf r(u,v_0)\right|_{u=u_0},
+      and
+      \mathbf r_v(u_0,v_0)=(x_v,y_v,z_v)(u_0,v_0)=\left.\frac{d}{dv}\mathbf r(u_0,v)\right|_{v=v_0}.
+      These vectors are the two columns of J_{\mathbf r}. If \mathbf r is
+      differentiable at (u_0,v_0), its linear approximation is
+      \mathbf r(u_0+\Delta u,v_0+\Delta v)-\mathbf r(u_0,v_0)\approx\Delta u\,\mathbf r_u(u_0,v_0)+\Delta v\,\mathbf r_v(u_0,v_0).
+      Continuous first partial derivatives near the point are sufficient, by applying
+      the scalar differentiability criterion component by component. The next section
+      proves that criterion. A nonzero column is tangent to its coordinate curve;
+      two independent columns span a tangent plane. The systematic regularity conditions
+      are developed in .
+
+[380-390 p c7s5-parametrized-surface default_required]
+Let
+      \mathbf s(u,v)= \left( u,\; v,\; 2+\frac{u^2}{4}-\frac{v^2}{9} \right).
+      This is a parametrized surface:
+      \mathbf s:\mathbb R^2\to\mathbb R^3.
+      The component functions are
+      s_1(u,v)=u, \qquad s_2(u,v)=v, \qquad s_3(u,v)=2+\frac{u^2}{4}-\frac{v^2}{9}.
+      The Jacobian matrix is
+      \boxed{ J_{\mathbf s}(u,v) = \begin{pmatrix} 1 \amp 0\\ 0 \amp 1\\[1mm] \frac{u}{2} \amp -\frac{2v}{9} \end{pmatrix}. }
+      This is a 3\times2 matrix. It cannot have a determinant, because it is not square.
+
+[392-400 p c7s5-parametrized-surface default_required]
+Its columns are
+      \mathbf s_u(u,v)= \left(1,0,\frac{u}{2}\right),
+      and
+      \mathbf s_v(u,v)= \left(0,1,-\frac{2v}{9}\right).
+      These are independent tangent directions on this smooth graph. A step of size
+      \Delta u produces approximately \Delta u\,\mathbf s_u;
+      a step of size \Delta v produces approximately \Delta v\,\mathbf s_v.
+
+[402-414 p c7s5-parametrized-surface default_required]
+At
+      (u,v)=(2,3),
+      the tangent directions are
+      \mathbf s_u(2,3)=(1,0,1),
+      and
+      \mathbf s_v(2,3)=\left(0,1,-\frac23\right).
+      So near the surface point
+      \mathbf s(2,3)= \left(2,3,2+1-1\right)=(2,3,2),
+      the surface is locally approximated by
+      \boxed{ \mathbf s(2+\Delta u,3+\Delta v) \approx (2,3,2) + \Delta u(1,0,1) + \Delta v\left(0,1,-\frac23\right). }
+      This is a tangent plane written in vector form.
+
+[418-418 title c7s5-jacobian-determinant default_required]
+The Jacobian determinant as local area or volume scaling
+
+[420-426 p c7s5-jacobian-determinant default_required]
+A determinant appears only when the Jacobian matrix is square:
+      F:\mathbb R^n\to\mathbb R^n.
+      Then
+      \det J_F(\mathbf p)
+      measures the signed scaling of the derivative when F is differentiable.
+
+[428-434 p c7s5-jacobian-determinant default_required]
+For a map
+      F(x,y)=(X(x,y),Y(x,y)),
+      the Jacobian determinant is
+      \boxed{ \frac{\partial(X,Y)}{\partial(x,y)} = \det \begin{pmatrix} X_x \amp X_y\\ Y_x \amp Y_y \end{pmatrix} = X_xY_y-X_yY_x. }
+      At a point, this number tells how a tiny signed area is scaled.
+
+[437-437 title checkpoint-7-5-what-the-determinant-measures default_required]
+What does the determinant measure?
+
+[439-443 p checkpoint-7-5-what-the-determinant-measures default_required]
+When F:\mathbb R^n\to\mathbb R^n is differentiable at \mathbf p, the number \det J_F(\mathbf p) appears. What
+          does this single number tell you about how the map treats a tiny region near \mathbf p?
+          And what extra information is carried by its sign that its size alone does not?
+
+[446-450 p checkpoint-7-5-what-the-determinant-measures hint]
+A tiny square or cube near \mathbf p gets pushed to a tiny parallelogram or
+          parallelepiped. Think about how its area or volume changes, and about whether the map flips
+          the region over or keeps its orientation.
+
+[454-462 p c7s5-jacobian-determinant default_required]
+For the rubber sheet map,
+      J_F(2,1) = \begin{pmatrix} \frac65 \amp \frac25\\[1mm] \frac25 \amp 1 \end{pmatrix}.
+      Therefore
+      \boxed{ \det J_F(2,1) = \frac65\cdot1-\frac25\cdot\frac25 = \frac{26}{25}. }
+      So a very small area near P=(2,1) is expanded by a factor of about
+      \frac{26}{25}=1.04.
+      The determinant is positive, so the local orientation is preserved.
+
+[464-482 p c7s5-jacobian-determinant default_required]
+The same fact can be written using the algebra from
+      . Here dX and dY
+      mean differentials of the component functions on the input plane, evaluated at one
+      fixed input point. Thus every measurement below acts on input vectors. Since
+      dX=X_x\,dx+X_y\,dy
+      and
+      dY=Y_x\,dx+Y_y\,dy,
+      we get
+      
+        dX\wedge dY \amp= (X_x\,dx+X_y\,dy)\wedge(Y_x\,dx+Y_y\,dy)
+        \amp= X_xY_y\,dx\wedge dy+X_yY_x\,dy\wedge dx
+        \amp= (X_xY_y-X_yY_x)\,dx\wedge dy.
+      
+      Thus
+      \boxed{ dX\wedge dY = \det(J_F)\,dx\wedge dy. }
+      The determinant is the coefficient that converts the old signed area form into the new
+      signed area form.
+
+[484-488 p c7s5-jacobian-determinant default_required]
+In three variables, \det J_F likewise measures the signed volume scaling
+      of the linear derivative. The corresponding volume-form formula will be explained in
+      .
+
+[490-494 p c7s5-jacobian-determinant default_required]
+This is why the Jacobian determinant will appear in change of variables for double and
+      triple integrals. A coordinate change does not merely rename points. It stretches tiny
+      areas and volumes, and the determinant measures that stretching.
+
+[496-501 p c7s5-jacobian-determinant default_required]
+The Jacobian matrix is a promise: near a point, the transformation behaves like this
+      linear map. But the promise is only true when the partial derivatives really stitch
+      together into a total derivative. The next question is practical and sharp: when can we
+      trust the matrix of partial derivatives to be the derivative?

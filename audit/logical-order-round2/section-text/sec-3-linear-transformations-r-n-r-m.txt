@@ -1,0 +1,458 @@
+[5-5 title sec-3-linear-transformations-r-n-r-m default_required]
+Linear transformations \mathbb R^n\to\mathbb R^m
+
+[7-7 p sec-3-linear-transformations-r-n-r-m default_required]
+A linear function produces one number. A linear transformation produces a vector.
+
+[9-12 p sec-3-linear-transformations-r-n-r-m default_required]
+That sounds like a larger idea, but it is built from the one we already know. Each
+    coordinate of the output is a linear function of the input.
+
+[15-15 title c3s2-grid-machine default_required]
+A machine that moves a grid
+
+[17-20 p c3s2-grid-machine default_required]
+Picture a square grid drawn on a sheet of rubber. A machine grabs the sheet and moves
+      every point so that straight grid lines remain straight and evenly spaced.
+
+[22-31 p c3s2-grid-machine default_required]
+Suppose the machine sends the basic east step
+      \mathbf e_1=(1,0)
+      to
+      \mathbf u=(2,1),
+      and sends the basic north step
+      \mathbf e_2=(0,1)
+      to
+      \mathbf v=(1,3).
+
+[33-46 p c3s2-grid-machine default_required]
+Then the point
+      (4,2)
+      can be written as
+      4\mathbf e_1+2\mathbf e_2.
+      If the machine respects scaling and addition, its output must be
+      4\mathbf u+2\mathbf v.
+      So
+      
+        T(4,2) \amp= 4(2,1)+2(1,3)
+        \amp= (8,4)+(2,6)
+        \amp= (10,10).
+
+[48-56 p c3s2-grid-machine default_required]
+For a general input
+      (x,y)=x\mathbf e_1+y\mathbf e_2,
+      the same reasoning gives
+      
+        T(x,y) \amp= x(2,1)+y(1,3)
+        \amp= (2x+y,\;x+3y).
+
+[59-59 caption c3s2-fig-grid-transformation default_required]
+A linear transformation sends the standard unit square to the parallelogram spanned by the images of \mathbf e_1 and \mathbf e_2.
+
+[61-93 latex-image c3s2-fig-grid-transformation default_required]
+\begin{tikzpicture}[scale=0.75, >=stealth]
+            \begin{scope}
+                \draw[->] (-0.4,0) -- (3.4,0) node[right] {\(x\)};
+                \draw[->] (0,-0.4) -- (0,3.4) node[above] {\(y\)};
+                \draw[step=1, gray!25, very thin] (0,0) grid (3,3);
+
+                \draw[fill=gray!15] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+                \draw[->, very thick] (0,0) -- (1,0) node[midway, below] {\(\mathbf e_1\)};
+                \draw[->, very thick] (0,0) -- (0,1) node[midway, left] {\(\mathbf e_2\)};
+                \node at (1.5,-0.9) {input grid};
+            \end{scope}
+
+            \begin{scope}[shift={(7,0)}]
+                \draw[->] (-0.4,0) -- (5.2,0) node[right] {\(X\)};
+                \draw[->] (0,-0.4) -- (0,5.0) node[above] {\(Y\)};
+
+                \coordinate (O) at (0,0);
+                \coordinate (U) at (2,1);
+                \coordinate (V) at (1,3);
+                \coordinate (UV) at (3,4);
+
+                \draw[fill=gray!15] (O) -- (U) -- (UV) -- (V) -- cycle;
+                \draw[->, very thick] (O) -- (U) node[midway, below right] {\(T(\mathbf e_1)\)};
+                \draw[->, very thick] (O) -- (V) node[midway, left] {\(T(\mathbf e_2)\)};
+                \draw[thick, dashed] (U) -- (UV);
+                \draw[thick, dashed] (V) -- (UV);
+                \node at (2.3,-0.9) {output grid};
+            \end{scope}
+
+            \draw[->, thick] (3.8,1.6) -- (6.0,1.6) node[midway, above] {\(T\)};
+        \end{tikzpicture}
+
+[97-100 p c3s2-grid-machine default_required]
+This example contains the main idea. Once we know where the basic directions go,
+      linearity tells us where every vector goes.
+
+[103-103 title checkpoint-3-2-grid-to-parallelogram default_required]
+Why a parallelogram?
+
+[105-110 p checkpoint-3-2-grid-to-parallelogram default_required]
+The machine sends the unit square (spanned by \mathbf e_1 and \mathbf e_2)
+          to the parallelogram spanned by T(\mathbf e_1) and T(\mathbf e_2). Why must
+          the image of an evenly spaced square grid always be a grid of identical parallelograms,
+          rather than something curved or unevenly spaced?
+
+[113-117 p checkpoint-3-2-grid-to-parallelogram hint]
+Each grid point is a combination a\mathbf e_1+b\mathbf e_2 with whole-number steps.
+          Think about what the two rules T(\mathbf u+\mathbf v)=T(\mathbf u)+T(\mathbf v) and
+          T(c\mathbf u)=cT(\mathbf u) force the spacing between neighboring images to be.
+
+[122-122 title c3s2-def-linear-transformation default_required]
+Linear transformation
+
+[124-133 p c3s2-def-linear-transformation default_required]
+A function
+          T:\mathbb R^n\to\mathbb R^m
+          is called a linear transformation if, for all vectors
+          \mathbf u,\mathbf v\in\mathbb R^n
+          and all scalars c,
+          T(\mathbf u+\mathbf v)=T(\mathbf u)+T(\mathbf v),
+          and
+          T(c\mathbf u)=cT(\mathbf u).
+
+[137-140 p c3s2-grid-machine default_required]
+The definition is the same as the definition of a linear function, except that the output
+      is now a vector.
+
+[142-146 p c3s2-grid-machine default_required]
+A linear transformation must send the zero vector to the zero vector:
+      T(\mathbf 0)=\mathbf 0.
+      So translations are not linear.
+
+[149-149 title c3s2-ex-translation-not-linear default_required]
+A translation is not linear
+
+[151-162 p c3s2-ex-translation-not-linear default_required]
+The rule
+          F(x,y)=(x+1,y)
+          moves every point one unit to the right. It is a perfectly useful geometric motion,
+          but it is not linear because
+          F(0,0)=(1,0)\neq(0,0).
+          Also,
+          F((1,0)+(0,1))=F(1,1)=(2,1),
+          while
+          F(1,0)+F(0,1)=(2,0)+(1,1)=(3,1).
+          The addition rule fails.
+
+[166-169 p c3s2-grid-machine default_required]
+Translations will return when we discuss affine maps and tangent planes. For now, linear
+      transformations are the origin-fixing machines.
+
+[173-173 title c3s2-images-basis-determine default_required]
+Images of basis vectors determine the whole map
+
+[175-175 p c3s2-images-basis-determine default_required]
+The grid example was not special.
+
+[177-184 p c3s2-images-basis-determine default_required]
+Let
+      T:\mathbb R^n\to\mathbb R^m
+      be linear. Every input vector can be written as
+      \mathbf x=x_1\mathbf e_1+\cdots+x_n\mathbf e_n.
+      Then linearity forces
+      \boxed{ T(\mathbf x) = x_1T(\mathbf e_1)+\cdots+x_nT(\mathbf e_n). }
+
+[186-189 p c3s2-images-basis-determine default_required]
+So the entire transformation is determined by the n output vectors
+      T(\mathbf e_1),\quad T(\mathbf e_2),\quad \ldots,\quad T(\mathbf e_n).
+
+[192-192 title c3s2-thm-determined-by-basis default_required]
+A linear transformation is determined by its values on the standard basis
+
+[194-200 p c3s2-thm-determined-by-basis default_required]
+Let
+          T:\mathbb R^n\to\mathbb R^m
+          be linear. Then, for every
+          \mathbf x=(x_1,\ldots,x_n),
+          \boxed{ T(\mathbf x) = x_1T(\mathbf e_1)+x_2T(\mathbf e_2)+\cdots+x_nT(\mathbf e_n). }
+
+[203-211 p c3s2-thm-determined-by-basis default_required]
+Use the standard basis expansion
+          \mathbf x=x_1\mathbf e_1+x_2\mathbf e_2+\cdots+x_n\mathbf e_n.
+          Then apply linearity:
+          
+            T(\mathbf x) \amp= T(x_1\mathbf e_1+x_2\mathbf e_2+\cdots+x_n\mathbf e_n)
+            \amp= x_1T(\mathbf e_1)+x_2T(\mathbf e_2)+\cdots+x_nT(\mathbf e_n).
+
+[215-215 p c3s2-images-basis-determine default_required]
+The hypothesis that T is linear is essential.
+
+[218-218 title c3s2-ex-without-linearity default_required]
+Without linearity, basis vectors are not enough
+
+[220-235 p c3s2-ex-without-linearity default_required]
+Consider two maps from \mathbb R^2 to \mathbb R^2:
+          I(x,y)=(x,y)
+          and
+          N(x,y)=(x^2,y).
+          They agree on the standard basis:
+          I(1,0)=(1,0)=N(1,0),
+          and
+          I(0,1)=(0,1)=N(0,1).
+          But they do not agree everywhere:
+          I(2,0)=(2,0),
+          while
+          N(2,0)=(4,0).
+          The map N is not linear. Knowing what it does to the basis vectors does not
+          determine what it does to every vector.
+
+[239-239 p c3s2-images-basis-determine default_required]
+Linearity is what lets the basic directions control the whole map.
+
+[242-242 title checkpoint-3-2-basis-determines-all default_required]
+Why do the basis images decide everything?
+
+[244-249 p checkpoint-3-2-basis-determines-all default_required]
+Suppose you are told only the n output vectors
+          T(\mathbf e_1),\ldots,T(\mathbf e_n), and nothing else about T. Explain in
+          your own words why this is already enough information to predict T(\mathbf x) for
+          every possible input \mathbf x.
+
+[252-256 p checkpoint-3-2-basis-determines-all hint]
+Any input can be rebuilt from the basis as
+          \mathbf x=x_1\mathbf e_1+\cdots+x_n\mathbf e_n. What do the two linearity rules let
+          you do once \mathbf x is written that way?
+
+[262-262 title c3s2-matrices-representations default_required]
+Matrices as representations of linear transformations
+
+[264-272 p c3s2-matrices-representations default_required]
+For the grid machine above,
+      T(\mathbf e_1)=(2,1), \qquad T(\mathbf e_2)=(1,3).
+      It is convenient to store these two output vectors as the columns of a rectangular array:
+      A= \begin{pmatrix} 2\amp1\\ 1\amp3 \end{pmatrix}.
+      Then
+      T(x,y) = x\begin{pmatrix}2\\1\end{pmatrix} + y\begin{pmatrix}1\\3\end{pmatrix} = \begin{pmatrix} 2x+y\\ x+3y \end{pmatrix}.
+      This is matrix-vector multiplication.
+
+[275-275 title c3s2-def-matrix default_required]
+Matrix
+
+[277-287 p c3s2-def-matrix default_required]
+An m\times n matrix is a rectangular array of numbers with m rows and
+          n columns:
+          A= \begin{pmatrix} a_{11}\amp a_{12}\amp\cdots\amp a_{1n}\\ a_{21}\amp a_{22}\amp\cdots\amp a_{2n}\\ \vdots\amp\vdots\amp\ddots\amp\vdots\\ a_{m1}\amp a_{m2}\amp\cdots\amp a_{mn} \end{pmatrix}.
+          If its columns are
+          \mathbf a_1,\mathbf a_2,\ldots,\mathbf a_n\in\mathbb R^m,
+          then for
+          \mathbf x=(x_1,\ldots,x_n)\in\mathbb R^n,
+          we define
+          \boxed{ A\mathbf x = x_1\mathbf a_1+x_2\mathbf a_2+\cdots+x_n\mathbf a_n. }
+
+[291-294 p c3s2-matrices-representations default_required]
+This definition says that a matrix acts by mixing its columns according to the input
+      coordinates.
+
+[296-300 p c3s2-matrices-representations default_required]
+In row form, the same multiplication is
+      A\mathbf x = \begin{pmatrix} a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n\\ a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n\\ \vdots\\ a_{m1}x_1+a_{m2}x_2+\cdots+a_{mn}x_n \end{pmatrix}.
+      Each output coordinate is a linear function of the input.
+
+[303-303 title c3s2-ex-2x3-matrix default_required]
+A 2\times 3 matrix
+
+[305-316 p c3s2-ex-2x3-matrix default_required]
+Let
+          A= \begin{pmatrix} 1\amp2\amp0\\ 0\amp-1\amp3 \end{pmatrix}.
+          Then A takes inputs from \mathbb R^3 and produces outputs in
+          \mathbb R^2:
+          A:\mathbb R^3\to\mathbb R^2.
+          For
+          \mathbf x=(x,y,z),
+          A\mathbf x = \begin{pmatrix} x+2y\\ -y+3z \end{pmatrix}.
+          For example,
+          A(4,1,2) = \begin{pmatrix} 4+2\\ -1+6 \end{pmatrix} = \begin{pmatrix} 6\\ 5 \end{pmatrix}.
+
+[320-320 p c3s2-matrices-representations default_required]
+Now the relationship between matrices and linear transformations can be stated cleanly.
+
+[323-323 title c3s2-thm-every-lt-has-matrix default_required]
+Every linear transformation has a matrix
+
+[325-333 p c3s2-thm-every-lt-has-matrix default_required]
+Let
+          T:\mathbb R^n\to\mathbb R^m
+          be linear. Form the matrix
+          A= \begin{pmatrix} |\amp|\amp\amp|\\ T(\mathbf e_1)\amp T(\mathbf e_2)\amp\cdots\amp T(\mathbf e_n)\\ |\amp|\amp\amp| \end{pmatrix},
+          whose columns are the images of the standard basis vectors. Then
+          \boxed{ T(\mathbf x)=A\mathbf x }
+          for every \mathbf x\in\mathbb R^n.
+
+[334-338 p c3s2-thm-every-lt-has-matrix default_required]
+Conversely, every m\times n matrix A defines a linear transformation
+          \mathbf x\longmapsto A\mathbf x
+          from \mathbb R^n to \mathbb R^m.
+
+[341-350 p c3s2-thm-every-lt-has-matrix default_required]
+Let
+          \mathbf x=(x_1,\ldots,x_n).
+          By the previous theorem,
+          T(\mathbf x) = x_1T(\mathbf e_1)+\cdots+x_nT(\mathbf e_n).
+          But the columns of A are exactly
+          T(\mathbf e_1),\ldots,T(\mathbf e_n).
+          So the right-hand side is precisely
+          A\mathbf x.
+
+[351-366 p c3s2-thm-every-lt-has-matrix default_required]
+Conversely, suppose A is an m\times n matrix with columns
+          \mathbf a_1,\ldots,\mathbf a_n.
+          For vectors
+          \mathbf x=(x_1,\ldots,x_n), \qquad \mathbf y=(y_1,\ldots,y_n),
+          we have
+          
+            A(\mathbf x+\mathbf y) \amp= A(x_1+y_1,\ldots,x_n+y_n)
+            \amp= (x_1+y_1)\mathbf a_1+\cdots+(x_n+y_n)\mathbf a_n
+            \amp= (x_1\mathbf a_1+\cdots+x_n\mathbf a_n) + (y_1\mathbf a_1+\cdots+y_n\mathbf a_n)
+            \amp= A\mathbf x+A\mathbf y.
+          
+          Also,
+          A(c\mathbf x)=cA\mathbf x.
+          So the map \mathbf x\mapsto A\mathbf x is linear.
+
+[370-373 p c3s2-matrices-representations default_required]
+A matrix is the coordinate record of a linear transformation. It is not the geometric
+      machine itself; it is the machine written in a chosen coordinate language.
+
+[376-376 title checkpoint-3-2-columns-meaning default_required]
+What do the columns mean?
+
+[378-382 p checkpoint-3-2-columns-meaning default_required]
+Take the matrix and read it one column at a time. Geometrically, what does each single
+          column of A tell you about the transformation it represents? Why is it the
+          columns (and not the rows) that carry this particular meaning?
+
+[385-389 p checkpoint-3-2-columns-meaning hint]
+Try multiplying A by a basis vector such as \mathbf e_1=(1,0,\ldots,0) using
+          the rule A\mathbf x=x_1\mathbf a_1+\cdots+x_n\mathbf a_n. Which column survives, and
+          where does that basis vector end up?
+
+[395-395 title c3s2-rows-columns default_required]
+Rows, columns, inputs, and outputs
+
+[397-397 p c3s2-rows-columns default_required]
+The columns tell us where the basis vectors go.
+
+[399-406 p c3s2-rows-columns default_required]
+For
+      A= \begin{pmatrix} 2\amp1\\ 1\amp3 \end{pmatrix},
+      the first column says
+      A\mathbf e_1=(2,1),
+      and the second column says
+      A\mathbf e_2=(1,3).
+
+[408-408 p c3s2-rows-columns default_required]
+The rows tell us the output measurements.
+
+[410-420 p c3s2-rows-columns default_required]
+The first row
+      (2,1)
+      produces the first coordinate:
+      2x+y.
+      The second row
+      (1,3)
+      produces the second coordinate:
+      x+3y.
+      So a matrix has two equally important readings:
+
+[423-423 title c3s2-tab-columns-rows default_required]
+Two readings of a matrix.
+
+[425-425 cell c3s2-tab-columns-rows default_required]
+Columns
+
+[425-425 cell c3s2-tab-columns-rows default_required]
+images of input basis vectors
+
+[426-426 cell c3s2-tab-columns-rows default_required]
+Rows
+
+[426-426 cell c3s2-tab-columns-rows default_required]
+linear functions giving output coordinates
+
+[430-435 p c3s2-rows-columns default_required]
+The size of a matrix follows the direction of the transformation:
+      T:\mathbb R^n\to\mathbb R^m \qquad\Longleftrightarrow\qquad A\text{ is }m\times n.
+      The input dimension n is the number of columns. The output dimension m is
+      the number of rows.
+
+[438-438 title c3s2-tab-matrix-sizes default_required]
+Matrix size follows the direction of the transformation.
+
+[441-441 cell c3s2-tab-matrix-sizes default_required]
+Transformation
+
+[441-441 cell c3s2-tab-matrix-sizes default_required]
+Matrix size
+
+[441-441 cell c3s2-tab-matrix-sizes default_required]
+Example
+
+[444-444 cell c3s2-tab-matrix-sizes default_required]
+\mathbb R^2\to\mathbb R^2
+
+[445-445 cell c3s2-tab-matrix-sizes default_required]
+2\times2
+
+[446-446 cell c3s2-tab-matrix-sizes default_required]
+\begin{pmatrix}2\amp1\\1\amp3\end{pmatrix}
+
+[449-449 cell c3s2-tab-matrix-sizes default_required]
+\mathbb R^3\to\mathbb R^2
+
+[450-450 cell c3s2-tab-matrix-sizes default_required]
+2\times3
+
+[451-451 cell c3s2-tab-matrix-sizes default_required]
+\begin{pmatrix}1\amp2\amp0\\0\amp-1\amp3\end{pmatrix}
+
+[454-454 cell c3s2-tab-matrix-sizes default_required]
+\mathbb R^2\to\mathbb R^3
+
+[455-455 cell c3s2-tab-matrix-sizes default_required]
+3\times2
+
+[456-456 cell c3s2-tab-matrix-sizes default_required]
+\begin{pmatrix}1\amp0\\0\amp1\\2\amp-1\end{pmatrix}
+
+[462-462 title c3s2-ex-projection default_required]
+A projection
+
+[464-475 p c3s2-ex-projection default_required]
+The map
+          P:\mathbb R^3\to\mathbb R^2
+          that drops the height coordinate is
+          P(x,y,z)=(x,y).
+          It is linear. Its matrix is
+          P= \begin{pmatrix} 1\amp0\amp0\\ 0\amp1\amp0 \end{pmatrix}.
+          The columns tell us
+          P(\mathbf e_1)=(1,0), \qquad P(\mathbf e_2)=(0,1), \qquad P(\mathbf e_3)=(0,0).
+          The third basis direction is collapsed because vertical motion has no shadow on the
+          floor.
+
+[480-480 title c3s2-ex-plane-into-space default_required]
+A map from the plane into space
+
+[482-495 p c3s2-ex-plane-into-space default_required]
+Let
+          S:\mathbb R^2\to\mathbb R^3
+          be defined by
+          S(x,y)=(x,\;y,\;2x-y).
+          This map places the xy-plane onto the tilted plane
+          z=2x-y.
+          Its matrix is
+          A= \begin{pmatrix} 1\amp0\\ 0\amp1\\ 2\amp-1 \end{pmatrix}.
+          The columns are
+          S(\mathbf e_1)=(1,0,2), \qquad S(\mathbf e_2)=(0,1,-1).
+          So the two ordinary coordinate directions in the input plane become two direction
+          vectors lying in the tilted plane.
+
+[499-506 p c3s2-rows-columns default_required]
+This is the first time matrices have appeared as objects of their own. But their real
+      power shows up when machines are connected. If one linear transformation moves a grid and
+      a second transformation moves the new grid again, the combined effect is still linear. The
+      question is not whether it has a matrix. It does. The question is how to compute that
+      matrix without rebuilding the whole machine from scratch. That question forces the rule for
+      multiplying matrices.

@@ -1,0 +1,407 @@
+[5-5 title sec-14-warning-examples default_required]
+Warning examples
+
+[7-12 p sec-14-warning-examples default_required]
+The proof in  was
+    built from rectangles, cancellation, and limiting curved boundaries. Each hypothesis in
+    Green's theorem protects one of those steps. The warnings below are not exceptions to the
+    theorem. They are examples where the theorem's words have been changed.
+
+[15-15 title c14s6-reversing-orientation-changes-the-sign default_required]
+Reversing orientation changes the sign
+
+[17-26 p c14s6-reversing-orientation-changes-the-sign default_required]
+Take the unit square
+      R=[0,1]\times[0,1],
+      and the form
+      \omega=x\,dy.
+      Then
+      d\omega=dx\wedge dy,
+      so
+      \int_R d\omega=\operatorname{Area}(R)=1.
+
+[28-35 p c14s6-reversing-orientation-changes-the-sign default_required]
+Now compute the boundary integral with positive orientation. The bottom and top edges have
+      dy=0. The left edge has x=0. Only the right edge contributes. There,
+      x=1, \qquad 0\le y\le1.
+      So
+      \oint_{\partial R}x\,dy = \int_0^1 1\,dy = 1.
+      This matches Green's theorem.
+
+[37-46 p c14s6-reversing-orientation-changes-the-sign default_required]
+If we walk the same boundary clockwise, the right edge is walked downward:
+      1\ge y\ge0.
+      The integral becomes
+      \int_1^0 1\,dy=-1.
+      The interior integral is still
+      \int_R dx\wedge dy=1.
+      So the clockwise boundary gives the wrong sign:
+      \boxed{\int_{-\partial R}\omega=-\int_{\partial R}\omega.}
+
+[48-51 p c14s6-reversing-orientation-changes-the-sign default_required]
+The theorem did not fail. Its orientation condition was ignored. Positive orientation means
+      the region stays on the left.
+
+[55-55 title c14s6-a-singularity-inside-cannot-be-hidden default_required]
+A singularity inside the region cannot be hidden
+
+[57-63 p c14s6-a-singularity-inside-cannot-be-hidden default_required]
+Now return to the angle form
+      \alpha=\frac{-y\,dx+x\,dy}{x^2+y^2}.
+      It is defined on the punctured plane
+      \mathbb R^2\setminus\{(0,0)\},
+      but not at the origin.
+
+[65-77 p c14s6-a-singularity-inside-cannot-be-hidden default_required]
+Where it is defined, write
+      P(x,y)=\frac{-y}{x^2+y^2}, \qquad Q(x,y)=\frac{x}{x^2+y^2}.
+      A direct calculation gives
+      Q_x=\frac{y^2-x^2}{(x^2+y^2)^2}
+      and
+      P_y=\frac{y^2-x^2}{(x^2+y^2)^2}.
+      Thus
+      Q_x-P_y=0
+      away from the origin, so
+      d\alpha=0
+      on the punctured plane.
+
+[79-94 p c14s6-a-singularity-inside-cannot-be-hidden default_required]
+Now integrate around the unit circle
+      C:\quad x=\cos t,\qquad y=\sin t,\qquad 0\le t\le2\pi,
+      oriented counterclockwise. Then
+      dx=-\sin t\,dt, \qquad dy=\cos t\,dt.
+      The numerator becomes
+      
+        -y\,dx+x\,dy \amp= -(\sin t)(-\sin t\,dt)+(\cos t)(\cos t\,dt)
+        \amp= \sin^2t\,dt+\cos^2t\,dt
+        \amp= dt.
+      
+      The denominator is
+      x^2+y^2=1.
+      Therefore
+      \boxed{\oint_C\alpha = \int_0^{2\pi}dt = 2\pi.}
+
+[96-101 p c14s6-a-singularity-inside-cannot-be-hidden default_required]
+If we tried to apply Green's theorem to the disk bounded by C, we would be tempted to
+      write
+      \oint_C\alpha = \iint_{\text{disk}}0\,dA = 0.
+      But the boundary integral is 2\pi.
+
+[103-103 title checkpoint-14-6-singularity-domain default_required]
+Where does the disk argument break?
+
+[105-110 p checkpoint-14-6-singularity-domain default_required]
+We found d\alpha=0 at every point where \alpha is defined, yet
+          \oint_C\alpha=2\pi rather than 0. Which exact hypothesis of Green's theorem
+          fails for the disk bounded by C, and why is it not enough that d\alpha=0
+          at every point except the origin?
+
+[113-117 p checkpoint-14-6-singularity-domain hint]
+Read the theorem's domain requirement literally: it asks for the form to be defined and
+          smooth on all of the region, not just on most of it. Where does \alpha
+          live, and what single point sits inside the disk?
+
+[121-126 p c14s6-a-singularity-inside-cannot-be-hidden default_required]
+The missing hypothesis is not small. Green's theorem requires the form to be defined with
+      continuous first partial derivatives on an open region containing the whole disk. The origin
+      is inside the disk, and \alpha is not defined there. The circulation is hiding at that
+      missing point.
+
+[129-132 caption c14s6-fig-singularity-circulation default_required]
+A singularity inside the region can carry circulation even when d\alpha=0 away from
+        it.
+
+[134-154 latex-image c14s6-fig-singularity-circulation default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            \draw[->] (-3.0,0) -- (3.2,0) node[right] {\(x\)};
+            \draw[->] (0,-3.0) -- (0,3.2) node[above] {\(y\)};
+
+            \draw[thick, fill=gray!8] (0,0) circle (2);
+            \draw[->, very thick, red!65!black] (2,0) arc[start angle=0,end angle=55,radius=2];
+
+            \fill[white] (0,0) circle (4pt);
+            \draw[thick] (0,0) circle (4pt);
+            \node[below right] at (0,0) {singularity};
+
+            \foreach \ang in {25,70,115,160,205,250,295,340} {
+                \draw[->, blue!65!black, thick]
+                    ({1.2*cos(\ang)},{1.2*sin(\ang)})
+                    -- ++({-0.35*sin(\ang)},{0.35*cos(\ang)});
+            }
+
+            \node at (0,-3.55) {the origin is inside the curve but outside the domain of \(\alpha\)};
+        \end{tikzpicture}
+
+[160-160 title c14s6-a-hole-must-be-included-in-the-boundary default_required]
+A hole must be included in the boundary
+
+[162-162 p c14s6-a-hole-must-be-included-in-the-boundary default_required]
+A hole is not only missing area. It is also an extra boundary curve.
+
+[165-165 title checkpoint-14-6-hole-extra-boundary default_required]
+Why isn't the area enough?
+
+[167-172 p checkpoint-14-6-hole-extra-boundary default_required]
+Suppose you only adjusted for the missing area of the hole but kept integrating over the
+          outer circle alone. Why would Green's theorem still disagree with you? In terms of the
+          cancellation idea from the proof, what does the inner curve do that no other piece of the
+          boundary can undo?
+
+[175-179 p checkpoint-14-6-hole-extra-boundary hint]
+Picture slicing the annulus into rectangles. Interior edges pair up and cancel, but the
+          edge hugging the hole has no neighbor on the other side. What happens to a boundary piece
+          that never finds a partner?
+
+[183-192 p c14s6-a-hole-must-be-included-in-the-boundary default_required]
+Let A be the annulus
+      1\le x^2+y^2\le4.
+      Use the area-measuring boundary 1-form
+      \omega=x\,dy.
+      Since
+      d\omega=dx\wedge dy,
+      Green's theorem predicts
+      \oint_{\partial A}x\,dy = \operatorname{Area}(A) = 4\pi-\pi = 3\pi.
+
+[194-194 p c14s6-a-hole-must-be-included-in-the-boundary default_required]
+The boundary of A has two pieces:
+
+[197-197 title c14s6-tab-annulus-boundary default_required]
+The two boundary components of the annulus.
+
+[200-200 cell c14s6-tab-annulus-boundary default_required]
+piece
+
+[201-201 cell c14s6-tab-annulus-boundary default_required]
+radius
+
+[202-202 cell c14s6-tab-annulus-boundary default_required]
+positive orientation
+
+[205-205 cell c14s6-tab-annulus-boundary default_required]
+C_{\mathrm{out}}
+
+[206-206 cell c14s6-tab-annulus-boundary default_required]
+2
+
+[207-207 cell c14s6-tab-annulus-boundary default_required]
+counterclockwise
+
+[210-210 cell c14s6-tab-annulus-boundary default_required]
+C_{\mathrm{in}}
+
+[211-211 cell c14s6-tab-annulus-boundary default_required]
+1
+
+[212-212 cell c14s6-tab-annulus-boundary default_required]
+clockwise
+
+[217-228 p c14s6-a-hole-must-be-included-in-the-boundary default_required]
+For the outer circle,
+      x=2\cos t, \qquad y=2\sin t, \qquad 0\le t\le2\pi.
+      Then
+      dy=2\cos t\,dt,
+      so
+      
+        \int_{C_{\mathrm{out}}}x\,dy \amp= \int_0^{2\pi}(2\cos t)(2\cos t)\,dt
+        \amp= 4\int_0^{2\pi}\cos^2t\,dt
+        \amp= 4\pi.
+
+[230-240 p c14s6-a-hole-must-be-included-in-the-boundary default_required]
+For the inner boundary, positive orientation is clockwise. Use
+      x=\cos t, \qquad y=-\sin t, \qquad 0\le t\le2\pi.
+      Then
+      dy=-\cos t\,dt,
+      and
+      
+        \int_{C_{\mathrm{in}}}x\,dy \amp= \int_0^{2\pi}(\cos t)(-\cos t)\,dt
+        \amp= -\pi.
+
+[242-246 p c14s6-a-hole-must-be-included-in-the-boundary default_required]
+Therefore
+      \boxed{\oint_{\partial A}x\,dy = 4\pi-\pi = 3\pi.}
+      This matches the area of the annulus.
+
+[248-253 p c14s6-a-hole-must-be-included-in-the-boundary default_required]
+If we used only the outer circle, we would get
+      4\pi,
+      the area of the filled disk of radius 2, not the area of the annulus. The inner
+      boundary subtracts the missing disk.
+
+[256-258 caption c14s6-fig-annulus-boundary default_required]
+The boundary of an annulus has two components. The inner one is oriented clockwise.
+
+[260-276 latex-image c14s6-fig-annulus-boundary default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            \draw[fill=gray!10, even odd rule]
+                (0,0) circle (2.4)
+                (0,0) circle (1.1);
+
+            \draw[very thick, red!65!black] (0,0) circle (2.4);
+            \draw[->, very thick, red!65!black] (2.4,0) arc[start angle=0,end angle=45,radius=2.4];
+
+            \draw[very thick, blue!65!black] (0,0) circle (1.1);
+            \draw[->, very thick, blue!65!black] (1.1,0) arc[start angle=0,end angle=-55,radius=1.1];
+
+            \node[red!65!black] at (0,-3.0) {outer boundary contributes \(4\pi\)};
+            \node[blue!65!black] at (0,3.0) {inner boundary contributes \(-\pi\)};
+            \node at (0,0) {hole};
+        \end{tikzpicture}
+
+[280-283 p c14s6-a-hole-must-be-included-in-the-boundary default_required]
+This is the same cancellation idea from the proof. A hole creates a boundary that does not
+      cancel with a neighboring piece. It must be counted.
+
+[287-287 title c14s6-a-jump-inside-is-a-hidden-edge default_required]
+A jump inside the region is a hidden edge
+
+[289-292 p c14s6-a-jump-inside-is-a-hidden-edge default_required]
+Green's theorem also requires P and Q to have continuous first partial
+      derivatives. A jump inside the region behaves like a boundary we forgot to draw.
+
+[294-302 p c14s6-a-jump-inside-is-a-hidden-edge default_required]
+Let
+      R=[-1,1]\times[0,1],
+      and define
+      \omega=Q(x,y)\,dy, \qquad Q(x,y)= \begin{cases} 0, \amp x\le0,\\ 1, \amp x\gt0. \end{cases}
+      The form jumps across the vertical line
+      x=0.
+      It is not C^1.
+
+[304-304 title checkpoint-14-6-jump-hidden-edge default_required]
+What does the jump act like?
+
+[306-311 p checkpoint-14-6-jump-hidden-edge default_required]
+The coefficient Q has Q_x=0 everywhere it is differentiable, so the naive
+          interior integral is 0, yet the boundary integral is 1. Which hypothesis of
+          Green's theorem does the jump violate, and why does the section describe the line
+          x=0 as a hidden edge rather than an ordinary interior point?
+
+[314-318 p checkpoint-14-6-jump-hidden-edge hint]
+The theorem assumes P and Q are C^1 on the whole region. Ask yourself
+          what the missing contribution would look like if you redrew the region's boundary to run
+          along the jump line.
+
+[322-326 p c14s6-a-jump-inside-is-a-hidden-edge default_required]
+Compute the boundary integral. On the bottom and top edges, dy=0. On the left edge,
+      Q=0. On the right edge, Q=1, and y goes from 0 to 1. Thus
+      \boxed{\oint_{\partial R}\omega=1.}
+
+[328-336 p c14s6-a-jump-inside-is-a-hidden-edge default_required]
+Away from the jump line,
+      Q_x=0.
+      If we illegally pretended that
+      d\omega=0
+      everywhere, then the interior integral would be
+      \iint_R 0\,dA=0.
+      That is not the boundary integral.
+
+[338-341 p c14s6-a-jump-inside-is-a-hidden-edge default_required]
+The missing contribution lives on the internal jump line. Smoothness prevents a hidden edge
+      from appearing inside the region.
+
+[345-345 title c14s6-a-boundary-too-rough-for-the-theorem default_required]
+A boundary can be too rough for the theorem as stated
+
+[347-352 p c14s6-a-boundary-too-rough-for-the-theorem default_required]
+The boundary condition also matters. Green's theorem in this chapter is stated for boundaries
+      made from finitely many piecewise smooth simple closed curves. That condition guarantees that
+      \int_{\partial R}\omega
+      is a finite sum of ordinary line integrals.
+
+[354-364 p c14s6-a-boundary-too-rough-for-the-theorem default_required]
+Consider a square pond from which infinitely many tiny circular islands have been removed. Let
+      the outer square be
+      S=[0,1]\times[0,1],
+      and remove disjoint disks
+      D_1,D_2,D_3,\ldots
+      lying inside the square. Suppose their areas add to a finite number:
+      \sum_{n=1}^{\infty}\operatorname{Area}(D_n)\lt 1.
+      The remaining region is
+      R=S\setminus\bigcup_{n=1}^{\infty}D_n.
+
+[366-375 p c14s6-a-boundary-too-rough-for-the-theorem default_required]
+For the form
+      \omega=x\,dy,
+      we have
+      d\omega=dx\wedge dy.
+      For a finite number of removed disks, Green's theorem says
+      \oint_{\partial R_N}x\,dy = 1-\sum_{n=1}^{N}\operatorname{Area}(D_n),
+      because the outer square contributes 1, and each clockwise inner circle subtracts the
+      area of its disk.
+
+[377-384 p c14s6-a-boundary-too-rough-for-the-theorem default_required]
+If there are infinitely many islands, the expected answer would be
+      1-\sum_{n=1}^{\infty}\operatorname{Area}(D_n).
+      But now the boundary is not a finite collection of curves. It has infinitely many components:
+      \partial S,\quad \partial D_1,\quad \partial D_2,\quad \partial D_3,\ldots
+      The boundary integral is no longer a finite sum of line integrals. It needs an infinite series
+      of boundary contributions, and convergence has to be checked.
+
+[386-391 p c14s6-a-boundary-too-rough-for-the-theorem default_required]
+So the elementary theorem stops before this example. The formula may still be true under extra
+      assumptions, but it is no longer covered by the statement we proved. The word finitely
+      is protecting us from an infinite boundary sum hidden in the notation
+      \int_{\partial R}.
+
+[393-399 p c14s6-a-boundary-too-rough-for-the-theorem default_required]
+An even rougher boundary, such as a snowflake-shaped curve with infinite length and no ordinary
+      tangent at most points, creates a different problem: the line integral along the boundary may
+      not be defined by the piecewise smooth parametrizations introduced in
+      . Again, Green's theorem has not failed. Its
+      hypotheses have not been met.
+
+[403-403 title c14s6-what-the-warnings-have-in-common default_required]
+What the warnings have in common
+
+[405-405 p c14s6-what-the-warnings-have-in-common default_required]
+Each warning points back to the proof.
+
+[408-408 title c14s6-tab-warnings-summary default_required]
+Each warning traced back to the step it breaks.
+
+[411-411 cell c14s6-tab-warnings-summary default_required]
+What goes wrong
+
+[412-412 cell c14s6-tab-warnings-summary default_required]
+Where the proof breaks
+
+[415-415 cell c14s6-tab-warnings-summary default_required]
+orientation is reversed
+
+[416-416 cell c14s6-tab-warnings-summary default_required]
+the surviving boundary has the wrong sign
+
+[419-419 cell c14s6-tab-warnings-summary default_required]
+a singularity lies inside
+
+[420-420 cell c14s6-tab-warnings-summary default_required]
+the form is not defined on the region
+
+[423-423 cell c14s6-tab-warnings-summary default_required]
+a hole is ignored
+
+[424-424 cell c14s6-tab-warnings-summary default_required]
+an uncanceled boundary component is missing
+
+[427-427 cell c14s6-tab-warnings-summary default_required]
+the coefficients jump
+
+[428-428 cell c14s6-tab-warnings-summary default_required]
+there is a hidden internal edge
+
+[431-431 cell c14s6-tab-warnings-summary default_required]
+the boundary is too rough
+
+[432-432 cell c14s6-tab-warnings-summary default_required]
+the boundary integral is not a finite smooth sum
+
+[437-440 p c14s6-what-the-warnings-have-in-common default_required]
+The proof was not only a justification. It was a diagnostic tool. It tells us what to check
+      before trusting the formula.
+
+[442-448 p c14s6-what-the-warnings-have-in-common default_required]
+Green's theorem is a theorem about flat regions. But its real message is larger: boundary
+      measurements can equal interior measurements of a derivative. The next time that pattern
+      appears, the inside will not be a plane region. It will be a surface in space. Then even the
+      word boundary will need care, because a surface has two sides, and choosing one side
+      will decide the sign of everything that crosses it.

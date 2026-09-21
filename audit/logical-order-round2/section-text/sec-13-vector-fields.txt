@@ -1,0 +1,427 @@
+[5-5 title sec-13-vector-fields default_required]
+Vector fields
+
+[7-11 p sec-13-vector-fields default_required]
+A scalar field attaches one number to each point. A temperature field says,
+    at this point, the temperature is 21^\circ\text{C}. A height field
+    says, at this point, the height is 80 meters.
+
+[13-17 p sec-13-vector-fields default_required]
+A vector field attaches an arrow to each point. A wind field says, at this point,
+    the air is moving northeast at this speed. A force field says, at this point, a
+    particle would be pulled in this direction with this strength.
+
+[20-20 title c13s1-subsec-vector-at-every-point default_required]
+A vector attached to every point
+
+[22-28 p c13s1-subsec-vector-at-every-point default_required]
+Picture a shallow circular fountain. Water swirls around the center. Put the center
+      at the origin, and suppose the horizontal velocity of the water at the point
+      (x,y) is
+      \mathbf V(x,y)=\frac14(-y,x).
+      At a few points,
+
+[31-31 title c13s1-tab-fountain-values default_required]
+Sample values of the fountain field \mathbf V(x,y)=\frac14(-y,x).
+
+[34-34 cell c13s1-tab-fountain-values default_required]
+(x,y)
+
+[35-35 cell c13s1-tab-fountain-values default_required]
+\mathbf V(x,y)
+
+[37-37 cell c13s1-tab-fountain-values default_required]
+(4,0)
+
+[37-37 cell c13s1-tab-fountain-values default_required]
+(0,1)
+
+[38-38 cell c13s1-tab-fountain-values default_required]
+(0,4)
+
+[38-38 cell c13s1-tab-fountain-values default_required]
+(-1,0)
+
+[39-39 cell c13s1-tab-fountain-values default_required]
+(-4,0)
+
+[39-39 cell c13s1-tab-fountain-values default_required]
+(0,-1)
+
+[40-40 cell c13s1-tab-fountain-values default_required]
+(0,-4)
+
+[40-40 cell c13s1-tab-fountain-values default_required]
+(1,0)
+
+[44-48 p c13s1-subsec-vector-at-every-point default_required]
+So water on the right side moves upward, water at the top moves left, water on the
+      left moves downward, and water at the bottom moves right. The arrows circle around
+      the origin.
+
+[51-51 caption c13s1-fig-fountain-field default_required]
+A vector field attaches an arrow to every point of its domain.
+
+[53-70 latex-image c13s1-fig-fountain-field default_required]
+\begin{tikzpicture}[scale=0.62, >=stealth]
+            \draw[->] (-4.7,0) -- (4.9,0) node[right] {\(x\)};
+            \draw[->] (0,-4.7) -- (0,4.9) node[above] {\(y\)};
+
+            \draw[gray!20, step=1] (-4,-4) grid (4,4);
+
+            \foreach \x in {-3,-2,-1,0,1,2,3} {
+                \foreach \y in {-3,-2,-1,0,1,2,3} {
+                    \draw[->, blue!65!black, thick]
+                        (\x,\y) -- ++({-0.20*\y},{0.20*\x});
+                }
+            }
+
+            \draw[thick] (0,0) circle (4);
+            \node at (0,-5.25) {\(\mathbf V(x,y)=\frac14(-y,x)\)};
+        \end{tikzpicture}
+
+[74-79 p c13s1-subsec-vector-at-every-point default_required]
+This picture is not one moving particle. It is a whole instruction book. If a tiny
+      floating leaf reaches the point (2,3), the field tells the leaf what velocity
+      to have there:
+      \mathbf V(2,3)=\frac14(-3,2)=\left(-\frac34,\frac12\right).
+
+[82-82 title checkpoint-13-1-instruction-book default_required]
+An instruction book, not a journey?
+
+[84-89 p checkpoint-13-1-instruction-book default_required]
+We said the picture of \mathbf V is a whole instruction book rather
+          than the path of one moving particle. What does it mean that the field assigns a
+          vector to a point like (2,3) even if no leaf ever floats there? Why might it
+          be misleading to read the arrows as if they trace out a single trajectory?
+
+[92-96 p checkpoint-13-1-instruction-book hint]
+Think about how many points the domain has, and ask what the arrow at (2,3)
+          is promising: a velocity for whatever arrives there, not a record of where
+          anything has been.
+
+[101-101 title c13s1-def-vector-field default_required]
+Vector field
+
+[103-108 p c13s1-def-vector-field default_required]
+A vector field on a region D in the plane is a function
+          \mathbf F:D\subseteq\mathbb R^2\to\mathbb R^2.
+          Usually we write
+          \mathbf F(x,y)=(P(x,y),Q(x,y)).
+
+[109-114 p c13s1-def-vector-field default_required]
+A vector field on a region D in space is a function
+          \mathbf F:D\subseteq\mathbb R^3\to\mathbb R^3,
+          usually written
+          \mathbf F(x,y,z)=(P(x,y,z),Q(x,y,z),R(x,y,z)).
+
+[118-121 p c13s1-subsec-vector-at-every-point default_required]
+The input is a point. The output is a vector. We draw the output vector with its
+      tail placed at the input point.
+
+[123-130 p c13s1-subsec-vector-at-every-point default_required]
+The domain matters. The formula
+      \mathbf F(x,y)=\frac{1}{x^2+y^2}(-y,x)
+      looks like a swirling field, but it is not defined at the origin. Its domain is
+      \mathbb R^2\setminus\{(0,0)\}.
+      That missing point will become important later, when we study conservative fields.
+      A tiny hole can change the behavior of every closed curve around it.
+
+[134-134 title c13s1-subsec-velocity-force-gradient default_required]
+Velocity fields, force fields, and gradient fields
+
+[136-136 p c13s1-subsec-velocity-force-gradient default_required]
+Vector fields appear in several different roles.
+
+[138-143 p c13s1-subsec-velocity-force-gradient default_required]
+A velocity field tells how a fluid or moving crowd flows. The fountain
+      field
+      \mathbf V(x,y)=\frac14(-y,x)
+      is a velocity field. It assigns a velocity vector to every point in the water.
+
+[145-153 p c13s1-subsec-velocity-force-gradient default_required]
+A force field tells what force would act on a particle placed at each
+      point. For example, a simplified gravitational field pointing toward the origin has
+      the form
+      \mathbf G(x,y,z)=-\frac{k}{(x^2+y^2+z^2)^{3/2}}(x,y,z),
+      where k\gt 0. The vector (x,y,z) points away from the origin, so the
+      negative sign points back toward the origin. The denominator says the field weakens
+      with distance.
+
+[155-161 p c13s1-subsec-velocity-force-gradient default_required]
+A gradient field comes from a scalar field. If
+      f(x,y)
+      is a differentiable scalar field, then
+      \nabla f(x,y)=\bigl(f_x(x,y),f_y(x,y)\bigr)
+      is a vector field.
+
+[163-172 p c13s1-subsec-velocity-force-gradient default_required]
+For example, let
+      h(x,y)=100+4x+3y-x^2-y^2.
+      This could be a simple height model for a hill. Its gradient field is
+      \nabla h(x,y)=(4-2x,\;3-2y).
+      At the point (1,1),
+      \nabla h(1,1)=(2,1).
+      A hiker standing there sees the steepest uphill direction pointing roughly east and
+      slightly north.
+
+[174-178 p c13s1-subsec-velocity-force-gradient default_required]
+Recall from  that gradients cross
+      level curves at right angles. So a gradient field is not just a collection of arrows;
+      it is tied to the contour map of the scalar field that produced it.
+
+[181-181 title checkpoint-13-1-gradient-knows-the-hill default_required]
+Why is a gradient field special?
+
+[183-189 p checkpoint-13-1-gradient-knows-the-hill default_required]
+A force field or a wind field is just an arrow at every point. A gradient
+          field \nabla f is also an arrow at every point, yet we say it is tied to
+          the contour map of f. What extra information does a gradient field carry
+          that a generic vector field need not, and why does that matter when you look at its
+          arrows?
+
+[192-196 p checkpoint-13-1-gradient-knows-the-hill hint]
+Recall that \nabla f points across level curves at right angles and toward
+          increasing f. Could you reconstruct something about the underlying surface
+          from its gradient arrows alone? Could you do that for an arbitrary field of arrows?
+
+[201-201 title c13s1-ex-not-gradient-field default_required]
+A field that is not a gradient field, at least not obviously
+
+[203-210 p c13s1-ex-not-gradient-field default_required]
+The swirling field
+          \mathbf V(x,y)=(-y,x)
+          has arrows tangent to circles centered at the origin. If it were the gradient of
+          some height function, its arrows would be perpendicular to that height function's
+          level curves. But these arrows go around in circles. They look more like rotation
+          than uphill motion.
+
+[211-214 p c13s1-ex-not-gradient-field default_required]
+Later we will learn a test that detects this difference. Some fields are gradients
+          in disguise. Others carry genuine circulation.
+
+[220-220 title c13s1-subsec-sketching-vector-fields default_required]
+Sketching vector fields
+
+[222-225 p c13s1-subsec-sketching-vector-fields default_required]
+A vector field drawing cannot show every arrow. There are infinitely many points. A
+      sketch chooses representative points and draws enough arrows to reveal the pattern.
+
+[227-227 p c13s1-subsec-sketching-vector-fields default_required]
+Here are four basic fields in the plane.
+
+[230-230 title c13s1-tab-basic-fields default_required]
+Four basic vector fields in the plane.
+
+[233-233 cell c13s1-tab-basic-fields default_required]
+Field
+
+[234-234 cell c13s1-tab-basic-fields default_required]
+Formula
+
+[235-235 cell c13s1-tab-basic-fields default_required]
+Pattern
+
+[237-237 cell c13s1-tab-basic-fields default_required]
+constant field
+
+[237-237 cell c13s1-tab-basic-fields default_required]
+(1,0)
+
+[237-237 cell c13s1-tab-basic-fields default_required]
+all arrows point right
+
+[238-238 cell c13s1-tab-basic-fields default_required]
+radial source
+
+[238-238 cell c13s1-tab-basic-fields default_required]
+(x,y)
+
+[238-238 cell c13s1-tab-basic-fields default_required]
+arrows point away from the origin
+
+[239-239 cell c13s1-tab-basic-fields default_required]
+radial sink
+
+[239-239 cell c13s1-tab-basic-fields default_required]
+(-x,-y)
+
+[239-239 cell c13s1-tab-basic-fields default_required]
+arrows point toward the origin
+
+[240-240 cell c13s1-tab-basic-fields default_required]
+rotational field
+
+[240-240 cell c13s1-tab-basic-fields default_required]
+(-y,x)
+
+[240-240 cell c13s1-tab-basic-fields default_required]
+arrows circulate counterclockwise
+
+[244-249 p c13s1-subsec-sketching-vector-fields default_required]
+The length of an arrow matters, but only up to the scale of the drawing. If one arrow
+      is too long, it can hide the rest of the picture. It is common to shorten all arrows
+      while preserving their directions, or to draw only direction arrows. A sketch is meant
+      to show structure, not to be a measuring device.
+
+[252-252 title c13s1-ex-sketch-saddle-field default_required]
+Sketching a saddle-like field
+
+[254-260 p c13s1-ex-sketch-saddle-field default_required]
+Consider
+          \mathbf F(x,y)=(x,-y).
+          On the x-axis, where y=0,
+          \mathbf F(x,0)=(x,0).
+          So arrows point away from the origin along the x-axis.
+
+[261-265 p c13s1-ex-sketch-saddle-field default_required]
+On the y-axis, where x=0,
+          \mathbf F(0,y)=(0,-y).
+          So arrows point toward the origin along the y-axis.
+
+[266-270 p c13s1-ex-sketch-saddle-field default_required]
+This field pushes outward in one direction and inward in the perpendicular
+          direction. The origin is a saddle-type equilibrium: motion near it is attracted
+          from some directions and repelled in others.
+
+[274-274 p c13s1-subsec-sketching-vector-fields default_required]
+A few practical rules help when drawing a field.
+
+[277-277 title c13s1-tab-drawing-steps default_required]
+Practical steps for sketching a vector field.
+
+[280-280 cell c13s1-tab-drawing-steps default_required]
+Step
+
+[281-281 cell c13s1-tab-drawing-steps default_required]
+What to look for
+
+[283-283 cell c13s1-tab-drawing-steps default_required]
+1
+
+[283-283 cell c13s1-tab-drawing-steps default_required]
+Evaluate the field at simple points.
+
+[284-284 cell c13s1-tab-drawing-steps default_required]
+2
+
+[284-284 cell c13s1-tab-drawing-steps default_required]
+Look along axes or symmetry lines.
+
+[285-285 cell c13s1-tab-drawing-steps default_required]
+3
+
+[285-285 cell c13s1-tab-drawing-steps default_required]
+Find points where \mathbf F=\mathbf 0.
+
+[286-286 cell c13s1-tab-drawing-steps default_required]
+4
+
+[286-286 cell c13s1-tab-drawing-steps default_required]
+Notice whether arrows point outward, inward, around, or across.
+
+[287-287 cell c13s1-tab-drawing-steps default_required]
+5
+
+[287-287 cell c13s1-tab-drawing-steps default_required]
+Scale arrows so the pattern can be seen.
+
+[291-298 p c13s1-subsec-sketching-vector-fields default_required]
+The points where
+      \mathbf F(\mathbf p)=\mathbf 0
+      are called equilibrium points. If the field is a velocity field, a
+      the constant curve at such a point satisfies the velocity equation. This observation
+      does not by itself prove that every solution starting there must remain there;
+      uniqueness requires additional hypotheses on the field.
+
+[302-302 title c13s1-subsec-flow-lines default_required]
+Flow lines and qualitative behavior
+
+[304-307 p c13s1-subsec-flow-lines default_required]
+A vector field tells a moving particle what velocity it should have at each point. A
+      path that obeys the field is called a flow line.
+
+[309-321 p c13s1-subsec-flow-lines default_required]
+For the fountain field
+      \mathbf V(x,y)=(-y,x),
+      the circle
+      \mathbf r(t)=(R\cos t,R\sin t)
+      is a flow line. Its velocity is
+      \mathbf r'(t)=(-R\sin t,R\cos t).
+      But
+      \mathbf V(\mathbf r(t))=\mathbf V(R\cos t,R\sin t)=(-R\sin t,R\cos t).
+      So
+      \mathbf r'(t)=\mathbf V(\mathbf r(t)).
+      The particle follows the arrows exactly.
+
+[324-324 title c13s1-def-flow-line default_required]
+Flow line
+
+[326-332 p c13s1-def-flow-line default_required]
+Let \mathbf F be a vector field. A differentiable curve
+          \mathbf r(t)
+          is called a flow line of \mathbf F if
+          \boxed{\mathbf r'(t)=\mathbf F(\mathbf r(t))}
+          for every t in its interval of definition.
+
+[336-341 p c13s1-subsec-flow-lines default_required]
+The equation
+      \mathbf r'(t)=\mathbf F(\mathbf r(t))
+      says that the curve's velocity at each moment equals the arrow assigned by the field
+      at the curve's current position.
+
+[344-344 title checkpoint-13-1-flow-line-meaning default_required]
+What does the flow-line equation really say?
+
+[346-351 p checkpoint-13-1-flow-line-meaning default_required]
+The definition asks that \mathbf r'(t)=\mathbf F(\mathbf r(t)) at every
+          instant. In plain words, why does this single equation force the curve to obey
+          the field? And why does it matter that the right-hand side is evaluated at the
+          curve's current position \mathbf r(t) rather than at some fixed point?
+
+[354-359 p checkpoint-13-1-flow-line-meaning hint]
+Imagine reading the field like a set of directions handed to you wherever you happen
+          to stand. If you stepped off the path even slightly, the instruction you receive
+          would change. Along a proposed flow line, compare its instantaneous velocity with
+          the arrow assigned by the field at that same point.
+
+[364-364 title c13s1-ex-flow-lines-radial default_required]
+Flow lines of a radial field
+
+[366-377 p c13s1-ex-flow-lines-radial default_required]
+Let
+          \mathbf F(x,y)=(x,y).
+          If a particle starts at
+          \mathbf r(0)=(a,b),
+          then
+          \mathbf r(t)=(ae^t,be^t)
+          is a flow line, because
+          \mathbf r'(t)=(ae^t,be^t)=\mathbf r(t)=\mathbf F(\mathbf r(t)).
+          The particle moves along the ray through (a,b), away from the origin. The
+          origin is an equilibrium point, but nearby points are pushed outward.
+
+[382-382 title c13s1-ex-flow-lines-saddle default_required]
+Flow lines of a saddle field
+
+[384-395 p c13s1-ex-flow-lines-saddle default_required]
+For
+          \mathbf F(x,y)=(x,-y),
+          a flow line through (a,b) is
+          \mathbf r(t)=(ae^t,be^{-t}).
+          Then
+          \mathbf r'(t)=(ae^t,-be^{-t})=\mathbf F(ae^t,be^{-t}).
+          If ab\ne0, the product of the coordinates along the flow is
+          x(t)y(t)=ae^t\cdot be^{-t}=ab.
+          So the flow lines lie on hyperbolas
+          xy=\text{constant}.
+
+[399-402 p c13s1-subsec-flow-lines default_required]
+A vector field drawing is therefore a prediction device. It tells us where motion is
+      fast or slow, where it turns, where it settles, and where it circulates.
+
+[404-410 p c13s1-subsec-flow-lines default_required]
+But motion is only one thing we can do with a curve. A curve can also carry material.
+      A wire can have density. A trail can have snow depth. A cable can have temperature.
+      Those quantities are not arrows, but they still need to be added along a path. Before
+      we let vector fields do work, we need the simpler integral that adds scalar quantities
+      along curves.

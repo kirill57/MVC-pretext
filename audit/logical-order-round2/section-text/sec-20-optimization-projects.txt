@@ -1,0 +1,731 @@
+[5-5 title sec-20-optimization-projects default_required]
+Optimization projects
+
+[8-14 p sec-20-optimization-projects default_required]
+Chapter  taught us the local tests for best points:
+      \nabla f=\mathbf 0
+      for free interior extrema, the Hessian for second-order shape, and
+      \nabla f=\lambda\nabla g
+      for one smooth constraint.
+
+[15-19 p sec-20-optimization-projects default_required]
+These projects turn those tools into models. The hardest part is often not taking
+      derivatives. It is deciding what the variables are, what must be optimized, and what
+      constraints cannot be broken.
+
+[23-23 title c20s2-proj-constrained-design default_required]
+Project 1: constrained design problems
+
+[25-27 p c20s2-proj-constrained-design default_required]
+A design problem becomes a calculus problem only after we name the variables.
+
+[28-32 p c20s2-proj-constrained-design default_required]
+A tank has dimensions. A package has side lengths. A fence has segments. A shape
+      has area, volume, cost, or strength. Optimization begins when those quantities become
+      functions.
+
+[34-36 p c20s2-proj-constrained-design default_required]
+A seed example: a closed cylindrical tank.
+
+[37-45 p c20s2-proj-constrained-design default_required]
+A field station needs a closed cylindrical water tank with fixed volume
+      V.
+      Let
+      r
+      be the radius and
+      h
+      be the height.
+
+[46-52 p c20s2-proj-constrained-design default_required]
+The volume constraint is
+      \boxed{\pi r^2h=V.}
+      The surface area is
+      \boxed{A(r,h)=2\pi r^2+2\pi rh.}
+      The first term is the top and bottom. The second term is the side.
+
+[53-76 p c20s2-proj-constrained-design default_required]
+Use the constraint to eliminate h:
+      h=\frac{V}{\pi r^2}.
+      Then
+      
+        A(r) \amp = 2\pi r^2+2\pi r\left(\frac{V}{\pi r^2}\right)
+        \amp = 2\pi r^2+\frac{2V}{r}.
+      
+      Differentiate:
+      A'(r)=4\pi r-\frac{2V}{r^2}.
+      At a critical point,
+      4\pi r=\frac{2V}{r^2},
+      so
+      4\pi r^3=2V,
+      and therefore
+      \boxed{r^3=\frac{V}{2\pi}.}
+      Now use the constraint:
+      h=\frac{V}{\pi r^2}.
+      Since
+      V=2\pi r^3,
+      we get
+      \boxed{h=2r.}
+      The height equals the diameter.
+
+[77-81 p c20s2-proj-constrained-design default_required]
+This result is not a coincidence. If the tank is too tall and narrow, the side wall is
+      expensive. If it is too flat and wide, the top and bottom are expensive. The optimum
+      balances those costs.
+
+[83-85 p c20s2-proj-constrained-design default_required]
+Your task. Choose one design problem from the list below, or create your own.
+
+[87-96 p c20s2-proj-constrained-design default_required]
+Option A. Open-top box.
+      An open-top rectangular box has side lengths
+      x,\qquad y,\qquad z.
+      Its volume must be
+      xyz=32.
+      The material area is
+      A(x,y,z)=xy+2xz+2yz.
+      Find the dimensions that minimize material.
+
+[98-104 p c20s2-proj-constrained-design default_required]
+Option B. Closed cylindrical tank.
+      A closed cylinder has volume V. Minimize
+      A(r,h)=2\pi r^2+2\pi rh
+      subject to
+      \pi r^2h=V.
+
+[106-113 p c20s2-proj-constrained-design default_required]
+Option C. Open cylindrical tank.
+      An open cylindrical tank has no top. Its volume is V. Minimize
+      A(r,h)=\pi r^2+2\pi rh
+      subject to
+      \pi r^2h=V.
+      Compare your answer with the closed-tank answer.
+
+[115-123 p c20s2-proj-constrained-design default_required]
+Option D. Rectangular package with square cross-section.
+      A shipping tube has square cross-section x\times x and length L. Its volume is
+      fixed:
+      x^2L=V.
+      The material cost is
+      C(x,L)=2x^2+4xL.
+      Find the least-cost dimensions.
+
+[125-127 p c20s2-proj-constrained-design default_required]
+Required steps. For your chosen problem:
+
+[129-131 li c20s2-proj-constrained-design default_required]
+Draw a diagram and label the variables.
+
+[132-134 li c20s2-proj-constrained-design default_required]
+Write the quantity to be optimized.
+
+[135-137 li c20s2-proj-constrained-design default_required]
+Write the constraint.
+
+[138-143 li c20s2-proj-constrained-design default_required]
+Solve the problem in two ways if possible:
+          \text{eliminate one variable} \qquad\text{and}\qquad \text{use Lagrange multipliers}.
+
+[144-149 li c20s2-proj-constrained-design default_required]
+Check that your critical point is a minimum, not a maximum or a saddle. You may
+          use a one-variable second derivative test after eliminating a variable.
+
+[150-155 li c20s2-proj-constrained-design default_required]
+Interpret the answer in words. Why does the shape make physical or economic
+          sense?
+
+[158-173 p c20s2-proj-constrained-design default_required]
+What to hand in. Your report should include:
+      
+        \begin{array}{ll}
+        1. \amp \text{a labeled diagram,}\\
+        2. \amp \text{the objective function,}\\
+        3. \amp \text{the constraint,}\\
+        4. \amp \text{the derivative or Lagrange multiplier equations,}\\
+        5. \amp \text{the final dimensions,}\\
+        6. \amp \text{a check that the point is a minimum,}\\
+        7. \amp \text{a short interpretation.}
+        \end{array}
+      
+      The interpretation is not optional. In a modeling problem, the formula and the story
+      must agree.
+
+[177-177 title c20s2-proj-least-squares default_required]
+Project 2: least-squares fitting and the Hessian
+
+[179-183 p c20s2-proj-least-squares default_required]
+A best-fit model usually does not pass through every data point. The errors remain.
+      The least-squares idea chooses the model that makes the squared errors as small as
+      possible.
+
+[184-187 p c20s2-proj-least-squares default_required]
+Chapter  studied a best-fit line. This project moves one step higher: fitting a
+      plane.
+
+[189-208 p c20s2-proj-least-squares default_required]
+A seed example: fitting a calibration plane.
+      A sensor output z depends on two inputs x and y. A lab records the data
+      
+        \begin{array}{c|c|c}
+        x \amp y \amp z \\ \hline
+        0 \amp 0 \amp 2\\
+        1 \amp 0 \amp 3\\
+        0 \amp 1 \amp 4\\
+        1 \amp 1 \amp 6\\
+        2 \amp 1 \amp 7
+        \end{array}
+      
+      Fit a plane
+      \boxed{z=ax+by+c.}
+      For the i-th data point, the residual is
+      ax_i+by_i+c-z_i.
+      The squared-error function is
+      \boxed{E(a,b,c)=\sum_{i=1}^5(ax_i+by_i+c-z_i)^2.}
+
+[209-236 p c20s2-proj-least-squares default_required]
+For this data set, expanding gives
+      
+        E(a,b,c) \amp = 6a^2+6ab+8ac-46a
+        \amp\qquad +3b^2+6bc-34b
+        \amp\qquad +5c^2-44c+114.
+      
+      At a critical point,
+      E_a=E_b=E_c=0.
+      Compute:
+      E_a=12a+6b+8c-46,
+      E_b=6a+6b+6c-34,
+      E_c=8a+6b+10c-44.
+      So the normal equations are
+      
+        \boxed{
+        \begin{aligned}
+        12a+6b+8c\amp=46,\\
+        6a+6b+6c\amp=34,\\
+        8a+6b+10c\amp=44.
+        \end{aligned}
+        }
+      
+      Solving gives
+      \boxed{a=\frac75,\qquad b=\frac{37}{15},\qquad c=\frac95.}
+      So the best-fit plane is
+      \boxed{z=\frac75x+\frac{37}{15}y+\frac95.}
+
+[237-266 p c20s2-proj-least-squares default_required]
+Now check that this critical point is a minimum. The Hessian is
+      
+        H_E=
+        \begin{pmatrix}
+        12\amp6\amp8\\
+        6\amp6\amp6\\
+        8\amp6\amp10
+        \end{pmatrix}.
+      
+      Its leading principal minors are
+      12\gt0,
+      
+        \begin{vmatrix}
+        12\amp6\\
+        6\amp6
+        \end{vmatrix}
+        =
+        72-36=36\gt0,
+      
+      and
+      \det H_E=120\gt0.
+      We can verify positive definiteness directly from the sum of squares, without a
+      further matrix criterion. For h=(h_a,h_b,h_c),
+      h^T H_E h=2\sum_{i=1}^5(h_a x_i+h_b y_i+h_c)^2.
+      The first three data points force h_c=h_a=h_b=0 if this sum is zero.
+      Thus it is positive for every nonzero h. Since E is quadratic,
+      its expansion at the critical point has zero linear term and this positive
+      quadratic term. The critical point is the unique absolute minimum.
+
+[268-270 p c20s2-proj-least-squares default_required]
+Your task. Choose one of the following.
+
+[272-280 p c20s2-proj-least-squares default_required]
+Option A. Fit a line.
+      Use data points
+      (0,1),\qquad (1,2),\qquad (2,2),\qquad (3,4),\qquad (4,5).
+      Fit
+      y=mx+b
+      by minimizing
+      E(m,b)=\sum (mx_i+b-y_i)^2.
+
+[282-287 p c20s2-proj-least-squares default_required]
+Option B. Fit a plane.
+      Use the calibration data from the seed example, or collect your own data with two
+      inputs and one output. Fit
+      z=ax+by+c.
+
+[289-297 p c20s2-proj-least-squares default_required]
+Option C. Fit a quadratic curve.
+      Use data points
+      (-2,5),\qquad (-1,2),\qquad (0,1),\qquad (1,2),\qquad (2,6).
+      Fit
+      y=Ax^2+Bx+C.
+      Minimize
+      E(A,B,C)=\sum (Ax_i^2+Bx_i+C-y_i)^2.
+
+[299-301 p c20s2-proj-least-squares default_required]
+Required steps.
+
+[303-305 li c20s2-proj-least-squares default_required]
+Write the model.
+
+[306-308 li c20s2-proj-least-squares default_required]
+Write the residuals.
+
+[309-311 li c20s2-proj-least-squares default_required]
+Write the squared-error function.
+
+[312-314 li c20s2-proj-least-squares default_required]
+Differentiate and set the partial derivatives equal to zero.
+
+[315-317 li c20s2-proj-least-squares default_required]
+Solve the resulting linear system.
+
+[318-320 li c20s2-proj-least-squares default_required]
+Compute the Hessian of the error function.
+
+[321-323 li c20s2-proj-least-squares default_required]
+Explain why the Hessian shows that the critical point is a minimum.
+
+[324-326 li c20s2-proj-least-squares default_required]
+Plot the data and the fitted model.
+
+[329-341 p c20s2-proj-least-squares default_required]
+The geometry of the residual.
+      For a line fit, the predicted vector has the form
+      \widehat{\mathbf y}=m\mathbf x+b\mathbf 1.
+      At the best fit, the residual
+      \mathbf r=\widehat{\mathbf y}-\mathbf y
+      is perpendicular to the prediction directions:
+      
+        \mathbf r\cdot\mathbf x=0,
+        \qquad
+        \mathbf r\cdot\mathbf 1=0.
+
+[342-346 p c20s2-proj-least-squares default_required]
+For a plane fit, the same idea appears with three prediction directions:
+      \mathbf x,\qquad \mathbf y,\qquad \mathbf 1.
+      At the best-fit plane, the residual is perpendicular to all three.
+
+[347-350 p c20s2-proj-least-squares default_required]
+This is why the equations are called normal equations. The remaining error is
+      normal to the space of predictions.
+
+[352-354 p c20s2-proj-least-squares default_required]
+What to hand in. Your report should include:
+
+[356-358 li c20s2-proj-least-squares default_required]
+the data table,
+
+[359-361 li c20s2-proj-least-squares default_required]
+the model,
+
+[362-364 li c20s2-proj-least-squares default_required]
+the error function,
+
+[365-367 li c20s2-proj-least-squares default_required]
+the normal equations,
+
+[368-370 li c20s2-proj-least-squares default_required]
+the fitted coefficients,
+
+[371-373 li c20s2-proj-least-squares default_required]
+the Hessian calculation,
+
+[374-376 li c20s2-proj-least-squares default_required]
+a plot,
+
+[377-379 li c20s2-proj-least-squares default_required]
+a paragraph explaining the perpendicular-residual interpretation.
+
+[382-385 p c20s2-proj-least-squares default_required]
+The best-fit model is not magic. It is the nearest point in a space of possible
+      predictions.
+
+[389-389 title c20s2-proj-entropy default_required]
+Project 3: entropy maximization as a Lagrange multiplier problem
+
+[391-393 p c20s2-proj-entropy default_required]
+Optimization is not only about boxes and tanks. It also appears in probability.
+
+[394-407 p c20s2-proj-entropy default_required]
+Suppose a system can fall into several states. A probability distribution is a list
+      p_1,p_2,\ldots,p_n
+      with
+      
+        p_i\ge0,
+        \qquad
+        p_1+\cdots+p_n=1.
+      
+      The entropy of this distribution is
+      \boxed{S(p_1,\ldots,p_n)=-\sum_{i=1}^n p_i\ln p_i.}
+      Entropy measures spread. A distribution concentrated in one state has low entropy.
+      A distribution spread evenly across many states has high entropy.
+
+[408-411 p c20s2-proj-entropy default_required]
+For this project, use the convention
+      0\ln0=0.
+
+[413-430 p c20s2-proj-entropy default_required]
+A seed example: no information except total probability.
+      Suppose there are n possible states and no extra information. Maximize
+      S=-\sum_{i=1}^n p_i\ln p_i
+      subject to
+      p_1+\cdots+p_n=1.
+      Inside the region where all p_i\gt0, use a Lagrange multiplier:
+      g(p_1,\ldots,p_n)=p_1+\cdots+p_n.
+      The equation
+      \nabla S=\lambda\nabla g
+      gives
+      -\ln p_i-1=\lambda
+      for every i. Therefore all the p_i's are equal:
+      p_1=p_2=\cdots=p_n.
+      Since they add to 1,
+      \boxed{p_i=\frac1n \qquad \text{for every }i.}
+      The maximum-entropy distribution is uniform.
+
+[431-449 p c20s2-proj-entropy default_required]
+The Hessian of S in the positive region is diagonal:
+      
+        H_S=
+        \begin{pmatrix}
+        -1/p_1\amp0\amp\cdots\amp0\\
+        0\amp-1/p_2\amp\cdots\amp0\\
+        \vdots\amp\vdots\amp\ddots\amp\vdots\\
+        0\amp0\amp\cdots\amp-1/p_n
+        \end{pmatrix}.
+      
+      For every nonzero vector h,
+      h^TH_Sh=-\sum_i h_i^2/p_i\lt0.
+      Along any line segment of positive probabilities starting at the uniform
+      distribution, the first derivative is initially zero and the second derivative is
+      negative. Entropy therefore decreases along that segment. Extending continuously
+      to the boundary using 0\ln0=0 shows that no boundary distribution has larger
+      entropy. This proves the claimed global maximum.
+
+[451-453 p c20s2-proj-entropy default_required]
+Your task. Choose one of the following entropy problems.
+
+[455-463 p c20s2-proj-entropy default_required]
+Option A. Four equally possible rooms.
+      A robot is in one of four rooms, but you have no information about which room. Let
+      p_1+p_2+p_3+p_4=1.
+      Maximize
+      S=-p_1\ln p_1-p_2\ln p_2-p_3\ln p_3-p_4\ln p_4.
+      Show that
+      \boxed{p_1=p_2=p_3=p_4=\frac14.}
+
+[465-476 p c20s2-proj-entropy default_required]
+Option B. A loaded three-state system.
+      A system has three energy levels:
+      E_1=0,\qquad E_2=1,\qquad E_3=2.
+      The probabilities satisfy
+      p_1+p_2+p_3=1.
+      Suppose the average energy is fixed with 0\lt U\lt2:
+      0p_1+1p_2+2p_3=U.
+      Maximize
+      S=-p_1\ln p_1-p_2\ln p_2-p_3\ln p_3
+      subject to the two constraints.
+
+[477-483 p c20s2-proj-entropy default_required]
+Use two Lagrange multipliers:
+      \nabla S=\lambda\nabla(p_1+p_2+p_3)+\mu\nabla(p_2+2p_3).
+      Show that the solution has the form
+      \boxed{p_i=C e^{-\beta E_i}}
+      for constants C and \beta.
+
+[484-490 p c20s2-proj-entropy default_required]
+This is the beginning of the Boltzmann distribution. Check that a positive solution
+      exists for the prescribed U, and use the same strict-concavity argument to
+      compare it with the boundary. At U=0 or U=2, only a distribution
+      concentrated at the corresponding extreme energy is possible; it is not represented
+      by finite \beta with all probabilities positive.
+
+[492-511 p c20s2-proj-entropy default_required]
+Option C. Three states with average energy 1/2.
+      Continue Option B with
+      U=\frac12.
+      Write
+      q=e^{-\beta}.
+      Then
+      (p_1,p_2,p_3)=C(1,q,q^2).
+      The constraints become
+      C(1+q+q^2)=1,
+      and
+      C(q+2q^2)=\frac12.
+      Eliminate C to show that
+      3q^2+q-1=0.
+      Thus
+      \boxed{q=\frac{-1+\sqrt{13}}{6}.}
+      Then compute
+      C=\frac{1}{1+q+q^2}
+      and find the three probabilities.
+
+[513-515 p c20s2-proj-entropy default_required]
+Required steps. For your chosen option:
+
+[517-519 li c20s2-proj-entropy default_required]
+Write the entropy function.
+
+[520-522 li c20s2-proj-entropy default_required]
+Write every constraint.
+
+[523-525 li c20s2-proj-entropy default_required]
+Set up the Lagrange multiplier equations.
+
+[526-528 li c20s2-proj-entropy default_required]
+Solve the equations.
+
+[529-534 li c20s2-proj-entropy default_required]
+Use the Hessian or a concavity argument to explain why the critical point gives a
+          maximum.
+
+[535-540 li c20s2-proj-entropy default_required]
+Interpret the result. Why does the distribution spread out as much as the
+          constraints allow?
+
+[543-545 p c20s2-proj-entropy default_required]
+What to hand in. Your report should include:
+
+[547-549 li c20s2-proj-entropy default_required]
+the probability variables,
+
+[550-552 li c20s2-proj-entropy default_required]
+the entropy function,
+
+[553-555 li c20s2-proj-entropy default_required]
+the constraints,
+
+[556-558 li c20s2-proj-entropy default_required]
+the Lagrange multiplier equations,
+
+[559-561 li c20s2-proj-entropy default_required]
+the solution,
+
+[562-564 li c20s2-proj-entropy default_required]
+a short explanation of why this is a maximum,
+
+[565-567 li c20s2-proj-entropy default_required]
+a paragraph explaining what the answer means in ordinary language.
+
+[570-573 p c20s2-proj-entropy default_required]
+This project shows a different face of Lagrange multipliers. The constraint is not a
+      curve or a surface in physical space. It is a rule inside probability space.
+
+[577-577 title c20s2-proj-gradient-descent default_required]
+Project 4: numerical gradient descent
+
+[579-584 p c20s2-proj-gradient-descent default_required]
+The equation
+      \nabla f=\mathbf 0
+      finds candidates for minima, but many functions are too large or too complicated to
+      solve exactly. A computer often searches by taking small downhill steps.
+
+[585-591 p c20s2-proj-gradient-descent default_required]
+The simplest version is gradient descent:
+      \boxed{\mathbf x_{n+1}=\mathbf x_n-\alpha\nabla f(\mathbf x_n).}
+      The number
+      \alpha\gt0
+      is the step size.
+
+[592-594 p c20s2-proj-gradient-descent default_required]
+The gradient points uphill. The negative gradient points downhill.
+
+[596-624 p c20s2-proj-gradient-descent default_required]
+A seed example: a tilted quadratic bowl.
+      Let
+      f(x,y)=\frac12(x-2)^2+2(y+1)^2.
+      The minimum is visibly at
+      (2,-1).
+      The gradient is
+      \nabla f(x,y)=(x-2,\ 4(y+1)).
+      Start at
+      \mathbf x_0=(6,4)
+      and take step size
+      \alpha=0.2.
+      Then
+      \nabla f(6,4)=(4,20),
+      so
+      
+        \mathbf x_1 \amp = (6,4)-0.2(4,20)
+        \amp = (5.2,0).
+      
+      Now
+      \nabla f(5.2,0)=(3.2,4),
+      so
+      
+        \mathbf x_2 \amp = (5.2,0)-0.2(3.2,4)
+        \amp = (4.56,-0.8).
+      
+      The points are moving toward
+      (2,-1).
+
+[627-627 caption c20s2-fig-gradient-descent default_required]
+Gradient descent takes repeated steps in the negative-gradient direction.
+
+[629-655 latex-image c20s2-img-gradient-descent default_required]
+\begin{tikzpicture}[scale=0.78, >=stealth]
+    \draw[->] (-0.5,0) -- (7,0) node[right] {\(x\)};
+    \draw[->] (0,-2.5) -- (0,5.5) node[above] {\(y\)};
+
+    \foreach \r in {0.7,1.2,1.8,2.5,3.3} {
+        \draw[gray!45] (2,-1) ellipse ({0.9*\r} and {0.45*\r});
+    }
+
+    \coordinate (A) at (6,4);
+    \coordinate (B) at (5.2,0);
+    \coordinate (C) at (4.56,-0.8);
+    \coordinate (D) at (4.048,-0.96);
+    \coordinate (M) at (2,-1);
+
+    \draw[->, very thick, red!65!black] (A) -- (B);
+    \draw[->, very thick, red!65!black] (B) -- (C);
+    \draw[->, very thick, red!65!black] (C) -- (D);
+
+    \fill (A) circle (2.2pt) node[above right] {\(\mathbf x_0\)};
+    \fill (B) circle (2.2pt) node[above right] {\(\mathbf x_1\)};
+    \fill (C) circle (2.2pt) node[below right] {\(\mathbf x_2\)};
+    \fill (M) circle (2.5pt) node[below left] {minimum};
+
+    \node at (3.3,-3.0) {gradient descent follows downhill across contour curves};
+\end{tikzpicture}
+
+[659-662 p c20s2-proj-gradient-descent default_required]
+Why step size matters.
+      Even in one variable, the step size can break the method.
+
+[663-675 p c20s2-proj-gradient-descent default_required]
+Let
+      f(x)=x^2.
+      Then
+      f'(x)=2x.
+      Gradient descent gives
+      x_{n+1}=x_n-\alpha(2x_n)=(1-2\alpha)x_n.
+      If
+      0\lt\alpha\lt1,
+      then
+      |1-2\alpha|\lt1
+      as long as \alpha\ne1, and the iterates move toward 0.
+
+[676-682 p c20s2-proj-gradient-descent default_required]
+If
+      \alpha=1,
+      then
+      x_{n+1}=-x_n.
+      The sequence bounces back and forth forever.
+
+[683-689 p c20s2-proj-gradient-descent default_required]
+If
+      \alpha\gt1,
+      then
+      |1-2\alpha|\gt1,
+      and the iterates grow in size. The method runs away from the minimum.
+
+[690-692 p c20s2-proj-gradient-descent default_required]
+The direction was right, but the step was too large.
+
+[694-696 p c20s2-proj-gradient-descent default_required]
+Your task. Choose one function from Group A and one from Group B.
+
+[698-707 p c20s2-proj-gradient-descent default_required]
+Group A: friendly quadratic bowls.
+      
+        \begin{array}{c}
+        f_1(x,y)=\frac12(x-2)^2+2(y+1)^2,\\[2mm]
+        f_2(x,y)=x^2+xy+y^2-4x-2y,\\[1mm]
+        f_3(x,y)=3(x+1)^2+(y-2)^2.
+        \end{array}
+
+[709-718 p c20s2-proj-gradient-descent default_required]
+Group B: functions with warnings.
+      
+        \begin{array}{c}
+        g_1(x,y)=x^2-y^2,\\[1mm]
+        g_2(x,y)=x^4+y^4-4xy,\\[1mm]
+        g_3(x,y)=\sin x+\cos y.
+        \end{array}
+
+[720-722 p c20s2-proj-gradient-descent default_required]
+For each function:
+
+[724-726 li c20s2-proj-gradient-descent default_required]
+Compute the gradient.
+
+[727-729 li c20s2-proj-gradient-descent default_required]
+Choose a starting point.
+
+[730-732 li c20s2-proj-gradient-descent default_required]
+Choose a step size \alpha.
+
+[733-738 li c20s2-proj-gradient-descent default_required]
+Compute at least five gradient descent steps by hand, spreadsheet, calculator, or
+          code.
+
+[739-741 li c20s2-proj-gradient-descent default_required]
+Plot the contour map and draw the step path.
+
+[742-749 li c20s2-proj-gradient-descent default_required]
+Record the function values
+          f(\mathbf x_0),\ f(\mathbf x_1),\ f(\mathbf x_2),\ldots
+          or
+          g(\mathbf x_0),\ g(\mathbf x_1),\ g(\mathbf x_2),\ldots
+
+[750-752 li c20s2-proj-gradient-descent default_required]
+Try a smaller step size and a larger step size. Compare what happens.
+
+[755-757 p c20s2-proj-gradient-descent default_required]
+Questions to answer.
+
+[759-761 li c20s2-proj-gradient-descent default_required]
+Did the function value decrease at every step?
+
+[762-764 li c20s2-proj-gradient-descent default_required]
+Did the points appear to approach a minimum?
+
+[765-767 li c20s2-proj-gradient-descent default_required]
+Did a large step size cause bouncing or divergence?
+
+[768-773 li c20s2-proj-gradient-descent default_required]
+What happened for a saddle-shaped function such as
+          g_1(x,y)=x^2-y^2?
+
+[774-776 li c20s2-proj-gradient-descent default_required]
+How does the Hessian help explain the behavior near a critical point?
+
+[779-781 p c20s2-proj-gradient-descent default_required]
+What to hand in. Your report should include:
+
+[783-785 li c20s2-proj-gradient-descent default_required]
+the two functions you chose,
+
+[786-788 li c20s2-proj-gradient-descent default_required]
+the gradients,
+
+[789-791 li c20s2-proj-gradient-descent default_required]
+the starting points and step sizes,
+
+[792-794 li c20s2-proj-gradient-descent default_required]
+a table of iterates,
+
+[795-797 li c20s2-proj-gradient-descent default_required]
+a table of function values,
+
+[798-800 li c20s2-proj-gradient-descent default_required]
+contour plots with the descent path drawn,
+
+[801-803 li c20s2-proj-gradient-descent default_required]
+a paragraph explaining what worked and what failed.
+
+[806-810 p c20s2-proj-gradient-descent default_required]
+Gradient descent is simple enough to write in one line, but it is not magic. It listens
+      only to local slope. If the landscape has a saddle, a flat valley, many wells, or a step
+      size that is too large, the path can surprise us.
+
+[814-819 p sec-20-optimization-projects default_required]
+Optimization chooses best points. Integration asks a different kind of question: not
+      where a quantity is largest or smallest, but how much of it is spread across a region.
+      The next group of projects returns to the adding machines of Chapters
+      –: double integrals, triple integrals, and change of variables.

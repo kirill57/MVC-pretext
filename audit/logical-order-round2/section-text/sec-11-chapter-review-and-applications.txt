@@ -1,0 +1,610 @@
+[5-5 title sec-11-chapter-review-and-applications default_required]
+Chapter review and applications
+
+[8-16 p sec-11-chapter-review-and-applications default_required]
+Chapter  took the adding idea one dimension
+      higher. A double integral adds over a region in the plane:
+      f(x,y)\,dA.
+      A triple integral adds over a solid:
+      f(x,y,z)\,dV.
+      The tiny pieces changed from rectangles to boxes. The story did not change:
+      \text{value near a point}\times \text{tiny volume}.
+
+[17-20 p sec-11-chapter-review-and-applications default_required]
+The hard part is rarely the antiderivative. The hard part is describing the solid without
+      counting too much or too little.
+
+[24-24 title c11s7-coordinate-systems default_required]
+Skills: triple integrals in several coordinate systems
+
+[26-30 p c11s7-coordinate-systems default_required]
+A triple integral begins with one question:
+      \text{What solid am I adding over?}
+      After that, the coordinate system should serve the geometry.
+
+[33-33 caption c11s7-fig-choose-coordinates default_required]
+Choose coordinates by listening to the shape of the solid.
+
+[35-65 latex-image c11s7-fig-choose-coordinates default_required]
+\begin{tikzpicture}[scale=0.88, >=stealth]
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (start) at (0,0) {Triple integral\\ \(\displaystyle \iiint_E f\,dV\)};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (rect) at (-5.9,-2) {Boxes, wedges, slabs\\ rectangular coordinates};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (cyl) at (0,-2) {Cylinders, cones, tubes\\ cylindrical coordinates};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (sph) at (5.9,-2) {Balls, shells, central symmetry\\ spherical coordinates};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (app) at (-2.8,-4.5) {Mass, charge, energy,\\ probability};
+
+              \node[draw, rounded corners, align=center, minimum width=4.4cm, minimum height=0.9cm]
+                  (hd) at (2.8,-4.5) {Higher dimensions\\ product boxes and slicing};
+
+              \draw[->, thick] (start) -- (rect);
+              \draw[->, thick] (start) -- (cyl);
+              \draw[->, thick] (start) -- (sph);
+
+              \draw[->, thick] (rect) -- (app);
+              \draw[->, thick] (cyl) -- (app);
+              \draw[->, thick] (sph) -- (app);
+
+              \draw[->, thick] (app) -- (hd);
+          \end{tikzpicture}
+
+[69-89 p c11s7-coordinate-systems default_required]
+The main volume elements are:
+      
+        \begin{array}{c|c|c}
+        \text{Coordinates} \amp \text{Conversion} \amp \text{Volume element} \\ \hline
+        \text{rectangular} \amp
+        (x,y,z) \amp
+        dV=dx\,dy\,dz
+        \\[2mm]
+        \text{cylindrical} \amp
+        x=r\cos\theta,\quad y=r\sin\theta,\quad z=z \amp
+        dV=r\,dr\,d\theta\,dz
+        \\[2mm]
+        \text{spherical} \amp
+        x=\rho\sin\phi\cos\theta,\quad
+        y=\rho\sin\phi\sin\theta,\quad
+        z=\rho\cos\phi \amp
+        dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta
+        \end{array}
+
+[91-98 p c11s7-coordinate-systems default_required]
+The oriented version of rectangular volume is
+      dx\wedge dy\wedge dz.
+      For ordinary volume, mass, probability, and energy, we use positive volume:
+      dV.
+      For orientation-sensitive integrals later in the book, the wedge notation will remember
+      the order of the directions.
+
+[100-147 p c11s7-coordinate-systems default_required]
+Here are the main application formulas from the chapter.
+      
+        \begin{array}{c|c}
+        \text{Quantity} \amp \text{Triple integral} \\ \hline
+        \text{volume of }E
+        \amp
+        \displaystyle
+        \operatorname{Vol}(E)=\iiint_E 1\,dV
+        \\[3mm]
+        \text{mass from density }\delta
+        \amp
+        \displaystyle
+        M=\iiint_E \delta\,dV
+        \\[3mm]
+        \text{center of mass}
+        \amp
+        \displaystyle
+        (\bar x,\bar y,\bar z)
+        =
+        \left(
+        \frac{\iiint_E x\delta\,dV}{M},
+        \frac{\iiint_E y\delta\,dV}{M},
+        \frac{\iiint_E z\delta\,dV}{M}
+        \right)
+        \\[5mm]
+        \text{moment of inertia about the }z\text{-axis}
+        \amp
+        \displaystyle
+        I_z=\iiint_E (x^2+y^2)\delta\,dV
+        \\[4mm]
+        \text{total charge from charge density }q
+        \amp
+        \displaystyle
+        Q=\iiint_E q\,dV
+        \\[3mm]
+        \text{total energy from energy density }u
+        \amp
+        \displaystyle
+        \mathcal E=\iiint_E u\,dV
+        \\[3mm]
+        \text{probability of a region }A
+        \amp
+        \displaystyle
+        \operatorname{Prob}(A)=\iiint_A p\,dV
+        \end{array}
+
+[149-154 p c11s7-coordinate-systems default_required]
+A probability density must satisfy
+      p\ge0
+      and
+      \iiint_E p\,dV=1.
+
+[158-158 title c11s7-example-wedge default_required]
+Worked review example: a wedge with density
+
+[160-170 p c11s7-example-wedge default_required]
+A storage wedge has rectangular floor
+      0\le x\le2,\qquad 0\le y\le1,
+      and slanted roof
+      z=4-x-y.
+      The floor is
+      z=0.
+      Its density is
+      \delta(x,y,z)=1+z.
+      Find the mass.
+
+[172-195 p c11s7-example-wedge default_required]
+The solid is
+      E=\{(x,y,z):0\le x\le2,\ 0\le y\le1,\ 0\le z\le4-x-y\}.
+      So
+      
+        M \amp= \int_0^2\int_0^1\int_0^{4-x-y} (1+z)\,dz\,dy\,dx
+        \amp= \int_0^2\int_0^1 \left[ z+\frac12z^2 \right]_0^{4-x-y} \,dy\,dx
+        \amp= \int_0^2\int_0^1 \left( (4-x-y)+\frac12(4-x-y)^2 \right)dy\,dx.
+      
+      Expand the integrand:
+      (4-x-y)+\frac12(4-x-y)^2 = 12-5x-5y+\frac12x^2+xy+\frac12y^2.
+      Now integrate in y:
+      
+        \int_0^1 \left( 12-5x-5y+\frac12x^2+xy+\frac12y^2 \right)dy \amp= \frac{29}{3}-\frac92x+\frac12x^2.
+      
+      Then
+      
+        M \amp= \int_0^2 \left( \frac{29}{3}-\frac92x+\frac12x^2 \right)dx
+        \amp= \frac{58}{3}-9+\frac43
+        \amp= \frac{35}{3}.
+      
+      Thus
+      \boxed{ M=\frac{35}{3}. }
+
+[197-200 p c11s7-example-wedge default_required]
+The bounds came from the geometry. The integrand came from the density. The
+      calculation only came after both were clear.
+
+[204-204 title c11s7-example-round-tank default_required]
+Worked review example: a round tank in cylindrical coordinates
+
+[206-214 p c11s7-example-round-tank default_required]
+A round tank has radius 2. Its floor is
+      z=0,
+      and its roof height depends on distance from the central axis:
+      z=3+\frac r2.
+      The density is
+      \delta(r,z)=1+r.
+      Find the mass.
+
+[216-237 p c11s7-example-round-tank default_required]
+The solid is rotationally symmetric, so cylindrical coordinates fit:
+      0\le\theta\le2\pi, \qquad 0\le r\le2, \qquad 0\le z\le 3+\frac r2.
+      Remember the volume factor:
+      dV=r\,dz\,dr\,d\theta.
+      So
+      
+        M \amp= \int_0^{2\pi}\int_0^2\int_0^{3+r/2} (1+r)r\,dz\,dr\,d\theta
+        \amp= 2\pi\int_0^2 (1+r)r\left(3+\frac r2\right)dr.
+      
+      Expand:
+      (1+r)r\left(3+\frac r2\right) = 3r+\frac72r^2+\frac12r^3.
+      Thus
+      
+        M \amp= 2\pi\int_0^2 \left( 3r+\frac72r^2+\frac12r^3 \right)dr
+        \amp= 2\pi \left[ \frac32r^2+\frac76r^3+\frac18r^4 \right]_0^2
+        \amp= 2\pi \left( 6+\frac{28}{3}+2 \right)
+        \amp= \frac{104\pi}{3}.
+      
+      So
+      \boxed{ M=\frac{104\pi}{3}. }
+
+[239-242 p c11s7-example-round-tank default_required]
+The factor r is doing real work. Rings near r=2 contain more volume than
+      rings near the central axis.
+
+[246-246 title c11s7-example-spherical-cone default_required]
+Worked review example: probability in a spherical cone
+
+[248-257 p c11s7-example-spherical-cone default_required]
+A random point is chosen in the solid inside the sphere
+      \rho\le2
+      and inside the cone
+      0\le\phi\le\frac{\pi}{3}.
+      The probability density is proportional to distance from the origin:
+      p(\rho,\phi,\theta)=C\rho.
+      Find C. Then find the probability that
+      \rho\le1.
+
+[259-271 p c11s7-example-spherical-cone default_required]
+The region is
+      0\le\theta\le2\pi, \qquad 0\le\phi\le\frac{\pi}{3}, \qquad 0\le\rho\le2.
+      The density must integrate to 1:
+      
+        1 \amp= \int_0^{2\pi}\int_0^{\pi/3}\int_0^2 C\rho\cdot \rho^2\sin\phi\,d\rho\,d\phi\,d\theta
+        \amp= C \left(\int_0^{2\pi}d\theta\right) \left(\int_0^{\pi/3}\sin\phi\,d\phi\right) \left(\int_0^2\rho^3\,d\rho\right)
+        \amp= C(2\pi)\left(1-\frac12\right)(4)
+        \amp= 4\pi C.
+      
+      Therefore
+      \boxed{ C=\frac{1}{4\pi}. }
+
+[273-284 p c11s7-example-spherical-cone default_required]
+Now restrict to
+      0\le\rho\le1.
+      Then
+      
+        \operatorname{Prob}(\rho\le1) \amp= \int_0^{2\pi}\int_0^{\pi/3}\int_0^1 \frac{1}{4\pi}\rho^3\sin\phi\,d\rho\,d\phi\,d\theta
+        \amp= \frac{1}{4\pi}(2\pi)\left(\frac12\right)\left(\frac14\right)
+        \amp= \frac{1}{16}.
+      
+      So
+      \boxed{ \operatorname{Prob}(\rho\le1)=\frac{1}{16}. }
+
+[286-290 p c11s7-example-spherical-cone default_required]
+The ball of half the radius has much less than half the probability. Part of the reason
+      is geometry: volume grows like \rho^2. Another part is density: this density also
+      grows like \rho.
+
+[294-294 title c11s7-ex-concept-check default_required]
+Concept check
+
+[298-298 p c11s7-cc-1 default_required]
+What does dV mean in a triple integral?
+
+[304-304 p c11s7-cc-2 default_required]
+Why is \iiint_E 1\,dV the volume of E?
+
+[310-310 p c11s7-cc-3 default_required]
+What is the difference between dV and dx\wedge dy\wedge dz?
+
+[316-316 p c11s7-cc-4 default_required]
+What does it mean for a solid to be z-simple?
+
+[322-322 p c11s7-cc-5 default_required]
+Why does the innermost variable determine the coordinate shadow we should draw?
+
+[328-328 p c11s7-cc-6 default_required]
+In cylindrical coordinates, why does dV contain the factor r?
+
+[334-337 p c11s7-cc-7 default_required]
+In spherical coordinates, why does dV contain both
+          \rho^2 \qquad\text{and}\qquad \sin\phi?
+
+[343-346 p c11s7-cc-8 default_required]
+What angle does \phi measure in the spherical-coordinate convention used in
+          this book?
+
+[352-355 p c11s7-cc-9 default_required]
+Give one example of a solid that is better described in cylindrical coordinates than
+          in rectangular coordinates.
+
+[361-364 p c11s7-cc-10 default_required]
+Give one example of a solid that is better described in spherical coordinates than
+          in cylindrical coordinates.
+
+[370-370 p c11s7-cc-11 default_required]
+Why can the same solid have several correct iterated-integral descriptions?
+
+[376-376 p c11s7-cc-12 default_required]
+Why does the center of mass require M\gt0?
+
+[382-382 p c11s7-cc-13 default_required]
+What is the distance factor for moment of inertia about the z-axis?
+
+[388-388 p c11s7-cc-14 default_required]
+What two conditions must a probability density satisfy?
+
+[393-393 title c11s7-cc-15 preview_or_optional_candidate]
+Optional: higher dimensions
+
+[395-398 p c11s7-cc-15 preview_or_optional_candidate]
+In \mathbb R^n, why does scaling every coordinate by a scale volume by
+          a^n?
+
+[404-404 title c11s7-ex-skill-problems default_required]
+Skill problems
+
+[408-408 p c11s7-sk-1 default_required]
+Compute \int_0^2\int_0^1\int_0^3 (x+y+z)\,dz\,dy\,dx.
+
+[414-417 p c11s7-sk-2 default_required]
+Find the volume of the solid
+          E=\{(x,y,z):0\le x\le2,\ 0\le y\le x,\ 0\le z\le x+y\}.
+
+[423-430 p c11s7-sk-3 default_required]
+Let
+          E=\{(x,y,z):x\ge0,\ y\ge0,\ z\ge0,\ x+2y+3z\le6\}.
+          Write an iterated integral for
+          \iiint_E f(x,y,z)\,dV
+          in the order
+          dz\,dy\,dx.
+
+[436-436 p c11s7-sk-4 default_required]
+For the same solid in , compute its volume.
+
+[442-446 p c11s7-sk-5 default_required]
+Describe the solid represented by
+          \int_0^4\int_0^{\sqrt{16-x^2}}\int_0^{x+y} f(x,y,z)\,dz\,dy\,dx.
+          Use words and inequalities.
+
+[452-456 p c11s7-sk-6 default_required]
+Rewrite
+          \int_0^1\int_0^{1-x}\int_0^{1-x-y} f(x,y,z)\,dz\,dy\,dx
+          with x as the innermost variable.
+
+[462-468 p c11s7-sk-7 default_required]
+A box occupies
+          0\le x\le3,\qquad 0\le y\le2,\qquad 0\le z\le1.
+          Its density is
+          \delta(x,y,z)=2+x.
+          Find its mass.
+
+[474-478 p c11s7-sk-8 default_required]
+For the box in , find
+          \bar x.
+          Use symmetry to explain \bar y and \bar z.
+
+[484-489 p c11s7-sk-9 default_required]
+A solid cylinder has radius a, height h, and constant density
+          \delta_0. Use cylindrical coordinates to show that its moment of inertia about
+          the central axis is
+          I_z=\frac12Ma^2.
+
+[495-501 p c11s7-sk-10 default_required]
+Find the volume inside the cylinder
+          x^2+y^2\le9
+          and between the planes
+          z=0 \qquad\text{and}\qquad z=4.
+          Use cylindrical coordinates.
+
+[507-512 p c11s7-sk-11 default_required]
+Find the volume inside the cone
+          z=5-r
+          above the floor
+          z=0.
+
+[518-523 p c11s7-sk-12 default_required]
+A pipe has inner radius 1, outer radius 3, and height 4. Its
+          density is
+          \delta(r)=\frac{1}{r}.
+          Find its mass.
+
+[529-535 p c11s7-sk-13 default_required]
+A round tank is inside
+          r\le2
+          and below the slanted roof
+          z=5+r\cos\theta.
+          It is above the floor z=0. Set up and evaluate the volume integral.
+
+[541-546 p c11s7-sk-14 default_required]
+Find the volume inside the sphere
+          \rho\le3
+          and above the cone
+          \phi=\frac{\pi}{4}.
+
+[552-555 p c11s7-sk-15 default_required]
+Find the volume of the first octant part of the sphere
+          \rho\le5.
+
+[561-567 p c11s7-sk-16 default_required]
+Write a spherical-coordinate integral for the volume inside
+          \rho\le4
+          and below the cone
+          \phi=\frac{2\pi}{3}.
+          Be careful: below the cone means farther down from the positive z-axis.
+
+[573-577 p c11s7-sk-17 default_required]
+A ball of radius 2 has density
+          \delta(\rho)=3+\rho.
+          Find its mass.
+
+[583-589 p c11s7-sk-18 default_required]
+A spherical shell satisfies
+          2\le\rho\le5.
+          Its energy density is
+          u(\rho)=\frac{12}{\rho^2}.
+          Find the total energy.
+
+[595-600 p c11s7-sk-19 default_required]
+A probability density on the unit cube is
+          p(x,y,z)=C(x+y+z).
+          Find C. Then find
+          \operatorname{Prob}(z\le1/2).
+
+[606-611 p c11s7-sk-20 default_required]
+A probability density on the ball \rho\le1 is
+          p(\rho)=C.
+          Find C. Then find the probability that
+          \rho\le\frac12.
+
+[617-621 p c11s7-sk-21 default_required]
+Decide which coordinate system you would use first: rectangular, cylindrical, or
+          spherical. Give a reason.
+          x^2+y^2\le4,\qquad 0\le z\le 7.
+
+[627-631 p c11s7-sk-22 default_required]
+Decide which coordinate system you would use first: rectangular, cylindrical, or
+          spherical. Give a reason.
+          x^2+y^2+z^2\le9,\qquad z\ge0.
+
+[637-641 p c11s7-sk-23 default_required]
+Decide which coordinate system you would use first: rectangular, cylindrical, or
+          spherical. Give a reason.
+          0\le x\le2,\qquad 0\le y\le3,\qquad 0\le z\le 4-x.
+
+[646-646 title c11s7-sk-24 preview_or_optional_candidate]
+Optional: higher dimensions
+
+[648-652 p c11s7-sk-24 preview_or_optional_candidate]
+The four-dimensional box
+          B=[0,2]\times[0,1]\times[0,3]\times[0,4]
+          has constant density 5. Find its total mass.
+
+[657-657 title c11s7-sk-25 preview_or_optional_candidate]
+Optional: higher dimensions
+
+[659-662 p c11s7-sk-25 preview_or_optional_candidate]
+Find the volume of the four-dimensional ball of radius 3, using
+          \operatorname{Vol}_4(B_4(R))=\frac{\pi^2}{2}R^4.
+
+[667-667 title c11s7-sk-26 preview_or_optional_candidate]
+Optional: higher dimensions
+
+[669-673 p c11s7-sk-26 preview_or_optional_candidate]
+A point is chosen uniformly from the cube
+          [-1,1]^6.
+          Find the probability that every coordinate lies between -1/2 and 1/2.
+
+[679-683 p c11s7-sk-27 default_required]
+Explain why the bounds
+          0\le\theta\le4\pi,\qquad 0\le r\le2,\qquad 0\le z\le1
+          describe the same cylinder twice.
+
+[689-692 p c11s7-sk-28 default_required]
+Write the oriented volume form in rectangular coordinates, and then write its
+          positive-volume version.
+
+[698-698 title c11s7-project-volume-formulas default_required]
+Project: comparing volume formulas numerically
+
+[700-706 p c11s7-project-volume-formulas default_required]
+A unit ball has volume
+      \frac{4\pi}{3}.
+      That formula is familiar, but this chapter gives several ways to approach the same
+      number. The goal of this project is to compare three numerical estimates of the unit
+      ball volume.
+
+[708-711 p c11s7-project-volume-formulas default_required]
+The unit ball is
+      B=\{(x,y,z):x^2+y^2+z^2\le1\}.
+
+[714-714 title c11s7-project-method-cubes default_required]
+Method 1. Counting small cubes
+
+[716-727 p c11s7-project-method-cubes default_required]
+Divide the cube
+        -1\le x\le1,\qquad -1\le y\le1,\qquad -1\le z\le1
+        into N^3 equal small cubes. Each small cube has side length
+        \Delta x=\frac{2}{N}
+        and volume
+        \Delta V=\left(\frac{2}{N}\right)^3.
+        Use the center of each small cube as a test point. Count how many centers satisfy
+        x^2+y^2+z^2\le1.
+        If that number is K_N, then
+        \boxed{ V_N^{\mathrm{box}} = K_N\left(\frac{2}{N}\right)^3. }
+
+[731-731 title c11s7-project-method-cylindrical default_required]
+Method 2. Cylindrical slices
+
+[733-744 p c11s7-project-method-cylindrical default_required]
+In cylindrical coordinates, the ball is
+        0\le r\le1, \qquad -\sqrt{1-r^2}\le z\le \sqrt{1-r^2}, \qquad 0\le\theta\le2\pi.
+        Its volume is
+        V= \int_0^{2\pi}\int_0^1\int_{-\sqrt{1-r^2}}^{\sqrt{1-r^2}} r\,dz\,dr\,d\theta.
+        After integrating in z and \theta, this becomes
+        V=4\pi\int_0^1 r\sqrt{1-r^2}\,dr.
+        Use a midpoint sum with
+        r_i^*=\left(i-\frac12\right)\Delta r, \qquad \Delta r=\frac1N.
+        Then
+        \boxed{ V_N^{\mathrm{cyl}} = 4\pi\sum_{i=1}^N r_i^*\sqrt{1-(r_i^*)^2}\,\Delta r. }
+
+[748-748 title c11s7-project-method-spherical default_required]
+Method 3. Spherical shells
+
+[750-759 p c11s7-project-method-spherical default_required]
+In spherical coordinates, the unit ball is simply
+        0\le\rho\le1,\qquad 0\le\phi\le\pi,\qquad 0\le\theta\le2\pi.
+        The volume is
+        V= \int_0^{2\pi}\int_0^\pi\int_0^1 \rho^2\sin\phi\,d\rho\,d\phi\,d\theta = 4\pi\int_0^1\rho^2\,d\rho.
+        Use a midpoint sum with
+        \rho_i^*=\left(i-\frac12\right)\Delta\rho, \qquad \Delta\rho=\frac1N.
+        Then
+        \boxed{ V_N^{\mathrm{sph}} = 4\pi\sum_{i=1}^N (\rho_i^*)^2\,\Delta\rho. }
+
+[763-763 title c11s7-project-sample-results default_required]
+Sample results
+
+[765-778 p c11s7-project-sample-results default_required]
+The exact value is
+        \frac{4\pi}{3}\approx 4.18879.
+        Here are typical midpoint estimates.
+        
+          \begin{array}{c|c|c|c}
+          N \amp V_N^{\mathrm{box}} \amp V_N^{\mathrm{cyl}} \amp V_N^{\mathrm{sph}} \\ \hline
+          4  \amp 4.00000 \amp 4.34530 \amp 4.12334\\
+          8  \amp 4.37500 \amp 4.24276 \amp 4.17243\\
+          16 \amp 4.25000 \amp 4.20738 \amp 4.18470\\
+          32 \amp 4.21289 \amp 4.19522 \amp 4.18777
+          \end{array}
+
+[780-784 p c11s7-project-sample-results default_required]
+The spherical estimate improves quickly because the spherical bounds match the ball.
+        The cube-counting estimate also improves, but its boundary is rough: small cubes do not
+        fit a sphere very naturally.
+
+[788-788 title c11s7-project-what-to-hand-in default_required]
+What to hand in
+
+[790-790 p c11s7-project-what-to-hand-in default_required]
+Write a short report with the following pieces.
+
+[793-795 li c11s7-project-what-to-hand-in default_required]
+A picture or description of the three methods.
+
+[796-798 li c11s7-project-what-to-hand-in default_required]
+A table of your estimates for at least four values of N.
+
+[799-804 li c11s7-project-what-to-hand-in default_required]
+The absolute error for each method:
+            \left|V_N-\frac{4\pi}{3}\right|.
+
+[805-807 li c11s7-project-what-to-hand-in default_required]
+A paragraph explaining which method converges fastest in your computation.
+
+[808-813 li c11s7-project-what-to-hand-in default_required]
+A paragraph explaining why the coordinate system matters even though all three
+            methods are estimating the same volume.
+
+[816-819 p c11s7-project-what-to-hand-in default_required]
+The last paragraph is the point of the project. A coordinate system is not just
+        notation. It shapes the pieces being added.
+
+[824-824 title c11s7-hook-scale-factor default_required]
+Hook: coordinate changes need a systematic scale factor
+
+[826-833 p c11s7-hook-scale-factor default_required]
+Cylindrical coordinates gave
+      dV=r\,dr\,d\theta\,dz.
+      Spherical coordinates gave
+      dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.
+      We found those factors by looking carefully at tiny coordinate boxes. That worked
+      because cylinders and spheres have familiar geometry.
+
+[835-840 p c11s7-hook-scale-factor default_required]
+But there are many other coordinate changes. A square can be sheared into a
+      parallelogram. A rectangle can be bent into a curved patch. A box can be stretched,
+      tilted, or folded by a transformation. We need one rule that tells us the correct scale
+      factor every time.
+
+[842-849 p c11s7-hook-scale-factor default_required]
+That rule is not new. It has been waiting since the determinant appeared as signed
+      area and signed volume. In Chapter , the
+      determinant returns as the automatic correction factor for changing variables. In the
+      language of forms, it is what appears when
+      dx\wedge dy \qquad\text{or}\qquad dx\wedge dy\wedge dz
+      is pulled back through a coordinate map.

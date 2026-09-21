@@ -1,0 +1,422 @@
+[5-5 title sec-12-pullbacks-of-area-and-volume-elements default_required]
+Pullbacks of area and volume elements
+
+[7-12 p sec-12-pullbacks-of-area-and-volume-elements default_required]
+gave one rule for changing variables in
+    space:
+    dV=|J|\,du\,dv\,dw.
+    The absolute value is right for ordinary volume. But it hides a sign.
+
+[14-20 p sec-12-pullbacks-of-area-and-volume-elements default_required]
+That sign is not decoration. It tells us whether the coordinate change preserves or reverses
+    orientation. To see the sign instead of hiding it, we return to the forms from
+    :
+    dx\wedge dy \qquad\text{and}\qquad dx\wedge dy\wedge dz.
+    These measure signed area and signed volume.
+
+[23-23 title c12s5-subsec-what-happens-to-dxdy default_required]
+What happens to dx\,dy under a change of variables
+
+[25-31 p c12s5-subsec-what-happens-to-dxdy default_required]
+The notation
+      dx\,dy
+      is useful in ordinary iterated integrals, but it does not show orientation. The form
+      dx\wedge dy
+      does. It measures signed area, and it changes sign when the two directions are swapped.
+
+[33-39 p c12s5-subsec-what-happens-to-dxdy default_required]
+Consider the coordinate change
+      T(u,v)=(x,y)=(u+v,\;u-v).
+      Start with the unit square
+      S=\{(u,v):0\le u\le1,\ 0\le v\le1\}.
+      Its image is a parallelogram in the xy-plane.
+
+[41-50 p c12s5-subsec-what-happens-to-dxdy default_required]
+The two coordinate directions become
+      T_u=(1,1), \qquad T_v=(1,-1).
+      The signed area scale factor is
+      \det \begin{pmatrix} 1&1\\ 1&-1 \end{pmatrix} = -2.
+      So the image parallelogram has ordinary area
+      2,
+      but the orientation induced by the ordered variables (u,v) is opposite to the usual
+      orientation of the xy-plane.
+
+[53-54 caption c12s5-fig-orientation-reversal default_required]
+The map T(u,v)=(u+v,u-v) sends the positive uv-orientation to the
+      opposite orientation in the xy-plane.
+
+[56-96 latex-image c12s5-fig-orientation-reversal default_required]
+\begin{tikzpicture}[scale=0.75, >=stealth]
+            \begin{scope}
+                \draw[->] (-0.4,0) -- (3.2,0) node[right] {\(u\)};
+                \draw[->] (0,-0.4) -- (0,3.2) node[above] {\(v\)};
+
+                \draw[fill=gray!12, thick] (0,0) rectangle (1.7,1.7);
+
+                \draw[->, very thick] (0,0) -- (1.7,0) node[midway, below] {\(u\)};
+                \draw[->, very thick] (0,0) -- (0,1.7) node[midway, left] {\(v\)};
+
+                % Arc perfectly centered at the origin, sweeping from u to v
+                \draw[->, thick] (15:1.2) arc[start angle=15, end angle=75, radius=1.2];
+
+                \node at (1.1,-0.9) {positive square};
+            \end{scope}
+
+            \draw[->, thick] (3.6,1.2) -- (5.2,1.2);
+            \node[above] at (4.4,1.2) {\(T\)};
+
+            \begin{scope}[shift={(6.4,1.2)}]
+                \draw[->] (-0.6,0) -- (4.5,0) node[right] {\(x\)};
+                \draw[->] (0,-2.4) -- (0,2.4) node[above] {\(y\)};
+
+                \coordinate (O) at (0,0);
+                \coordinate (A) at (1.7,1.7);
+                \coordinate (B) at (1.7,-1.7);
+                \coordinate (AB) at (3.4,0);
+
+                \draw[fill=blue!8, thick] (O) -- (A) -- (AB) -- (B) -- cycle;
+
+                \draw[->, very thick] (O) -- (A) node[midway, above left] {\(T_u\)};
+                \draw[->, very thick] (O) -- (B) node[midway, below left] {\(T_v\)};
+
+                % Arc perfectly centered at the origin, sweeping from T_u down to T_v
+                \draw[->, thick] (35:1.4) arc[start angle=35, end angle=-35, radius=1.4];
+
+                \node at (2,-2.9) {opposite orientation};
+            \end{scope}
+        \end{tikzpicture}
+
+[100-124 p c12s5-subsec-what-happens-to-dxdy default_required]
+Now watch the same fact through differentials. The symbol T^*, called
+      pullback, expresses a form on the target plane as a form on the parameter
+      plane. For a differentiable map it works by applying the derivative to the input vectors:
+      (T^*dx)_{(u,v)}(\mathbf a)=dx_{T(u,v)}(DT_{(u,v)}\mathbf a).
+      Thus T^*(dx)=d(x(u,v)), the scalar differential already studied in
+      . In this example,
+      x=u+v, \qquad y=u-v.
+      So
+      T^*(dx)=du+dv,
+      and
+      T^*(dy)=du-dv.
+      For an area form we apply DT to both input vectors; by the definition of the
+      wedge of two linear measurements this gives
+      
+        T^*(dx\wedge dy) \amp= (du+dv)\wedge(du-dv)
+        \amp= du\wedge du-du\wedge dv+dv\wedge du-dv\wedge dv
+        \amp= -du\wedge dv-du\wedge dv
+        \amp= -2\,du\wedge dv.
+      
+      Thus
+      \boxed{ T^*(dx\wedge dy)=-2\,du\wedge dv. }
+      Both sides are now forms on the same parameter plane; dx\wedge dy alone
+      lives on the target plane.
+
+[126-128 p c12s5-subsec-what-happens-to-dxdy default_required]
+The determinant has appeared as the coefficient of the pulled-back area form.
+
+[130-138 p c12s5-subsec-what-happens-to-dxdy default_required]
+For ordinary area, we use the positive scale factor:
+      \operatorname{Area}(T(S)) = \int_0^1\int_0^1 2\,du\,dv = 2.
+      For signed area using the orientation induced by the parametrization T, we keep the
+      sign. On a parameter region with the standard (u,v) orientation, define the integral
+      of h(u,v)\,du\wedge dv to be the ordinary double integral of its coefficient
+      h:
+      \int_S T^*(dx\wedge dy) = \int_0^1\int_0^1 (-2)\,du\,dv = -2.
+
+[140-140 p c12s5-subsec-what-happens-to-dxdy default_required]
+Both answers are correct. They answer different questions.
+
+[143-143 title checkpoint-12-5-signed-area-meaning default_required]
+Why two correct answers?
+
+[145-149 p checkpoint-12-5-signed-area-meaning default_required]
+The same map gave area 2 but signed area -2. In words, what extra
+          piece of information does the form dx\wedge dy record that the plain area
+          does not, and why might you want to keep it?
+
+[152-155 p checkpoint-12-5-signed-area-meaning hint]
+Think about what changes if you list the coordinate directions in the opposite
+          order. Does ordinary area notice? Does the sign?
+
+[161-161 title c12s5-subsec-determinant-as-coefficient default_required]
+The determinant as the coefficient of a pulled-back area element
+
+[163-166 p c12s5-subsec-determinant-as-coefficient default_required]
+The word pullback means that we express a form from the target coordinates back
+      in the parameter coordinates.
+
+[168-175 p c12s5-subsec-determinant-as-coefficient default_required]
+If T is continuously differentiable and
+      T(u,v)=(x(u,v),y(u,v)),
+      then pulling back dx means replacing it by the differential of x(u,v):
+      T^*(dx)=d(x(u,v))=x_u\,du+x_v\,dv.
+      Similarly,
+      T^*(dy)=d(y(u,v))=y_u\,du+y_v\,dv.
+
+[177-186 p c12s5-subsec-determinant-as-coefficient default_required]
+So
+      
+        T^*(dx\wedge dy) \amp= (x_u\,du+x_v\,dv)\wedge(y_u\,du+y_v\,dv)
+        \amp= x_u y_v\,du\wedge dv+x_v y_u\,dv\wedge du
+        \amp= (x_u y_v-x_v y_u)\,du\wedge dv.
+      
+      Hence
+      \boxed{ T^*(dx\wedge dy) = \frac{\partial(x,y)}{\partial(u,v)}\,du\wedge dv. }
+
+[188-188 p c12s5-subsec-determinant-as-coefficient default_required]
+This is the signed version of the change-of-variables rule.
+
+[190-199 p c12s5-linear-differential-scaling default_required]
+In particular, for the linear map from ,
+      T(u,v)=(au+bv,cu+dv),
+      this calculation gives
+      T^*(dx\wedge dy)=(a\,du+b\,dv)\wedge(c\,du+d\,dv)
+        =(ad-bc)\,du\wedge dv.
+      The differential calculation therefore gives the same signed factor as the finite
+      parallelogram calculation there. The corresponding ordinary area factor is
+      |ad-bc|.
+
+[202-202 title c12s5-def-pullback-area-form default_required]
+Pullback of an area form
+
+[204-211 p c12s5-def-pullback-area-form default_required]
+Let T be continuously differentiable, with
+          T(u,v)=(x(u,v),y(u,v)).
+          For a 2-form
+          \omega=g(x,y)\,dx\wedge dy,
+          its pullback by T is
+          \boxed{ T^*\omega = g(x(u,v),y(u,v)) \frac{\partial(x,y)}{\partial(u,v)} \,du\wedge dv. }
+
+[215-220 p c12s5-subsec-determinant-as-coefficient default_required]
+The pullback does two things at once:
+      g(x,y)\quad\longrightarrow\quad g(x(u,v),y(u,v)),
+      and
+      dx\wedge dy\quad\longrightarrow\quad \frac{\partial(x,y)}{\partial(u,v)}\,du\wedge dv.
+
+[222-230 p c12s5-subsec-determinant-as-coefficient default_required]
+Under the one-to-one and regularity hypotheses of
+      , ordinary area
+      integrals use the absolute value of the second factor:
+      \boxed{ \iint_R g(x,y)\,dA = \iint_S g(T(u,v)) \left| \frac{\partial(x,y)}{\partial(u,v)} \right| du\,dv. }
+      For oriented 2-form integrals, the sign stays:
+      \boxed{ \iint_R g(x,y)\,dx\wedge dy = \iint_S g(T(u,v)) \frac{\partial(x,y)}{\partial(u,v)} \,du\wedge dv, }
+      when T is used to orient the image.
+
+[233-233 title c12s5-ex-chemical-quarter-disk default_required]
+A chemical spread over a quarter disk
+
+[235-244 p c12s5-ex-chemical-quarter-disk default_required]
+A thin chemical film has areal density
+          g(x,y)=3+x.
+          Let R be the quarter disk
+          x^2+y^2\le4, \qquad x\ge0,\qquad y\ge0.
+          Use polar coordinates:
+          x=r\cos\theta, \qquad y=r\sin\theta,
+          with
+          0\le r\le2, \qquad 0\le\theta\le\frac{\pi}{2}.
+
+[245-261 p c12s5-ex-chemical-quarter-disk default_required]
+The area form pulls back as
+          T^*(dx\wedge dy)=r\,dr\wedge d\theta.
+          The density becomes
+          g(r\cos\theta,r\sin\theta)=3+r\cos\theta.
+          So the pulled-back 2-form is
+          (3+r\cos\theta)\,r\,dr\wedge d\theta.
+          The total amount of chemical is
+          
+            \iint_R (3+x)\,dA \amp= \int_0^{\pi/2}\int_0^2 (3+r\cos\theta)r\,dr\,d\theta
+            \amp= \int_0^{\pi/2} \left[ \frac{3r^2}{2}+\frac{r^3}{3}\cos\theta \right]_{0}^{2} d\theta
+            \amp= \int_0^{\pi/2} \left( 6+\frac83\cos\theta \right)d\theta
+            \amp= 3\pi+\frac83.
+          
+          So
+          \boxed{ \iint_R (3+x)\,dA=3\pi+\frac83. }
+
+[265-270 p c12s5-subsec-determinant-as-coefficient default_required]
+Here the polar Jacobian
+      r
+      is nonnegative on the chosen domain, so the signed and ordinary area factors agree.
+      The coordinate map degenerates at the origin, where both factors are zero.
+
+[274-274 title c12s5-subsec-pulling-back-volume-elements default_required]
+Pulling back volume elements
+
+[276-300 p c12s5-subsec-pulling-back-volume-elements default_required]
+The same idea works in space. Let
+      T(u,v,w)=(x(u,v,w),y(u,v,w),z(u,v,w)).
+      For a continuously differentiable T,
+      T^*(dx)=x_u\,du+x_v\,dv+x_w\,dw,
+      T^*(dy)=y_u\,du+y_v\,dv+y_w\,dw,
+      and
+      T^*(dz)=z_u\,du+z_v\,dv+z_w\,dw.
+      Here the wedge of three linear scalar measurements is the alternating trilinear
+      measurement
+      (\alpha\wedge\beta\wedge\gamma)(\mathbf a,\mathbf b,\mathbf c)
+      =\det\begin{pmatrix}
+      \alpha(\mathbf a)\amp\alpha(\mathbf b)\amp\alpha(\mathbf c)\\
+      \beta(\mathbf a)\amp\beta(\mathbf b)\amp\beta(\mathbf c)\\
+      \gamma(\mathbf a)\amp\gamma(\mathbf b)\amp\gamma(\mathbf c)
+      \end{pmatrix}.
+      The determinant is linear in each row, changes sign when two rows are exchanged,
+      and is zero when two rows coincide. Grouped expressions such as
+      (\alpha\wedge\beta)\wedge\gamma denote this same triple wedge.
+      These facts justify distributing the wedge,
+      swapping factors, and discarding repeated factors in the following expansion.
+      When we wedge these three expressions together, every repeated differential vanishes, and the
+      surviving coefficient is the 3\times3 determinant:
+      \boxed{ T^*(dx\wedge dy\wedge dz) = \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw. }
+
+[303-303 title checkpoint-12-5-why-repeats-vanish default_required]
+Where did the other terms go?
+
+[305-310 p checkpoint-12-5-why-repeats-vanish default_required]
+When the three differentials are wedged together, six terms can survive; together
+          they give one multiple of du\wedge dv\wedge dw. What is it about \wedge that makes every term with
+          a repeated differential disappear, and why does that leave exactly the determinant
+          behind rather than some other combination?
+
+[313-316 p checkpoint-12-5-why-repeats-vanish hint]
+Recall how du\wedge du behaves, and how swapping two factors changes the
+          sign. The pattern of surviving signs is the same pattern that defines a determinant.
+
+[320-325 p c12s5-subsec-pulling-back-volume-elements default_required]
+For a 3-form
+      \Omega=h(x,y,z)\,dx\wedge dy\wedge dz,
+      the pullback is
+      \boxed{ T^*\Omega = h(T(u,v,w)) \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw. }
+
+[328-328 title c12s5-ex-skewed-box-reversed-orientation default_required]
+A skewed box with reversed orientation
+
+[330-346 p c12s5-ex-skewed-box-reversed-orientation default_required]
+Let
+          T(u,v,w)=(x,y,z)=(u+v,\;u-v,\;w).
+          Then
+          T^*(dx)=du+dv,
+          T^*(dy)=du-dv,
+          and
+          T^*(dz)=dw.
+          Therefore
+          
+            T^*(dx\wedge dy\wedge dz) \amp= (du+dv)\wedge(du-dv)\wedge dw
+            \amp= (-2\,du\wedge dv)\wedge dw
+            \amp= -2\,du\wedge dv\wedge dw.
+          
+          So
+          \boxed{ T^*(dx\wedge dy\wedge dz) = -2\,du\wedge dv\wedge dw. }
+
+[347-357 p c12s5-ex-skewed-box-reversed-orientation default_required]
+If
+          S=[0,1]\times[0,1]\times[0,1],
+          then T(S) is a skewed prism. Its ordinary volume is
+          2.
+          But its oriented volume using the parametrization T is
+          -2.
+          The minus sign says that the ordered coordinate directions
+          T_u,\quad T_v,\quad T_w
+          have the opposite orientation from the usual x,y,z-orientation.
+
+[361-369 p c12s5-subsec-pulling-back-volume-elements default_required]
+Under the substitution hypotheses of ,
+      the ordinary volume rule is
+      \boxed{ \iiint_E h(x,y,z)\,dV = \iiint_S h(T(u,v,w)) \left| \frac{\partial(x,y,z)}{\partial(u,v,w)} \right| du\,dv\,dw. }
+      For oriented 3-form integrals, the sign stays, with E carrying the
+      orientation induced by T and the parameter domain carrying the
+      (u,v,w) orientation:
+      \boxed{ \iiint_E h(x,y,z)\,dx\wedge dy\wedge dz = \iiint_S h(T(u,v,w)) \frac{\partial(x,y,z)}{\partial(u,v,w)} \,du\wedge dv\wedge dw. }
+
+[373-373 title c12s5-subsec-orientation-versus-absolute-value default_required]
+Orientation versus absolute value
+
+[375-375 p c12s5-subsec-orientation-versus-absolute-value default_required]
+There are now two languages.
+
+[378-378 title checkpoint-12-5-absolute-value-vs-sign default_required]
+Why the absolute value?
+
+[380-385 p checkpoint-12-5-absolute-value-vs-sign default_required]
+Ordinary integration uses |J|, while oriented integration with
+          dx\wedge dy uses J itself. Conceptually, why does measuring plain
+          size force us to throw away the sign, and what question are we no longer able to
+          answer once we do?
+
+[388-391 p checkpoint-12-5-absolute-value-vs-sign hint]
+A length or an area can never come out negative. So if the determinant is negative,
+          something has to give. Ask which of the two readings still remembers the flip.
+
+[396-396 title c12s5-tab-orientation-vs-absolute-value default_required]
+Ordinary and oriented elements and their Jacobian factors.
+
+[399-399 cell c12s5-tab-orientation-vs-absolute-value default_required]
+Object
+
+[400-400 cell c12s5-tab-orientation-vs-absolute-value default_required]
+Measures
+
+[401-401 cell c12s5-tab-orientation-vs-absolute-value default_required]
+Jacobian factor
+
+[404-404 cell c12s5-tab-orientation-vs-absolute-value default_required]
+dA
+
+[405-405 cell c12s5-tab-orientation-vs-absolute-value default_required]
+ordinary area
+
+[406-406 cell c12s5-tab-orientation-vs-absolute-value default_required]
+|J|
+
+[409-409 cell c12s5-tab-orientation-vs-absolute-value default_required]
+dV
+
+[410-410 cell c12s5-tab-orientation-vs-absolute-value default_required]
+ordinary volume
+
+[411-411 cell c12s5-tab-orientation-vs-absolute-value default_required]
+|J|
+
+[414-414 cell c12s5-tab-orientation-vs-absolute-value default_required]
+dx\wedge dy
+
+[415-415 cell c12s5-tab-orientation-vs-absolute-value default_required]
+signed area
+
+[416-416 cell c12s5-tab-orientation-vs-absolute-value default_required]
+J
+
+[419-419 cell c12s5-tab-orientation-vs-absolute-value default_required]
+dx\wedge dy\wedge dz
+
+[420-420 cell c12s5-tab-orientation-vs-absolute-value default_required]
+signed volume
+
+[421-421 cell c12s5-tab-orientation-vs-absolute-value default_required]
+J
+
+[426-430 p c12s5-subsec-orientation-versus-absolute-value default_required]
+The ordinary symbols
+      dA,\qquad dV
+      forget orientation. They count size only.
+
+[432-436 p c12s5-subsec-orientation-versus-absolute-value default_required]
+The wedge forms
+      dx\wedge dy,\qquad dx\wedge dy\wedge dz
+      remember orientation. They count size with sign.
+
+[438-443 p c12s5-subsec-orientation-versus-absolute-value default_required]
+This is why the same determinant appears in two slightly different ways:
+      \text{ordinary integration uses } |J|,
+      while
+      \text{oriented integration uses } J.
+
+[445-449 p c12s5-subsec-orientation-versus-absolute-value default_required]
+If J\gt 0, the coordinate change preserves orientation. If J\lt 0, it reverses
+      orientation. If J=0, then the derivative crushes area or volume at that point, and the
+      coordinate change may stop being a genuine coordinate system there.
+
+[451-458 p c12s5-subsec-orientation-versus-absolute-value default_required]
+The notation
+      T^*\omega
+      is useful because it keeps the sign. But the same sign is also where mistakes begin. A
+      determinant can be negative, zero, or locally correct while the map still covers the same
+      region more than once. The next examples are traps worth meeting before the formula becomes a
+      habit.

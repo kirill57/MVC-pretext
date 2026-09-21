@@ -1,0 +1,433 @@
+[5-5 title sec-10-chapter-review-and-applications default_required]
+Chapter review and applications
+
+[8-14 p sec-10-chapter-review-and-applications default_required]
+Chapter  began with the same idea that built
+      single-variable integration: cut, multiply, add, and pass to a limit. The interval
+      became a region. The tiny length dx became a tiny area dA, or, when
+      orientation matters,
+      dx\wedge dy.
+
+[15-18 p sec-10-chapter-review-and-applications default_required]
+The hardest part of most double integral problems is not the integration. It is deciding
+      what the small pieces look like.
+
+[22-22 title c10s8-the-chapter-in-one-decision-path default_required]
+The chapter in one decision path
+
+[24-27 p c10s8-the-chapter-in-one-decision-path default_required]
+A double integral begins with a question:
+      \text{What is being added, and over what region?}
+
+[29-34 p c10s8-the-chapter-in-one-decision-path default_required]
+If the region is a rectangle, iterated integrals usually go straight through. If the
+      region has curved edges, draw it first. If the region is circular, polar coordinates may
+      turn the picture into simple bounds. If the region is infinite or the function blows up,
+      use an improper limit.
+
+[37-40 caption c10s8-fig-decision-path default_required]
+Most double integral problems are solved by matching the region to the right
+        description.
+
+[42-70 latex-image c10s8-fig-decision-path default_required]
+\begin{tikzpicture}[scale=0.88, >=stealth]
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (start) at (0,0) {Double integral\\ \(\displaystyle \iint_R f\,dA\)};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (rect) at (-5,-2) {Rectangle\\ use Fubini};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (gen) at (0,-2) {Curved region\\ draw bounds};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (polar) at (5,-2) {Circular geometry\\ try polar};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (app) at (-2.6,-4.4) {Density, mass,\\ average, probability};
+
+    \node[draw, rounded corners, align=center, minimum width=4.2cm, minimum height=0.9cm]
+        (improper) at (2.6,-4.4) {Infinite or singular\\ take a limit};
+
+    \draw[->, thick] (start) -- (rect);
+    \draw[->, thick] (start) -- (gen);
+    \draw[->, thick] (start) -- (polar);
+    \draw[->, thick] (gen) -- (app);
+    \draw[->, thick] (polar) -- (app);
+    \draw[->, thick] (rect) -- (app);
+    \draw[->, thick] (app) -- (improper);
+\end{tikzpicture}
+
+[74-121 p c10s8-the-chapter-in-one-decision-path default_required]
+Here are the main formulas from the chapter.
+      
+\begin{array}{c|c}
+\text{Quantity} \amp \text{Double integral} \\ \hline
+\text{area of }R
+\amp
+\displaystyle \operatorname{Area}(R)=\iint_R 1\,dA
+\\[3mm]
+\text{volume under }z=f(x,y)
+\amp
+\displaystyle V=\iint_R f(x,y)\,dA
+\\[3mm]
+\text{average value}
+\amp
+\displaystyle f_{\mathrm{avg}}
+=
+\frac{1}{\operatorname{Area}(R)}\iint_R f\,dA
+\\[4mm]
+\text{mass of a lamina}
+\amp
+\displaystyle M=\iint_R \rho\,dA
+\\[3mm]
+\text{moments}
+\amp
+\displaystyle M_y=\iint_R x\rho\,dA,
+\qquad
+M_x=\iint_R y\rho\,dA
+\\[4mm]
+\text{center of mass}
+\amp
+\displaystyle
+\bar x=\frac{M_y}{M},
+\qquad
+\bar y=\frac{M_x}{M}
+\\[4mm]
+\text{moment of inertia about the origin}
+\amp
+\displaystyle
+I_O=\iint_R (x^2+y^2)\rho\,dA
+\\[4mm]
+\text{probability over }R
+\amp
+\displaystyle
+P((X,Y)\in R)=\iint_R p(x,y)\,dA
+\end{array}
+
+[123-129 p c10s8-the-chapter-in-one-decision-path default_required]
+For polar coordinates,
+      \boxed{x=r\cos\theta,\qquad y=r\sin\theta,\qquad dA=r\,dr\,d\theta.}
+      The extra factor
+      r
+      is the area-scaling factor for a small polar rectangle.
+
+[131-138 p c10s8-the-chapter-in-one-decision-path default_required]
+For improper double integrals, the same symbols are used, but the meaning includes a
+      limit:
+      \boxed{\iint_R f\,dA=\lim_{A\to\infty}\iint_{R_A}f\,dA}
+      for an unbounded region, or
+      \boxed{\iint_R f\,dA=\lim_{\varepsilon\to0^+}\iint_{R_\varepsilon}f\,dA}
+      when a singular point has been removed and then allowed back in by a limit.
+
+[142-142 title c10s8-worked-review-example-drawing-the-region default_required]
+Worked review example: drawing the region before integrating
+
+[144-149 p c10s8-worked-review-example-drawing-the-region default_required]
+Let R be the region bounded by
+      y=x^2\qquad\text{and}\qquad y=2x.
+      Compute
+      \iint_R y\,dA.
+
+[151-169 p c10s8-worked-review-example-drawing-the-region default_required]
+First find the intersection points:
+      x^2=2x\quad\Longrightarrow\quad x(x-2)=0.
+      So
+      x=0\qquad\text{or}\qquad x=2.
+      On
+      0\le x\le2,
+      the line y=2x lies above the parabola y=x^2. Therefore
+      R=\{(x,y):0\le x\le2,\ x^2\le y\le 2x\}.
+      Set up the integral:
+      
+        \iint_R y\,dA \amp= \int_0^2\int_{x^2}^{2x} y\,dy\,dx
+        \amp= \int_0^2\left[\frac12y^2\right]_{x^2}^{2x}\,dx
+        \amp= \frac12\int_0^2(4x^2-x^4)\,dx
+        \amp= \frac12\left[\frac43x^3-\frac15x^5\right]_0^2
+        \amp= \frac12\left(\frac{32}{3}-\frac{32}{5}\right)
+        \amp= \boxed{\frac{32}{15}}.
+
+[171-181 p c10s8-worked-review-example-drawing-the-region default_required]
+The same region can be described the other way. Since
+      y=2x\quad\Longrightarrow\quad x=\frac y2,
+      and
+      y=x^2\quad\Longrightarrow\quad x=\sqrt y
+      on the right-hand branch, the reversed description is
+      R=\left\{(x,y):0\le y\le4,\ \frac y2\le x\le \sqrt y\right\}.
+      So the same integral is
+      \boxed{\iint_R y\,dA=\int_0^4\int_{y/2}^{\sqrt y}y\,dx\,dy.}
+      This is the same quantity with a different slicing direction.
+
+[185-185 title c10s8-worked-review-example-sprinkler default_required]
+Worked review example: a circular sprinkler pattern
+
+[187-192 p c10s8-worked-review-example-sprinkler default_required]
+A sprinkler waters a circular garden of radius 2 meters. The water density at a
+      point depends only on distance from the center:
+      w(r)=10-r,\qquad 0\le r\le2.
+      Find the total water and the average water density over the garden.
+
+[194-209 p c10s8-worked-review-example-sprinkler default_required]
+The region is a disk, and the density is radial, so use polar coordinates:
+      0\le r\le2,\qquad 0\le\theta\le2\pi.
+      The total water is
+      
+        W \amp= \int_0^{2\pi}\int_0^2 (10-r)r\,dr\,d\theta
+        \amp= 2\pi\int_0^2(10r-r^2)\,dr
+        \amp= 2\pi\left[5r^2-\frac13r^3\right]_0^2
+        \amp= 2\pi\left(20-\frac83\right)
+        \amp= \boxed{\frac{104\pi}{3}}.
+      
+      The garden area is
+      \pi(2)^2=4\pi.
+      Therefore the average water density is
+      \boxed{w_{\mathrm{avg}}=\frac{W}{4\pi}=\frac{26}{3}.}
+
+[211-216 p c10s8-worked-review-example-sprinkler default_required]
+The value
+      \frac{26}{3}
+      is less than 10, because most of the garden is not near the center. In polar
+      coordinates, the factor r reminds us that larger rings contain more area.
+
+[220-220 title c10s8-ex-grp-concept-check default_required]
+Concept check
+
+[224-228 p c10s8-ex-cc-01 default_required]
+What does
+          dA
+          mean in a double integral?
+
+[234-238 p c10s8-ex-cc-02 default_required]
+Why is
+          \iint_R 1\,dA
+          the area of R?
+
+[244-244 p c10s8-ex-cc-03 default_required]
+What does the inner integral mean geometrically in an iterated integral?
+
+[250-250 p c10s8-ex-cc-04 default_required]
+Why does changing the order of integration require redrawing the region?
+
+[256-256 p c10s8-ex-cc-05 default_required]
+What is a Type I region? What is a Type II region?
+
+[262-267 p c10s8-ex-cc-06 default_required]
+Why does polar area have the factor
+          r
+          in
+          dA=r\,dr\,d\theta?
+
+[273-273 p c10s8-ex-cc-07 default_required]
+When is polar integration likely to simplify a problem?
+
+[279-279 p c10s8-ex-cc-08 default_required]
+How are mass and density related by a double integral?
+
+[285-289 p c10s8-ex-cc-09 default_required]
+Why are the moments
+          M_y=\iint_R x\rho\,dA,\qquad M_x=\iint_R y\rho\,dA
+          named with the opposite coordinate?
+
+[295-295 p c10s8-ex-cc-10 default_required]
+What does the average value formula say in words?
+
+[301-304 p c10s8-ex-cc-11 default_required]
+How can a function be unbounded at one point but still have a finite double
+          integral?
+
+[310-310 p c10s8-ex-cc-12 default_required]
+Why can a function that tends to 0 at infinity still have a divergent integral?
+
+[316-316 p c10s8-ex-cc-13 default_required]
+What does the comparison test require?
+
+[322-322 title c10s8-ex-grp-skills default_required]
+Skill problems
+
+[326-329 p c10s8-ex-sk-01 default_required]
+Compute
+          \int_0^3\int_0^2 (x+2y)\,dy\,dx.
+
+[335-338 p c10s8-ex-sk-02 default_required]
+Compute
+          \int_0^1\int_0^x (x^2+y)\,dy\,dx.
+
+[344-350 p c10s8-ex-sk-03 default_required]
+Let R be the triangle with vertices
+          (0,0),\qquad (4,0),\qquad (4,2).
+          Set up
+          \iint_R f(x,y)\,dA
+          as an iterated integral in both orders.
+
+[356-361 p c10s8-ex-sk-04 default_required]
+Let R be bounded by
+          y=x^2\qquad\text{and}\qquad y=4.
+          Set up and evaluate
+          \iint_R x^2\,dA.
+
+[367-370 p c10s8-ex-sk-05 default_required]
+Reverse the order of integration:
+          \int_0^1\int_y^1 f(x,y)\,dx\,dy.
+
+[376-379 p c10s8-ex-sk-06 default_required]
+Reverse the order of integration:
+          \int_0^4\int_{\sqrt y}^{2} f(x,y)\,dx\,dy.
+
+[385-391 p c10s8-ex-sk-07 default_required]
+Find the area of the region inside the circle
+          x^2+y^2=9
+          and above the line
+          y=0
+          using polar coordinates.
+
+[397-402 p c10s8-ex-sk-08 default_required]
+Evaluate
+          \iint_D (x^2+y^2)\,dA,
+          where D is the disk
+          x^2+y^2\le 4.
+
+[408-413 p c10s8-ex-sk-09 default_required]
+Evaluate
+          \iint_A \frac{1}{1+x^2+y^2}\,dA,
+          where A is the annulus
+          1\le x^2+y^2\le 9.
+
+[419-425 p c10s8-ex-sk-10 default_required]
+A lamina occupies the rectangle
+          0\le x\le2,\qquad 0\le y\le3,
+          with density
+          \rho(x,y)=1+x.
+          Find its mass.
+
+[431-435 p c10s8-ex-sk-11 default_required]
+For the lamina in Problem 10, find
+          M_x,\qquad M_y,
+          and its center of mass.
+
+[441-448 p c10s8-ex-sk-12 default_required]
+A probability density on the square
+          0\le x\le1,\qquad 0\le y\le1
+          is
+          p(x,y)=C(x+y).
+          Find C, and then find the probability that
+          x+y\le1.
+
+[454-459 p c10s8-ex-sk-13 default_required]
+Find the average value of
+          f(x,y)=x+y
+          over the triangle with vertices
+          (0,0),\qquad (1,0),\qquad (0,1).
+
+[465-468 p c10s8-ex-sk-14 default_required]
+Decide whether the improper integral converges:
+          \iint_{\mathbb R^2}\frac{1}{(1+x^2+y^2)^2}\,dA.
+
+[474-477 p c10s8-ex-sk-15 default_required]
+Decide whether the improper integral converges:
+          \iint_{\mathbb R^2}\frac{1}{1+x^2+y^2}\,dA.
+
+[483-486 p c10s8-ex-sk-16 default_required]
+Decide whether the improper integral over the unit disk converges:
+          \iint_{x^2+y^2\le1}\frac{1}{(x^2+y^2)^{3/4}}\,dA.
+
+[492-495 p c10s8-ex-sk-17 default_required]
+Decide whether the improper integral over the unit disk converges:
+          \iint_{x^2+y^2\le1}\frac{1}{x^2+y^2}\,dA.
+
+[501-504 p c10s8-ex-sk-18 default_required]
+Use the Gaussian integral result to evaluate
+          \int_{-\infty}^{\infty} e^{-4x^2}\,dx.
+
+[510-510 title c10s8-project-estimating-rainfall default_required]
+Project: estimating rainfall from gridded data
+
+[512-516 p c10s8-project-estimating-rainfall default_required]
+A storm passes over a rectangular watershed. The watershed is
+      0\le x\le8,\qquad 0\le y\le6,
+      where x and y are measured in kilometers.
+
+[518-530 p c10s8-project-estimating-rainfall default_required]
+The region is divided into rectangles of size
+      2\text{ km}\times 2\text{ km}.
+      Rainfall is measured at the center of each rectangle, in centimeters.
+      
+\begin{array}{c|cccc}
+ \amp x=1 \amp x=3 \amp x=5 \amp x=7 \\ \hline
+y=5 \amp 3.2 \amp 4.1 \amp 4.6 \amp 3.8\\
+y=3 \amp 2.4 \amp 3.5 \amp 5.0 \amp 4.2\\
+y=1 \amp 1.1 \amp 2.0 \amp 3.1 \amp 2.7
+\end{array}
+
+[532-535 p c10s8-project-estimating-rainfall default_required]
+Each grid cell has area
+      4\text{ km}^2.
+
+[538-538 title c10s8-project-part-1 default_required]
+Part 1. Estimate the total rainfall integral
+
+[540-552 p c10s8-project-part-1 default_required]
+Use a midpoint sum:
+        \iint_R r(x,y)\,dA\approx 4\sum r(x_i^*,y_j^*).
+        For the data above,
+        
+          \sum r(x_i^*,y_j^*) \amp= 3.2+4.1+4.6+3.8
+          \amp\qquad +2.4+3.5+5.0+4.2
+          \amp\qquad +1.1+2.0+3.1+2.7
+          \amp= 39.7.
+        
+        So
+        \boxed{\iint_R r(x,y)\,dA\approx 4(39.7)=158.8\text{ cm}\cdot\text{km}^2.}
+
+[556-556 title c10s8-project-part-2 default_required]
+Part 2. Convert to water volume
+
+[558-563 p c10s8-project-part-2 default_required]
+One centimeter of rain over one square kilometer equals
+        10{,}000\text{ m}^3
+        of water. Therefore the estimated water volume is
+        \boxed{158.8(10{,}000)=1{,}588{,}000\text{ m}^3.}
+
+[567-567 title c10s8-project-part-3 default_required]
+Part 3. Estimate average rainfall
+
+[569-574 p c10s8-project-part-3 default_required]
+The watershed area is
+        8\cdot6=48\text{ km}^2.
+        The average rainfall is
+        \boxed{r_{\mathrm{avg}}\approx \frac{158.8}{48}\approx 3.31\text{ cm}.}
+
+[578-578 title c10s8-project-part-4 default_required]
+Part 4. What to hand in
+
+[580-580 p c10s8-project-part-4 default_required]
+Write a short report with the following pieces.
+
+[583-585 li c10s8-project-part-4 default_required]
+A sketch of the watershed grid.
+
+[586-591 li c10s8-project-part-4 default_required]
+The midpoint-sum estimate for
+            \iint_R r(x,y)\,dA.
+
+[592-598 li c10s8-project-part-4 default_required]
+The conversion from
+            \text{cm}\cdot\text{km}^2
+            to cubic meters.
+
+[599-601 li c10s8-project-part-4 default_required]
+The estimated average rainfall.
+
+[602-604 li c10s8-project-part-4 default_required]
+A contour-style sketch showing where the rainfall appears largest.
+
+[605-610 li c10s8-project-part-4 default_required]
+A paragraph explaining one possible source of error in the estimate. For example,
+            what if the heaviest rain fell between two sensors?
+
+[616-623 p sec-10-chapter-review-and-applications default_required]
+A double integral sees a thin region: a floor, a plate, a map, a lamina. But many
+      objects are not thin. Air fills a room. Charge fills a solid ball. Density can vary from
+      one shelf of a tank to another. The same adding idea is waiting there too, but the tiny
+      pieces are no longer small rectangles. They are small boxes, and the bounds must
+      describe a three-dimensional body. One more coordinate turns the double integral into a
+      triple integral.

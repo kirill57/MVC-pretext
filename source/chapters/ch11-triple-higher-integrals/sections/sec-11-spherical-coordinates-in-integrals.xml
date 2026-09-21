@@ -111,20 +111,76 @@
       </hint>
     </exercise>
 
-    <p>
-      In form language, substituting the scalar coordinate functions
-      <m>x(\rho,\phi,\theta)</m>, <m>y(\rho,\phi,\theta)</m>, and
-      <m>z(\rho,\phi,\theta)</m> gives the following identity on the parameter domain.
-      Here <m>dx,dy,dz</m> mean the differentials of those functions, as in the cylindrical
-      calculation; they are not unchanged target-coordinate covectors. The signed determinant
-      calculation in <xref ref="sec-8-coordinate-changes"/> gives
-      <md>\boxed{dx\wedge dy\wedge dz = \rho^2\sin\phi\, d\rho\wedge d\phi\wedge d\theta.}</md>
-      This order is <m>(\rho,\phi,\theta)</m>. Interchanging the two angular variables gives
-      the negative signed determinant in order <m>(\rho,\theta,\phi)</m>; ordinary volume
-      uses the absolute value in either order.
-      For positive volume, we write
-      <md>dV=\rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
-    </p>
+    <theorem xml:id="c11s4-thm-spherical-integration">
+      <title>Spherical integration</title>
+      <statement><p>Let <m>U</m> be a bounded closed parameter region with
+        piecewise smooth boundary, using <m>\rho\ge0</m>, <m>0\le\phi\le\pi</m>
+        and an azimuth interval of length at most <m>2\pi</m>. Suppose
+        <m>T(\rho,\phi,\theta)=(\rho\sin\phi\cos\theta,\rho\sin\phi\sin\theta,
+        \rho\cos\phi)</m> covers <m>E=T(U)</m> once except for boundary seams,
+        the poles and the origin. If <m>f</m> is continuous on a neighborhood
+        of <m>E</m>, then
+        <md>\iiint_E f\,dV=\iiint_U
+          f(\rho\sin\phi\cos\theta,\rho\sin\phi\sin\theta,\rho\cos\phi)
+          \rho^2\sin\phi\,d\rho\,d\phi\,d\theta.</md>
+        Those boundary repetitions do not affect the integral. Choose iterated
+        bounds that describe <m>U</m> without repeating the interior.</p></statement>
+    </theorem>
+    <p>We supply the general formula for use. The following derivation proves
+      it for any continuous integrand on a ball. A ball-volume calculation by
+      itself is only a consistency check.</p>
+    <exercise xml:id="c11s4-ex-justify-spherical-integration">
+      <title>Derive the rule on a ball from two planar substitutions</title>
+      <statement><p>Let <m>B_R</m> be the ball of radius <m>R&gt;0</m>,
+        and let <m>f</m> be continuous on a neighborhood of it. The supplied
+        cylindrical rule and slicing give
+        <md>\iiint_{B_R}f\,dV=\int_0^{2\pi}\int_0^R
+          \int_{-\sqrt{R^2-r^2}}^{\sqrt{R^2-r^2}}
+          f(r\cos\theta,r\sin\theta,z)\,r\,dz\,dr\,d\theta.</md>
+        At fixed <m>\theta</m>, the inner integral covers the right half-disk
+        <m>r\ge0,\ r^2+z^2\le R^2</m>. Apply the planar polar theorem there
+        with <m>r=\rho\cos\psi,\ z=\rho\sin\psi</m>,
+        <m>0\le\rho\le R</m> and <m>-\pi/2\le\psi\le\pi/2</m>.
+        Then substitute <m>\psi=\pi/2-\phi</m>. Explain the reversal of
+        bounds and obtain the spherical formula for this ball. Finally set
+        <m>f=1</m> to check its volume.</p></statement>
+      <solution><p>Planar polar substitution contributes the unsigned factor
+        <m>\rho</m>, while the old factor <m>r</m> becomes
+        <m>\rho\cos\psi</m>. Thus the integral is
+        <md>\int_0^{2\pi}\int_{-\pi/2}^{\pi/2}\int_0^R
+          f(\rho\cos\psi\cos\theta,\rho\cos\psi\sin\theta,\rho\sin\psi)
+          \rho^2\cos\psi\,d\rho\,d\psi\,d\theta.</md>
+        Since <m>d\psi=-d\phi</m> and the endpoints become <m>\pi,0</m>,
+        reversing those endpoints absorbs the minus sign. Also
+        <m>\cos\psi=\sin\phi</m> and <m>\sin\psi=\cos\phi</m>.
+        This yields the stated spherical integral over
+        <m>0\le\rho\le R,\ 0\le\phi\le\pi,\ 0\le\theta\le2\pi</m>,
+        for every such <m>f</m>. With <m>f=1</m> it is
+        <m>(2\pi)(2)(R^3/3)=4\pi R^3/3</m>.
+        No assertion about decomposing every other region was used.</p></solution>
+    </exercise>
+    <aside xml:id="c11s4-optional-oriented-volume">
+      <title>Optional: oriented-volume connection and the spherical sign</title>
+      <p>Use the pointwise triple-covector determinant from
+        <xref ref="c11s3-optional-oriented-volume" text="title"/>.
+        Here <m>dx,dy,dz</m> are the differentials of the three coordinate
+        functions on the same <m>(\rho,\phi,\theta)</m> parameter domain.
+        The signed meridional determinant is
+        <md>\frac{\partial(r,z)}{\partial(\rho,\phi)}
+          =\det\begin{pmatrix}\sin\phi&amp;\rho\cos\phi\\
+            \cos\phi&amp;-\rho\sin\phi\end{pmatrix}=-\rho.</md>
+        Appending <m>\theta</m> gives order <m>(r,z,\theta)</m>.
+        Swapping to <m>(r,\theta,z)</m> changes the sign, giving
+        <m>+\rho</m>. The cylindrical Cartesian determinant in that order
+        is <m>r</m>, so composition gives
+        <md>\frac{\partial(x,y,z)}{\partial(\rho,\phi,\theta)}
+          =\rho r=\rho^2\sin\phi,\qquad
+          dx\wedge dy\wedge dz
+          =\rho^2\sin\phi\,d\rho\wedge d\phi\wedge d\theta.</md>
+        Exchanging the two angular variables reverses the signed determinant.
+        Ordinary volume uses its absolute value in either orientation.
+        The order of a scalar iterated integral is a separate choice.</p>
+    </aside>
 
     <example xml:id="c11s4-ex-volume-of-a-ball">
       <title>Volume of a ball</title>

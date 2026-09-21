@@ -1,0 +1,429 @@
+[5-5 title sec-13-line-integrals-of-scalar-functions default_required]
+Line integrals of scalar functions
+
+[7-10 p sec-13-line-integrals-of-scalar-functions default_required]
+A vector field attaches arrows to points. A scalar field attaches numbers. When a
+    curve passes through a scalar field, it collects numbers along its length.
+
+[12-15 p sec-13-line-integrals-of-scalar-functions default_required]
+That idea sounds like ordinary integration, but the domain is no longer an interval.
+    The domain is a curve.
+
+[18-18 title c13s2-subsec-accumulating-density default_required]
+Accumulating density along a curve
+
+[20-27 p c13s2-subsec-accumulating-density default_required]
+A thin copper wire is bent into the upper half of a circle of radius 3. Its
+      shape is
+      x^2+y^2=9, \qquad y\ge0.
+      The wire is not uniform. Its linear density at the point (x,y) is
+      \rho(x,y)=2+\frac{x}{3}
+      grams per centimeter.
+
+[29-32 p c13s2-subsec-accumulating-density default_required]
+The right side of the wire is denser, because x\gt 0. The left side is
+      lighter, because x\lt 0.
+
+[34-39 p c13s2-subsec-accumulating-density default_required]
+Parametrize the upper semicircle by
+      \mathbf r(t)=(3\cos t,3\sin t), \qquad 0\le t\le \pi.
+      Then
+      \rho(\mathbf r(t)) = 2+\frac{3\cos t}{3} = 2+\cos t.
+
+[41-58 p c13s2-subsec-accumulating-density default_required]
+A small change dt sweeps out a small arc length. Since
+      \mathbf r'(t)=(-3\sin t,3\cos t),
+      we have
+      \|\mathbf r'(t)\| = \sqrt{9\sin^2t+9\cos^2t} = 3.
+      So
+      ds=3\,dt.
+      A small piece of wire has mass approximately
+      \rho(\mathbf r(t))\,ds = (2+\cos t)3\,dt.
+      Adding all pieces gives
+      
+        M \amp= \int_0^\pi (2+\cos t)3\,dt
+        \amp= 3\left[2t+\sin t\right]_0^\pi
+        \amp= 6\pi.
+      
+      So the wire has mass
+      \boxed{ 6\pi \text{ grams}. }
+
+[61-61 caption c13s2-fig-scalar-line-integral-semicircle default_required]
+A scalar line integral adds density along the length of a curve.
+
+[63-86 latex-image c13s2-fig-scalar-line-integral-semicircle default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            \draw[->] (-4.1,0) -- (4.4,0) node[right] {\(x\)};
+            \draw[->] (0,-0.4) -- (0,4.3) node[above] {\(y\)};
+
+            \draw[gray!25, step=1] (-3,-0.2) grid (3,4);
+
+            \draw[very thick, domain=0:180, samples=120, variable=\t]
+                plot ({3*cos(\t)}, {3*sin(\t)});
+
+            \foreach \a in {25,55,85,115,145} {
+                \draw[red!60!black, thick]
+                    ({3*cos(\a)},{3*sin(\a)})
+                    -- ({3*cos(\a+8)},{3*sin(\a+8)});
+            }
+
+            \fill (3,0) circle (2pt);
+            \fill (-3,0) circle (2pt);
+
+            \node[below] at (3,0) {\(t=0\)};
+            \node[below] at (-3,0) {\(t=\pi\)};
+            \node at (0,-0.9) {\(\rho(x,y)=2+\frac{x}{3}\)};
+        \end{tikzpicture}
+
+[90-94 p c13s2-subsec-accumulating-density default_required]
+This is the seed of the definition. We multiply the scalar value on the curve by a
+      tiny length element and add:
+      \sum \rho\,\Delta s.
+
+[98-98 title c13s2-subsec-arc-length-element default_required]
+The arc length element ds
+
+[100-104 p c13s2-subsec-arc-length-element default_required]
+The symbol
+      ds
+      means a tiny piece of arc length.
+
+[106-119 p c13s2-subsec-arc-length-element default_required]
+If a curve is parametrized by
+      \mathbf r(t)=(x(t),y(t)),
+      then over a small time interval \Delta t, the displacement is approximately
+      \mathbf r'(t)\Delta t.
+      Its length is approximately
+      \|\mathbf r'(t)\|\Delta t.
+      So
+      \boxed{ ds=\|\mathbf r'(t)\|\,dt. }
+      In the plane,
+      \boxed{ ds= \sqrt{\left(\frac{dx}{dt}\right)^2+ \left(\frac{dy}{dt}\right)^2}\,dt. }
+      In space,
+      \boxed{ ds= \sqrt{\left(\frac{dx}{dt}\right)^2+ \left(\frac{dy}{dt}\right)^2+ \left(\frac{dz}{dt}\right)^2}\,dt. }
+
+[121-126 p c13s2-subsec-arc-length-element default_required]
+This is the same speed from . Arc length is
+      distance traveled:
+      L=\int_a^b \|\mathbf r'(t)\|\,dt.
+      A scalar line integral simply weights this distance by a scalar field.
+
+[129-129 title c13s2-def-line-integral-scalar-function default_required]
+Line integral of a scalar function
+
+[131-137 p c13s2-def-line-integral-scalar-function default_required]
+Let C be a piecewise smooth curve parametrized by
+          \mathbf r(t),\qquad a\le t\le b.
+          Let f be a continuous scalar function on C. The line integral
+          of f with respect to arc length is
+          \boxed{ \int_C f\,ds = \int_a^b f(\mathbf r(t))\,\|\mathbf r'(t)\|\,dt. }
+
+[141-145 p c13s2-subsec-arc-length-element default_required]
+The notation
+      \int_C f\,ds
+      says: add the values of f along the curve, weighted by length.
+
+[147-153 p c13s2-subsec-arc-length-element default_required]
+If
+      f=1,
+      then
+      \int_C 1\,ds = \int_a^b \|\mathbf r'(t)\|\,dt,
+      which is the length of the curve.
+
+[156-156 title checkpoint-13-2-speed-factor-meaning default_required]
+Why multiply by speed?
+
+[158-162 p checkpoint-13-2-speed-factor-meaning default_required]
+The factor \|\mathbf r'(t)\| turns dt into a piece of arc length
+          ds. In plain words, what does this factor measure about how the curve is
+          being traced, and why would leaving it out give the wrong total?
+
+[165-169 p checkpoint-13-2-speed-factor-meaning hint]
+Think about the difference between clock time dt and distance
+          on the wire. If the parametrization speeds up, one second of t covers
+          more length.
+
+[175-175 title c13s2-subsec-mass-of-a-wire default_required]
+Mass of a wire
+
+[177-177 p c13s2-subsec-mass-of-a-wire default_required]
+A scalar line integral is often a mass integral.
+
+[180-180 title c13s2-ex-straight-wire-in-space default_required]
+A straight wire in space
+
+[182-192 p c13s2-ex-straight-wire-in-space default_required]
+A wire runs from
+          (0,0,0)
+          to
+          (2,2,1).
+          Parametrize it by
+          \mathbf r(t)=(t,t,t/2), \qquad 0\le t\le2.
+          Suppose its density is
+          \rho(x,y,z)=1+z
+          kilograms per meter.
+
+[193-210 p c13s2-ex-straight-wire-in-space default_required]
+Along the wire,
+          \rho(\mathbf r(t))=1+\frac t2.
+          Also,
+          \mathbf r'(t)=\left(1,1,\frac12\right),
+          so
+          \|\mathbf r'(t)\| = \sqrt{1+1+\frac14} = \frac32.
+          Therefore
+          
+            M \amp= \int_C \rho\,ds
+            \amp= \int_0^2 \left(1+\frac t2\right)\frac32\,dt
+            \amp= \frac32\left[t+\frac{t^2}{4}\right]_0^2
+            \amp= \frac32(2+1)
+            \amp= \frac92.
+          
+          So the wire has mass
+          \boxed{ \frac92 \text{ kilograms}. }
+
+[214-214 p c13s2-subsec-mass-of-a-wire default_required]
+The computation has three steps:
+
+[216-223 md c13s2-subsec-mass-of-a-wire default_required]
+\begin{array}{c|c}
+      \text{Step} \amp \text{Action} \\ \hline
+      1 \amp \text{Parametrize the curve: }\mathbf r(t).\\[1mm]
+      2 \amp \text{Evaluate the scalar field on the curve: }f(\mathbf r(t)).\\[1mm]
+      3 \amp \text{Multiply by speed: }\|\mathbf r'(t)\|\,dt.
+      \end{array}
+
+[225-230 p c13s2-subsec-mass-of-a-wire default_required]
+The last step is the one students most often forget. The parameter t is not
+      necessarily arc length. The factor
+      \|\mathbf r'(t)\|
+      converts dt into length.
+
+[233-233 title checkpoint-13-2-parameter-not-arc-length default_required]
+Is t the same as distance?
+
+[235-239 p checkpoint-13-2-parameter-not-arc-length default_required]
+The text warns that the parameter t is not necessarily arc length.
+          What would have to be true about a parametrization for t itself to measure
+          distance along the curve, so that the speed factor became simply 1?
+
+[242-245 p checkpoint-13-2-parameter-not-arc-length hint]
+Ask what value \|\mathbf r'(t)\| would need to have at every instant. A
+          curve traced at unit speed has a special name.
+
+[250-250 title c13s2-ex-same-segment-different-clock default_required]
+The same segment with a different clock
+
+[252-269 p c13s2-ex-same-segment-different-clock default_required]
+The same line segment from (0,0,0) to (2,2,1) can also be written as
+          \mathbf q(u)=(2u,2u,u), \qquad 0\le u\le1.
+          Along this parametrization,
+          \rho(\mathbf q(u))=1+u,
+          and
+          \mathbf q'(u)=(2,2,1),
+          so
+          \|\mathbf q'(u)\|=3.
+          The mass is
+          
+            M \amp= \int_0^1 (1+u)3\,du
+            \amp= 3\left[u+\frac{u^2}{2}\right]_0^1
+            \amp= \frac92.
+          
+          The answer is the same. The new clock moves along the same wire over a different
+          parameter interval, and the speed factor corrects for that.
+
+[275-275 title c13s2-subsec-reparametrization-invariance default_required]
+Why parametrization does not change the value
+
+[277-280 p c13s2-subsec-reparametrization-invariance default_required]
+The last example was not an accident. A scalar line integral depends on the curve as
+      a traced geometric object, not on the particular clock used to trace it.
+
+[283-283 title c13s2-thm-scalar-line-integral-reparametrization default_required]
+Scalar line integrals are unchanged by reparametrization
+
+[285-295 p c13s2-thm-scalar-line-integral-reparametrization default_required]
+Let C be a curve parametrized by
+          \mathbf r(t),\qquad a\le t\le b.
+          Let
+          t=\phi(u),\qquad \alpha\le u\le \beta,
+          where \phi is continuously differentiable and traces the interval
+          [a,b] exactly once, either forward or backward. Then
+          \mathbf q(u)=\mathbf r(\phi(u))
+          parametrizes the same curve once, and
+          \boxed{ \int_\alpha^\beta f(\mathbf q(u))\|\mathbf q'(u)\|\,du = \int_a^b f(\mathbf r(t))\|\mathbf r'(t)\|\,dt. }
+
+[300-311 p c13s2-subsec-reparametrization-invariance default_required]
+By the chain rule,
+        \mathbf q'(u)=\mathbf r'(\phi(u))\phi'(u).
+        Therefore
+        \|\mathbf q'(u)\| = \|\mathbf r'(\phi(u))\|\,|\phi'(u)|.
+        So
+        f(\mathbf q(u))\|\mathbf q'(u)\| = f(\mathbf r(\phi(u)))\|\mathbf r'(\phi(u))\|\,|\phi'(u)|.
+        If \phi traces the interval forward, then \phi'(u)\ge0 except possibly
+        at isolated points, and this is the ordinary substitution rule. If \phi
+        traces the interval backward, the absolute value reverses the sign that would have
+        come from dt. Either way, length is positive, and the same total is obtained.
+
+[314-317 p c13s2-subsec-reparametrization-invariance default_required]
+This is why orientation does not affect scalar line integrals. If you walk along a
+      wire from left to right or right to left, its mass is the same.
+
+[320-320 title checkpoint-13-2-orientation-irrelevant default_required]
+Why doesn't direction matter?
+
+[322-327 p checkpoint-13-2-orientation-irrelevant default_required]
+A scalar line integral such as mass gives the same value whether the curve is
+          traced one way or the other, yet later in the chapter work will change
+          sign when you reverse direction. What is it about adding up f\,ds that
+          makes orientation simply not register?
+
+[330-333 p checkpoint-13-2-orientation-irrelevant hint]
+Notice that ds is always a positive length, never a signed displacement.
+          Reversing the trace reorders the pieces but does not turn any of them negative.
+
+[337-337 p c13s2-subsec-reparametrization-invariance default_required]
+But the theorem contains the phrase exactly once for a reason.
+
+[340-340 title c13s2-ex-same-image-different-multiplicity default_required]
+Same image, different multiplicity
+
+[342-349 p c13s2-ex-same-image-different-multiplicity default_required]
+Let C be the unit circle and let
+          f(x,y)=1.
+          Tracing the circle once by
+          \mathbf r(t)=(\cos t,\sin t), \qquad 0\le t\le2\pi,
+          gives
+          \int_C 1\,ds = \int_0^{2\pi}1\,dt = 2\pi.
+
+[350-357 p c13s2-ex-same-image-different-multiplicity default_required]
+Tracing the same geometric circle twice by
+          \mathbf q(t)=(\cos t,\sin t), \qquad 0\le t\le4\pi,
+          gives
+          \int 1\,ds = \int_0^{4\pi}1\,dt = 4\pi.
+          The image is the same set of points, but the traced curve is not the same. The
+          second parametrization counts the wire twice.
+
+[361-364 p c13s2-subsec-reparametrization-invariance default_required]
+The phrase piecewise smooth also matters. It rules out curves whose length is
+      not controlled by ordinary calculus.
+
+[367-367 title c13s2-ex-continuous-curve-too-much-length default_required]
+A continuous curve can have too much length
+
+[369-382 p c13s2-ex-continuous-curve-too-much-length default_required]
+Define
+          
+            \mathbf r(t)=
+            \begin{cases}
+            (t,\;t\sin(1/t)), \amp 0\lt t\le1,\\
+            (0,0), \amp t=0.
+            \end{cases}
+          
+          This curve is continuous, but it wiggles infinitely often near the origin. Its
+          length is infinite. Therefore
+          \int_C 1\,ds
+          does not give a finite number.
+
+[383-388 p c13s2-ex-continuous-curve-too-much-length default_required]
+So continuity alone is not enough for the line integrals in this chapter.
+          Piecewise smooth curves keep the geometry tame enough that arc length can be
+          computed by
+          \int \|\mathbf r'(t)\|\,dt.
+
+[392-392 p c13s2-subsec-reparametrization-invariance default_required]
+The scalar field also needs to be reasonable along the curve.
+
+[395-395 title c13s2-ex-density-too-wild default_required]
+A density too wild to integrate
+
+[397-411 p c13s2-ex-density-too-wild default_required]
+On the line segment
+          \mathbf r(t)=(t,0), \qquad 0\le t\le1,
+          define
+          
+            f(x,y)=
+            \begin{cases}
+            1, \amp x \text{ rational},\\
+            0, \amp x \text{ irrational}.
+            \end{cases}
+          
+          Every subinterval contains rational and irrational x-values. Riemann sums
+          can be forced toward 1 or toward 0, depending on sample points.
+          There is no single settled value.
+
+[412-415 p c13s2-ex-density-too-wild default_required]
+This is why the definition assumes f is continuous on the curve. Continuous
+          densities do not jump between two values at every scale.
+
+[421-421 title c13s2-subsec-average-value-curve default_required]
+Average value along a curve
+
+[423-427 p c13s2-subsec-average-value-curve default_required]
+For a scalar function on a region, average value means
+      \frac{\text{total}}{\text{size of domain}}.
+      Along a curve, the size of the domain is length.
+
+[430-430 title c13s2-def-average-value-curve default_required]
+Average value along a curve
+
+[432-437 p c13s2-def-average-value-curve default_required]
+Let C have length
+          L=\int_C 1\,ds.
+          The average value of a scalar function f along C is
+          \boxed{ f_{\mathrm{avg}} = \frac{1}{L}\int_C f\,ds. }
+
+[442-442 title c13s2-ex-average-density-semicircular-wire default_required]
+Average density on the semicircular wire
+
+[444-455 p c13s2-ex-average-density-semicircular-wire default_required]
+For the upper semicircle of radius 3,
+          L=3\pi.
+          Earlier we found
+          \int_C \rho\,ds=6\pi.
+          Therefore the average density is
+          \rho_{\mathrm{avg}} = \frac{1}{3\pi}(6\pi) = 2.
+          This makes sense. The density
+          \rho(x,y)=2+\frac{x}{3}
+          is larger on the right side and smaller on the left side. The upper semicircle is
+          symmetric, so the x/3 part averages to 0.
+
+[460-460 title c13s2-ex-average-temperature-cable default_required]
+Average temperature along a straight cable
+
+[462-486 p c13s2-ex-average-temperature-cable default_required]
+A cable runs from
+          (0,0)
+          to
+          (4,3).
+          The temperature on the floor is
+          T(x,y)=18+x-\frac{y}{3}.
+          Parametrize the cable by
+          \mathbf r(t)=(4t,3t), \qquad 0\le t\le1.
+          Then
+          T(\mathbf r(t)) = 18+4t-\frac{3t}{3} = 18+3t.
+          Also,
+          \|\mathbf r'(t)\|=\|(4,3)\|=5.
+          The length is
+          L=\int_0^1 5\,dt=5.
+          The average temperature is
+          
+            T_{\mathrm{avg}} \amp= \frac{1}{5}\int_0^1 (18+3t)5\,dt
+            \amp= \int_0^1(18+3t)\,dt
+            \amp= 18+\frac32
+            \amp= \frac{39}{2}.
+          
+          So the average temperature along the cable is
+          \boxed{ 19.5^\circ\text{C}. }
+
+[490-493 p c13s2-subsec-average-value-curve default_required]
+Scalar line integrals add quantities that do not care which way the curve is
+      traveled. Mass, length, and average temperature are unchanged if we reverse direction.
+
+[495-503 p c13s2-subsec-average-value-curve default_required]
+A force field is different. If a force helps you move one way, it resists you in the
+      opposite direction. To measure work, we cannot multiply by the unsigned length
+      ds. We must measure how much of the force points along the actual displacement.
+      That is where
+      \mathbf F\cdot d\mathbf r
+      enters, and it will lead us directly to the 1-form
+      P\,dx+Q\,dy+R\,dz.

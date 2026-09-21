@@ -1,0 +1,694 @@
+[5-5 title sec-5-derivatives-and-integrals-of-vector-valued-functions default_required]
+Derivatives and integrals of vector-valued functions
+
+[8-13 p sec-5-derivatives-and-integrals-of-vector-valued-functions default_required]
+made \mathbf r(t) a position record. A
+    position record becomes useful when we compare nearby times. The difference
+    \mathbf r(t+h)-\mathbf r(t)
+    is a displacement. Dividing by h gives average velocity over a short time interval.
+
+[15-15 p sec-5-derivatives-and-integrals-of-vector-valued-functions default_required]
+Then the old single-variable idea returns: let the time interval shrink.
+
+[20-20 title c5s2-subsec-velocity-difference-quotient default_required]
+Velocity from a difference quotient
+
+[22-26 p c5s2-subsec-velocity-difference-quotient default_required]
+A small drone flies through a warehouse. Its position, in meters, is
+      \mathbf r(t)=\left(t,\;t^2,\;3-\frac{t}{2}\right),
+      where t is measured in seconds.
+
+[28-42 p c5s2-subsec-velocity-difference-quotient default_required]
+At t=1,
+      \mathbf r(1)=\left(1,1,\frac52\right).
+      At time 1+h,
+      \mathbf r(1+h)=\left(1+h,\;(1+h)^2,\;3-\frac{1+h}{2}\right).
+      The displacement from t=1 to t=1+h is
+      
+        \mathbf r(1+h)-\mathbf r(1) \amp= \left(h,\;(1+h)^2-1,\;-\frac{h}{2}\right)
+        \amp= \left(h,\;2h+h^2,\;-\frac{h}{2}\right).
+      
+      The average velocity over that interval is
+      \frac{\mathbf r(1+h)-\mathbf r(1)}{h}=\left(1,\;2+h,\;-\frac12\right).
+      Letting h\to0, we get the instantaneous velocity at t=1:
+      \left(1,2,-\frac12\right).
+
+[44-44 p c5s2-subsec-velocity-difference-quotient default_required]
+This vector points in the direction the drone is moving at that instant.
+
+[47-47 title checkpoint-5-2-derivative-points-along-path default_required]
+Why does \mathbf r'(t) point along the path?
+
+[49-56 p checkpoint-5-2-derivative-points-along-path default_required]
+Suppose \mathbf r'(t)\ne\mathbf0. The derivative is a limit of difference quotients
+          \frac{\mathbf r(t+h)-\mathbf r(t)}{h}. Each numerator
+          \mathbf r(t+h)-\mathbf r(t) is a displacement vector connecting two nearby
+          points on the curve. As h\to 0^+, what happens to the direction of that
+          displacement vector, and why does this explain that \mathbf r'(t) ends up
+          pointing along the path rather than off in some other direction?
+
+[59-64 p checkpoint-5-2-derivative-points-along-path hint]
+Picture the two points \mathbf r(t) and \mathbf r(t+h) sliding toward
+          each other as h shrinks. The chord between them is a secant of the curve;
+          think about what a secant becomes in the limit. Dividing by the positive number h only rescales the
+          vector, it does not turn it.
+
+[69-69 title c5s2-def-derivative-vector-valued-function default_required]
+Derivative of a vector-valued function
+
+[71-77 p c5s2-def-derivative-vector-valued-function default_required]
+The derivative of
+          \mathbf r(t)
+          at t=a is
+          \boxed{\mathbf r'(a)=\lim_{h\to0}\frac{\mathbf r(a+h)-\mathbf r(a)}{h}}
+          when this limit exists.
+
+[81-87 p c5s2-subsec-velocity-difference-quotient default_required]
+When \mathbf r(t) is a position vector, the derivative
+      \mathbf v(t)=\mathbf r'(t)
+      is called the velocity. The derivative of velocity,
+      \mathbf a(t)=\mathbf v'(t)=\mathbf r''(t),
+      is called the acceleration.
+
+[89-97 p c5s2-subsec-velocity-difference-quotient default_required]
+For the drone,
+      \mathbf r(t)=\left(t,\;t^2,\;3-\frac{t}{2}\right),
+      so we expect
+      \mathbf v(t)=\left(1,2t,-\frac12\right),
+      and
+      \mathbf a(t)=(0,2,0).
+      We will justify the component-by-component rule next.
+
+[101-101 title c5s2-subsec-differentiating-component-by-component default_required]
+Differentiating component by component
+
+[103-121 p c5s2-subsec-differentiating-component-by-component default_required]
+A helix gives a clean example. Let
+      \mathbf r(t)=\left(2\cos t,\;2\sin t,\;\frac{t}{3}\right).
+      The component functions are
+      x(t)=2\cos t,\qquad y(t)=2\sin t,\qquad z(t)=\frac{t}{3}.
+      Differentiating each one gives
+      x'(t)=-2\sin t,
+      y'(t)=2\cos t,
+      and
+      z'(t)=\frac13.
+      So
+      \mathbf r'(t)=\left(-2\sin t,\;2\cos t,\;\frac13\right).
+      At t=0,
+      \mathbf r(0)=(2,0,0),
+      and
+      \mathbf r'(0)=\left(0,2,\frac13\right).
+      The point is at the right side of the circle and is moving in the positive
+      y-direction while also rising.
+
+[124-124 caption c5s2-fig-helix-tangent-vector default_required]
+The derivative vector points tangent to the path. (Interactive: drag to rotate, scroll to zoom.)
+
+[126-141 asymptote c5s2-fig-helix-tangent-vector default_required]
+// 3-D interactive (WebGL) figure.
+        import graph3;
+        size(8.5cm);
+        currentprojection=orthographic(5,3,2.4);
+        real a=2;
+        path3 helix=graph(new triple(real t){return (a*cos(t), a*sin(t), t/3);}, 0, 3.5pi, 220, operator ..);
+        draw(helix, blue+linewidth(1.1pt));
+        draw(circle((0,0,0), a, (0,0,1)), gray(0.6)+dashed);
+        real t0=1.2; triple P=(a*cos(t0), a*sin(t0), t0/3);
+        triple v=(-a*sin(t0), a*cos(t0), 1.0/3);
+        dot(P); label("$P$", P, SW);
+        draw(P--(P+v), red+linewidth(1.3pt), Arrow3); label("$\mathbf r'(t)$", P+v, N);
+        draw(O--(3,0,0),gray,Arrow3); draw(O--(0,3,0),gray,Arrow3); draw(O--(0,0,4.2),gray,Arrow3);
+        label("$x$",(3,0,0),S); label("$y$",(0,3,0),E); label("$z$",(0,0,4.2),N);
+
+[145-145 p c5s2-subsec-differentiating-component-by-component default_required]
+The rule is exactly what the example showed.
+
+[148-148 title c5s2-thm-componentwise-differentiation default_required]
+Componentwise differentiation
+
+[150-157 p c5s2-thm-componentwise-differentiation default_required]
+Let
+          \mathbf r(t)=\bigl(r_1(t),r_2(t),\ldots,r_n(t)\bigr).
+          Then \mathbf r'(a) exists if and only if each component derivative
+          r_i'(a)
+          exists. In that case,
+          \boxed{\mathbf r'(a)=\bigl(r_1'(a),r_2'(a),\ldots,r_n'(a)\bigr).}
+
+[160-165 p c5s2-thm-componentwise-differentiation default_required]
+Use the definition:
+          \frac{\mathbf r(a+h)-\mathbf r(a)}{h}=\left(\frac{r_1(a+h)-r_1(a)}{h},\ldots,\frac{r_n(a+h)-r_n(a)}{h}\right).
+          A vector limit exists exactly when all component limits exist. Those component limits
+          are the ordinary derivatives r_i'(a).
+
+[169-172 p c5s2-subsec-differentiating-component-by-component default_required]
+The hypothesis that the component derivatives exist is real. A continuous curve can still
+      fail to have a velocity.
+
+[175-175 title c5s2-ex-sharp-corner-no-velocity default_required]
+A sharp corner has no velocity vector
+
+[177-187 p c5s2-ex-sharp-corner-no-velocity default_required]
+Let
+          \mathbf r(t)=(|t|,t).
+          This curve is continuous at t=0, but
+          \frac{\mathbf r(h)-\mathbf r(0)}{h}=\left(\frac{|h|}{h},1\right).
+          If h>0, this quotient is
+          (1,1).
+          If h<0, it is
+          (-1,1).
+          The two one-sided limits do not agree. Therefore \mathbf r'(0) does not exist.
+
+[188-191 p c5s2-ex-sharp-corner-no-velocity default_required]
+Geometrically, the curve has a corner at the origin. The point arrives from one
+          direction and leaves in another, so there is no single tangent velocity at that instant.
+
+[195-199 p c5s2-subsec-differentiating-component-by-component default_required]
+At endpoints of a time interval, we use the same caution as in single-variable calculus. A
+      curve defined only for t\ge0 may have a right-hand velocity at t=0, but not a
+      two-sided derivative there unless the curve is defined on both sides.
+
+[203-203 title c5s2-subsec-tangent-lines-motion-path default_required]
+Tangent lines to a motion path
+
+[205-215 p c5s2-subsec-tangent-lines-motion-path default_required]
+If
+      \mathbf r'(a)\ne\mathbf 0,
+      then the tangent line to the curve at time a is the line through
+      \mathbf r(a)
+      in the direction
+      \mathbf r'(a).
+      Thus
+      \boxed{\mathbf L(s)=\mathbf r(a)+s\mathbf r'(a)}
+      is a parametrization of the tangent line.
+
+[218-218 title c5s2-ex-tangent-line-drone-path default_required]
+A tangent line to a drone path
+
+[220-231 p c5s2-ex-tangent-line-drone-path default_required]
+For
+          \mathbf r(t)=\left(t,\;t^2,\;3-\frac{t}{2}\right),
+          we found
+          \mathbf r(1)=\left(1,1,\frac52\right)
+          and
+          \mathbf r'(1)=\left(1,2,-\frac12\right).
+          So the tangent line at t=1 is
+          \mathbf L(s)=\left(1,1,\frac52\right)+s\left(1,2,-\frac12\right).
+          In coordinates,
+          x=1+s,\qquad y=1+2s,\qquad z=\frac52-\frac{s}{2}.
+
+[235-239 p c5s2-subsec-tangent-lines-motion-path default_required]
+The velocity vector gives the instantaneous direction of motion, not merely the direction
+      of the curve as a set. If the same geometric curve is traced with a different clock, the
+      velocity vector changes.
+
+[242-242 title c5s2-ex-same-circle-different-speeds default_required]
+Same circle, different speeds
+
+[244-255 p c5s2-ex-same-circle-different-speeds default_required]
+Let
+          \mathbf r_1(t)=(\cos t,\sin t)
+          and
+          \mathbf r_2(t)=(\cos 2t,\sin 2t).
+          Both trace the unit circle. But
+          \mathbf r_1'(t)=(-\sin t,\cos t),
+          while
+          \mathbf r_2'(t)=(-2\sin 2t,2\cos 2t).
+          The second velocity vector has twice the length. The same circle is being traced twice
+          as fast.
+
+[259-263 p c5s2-subsec-tangent-lines-motion-path default_required]
+The length of the velocity vector is the speed:
+      \text{speed}=\|\mathbf r'(t)\|.
+      Speed will become the key to arc length in .
+
+[266-266 title checkpoint-5-2-tangent-direction-and-length default_required]
+What does the tangent vector's direction and length tell you?
+
+[268-275 p checkpoint-5-2-tangent-direction-and-length default_required]
+The tangent line at time a uses \mathbf r'(a) as its direction, so
+          \mathbf r'(t) is tangent to the curve. Yet two motions can trace the very same
+          curve while their velocity vectors differ in length, as the unit circle examples above
+          showed. Explain in your own words why the direction of \mathbf r'(t)
+          determines the tangent line to the curve, with its sign recording the chosen direction of travel, while the length \|\mathbf r'(t)\|
+          is instead a feature of how the curve is being traced.
+
+[278-283 p checkpoint-5-2-tangent-direction-and-length hint]
+Imagine driving along a fixed road. The road decides which way your car is pointing at
+          each spot, but you choose how fast to go. Which of those two things is "direction" and
+          which is "length"? Re-tracing the same circle twice as fast multiplies the velocity by
+          a constant without rotating it.
+
+[289-289 title c5s2-subsec-differentiation-rules default_required]
+Differentiation rules
+
+[291-294 p c5s2-subsec-differentiation-rules default_required]
+Since derivatives are computed component by component, the familiar single-variable rules
+      return almost unchanged.
+
+[296-296 p c5s2-subsec-differentiation-rules default_required]
+Before listing them, here is one example.
+
+[299-299 title c5s2-ex-dot-product-changing-with-time default_required]
+A dot product changing with time
+
+[301-308 p c5s2-ex-dot-product-changing-with-time default_required]
+Let
+          \mathbf r(t)=(t,t^2,0),\qquad \mathbf s(t)=(1,\cos t,\sin t).
+          Then
+          \mathbf r(t)\cdot\mathbf s(t)=t+t^2\cos t.
+          Differentiating directly,
+          \frac{d}{dt}\bigl(\mathbf r(t)\cdot\mathbf s(t)\bigr)=1+2t\cos t-t^2\sin t.
+
+[309-320 p c5s2-ex-dot-product-changing-with-time default_required]
+Now compute using a product rule:
+          \mathbf r'(t)=(1,2t,0),
+          \mathbf s'(t)=(0,-\sin t,\cos t).
+          Then
+          
+            \mathbf r'(t)\cdot\mathbf s(t)+\mathbf r(t)\cdot\mathbf s'(t) \amp= (1,2t,0)\cdot(1,\cos t,\sin t)
+            \amp\quad +(t,t^2,0)\cdot(0,-\sin t,\cos t)
+            \amp= 1+2t\cos t-t^2\sin t.
+          
+          The ordinary product rule is still there, but now it is written with dot products.
+
+[325-325 title c5s2-thm-differentiation-rules default_required]
+Differentiation rules for vector-valued functions
+
+[327-337 p c5s2-thm-differentiation-rules default_required]
+Suppose \mathbf r(t) and \mathbf s(t) are differentiable vector-valued
+          functions, and f(t) is a differentiable real-valued function. Then
+          \frac{d}{dt}\bigl(\mathbf r+\mathbf s\bigr)=\mathbf r'+\mathbf s',
+          \frac{d}{dt}\bigl(f\mathbf r\bigr)=f'\mathbf r+f\mathbf r',
+          and
+          \frac{d}{dt}\bigl(\mathbf r\cdot\mathbf s\bigr)=\mathbf r'\cdot\mathbf s+\mathbf r\cdot\mathbf s'.
+          If \mathbf r(t) and \mathbf s(t) are functions into \mathbb R^3,
+          then
+          \frac{d}{dt}\bigl(\mathbf r\times\mathbf s\bigr)=\mathbf r'\times\mathbf s+\mathbf r\times\mathbf s'.
+
+[340-352 p c5s2-thm-differentiation-rules default_required]
+Each rule follows by writing the vectors in components and applying the ordinary
+          single-variable differentiation rules. The dot product rule, for example, is just the
+          product rule applied to each term:
+          \mathbf r\cdot\mathbf s=r_1s_1+\cdots+r_ns_n.
+          Then
+          
+            \frac{d}{dt}(\mathbf r\cdot\mathbf s) \amp= (r_1's_1+r_1s_1')+\cdots+(r_n's_n+r_ns_n')
+            \amp= \mathbf r'\cdot\mathbf s+\mathbf r\cdot\mathbf s'.
+          
+          The cross product rule is checked the same way from the component formula for
+          \mathbf r\times\mathbf s.
+
+[356-361 p c5s2-subsec-differentiation-rules default_required]
+The differentiability assumptions matter. If a component has a corner, as in
+      |t|,
+      then the corresponding vector function may fail to have a derivative, and the rules above
+      have nothing to apply to at that time.
+
+[365-365 title c5s2-subsec-integrating-vector-valued-functions default_required]
+Integrating vector-valued functions
+
+[367-372 p c5s2-subsec-integrating-vector-valued-functions default_required]
+Differentiation takes us from position to velocity:
+      \mathbf r(t)\longmapsto \mathbf r'(t).
+      Integration goes the other way. It adds many tiny velocity vectors to recover a net
+      displacement.
+
+[374-387 p c5s2-subsec-integrating-vector-valued-functions default_required]
+Suppose a drifting boat has velocity
+      \mathbf v(t)=(2,\cos t,3t^2),\qquad 0\le t\le\pi.
+      The displacement from t=0 to t=\pi is
+      \int_0^\pi \mathbf v(t)\,dt.
+      Compute component by component:
+      
+        \int_0^\pi (2,\cos t,3t^2)\,dt \amp= \left(\int_0^\pi 2\,dt,\;\int_0^\pi \cos t\,dt,\;\int_0^\pi 3t^2\,dt\right)
+        \amp= \left(2\pi,\;\sin t\bigg|_0^\pi,\;t^3\bigg|_0^\pi\right)
+        \amp= (2\pi,0,\pi^3).
+      
+      The boat's net displacement is
+      (2\pi,0,\pi^3).
+
+[390-390 title c5s2-def-integral-vector-valued-function default_required]
+Integral of a vector-valued function
+
+[392-398 p c5s2-def-integral-vector-valued-function default_required]
+If
+          \mathbf v(t)=\bigl(v_1(t),v_2(t),\ldots,v_n(t)\bigr),
+          then
+          \boxed{\int_a^b \mathbf v(t)\,dt=\left(\int_a^b v_1(t)\,dt,\;\int_a^b v_2(t)\,dt,\;\ldots,\;\int_a^b v_n(t)\,dt\right)}
+          whenever the component integrals exist.
+
+[402-408 p c5s2-subsec-integrating-vector-valued-functions default_required]
+For an indefinite integral,
+      \int \mathbf v(t)\,dt
+      means a vector-valued antiderivative:
+      \mathbf R'(t)=\mathbf v(t).
+      The constant of integration is now a constant vector.
+
+[411-411 title checkpoint-5-2-integrating-velocity-and-vector-constant default_required]
+What does integrating velocity recover, and why a whole vector \mathbf C?
+
+[413-419 p checkpoint-5-2-integrating-velocity-and-vector-constant default_required]
+When you integrate a velocity \mathbf v(t), the result is again a vector. In
+          words, what quantity does this integral recover, and how does that meaning explain why
+          the constant of integration must be a whole vector \mathbf C rather than a single
+          number? Think about what kind of information you must supply to pin down the actual
+          motion.
+
+[422-427 p checkpoint-5-2-integrating-velocity-and-vector-constant hint]
+Antidifferentiating each component leaves one unknown number per component, and there is
+          a separate one in each coordinate direction. What single object do you get when you
+          collect (C_1,C_2,C_3) together? Geometrically, knowing the velocity tells you the
+          shape of the trip but not where it began.
+
+[432-432 title c5s2-ex-vector-antiderivative default_required]
+A vector antiderivative
+
+[434-442 p c5s2-ex-vector-antiderivative default_required]
+Let
+          \mathbf v(t)=(6t,\;e^t,\;\cos t).
+          Then
+          \int \mathbf v(t)\,dt=(3t^2,\;e^t,\;\sin t)+\mathbf C,
+          where
+          \mathbf C=(C_1,C_2,C_3)
+          is a constant vector.
+
+[446-449 p c5s2-subsec-integrating-vector-valued-functions default_required]
+The condition that the component integrals exist is not decoration. If even one component
+      fails to have an ordinary definite integral, then the vector integral fails.
+
+[452-452 title c5s2-ex-one-bad-component default_required]
+One bad component breaks the vector integral
+
+[454-462 p c5s2-ex-one-bad-component default_required]
+The function
+          \mathbf v(t)=\left(\frac1t,0\right)
+          is not bounded near t=0. The ordinary integral
+          \int_0^1 \frac1t\,dt
+          does not exist as a finite definite integral. Therefore
+          \int_0^1 \left(\frac1t,0\right)\,dt
+          does not exist as an ordinary vector integral.
+
+[463-463 p c5s2-ex-one-bad-component default_required]
+A vector integral is only as well behaved as its components.
+
+[469-469 title c5s2-subsec-fundamental-theorem-vector-valued default_required]
+The Fundamental Theorem for vector-valued functions
+
+[471-471 p c5s2-subsec-fundamental-theorem-vector-valued default_required]
+The Fundamental Theorem of Calculus now returns in vector form.
+
+[474-474 title c5s2-thm-fundamental-theorem-vector-valued default_required]
+Fundamental Theorem for vector-valued functions
+
+[476-482 p c5s2-thm-fundamental-theorem-vector-valued default_required]
+Let
+          \mathbf r(t)=\bigl(r_1(t),\ldots,r_n(t)\bigr)
+          be differentiable on an interval, and suppose \mathbf r'(t) has continuous
+          components on [a,b]. Then
+          \boxed{\int_a^b \mathbf r'(t)\,dt=\mathbf r(b)-\mathbf r(a).}
+
+[485-496 p c5s2-thm-fundamental-theorem-vector-valued default_required]
+Write
+          \mathbf r'(t)=\bigl(r_1'(t),\ldots,r_n'(t)\bigr).
+          Then
+          
+            \int_a^b \mathbf r'(t)\,dt \amp= \left(\int_a^b r_1'(t)\,dt,\ldots,\int_a^b r_n'(t)\,dt\right)
+            \amp= \left(r_1(b)-r_1(a),\ldots,r_n(b)-r_n(a)\right)
+            \amp= \mathbf r(b)-\mathbf r(a).
+          
+          The middle step is the single-variable Fundamental Theorem of Calculus, applied one
+          component at a time.
+
+[500-505 p c5s2-subsec-fundamental-theorem-vector-valued default_required]
+The continuity assumption on the components of \mathbf r' is a friendly sufficient
+      condition. It guarantees that the component integrals behave exactly as expected. There are
+      more advanced versions with weaker hypotheses, but this one is the right tool for the curves
+      in this course.
+
+[507-511 p c5s2-subsec-fundamental-theorem-vector-valued default_required]
+For motion, the theorem says:
+      \boxed{\int_a^b \mathbf v(t)\,dt=\mathbf r(b)-\mathbf r(a).}
+      The integral of velocity is displacement.
+
+[515-515 title c5s2-subsec-initial-value-problems-motion default_required]
+Initial value problems for motion
+
+[517-517 p c5s2-subsec-initial-value-problems-motion default_required]
+Often we know velocity or acceleration first, and we want position.
+
+[519-527 p c5s2-subsec-initial-value-problems-motion default_required]
+A basketball is thrown across a gym. Let the x-axis point across the court, the
+      y-axis point sideways, and the z-axis point upward. Suppose the ball starts at
+      \mathbf r(0)=(0,0,1)
+      meters and has initial velocity
+      \mathbf v(0)=(8,3,10)
+      meters per second. Ignore air resistance. Then acceleration is constant:
+      \mathbf a(t)=(0,0,-9.8).
+
+[529-540 p c5s2-subsec-initial-value-problems-motion default_required]
+Since
+      \mathbf v'(t)=\mathbf a(t),
+      we integrate acceleration:
+      \mathbf v(t)=\int (0,0,-9.8)\,dt=(0,0,-9.8t)+\mathbf C.
+      Use
+      \mathbf v(0)=(8,3,10)
+      to get
+      \mathbf C=(8,3,10).
+      Thus
+      \mathbf v(t)=(8,3,10-9.8t).
+
+[542-551 p c5s2-subsec-initial-value-problems-motion default_required]
+Now integrate velocity:
+      \mathbf r(t)=\int (8,3,10-9.8t)\,dt=(8t,3t,10t-4.9t^2)+\mathbf D.
+      Use
+      \mathbf r(0)=(0,0,1)
+      to get
+      \mathbf D=(0,0,1).
+      Therefore
+      \boxed{\mathbf r(t)=(8t,\;3t,\;1+10t-4.9t^2).}
+
+[553-560 p c5s2-subsec-initial-value-problems-motion default_required]
+The three coordinates tell three simpler stories:
+      x(t)=8t,
+      y(t)=3t,
+      z(t)=1+10t-4.9t^2.
+      The horizontal motion is linear. The vertical motion is the familiar falling-object
+      parabola from single-variable calculus.
+
+[563-563 title c5s2-ex-recovering-position-from-velocity default_required]
+Recovering position from velocity
+
+[565-571 p c5s2-ex-recovering-position-from-velocity default_required]
+A small underwater robot has velocity
+          \mathbf v(t)=(1+t,\;2,\;e^{-t})
+          and starts at
+          \mathbf r(0)=(3,-1,0).
+          Find \mathbf r(t).
+
+[572-583 p c5s2-ex-recovering-position-from-velocity default_required]
+Since
+          \mathbf r'(t)=\mathbf v(t),
+          we integrate:
+          \mathbf r(t)=\left(t+\frac{t^2}{2},\;2t,\;-e^{-t}\right)+\mathbf C.
+          Use the initial position:
+          \mathbf r(0)=(0,0,-1)+\mathbf C=(3,-1,0).
+          So
+          \mathbf C=(3,-1,1).
+          Therefore
+          \boxed{\mathbf r(t)=\left(3+t+\frac{t^2}{2},\;-1+2t,\;1-e^{-t}\right).}
+
+[587-591 p c5s2-subsec-initial-value-problems-motion default_required]
+This is an initial value problem. The derivative information gives a family of possible
+      motions. The initial condition chooses the one motion that actually starts in the given
+      place.
+
+[593-603 p c5s2-subsec-initial-value-problems-motion default_required]
+Differentiation and integration now work for motion in space. But a subtle problem has
+      appeared. The integral of velocity gives displacement, not distance traveled. A runner who
+      completes one lap has
+      \mathbf r(b)-\mathbf r(a)=\mathbf 0,
+      but she certainly did not run zero meters. To measure distance traveled, we must add up tiny
+      lengths
+      \|\mathbf r'(t)\|\,dt.
+      We return to this question in . First, the same
+      curve derivatives let us revisit the surface grids from Chapter 4.
+
+[607-607 title c5s2-subsec-surface-grid-velocities default_required]
+Velocities along a surface grid
+
+[609-612 p c5s2-subsec-surface-grid-velocities default_required]
+In , we described a surface by
+    \mathbf r(s,t) and drew its grid curves by holding one parameter fixed.
+    We can now find the velocities along those curves. Each calculation uses an
+    ordinary derivative of a function with just one changing input.
+
+[614-625 p c5s2-subsec-surface-grid-velocities default_required]
+Choose an interior parameter pair (s_0,t_0), so that either parameter
+    can vary a little in both directions. The two grid curves through
+    P=\mathbf r(s_0,t_0) are
+    \boldsymbol\alpha(s)=\mathbf r(s,t_0),\qquad
+    \boldsymbol\beta(t)=\mathbf r(s_0,t).
+    In the first curve t_0 is a constant; in the second s_0 is a constant.
+    Their velocities at P are
+    \boxed{\mathbf v=\boldsymbol\alpha'(s_0),\qquad
+    \mathbf w=\boldsymbol\beta'(t_0).}
+    A nonzero velocity is a tangent vector to its grid curve, based at P.
+    The parameters need not measure physical time: velocity here means change of
+    position per unit change of the parameter.
+
+[628-628 title c5s2-ex-bowl-grid-velocities default_required]
+Two velocities on a bowl
+
+[630-638 p c5s2-ex-bowl-grid-velocities default_required]
+For \mathbf r(s,t)=(s,t,s^2+t^2), freezing one input gives
+        \boldsymbol\alpha(s)=(s,t_0,s^2+t_0^2),\qquad
+        \boldsymbol\beta(t)=(s_0,t,s_0^2+t^2).
+        Differentiate these one-variable functions component by component:
+        \mathbf v=(1,0,2s_0),\qquad \mathbf w=(0,1,2t_0).
+        The vectors cannot be parallel: their first two coordinates already give
+        two independent directions. Their cross product is
+        \mathbf v\times\mathbf w=(-2s_0,-2t_0,1),
+        perpendicular to both grid-curve tangents and never zero.
+
+[643-643 title c5s2-def-regular-grid-point default_required]
+Regular parameter point and a normal vector
+
+[645-651 p c5s2-def-regular-grid-point default_required]
+Suppose the two grid-curve velocities exist at an interior pair
+        (s_0,t_0). The parametrization is regular at this parameter
+        point when the velocities are linearly independent, equivalently when
+        \boxed{\mathbf v\times\mathbf w\ne\mathbf0.}
+        When they are dependent, the parameter point is nonregular.
+        Thus regularity is a property of the chosen parametrization at a parameter
+        pair, not just a test on the coordinates of its image point.
+
+[652-661 p c5s2-def-regular-grid-point default_required]
+For surface geometry we work with parametrizations whose grid-curve
+        velocities exist nearby and vary continuously as the two parameters vary.
+        At a regular point they span the tangent plane to the local surface sheet;
+        a normal vector to this sheet at P is
+        \boxed{\mathbf N=\mathbf v\times\mathbf w.}
+        Any nonzero multiple of \mathbf N is also normal. Swapping the two
+        velocities changes its sign. The cross-product rule proves perpendicularity
+        to both grid tangents immediately; the full justification that their plane
+        describes the local sheet is given in
+        .
+
+[665-669 p c5s2-subsec-surface-grid-velocities default_required]
+The nearby-continuity assumption rules out erratic behavior between the grid
+    curves; two derivatives at a single pair alone do not control an entire surface.
+    For the polynomial and trigonometric parametrizations here, the displayed
+    velocity formulas vary continuously. On a surface that crosses itself, the
+    normal belongs to the sheet selected by the parameter pair.
+
+[672-672 title c5s2-ex-double-cone-nonregular default_required]
+A grid that collapses at a cone vertex
+
+[674-678 p c5s2-ex-double-cone-nonregular default_required]
+Consider
+        \mathbf r(s,t)=(s\cos t,s\sin t,s),\qquad s,t\in\mathbb R.
+        Its image is the double cone x^2+y^2=z^2. Positive and negative
+        s describe its upper and lower halves. Both inputs can vary on either
+        side of every chosen value, including s=0.
+
+[679-690 p c5s2-ex-double-cone-nonregular default_required]
+Freezing t=t_0 gives a straight grid line
+        \boldsymbol\alpha(s)=(s\cos t_0,s\sin t_0,s).
+        Freezing s=s_0 gives a circular grid curve
+        \boldsymbol\beta(t)=(s_0\cos t,s_0\sin t,s_0). Their velocities are
+        \mathbf v=(\cos t_0,\sin t_0,1),\qquad
+        \mathbf w=(-s_0\sin t_0,s_0\cos t_0,0).
+        Hence
+        \boxed{\mathbf N=(-s_0\cos t_0,-s_0\sin t_0,s_0).}
+        The parametrization is regular exactly when s_0\ne0. At
+        (0,t_0), the circular grid curve is the constant curve
+        \boldsymbol\beta(t)=(0,0,0), so \mathbf w=\mathbf0 and
+        \mathbf N=\mathbf0. The zero vector supplies no normal direction.
+
+[691-695 p c5s2-ex-double-cone-nonregular default_required]
+For this cone the vertex really has no single tangent plane. The straight
+        grid lines with t_0=0,\pi/2,\pi have velocities
+        (1,0,1),(0,1,1),(-1,0,1). Their determinant is 2, so these
+        three directions cannot lie in one plane. This geometric argument says
+        more than merely observing a zero cross product.
+
+[700-704 caption c5s2-fig-double-cone-grid-velocities default_required]
+Grid curves on the double cone. The blue straight grid line and orange
+      circular grid curve meet at the regular point P; the arrows show their
+      velocities \mathbf v,\mathbf w and a normal \mathbf N, scaled for
+      visibility. At the red vertex O, the circular grid has collapsed to a point.
+      (Interactive: drag to rotate, scroll to zoom.)
+
+[706-706 shortdescription c5s2-fig-double-cone-grid-velocities default_required]
+Double cone with grid curves, tangent velocities and a normal at a regular point, and a red nonregular vertex.
+
+[707-740 asymptote c5s2-fig-double-cone-grid-velocities default_required]
+import graph3;
+        size(11cm);
+        currentprojection=orthographic(7,1,3.8);
+        real extent=1.65;
+        surface cone=surface(new triple(pair q) {
+          return (q.x*cos(q.y),q.x*sin(q.y),q.x);
+        },(-extent,0),(extent,2pi),24,48);
+        draw(cone,rgb(0.75,0.84,0.91)+opacity(0.38),
+             meshpen=gray(0.6)+opacity(0.45)+linewidth(0.12pt));
+        real t0=pi/4, s0=1;
+        path3 generator=graph(new triple(real s) {
+          return (s*cos(t0),s*sin(t0),s);
+        },-extent,extent,2);
+        draw(generator,blue+linewidth(1.2pt));
+        path3 ring=graph(new triple(real t) {
+          return (s0*cos(t),s0*sin(t),s0);
+        },0,2pi,120,operator ..);
+        draw(ring,orange+linewidth(1.2pt));
+        triple P=(s0*cos(t0),s0*sin(t0),s0);
+        triple v=(cos(t0),sin(t0),1);
+        triple w=(-s0*sin(t0),s0*cos(t0),0);
+        triple n=(-s0*cos(t0),-s0*sin(t0),s0);
+        draw(P--(P+0.6v),blue+linewidth(1.2pt),Arrow3);
+        draw(P--(P+0.75w),orange+linewidth(1.2pt),Arrow3);
+        draw(P--(P+0.75n),deepgreen+linewidth(1.2pt),Arrow3);
+        dot(P,black+4bp); label("$P$",P,SE);
+        label("$\mathbf v$",P+0.6v,NE);
+        label("$\mathbf w$",P+0.75w,E);
+        label("$\mathbf N$",P+0.75n,NW);
+        dot(O,red+6bp); label("$O$: nonregular",O,W);
+        draw((0,0,-1.9)--(0,0,2.2),gray+linewidth(0.5pt),Arrow3);
+        label("$z$",(0,0,2.2),N);
+
+[744-751 p c5s2-regularity-map-versus-image default_required]
+A nonregular parametrization does
+    not always mean that the image itself has a sharp point. For example,
+    \mathbf q(s,t)=(s^3,t,0) covers the ordinary xy-plane. Its grid
+    velocities at (s_0,t_0) are (3s_0^2,0,0) and (0,1,0), so
+    their cross product vanishes when s_0=0. The first grid curve simply has
+    zero velocity there. The same plane has the regular parametrization
+    \widetilde{\mathbf q}(a,b)=(a,b,0), whose grid velocities are
+    (1,0,0) and (0,1,0).
+
+[754-754 title checkpoint-5-2-grid-normal default_required]
+Freeze, differentiate, and compare
+
+[755-758 p checkpoint-5-2-grid-normal default_required]
+For the bowl \mathbf r(s,t)=(s,t,s^2+t^2), write the two
+      frozen-parameter grid curves through the parameter pair (1,-1).
+      Find their velocities and a normal at the image point. Is the parametrization
+      regular there? What happens to the normal if the two velocities are exchanged?
+
+[759-760 p checkpoint-5-2-grid-normal hint]
+In one curve set t=-1; in the other set s=1. Differentiate
+      each curve in its remaining variable, then use the cross product.
+
+[761-765 p checkpoint-5-2-grid-normal solution]
+The curves are \boldsymbol\alpha(s)=(s,-1,s^2+1) and
+      \boldsymbol\beta(t)=(1,t,1+t^2). At P=(1,-1,2) their velocities
+      are (1,0,2) and (0,1,-2). Their cross product (-2,2,1)
+      is nonzero, so the parameter point is regular and this vector is normal.
+      Exchanging the velocities gives the opposite normal (2,-2,-1).
+
+[768-772 p c5s2-subsec-surface-grid-velocities default_required]
+The ordinary derivatives of two grid curves have given us two tangent
+    directions and, at regular points, a normal. 
+    will collect the same velocities in a matrix and explain their role in a local
+    linear approximation. We next return to a single moving point and measure its
+    speed and distance traveled.

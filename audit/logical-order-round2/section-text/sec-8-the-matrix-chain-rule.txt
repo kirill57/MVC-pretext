@@ -1,0 +1,497 @@
+[5-5 title sec-8-the-matrix-chain-rule default_required]
+The matrix chain rule
+
+[7-16 p sec-8-the-matrix-chain-rule default_required]
+followed one moving point through one
+    scalar field:
+    t\longmapsto \mathbf r(t)\longmapsto f(\mathbf r(t)).
+    Now the input can have several variables, and the output can have several components.
+    One map may feed another:
+    \mathbf u\longmapsto G(\mathbf u)\longmapsto F(G(\mathbf u)).
+    The chain rule says: linearize the first map, linearize the second map, then compose
+    the two linear maps.
+
+[18-18 p sec-8-the-matrix-chain-rule default_required]
+In coordinates, that means multiply the two Jacobian matrices.
+
+[21-21 title c8s2-subsec-composing-transformations default_required]
+Composing transformations
+
+[23-31 p c8s2-subsec-composing-transformations default_required]
+A calibration map sends control variables (u,v) to physical floor coordinates
+      (x,y):
+      G(u,v)=(u+2v,\;u^2-v).
+      A second map sends floor coordinates to screen coordinates:
+      F(x,y)=(x^2+y,\;x-y^2).
+      The combined map is
+      H(u,v)=F(G(u,v)).
+
+[33-60 p c8s2-subsec-composing-transformations default_required]
+Take the control point
+      (u,v)=(1,1).
+      First,
+      G(1,1)=(3,0).
+      The Jacobian of G is
+      
+        J_G(u,v)
+        =
+        \begin{pmatrix}
+            1 \amp 2\\
+            2u \amp -1
+        \end{pmatrix},
+      
+      so
+      
+        J_G(1,1)
+        =
+        \begin{pmatrix}
+            1 \amp 2\\
+            2 \amp -1
+        \end{pmatrix}.
+      
+      This matrix sends a small control displacement
+      \begin{pmatrix}\Delta u\\ \Delta v\end{pmatrix}
+      to the first-order physical displacement
+      \begin{pmatrix}\Delta x\\ \Delta y\end{pmatrix}.
+
+[62-81 p c8s2-subsec-composing-transformations default_required]
+The Jacobian of F is
+      
+        J_F(x,y)
+        =
+        \begin{pmatrix}
+            2x \amp 1\\
+            1 \amp -2y
+        \end{pmatrix}.
+      
+      At the intermediate point (3,0),
+      
+        J_F(3,0)
+        =
+        \begin{pmatrix}
+            6 \amp 1\\
+            1 \amp 0
+        \end{pmatrix}.
+
+[83-108 p c8s2-subsec-composing-transformations default_required]
+So the control displacement first passes through
+      J_G(1,1),
+      and then through
+      J_F(3,0).
+      The combined linear map is
+      
+      \boxed{
+          J_F(3,0)J_G(1,1)
+          =
+          \begin{pmatrix}
+              6 \amp 1\\
+              1 \amp 0
+          \end{pmatrix}
+          \begin{pmatrix}
+              1 \amp 2\\
+              2 \amp -1
+          \end{pmatrix}
+          =
+          \begin{pmatrix}
+              8 \amp 11\\
+              1 \amp 2
+          \end{pmatrix}.
+      }
+
+[110-124 p c8s2-subsec-composing-transformations default_required]
+Let us check this by composing first and differentiating afterward. Since
+      x=u+2v,\qquad y=u^2-v,
+      we get
+      
+        H(u,v) \amp= F(u+2v,u^2-v)
+        \amp= \left( (u+2v)^2+(u^2-v),\; (u+2v)-(u^2-v)^2 \right).
+      
+      Thus
+      H_1(u,v)=2u^2+4uv+4v^2-v,
+      so
+      (H_1)_u=4u+4v,\qquad (H_1)_v=4u+8v-1.
+      At (1,1),
+      (H_1)_u=8,\qquad (H_1)_v=11.
+
+[126-145 p c8s2-subsec-composing-transformations default_required]
+For the second component,
+      H_2(u,v)=u+2v-(u^2-v)^2.
+      Therefore
+      (H_2)_u=1-2(u^2-v)(2u),
+      and
+      (H_2)_v=2+2(u^2-v).
+      At (1,1), the factor u^2-v is 0, so
+      (H_2)_u=1,\qquad (H_2)_v=2.
+      Hence
+      
+        J_H(1,1)
+        =
+        \begin{pmatrix}
+            8 \amp 11\\
+            1 \amp 2
+        \end{pmatrix},
+      
+      which matches the matrix product.
+
+[149-149 title c8s2-subsec-multiplying-jacobian-matrices default_required]
+Multiplying Jacobian matrices
+
+[151-151 p c8s2-subsec-multiplying-jacobian-matrices default_required]
+The example gives the rule.
+
+[154-154 title c8s2-thm-matrix-chain-rule default_required]
+Matrix chain rule
+
+[156-180 p c8s2-thm-matrix-chain-rule default_required]
+Let
+          G:D\subseteq\mathbb R^n\to\mathbb R^m
+          be differentiable at \mathbf p, and let
+          F:E\subseteq\mathbb R^m\to\mathbb R^k
+          be differentiable at G(\mathbf p). Suppose G(D)\subseteq E, so the
+          composition
+          F\circ G
+          is defined. Then F\circ G is differentiable at \mathbf p, and
+          
+          \boxed{
+              D(F\circ G)(\mathbf p)
+              =
+              DF(G(\mathbf p))\circ DG(\mathbf p).
+          }
+          
+          In matrix form,
+          
+          \boxed{
+              J_{F\circ G}(\mathbf p)
+              =
+              J_F(G(\mathbf p))\,J_G(\mathbf p).
+          }
+
+[183-195 p c8s2-thm-matrix-chain-rule default_required]
+Let
+          \mathbf q=G(\mathbf p).
+          Since G is differentiable at \mathbf p,
+          G(\mathbf p+\mathbf h)=G(\mathbf p)+DG(\mathbf p)\mathbf h+\mathbf e(\mathbf h),
+          where
+          \frac{\|\mathbf e(\mathbf h)\|}{\|\mathbf h\|}\to0.
+          Set
+          \mathbf k(\mathbf h)=G(\mathbf p+\mathbf h)-G(\mathbf p).
+          Then
+          \mathbf k(\mathbf h)=DG(\mathbf p)\mathbf h+\mathbf e(\mathbf h),
+          so \mathbf k(\mathbf h)\to\mathbf 0 as \mathbf h\to\mathbf 0.
+
+[196-214 p c8s2-thm-matrix-chain-rule default_required]
+Since F is differentiable at \mathbf q,
+          F(\mathbf q+\mathbf k)=F(\mathbf q)+DF(\mathbf q)\mathbf k+\mathbf r(\mathbf k),
+          where
+          \frac{\|\mathbf r(\mathbf k)\|}{\|\mathbf k\|}\to0.
+          Apply this with \mathbf k=\mathbf k(\mathbf h):
+          
+            F(G(\mathbf p+\mathbf h)) \amp= F(G(\mathbf p)) + DF(\mathbf q)\bigl(DG(\mathbf p)\mathbf h+\mathbf e(\mathbf h)\bigr) + \mathbf r(\mathbf k(\mathbf h))
+            \amp= F(G(\mathbf p)) + \bigl(DF(\mathbf q)\circ DG(\mathbf p)\bigr)\mathbf h + DF(\mathbf q)\mathbf e(\mathbf h) + \mathbf r(\mathbf k(\mathbf h)).
+          
+          To justify the two remainder estimates, a fixed matrix A=(a_{ij}) satisfies \|A\mathbf v\|\le C_A\|\mathbf v\|, where C_A=(\sum_{i,j}a_{ij}^2)^{1/2}; apply CauchySchwarz to each row and add squares. Consequently \|\mathbf k(\mathbf h)\|/\|\mathbf h\| stays bounded, and \|DF(\mathbf q)\mathbf e(\mathbf h)\|/\|\mathbf h\|\to0. When \mathbf k\ne\mathbf0,
+          \frac{\|\mathbf r(\mathbf k(\mathbf h))\|}{\|\mathbf h\|}=\frac{\|\mathbf r(\mathbf k(\mathbf h))\|}{\|\mathbf k(\mathbf h)\|}\frac{\|\mathbf k(\mathbf h)\|}{\|\mathbf h\|}\to0.
+          When \mathbf k=\mathbf0 the remainder is zero. Thus both terms are smaller than first order in \mathbf h. Therefore the
+          total derivative of the composition is
+          DF(\mathbf q)\circ DG(\mathbf p).
+          The matrix of a composition of linear maps is the product of their matrices, in the
+          same order:
+          J_F(G(\mathbf p))J_G(\mathbf p).
+
+[218-231 p c8s2-subsec-multiplying-jacobian-matrices default_required]
+The sizes explain the order. If
+      G:\mathbb R^n\to\mathbb R^m,
+      then
+      J_G(\mathbf p)
+      is an m\times n matrix. If
+      F:\mathbb R^m\to\mathbb R^k,
+      then
+      J_F(G(\mathbf p))
+      is a k\times m matrix. The product
+      J_F(G(\mathbf p))J_G(\mathbf p)
+      is a k\times n matrix, exactly the size needed for
+      F\circ G:\mathbb R^n\to\mathbb R^k.
+
+[234-234 title checkpoint-8-2-why-matrix-product default_required]
+Why does composing maps become matrix multiplication?
+
+[236-242 p checkpoint-8-2-why-matrix-product default_required]
+The chain rule says linearize each map, then compose the linearizations.
+          Each linearization is a linear map, recorded as a Jacobian matrix. Explain why
+          composing the two linear maps shows up as the matrix product
+          J_F\,J_G rather than a sum, and why the outer Jacobian J_F must sit
+          on the left of the inner Jacobian J_G.
+
+[245-250 p checkpoint-8-2-why-matrix-product hint]
+Think about what happens to a displacement step by step: it passes through
+          J_G first, and the result of that step is what J_F acts on next.
+          Which matrix touches the displacement first, and where does the matrix that acts
+          last have to be written so the sizes line up?
+
+[254-257 p c8s2-subsec-multiplying-jacobian-matrices default_required]
+The hypotheses are real. If the outer function is not differentiable, the matrix product
+      built from partial derivatives can give the wrong answer.
+
+[260-260 title c8s2-ex-outer-not-differentiable default_required]
+When the outer derivative does not exist
+
+[262-274 p c8s2-ex-outer-not-differentiable default_required]
+Use the function
+          
+            Q(x,y)=
+            \begin{cases}
+            \dfrac{x^2y}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+            0, \amp (x,y)=(0,0),
+            \end{cases}
+          
+          from . It has
+          Q_x(0,0)=0,\qquad Q_y(0,0)=0,
+          but it is not differentiable at the origin.
+
+[275-297 p c8s2-ex-outer-not-differentiable default_required]
+Let
+          G(t)=(t,t).
+          Then
+          (Q\circ G)(t)=Q(t,t)=\frac{t}{2}
+          for t\ne0, with value 0 at t=0. So
+          (Q\circ G)'(0)=\frac12.
+          If we tried to use the row
+          
+            \begin{pmatrix}Q_x(0,0)\amp Q_y(0,0)\end{pmatrix}
+            =
+            \begin{pmatrix}0\amp 0\end{pmatrix}
+          
+          as if it were the derivative of Q, then the matrix product would predict
+          
+            \begin{pmatrix}0\amp 0\end{pmatrix}
+            \begin{pmatrix}1\\1\end{pmatrix}
+            =
+            0.
+          
+          Again the answer is wrong. The matrix chain rule uses total derivatives, not lists of
+          partials that happen to exist.
+
+[301-301 p c8s2-subsec-multiplying-jacobian-matrices default_required]
+If the inner map is not differentiable, the composition may also fail to be differentiable.
+
+[304-304 title c8s2-ex-inner-corner default_required]
+When the inner map has a corner
+
+[306-315 p c8s2-ex-inner-corner default_required]
+Let
+          G(t)=|t|
+          and let
+          F(x)=x.
+          The outer function is as smooth as possible. But
+          (F\circ G)(t)=|t|,
+          which is not differentiable at 0. The inner map has no derivative there, so
+          there is no linear part for the outer derivative to receive.
+
+[321-321 title c8s2-subsec-tree-and-dependency-diagrams default_required]
+Tree diagrams and dependency diagrams
+
+[323-323 p c8s2-subsec-tree-and-dependency-diagrams default_required]
+For scalar outputs, the matrix chain rule becomes the familiar sum-over-paths formula.
+
+[326-326 title checkpoint-8-2-tree-which-terms-to-add default_required]
+What does the dependency tree tell you to add?
+
+[328-333 p checkpoint-8-2-tree-which-terms-to-add default_required]
+Look at the dependency diagram for w. Without computing anything, explain how
+          you read off the formula for w_u directly from the picture: which features of
+          the diagram become the individual products, and which feature tells you that you must
+          add those products together rather than keep them separate.
+
+[336-340 p checkpoint-8-2-tree-which-terms-to-add hint]
+Trace every route that leads from u all the way to w. Each arrow you
+          walk along carries one derivative. Ask yourself: what does a single complete path
+          contribute, and why do several paths from the same input get summed?
+
+[344-351 p c8s2-subsec-tree-and-dependency-diagrams default_required]
+Suppose
+      w=f(x,y),
+      where
+      x=x(u,v),\qquad y=y(u,v).
+      Then w depends on u and v through the intermediate variables
+      x and y.
+
+[354-355 caption c8s2-fig-dependency-diagram default_required]
+Each path from an input variable to w contributes one product of
+      derivatives.
+
+[357-373 latex-image c8s2-fig-dependency-diagram default_required]
+\begin{tikzpicture}[scale=1.0, >=stealth]
+            \node (u) at (0,1.2) {\(u\)};
+            \node (v) at (0,-1.2) {\(v\)};
+            \node (x) at (3,1.2) {\(x\)};
+            \node (y) at (3,-1.2) {\(y\)};
+            \node (w) at (6,0) {\(w\)};
+
+            \draw[->, thick] (u) -- (x) node[midway, above] {\(x_u\)};
+            \draw[->, thick] (v) -- (x) node[midway, below left] {\(x_v\)};
+            \draw[->, thick] (u) -- (y) node[midway, above left] {\(y_u\)};
+            \draw[->, thick] (v) -- (y) node[midway, below] {\(y_v\)};
+
+            \draw[->, thick] (x) -- (w) node[midway, above right] {\(f_x\)};
+            \draw[->, thick] (y) -- (w) node[midway, below right] {\(f_y\)};
+        \end{tikzpicture}
+
+[377-390 p c8s2-subsec-tree-and-dependency-diagrams default_required]
+To find w_u, add the products along all paths from u to w:
+      
+      \boxed{
+          w_u=f_xx_u+f_yy_u.
+      }
+      
+      To find w_v, add the products along all paths from v to w:
+      
+      \boxed{
+          w_v=f_xx_v+f_yy_v.
+      }
+
+[392-431 p c8s2-subsec-tree-and-dependency-diagrams default_required]
+These two formulas are one matrix product. The Jacobian of
+      f:\mathbb R^2\to\mathbb R
+      is the row matrix
+      
+        J_f(x,y)=
+        \begin{pmatrix}
+            f_x \amp f_y
+        \end{pmatrix}.
+      
+      The Jacobian of
+      G(u,v)=(x(u,v),y(u,v))
+      is
+      
+        J_G(u,v)
+        =
+        \begin{pmatrix}
+            x_u \amp x_v\\
+            y_u \amp y_v
+        \end{pmatrix}.
+      
+      Therefore
+      
+        J_{f\circ G}(u,v)
+        =
+        \begin{pmatrix}
+            f_x \amp f_y
+        \end{pmatrix}
+        \begin{pmatrix}
+            x_u \amp x_v\\
+            y_u \amp y_v
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            f_xx_u+f_yy_u
+            \amp
+            f_xx_v+f_yy_v
+        \end{pmatrix}.
+
+[434-434 title c8s2-ex-dependency-diagram default_required]
+A dependency diagram calculation
+
+[436-443 p c8s2-ex-dependency-diagram default_required]
+Let
+          w=x^2+xy,
+          where
+          x=u+v^2,\qquad y=uv.
+          Find w_u and w_v at
+          (u,v)=(2,1).
+
+[444-451 p c8s2-ex-dependency-diagram default_required]
+First compute the intermediate values:
+          x(2,1)=2+1=3,\qquad y(2,1)=2.
+          The partial derivatives of w are
+          w_x=2x+y,\qquad w_y=x.
+          At (x,y)=(3,2),
+          w_x=8,\qquad w_y=3.
+
+[452-471 p c8s2-ex-dependency-diagram default_required]
+The derivatives of the intermediate variables are
+          x_u=1,\qquad x_v=2v,
+          and
+          y_u=v,\qquad y_v=u.
+          At (u,v)=(2,1),
+          x_u=1,\qquad x_v=2,\qquad y_u=1,\qquad y_v=2.
+          Thus
+          
+            w_u \amp= w_xx_u+w_yy_u
+            \amp= 8(1)+3(1)
+            \amp= 11,
+          
+          and
+          
+            w_v \amp= w_xx_v+w_yy_v
+            \amp= 8(2)+3(2)
+            \amp= 22.
+
+[477-477 title c8s2-subsec-linearize-then-compose default_required]
+The chain rule as linearize, then compose
+
+[479-483 p c8s2-subsec-linearize-then-compose default_required]
+The matrix formula can look like a bookkeeping rule:
+      J_{F\circ G}=J_FJ_G.
+      But the meaning is more geometric.
+
+[486-486 title checkpoint-8-2-why-replace-by-linearizations default_required]
+Why may you replace each map by its linear part?
+
+[488-494 p checkpoint-8-2-why-replace-by-linearizations default_required]
+To track a small displacement through F\circ G, we replace G by its
+          best linear approximation, replace F by its best linear
+          approximation, and then compose those two linear pieces. Explain why this swap does
+          not corrupt the answer: why are the leftover, nonlinear errors safe to ignore when
+          we only care about the first-order behavior at the point?
+
+[497-502 p checkpoint-8-2-why-replace-by-linearizations hint]
+Recall what best linear approximation guarantees about the size of the error:
+          it shrinks faster than \|\Delta\mathbf u\| itself. Track an error from the
+          inner map as it is carried through the outer map, and ask whether it stays smaller
+          than first order in the original displacement.
+
+[506-521 p c8s2-subsec-linearize-then-compose default_required]
+A small input displacement
+      \Delta\mathbf u
+      first passes through the best linear approximation to G:
+      \Delta\mathbf x\approx J_G(\mathbf p)\Delta\mathbf u.
+      Then that output displacement passes through the best linear approximation to F:
+      \Delta\mathbf z\approx J_F(G(\mathbf p))\Delta\mathbf x.
+      Substitute the first approximation into the second:
+      \Delta\mathbf z\approx J_F(G(\mathbf p))J_G(\mathbf p)\Delta\mathbf u.
+      So the chain rule says:
+      
+      \boxed{
+          \text{linearize each map, then compose the linearizations.}
+      }
+
+[524-524 caption c8s2-fig-linearize-compose default_required]
+The derivative of a composition is the composition of the derivatives.
+
+[526-541 latex-image c8s2-fig-linearize-compose default_required]
+\begin{tikzpicture}[scale=1.0, >=stealth]
+            \node (du) at (0,0) {\(\Delta\mathbf u\)};
+            \node (dx) at (3.2,0) {\(\Delta\mathbf x\)};
+            \node (dz) at (6.4,0) {\(\Delta\mathbf z\)};
+
+            \draw[->, thick] (du) -- (dx)
+                node[midway, above] {\(J_G(\mathbf p)\)};
+            \draw[->, thick] (dx) -- (dz)
+                node[midway, above] {\(J_F(G(\mathbf p))\)};
+
+            \draw[->, thick, bend right=28] (du) to
+                node[midway, below] {\(J_F(G(\mathbf p))J_G(\mathbf p)\)}
+                (dz);
+        \end{tikzpicture}
+
+[545-556 p c8s2-subsec-linearize-then-compose default_required]
+There is a cleaner notation hiding inside the matrix multiplication. If
+      x=x(u,v)\qquad\text{and}\qquad y=y(u,v),
+      then their differentials are
+      dx=x_u\,du+x_v\,dv,\qquad dy=y_u\,du+y_v\,dv.
+      Substituting these into
+      df=f_x\,dx+f_y\,dy
+      produces the same chain rule formulas. That substitution looks almost too simple. It is
+      not a trick. It is the beginning of the pullback idea for differential forms, and it will
+      become one of the quiet engines behind line integrals, surface integrals, and the
+      integral theorems later in the book.

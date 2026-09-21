@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section xml:id="sec-appF-uniform-control-investigation">
+  <title>Optional: why one small scale works everywhere</title>
+  <p>This investigation supplies fuller justifications for facts stated for use in
+    Chapters 13, 17 and 19. It is optional throughout. The four folded exercises
+    form a sequence; each names its earlier optional prerequisites. Their solutions
+    are complete arguments using the explicitly supplied completeness fact below,
+    unlike the shorter proof sketches elsewhere in this appendix.</p>
+
+  <aside xml:id="appF-optional-completeness-background">
+    <title>Optional: the completeness fact and vocabulary for this investigation</title>
+    <p>We supply the nested-interval fact: decreasing nonempty closed bounded
+      intervals whose lengths tend to zero have exactly one common point.
+      Applying this in each coordinate gives the same result for nested closed
+      boxes whose side lengths tend to zero. This fact expresses completeness of
+      the real numbers; we do not prove completeness here.</p>
+    <p>A sequence is a list <m>x_1,x_2,\ldots</m>. A subsequence
+      <m>x_{n_1},x_{n_2},\ldots</m> selects terms with strictly increasing indices.
+      Convergence to <m>x</m> means that eventually all selected terms are within
+      every prescribed positive distance of <m>x</m>. An open set contains a
+      small open ball around each of its points; a set is closed when its complement
+      is open. A bounded set lies in a finite box. The diameter of a box with side
+      lengths at most <m>\ell</m> in <m>\mathbb R^n</m> is at most
+      <m>\sqrt n\,\ell</m>.</p>
+  </aside>
+
+  <exercise xml:id="appF-ex-compact-subsequence">
+    <title>Optional: finding a convergent subsequence</title>
+    <statement><p>Use the supplied nested-box fact in
+      <xref ref="appF-optional-completeness-background" text="title"/>. Given a sequence in a
+      nonempty closed bounded set <m>K\subseteq\mathbb R^n</m>, enclose it in a
+      closed box. Bisect every side and retain a subbox containing infinitely many
+      terms (counted by their indices). Repeat. Choose one term in the
+      <m>k</m>th box with index larger than every previously selected index.
+      Show that these selected terms converge to the common point of the boxes.
+      Why must that point belong to <m>K</m>?</p></statement>
+    <solution><p>At each stage finitely many subboxes cover the previous box.
+      If each held only finitely many indices, their union would too, a
+      contradiction. Thus the construction continues, and infinitely many
+      available indices permit the increasing selection. If the initial longest
+      side is <m>L</m>, the <m>k</m>th box has diameter at most
+      <m>\sqrt n L/2^k</m>. Completeness supplies a common point <m>x</m>,
+      and the distance from the selected term to <m>x</m> is at most that
+      diameter, hence tends to zero. If <m>x\notin K</m>, the open complement
+      contains a ball about <m>x</m> disjoint from <m>K</m>; convergence would
+      eventually put selected terms of <m>K</m> in that ball. Thus
+      <m>x\in K</m>.</p></solution>
+  </exercise>
+
+  <exercise xml:id="appF-ex-uniform-continuity">
+    <title>Optional: from continuity to one common distance bound</title>
+    <statement><p>This exercise uses <xref ref="appF-ex-compact-subsequence"/>.
+      A continuous map <m>f:K\to\mathbb R^m</m> on a closed bounded set is
+      <term>uniformly continuous</term> if, for every <m>\varepsilon&gt;0</m>,
+      there is <m>\delta&gt;0</m> such that
+      <m>\|f(x)-f(y)\|&lt;\varepsilon</m> whenever <m>x,y\in K</m> and
+      <m>\|x-y\|&lt;\delta</m>. Assume this fails. Explain why some fixed
+      <m>\varepsilon_0&gt;0</m> admits points <m>x_k,y_k\in K</m> with
+      <m>\|x_k-y_k\|&lt;1/k</m> but output distance at least
+      <m>\varepsilon_0</m>. Extract a convergent subsequence of <m>x_k</m>
+      and use continuity to reach a contradiction.</p></statement>
+    <solution><p>Failure of the stated quantifiers gives such a fixed error and
+      pairs for every allowed distance <m>1/k</m>. The preceding exercise gives
+      <m>x_{k_j}\to x\in K</m>. The triangle inequality gives
+      <m>\|y_{k_j}-x\|\le1/k_j+\|x_{k_j}-x\|\to0</m>. Continuity at
+      <m>x</m> makes both output sequences tend to <m>f(x)</m>, so their
+      difference tends to zero, contradicting the fixed lower bound.
+      The empty-set case is immediate. This also proves the result for a
+      continuous vector-valued map, since only distances were used.</p></solution>
+  </exercise>
+
+  <exercise xml:id="appF-ex-finite-cover-control">
+    <title>Optional: a uniform radius for an open cover</title>
+    <statement><p>This exercise uses <xref ref="appF-ex-compact-subsequence"/>.
+      An <term>open cover</term> of <m>K</m> is a collection of open sets whose
+      union contains <m>K</m>. Prove that if <m>K</m> is closed and bounded,
+      some <m>\eta&gt;0</m> has this property: for every <m>x\in K</m>,
+      the ball <m>B(x,\eta)</m> lies in one member of the cover.
+      If this fails, choose bad centers for radii <m>1/k</m> and extract a
+      convergent subsequence. Then enclose <m>K</m> in a finite grid with cell
+      diameter less than <m>\eta</m>, choose a point of <m>K</m> in each
+      occupied cell, and deduce that finitely many members cover <m>K</m>.</p></statement>
+    <solution><p>Suppose no common radius works, and choose
+      <m>x_k\in K</m> such that <m>B(x_k,1/k)</m> lies in no member.
+      Pass to <m>x_{k_j}\to x\in K</m>. One covering set <m>U</m>
+      contains <m>x</m>, so <m>B(x,r)\subseteq U</m> for some
+      <m>r&gt;0</m>. Eventually <m>\|x_{k_j}-x\|+1/k_j&lt;r</m>,
+      so <m>B(x_{k_j},1/k_j)\subseteq U</m>, a contradiction.
+      Choose a grid of side length less than <m>\eta/\sqrt n</m> in a
+      bounding box. There are finitely many cells. Every point in an occupied
+      cell is within <m>\eta</m> of its selected point, so the associated
+      cover member contains that cell. These finitely many members cover
+      <m>K</m>. If <m>K</m> is empty, the empty subcollection suffices.
+      Notice that we established the common scale before extracting the finite
+      cover; merely naming a finite cover would not prove the scale assertion.</p></solution>
+  </exercise>
+
+  <exercise xml:id="appF-ex-path-grid-subdivision">
+    <title>Optional: subdividing paths and parameter rectangles</title>
+    <statement><p>This exercise uses <xref ref="appF-ex-compact-subsequence"/>
+      directly. Let <m>P</m> be a closed bounded interval or rectangle and
+      <m>H:P\to D</m> continuous, where <m>D</m> is open. Show that some
+      <m>\delta&gt;0</m> ensures that every nonempty closed cell
+      <m>Q\subseteq P</m> of diameter less than <m>\delta</m> has image
+      in an open ball contained in <m>D</m>. If this fails, choose cells of
+      diameter less than <m>1/k</m> and one point in each; extract a
+      subsequence and use continuity at its limit. Explain why the same
+      argument controls every point in each small cell.</p></statement>
+    <solution><p>Choose failing cells <m>Q_k</m> and points <m>u_k\in Q_k</m>.
+      A subsequence tends to <m>u\in P</m>. Since <m>D</m> is open,
+      <m>B(H(u),r)\subseteq D</m> for some <m>r&gt;0</m>. Continuity
+      relative to <m>P</m> gives <m>\eta&gt;0</m> such that
+      <m>\|H(v)-H(u)\|&lt;r</m> for <m>v\in P</m> within
+      <m>\eta</m> of <m>u</m>. For every <m>v\in Q_{k_j}</m>,
+      <md>\|v-u\|\le\operatorname{diam}(Q_{k_j})+\|u_{k_j}-u\|
+        &lt;1/k_j+\|u_{k_j}-u\|.</md>
+      Eventually this is less than <m>\eta</m>, independently of the chosen
+      <m>v</m>. The entire image then lies in <m>B(H(u),r)</m>,
+      contradicting failure. A grid with side lengths below
+      <m>\delta/\sqrt n</m>, where <m>n=1</m> or <m>2</m>, has the
+      required diameter bound. This proves the supplied path theorem in
+      <xref ref="c13s5-thm-path-subdivision"/> and the rectangle fact used
+      in <xref ref="c17s5-optional-potential-proof" text="title"/>.</p></solution>
+  </exercise>
+</section>

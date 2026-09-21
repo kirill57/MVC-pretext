@@ -1,0 +1,441 @@
+[5-5 title sec-11-general-solid-regions default_required]
+General solid regions
+
+[7-13 p sec-11-general-solid-regions default_required]
+lived inside boxes. Boxes are a good first home
+    because their bounds do not move:
+    a\le x\le b,\qquad c\le y\le d,\qquad e\le z\le f.
+    A general solid is different. One slice may be short, another tall, another empty. The
+    limits have to tell that story.
+
+[16-16 title c11s2-subsec-describing-by-inequalities default_required]
+Describing a solid by inequalities
+
+[18-26 p c11s2-subsec-describing-by-inequalities default_required]
+Picture a small tent in the corner of a coordinate room. Its floor lies in the first
+      quadrant of the xy-plane, and its sloping roof is the plane
+      z=6-x-y.
+      The tent touches the coordinate planes
+      x=0,\qquad y=0,\qquad z=0.
+      The solid inside the tent is
+      E=\{(x,y,z):x\ge0,\ y\ge0,\ z\ge0,\ x+y+z\le6\}.
+
+[28-37 p c11s2-subsec-describing-by-inequalities default_required]
+The same solid can be described by nested inequalities. Choose x first:
+      0\le x\le 6.
+      Once x is fixed, y can run from 0 to 6-x:
+      0\le y\le 6-x.
+      Once x and y are fixed, z runs from the floor to the roof:
+      0\le z\le 6-x-y.
+      So
+      \boxed{E=\left\{(x,y,z):0\le x\le6,\ 0\le y\le 6-x,\ 0\le z\le 6-x-y\right\}.}
+
+[40-40 caption c11s2-fig-tetrahedron default_required]
+The solid x,y,z\ge0,\ x+y+z\le6 is a tetrahedron. (Interactive: drag to rotate, scroll to zoom.)
+
+[42-55 asymptote c11s2-fig-tetrahedron default_required]
+// 3-D interactive (WebGL) figure.
+        import three; size(8.5cm); currentprojection=orthographic(5,3,3);
+        triple O0=(0,0,0), A=(6,0,0), B=(0,6,0), C=(0,0,6);
+        pen face=rgb(0.5,0.7,0.95)+opacity(0.45);
+        draw(surface(O0--A--B--cycle), face);
+        draw(surface(O0--A--C--cycle), face);
+        draw(surface(O0--B--C--cycle), face);
+        draw(surface(A--B--C--cycle), rgb(0.95,0.7,0.5)+opacity(0.5));
+        draw(O0--A--B--cycle, black+0.5pt); draw(O0--C, black+0.5pt); draw(A--C, black+0.5pt); draw(B--C, black+0.5pt);
+        label("$(6,0,0)$", A, 2S); label("$(0,6,0)$", B, 2E); label("$(0,0,6)$", C, 2N);
+        draw(O0--(7.2,0,0),gray,Arrow3); draw(O0--(0,7.2,0),gray,Arrow3); draw(O0--(0,0,7.2),gray,Arrow3);
+        label("$x$",(7.2,0,0),S); label("$y$",(0,7.2,0),E); label("$z$",(0,0,7.2),W);
+
+[59-80 p c11s2-subsec-describing-by-inequalities default_required]
+Its volume is
+      \iiint_E 1\,dV.
+      Using the bounds above,
+      
+        \operatorname{Volume}(E) \amp= \int_0^6\int_0^{6-x}\int_0^{6-x-y} 1\,dz\,dy\,dx
+        \amp= \int_0^6\int_0^{6-x} (6-x-y)\,dy\,dx.
+      
+      Compute the y-integral:
+      
+        \int_0^{6-x} (6-x-y)\,dy \amp= \left[(6-x)y-\frac12y^2\right]_0^{6-x}
+        \amp= \frac12(6-x)^2.
+      
+      Therefore
+      
+        \operatorname{Volume}(E) \amp= \int_0^6 \frac12(6-x)^2\,dx
+        \amp= \frac12\left[-\frac{(6-x)^3}{3}\right]_0^6
+        \amp= 36.
+      
+      So
+      \boxed{\operatorname{Volume}(E)=36.}
+
+[82-82 p c11s2-subsec-describing-by-inequalities default_required]
+The bounds were not guessed. They came from slicing the solid.
+
+[84-84 title checkpoint-11-2-inequalities-to-limits default_required]
+From inequalities to limits?
+
+[86-92 p checkpoint-11-2-inequalities-to-limits default_required]
+We described the tetrahedron with the nested chain 0\le x\le6, then
+          0\le y\le 6-x, then 0\le z\le 6-x-y, and then simply copied those
+          bounds into the integral \int_0^6\int_0^{6-x}\int_0^{6-x-y}\,dz\,dy\,dx.
+          Why is the chain of nested inequalities already the integration limits, with no
+          translation step in between?
+
+[95-100 p checkpoint-11-2-inequalities-to-limits hint]
+Think about what each inequality fixes. When you write 0\le z\le 6-x-y, the
+          bounds on z are allowed to mention x and y because those are
+          already chosen. Which variable is allowed to appear in which set of limits, and how
+          does that ordering match the inside-to-outside order of the integral?
+
+[107-107 title c11s2-subsec-slicing-perpendicular default_required]
+Slicing perpendicular to coordinate axes
+
+[109-113 p c11s2-subsec-slicing-perpendicular default_required]
+The tent example used vertical slices. For each fixed point (x,y) in the shadow on
+      the xy-plane, the z-coordinate ran from the bottom surface to the top
+      surface.
+
+[115-115 p c11s2-subsec-slicing-perpendicular default_required]
+That pattern is common enough to name.
+
+[119-119 title c11s2-def-z-simple-solid default_required]
+z-simple solid
+
+[121-125 p c11s2-def-z-simple-solid default_required]
+A solid E is called z-simple if it can be written as
+          \boxed{E=\left\{(x,y,z):(x,y)\in D,\ g_1(x,y)\le z\le g_2(x,y)\right\}.}
+          Here D is the shadow of E on the xy-plane.
+
+[129-134 p c11s2-subsec-slicing-perpendicular default_required]
+For a z-simple solid, the triple integral is
+      \boxed{\iiint_E f(x,y,z)\,dV = \iint_D \left(\int_{g_1(x,y)}^{g_2(x,y)} f(x,y,z)\,dz\right)dA.}
+      After that, the double integral over D is handled by the methods of
+      .
+
+[136-141 p c11s2-subsec-slicing-perpendicular default_required]
+If D is Type I,
+      D=\{(x,y):a\le x\le b,\ \phi_1(x)\le y\le \phi_2(x)\},
+      then
+      \boxed{\iiint_E f\,dV = \int_a^b \int_{\phi_1(x)}^{\phi_2(x)} \int_{g_1(x,y)}^{g_2(x,y)} f(x,y,z)\,dz\,dy\,dx.}
+
+[144-144 title c11s2-thm-triple-integral-z-simple default_required]
+Triple integral over a z-simple solid
+
+[146-154 p c11s2-thm-triple-integral-z-simple default_required]
+Suppose
+          E=\left\{(x,y,z):(x,y)\in D,\ g_1(x,y)\le z\le g_2(x,y)\right\},
+          where D is a bounded Type I or Type II region, or a finite union of such
+          regions with disjoint interiors, and g_1,g_2 are continuous with
+          g_1\le g_2 on D. Suppose f is continuous on
+          E. Then
+          \boxed{\iiint_E f(x,y,z)\,dV = \iint_D \int_{g_1(x,y)}^{g_2(x,y)} f(x,y,z)\,dz\,dA.}
+
+[157-157 title c11s2-thm-triple-integral-z-simple default_required]
+Idea of the proof
+
+[158-164 p c11s2-thm-triple-integral-z-simple default_required]
+For each fixed (x,y) in the shadow D, the vertical line through
+          (x,y) cuts the solid in the interval
+          g_1(x,y)\le z\le g_2(x,y).
+          The inner integral adds f along that vertical slice. The outer double integral
+          adds all the vertical slices over the shadow D.
+
+[165-168 p c11s2-thm-triple-integral-z-simple default_required]
+This is the same slicing idea as Fubini's theorem, except now the slice endpoints
+          depend on position.
+
+[173-173 title checkpoint-11-2-slice-drops-a-dimension default_required]
+Why a slice drops a dimension?
+
+[175-181 p checkpoint-11-2-slice-drops-a-dimension default_required]
+For a z-simple solid we computed \iiint_E f\,dV by first integrating
+          along each vertical slice, \int_{g_1(x,y)}^{g_2(x,y)} f\,dz, and then doing a
+          double integral over the shadow D. Why does integrating along the vertical
+          line segments parallel to the z-axis leave a double integral over D, instead
+          of leaving you with three integrals to do all at once?
+
+[184-188 p checkpoint-11-2-slice-drops-a-dimension hint]
+After the inner dz-integral is done, the result no longer depends on z;
+          it is just a number attached to each point (x,y) of the shadow. How many free
+          variables are left, and what kind of region do they range over?
+
+[193-197 p c11s2-subsec-slicing-perpendicular default_required]
+The word z-simple matters. A vertical line must hit the solid in one interval. If
+      it hits the solid in two separated pieces, one pair of z-limits cannot describe the
+      solid without filling in empty space.
+
+[200-200 title c11s2-ex-one-slice-one-interval default_required]
+Why one slice must be one interval
+
+[202-206 p c11s2-ex-one-slice-one-interval default_required]
+Let
+          E=\bigl([0,1]\times[0,1]\times[0,1]\bigr)\cup\bigl([0,1]\times[0,1]\times[2,3]\bigr).
+          This solid is two square shelves with a gap between them.
+
+[207-218 p c11s2-ex-one-slice-one-interval default_required]
+For each point (x,y) in the unit square, the vertical line meets the solid in
+          0\le z\le1
+          and also in
+          2\le z\le3.
+          It does not meet the gap
+          1\lt z\lt2.
+          If we wrote
+          0\le z\le3,
+          we would describe a full box of volume 3, not two shelves of total volume
+          2.
+
+[219-223 p c11s2-ex-one-slice-one-interval default_required]
+The correct integral is a sum:
+          \boxed{\iiint_E f\,dV = \int_0^1\int_0^1\int_0^1 f\,dz\,dy\,dx + \int_0^1\int_0^1\int_2^3 f\,dz\,dy\,dx.}
+          If one slice breaks into pieces, split the solid.
+
+[227-227 p c11s2-subsec-slicing-perpendicular default_required]
+There are also x-simple and y-simple solids.
+
+[229-236 p c11s2-subsec-slicing-perpendicular default_required]
+An x-simple solid has the form
+      E=\left\{(x,y,z):(y,z)\in D_{yz},\ h_1(y,z)\le x\le h_2(y,z)\right\}.
+      A y-simple solid has the form
+      E=\left\{(x,y,z):(x,z)\in D_{xz},\ k_1(x,z)\le y\le k_2(x,z)\right\}.
+      The same solid may be simple in more than one direction. The best direction is the one
+      that makes the bounds easiest.
+
+[240-240 title c11s2-subsec-regions-bounded-surfaces default_required]
+Regions bounded by surfaces
+
+[242-242 p c11s2-subsec-regions-bounded-surfaces default_required]
+Many solids are described as the region between two surfaces above a plane region.
+
+[245-245 title c11s2-ex-layer-two-surfaces default_required]
+A layer between two slanted surfaces
+
+[247-277 p c11s2-ex-layer-two-surfaces default_required]
+A layer of insulation fills the region above the rectangle
+          0\le x\le2,\qquad 0\le y\le1.
+          Its lower surface is
+          z=1+x,
+          and its upper surface is
+          z=5-y.
+          Since
+          1+x\le 5-y
+          on this rectangle, the solid is
+          E=\left\{(x,y,z):0\le x\le2,\ 0\le y\le1,\ 1+x\le z\le 5-y\right\}.
+          Its volume is
+          
+            \operatorname{Volume}(E) \amp= \int_0^2\int_0^1\int_{1+x}^{5-y}1\,dz\,dy\,dx
+            \amp= \int_0^2\int_0^1 \bigl((5-y)-(1+x)\bigr)\,dy\,dx
+            \amp= \int_0^2\int_0^1 (4-x-y)\,dy\,dx.
+          
+          Now compute:
+          
+            \int_0^1(4-x-y)\,dy \amp= 4-x-\frac12
+            \amp= \frac72-x.
+          
+          Thus
+          
+            \operatorname{Volume}(E) \amp= \int_0^2 \left(\frac72-x\right)\,dx
+            \amp= 7-2
+            \amp= 5.
+          
+          So
+          \boxed{\operatorname{Volume}(E)=5.}
+
+[281-288 p c11s2-subsec-regions-bounded-surfaces default_required]
+The inner integral with respect to z simply subtracts top minus bottom:
+      (5-y)-(1+x).
+      So for volume between two graphs,
+      \boxed{\iiint_E 1\,dV = \iint_D \bigl(\text{top}-\text{bottom}\bigr)\,dA.}
+      This is exactly the double-integral volume idea from .
+      Triple integrals did not erase that idea; they placed it inside a larger one.
+
+[291-291 title c11s2-ex-nonconstant-density default_required]
+A nonconstant density between surfaces
+
+[293-317 p c11s2-ex-nonconstant-density default_required]
+Use the same solid
+          0\le x\le2,\qquad 0\le y\le1,\qquad 1+x\le z\le 5-y,
+          but suppose the density is
+          \rho(x,y,z)=z.
+          Then
+          
+            M \amp= \int_0^2\int_0^1\int_{1+x}^{5-y} z\,dz\,dy\,dx
+            \amp= \int_0^2\int_0^1 \left[\frac12 z^2\right]_{1+x}^{5-y}\,dy\,dx
+            \amp= \frac12 \int_0^2\int_0^1 \left((5-y)^2-(1+x)^2\right)\,dy\,dx.
+          
+          Compute the two pieces:
+          \int_0^1(5-y)^2\,dy = \left[-\frac{(5-y)^3}{3}\right]_0^1 = \frac{125-64}{3} = \frac{61}{3},
+          and
+          \int_0^2(1+x)^2\,dx = \left[\frac{(1+x)^3}{3}\right]_0^2 = \frac{27-1}{3} = \frac{26}{3}.
+          Since the first term is integrated over x\in[0,2] and the second over
+          y\in[0,1],
+          
+            M \amp= \frac12 \left(2\cdot\frac{61}{3} - 1\cdot\frac{26}{3}\right)
+            \amp= \frac12\cdot\frac{96}{3}
+            \amp= 16.
+          
+          So
+          \boxed{M=16.}
+
+[321-321 p c11s2-subsec-regions-bounded-surfaces default_required]
+The bounds describe the solid. The integrand describes what is spread through it.
+
+[325-325 title c11s2-subsec-changing-order default_required]
+Changing the order of integration in space
+
+[327-331 p c11s2-subsec-changing-order default_required]
+Changing the order in two dimensions meant redrawing a region in the plane. Changing the
+      order in three dimensions means redrawing a solid, or at least redrawing its shadow on a
+      coordinate plane.
+
+[333-333 title checkpoint-11-2-reorder-needs-redescribe default_required]
+Why not just shuffle the limits?
+
+[335-341 p checkpoint-11-2-reorder-needs-redescribe default_required]
+When we switched from \int_0^6\int_0^{6-x}\int_0^{6-x-y}\,dz\,dy\,dx to an
+          order with x innermost, the new limits 0\le z\le6-y and
+          0\le x\le6-y-z were not the old limits rearranged. Why does changing the order
+          force us to re-describe the solid from scratch, rather than simply permuting the limits
+          we already had?
+
+[344-350 p checkpoint-11-2-reorder-needs-redescribe hint]
+Each set of limits answers the question “given the variables chosen so far, where
+          can the next one go?” Changing the order changes which variables are
+          chosen first, so it changes which surface bounds the slice and which coordinate plane
+          the shadow lives on. Try sketching the shadow in the yz-plane versus the
+          xy-plane and compare.
+
+[355-362 p c11s2-subsec-changing-order default_required]
+Return to the tetrahedron
+      E=\{(x,y,z):x\ge0,\ y\ge0,\ z\ge0,\ x+y+z\le6\}.
+      One order was
+      \boxed{\iiint_E f\,dV = \int_0^6\int_0^{6-x}\int_0^{6-x-y} f(x,y,z)\,dz\,dy\,dx.}
+      This order uses vertical z-slices. The shadow lies in the xy-plane:
+      0\le x\le6,\qquad 0\le y\le6-x.
+
+[364-374 p c11s2-subsec-changing-order default_required]
+Now choose x as the innermost variable. Then the shadow lies in the
+      yz-plane. For fixed y and z,
+      x
+      runs from the plane x=0 to the slanted plane
+      x=6-y-z.
+      The yz-shadow is the triangle
+      0\le y\le6,\qquad 0\le z\le6-y.
+      So the same integral can be written as
+      \boxed{\iiint_E f\,dV = \int_0^6\int_0^{6-y}\int_0^{6-y-z} f(x,y,z)\,dx\,dz\,dy.}
+
+[376-381 p c11s2-subsec-changing-order default_required]
+A third order is
+      \boxed{\iiint_E f\,dV = \int_0^6\int_0^{6-z}\int_0^{6-z-x} f(x,y,z)\,dy\,dx\,dz.}
+      All three describe the same solid. The only difference is which coordinate direction is
+      used for the innermost slice.
+
+[384-384 caption c11s2-fig-yz-shadow default_required]
+Changing the innermost variable changes the coordinate shadow we must draw.
+
+[386-404 latex-image c11s2-fig-yz-shadow default_required]
+\begin{tikzpicture}[scale=0.95, >=stealth]
+            \draw[->] (-0.3,0) -- (4.5,0) node[right] {\(y\)};
+            \draw[->] (0,-0.3) -- (0,4.5) node[above] {\(z\)};
+
+            \draw[fill=purple!12, draw=purple!60!black, thick]
+                (0,0) -- (4,0) -- (0,4) -- cycle;
+
+            \draw[thick] (4,0) -- (0,4);
+            \node[above right] at (1.9,2.1) {\(y+z=6\)};
+
+            \draw[very thick, blue!60!black] (1.5,0) -- (1.5,2.5);
+            \node[blue!60!black, right] at (1.55,1.25) {\(0\le z\le 6-y\)};
+
+            \node[below] at (4,0) {\(6\)};
+            \node[left] at (0,4) {\(6\)};
+            \node at (2,-0.85) {the \(yz\)-shadow for \(x\)-slices};
+        \end{tikzpicture}
+
+[408-411 p c11s2-subsec-changing-order default_required]
+Sometimes changing order is not only possible; it is the difference between a hard
+      integral and an easy one.
+
+[414-414 title c11s2-ex-change-order-hard-antiderivative default_required]
+Changing order to avoid a hard antiderivative
+
+[416-422 p c11s2-ex-change-order-hard-antiderivative default_required]
+Consider
+          I=\int_0^1\int_0^1\int_y^1 e^{x^2}\,dx\,dz\,dy.
+          The inner integral
+          \int_y^1 e^{x^2}\,dx
+          has no elementary antiderivative.
+
+[423-438 p c11s2-ex-change-order-hard-antiderivative default_required]
+The bounds describe the triangular slab
+          0\le z\le1,\qquad 0\le y\le x\le1.
+          So we can write the same integral with y inside:
+          I=\int_0^1\int_0^1\int_0^x e^{x^2}\,dy\,dz\,dx.
+          Now the inner integral is easy because x is fixed:
+          \int_0^x e^{x^2}\,dy=xe^{x^2}.
+          Therefore
+          
+            I \amp= \int_0^1\int_0^1 xe^{x^2}\,dz\,dx
+            \amp= \int_0^1 xe^{x^2}\,dx
+            \amp= \frac12(e-1).
+          
+          So
+          \boxed{I=\frac{e-1}{2}.}
+
+[439-439 p c11s2-ex-change-order-hard-antiderivative default_required]
+The solid did not change. The grouping of its slices changed.
+
+[443-448 p c11s2-subsec-changing-order default_required]
+The habit from  still works:
+      \boxed{\text{Draw the shadow before writing the bounds.}}
+      For a triple integral, choose the innermost variable first. Then draw the shadow on the
+      plane of the two outer variables.
+
+[452-452 title c11s2-subsec-compact-guide default_required]
+A compact guide to setting up bounds
+
+[454-454 p c11s2-subsec-compact-guide default_required]
+When setting up a triple integral, use the following routine.
+
+[457-457 li c11s2-subsec-compact-guide default_required]
+Decide which variable goes inside.
+
+[458-458 li c11s2-subsec-compact-guide default_required]
+Look along that coordinate direction and describe the first and last surfaces hit.
+
+[459-459 li c11s2-subsec-compact-guide default_required]
+Project the solid onto the plane of the two remaining variables.
+
+[460-460 li c11s2-subsec-compact-guide default_required]
+Describe that shadow using the two-dimensional methods from .
+
+[461-461 li c11s2-subsec-compact-guide default_required]
+Write the integral from inside to outside.
+
+[464-469 p c11s2-subsec-compact-guide default_required]
+For example, if z goes inside, use
+      \int\int\int_{\text{bottom}}^{\text{top}} f(x,y,z)\,dz\,dA.
+      If the xy-shadow is Type I, this becomes
+      \int_a^b \int_{\phi_1(x)}^{\phi_2(x)} \int_{g_1(x,y)}^{g_2(x,y)} f(x,y,z)\,dz\,dy\,dx.
+
+[471-476 p c11s2-subsec-compact-guide default_required]
+If x goes inside, use
+      \int\int\int_{\text{left}}^{\text{right}} f(x,y,z)\,dx\,dA_{yz}.
+      If y goes inside, use
+      \int\int\int_{\text{back}}^{\text{front}} f(x,y,z)\,dy\,dA_{xz}.
+
+[478-481 p c11s2-subsec-compact-guide default_required]
+The names left, right, front, and back depend on the picture. The mathematics is the
+      inequality.
+
+[483-489 p c11s2-subsec-compact-guide default_required]
+Rectangular coordinates are good for boxes, wedges, slabs, and planes. But they are not
+      always the natural language of space. A can, a pipe, a cone, and a ball all ask for
+      distances and angles. If we describe a circular cylinder with x and y,
+      square roots appear everywhere. If we describe it by radius, angle, and height, the solid
+      becomes almost as simple as a box.
+
+[491-495 p c11s2-subsec-compact-guide default_required]
+There is a price: a small coordinate box in radius and angle is not a true rectangular box
+      in space. Its volume has a scale factor. The next section finds that factor:
+      r\,dr\,d\theta\,dz.

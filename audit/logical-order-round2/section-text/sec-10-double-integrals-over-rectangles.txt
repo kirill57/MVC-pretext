@@ -1,0 +1,536 @@
+[5-5 title sec-10-double-integrals-over-rectangles default_required]
+Double integrals over rectangles
+
+[7-12 p sec-10-double-integrals-over-rectangles default_required]
+built the double integral from a
+    picture: columns over small rectangles. Now we make the pieces precise. The goal is the
+    same as in single-variable calculus: define the integral in a way that does not depend on
+    a lucky choice of sample points.
+
+[15-15 title c10s2-subsec-partitions-sample-points default_required]
+Partitions and sample points
+
+[17-30 p c10s2-subsec-partitions-sample-points default_required]
+Start with a rectangle
+      R=[a,b]\times[c,d].
+      A partition of the x-interval is a list
+      a=x_0\lt x_1\lt\cdots\lt x_m=b.
+      A partition of the y-interval is a list
+      c=y_0\lt y_1\lt\cdots\lt y_n=d.
+      Together they cut R into subrectangles
+      R_{ij}=[x_{i-1},x_i]\times[y_{j-1},y_j].
+      The area of R_{ij} is
+      \Delta A_{ij}=\Delta x_i\,\Delta y_j,
+      where
+      \Delta x_i=x_i-x_{i-1}, \qquad \Delta y_j=y_j-y_{j-1}.
+
+[33-34 caption c10s2-fig-partition-rectangle default_required]
+A partition cuts a rectangle into smaller rectangles. A Riemann sum chooses
+      one sample point in each piece.
+
+[36-61 latex-image c10s2-fig-partition-rectangle default_required]
+\begin{tikzpicture}[scale=0.75, >=stealth]
+            \draw[->] (-0.4,0) -- (6.6,0) node[right] {\(x\)};
+            \draw[->] (0,-0.4) -- (0,4.7) node[above] {\(y\)};
+
+            \draw[thick] (0,0) rectangle (6,4);
+
+            \foreach \x in {1,2.4,4.1} {
+                \draw[gray!50] (\x,0) -- (\x,4);
+            }
+            \foreach \y in {0.9,2.2,3.1} {
+                \draw[gray!50] (0,\y) -- (6,\y);
+            }
+
+            \foreach \p in {
+                (0.55,0.45),(1.65,0.55),(3.2,0.35),(5.0,0.65),
+                (0.4,1.5),(1.7,1.35),(3.3,1.75),(5.2,1.45),
+                (0.75,2.75),(1.5,2.6),(3.5,2.55),(5.0,2.75),
+                (0.55,3.55),(1.8,3.55),(3.3,3.65),(5.2,3.5)
+            } {
+                \fill \p circle (1.5pt);
+            }
+
+            \node at (3,-0.8) {one sample point in each subrectangle};
+        \end{tikzpicture}
+
+[65-76 p c10s2-subsec-partitions-sample-points default_required]
+Choose a sample point
+      (x_{ij}^*,y_{ij}^*)\in R_{ij}
+      for each subrectangle. The corresponding Riemann sum is
+      
+      \boxed{
+          S=
+          \sum_{i=1}^{m}\sum_{j=1}^{n}
+          f(x_{ij}^*,y_{ij}^*)\,\Delta x_i\,\Delta y_j.
+      }
+
+[79-79 title c10s2-ex-midpoint-estimate default_required]
+A midpoint estimate on a rectangle
+
+[81-102 p c10s2-ex-midpoint-estimate default_required]
+Let
+          R=[0,4]\times[0,2],
+          and let
+          f(x,y)=3+x+\frac12y.
+          Cut R into four rectangles of size 2\times1. The midpoint sample points
+          are
+          (1,0.5),\quad (3,0.5),\quad (1,1.5),\quad (3,1.5).
+          Each subrectangle has area
+          \Delta A=2.
+          The midpoint Riemann sum is
+          
+            S \amp= 2\Bigl[ f(1,0.5)+f(3,0.5)+f(1,1.5)+f(3,1.5) \Bigr]
+            \amp= 2\Bigl[ \left(3+1+\frac14\right) +\left(3+3+\frac14\right) +\left(3+1+\frac34\right) +\left(3+3+\frac34\right) \Bigr]
+            \amp= 2\left[ \frac{17}{4}+\frac{25}{4}+\frac{19}{4}+\frac{27}{4} \right]
+            \amp= 2\cdot 22
+            \amp= 44.
+          
+          So this grid estimates
+          \iint_R f\,dA
+          by 44.
+
+[106-109 p c10s2-subsec-partitions-sample-points default_required]
+For this linear function, the midpoint estimate is already exact. We will prove such
+      facts later using iterated integrals. For now, the sum is the object to understand.
+
+[112-112 title checkpoint-10-2-sample-points-stop-mattering default_required]
+Why do the sample points stop mattering?
+
+[114-120 p checkpoint-10-2-sample-points-stop-mattering default_required]
+For a continuous function f, two friends compute Riemann sums over the same
+          rectangle, but they pick different sample points
+          (x_{ij}^*,y_{ij}^*) inside each subrectangle, so their sums disagree. As the
+          grid is refined and every subrectangle shrinks, why should this disagreement shrink to
+          0, no matter how stubbornly each friend keeps choosing different points?
+
+[123-127 p checkpoint-10-2-sample-points-stop-mattering hint]
+Think about how much f can change across a single tiny subrectangle. Two sample
+          points in the same cell can differ in value by at most the spread of f on that
+          cell, and that contribution is weighted by \Delta A_{ij}.
+
+[133-133 title c10s2-subsec-integrable-functions-informally default_required]
+Integrable functions, informally
+
+[135-138 p c10s2-subsec-integrable-functions-informally default_required]
+A function is integrable over a rectangle when the Riemann sums settle down to one
+      number as the rectangles get small.
+
+[140-143 p c10s2-subsec-integrable-functions-informally default_required]
+The sample points should stop mattering. The exact shape of the grid should stop
+      mattering. Only the function and the region should matter.
+
+[146-146 title checkpoint-10-2-what-breaks-integrability default_required]
+What kind of bad behavior breaks integrability?
+
+[148-154 p checkpoint-10-2-what-breaks-integrability default_required]
+We just asked that the sample points stop mattering as the grid refines. Imagine a
+          bounded function for which that never happens: no matter how fine the grid, you can
+          still pick sample points that push the sum high and others that push it low. What would
+          such a function have to be doing on every tiny subrectangle to keep the upper and lower
+          estimates from closing in on each other?
+
+[157-161 p checkpoint-10-2-what-breaks-integrability hint]
+Integrability fails when f keeps oscillating wildly at every scale, so that even
+          the smallest subrectangle still contains points with large values and points with small
+          values. Picture a function whose graph never settles down, no matter how far you zoom in.
+
+[166-166 title c10s2-def-integrable-rectangle default_required]
+Integrable over a rectangle
+
+[168-177 p c10s2-def-integrable-rectangle default_required]
+A bounded function
+          f:R\to\mathbb R
+          on a rectangle
+          R=[a,b]\times[c,d]
+          is integrable over R if all Riemann sums
+          \sum_i\sum_j f(x_{ij}^*,y_{ij}^*)\,\Delta A_{ij}
+          approach the same number as the largest side length of the subrectangles approaches
+          0.
+
+[178-185 p c10s2-def-integrable-rectangle default_required]
+That common number is
+          
+          \boxed{
+              \iint_R f\,dA.
+          }
+
+[189-194 p c10s2-subsec-integrable-functions-informally default_required]
+There is another way to say the same thing. On each subrectangle, the function has a
+      largest possible value and a smallest possible value, at least for the functions we first
+      meet. If we use all the largest values, we get an upper estimate. If we use all the
+      smallest values, we get a lower estimate.
+
+[196-199 p c10s2-subsec-integrable-functions-informally default_required]
+If the upper and lower estimates can be forced close together by using a fine enough
+      partition, then the function is integrable.
+
+[202-202 title c10s2-thm-continuous-integrable default_required]
+Continuous functions on rectangles are integrable
+
+[204-208 p c10s2-thm-continuous-integrable default_required]
+If f is continuous on a rectangle
+          R=[a,b]\times[c,d],
+          then f is integrable over R.
+
+[211-211 title c10s2-thm-continuous-integrable default_required]
+Idea of proof
+
+[212-219 p c10s2-thm-continuous-integrable default_required]
+A continuous function on a closed rectangle cannot oscillate too much inside very
+          small rectangles. If the partition is fine enough, then the largest and smallest
+          values of f on each subrectangle are close. Multiplying those small
+          differences by the areas of the subrectangles and adding them gives upper and lower
+          sums that are close. So every reasonable Riemann sum is trapped between two nearly
+          equal numbers.
+
+[223-226 p c10s2-subsec-integrable-functions-informally default_required]
+We required continuity because it gives a clean guarantee. Without it, the conclusion can
+      fail.
+
+[229-229 title c10s2-ex-bounded-not-integrable default_required]
+A bounded function that is not integrable
+
+[231-250 p c10s2-ex-bounded-not-integrable default_required]
+Define a function on the unit square
+          R=[0,1]\times[0,1]
+          by
+          
+          D(x,y)=
+          \begin{cases}
+          1, \amp x\text{ and }y\text{ are both rational},\\
+          0, \amp \text{otherwise}.
+          \end{cases}
+          
+          Every small rectangle contains points with rational coordinates and also points where
+          at least one coordinate is irrational. So on every subrectangle,
+          \text{largest value}=1, \qquad \text{smallest value}=0.
+          Every upper sum is therefore
+          1\cdot \operatorname{Area}(R)=1,
+          and every lower sum is
+          0.
+          The upper and lower sums never get close.
+
+[251-253 p c10s2-ex-bounded-not-integrable default_required]
+The function is bounded, but not integrable. It jumps too wildly on every tiny piece.
+
+[257-257 p c10s2-subsec-integrable-functions-informally default_required]
+The boundedness condition is also part of this definition.
+
+[260-260 title c10s2-ex-unbounded-function default_required]
+An unbounded function needs a different treatment
+
+[262-275 p c10s2-ex-unbounded-function default_required]
+Define
+          
+          u(x,y)=
+          \begin{cases}
+          \dfrac{1}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm]
+          0, \amp (x,y)=(0,0),
+          \end{cases}
+          
+          on
+          [-1,1]\times[-1,1].
+          The function is unbounded near the origin. A sample point very close to the origin
+          can make a Riemann sum extremely large.
+
+[276-280 p c10s2-ex-unbounded-function default_required]
+This function does not fit the ordinary rectangle definition above. Integrals of
+          unbounded functions require a limiting process. Those are improper double integrals,
+          which return in .
+
+[284-289 p c10s2-subsec-integrable-functions-informally default_required]
+The rectangle itself also has finite area. If we try to integrate
+      f(x,y)=1
+      over the whole plane, the sums do not approach a finite number. They grow with the area
+      being covered. Infinite regions also need improper integrals.
+
+[291-294 p c10s2-subsec-integrable-functions-informally default_required]
+For now, rectangles are finite, functions are bounded, and continuity is the safe
+      condition that makes the integral exist.
+
+[298-298 title c10s2-subsec-average-value default_required]
+Average value over a rectangle
+
+[300-304 p c10s2-subsec-average-value default_required]
+Single-variable calculus defined the average value of a function on an interval by
+      f_{\text{avg}} = \frac{1}{b-a}\int_a^b f(x)\,dx.
+      The denominator was the length of the interval.
+
+[306-306 p c10s2-subsec-average-value default_required]
+For a rectangle, length is replaced by area.
+
+[309-309 title checkpoint-10-2-why-divide-by-area default_required]
+Why does dividing by area give the average?
+
+[311-316 p checkpoint-10-2-why-divide-by-area default_required]
+Suppose f were a constant, say f(x,y)=7, on a rectangle R. What is
+          \iint_R f\,dA in that case, and what do you get when you divide it by
+          \operatorname{Area}(R)? Use that simplest case to explain why dividing a general
+          integral by the area deserves to be called the average value of f.
+
+[319-324 p checkpoint-10-2-why-divide-by-area hint]
+The average value should be the single constant height that, spread evenly over R,
+          accumulates the same total \iint_R f\,dA. Setting
+          (\text{height})\times\operatorname{Area}(R)=\iint_R f\,dA and solving for the
+          height gives the formula.
+
+[329-329 title c10s2-def-average-value-rectangle default_required]
+Average value over a rectangle
+
+[331-342 p c10s2-def-average-value-rectangle default_required]
+Let f be integrable over a rectangle R with positive area. The
+          average value of f over R is
+          
+          \boxed{
+              f_{\text{avg}}
+              =
+              \frac{1}{\operatorname{Area}(R)}
+              \iint_R f\,dA.
+          }
+
+[346-354 p c10s2-subsec-average-value default_required]
+The units work out exactly as they should. If f is temperature in degrees Celsius,
+      then
+      \iint_R f\,dA
+      has units
+      {}^\circ\text{C}\cdot \text{m}^2.
+      Dividing by area leaves
+      {}^\circ\text{C}.
+
+[357-357 title c10s2-ex-average-canopy default_required]
+Average height of the market canopy
+
+[359-370 p c10s2-ex-average-canopy default_required]
+In , the canopy over the rectangle
+          [0,4]\times[0,3]
+          had estimated volume
+          33\text{ m}^3.
+          The floor area is
+          4\cdot 3=12\text{ m}^2.
+          So the average canopy height is
+          \frac{33}{12}=\frac{11}{4}=2.75\text{ m}.
+          The average height is the height of a flat roof over the same floor that would enclose
+          the same volume.
+
+[374-374 p c10s2-subsec-average-value default_required]
+That last sentence is often the best way to remember average value:
+
+[376-384 p c10s2-subsec-average-value default_required]
+\boxed{
+          \text{average height}\times\text{base area}
+          =
+          \text{total volume}.
+      }
+
+[388-388 title c10s2-subsec-numerical-estimates default_required]
+Numerical estimates from tables and contour maps
+
+[390-393 p c10s2-subsec-numerical-estimates default_required]
+In applications, we often do not know a formula for f(x,y). We may only have
+      measurements.
+
+[395-403 p c10s2-subsec-numerical-estimates default_required]
+Suppose a greenhouse floor is
+      0\le x\le 6,\qquad 0\le y\le 4,
+      and temperature is measured at the centers of six equal rectangles. Each rectangle has
+      dimensions
+      2\times2,
+      so each has area
+      4.
+
+[406-406 title c10s2-tab-temperature-grid default_required]
+Measured temperatures at the centers of six subrectangles.
+
+[413-413 cell c10s2-tab-temperature-grid default_required]
+
+
+[414-414 cell c10s2-tab-temperature-grid default_required]
+x=1
+
+[415-415 cell c10s2-tab-temperature-grid default_required]
+x=3
+
+[416-416 cell c10s2-tab-temperature-grid default_required]
+x=5
+
+[419-419 cell c10s2-tab-temperature-grid default_required]
+y=3
+
+[420-420 cell c10s2-tab-temperature-grid default_required]
+18
+
+[421-421 cell c10s2-tab-temperature-grid default_required]
+19
+
+[422-422 cell c10s2-tab-temperature-grid default_required]
+20
+
+[425-425 cell c10s2-tab-temperature-grid default_required]
+y=1
+
+[426-426 cell c10s2-tab-temperature-grid default_required]
+22
+
+[427-427 cell c10s2-tab-temperature-grid default_required]
+24
+
+[428-428 cell c10s2-tab-temperature-grid default_required]
+23
+
+[433-444 p c10s2-subsec-numerical-estimates default_required]
+The midpoint estimate for the integral is
+      
+        \iint_R T\,dA \amp\approx 4(18+19+20+22+24+23)
+        \amp= 4(126)
+        \amp= 504.
+      
+      The total area is
+      6\cdot4=24.
+      So the estimated average temperature is
+      T_{\text{avg}} \approx \frac{504}{24} = 21{}^\circ\text{C}.
+
+[446-449 p c10s2-subsec-numerical-estimates default_required]
+This is a double integral computed from a table. The table supplies the sample values.
+      The grid supplies the area pieces.
+
+[451-454 p c10s2-subsec-numerical-estimates default_required]
+Contour maps give another kind of estimate. They do not give values at isolated points;
+      they show curves of equal value. We can estimate by splitting the region into bands.
+
+[457-458 caption c10s2-fig-pond-contours default_required]
+A contour map can be turned into an estimate by using the areas between
+      contours.
+
+[460-513 latex-image c10s2-fig-pond-contours default_required]
+\begin{tikzpicture}[scale=0.82, >=stealth]
+            \draw[thick, fill=blue!6]
+                plot[smooth cycle] coordinates {
+                    (0.4,1.2)
+                    (1.2,0.3)
+                    (3.2,0.2)
+                    (5.3,0.9)
+                    (5.7,2.4)
+                    (4.7,3.8)
+                    (2.5,4.2)
+                    (0.7,3.3)
+                };
+
+            \draw[blue!55!black, thick]
+                plot[smooth cycle] coordinates {
+                    (1.0,1.4)
+                    (1.7,0.9)
+                    (3.4,0.8)
+                    (4.7,1.3)
+                    (4.9,2.4)
+                    (4.0,3.2)
+                    (2.4,3.4)
+                    (1.2,2.7)
+                };
+            \node[blue!55!black] at (5.35,1.35) {\(1\) m};
+
+            \draw[blue!65!black, thick]
+                plot[smooth cycle] coordinates {
+                    (1.6,1.7)
+                    (2.2,1.25)
+                    (3.4,1.25)
+                    (4.1,1.8)
+                    (4.1,2.5)
+                    (3.4,2.9)
+                    (2.3,2.9)
+                    (1.7,2.4)
+                };
+            \node[blue!65!black] at (4.55,2.55) {\(2\) m};
+
+            \draw[blue!75!black, thick]
+                plot[smooth cycle] coordinates {
+                    (2.25,1.9)
+                    (2.8,1.65)
+                    (3.35,1.8)
+                    (3.55,2.35)
+                    (3.1,2.55)
+                    (2.45,2.45)
+                };
+            \node[blue!75!black] at (3.75,2.05) {\(3\) m};
+
+            \node at (3,-0.55) {depth contours for a small pond};
+        \end{tikzpicture}
+
+[518-518 title c10s2-ex-water-volume-depth-bands default_required]
+Estimating water volume from depth bands
+
+[520-522 p c10s2-ex-water-volume-depth-bands default_required]
+A pond is divided by contour lines into depth bands. Suppose the estimated areas are:
+
+[524-524 title c10s2-tab-depth-bands default_required]
+Depth bands, typical depths, and estimated areas for the pond.
+
+[530-530 cell c10s2-tab-depth-bands default_required]
+depth band
+
+[531-531 cell c10s2-tab-depth-bands default_required]
+typical depth
+
+[532-532 cell c10s2-tab-depth-bands default_required]
+area
+
+[535-535 cell c10s2-tab-depth-bands default_required]
+0\text{ to }1\text{ m}
+
+[536-536 cell c10s2-tab-depth-bands default_required]
+0.5\text{ m}
+
+[537-537 cell c10s2-tab-depth-bands default_required]
+120\text{ m}^2
+
+[540-540 cell c10s2-tab-depth-bands default_required]
+1\text{ to }2\text{ m}
+
+[541-541 cell c10s2-tab-depth-bands default_required]
+1.5\text{ m}
+
+[542-542 cell c10s2-tab-depth-bands default_required]
+200\text{ m}^2
+
+[545-545 cell c10s2-tab-depth-bands default_required]
+2\text{ to }3\text{ m}
+
+[546-546 cell c10s2-tab-depth-bands default_required]
+2.5\text{ m}
+
+[547-547 cell c10s2-tab-depth-bands default_required]
+160\text{ m}^2
+
+[550-550 cell c10s2-tab-depth-bands default_required]
+3\text{ to }4\text{ m}
+
+[551-551 cell c10s2-tab-depth-bands default_required]
+3.5\text{ m}
+
+[552-552 cell c10s2-tab-depth-bands default_required]
+60\text{ m}^2
+
+[556-567 p c10s2-ex-water-volume-depth-bands default_required]
+Then the water volume is estimated by
+          
+            V \amp\approx 0.5(120)+1.5(200)+2.5(160)+3.5(60)
+            \amp= 60+300+400+210
+            \amp= 970\text{ m}^3.
+          
+          The pond area is
+          120+200+160+60=540\text{ m}^2.
+          So the estimated average depth is
+          \frac{970}{540}\approx 1.80\text{ m}.
+
+[571-575 p c10s2-subsec-numerical-estimates default_required]
+Both the table method and the contour method are Riemann sums in disguise. Each small
+      contribution has the form
+      \text{value}\times\text{area}.
+
+[577-584 p c10s2-subsec-numerical-estimates default_required]
+So far, our double integrals have been built by estimates. That is honest, but slow.
+      Single-variable calculus became powerful when area sums turned into ordinary
+      antiderivatives. The same thing happens here in a surprising way: a double integral over
+      a rectangle can often be computed by doing two single-variable integrals, one after the
+      other. The next step is to slice the rectangle into strips and let the old Fundamental
+      Theorem of Calculus do part of the work.

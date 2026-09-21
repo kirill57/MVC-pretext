@@ -1,0 +1,153 @@
+[5-5 title sec-appG-numerical-differentiation-and-the-jacobian default_required]
+Numerical differentiation and the Jacobian
+
+[8-8 title appG-numdiff-forward-difference default_required]
+Forward difference
+
+[10-13 p appG-numdiff-forward-difference default_required]
+For a one-variable function,
+      f'(a)\approx \frac{f(a+h)-f(a)}{h}.
+
+[15-15 p appG-numdiff-forward-difference default_required]
+This is simple but less accurate.
+
+[19-19 title appG-numdiff-central-difference default_required]
+Central difference
+
+[21-23 p appG-numdiff-central-difference default_required]
+f'(a)\approx \frac{f(a+h)-f(a-h)}{2h}.
+
+[25-25 p appG-numdiff-central-difference default_required]
+This is usually better.
+
+[29-29 title appG-numdiff-second-derivative default_required]
+Second derivative
+
+[31-33 p appG-numdiff-second-derivative default_required]
+f''(a)\approx \frac{f(a+h)-2f(a)+f(a-h)}{h^2}.
+
+[37-37 title appG-numdiff-partial-derivatives default_required]
+Partial derivatives
+
+[39-44 p appG-numdiff-partial-derivatives default_required]
+For
+      f=f(x,y),
+      f_x(a,b) \approx \frac{f(a+h,b)-f(a-h,b)}{2h}.
+      f_y(a,b) \approx \frac{f(a,b+h)-f(a,b-h)}{2h}.
+
+[48-48 title appG-numdiff-gradient-by-central-differences default_required]
+Gradient by central differences
+
+[50-57 program appG-numdiff-gradient-by-central-differences default_required]
+def grad2(f, x, y, h=1e-5):
+    fx = (f(x+h, y) - f(x-h, y)) / (2*h)
+    fy = (f(x, y+h) - f(x, y-h)) / (2*h)
+    return np.array([fx, fy])
+
+[61-61 title appG-numdiff-jacobian-matrix default_required]
+Jacobian matrix
+
+[63-76 p appG-numdiff-jacobian-matrix default_required]
+For
+      F:\mathbb R^n\to\mathbb R^m,
+      the Jacobian matrix is
+      
+        J_F(\mathbf p)
+        =
+        \begin{pmatrix}
+        \dfrac{\partial F_1}{\partial x_1} \amp \cdots \amp \dfrac{\partial F_1}{\partial x_n}\\[2mm]
+        \vdots \amp \ddots \amp \vdots\\[2mm]
+        \dfrac{\partial F_m}{\partial x_1} \amp \cdots \amp \dfrac{\partial F_m}{\partial x_n}
+        \end{pmatrix}_{\mathbf p}.
+
+[80-80 title appG-numdiff-numerical-jacobian default_required]
+Numerical Jacobian
+
+[82-99 program appG-numdiff-numerical-jacobian default_required]
+def jacobian(F, p, h=1e-5):
+    p = np.array(p, dtype=float)
+    m = len(F(p))
+    n = len(p)
+    J = np.zeros((m, n))
+
+    for j in range(n):
+        e = np.zeros(n)
+        e[j] = 1.0
+        plus = np.asarray(F(p + h*e), dtype=float)
+        minus = np.asarray(F(p - h*e), dtype=float)
+        J[:, j] = (plus - minus) / (2*h)
+
+    return J
+
+[103-103 title appG-numdiff-numerical-hessian default_required]
+Numerical Hessian
+
+[105-111 p appG-numdiff-numerical-hessian default_required]
+For
+      f=f(x,y),
+      f_{xx}\approx \frac{f(x+h,y)-2f(x,y)+f(x-h,y)}{h^2}.
+      f_{yy}\approx \frac{f(x,y+h)-2f(x,y)+f(x,y-h)}{h^2}.
+      f_{xy}\approx \frac{f(x+h,y+h)-f(x+h,y-h)-f(x-h,y+h)+f(x-h,y-h)}{4h^2}.
+
+[115-115 title appG-numdiff-symbolic-jacobian default_required]
+Symbolic Jacobian
+
+[117-119 p appG-numdiff-symbolic-jacobian default_required]
+Using SymPy:
+
+[121-134 program appG-numdiff-symbolic-jacobian default_required]
+import sympy as sp
+
+x, y = sp.symbols("x y")
+
+F = sp.Matrix([
+    x**2 + y,
+    sp.sin(x*y)
+])
+
+J = F.jacobian([x, y])
+
+[138-138 title appG-numdiff-symbolic-hessian default_required]
+Symbolic Hessian
+
+[140-145 program appG-numdiff-symbolic-hessian default_required]
+f = x**3 + x*y + y**2
+H = sp.hessian(f, (x, y))
+
+[149-149 title appG-numdiff-step-size-warning default_required]
+Step-size warning
+
+[152-154 p appG-numdiff-step-size-warning default_required]
+If h is too large, the approximation error is large.
+
+[156-158 p appG-numdiff-step-size-warning default_required]
+If h is too small, roundoff error can dominate.
+
+[160-164 p appG-numdiff-step-size-warning default_required]
+A typical starting value is
+        h=10^{-5}
+        for central differences, but this is not universal.
+
+[169-169 title appG-numdiff-differentiability-warning default_required]
+Differentiability warning
+
+[172-174 p appG-numdiff-differentiability-warning default_required]
+Numerical derivatives can produce misleading numbers near:
+
+[177-177 li appG-numdiff-differentiability-warning default_required]
+corners,
+
+[178-178 li appG-numdiff-differentiability-warning default_required]
+cusps,
+
+[179-179 li appG-numdiff-differentiability-warning default_required]
+jumps,
+
+[180-180 li appG-numdiff-differentiability-warning default_required]
+singularities,
+
+[181-181 li appG-numdiff-differentiability-warning default_required]
+rapid oscillations.
+
+[184-186 p appG-numdiff-differentiability-warning default_required]
+A finite-difference approximation does not prove differentiability.

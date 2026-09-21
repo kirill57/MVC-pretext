@@ -1,0 +1,496 @@
+[5-5 title sec-17-the-exterior-derivative-of-a-2-form default_required]
+The exterior derivative of a 2-form
+
+[7-13 p sec-17-the-exterior-derivative-of-a-2-form default_required]
+turned a work 1-form into a
+    flux 2-form:
+    \omega_{\mathbf F} \quad\longmapsto\quad d\omega_{\mathbf F} = \Phi_{\nabla\times\mathbf F}.
+    A 2-form is integrated over a surface. So its derivative should be integrated over a
+    solid. That means the next exterior derivative should measure source strength inside volume.
+
+[16-16 title c17s3-computing-d-of-a-flux-2-form default_required]
+Computing d(P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy)
+
+[18-22 p c17s3-computing-d-of-a-flux-2-form default_required]
+Picture air flowing through a sealed box. The flux through the boundary tells us whether
+      more air is leaving than entering. If more leaves than enters, something inside acts like a
+      source. If more enters than leaves, something inside acts like a sink.
+
+[24-30 p c17s3-computing-d-of-a-flux-2-form default_required]
+The flux 2-form of a vector field
+      \mathbf F=(P,Q,R)
+      is
+      \Phi_{\mathbf F} = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy.
+      The three pieces measure flux through the three coordinate shadows:
+
+[33-33 title c17s3-tab-flux-pieces default_required]
+The three pieces of a flux 2-form.
+
+[36-36 cell c17s3-tab-flux-pieces default_required]
+Piece
+
+[37-37 cell c17s3-tab-flux-pieces default_required]
+Surface direction
+
+[38-38 cell c17s3-tab-flux-pieces default_required]
+Field component measured
+
+[41-41 cell c17s3-tab-flux-pieces default_required]
+dy\wedge dz
+
+[42-42 cell c17s3-tab-flux-pieces default_required]
+yz-oriented area
+
+[43-43 cell c17s3-tab-flux-pieces default_required]
+x-component P
+
+[46-46 cell c17s3-tab-flux-pieces default_required]
+dz\wedge dx
+
+[47-47 cell c17s3-tab-flux-pieces default_required]
+zx-oriented area
+
+[48-48 cell c17s3-tab-flux-pieces default_required]
+y-component Q
+
+[51-51 cell c17s3-tab-flux-pieces default_required]
+dx\wedge dy
+
+[52-52 cell c17s3-tab-flux-pieces default_required]
+xy-oriented area
+
+[53-53 cell c17s3-tab-flux-pieces default_required]
+z-component R
+
+[58-68 p c17s3-computing-d-of-a-flux-2-form default_required]
+Start with the simple expanding field
+      \mathbf F(x,y,z)=(x,2y,3z).
+      Its flux form is
+      \Phi=x\,dy\wedge dz+2y\,dz\wedge dx+3z\,dx\wedge dy.
+       computed the outward flux of this field
+      through a rectangular box and found
+      \text{outward flux}=6\cdot\text{volume}.
+      So its exterior derivative should be
+      6\,dx\wedge dy\wedge dz.
+
+[70-70 p c17s3-computing-d-of-a-flux-2-form default_required]
+Now compute with d.
+
+[72-85 p c17s3-computing-d-of-a-flux-2-form default_required]
+For the first term,
+      d\bigl(x\,dy\wedge dz\bigr) = dx\wedge dy\wedge dz.
+      For the second term,
+      d\bigl(2y\,dz\wedge dx\bigr) = 2\,dy\wedge dz\wedge dx.
+      The order
+      dy\wedge dz\wedge dx
+      is a cyclic shift of
+      dx\wedge dy\wedge dz,
+      so it has the same sign:
+      dy\wedge dz\wedge dx=dx\wedge dy\wedge dz.
+      Thus
+      d\bigl(2y\,dz\wedge dx\bigr) = 2\,dx\wedge dy\wedge dz.
+
+[87-94 p c17s3-computing-d-of-a-flux-2-form default_required]
+For the third term,
+      
+        d\bigl(3z\,dx\wedge dy\bigr) \amp= 3\,dz\wedge dx\wedge dy
+        \amp= 3\,dx\wedge dy\wedge dz.
+      
+      Again the order is cyclic, so the sign is positive.
+
+[96-107 p c17s3-computing-d-of-a-flux-2-form default_required]
+Add the three pieces:
+      
+        d\Phi \amp= dx\wedge dy\wedge dz + 2\,dx\wedge dy\wedge dz + 3\,dx\wedge dy\wedge dz
+        \amp= 6\,dx\wedge dy\wedge dz.
+      
+      So
+      \boxed{ d\Phi=6\,dx\wedge dy\wedge dz. }
+      The coefficient 6 is the source density. Every small volume box has net outward flux
+      approximately
+      6\,\Delta V.
+
+[110-110 caption c17s3-fig-flux-box default_required]
+The exterior derivative of a flux 2-form measures net outward flux per unit volume.
+
+[112-150 latex-image c17s3-fig-flux-box default_required]
+\begin{tikzpicture}[scale=0.9, >=stealth]
+            \coordinate (O) at (0,0);
+            \coordinate (A) at (3.2,0);
+            \coordinate (B) at (4.3,1.0);
+            \coordinate (C) at (1.1,1.0);
+            \coordinate (D) at (0,2.2);
+            \coordinate (E) at (3.2,2.2);
+            \coordinate (F) at (4.3,3.2);
+            \coordinate (G) at (1.1,3.2);
+
+            \draw[fill=gray!8, thick] (O)--(A)--(B)--(C)--cycle;
+            \draw[fill=gray!5, thick] (D)--(E)--(F)--(G)--cycle;
+            \draw[thick] (O)--(D);
+            \draw[thick] (A)--(E);
+            \draw[thick] (B)--(F);
+            \draw[thick] (C)--(G);
+
+            \draw[->, very thick, red!65!black, dashed, draw opacity=0.6] (2.7,2.1) -- (3.6,3.0)
+                node[right, text opacity=1] {\(-P\)};
+            \draw[->, very thick, red!65!black] (1.6,1.1) -- (0.7,0.2)
+                node[left] {\(P\)};
+
+            \draw[very thick, blue!65!black, dashed, draw opacity=0.6] (0.55,1.6) -- (0,1.6);
+            \draw[->, very thick, blue!65!black] (0,1.6) -- (-0.65,1.6)
+                node[left] {\(-Q\)};
+            \draw[->, very thick, blue!65!black] (3.75,1.6) -- (4.95,1.6)
+                node[right] {\(Q\)};
+
+            \draw[very thick, green!50!black, dashed, draw opacity=0.6] (2.15,0.5) -- (2.15,0);
+            \draw[->, very thick, green!50!black] (2.15,0) -- (2.15,-0.7)
+                node[below] {\(-R\)};
+            \draw[->, very thick, green!50!black] (2.15,2.7) -- (2.15,3.9)
+                node[above] {\(R\)};
+
+            \node at (2.15,-1.55)
+                {opposite faces compare how much flux enters and leaves};
+        \end{tikzpicture}
+
+[154-154 p c17s3-computing-d-of-a-flux-2-form default_required]
+The same calculation works for every flux 2-form in space.
+
+[156-167 p c17s3-computing-d-of-a-flux-2-form default_required]
+Let
+      \Phi=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy.
+      Then
+      d\Phi = dP\wedge dy\wedge dz + dQ\wedge dz\wedge dx + dR\wedge dx\wedge dy.
+      Use
+      dP=P_x\,dx+P_y\,dy+P_z\,dz.
+      Only the P_x\,dx term survives, because
+      dy\wedge dy=0, \qquad dz\wedge dz=0.
+      So
+      dP\wedge dy\wedge dz = P_x\,dx\wedge dy\wedge dz.
+
+[169-177 p c17s3-computing-d-of-a-flux-2-form default_required]
+Similarly,
+      dQ=Q_x\,dx+Q_y\,dy+Q_z\,dz.
+      Only the Q_y\,dy term survives:
+      
+        dQ\wedge dz\wedge dx \amp= Q_y\,dy\wedge dz\wedge dx
+        \amp= Q_y\,dx\wedge dy\wedge dz.
+
+[179-187 p c17s3-computing-d-of-a-flux-2-form default_required]
+Finally,
+      dR=R_x\,dx+R_y\,dy+R_z\,dz.
+      Only the R_z\,dz term survives:
+      
+        dR\wedge dx\wedge dy \amp= R_z\,dz\wedge dx\wedge dy
+        \amp= R_z\,dx\wedge dy\wedge dz.
+
+[189-192 p c17s3-computing-d-of-a-flux-2-form default_required]
+Therefore
+      \boxed{ d\Phi = (P_x+Q_y+R_z)\,dx\wedge dy\wedge dz. }
+
+[195-195 title c17s3-def-exterior-derivative-space-2-form default_required]
+Exterior derivative of a space 2-form
+
+[197-203 p c17s3-def-exterior-derivative-space-2-form default_required]
+Let
+          \Phi=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy
+          be a 2-form in space with C^1 coefficient functions. Its exterior
+          derivative is the 3-form
+          \boxed{ d\Phi = (P_x+Q_y+R_z)\,dx\wedge dy\wedge dz. }
+
+[207-210 p c17s3-computing-d-of-a-flux-2-form default_required]
+The notation is compact, but the meaning is physical:
+      \boxed{ d(\text{flux form})=\text{source density volume form}. }
+
+[214-214 title c17s3-divergence-hidden-inside-d-phi default_required]
+Divergence hidden inside d\Phi
+
+[216-225 p c17s3-divergence-hidden-inside-d-phi default_required]
+For a vector field
+      \mathbf F=(P,Q,R),
+      the classical divergence is
+      \boxed{ \nabla\cdot\mathbf F=P_x+Q_y+R_z. }
+      The flux form of \mathbf F is
+      \Phi_{\mathbf F} = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy.
+      Taking its exterior derivative gives
+      \boxed{ d\Phi_{\mathbf F} = (\nabla\cdot\mathbf F)\,dx\wedge dy\wedge dz. }
+
+[228-228 title c17s3-thm-d-flux-is-divergence-volume-form default_required]
+Exterior derivative of a flux form is divergence as a volume form
+
+[230-237 p c17s3-thm-d-flux-is-divergence-volume-form default_required]
+Let
+          \mathbf F=(P,Q,R)
+          be a C^1 vector field in space, and let
+          \Phi_{\mathbf F} = P\,dy\wedge dz + Q\,dz\wedge dx + R\,dx\wedge dy
+          be its flux 2-form. Then
+          \boxed{ d\Phi_{\mathbf F} = (\nabla\cdot\mathbf F)\,dx\wedge dy\wedge dz. }
+
+[240-245 p c17s3-thm-d-flux-is-divergence-volume-form default_required]
+The coefficient of d\Phi_{\mathbf F} is
+          P_x+Q_y+R_z,
+          which is exactly
+          \nabla\cdot\mathbf F.
+
+[249-249 p c17s3-divergence-hidden-inside-d-phi default_required]
+The theorem completes the promised dictionary:
+
+[252-252 title c17s3-tab-translation default_required]
+The exterior derivative across degrees.
+
+[255-255 cell c17s3-tab-translation default_required]
+Form
+
+[256-256 cell c17s3-tab-translation default_required]
+Exterior derivative
+
+[257-257 cell c17s3-tab-translation default_required]
+Classical name
+
+[260-260 cell c17s3-tab-translation default_required]
+f
+
+[261-261 cell c17s3-tab-translation default_required]
+df
+
+[262-262 cell c17s3-tab-translation default_required]
+gradient information
+
+[265-265 cell c17s3-tab-translation default_required]
+P\,dx+Q\,dy+R\,dz
+
+[266-266 cell c17s3-tab-translation default_required]
+d\omega
+
+[267-267 cell c17s3-tab-translation default_required]
+curl flux form
+
+[270-270 cell c17s3-tab-translation default_required]
+P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy
+
+[271-271 cell c17s3-tab-translation default_required]
+d\Phi
+
+[272-272 cell c17s3-tab-translation default_required]
+divergence volume form
+
+[277-280 p c17s3-divergence-hidden-inside-d-phi default_required]
+Gradient, curl, and divergence are no longer three unrelated formulas. They are the same
+      degree-raising operation d, read in degrees 0, 1, and 2.
+
+[283-283 title checkpoint-17-3-one-operation-three-names default_required]
+Why one operation, three names?
+
+[285-290 p checkpoint-17-3-one-operation-three-names default_required]
+Gradient, curl, and divergence all turn out to be the single operation d applied
+          in degrees 0, 1, and 2. What does it tell you about these three
+          classical operators that they are really the same degree-raising step, just read
+          on different kinds of forms?
+
+[293-297 p checkpoint-17-3-one-operation-three-names hint]
+Think about what d always does: it raises a k-form to a
+          (k+1)-form and measures how the form changes from the boundary of a small region to
+          its interior. The classical name you read off depends only on the degree you started in.
+
+[302-302 title c17s3-ex-swirling-field-no-source default_required]
+A swirling field with no source
+
+[304-317 p c17s3-ex-swirling-field-no-source default_required]
+Let
+          \mathbf F(x,y,z)=(-y,x,0).
+          Its flux form is
+          \Phi_{\mathbf F} = -y\,dy\wedge dz + x\,dz\wedge dx.
+          Then
+          P=-y,\qquad Q=x,\qquad R=0.
+          So
+          P_x=0,\qquad Q_y=0,\qquad R_z=0.
+          Therefore
+          \boxed{ d\Phi_{\mathbf F}=0. }
+          The field rotates around the z-axis, but it has no source strength. Air can swirl
+          without being created.
+
+[322-322 title c17s3-ex-uniform-source-density default_required]
+A field with uniform source density
+
+[324-337 p c17s3-ex-uniform-source-density default_required]
+Let
+          \mathbf F(x,y,z)=(x,y,z).
+          Then
+          \Phi_{\mathbf F} = x\,dy\wedge dz + y\,dz\wedge dx + z\,dx\wedge dy.
+          The exterior derivative is
+          
+            d\Phi_{\mathbf F} \amp= (1+1+1)\,dx\wedge dy\wedge dz
+            \amp= 3\,dx\wedge dy\wedge dz.
+          
+          Every small box has net outward flux approximately
+          3\,\Delta V.
+          The field expands uniformly in all three coordinate directions.
+
+[343-343 title c17s3-flux-balance-as-exterior-derivative default_required]
+Flux balance as an exterior derivative statement
+
+[345-350 p c17s3-flux-balance-as-exterior-derivative default_required]
+A 2-form is integrated over a surface:
+      \int_S \Phi.
+      Its derivative is a 3-form, so it is integrated over a solid:
+      \int_E d\Phi.
+
+[352-358 p c17s3-flux-balance-as-exterior-derivative default_required]
+For a rectangular box B and C^1 coefficients defined near it, the
+      Fundamental Theorem of Calculus on opposite faces gives the exact equality
+      \boxed{ \int_{\partial B}\Phi = \int_B d\Phi. }
+      The left side is the outward flux through the boundary. The right side is the source density
+      added throughout the box.
+
+[361-361 title checkpoint-17-3-boundary-flux-versus-interior-source default_required]
+What does the balance really claim?
+
+[363-368 p checkpoint-17-3-boundary-flux-versus-interior-source default_required]
+The relation \int_{\partial B}\Phi = \int_B d\Phi sets a boundary
+          integral equal to an interior integral. In plain words, why should the flux leaking out
+          through the skin of a box be the same as the source density piled up
+          inside it? What would it mean physically if these two numbers disagreed?
+
+[371-375 p checkpoint-17-3-boundary-flux-versus-interior-source hint]
+Imagine nothing is created or destroyed inside the box. Then anything that flows out of
+          the boundary had to come from somewhere within. The interior integral of d\Phi is
+          just the bookkeeping that adds up every tiny source.
+
+[379-394 p c17s3-flux-balance-as-exterior-derivative default_required]
+For the expanding form
+      \Phi=x\,dy\wedge dz+2y\,dz\wedge dx+3z\,dx\wedge dy,
+      the equality is exact on every rectangular box:
+      d\Phi=6\,dx\wedge dy\wedge dz.
+      If
+      B=[a,a+h]\times[b,b+k]\times[c,c+\ell],
+      then
+      \int_B d\Phi = \int_B 6\,dx\wedge dy\wedge dz = 6hk\ell.
+      The boundary flux is also
+      6hk\ell,
+      because the opposite faces contribute
+      hk\ell,\qquad 2hk\ell,\qquad 3hk\ell.
+      So
+      \boxed{ \int_{\partial B}\Phi=\int_B d\Phi. }
+
+[396-401 p c17s3-flux-balance-as-exterior-derivative default_required]
+For a general smooth field, the equality is already exact on each box. Approximating
+      its volume integral by the divergence at one point times the box volume introduces
+      an approximation. When boxes are added, their interior face integrals cancel;
+      this cancellation is the starting point for the theorem on more general regions.
+
+[403-407 p c17s3-flux-balance-as-exterior-derivative default_required]
+That is the same cancellation pattern we saw in Green's theorem. In the plane, small edge
+      contributions cancel inside a region. In space, small face contributions cancel inside a
+      solid.
+
+[411-411 title c17s3-divergence-theorem-previewed-again preview_or_optional_candidate]
+The divergence theorem previewed again
+
+[413-413 p c17s3-divergence-theorem-previewed-again preview_or_optional_candidate]
+The divergence theorem is the 2-form version of the same boundary principle.
+
+[416-416 title c17s3-thm-divergence-theorem-form-version preview_or_optional_candidate]
+Divergence theorem, form version
+
+[418-428 p c17s3-thm-divergence-theorem-form-version preview_or_optional_candidate]
+Let E be a solid region whose boundary is made from finitely many smooth surface
+          pieces. Give \partial E the outward orientation. Let
+          \Phi=P\,dy\wedge dz+Q\,dz\wedge dx+R\,dx\wedge dy
+          have C^1 coefficient functions on a region containing E. Then
+          \boxed{ \int_{\partial E}\Phi=\int_E d\Phi. }
+          If
+          \Phi=\Phi_{\mathbf F},
+          this is the classical formula
+          \boxed{ \iint_{\partial E}\mathbf F\cdot\widehat{\mathbf n}\,dS = \iiint_E \nabla\cdot\mathbf F\,dV. }
+
+[432-432 p c17s3-divergence-theorem-previewed-again preview_or_optional_candidate]
+The theorem has three sign-and-domain traps.
+
+[435-435 title c17s3-ex-disk-not-closed-boundary preview_or_optional_candidate]
+A disk is not a closed boundary
+
+[437-448 p c17s3-ex-disk-not-closed-boundary preview_or_optional_candidate]
+Let D be the unit disk in the plane z=0, oriented upward, and let
+          \mathbf F=(0,0,1).
+          Its flux form is
+          \Phi=dx\wedge dy.
+          The flux through the disk is
+          \int_D dx\wedge dy=\pi.
+          But
+          d\Phi=0.
+          This does not contradict the divergence theorem. The disk alone is not the boundary of a
+          solid. It has a rim. The theorem needs a closed boundary surface.
+
+[453-453 title c17s3-ex-outward-orientation-matters preview_or_optional_candidate]
+Outward orientation matters
+
+[455-469 p c17s3-ex-outward-orientation-matters preview_or_optional_candidate]
+Let
+          E=[0,1]\times[0,1]\times[0,1]
+          and
+          \mathbf F=(x,0,0).
+          Then
+          \nabla\cdot\mathbf F=1.
+          So
+          \int_E d\Phi_{\mathbf F}=1.
+          With outward orientation, the only nonzero flux is through the face x=1, and it is
+          1.
+          With inward orientation, the same surface integral becomes
+          -1.
+          The theorem uses the outward orientation.
+
+[474-474 title c17s3-ex-hidden-singularity-source preview_or_optional_candidate]
+A hidden singularity can carry source strength
+
+[476-486 p c17s3-ex-hidden-singularity-source preview_or_optional_candidate]
+Consider the inverse-square radial field
+          \mathbf G(x,y,z) = \frac{(x,y,z)}{(x^2+y^2+z^2)^{3/2}},
+          defined on
+          \mathbb R^3\setminus\{(0,0,0)\}.
+          Away from the origin,
+          \nabla\cdot\mathbf G=0,
+          so
+          d\Phi_{\mathbf G}=0
+          where the form is defined.
+
+[487-497 p c17s3-ex-hidden-singularity-source preview_or_optional_candidate]
+Now integrate through the sphere S_a of radius a, oriented outward. On the
+          sphere,
+          \widehat{\mathbf n}=\frac{(x,y,z)}{a}
+          and
+          \mathbf G=\frac{(x,y,z)}{a^3}.
+          Thus
+          \mathbf G\cdot\widehat{\mathbf n} = \frac{1}{a^2}.
+          Therefore
+          \int_{S_a}\Phi_{\mathbf G} = \iint_{S_a}\mathbf G\cdot\widehat{\mathbf n}\,dS = \frac{1}{a^2}\cdot 4\pi a^2 = 4\pi.
+
+[498-503 p c17s3-ex-hidden-singularity-source preview_or_optional_candidate]
+It would be wrong to say
+          d\Phi_{\mathbf G}=0, \qquad \text{so the sphere flux is }0.
+          The field is not defined at the origin, and the origin lies inside the sphere. The
+          missing point is carrying the source.
+
+[508-508 title checkpoint-17-3-zero-divergence-but-nonzero-flux preview_or_optional_candidate]
+How can d\Phi=0 yet the flux be 4\pi?
+
+[510-515 p checkpoint-17-3-zero-divergence-but-nonzero-flux preview_or_optional_candidate]
+For the inverse-square field, d\Phi_{\mathbf G}=0 everywhere the form is defined,
+          and yet the outward flux through a sphere around the origin is 4\pi, not 0.
+          What is it about the hole at the origin that lets a source hide there, even though
+          the source density vanishes at every point you can actually evaluate?
+
+[518-523 p checkpoint-17-3-zero-divergence-but-nonzero-flux hint]
+The divergence theorem trades a boundary integral for an interior integral only when the
+          form is defined on the whole solid. Here the origin is missing, so the interior
+          integral is not allowed to swallow that point. Ask where the theorem's hypothesis quietly
+          fails.
+
+[527-537 p c17s3-divergence-theorem-previewed-again preview_or_optional_candidate]
+The exterior derivative has now moved through every degree available in ordinary space:
+      0\longrightarrow 1\longrightarrow 2\longrightarrow 3.
+      There is no new ordinary spatial integrand after 3-forms. But we can still ask a
+      different question: what happens if we apply d twice? The answer is always zero for
+      smooth forms. That one fact explains both
+      \nabla\times(\nabla f)=\mathbf 0
+      and
+      \nabla\cdot(\nabla\times\mathbf F)=0.
+      It also has a geometric reason: a boundary has no boundary.

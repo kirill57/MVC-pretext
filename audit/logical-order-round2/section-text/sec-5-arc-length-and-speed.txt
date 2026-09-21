@@ -1,0 +1,505 @@
+[5-5 title sec-5-arc-length-and-speed default_required]
+Arc length and speed
+
+[7-14 p sec-5-arc-length-and-speed default_required]
+ended with a
+    warning. The integral of velocity gives displacement:
+    \int_a^b \mathbf r'(t)\,dt=\mathbf r(b)-\mathbf r(a).
+    But displacement is not the same as distance traveled. A runner who completes one lap
+    around a track has returned to the starting point, so the displacement is zero. The run
+    was not zero meters long.
+
+[17-17 title c5s3-distance-traveled-versus-displacement default_required]
+Distance traveled versus displacement
+
+[19-29 p c5s3-distance-traveled-versus-displacement default_required]
+Picture a circular track of radius 50 meters. A runner completes one lap in
+      40 seconds. A convenient position function is
+      \mathbf r(t)=\left(50\cos\frac{2\pi t}{40},50\sin\frac{2\pi t}{40}\right),\qquad 0\le t\le 40.
+      At t=0,
+      \mathbf r(0)=(50,0).
+      At t=40,
+      \mathbf r(40)=(50,0).
+      So the displacement is
+      \mathbf r(40)-\mathbf r(0)=\mathbf 0.
+
+[31-36 p c5s3-distance-traveled-versus-displacement default_required]
+But the distance traveled is the circumference:
+      2\pi(50)=100\pi.
+      The displacement remembers only the start and finish. Distance traveled remembers the
+      whole path.
+
+[39-39 caption c5s3-fig-lap-displacement default_required]
+A closed trip can have zero displacement and positive distance traveled.
+
+[41-58 latex-image c5s3-fig-lap-displacement default_required]
+\begin{tikzpicture}[scale=0.85, >=stealth]
+            \draw[->] (-3.8,0) -- (4.3,0) node[right] {\(x\)};
+            \draw[->] (0,-3.8) -- (0,4.3) node[above] {\(y\)};
+            \draw[gray!20, step=1] (-3,-3) grid (3,3);
+            \draw[thick] (0,0) circle (3);
+            \draw[->, very thick] (3,0) arc[start angle=0,end angle=65,radius=3];
+            \draw[->, very thick] ({3*cos(150)}, {3*sin(150)})
+                arc[start angle=150,end angle=215,radius=3];
+            \draw[->, very thick] ({3*cos(290)}, {3*sin(290)})
+                arc[start angle=290,end angle=355,radius=3];
+            \fill (3,0) circle (2.5pt);
+            \node[below right] at (3,0) {start and finish};
+            \draw[->, thick, dashed] (3.4,-0.5) -- (3.4,0.5);
+            \node[right] at (3.4,0) {one lap};
+            \node at (0,-4.5) {The net displacement is zero, but the distance traveled is \(100\pi\).};
+        \end{tikzpicture}
+
+[62-76 p c5s3-distance-traveled-versus-displacement default_required]
+Differentiate the runner's position:
+      \mathbf r'(t)=\left(-50\frac{2\pi}{40}\sin\frac{2\pi t}{40},50\frac{2\pi}{40}\cos\frac{2\pi t}{40}\right).
+      Its length is
+      
+        \|\mathbf r'(t)\| \amp= 50\frac{2\pi}{40}\sqrt{\sin^2\frac{2\pi t}{40}+\cos^2\frac{2\pi t}{40}}
+        \amp= \frac{5\pi}{2}.
+      
+      So the runner's speed is constant:
+      \frac{5\pi}{2}\text{ meters per second}.
+      Distance traveled is speed multiplied by time:
+      \frac{5\pi}{2}\cdot 40=100\pi.
+      Equivalently,
+      \int_0^{40}\|\mathbf r'(t)\|\,dt=\int_0^{40}\frac{5\pi}{2}\,dt=100\pi.
+
+[78-84 p c5s3-distance-traveled-versus-displacement default_required]
+The vector integral
+      \int_0^{40}\mathbf r'(t)\,dt
+      cancels the forward and backward changes in position. The scalar integral
+      \int_0^{40}\|\mathbf r'(t)\|\,dt
+      does not cancel. Speed is never negative.
+
+[86-86 title checkpoint-5-3-distance-at-least-displacement default_required]
+Why is the trip at least as long as the shortcut?
+
+[88-92 p checkpoint-5-3-distance-at-least-displacement default_required]
+Explain in your own words why the total distance traveled along a path is always at
+          least as large as the magnitude of the displacement \|\mathbf r(b)-\mathbf r(a)\|.
+          When are the two quantities equal?
+
+[95-101 p checkpoint-5-3-distance-at-least-displacement hint]
+Think about the difference between the scalar integral
+          \int_a^b\|\mathbf r'(t)\|\,dt and the vector integral
+          \int_a^b\mathbf r'(t)\,dt. The vector version lets backward steps cancel
+          forward ones; the scalar version never does. What kind of path would have nothing to
+          cancel?
+
+[106-106 p c5s3-distance-traveled-versus-displacement default_required]
+That is the key idea.
+
+[109-109 title c5s3-def-speed default_required]
+Speed
+
+[111-119 p c5s3-def-speed default_required]
+If
+          \mathbf r(t)
+          is a differentiable position function, then its velocity is
+          \mathbf v(t)=\mathbf r'(t),
+          and its speed is
+          \boxed{\|\mathbf v(t)\|=\|\mathbf r'(t)\|.}
+          Velocity is a vector. Speed is a number.
+
+[123-125 p c5s3-distance-traveled-versus-displacement default_required]
+Velocity knows direction. Speed only knows how fast the point is moving.
+
+[129-129 title c5s3-the-arc-length-integral default_required]
+The arc length integral
+
+[131-139 p c5s3-the-arc-length-integral default_required]
+For a short time interval from t to t+\Delta t, the displacement is
+      approximately
+      \mathbf r'(t)\Delta t.
+      The distance traveled during that short time is approximately
+      \|\mathbf r'(t)\Delta t\|=\|\mathbf r'(t)\|\Delta t.
+      Adding these small distances suggests
+      \text{length}=\int_a^b \|\mathbf r'(t)\|\,dt.
+
+[141-144 p c5s3-the-arc-length-integral default_required]
+This is exactly the same idea as single-variable integration. Break the quantity into
+      tiny pieces, approximate each piece, and pass to a limit.
+
+[147-147 title c5s3-ex-length-of-helix default_required]
+Length of a helix
+
+[149-153 p c5s3-ex-length-of-helix default_required]
+Let
+          \mathbf r(t)=\left(2\cos t,\;2\sin t,\;\frac{t}{3}\right),\qquad 0\le t\le 6\pi.
+          This curve winds around a cylinder of radius 2 while rising.
+
+[154-170 p c5s3-ex-length-of-helix default_required]
+Differentiate:
+          \mathbf r'(t)=\left(-2\sin t,\;2\cos t,\;\frac13\right).
+          The speed is
+          
+            \|\mathbf r'(t)\| \amp= \sqrt{(-2\sin t)^2+(2\cos t)^2+\left(\frac13\right)^2}
+            \amp= \sqrt{4\sin^2t+4\cos^2t+\frac19}
+            \amp= \sqrt{4+\frac19}
+            \amp= \frac{\sqrt{37}}{3}.
+          
+          So the length of the helix is
+          
+            L \amp= \int_0^{6\pi}\frac{\sqrt{37}}{3}\,dt
+            \amp= \frac{\sqrt{37}}{3}(6\pi)
+            \amp= 2\pi\sqrt{37}.
+
+[175-175 title c5s3-def-arc-length default_required]
+Arc length
+
+[177-183 p c5s3-def-arc-length default_required]
+Let
+          \mathbf r:[a,b]\to\mathbb R^n
+          be a continuously differentiable curve. Its arc length from t=a
+          to t=b is
+          \boxed{L=\int_a^b \|\mathbf r'(t)\|\,dt.}
+
+[187-192 p c5s3-the-arc-length-integral default_required]
+The symbol ds denotes the arc-length integration element. For an increasing parameter t, its notation means
+      \boxed{ds=\|\mathbf r'(t)\|\,dt.}
+      So the length integral may also be written
+      L=\int_a^b ds.
+
+[194-203 p c5s3-the-arc-length-integral default_required]
+In the plane, where
+      \mathbf r(t)=(x(t),y(t)),
+      this becomes
+      \boxed{ds=\sqrt{(x'(t))^2+(y'(t))^2}\,dt.}
+      In space,
+      \mathbf r(t)=(x(t),y(t),z(t)),
+      and
+      \boxed{ds=\sqrt{(x'(t))^2+(y'(t))^2+(z'(t))^2}\,dt.}
+
+[205-207 p c5s3-the-arc-length-integral default_required]
+The meaning is ordinary single-variable integration of speed. For a small positive time increment \Delta t, the coordinate increments are approximately x'(t)\Delta t, y'(t)\Delta t, and z'(t)\Delta t; their Euclidean length is approximately \|\mathbf r'(t)\|\Delta t. Reversing travel does not change length: under a new parameter, use the speed with respect to that parameter. Thus ds measures unsigned length and is not a signed coordinate measurement such as dx from Chapter 2.
+
+[211-211 title c5s3-why-the-formula-comes-from-polygons default_required]
+Why the formula comes from polygons
+
+[213-215 p c5s3-why-the-formula-comes-from-polygons default_required]
+Before trusting the integral formula, it is helpful to see where it comes from.
+
+[217-227 p c5s3-why-the-formula-comes-from-polygons default_required]
+Take a curve
+      \mathbf r(t),\qquad a\le t\le b,
+      and choose a partition
+      a=t_0<t_1<\cdots<t_N=b.
+      Connect the points
+      \mathbf r(t_0),\mathbf r(t_1),\ldots,\mathbf r(t_N)
+      by straight segments. The length of this polygonal path is
+      L_P=\sum_{i=1}^N \|\mathbf r(t_i)-\mathbf r(t_{i-1})\|.
+      For a fine partition, each small piece of the curve is nearly straight.
+
+[230-230 caption c5s3-fig-polygonal-path default_required]
+Arc length is the limit of polygonal lengths.
+
+[232-249 latex-image c5s3-fig-polygonal-path default_required]
+\begin{tikzpicture}[scale=1.0, >=stealth]
+            \draw[->] (-0.3,0) -- (6.6,0) node[right] {\(x\)};
+            \draw[->] (0,-0.3) -- (0,3.8) node[above] {\(y\)};
+            \draw[thick, domain=0.4:6.0, samples=150, smooth, variable=\x]
+                plot ({\x}, {1.4 + 0.6*sin(1.35*\x r) + 0.12*\x});
+            \coordinate (P0) at (0.4,{1.4 + 0.6*sin(1.35*0.4 r) + 0.12*0.4});
+            \coordinate (P1) at (1.3,{1.4 + 0.6*sin(1.35*1.3 r) + 0.12*1.3});
+            \coordinate (P2) at (2.2,{1.4 + 0.6*sin(1.35*2.2 r) + 0.12*2.2});
+            \coordinate (P3) at (3.3,{1.4 + 0.6*sin(1.35*3.3 r) + 0.12*3.3});
+            \coordinate (P4) at (4.5,{1.4 + 0.6*sin(1.35*4.5 r) + 0.12*4.5});
+            \coordinate (P5) at (6.0,{1.4 + 0.6*sin(1.35*6.0 r) + 0.12*6.0});
+            \draw[very thick, dashed] (P0) -- (P1) -- (P2) -- (P3) -- (P4) -- (P5);
+            \foreach \P in {P0,P1,P2,P3,P4,P5}
+                \fill (\P) circle (2pt);
+            \node at (3.2,-0.8) {A polygonal path approximates the curve.};
+        \end{tikzpicture}
+
+[253-264 p c5s3-why-the-formula-comes-from-polygons default_required]
+On a small interval
+      [t_{i-1},t_i],
+      the displacement is approximately
+      \mathbf r'(t_i^*)\Delta t_i
+      for some point t_i^* in the interval. Its length is approximately
+      \|\mathbf r'(t_i^*)\|\Delta t_i.
+      So the polygonal length is approximately
+      \sum_{i=1}^N \|\mathbf r'(t_i^*)\|\Delta t_i.
+      As the partition gets finer, this Riemann sum becomes
+      \int_a^b \|\mathbf r'(t)\|\,dt.
+
+[267-267 title c5s3-thm-arc-length-formula default_required]
+Arc length formula
+
+[269-276 p c5s3-thm-arc-length-formula default_required]
+Let
+          \mathbf r:[a,b]\to\mathbb R^n
+          be continuously differentiable. Then the arc length of the curve is
+          \boxed{L=\int_a^b \|\mathbf r'(t)\|\,dt.}
+          If the curve is only piecewise continuously differentiable, the same formula holds by
+          splitting the interval into smooth pieces and adding the lengths.
+
+[279-279 title c5s3-thm-arc-length-formula default_required]
+Proof idea
+
+[280-290 p c5s3-thm-arc-length-formula default_required]
+On a very short interval, a differentiable curve is well approximated by its tangent
+          line:
+          \mathbf r(t+\Delta t)-\mathbf r(t)\approx\mathbf r'(t)\Delta t.
+          Taking lengths gives
+          \|\mathbf r(t+\Delta t)-\mathbf r(t)\|\approx\|\mathbf r'(t)\|\Delta t.
+          Adding these approximations over the whole interval gives a Riemann sum for
+          \int_a^b \|\mathbf r'(t)\|\,dt.
+          The continuity of \mathbf r' makes the approximation behave uniformly as the
+          subintervals shrink.
+
+[294-296 p c5s3-why-the-formula-comes-from-polygons default_required]
+The smoothness condition is there to keep the tangent approximation honest.
+
+[299-299 title c5s3-ex-corner-piece-by-piece default_required]
+A corner must be treated piece by piece
+
+[301-305 p c5s3-ex-corner-piece-by-piece default_required]
+Let
+          \mathbf r(t)=(|t|,t),\qquad -1\le t\le1.
+          This curve has a corner at t=0. It is not differentiable there.
+
+[306-317 p c5s3-ex-corner-piece-by-piece default_required]
+For t<0,
+          \mathbf r(t)=(-t,t),
+          so
+          \mathbf r'(t)=(-1,1),\qquad \|\mathbf r'(t)\|=\sqrt2.
+          For t>0,
+          \mathbf r(t)=(t,t),
+          so
+          \mathbf r'(t)=(1,1),\qquad \|\mathbf r'(t)\|=\sqrt2.
+          The curve is made of two straight segments, each of length \sqrt2. Therefore
+          L=2\sqrt2.
+
+[318-324 p c5s3-ex-corner-piece-by-piece default_required]
+We could not apply the smooth theorem on the whole interval at once, because the
+          velocity does not exist at t=0. But the curve is piecewise smooth, so we split
+          it:
+          L=\int_{-1}^0\sqrt2\,dt+\int_0^1\sqrt2\,dt=2\sqrt2.
+          The moral is simple: one corner is not a disaster, but it must be acknowledged.
+
+[330-330 title c5s3-arc-length-does-not-depend-on-the-clock default_required]
+Arc length does not depend on the clock
+
+[331-331 p c5s3-arc-length-does-not-depend-on-the-clock default_required]
+Here a change of clock means a continuously differentiable, strictly monotone reparametrization with nonzero derivative, covering the same traversal once. By the componentwise single-variable chain rule, \|d\mathbf r(t(u))/du\|=\|\mathbf r'(t(u))\||t'(u)|; ordinary substitution in the length integral proves invariance, also when the direction is reversed. Traversing a curve twice instead of once doubles the distance traveled.
+
+[333-335 p c5s3-arc-length-does-not-depend-on-the-clock default_required]
+The same path can be traced slowly or quickly. Its length should not change.
+
+[337-344 p c5s3-arc-length-does-not-depend-on-the-clock default_required]
+Consider the unit circle traced once:
+      \mathbf r_1(t)=(\cos t,\sin t),\qquad 0\le t\le2\pi.
+      Its speed is
+      \|\mathbf r_1'(t)\|=\|(-\sin t,\cos t)\|=1.
+      So its length is
+      L_1=\int_0^{2\pi}1\,dt=2\pi.
+
+[346-357 p c5s3-arc-length-does-not-depend-on-the-clock default_required]
+Now trace the same circle using the faster clock
+      \mathbf r_2(u)=(\cos(2u),\sin(2u)),\qquad 0\le u\le\pi.
+      This also goes once around the circle. Its velocity is
+      \mathbf r_2'(u)=(-2\sin(2u),2\cos(2u)),
+      and its speed is
+      \|\mathbf r_2'(u)\|=2.
+      So
+      L_2=\int_0^\pi 2\,du=2\pi.
+      The second clock runs over a shorter interval, but the speed with respect to that clock
+      is larger. The product gives the same length.
+
+[359-362 p c5s3-arc-length-does-not-depend-on-the-clock default_required]
+This is the reason arc length is geometric. It belongs to the curve, not to a particular
+      clock.
+
+[364-364 title checkpoint-5-3-length-independent-of-clock default_required]
+Why does the clock not matter?
+
+[366-370 p checkpoint-5-3-length-independent-of-clock default_required]
+When we sped up the clock so the same circle was traced over a shorter interval, the
+          speed \|\mathbf r'\| grew but the arc length stayed 2\pi. Explain why
+          changing how fast you traverse a curve never changes its length.
+
+[373-377 p checkpoint-5-3-length-independent-of-clock hint]
+Arc length is built from the product \|\mathbf r'(t)\|\,dt. A faster clock
+          increases the speed but compresses the interval by the same factor. Picture walking
+          and running along the same hallway: which one covers more floor?
+
+[384-384 title c5s3-the-unit-tangent-vector default_required]
+The unit tangent vector
+
+[386-389 p c5s3-the-unit-tangent-vector default_required]
+Velocity gives both speed and direction. If we want only the direction of motion, we
+      divide by the speed.
+
+[391-401 p c5s3-the-unit-tangent-vector default_required]
+For the circle
+      \mathbf r(t)=(50\cos t,50\sin t),
+      the velocity is
+      \mathbf r'(t)=(-50\sin t,50\cos t).
+      The speed is
+      \|\mathbf r'(t)\|=50.
+      So the direction of motion is
+      \frac{\mathbf r'(t)}{\|\mathbf r'(t)\|}=(-\sin t,\cos t).
+      This vector has length 1, and it is tangent to the circle.
+
+[404-404 title c5s3-def-unit-tangent-vector default_required]
+Unit tangent vector
+
+[406-412 p c5s3-def-unit-tangent-vector default_required]
+If
+          \mathbf r'(t)\ne\mathbf 0,
+          then the unit tangent vector is
+          \boxed{\mathbf T(t)=\frac{\mathbf r'(t)}{\|\mathbf r'(t)\|}.}
+          It is the unit vector pointing in the direction of motion.
+
+[416-420 p c5s3-the-unit-tangent-vector default_required]
+The condition
+      \mathbf r'(t)\ne\mathbf 0
+      matters. If the velocity vector is zero, then there is no direction to divide by.
+
+[423-423 title c5s3-ex-stopped-particle-no-unit-tangent default_required]
+A stopped particle has no unit tangent at that instant
+
+[425-430 p c5s3-ex-stopped-particle-no-unit-tangent default_required]
+Let
+          \mathbf r(t)=(t^2,0),\qquad -1\le t\le1.
+          This point moves left along the x-axis until t=0, stops, and then moves
+          right along the same line.
+
+[431-443 p c5s3-ex-stopped-particle-no-unit-tangent default_required]
+The velocity is
+          \mathbf r'(t)=(2t,0).
+          For t<0,
+          \mathbf T(t)=(-1,0).
+          For t>0,
+          \mathbf T(t)=(1,0).
+          At t=0,
+          \mathbf r'(0)=(0,0),
+          so
+          \frac{\mathbf r'(0)}{\|\mathbf r'(0)\|}
+          is meaningless.
+
+[444-447 p c5s3-ex-stopped-particle-no-unit-tangent default_required]
+The geometric path lies on the x-axis, but the moving point stops and reverses.
+          There is no single direction of motion at the stopping time.
+
+[451-456 p c5s3-the-unit-tangent-vector default_required]
+A curve with
+      \mathbf r'(t)\ne\mathbf 0
+      is often called regular. Regular curves do not stop. They may turn, but they
+      always have a well-defined direction of motion.
+
+[460-460 title c5s3-reparametrization-by-arc-length default_required]
+Reparametrization by arc length
+
+[462-465 p c5s3-reparametrization-by-arc-length default_required]
+Sometimes the clock t is inconvenient. A curve may speed up and slow down even when
+      its shape is simple. Arc length gives a more geometric parameter.
+
+[467-483 p c5s3-reparametrization-by-arc-length default_required]
+Let
+      \mathbf r(t)=(2\cos t,2\sin t),\qquad 0\le t\le2\pi.
+      The speed is
+      \|\mathbf r'(t)\|=2.
+      The distance traveled from 0 to t is
+      s(t)=\int_0^t 2\,du=2t.
+      So
+      t=\frac{s}{2}.
+      Substituting into the curve gives
+      \mathbf R(s)=\mathbf r\left(\frac{s}{2}\right)=\left(2\cos\frac{s}{2},2\sin\frac{s}{2}\right),\qquad 0\le s\le4\pi.
+      Now s measures distance traveled along the circle. Differentiate:
+      \mathbf R'(s)=\left(-\sin\frac{s}{2},\cos\frac{s}{2}\right).
+      Thus
+      \|\mathbf R'(s)\|=1.
+      The curve is now traveled at unit speed.
+
+[486-486 title c5s3-def-arc-length-function default_required]
+Arc length function
+
+[488-494 p c5s3-def-arc-length-function default_required]
+For a continuously differentiable curve
+          \mathbf r:[a,b]\to\mathbb R^n,
+          the arc length function starting at a is
+          \boxed{s(t)=\int_a^t \|\mathbf r'(u)\|\,du.}
+          It measures the distance traveled from time a to time t.
+
+[498-502 p c5s3-reparametrization-by-arc-length default_required]
+By the single-variable Fundamental Theorem of Calculus,
+      \frac{ds}{dt}=\|\mathbf r'(t)\|.
+      So s increases at the speed of the moving point.
+
+[504-504 title checkpoint-5-3-arc-length-unit-speed default_required]
+What makes arc length the natural parameter?
+
+[506-510 p checkpoint-5-3-arc-length-unit-speed default_required]
+After reparametrizing a regular curve by arc length to get \mathbf R(s), what is
+          its speed \|\mathbf R'(s)\|? Explain why that value is exactly what you should
+          expect when the parameter s itself measures distance traveled.
+
+[513-517 p checkpoint-5-3-arc-length-unit-speed hint]
+Speed is the rate at which distance is covered per unit of the parameter. If the
+          parameter is distance, how much distance passes for each unit of s?
+          You do not need to compute anything; reason from what s measures.
+
+[523-523 title c5s3-thm-reparametrization-by-arc-length default_required]
+Reparametrization by arc length
+
+[525-537 p c5s3-thm-reparametrization-by-arc-length default_required]
+Suppose
+          \mathbf r:[a,b]\to\mathbb R^n
+          is continuously differentiable and
+          \|\mathbf r'(t)\|>0
+          for all t\in[a,b]. Define
+          s(t)=\int_a^t \|\mathbf r'(u)\|\,du.
+          Then s(t) is strictly increasing, so it has an inverse t=t(s). The
+          reparametrized curve
+          \mathbf R(s)=\mathbf r(t(s))
+          has unit speed:
+          \boxed{\left\|\frac{d\mathbf R}{ds}\right\|=1.}
+
+[540-544 p c5s3-thm-reparametrization-by-arc-length default_required]
+Since
+          \frac{ds}{dt}=\|\mathbf r'(t)\|>0,
+          the function s(t) is strictly increasing and therefore invertible.
+
+[545-554 p c5s3-thm-reparametrization-by-arc-length default_required]
+Using the chain rule,
+          \frac{d\mathbf R}{ds}=\frac{d\mathbf r}{dt}\frac{dt}{ds}.
+          But
+          \frac{dt}{ds}=\frac{1}{ds/dt}=\frac{1}{\|\mathbf r'(t)\|}.
+          Therefore
+          \frac{d\mathbf R}{ds}=\frac{\mathbf r'(t)}{\|\mathbf r'(t)\|}=\mathbf T(t).
+          Taking lengths gives
+          \left\|\frac{d\mathbf R}{ds}\right\|=1.
+
+[558-562 p c5s3-reparametrization-by-arc-length default_required]
+The assumption
+      \|\mathbf r'(t)\|>0
+      is not decoration. If the curve stops for a while, arc length cannot serve as a clock.
+
+[565-565 title c5s3-ex-waiting-particle-arc-length default_required]
+If the particle waits, arc length cannot recover the time
+
+[567-571 p c5s3-ex-waiting-particle-arc-length default_required]
+Define a path on 0\le t\le2 by
+          \mathbf r(t)=\begin{cases}(0,0), & 0\le t\le1,\\(t-1,0), & 1\le t\le2.\end{cases}
+          The point waits at the origin for one second, then moves to the right.
+
+[572-582 p c5s3-ex-waiting-particle-arc-length default_required]
+During the waiting time,
+          \|\mathbf r'(t)\|=0.
+          So
+          s(t)=0
+          for every 0\le t\le1. The arc length function is not one-to-one. Knowing
+          s=0
+          does not tell us whether
+          t=0.2,\quad t=0.7,\quad \text{or}\quad t=1.
+          So t cannot be recovered from s. Strictly positive continuous speed guarantees a smooth arc-length parametrization, as the preceding theorem shows. Waiting on an interval prevents recovery of the old clock; an isolated zero of speed requires separate analysis.
+
+[586-592 p c5s3-reparametrization-by-arc-length default_required]
+Arc length solves the first problem raised by motion: how far did the point travel? But it
+      does not tell us how the curve bends. Two roads can have the same length while one is
+      nearly straight and the other twists through sharp turns. The unit tangent vector
+      \mathbf T records direction; the next question is how quickly that direction changes
+      as we move along the curve. That rate of turning is called curvature.

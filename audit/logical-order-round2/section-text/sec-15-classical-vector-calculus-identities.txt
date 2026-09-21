@@ -1,0 +1,373 @@
+[5-5 title sec-15-classical-vector-calculus-identities default_required]
+Classical vector-calculus identities
+
+[7-15 p sec-15-classical-vector-calculus-identities default_required]
+ended with two
+    familiar-looking derivatives:
+    \nabla\times \mathbf F \qquad\text{and}\qquad \nabla\cdot \mathbf F.
+    In vector notation they look like separate operations. In form notation they are
+    successive appearances of the same operation:
+    d.
+    That is why two famous identities are really one fact.
+
+[18-18 title c15s7-subsec-gradient-no-rotation default_required]
+A gradient field has no local rotation
+
+[20-26 p c15s7-subsec-gradient-no-rotation default_required]
+Suppose a metal plate has temperature
+      T(x,y,z)=x^2y+yz+3z.
+      The gradient field is
+      \nabla T=(2xy,\ x^2+z,\ y+3).
+      This field points in the direction of fastest temperature increase.
+
+[28-37 p c15s7-subsec-gradient-no-rotation default_required]
+Compute its curl:
+      
+        \nabla\times(\nabla T) \amp= \left( \frac{\partial}{\partial y}(y+3) - \frac{\partial}{\partial z}(x^2+z), \right.
+        \amp\qquad \frac{\partial}{\partial z}(2xy) - \frac{\partial}{\partial x}(y+3),
+        \amp\qquad\left. \frac{\partial}{\partial x}(x^2+z) - \frac{\partial}{\partial y}(2xy) \right)
+        \amp= (1-1,\ 0-0,\ 2x-2x)
+        \amp= \mathbf 0.
+
+[39-43 p c15s7-subsec-gradient-no-rotation default_required]
+The cancellations are not an accident. A gradient field comes from a potential
+      function. It points uphill. A tiny paddle wheel placed in a pure uphill field may be
+      pushed, but it has no first-order tendency to spin.
+
+[46-46 title checkpoint-15-7-paddle-wheel default_required]
+Why is closed-loop circulation zero?
+
+[47-51 p checkpoint-15-7-paddle-wheel default_required]
+Let f have continuous second partial derivatives on a neighborhood
+      of a small disk. Use the fundamental theorem for work integrals from
+       to explain why
+      \oint_C\nabla f\cdot d\mathbf r=0 around its boundary C.
+      How does this agree with the local paddle-wheel interpretation of curl?
+
+[52-53 p checkpoint-15-7-paddle-wheel hint]
+The integral is the final potential minus the initial potential. A closed
+      path has the same starting and ending point.
+
+[56-65 p c15s7-subsec-gradient-no-rotation default_required]
+In the language of 1-forms, the potential T has differential
+      dT=T_x\,dx+T_y\,dy+T_z\,dz.
+      For our example,
+      dT=2xy\,dx+(x^2+z)\,dy+(y+3)\,dz.
+      Taking d again gives
+      d(dT)=0.
+      That is the form version of
+      \nabla\times(\nabla T)=\mathbf 0.
+
+[68-68 title c15s7-thm-curl-of-gradient default_required]
+Curl of a gradient
+
+[70-76 p c15s7-thm-curl-of-gradient default_required]
+Let f(x,y,z) have continuous second partial derivatives on an open
+          region. Then
+          \boxed{ \nabla\times(\nabla f)=\mathbf 0. }
+          Equivalently,
+          \boxed{ d(df)=0. }
+
+[79-87 p c15s7-thm-curl-of-gradient default_required]
+Write
+          \nabla f=(f_x,f_y,f_z).
+          Then
+          \nabla\times(\nabla f) = (f_{zy}-f_{yz},\ f_{xz}-f_{zx},\ f_{yx}-f_{xy}).
+          If the second partial derivatives are continuous, then the mixed partials agree:
+          f_{zy}=f_{yz},\qquad f_{xz}=f_{zx},\qquad f_{yx}=f_{xy}.
+          So every component is zero.
+
+[91-93 p c15s7-subsec-gradient-no-rotation default_required]
+The hypothesis about continuous second partial derivatives is doing real work.
+
+[96-96 title c15s7-ex-smoothness-hypothesis default_required]
+Why the smoothness hypothesis matters
+
+[98-103 p c15s7-ex-smoothness-hypothesis default_required]
+Define
+          f(x,y)= \begin{cases} \dfrac{xy(x^2-y^2)}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm] 0, \amp (x,y)=(0,0). \end{cases}
+          This function has second mixed partial derivatives at the origin, but they are
+          not equal.
+
+[104-114 p c15s7-ex-smoothness-hypothesis default_required]
+First compute f_x(0,y). For y\ne0,
+          
+            f_x(0,y) \amp= \lim_{h\to0} \frac{f(h,y)-f(0,y)}{h}
+            \amp= \lim_{h\to0} \frac{hy(h^2-y^2)}{h^2+y^2}\cdot\frac1h
+            \amp= \lim_{h\to0} y\frac{h^2-y^2}{h^2+y^2}
+            \amp= -y.
+          
+          Also f_x(0,0)=0. Therefore
+          f_{xy}(0,0) = \lim_{y\to0}\frac{f_x(0,y)-f_x(0,0)}{y} = \lim_{y\to0}\frac{-y}{y} = -1.
+
+[115-125 p c15s7-ex-smoothness-hypothesis default_required]
+Now compute f_y(x,0). For x\ne0,
+          
+            f_y(x,0) \amp= \lim_{h\to0} \frac{f(x,h)-f(x,0)}{h}
+            \amp= \lim_{h\to0} \frac{xh(x^2-h^2)}{x^2+h^2}\cdot\frac1h
+            \amp= \lim_{h\to0} x\frac{x^2-h^2}{x^2+h^2}
+            \amp= x.
+          
+          Also f_y(0,0)=0. Therefore
+          f_{yx}(0,0) = \lim_{x\to0}\frac{f_y(x,0)-f_y(0,0)}{x} = \lim_{x\to0}\frac{x}{x} = 1.
+
+[126-137 p c15s7-ex-smoothness-hypothesis default_required]
+So
+          \boxed{ f_{xy}(0,0)=-1, \qquad f_{yx}(0,0)=1. }
+          If we form the field
+          \nabla f=(f_x,f_y,0),
+          then at the origin the z-component of
+          \nabla\times(\nabla f)
+          would be
+          f_{yx}(0,0)-f_{xy}(0,0)=2.
+          The identity failed because the second partial derivatives were not continuous
+          enough to force mixed partials to agree.
+
+[141-146 p c15s7-subsec-gradient-no-rotation default_required]
+The moral is small but sharp: the identity
+      \nabla\times(\nabla f)=\mathbf 0
+      belongs to sufficiently smooth functions. It is not a purely formal trick with
+      symbols.
+
+[150-150 title c15s7-subsec-curl-no-source default_required]
+A curl field has no source strength
+
+[152-152 p c15s7-subsec-curl-no-source default_required]
+Now look at a curl instead of a gradient.
+
+[154-168 p c15s7-subsec-curl-no-source default_required]
+Let
+      \mathbf F(x,y,z)=(0,xz,0).
+      Then
+      
+        \nabla\times\mathbf F \amp= \left( 0-\frac{\partial}{\partial z}(xz), \frac{\partial}{\partial z}(0)-0, \frac{\partial}{\partial x}(xz)-0 \right)
+        \amp= (-x,0,z).
+      
+      Now take its divergence:
+      
+        \nabla\cdot(\nabla\times\mathbf F) \amp= \frac{\partial}{\partial x}(-x) + \frac{\partial}{\partial y}(0) + \frac{\partial}{\partial z}(z)
+        \amp= -1+0+1
+        \amp= 0.
+
+[170-180 p c15s7-subsec-curl-no-source default_required]
+A curl field represents local spinning. Spinning can move material around, but by
+      itself it does not create source strength. In form language, if
+      \omega=P\,dx+Q\,dy+R\,dz
+      is the work form of \mathbf F, then
+      d\omega
+      is the flux form of \nabla\times\mathbf F. Taking d again gives
+      d(d\omega)=0.
+      That is the form version of
+      \nabla\cdot(\nabla\times\mathbf F)=0.
+
+[183-183 title c15s7-thm-divergence-of-curl default_required]
+Divergence of a curl
+
+[185-194 p c15s7-thm-divergence-of-curl default_required]
+Let
+          \mathbf F=(P,Q,R)
+          have continuous second partial derivatives on an open region. Then
+          \boxed{ \nabla\cdot(\nabla\times\mathbf F)=0. }
+          Equivalently, if
+          \omega=P\,dx+Q\,dy+R\,dz,
+          then
+          \boxed{ d(d\omega)=0. }
+
+[197-210 p c15s7-thm-divergence-of-curl default_required]
+The curl is
+          \nabla\times\mathbf F = (R_y-Q_z,\ P_z-R_x,\ Q_x-P_y).
+          Its divergence is
+          
+            \nabla\cdot(\nabla\times\mathbf F) \amp= (R_y-Q_z)_x + (P_z-R_x)_y + (Q_x-P_y)_z
+            \amp= R_{yx}-Q_{zx}+P_{zy}-R_{xy}+Q_{xz}-P_{yz}.
+          
+          Regroup:
+          (R_{yx}-R_{xy}) + (P_{zy}-P_{yz}) + (Q_{xz}-Q_{zx}).
+          Each pair cancels because the second partial derivatives are continuous.
+          Therefore
+          \nabla\cdot(\nabla\times\mathbf F)=0.
+
+[214-214 p c15s7-subsec-curl-no-source default_required]
+The same smoothness warning appears again.
+
+[217-217 title c15s7-ex-nonsmooth-vector-potential default_required]
+A nonsmooth vector potential can break the cancellation
+
+[219-237 p c15s7-ex-nonsmooth-vector-potential default_required]
+Use the function from the previous example:
+          f(x,y)= \begin{cases} \dfrac{xy(x^2-y^2)}{x^2+y^2}, \amp (x,y)\ne(0,0),\\[2mm] 0, \amp (x,y)=(0,0). \end{cases}
+          Define a vector field in space by
+          \mathbf A(x,y,z)=(0,0,f(x,y)).
+          Then
+          \nabla\times\mathbf A=(f_y,-f_x,0).
+          At the origin,
+          
+            \nabla\cdot(\nabla\times\mathbf A) \amp= (f_y)_x+(-f_x)_y
+            \amp= f_{yx}-f_{xy}
+            \amp= 1-(-1)
+            \amp= 2.
+          
+          So the identity
+          \nabla\cdot(\nabla\times\mathbf A)=0
+          fails at the origin. The formal cancellation depends on the mixed partials being
+          allowed to trade order.
+
+[243-243 title c15s7-subsec-single-fact-d-squared default_required]
+The single fact: d^2=0
+
+[245-245 p c15s7-subsec-single-fact-d-squared default_required]
+The two identities now have the same explanation.
+
+[247-256 p c15s7-subsec-single-fact-d-squared default_required]
+For a function f,
+      df
+      is a 1-form. Its exterior derivative is
+      d(df).
+      The identity
+      d(df)=0
+      is the statement
+      \nabla\times(\nabla f)=\mathbf 0.
+
+[258-269 p c15s7-subsec-single-fact-d-squared default_required]
+For a work 1-form
+      \omega=P\,dx+Q\,dy+R\,dz,
+      the derivative
+      d\omega
+      is the flux 2-form of the curl:
+      d\omega=\Phi_{\nabla\times\mathbf F}.
+      The identity
+      d(d\omega)=0
+      is the statement
+      \nabla\cdot(\nabla\times\mathbf F)=0.
+
+[271-275 p c15s7-subsec-single-fact-d-squared default_required]
+In these degrees, for coefficients with continuous second partial derivatives,
+    the two classical identities are one rule:
+      \boxed{ d^2=0. }
+
+[277-295 p c15s7-subsec-single-fact-d-squared default_required]
+A tiny piece of the algebra shows why. In two variables,
+      df=f_x\,dx+f_y\,dy.
+      Then
+      
+        d(df) \amp= d(f_x)\wedge dx+d(f_y)\wedge dy
+        \amp= (f_{xx}\,dx+f_{xy}\,dy)\wedge dx + (f_{yx}\,dx+f_{yy}\,dy)\wedge dy.
+      
+      Now
+      dx\wedge dx=0, \qquad dy\wedge dy=0,
+      and
+      dy\wedge dx=-dx\wedge dy.
+      So
+      
+        d(df) \amp= f_{xy}\,dy\wedge dx+f_{yx}\,dx\wedge dy
+        \amp= (f_{yx}-f_{xy})\,dx\wedge dy.
+      
+      When the mixed partials agree, this is 0.
+
+[297-300 p c15s7-subsec-single-fact-d-squared default_required]
+The wedge product supplies the sign. Equality of mixed partials supplies the
+      cancellation.
+
+[303-303 title checkpoint-15-7-two-ingredients default_required]
+Two ingredients, one zero?
+
+[305-310 p checkpoint-15-7-two-ingredients default_required]
+The computation of d(df) relied on two separate facts: the wedge product
+          is antisymmetric (so dx\wedge dy=-\,dy\wedge dx), and the mixed partials
+          are equal (f_{xy}=f_{yx}). What does each fact contribute, and why does the
+          result fail to be zero if either one is missing?
+
+[313-317 p checkpoint-15-7-two-ingredients hint]
+Picture the two surviving terms before cancellation. One ingredient lines them up
+          as a difference; the other makes that difference vanish. Try removing each in turn
+          and see which structure collapses.
+
+[323-323 title c15s7-subsec-potentials-topology default_required]
+Potentials and topology warnings
+
+[325-329 p c15s7-subsec-potentials-topology default_required]
+The identity
+      \nabla\times(\nabla f)=\mathbf 0
+      says every gradient field has zero curl.
+
+[331-339 p c15s7-subsec-potentials-topology default_required]
+The converse is more delicate. If
+      \nabla\times\mathbf F=\mathbf 0,
+      and \mathbf F has continuous first partial derivatives on an open region,
+      then it has local potentials; on a simply connected domain it has a global potential
+      by :
+      \mathbf F=\nabla f.
+      But holes can prevent a global potential.
+
+[341-347 p c15s7-subsec-potentials-topology default_required]
+Recall the field
+      \mathbf A(x,y,z) = \left( -\frac{y}{x^2+y^2}, \frac{x}{x^2+y^2}, 0 \right),
+      defined away from the z-axis. A direct calculation gives
+      \nabla\times\mathbf A=\mathbf 0
+      where the field is defined.
+
+[349-365 p c15s7-subsec-potentials-topology default_required]
+But around the unit circle
+      \mathbf r(t)=(\cos t,\sin t,0), \qquad 0\le t\le2\pi,
+      we get
+      \mathbf A(\mathbf r(t))=(-\sin t,\cos t,0),
+      and
+      \mathbf r'(t)=(-\sin t,\cos t,0).
+      Thus
+      
+        \oint_C \mathbf A\cdot d\mathbf r \amp= \int_0^{2\pi} (-\sin t,\cos t,0)\cdot(-\sin t,\cos t,0)\,dt
+        \amp= \int_0^{2\pi}1\,dt
+        \amp= 2\pi.
+      
+      If \mathbf A were a global gradient field on its whole domain, every
+      closed-loop integral would be 0. This nonzero integral proves that no such
+      global potential exists.
+
+[368-368 title checkpoint-15-7-curl-versus-potential default_required]
+Same derivative, different verdict?
+
+[370-376 p checkpoint-15-7-curl-versus-potential default_required]
+The field \mathbf A has zero curl everywhere it is defined, yet its loop
+          integral around the circle is 2\pi rather than 0. Since the curl
+          test is purely local, what is it about the shape of the domain—not
+          the formula for \mathbf A—that lets a curl-free field still fail to
+          have a global potential?
+
+[379-383 p checkpoint-15-7-curl-versus-potential hint]
+A potential would make every closed-loop integral zero. Ask whether the loop
+          could be shrunk to a point while staying inside the domain, and what the missing
+          z-axis has to do with that.
+
+[387-394 p c15s7-subsec-potentials-topology default_required]
+A similar warning appears one level higher. The identity
+      \nabla\cdot(\nabla\times\mathbf A)=0
+      says every curl field has zero divergence. The converse asks whether every
+      divergence-free field can be written as a curl:
+      \mathbf F=\nabla\times\mathbf A.
+      Again, topology can interfere.
+
+[396-411 p c15s7-subsec-potentials-topology default_required]
+Consider
+      \mathbf G(x,y,z) = \frac{(x,y,z)}{(x^2+y^2+z^2)^{3/2}},
+      defined on
+      \mathbb R^3\setminus\{(0,0,0)\}.
+      Away from the origin,
+      \nabla\cdot\mathbf G=0.
+      But the outward flux through any sphere centered at the origin is
+      4\pi.
+      If \mathbf G=\nabla\times\mathbf A for a smooth vector field \mathbf A
+      defined on the punctured space, then the flux of \mathbf G through the sphere
+      would be the flux of a curl through a closed surface. Stokes' theorem would give
+      \iint_S(\nabla\times\mathbf A)\cdot\widehat{\mathbf n}\,dS = \int_{\partial S}\mathbf A\cdot d\mathbf r = 0,
+      because a sphere has no boundary. But the flux is 4\pi. So no global vector
+      potential exists on the punctured space.
+
+[413-417 p c15s7-subsec-potentials-topology default_required]
+These warnings are not exceptions to the identities. They say something more subtle:
+      local derivative tests do not always decide global questions. Smoothness and domain
+      shape both matter.
+
+[419-423 p c15s7-subsec-potentials-topology default_required]
+That is why the final section of the chapter collects the traps. The formulas are
+      short, but the surface, the orientation, the boundary, and the domain decide whether
+      the formula may be used.

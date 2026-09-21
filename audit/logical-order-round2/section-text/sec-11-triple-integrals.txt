@@ -1,0 +1,443 @@
+[5-5 title sec-11-triple-integrals default_required]
+Triple integrals
+
+[7-7 p sec-11-triple-integrals default_required]
+A double integral adds over area. A triple integral adds over volume.
+
+[9-12 p sec-11-triple-integrals default_required]
+That one sentence is almost the whole idea. But it is worth seeing it first in the
+    plainest possible place: a rectangular box.
+
+[15-15 title c11s1-subsec-volume-as-triple-integral default_required]
+Volume as a triple integral
+
+[17-23 p c11s1-subsec-volume-as-triple-integral default_required]
+Imagine a storage room whose dimensions are
+      4\text{ m}\times 3\text{ m}\times 2\text{ m}.
+      Its volume is
+      4\cdot 3\cdot 2=24\text{ m}^3.
+      Now suppose we forget that formula and rebuild the answer by adding small boxes.
+
+[25-32 p c11s1-subsec-volume-as-triple-integral default_required]
+Cut the room into unit cubes. Each cube has volume
+      1\text{ m}^3.
+      There are
+      4\cdot3\cdot2=24
+      of them, so the total volume is
+      24\cdot1=24.
+
+[34-44 p c11s1-subsec-volume-as-triple-integral default_required]
+If the cubes were smaller, the idea would be the same. A small box with side lengths
+      \Delta x,\qquad \Delta y,\qquad \Delta z
+      has volume
+      \Delta V=\Delta x\,\Delta y\,\Delta z.
+      Adding all those small volumes gives the volume of the room:
+      \sum \Delta V.
+      In integral notation,
+      \boxed{\operatorname{Volume}(E)=\iiint_E 1\,dV.}
+      This says: add the constant value 1 throughout the solid E.
+
+[47-47 caption c11s1-fig-box-from-boxes default_required]
+A triple integral begins by adding tiny volume pieces. (Interactive: drag to rotate, scroll to zoom.)
+
+[49-61 asymptote c11s1-fig-box-from-boxes default_required]
+// 3-D interactive (WebGL) figure.
+        import three; size(9cm); currentprojection=orthographic(5,2.6,3.2);
+        int nx=3,ny=2,nz=1; pen edge=gray(0.4)+linewidth(0.4pt);
+        for(int i=0;i<=nx;++i) for(int j=0;j<=ny;++j) draw((i,j,0)--(i,j,nz), edge);
+        for(int i=0;i<=nx;++i) for(int k=0;k<=nz;++k) draw((i,0,k)--(i,ny,k), edge);
+        for(int j=0;j<=ny;++j) for(int k=0;k<=nz;++k) draw((0,j,k)--(nx,j,k), edge);
+        draw(shift((2,1,0))*unitcube, red+opacity(0.45));
+        draw((2,1,0)--(3,1,0)--(3,2,0)--(2,2,0)--cycle, red+linewidth(0.6pt));
+        label("$\Delta V_{ijk}$", (2.5,1.5,1), 2N);
+        draw(O--(nx+1,0,0),gray,Arrow3); draw(O--(0,ny+1,0),gray,Arrow3); draw(O--(0,0,nz+1.3),gray,Arrow3);
+        label("$x$",(nx+1,0,0),S); label("$y$",(0,ny+1,0),E); label("$z$",(0,0,nz+1.3),N);
+
+[65-69 p c11s1-subsec-volume-as-triple-integral default_required]
+Now put a quantity inside the room. Suppose the density of a gas is
+      \rho(x,y,z)=1+\frac z2
+      kilograms per cubic meter. The density is larger near the ceiling.
+
+[71-76 p c11s1-subsec-volume-as-triple-integral default_required]
+A small box near (x,y,z) has mass approximately
+      \rho(x,y,z)\,\Delta V.
+      Adding all small masses gives the total mass:
+      \boxed{M=\iiint_E \rho(x,y,z)\,dV.}
+
+[78-91 p c11s1-subsec-volume-as-triple-integral default_required]
+For our room,
+      E=[0,4]\times[0,3]\times[0,2].
+      The mass is
+      
+        M \amp= \int_0^4\int_0^3\int_0^2 \left(1+\frac z2\right)\,dz\,dy\,dx
+        \amp= \int_0^4\int_0^3 \left[z+\frac{z^2}{4}\right]_{0}^{2}\,dy\,dx
+        \amp= \int_0^4\int_0^3 3\,dy\,dx
+        \amp= \int_0^4 9\,dx
+        \amp= 36.
+      
+      So the gas has total mass
+      \boxed{36\text{ kg}.}
+
+[93-96 p c11s1-subsec-volume-as-triple-integral default_required]
+The calculation did exactly what the story said. It added density times small volume
+      throughout the room.
+
+[99-99 title checkpoint-11-1-one-versus-density default_required]
+Why does adding 1 give volume?
+
+[101-106 p checkpoint-11-1-one-versus-density default_required]
+We wrote \operatorname{Volume}(E)=\iiint_E 1\,dV. Why does adding the constant
+          1 throughout E measure volume, and what changes in the story when the
+          constant 1 is replaced by a density f(x,y,z) so that the integral becomes
+          \iiint_E f\,dV?
+
+[109-113 p checkpoint-11-1-one-versus-density hint]
+Each tiny piece contributes (\text{value})\times \Delta V. Ask yourself what one
+          small piece adds when the value is 1, and what it adds when the value is the local
+          density.
+
+[118-118 title c11s1-def-triple-integral-first-meaning default_required]
+Triple integral, first meaning
+
+[120-127 p c11s1-def-triple-integral-first-meaning default_required]
+Let E be a solid region in space. If sums of the form
+          \sum f(x_i^*,y_i^*,z_i^*)\,\Delta V_i
+          approach one number as the small volume pieces shrink, independent of the sample
+          points, then that number is called the triple integral of f over
+          E, written
+          \boxed{\iiint_E f(x,y,z)\,dV.}
+
+[131-131 p c11s1-subsec-volume-as-triple-integral default_required]
+The symbol dV means a tiny positive volume piece.
+
+[133-147 p c11s1-subsec-volume-as-triple-integral default_required]
+There is also an oriented version. In , the form
+      dx\wedge dy\wedge dz
+      measured signed volume. For a small box whose edges point first in the positive
+      x-direction, then the positive y-direction, then the positive
+      z-direction,
+      dx\wedge dy\wedge dz
+      gives
+      \Delta x\,\Delta y\,\Delta z.
+      So the oriented version of a triple integral is
+      \boxed{\iiint_E f(x,y,z)\,dx\wedge dy\wedge dz.}
+      For volume, mass, probability, and energy, we usually write dV, because those
+      quantities use positive volume. The wedge notation remembers orientation, and that
+      memory will matter when surfaces acquire a chosen side.
+
+[151-151 title c11s1-subsec-integrals-over-boxes default_required]
+Integrals over boxes
+
+[153-158 p c11s1-subsec-integrals-over-boxes default_required]
+A rectangular box has the form
+      B=[a,b]\times[c,d]\times[e,f].
+      That means
+      a\le x\le b,\qquad c\le y\le d,\qquad e\le z\le f.
+
+[160-170 p c11s1-subsec-integrals-over-boxes default_required]
+To build a Riemann sum, cut the three coordinate intervals into pieces. A typical
+      small box has side lengths
+      \Delta x_i,\qquad \Delta y_j,\qquad \Delta z_k,
+      so its volume is
+      \Delta V_{ijk}=\Delta x_i\,\Delta y_j\,\Delta z_k.
+      Choose a sample point
+      (x_{ijk}^*,y_{ijk}^*,z_{ijk}^*)
+      inside that small box. The Riemann sum is
+      \boxed{\sum_i\sum_j\sum_k f(x_{ijk}^*,y_{ijk}^*,z_{ijk}^*)\,\Delta V_{ijk}.}
+
+[172-172 p c11s1-subsec-integrals-over-boxes default_required]
+The table below gives the common meanings.
+
+[175-175 title c11s1-tab-integral-meanings default_required]
+Common meanings of a triple integral.
+
+[178-178 cell c11s1-tab-integral-meanings default_required]
+Function
+
+[179-179 cell c11s1-tab-integral-meanings default_required]
+Units of f
+
+[180-180 cell c11s1-tab-integral-meanings default_required]
+Meaning of \displaystyle\iiint_E f\,dV
+
+[183-183 cell c11s1-tab-integral-meanings default_required]
+f(x,y,z)=1
+
+[184-184 cell c11s1-tab-integral-meanings default_required]
+1
+
+[185-185 cell c11s1-tab-integral-meanings default_required]
+volume of E
+
+[188-188 cell c11s1-tab-integral-meanings default_required]
+\rho(x,y,z)=\text{density}
+
+[189-189 cell c11s1-tab-integral-meanings default_required]
+\text{kg/m}^3
+
+[190-190 cell c11s1-tab-integral-meanings default_required]
+mass
+
+[193-193 cell c11s1-tab-integral-meanings default_required]
+q(x,y,z)=\text{charge density}
+
+[194-194 cell c11s1-tab-integral-meanings default_required]
+\text{C/m}^3
+
+[195-195 cell c11s1-tab-integral-meanings default_required]
+total charge
+
+[198-198 cell c11s1-tab-integral-meanings default_required]
+u(x,y,z)=\text{energy density}
+
+[199-199 cell c11s1-tab-integral-meanings default_required]
+\text{J/m}^3
+
+[200-200 cell c11s1-tab-integral-meanings default_required]
+total energy
+
+[203-203 cell c11s1-tab-integral-meanings default_required]
+p(x,y,z)=\text{probability density}
+
+[204-204 cell c11s1-tab-integral-meanings default_required]
+1/\text{volume}
+
+[205-205 cell c11s1-tab-integral-meanings default_required]
+probability
+
+[211-211 title c11s1-ex-total-charge-box default_required]
+Total charge in a box
+
+[213-222 p c11s1-ex-total-charge-box default_required]
+A solid block occupies
+          B=[0,2]\times[0,1]\times[0,3].
+          Its charge density is
+          q(x,y,z)=6+x+2y+3z.
+          The total charge is
+          Q=\iiint_B q(x,y,z)\,dV.
+          Using the order dz\,dy\,dx,
+          Q=\int_0^2\int_0^1\int_0^3 (6+x+2y+3z)\,dz\,dy\,dx.
+
+[223-230 p c11s1-ex-total-charge-box default_required]
+First integrate with respect to z:
+          
+            \int_0^3(6+x+2y+3z)\,dz \amp= \left[(6+x+2y)z+\frac32z^2\right]_0^3
+            \amp= 3(6+x+2y)+\frac{27}{2}
+            \amp= \frac{63}{2}+3x+6y.
+
+[231-237 p c11s1-ex-total-charge-box default_required]
+Then integrate with respect to y:
+          
+            \int_0^1 \left(\frac{63}{2}+3x+6y\right)\,dy \amp= \frac{63}{2}+3x+3
+            \amp= \frac{69}{2}+3x.
+
+[238-247 p c11s1-ex-total-charge-box default_required]
+Finally,
+          
+            Q \amp= \int_0^2 \left(\frac{69}{2}+3x\right)\,dx
+            \amp= 69+6
+            \amp= 75.
+          
+          So
+          \boxed{Q=75.}
+
+[251-254 p c11s1-subsec-integrals-over-boxes default_required]
+The order dz\,dy\,dx tells us to integrate in z first, then y, then
+      x. It is an instruction for computation.
+
+[256-263 p c11s1-subsec-integrals-over-boxes default_required]
+The oriented volume form
+      dx\wedge dy\wedge dz
+      is different. It remembers the orientation of ordered directions:
+      dx\wedge dy\wedge dz=-dy\wedge dx\wedge dz.
+      For ordinary triple integrals with dV, the order of calculation does not change the
+      sign. The bounds and the differentials only tell us how to do the arithmetic.
+
+[267-267 title c11s1-subsec-iterated-triple-integrals default_required]
+Iterated triple integrals
+
+[269-277 p c11s1-subsec-iterated-triple-integrals default_required]
+The expression
+      \int_a^b\int_c^d\int_e^f f(x,y,z)\,dz\,dy\,dx
+      means
+      \int_a^b \left( \int_c^d \left( \int_e^f f(x,y,z)\,dz \right) dy \right) dx.
+      In the innermost integral, x and y are held constant while z changes.
+      After that, x is held constant while y changes. The outermost integral
+      finally adds the results over x.
+
+[280-280 title checkpoint-11-1-three-ordinary-integrals default_required]
+Why three integrals, one at a time?
+
+[282-286 p checkpoint-11-1-three-ordinary-integrals default_required]
+A triple integral asks us to add over a whole solid at once, yet we compute it by doing
+          three ordinary single integrals in sequence. Why is it legitimate to peel the sum apart
+          this way, holding two variables fixed while we integrate the third?
+
+[289-293 p checkpoint-11-1-three-ordinary-integrals hint]
+Think about grouping the tiny contributions before adding them: first total a thin line in
+          one direction, then collect those lines, then collect again. Holding two variables constant
+          is just deciding which pieces to add first.
+
+[298-298 title c11s1-def-iterated-triple-integral-box default_required]
+Iterated triple integral over a box
+
+[300-306 p c11s1-def-iterated-triple-integral-box default_required]
+For a box
+          B=[a,b]\times[c,d]\times[e,f],
+          the iterated integral
+          \boxed{\int_a^b\int_c^d\int_e^f f(x,y,z)\,dz\,dy\,dx}
+          means that z is integrated first, then y, then x.
+
+[307-310 p c11s1-def-iterated-triple-integral-box default_required]
+Other orders are read the same way. The differential closest to the integrand is the
+          first variable integrated.
+
+[314-323 p c11s1-subsec-iterated-triple-integrals default_required]
+There are six possible orders:
+      
+        \begin{array}{ccc}
+        dz\,dy\,dx, \amp dz\,dx\,dy, \amp dy\,dz\,dx,\\
+        dy\,dx\,dz, \amp dx\,dz\,dy, \amp dx\,dy\,dz.
+        \end{array}
+      
+      For boxes and well-behaved functions, all six orders give the same total.
+
+[326-326 title c11s1-thm-fubini-boxes default_required]
+Fubini's theorem for boxes
+
+[328-339 p c11s1-thm-fubini-boxes default_required]
+Let
+          B=[a,b]\times[c,d]\times[e,f],
+          and suppose f is continuous on B. Then
+          \boxed{\iiint_B f(x,y,z)\,dV}
+          can be computed by any of the six iterated integrals. For example,
+          \boxed{\begin{aligned}
+          \iiint_B f\,dV
+          \amp= \int_a^b\int_c^d\int_e^f f(x,y,z)\,dz\,dy\,dx\\
+          \amp= \int_e^f\int_c^d\int_a^b f(x,y,z)\,dx\,dy\,dz.
+          \end{aligned}}
+
+[343-347 p c11s1-subsec-iterated-triple-integrals default_required]
+Continuity is a safe condition. It guarantees that the volume sums settle down and that
+      slicing in any coordinate order gives the same total. It is stronger than necessary. A
+      density with a jump across a plane can still be integrable.
+
+[350-350 title c11s1-ex-jump-integrable default_required]
+A jump can still be integrated
+
+[352-370 p c11s1-ex-jump-integrable default_required]
+On the box
+          B=[0,1]\times[0,1]\times[0,2],
+          define
+          f(x,y,z)=
+          \begin{cases}
+          2, \amp 0\le z\lt 1,\\
+          5, \amp 1\le z\le2.
+          \end{cases}
+          The function jumps across the plane z=1, so it is not continuous. But the
+          integral is still easy. The lower half of the box contributes
+          2\cdot 1=2,
+          and the upper half contributes
+          5\cdot 1=5.
+          Thus
+          \boxed{\iiint_B f\,dV=7.}
+          So continuity is not the point by itself. The point is that the adding process must
+          have a well-defined limit.
+
+[374-374 p c11s1-subsec-iterated-triple-integrals default_required]
+Here is what breaks when the adding process does not settle.
+
+[377-377 title c11s1-ex-why-integrability default_required]
+Why integrability is needed
+
+[379-391 p c11s1-ex-why-integrability default_required]
+Define a function on
+          B=[0,1]\times[0,1]\times[0,1]
+          by
+          q(x,y,z)=
+          \begin{cases}
+          1, \amp x\text{ is rational},\\
+          0, \amp x\text{ is irrational}.
+          \end{cases}
+          Every small box contains points with rational x-coordinate and points with
+          irrational x-coordinate. So on every small box, the largest possible value of
+          q is 1, and the smallest possible value is 0.
+
+[392-400 p c11s1-ex-why-integrability default_required]
+The upper sums always give the full volume:
+          1.
+          The lower sums always give
+          0.
+          They cannot approach the same number. Therefore
+          \iiint_B q\,dV
+          does not exist as a Riemann integral.
+
+[401-404 p c11s1-ex-why-integrability default_required]
+This example is not a model for a physical density. It is a warning label for the
+          theorem: before changing orders, there must be an integral to change.
+
+[409-409 title c11s1-subsec-iterated-triple-integrals default_required]
+Idea of Fubini's theorem for boxes
+
+[410-414 p c11s1-subsec-iterated-triple-integrals default_required]
+A triple integral over a box adds small contributions
+        f(x,y,z)\,\Delta x\,\Delta y\,\Delta z.
+        An iterated integral groups those same small contributions into slices.
+
+[415-419 p c11s1-subsec-iterated-triple-integrals default_required]
+For example, if we integrate in z first, we add the thin vertical column above a
+        fixed point (x,y). Then we add those columns over y, and finally over
+        x.
+
+[420-424 p c11s1-subsec-iterated-triple-integrals default_required]
+If we integrate in x first, we group the same small boxes into slabs pointing in
+        a different direction. The small contributions are the same; only the grouping changes.
+        For continuous f, the limits of these grouped sums agree.
+
+[429-429 title c11s1-subsec-order-of-integration default_required]
+Order of integration in space
+
+[431-434 p c11s1-subsec-order-of-integration default_required]
+For a rectangular box, changing the order is mostly a matter of taste. The limits stay
+      constant.
+
+[436-453 p c11s1-subsec-order-of-integration default_required]
+Return to the density
+      \rho(x,y,z)=1+\frac z2
+      on
+      B=[0,4]\times[0,3]\times[0,2].
+      The order dz\,dy\,dx gave
+      \int_0^4\int_0^3\int_0^2 \left(1+\frac z2\right)\,dz\,dy\,dx.
+      Since the density depends only on z, it may feel more natural to leave z for
+      last:
+      
+        M \amp= \int_0^2\int_0^3\int_0^4 \left(1+\frac z2\right)\,dx\,dy\,dz
+        \amp= \int_0^2\int_0^3 4\left(1+\frac z2\right)\,dy\,dz
+        \amp= \int_0^2 12\left(1+\frac z2\right)\,dz
+        \amp= 12\left[z+\frac{z^2}{4}\right]_0^2
+        \amp= 36.
+      
+      The same mass appears.
+
+[456-456 title checkpoint-11-1-six-orders-same-answer default_required]
+Why six orders, one answer?
+
+[458-462 p checkpoint-11-1-six-orders-same-answer default_required]
+There are exactly six orders in which we can integrate x, y, and z.
+          Why are there six, and why should all six produce the very same number for a well-behaved
+          integrand on a box?
+
+[465-469 p checkpoint-11-1-six-orders-same-answer hint]
+Count the ways to arrange three variables in a line. Then remember that each order only
+          regroups the same little volume pieces f\,\Delta V before adding—the pieces
+          themselves never change.
+
+[473-479 p c11s1-subsec-order-of-integration default_required]
+For boxes, all coordinate shadows are rectangles. That is why the limits are so calm. A
+      real solid is rarely so polite. A room may have a slanted ceiling. A tank may have a
+      curved side. A solid ball has no flat coordinate face at all. Then the bounds must
+      describe the geometry, and changing the order becomes a drawing problem in three
+      dimensions.
+
+[481-481 p c11s1-subsec-order-of-integration default_required]
+That is where the next section begins.

@@ -1,0 +1,370 @@
+[5-5 title sec-4-parametric-surfaces default_required]
+Parametric surfaces
+
+[8-13 p sec-4-parametric-surfaces default_required]
+described surfaces by equations:
+    x^2+y^2+z^2=9, \qquad z=x^2-y^2, \qquad F(x,y,z)=c.
+    An equation tells us which points belong to a surface. But it does not tell us how to
+    locate a point using two inputs or draw a coordinate grid on it.
+
+[15-15 p sec-4-parametric-surfaces default_required]
+For that, we need parameters.
+
+[17-24 p sec-4-parametric-surfaces default_required]
+A curve used one parameter:
+    \mathbf r(t).
+    The surface-coordinate descriptions in this chapter use two:
+    \mathbf r(u,v).
+    One parameter can move a point along a curve. Two parameters can move a point across
+    a sheet.
+
+[29-29 title c4s5-subsec-surfaces-as-moving-curves default_required]
+Two parameters locate a point
+
+[31-37 p c4s5-subsec-surfaces-as-moving-curves default_required]
+Start with a round pipe of radius 2 and height 5. A point on the pipe can be
+      described by two choices:
+      \text{angle around the pipe},\qquad \text{height along the pipe}.
+      Let the angle be \theta and the height be z. Then
+      \mathbf r(\theta,z) = (2\cos\theta,2\sin\theta,z), \qquad 0\le \theta\le2\pi,\quad 0\le z\le5.
+
+[39-45 p c4s5-subsec-surfaces-as-moving-curves default_required]
+If we hold z fixed, the point moves around a circle:
+      \theta\mapsto (2\cos\theta,2\sin\theta,z).
+      If we hold \theta fixed, the point moves up a vertical line:
+      z\mapsto (2\cos\theta,2\sin\theta,z).
+      The surface is made by letting both motions happen.
+
+[48-48 title checkpoint-4-5-two-parameters default_required]
+Why two parameters?
+
+[50-54 p checkpoint-4-5-two-parameters default_required]
+In the cylinder formula above, explain what changes when you vary only the
+          angle, and what changes when you vary only the height. Why are two input numbers
+          useful for specifying a point on this pipe?
+
+[57-61 p checkpoint-4-5-two-parameters hint]
+On the pipe you can change the angle and the height independently, so it
+          takes two numbers to say where you are. How many independent ways can you move along
+          a single curve?
+
+[66-66 caption c4s5-fig-cylinder-from-rectangle default_required]
+The rectangle of parameter values is wrapped into a cylinder.
+
+[68-109 latex-image c4s5-fig-cylinder-from-rectangle default_required]
+\begin{tikzpicture}[scale=0.82, >=stealth]
+            % parameter domain
+            \begin{scope}
+                \draw[->] (-0.2,0) -- (4.4,0) node[right] {\(\theta\)};
+                \draw[->] (0,-0.2) -- (0,3.4) node[above] {\(z\)};
+
+                \draw[thick] (0,0) rectangle (4,3);
+
+                \foreach \x in {0.8,1.6,2.4,3.2}
+                    \draw[gray!45] (\x,0) -- (\x,3);
+                \foreach \y in {0.6,1.2,1.8,2.4}
+                    \draw[gray!45] (0,\y) -- (4,\y);
+
+                \node at (2,-0.65) {parameter rectangle};
+                \node[left] at (0,3) {\(5\)};
+                \node[below] at (4,0) {\(2\pi\)};
+            \end{scope}
+
+            % arrow
+            \draw[->, thick] (4.7,1.5) -- (6.4,1.5) node[midway, above] {\(\mathbf r\)};
+
+            % cylinder
+            \begin{scope}[shift={(8,0.2)}]
+                \draw[->] (-2.7,0) -- (2.9,0) node[right] {\(x\)};
+                \draw[->] (0,-0.5) -- (0,3.9) node[above] {\(z\)};
+
+                \draw[gray!50] (0,0) ellipse (1.5 and 0.38);
+                \draw[thick] (-1.5,0) -- (-1.5,3);
+                \draw[thick] (1.5,0) -- (1.5,3);
+                \draw[thick] (0,3) ellipse (1.5 and 0.38);
+
+                \foreach \h in {0.6,1.2,1.8,2.4}
+                    \draw[gray!45] (0,\h) ellipse (1.5 and 0.38);
+
+                \foreach \x in {-1.0,0,1.0}
+                    \draw[gray!45] (\x,0.1) -- (\x,2.9);
+
+                \node at (0,-0.95) {cylindrical surface};
+            \end{scope}
+        \end{tikzpicture}
+
+[116-116 title c4s5-subsec-domain-image default_required]
+Parameter domain and image
+
+[119-119 title c4s5-def-parametrized-surface default_required]
+Parametrized surface
+
+[121-128 p c4s5-def-parametrized-surface default_required]
+A parametrization for the sheets considered here is a continuous map
+          \mathbf r:D\to\mathbb R^3,
+          where D is a region in the uv-plane. We write
+          \mathbf r(u,v)=\bigl(x(u,v),y(u,v),z(u,v)\bigr).
+          The image of the parametrization is the set of points
+          \{\mathbf r(u,v):(u,v)\in D\}.
+
+[132-135 p c4s5-subsec-domain-image default_required]
+The region D is called the parameter domain. It might be a rectangle, a
+      disk, a triangle, or some other region.
+
+[137-142 p c4s5-subsec-domain-image default_required]
+We often use the same phrase parametric surface for both the map
+      \mathbf r(u,v)
+      and the geometric surface it traces. When the distinction matters, we will say
+      parametrization for the map and surface for the image.
+
+[144-150 p c4s5-subsec-domain-image default_required]
+Here continuity means that small changes of the two inputs produce small changes
+      of the output point; Chapter 6 makes that precise. Continuity alone does not ensure
+      a sheet: \mathbf r(u,v)=(u,0,0) collapses to a line and
+      \mathbf r(u,v)=(0,0,0) to a point. Our present examples describe sheets;
+      later regularity conditions will identify nondegenerate differentiable patches.
+
+[153-153 title c4s5-ex-cylinder-domains default_required]
+One formula, different domains
+
+[154-158 p c4s5-ex-cylinder-domains default_required]
+Keep \mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z).
+      The domain 0\le\theta\le2\pi, z\in\mathbb R describes the whole
+      infinite cylinder. Restricting to 1\le z\le4 gives a shorter band.
+      Restricting also to 0\le\theta\le\pi gives its half with y\ge0,
+      since \sin\theta\ge0 on that interval.
+
+[159-163 p c4s5-ex-cylinder-domains default_required]
+On the original pipe, direct substitution gives
+      \mathbf r(0,0)=(2,0,0),\quad
+      \mathbf r(\pi/2,3)=(0,2,3),\quad
+      \mathbf r(\pi/3,2)=(1,\sqrt3,2).
+      The input pair is a point in the parameter domain; the output triple is a point in space.
+
+[167-167 title c4s5-ex-discontinuous-rule default_required]
+A discontinuous rule is not a sheet
+
+[169-176 p c4s5-ex-discontinuous-rule default_required]
+Define
+          \mathbf r(u,v)= \begin{cases} (u,v,0), \amp u\lt 0,\\ (u,v,1), \amp u\ge0, \end{cases}
+          on the square
+          -1\le u\le1,\qquad -1\le v\le1.
+          The left half of the square is sent to the plane z=0, while the right half is sent to
+          the plane z=1. Along u=0, the image jumps upward by one unit.
+
+[177-179 p c4s5-ex-discontinuous-rule default_required]
+This is not one continuous surface patch. It is two half-sheets separated by a tear.
+
+[185-185 title c4s5-subsec-graphs-as-parametrized-surfaces default_required]
+Graphs as parametrized surfaces
+
+[187-193 p c4s5-subsec-graphs-as-parametrized-surfaces default_required]
+For a continuous function f, the graph
+      z=f(x,y)
+      has a natural parametrization:
+      \mathbf r(u,v)=(u,v,f(u,v)).
+      The parameters are just the input coordinates.
+
+[196-196 title c4s5-ex-bowl-as-surface default_required]
+A bowl as a parametrized surface
+
+[198-209 p c4s5-ex-bowl-as-surface default_required]
+Consider the elliptic bowl
+          z=4-\frac{x^2}{9}-\frac{y^2}{4}.
+          Using
+          x=u,\qquad y=v,
+          we get
+          \mathbf r(u,v) = \left( u,\, v,\, 4-\frac{u^2}{9}-\frac{v^2}{4} \right).
+          If we use all pairs (u,v), this traces the whole paraboloid. If we restrict the
+          domain, for example to
+          -3\le u\le3,\qquad -2\le v\le2,
+          we get only a rectangular patch of the bowl.
+
+[213-216 p c4s5-subsec-graphs-as-parametrized-surfaces default_required]
+This is one reason parametrizations are useful. The same formula can describe a whole
+      surface or only a chosen piece of it, depending on the parameter domain.
+
+[218-223 p c4s5-subsec-graphs-as-parametrized-surfaces default_required]
+A plane from Chapter 1 is also a parametrized surface:
+      \mathbf r(u,v)=P+u\mathbf a+v\mathbf b.
+      Here \mathbf a and \mathbf b must be linearly independent.
+      The parameters are the scalar multiples of the two plane directions.
+
+[226-226 title c4s5-ex-affine-plane-as-surface default_required]
+An affine plane as a parametrized surface
+
+[228-237 p c4s5-ex-affine-plane-as-surface default_required]
+Let
+          P=(1,0,2),\qquad \mathbf a=(2,1,0),\qquad \mathbf b=(0,1,3).
+          Then
+          \mathbf r(u,v) = (1,0,2)+u(2,1,0)+v(0,1,3).
+          So
+          \mathbf r(u,v)=(1+2u,\;u+v,\;2+3v).
+          This is the plane through P spanned by the directions \mathbf a and
+          \mathbf b.
+
+[241-247 p c4s5-subsec-graphs-as-parametrized-surfaces default_required]
+The formula
+      P+u\mathbf a+v\mathbf b
+      describes the whole plane when both parameters range over all real numbers.
+      For the example above, substituting the coordinate formulas into
+      3x-6y+2z=7 verifies its plane equation.
+
+[251-251 title c4s5-subsec-coordinate-grids default_required]
+Coordinate grids on surfaces
+
+[253-253 p c4s5-subsec-coordinate-grids default_required]
+A parametrization does more than trace points. It brings a grid with it.
+
+[255-259 p c4s5-subsec-coordinate-grids default_required]
+For a surface
+      \mathbf r(u,v),
+      there are two natural families of curves.
+
+[261-268 p c4s5-subsec-coordinate-grids default_required]
+If we hold u=u_0 fixed, we get the curve
+      v\mapsto \mathbf r(u_0,v).
+      If we hold v=v_0 fixed, we get the curve
+      u\mapsto \mathbf r(u,v_0).
+      These are called coordinate curves or grid curves.
+      They are entire curves on the surface, not vectors attached to one point.
+
+[271-271 title c4s5-def-grid-curves default_required]
+Grid curves on a parametrized surface
+
+[273-281 p c4s5-def-grid-curves default_required]
+For a parametrized surface
+          \mathbf r(u,v),
+          the curves
+          \mathbf r(u_0,v)
+          and
+          \mathbf r(u,v_0)
+          are called the grid curves of the parametrization.
+
+[285-289 p c4s5-subsec-coordinate-grids default_required]
+On the cylinder
+      \mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z),
+      the grid curves are easy to see.
+
+[291-294 p c4s5-subsec-coordinate-grids default_required]
+Holding z fixed gives horizontal circles. Holding \theta fixed gives vertical
+      lines.
+
+[296-296 p c4s5-subsec-coordinate-grids default_required]
+On a sphere, the same idea becomes latitude and longitude.
+
+[299-299 title c4s5-ex-latitude-longitude default_required]
+Latitude and longitude as grid curves
+
+[301-308 p c4s5-ex-latitude-longitude default_required]
+The sphere of radius 3 can be parametrized by
+          \mathbf r(\theta,\phi) = (3\sin\phi\cos\theta,\, 3\sin\phi\sin\theta,\, 3\cos\phi),
+          where
+          0\le\theta\le2\pi,\qquad 0\le\phi\le\pi.
+          Here \theta goes around the z-axis, and \phi measures angle down from the
+          positive z-axis.
+
+[309-313 p c4s5-ex-latitude-longitude default_required]
+If 0\lt\phi\lt\pi is fixed, then
+          z=3\cos\phi
+          is fixed, and the point moves around a circle of latitude.
+
+[314-317 p c4s5-ex-latitude-longitude default_required]
+If \theta is fixed, then the point moves along a meridian from the north pole to the
+          south pole.
+
+[324-324 title c4s5-subsec-seams-collapsed-edges default_required]
+Repeated points, seams, and collapsed edges
+
+[326-337 p c4s5-subsec-seams-collapsed-edges default_required]
+The spherical parametrization also shows a small warning. At
+      \phi=0
+      all values of \theta give the same point:
+      (0,0,3).
+      At
+      \phi=\pi,
+      all values of \theta give
+      (0,0,-3).
+      Also, \theta=0 and \theta=2\pi trace the same meridian. So the parametrization
+      is not one-to-one on the full parameter rectangle.
+
+[339-343 p c4s5-subsec-seams-collapsed-edges default_required]
+That is not a mistake. Many useful parametrizations repeat some points. The important
+      thing is to notice when it happens. A collapsed parameter edge does not by itself
+      mean that the geometric surface has a sharp point: the sphere is round even at its poles.
+
+[347-347 title c4s5-subsec-checking-parametrizations default_required]
+Choosing and checking a parametrization
+
+[349-352 p c4s5-subsec-checking-parametrizations default_required]
+Start with the shape: use angle and height for a cylinder, two angles for a sphere,
+    and the two input coordinates for a graph. Then check both the formula and its domain.
+    Substitution shows that the output satisfies the desired equation; the parameter
+    ranges tell you which points are reached and which are repeated.
+
+[355-355 title c4s5-ex-cylinder-point-domain default_required]
+A point and a half-cylinder
+
+[356-358 p c4s5-ex-cylinder-point-domain default_required]
+For \mathbf r(\theta,z)=(2\cos\theta,2\sin\theta,z), find
+      \mathbf r(\pi/3,2). Give a domain for the part with y\ge0 and
+      height between 1 and 4.
+
+[359-359 p c4s5-ex-cylinder-point-domain hint]
+Use the signs of sine on [0,\pi].
+
+[360-361 p c4s5-ex-cylinder-point-domain solution]
+The point is (1,\sqrt3,2); one domain is
+      0\le\theta\le\pi, 1\le z\le4.
+
+[365-365 title c4s5-ex-saddle-grid default_required]
+Grid lines on a saddle
+
+[366-367 p c4s5-ex-saddle-grid default_required]
+Describe the grid curves of \mathbf r(u,v)=(u,v,uv) with
+      u=c and with v=c.
+
+[368-368 p c4s5-ex-saddle-grid hint]
+Replace the fixed parameter by the number c before interpreting the formula.
+
+[369-370 p c4s5-ex-saddle-grid solution]
+They are the straight lines (c,v,cv) and (u,c,cu).
+      A curved surface can contain straight lines.
+
+[374-374 title c4s5-ex-sphere-check-seams default_required]
+Check the sphere and its repetitions
+
+[375-377 p c4s5-ex-sphere-check-seams default_required]
+For the radius-three spherical formula in
+      , verify x^2+y^2+z^2=9.
+      Which two edges describe the same meridian? Which edges collapse to poles?
+
+[378-378 p c4s5-ex-sphere-check-seams hint]
+Use \sin^2 t+\cos^2 t=1 twice, then substitute the four boundary values.
+
+[379-382 p c4s5-ex-sphere-check-seams solution]
+The sum of squares is
+      9\sin^2\phi(\cos^2\theta+\sin^2\theta)+9\cos^2\phi=9.
+      The edges \theta=0,2\pi share a meridian; \phi=0,\pi
+      collapse to (0,0,3) and (0,0,-3).
+
+[386-386 title c4s5-ex-same-cylinder-different-repetitions default_required]
+Same image, different repetitions
+
+[387-389 p c4s5-ex-same-cylinder-different-repetitions default_required]
+Use the cylinder formula with 0\le z\le5. Compare the
+      angular domains [0,2\pi] and [0,4\pi]. Do they have the same
+      image? How many parameter pairs represent a point away from the seam in each case?
+
+[390-390 p c4s5-ex-same-cylinder-different-repetitions hint]
+Adding 2\pi to the angle leaves sine and cosine unchanged.
+
+[391-392 p c4s5-ex-same-cylinder-different-repetitions solution]
+Both describe the same cylindrical side. Away from the seam,
+      each point occurs once in the first domain and twice in the second.
+
+[395-398 p c4s5-subsec-checking-parametrizations default_required]
+In ,
+    we will differentiate these grid curves one parameter at a time to find their
+    velocities and surface normals. Surface area is developed in
+    .
