@@ -40,40 +40,34 @@
 
     <figure xml:id="c6s2-fig-graph-canopy">
       <caption>The graph of <m>z=f(x,y)</m> is made by placing height <m>f(x,y)</m> above each
-      input point <m>(x,y)</m>.</caption>
+      input point <m>(x,y)</m>. (Interactive: drag to rotate, scroll to zoom.)</caption>
       <image width="70%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.95, &gt;=stealth]
-            % projected floor coordinates
-            \coordinate (A) at (0,0);
-            \coordinate (B) at (4,0);
-            \coordinate (C) at (5.35,0.75);
-            \coordinate (D) at (1.35,0.75);
-
-            % projected surface coordinates
-            \coordinate (Ap) at (0,2);
-            \coordinate (Bp) at (4,3);
-            \coordinate (Cp) at (5.35,4.25);
-            \coordinate (Dp) at (1.35,3.25);
-
-            \draw[-&gt;] (-0.4,0) -- (6,0) node[right] {\(x\)};
-            \draw[-&gt;] (0,-0.3) -- (0,4.8) node[above] {\(z\)};
-            \draw[-&gt;] (0,0) -- (1.6,0.9) node[above right] {\(y\)};
-
-            \draw[fill=gray!10] (A) -- (B) -- (C) -- (D) -- cycle;
-            \draw[dashed] (A) -- (Ap);
-            \draw[dashed] (B) -- (Bp);
-            \draw[dashed] (C) -- (Cp);
-            \draw[dashed] (D) -- (Dp);
-
-            \draw[fill=blue!12, thick] (Ap) -- (Bp) -- (Cp) -- (Dp) -- cycle;
-
-            \node[left] at (Ap) {\(2\)};
-            \node[right] at (Cp) {\(3.5\)};
-            \node at (3,4.8) {\(z=2+\dfrac{x}{4}+\dfrac{y}{6}\)};
-            \node at (3,-0.8) {floor domain in the \(xy\)-plane};
-        \end{tikzpicture}
-        </latex-image>
+        <shortdescription>A 3D slanted canopy above its rectangular floor, with dashed vertical segments joining each corner to the graph.</shortdescription>
+        <asymptote>
+        import three;
+        size(9cm);
+        currentprojection=orthographic(8,-10,7);
+        triple O0=(0,0,0), A=(4,0,0), B=(4,3,0), C=(0,3,0);
+        triple O1=(0,0,2), A1=(4,0,3), B1=(4,3,3.5), C1=(0,3,2.5);
+        draw(surface(O0--A--B--C--cycle),gray(0.82)+opacity(0.28));
+        draw(O0--A--B--C--cycle,gray(0.55)+linewidth(0.7pt));
+        draw(O0--O1,gray(0.55)+linetype("4 3"));
+        draw(A--A1,gray(0.55)+linetype("4 3"));
+        draw(B--B1,gray(0.55)+linetype("4 3"));
+        draw(C--C1,gray(0.55)+linetype("4 3"));
+        draw(surface(O1--A1--B1--C1--cycle),rgb(0.39,0.62,0.88)+opacity(0.55));
+        draw(O1--A1--B1--C1--cycle,rgb(0.13,0.37,0.69)+linewidth(1.0pt));
+        draw(O0--(4.8,0,0),gray(0.45),Arrow3);
+        draw(O0--(0,3.8,0),gray(0.45),Arrow3);
+        draw(O0--(0,0,4.2),gray(0.45),Arrow3);
+        label("$x$",(4.8,0,0),2E);
+        label("$y$",(0,3.8,0),2N);
+        label("$z$",(0,0,4.2),2N);
+        label("$D$",(2,1.4,0),2S);
+        label("$z=2+x/4+y/6$",(2,1.5,2.75),2N,rgb(0.13,0.37,0.69));
+        label("$2$",O1,2W);
+        label("$3.5$",B1,2E);
+        </asymptote>
       </image>
     </figure>
 
@@ -304,6 +298,67 @@
       the graph.
     </p>
 
+    <figure xml:id="c6s2-fig-horizontal-slices-contours">
+      <caption>The horizontal slices <m>z=104</m> and <m>z=116</m> meet the graph of <m>H(x,y)=120-x^2-4y^2</m> in ellipses. Dashed vertical segments project points on those ellipses to the matching contours in the <m>xy</m>-plane. The higher contour is smaller. Vertical heights are compressed by a factor of 20 for display. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="85%">
+        <shortdescription>3D hill with level ellipses at 104 and 116; dashed lines project each slice onto matching contours in the xy-plane.</shortdescription>
+        <asymptote>
+        import graph3;
+        size(12cm);
+        currentprojection=orthographic(8,-11,8);
+
+        // Heights are plotted at one twentieth of their true values.
+        real shown(real height) {return height/20;}
+        path3 ellipseAt(real a, real b, real z) {
+          path3 e=(a,0,z);
+          for(int k=1; k&lt;72; ++k) {
+            real theta=2pi*k/72;
+            e=e--(a*cos(theta),b*sin(theta),z);
+          }
+          return e--cycle;
+        }
+
+        pen outer=rgb(0.86,0.35,0.11)+linewidth(1.5pt);
+        pen inner=rgb(0.46,0.23,0.70)+linewidth(1.5pt);
+        path3 floorEdge=ellipseAt(6,3,0);
+        path3 outerSlice=ellipseAt(4,2,shown(104));
+        path3 innerSlice=ellipseAt(2,1,shown(116));
+
+        draw(surface(floorEdge),gray(0.85)+opacity(0.28));
+        draw(floorEdge,gray(0.6)+linewidth(0.5pt));
+        draw(O--(6.7,0,0),gray(0.4),Arrow3);
+        draw(O--(0,3.7,0),gray(0.4),Arrow3);
+        draw(O--(0,0,6.8),gray(0.4),Arrow3);
+        label("$x$",(6.7,0,0),2E);
+        label("$y$",(0,3.7,0),2N);
+        label("$z$",(0,0,6.8),2N);
+
+        surface hill=surface(new triple(pair q) {
+          real r=q.y, theta=q.x;
+          return (6*r*cos(theta),3*r*sin(theta),shown(120-36*r*r));
+        },(0,0),(2pi,1),48,18);
+        draw(hill,rgb(0.50,0.72,0.84)+opacity(0.38));
+        draw(surface(outerSlice),rgb(0.96,0.69,0.45)+opacity(0.14));
+        draw(surface(innerSlice),rgb(0.73,0.59,0.88)+opacity(0.18));
+
+        // Each lower endpoint has the same x and y coordinates as its point above.
+        draw((4,0,shown(104))--(4,0,0),outer+linetype("4 3")+opacity(0.7));
+        draw((0,-2,shown(104))--(0,-2,0),outer+linetype("4 3")+opacity(0.7));
+        draw((2,0,shown(116))--(2,0,0),inner+linetype("4 3")+opacity(0.7));
+        draw((0,-1,shown(116))--(0,-1,0),inner+linetype("4 3")+opacity(0.7));
+        draw(outerSlice,outer);
+        draw(innerSlice,inner);
+        draw(ellipseAt(4,2,0),outer);
+        draw(ellipseAt(2,1,0),inner);
+        label("$z=104$",(0,-2,shown(104)),2S,outer);
+        label("$z=116$",(0,-1,shown(116)),2N,inner);
+        label("$104$",(0,-2,0),2S,outer);
+        label("$116$",(0,-1,0),2S,inner);
+        label("$xy$-plane",(-4.8,-2.4,0),2S,gray(0.35));
+        </asymptote>
+      </image>
+    </figure>
+
     <theorem xml:id="c6s2-thm-level-curves-horizontal-slices">
       <title>Level curves are horizontal slices of the graph</title>
       <statement>
@@ -428,30 +483,36 @@
     </example>
 
     <figure xml:id="c6s2-fig-level-surfaces-spheres">
-      <caption>Level surfaces of squared distance are spheres centered at the source.</caption>
+      <caption>Level surfaces of squared distance are spheres centered at the source. (Interactive: drag to rotate, scroll to zoom.)</caption>
       <image width="65%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.8, &gt;=stealth]
-            \draw[-&gt;] (-4,0) -- (4.5,0) node[right] {\(x\)};
-            \draw[-&gt;] (0,-3.2) -- (0,3.8) node[above] {\(z\)};
-
-            \draw[gray!25] (-3,-2.5) -- (3,2.5);
-            \draw[gray!25] (-3,2.5) -- (3,-2.5);
-
-            \fill (0,0) circle (2pt);
-            \node[below right] at (0,0) {beacon};
-
-            \draw[thick] (0,0) ellipse (1.2 and 0.75);
-            \draw[thick] (0,0) ellipse (2.2 and 1.4);
-            \draw[thick] (0,0) ellipse (3.2 and 2.05);
-
-            \node[fill=white, inner sep=1pt] at (1.15,0.55) {\(R=1\)};
-            \node[fill=white, inner sep=1pt] at (2.15,1.1) {\(R=4\)};
-            \node[fill=white, inner sep=1pt] at (3.15,1.7) {\(R=9\)};
-
-            \node at (0,-4) {a two-dimensional sketch of nested spherical level surfaces};
-        \end{tikzpicture}
-        </latex-image>
+        <shortdescription>Three concentric translucent spheres at squared-distance levels 1, 4, and 9 around a beacon.</shortdescription>
+        <asymptote>
+        import graph3;
+        size(10cm);
+        currentprojection=orthographic(7,-10,6);
+        surface sphereAt(real r) {
+          return surface(new triple(pair q) {
+            real t=q.x, phi=q.y;
+            return (r*sin(phi)*cos(t),r*sin(phi)*sin(t),r*cos(phi));
+          },(0,0),(2pi,pi),36,18);
+        }
+        draw(sphereAt(3),rgb(0.42,0.68,0.87)+opacity(0.15));
+        draw(sphereAt(2),rgb(0.37,0.54,0.83)+opacity(0.20));
+        draw(sphereAt(1),rgb(0.56,0.40,0.79)+opacity(0.30));
+        draw(O--(3.7,0,0),gray(0.48),Arrow3);
+        draw(O--(0,3.7,0),gray(0.48),Arrow3);
+        draw(O--(0,0,3.7),gray(0.48),Arrow3);
+        label("$x$",(3.7,0,0),2E);
+        label("$y$",(0,3.7,0),2N);
+        label("$z$",(0,0,3.7),2N);
+        draw(O--(3,0,0),rgb(0.72,0.24,0.14)+linewidth(0.9pt));
+        dot(O,black);
+        dot((1,0,0)); dot((2,0,0)); dot((3,0,0));
+        label("beacon",O,2S);
+        label("$R=1$",(1,0,0),2S);
+        label("$R=4$",(2,0,0),2S);
+        label("$R=9$",(3,0,0),2S);
+        </asymptote>
       </image>
     </figure>
 

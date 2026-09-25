@@ -100,43 +100,67 @@
     </exercise>
 
     <figure xml:id="c12s4-fig-box-to-curved-solid">
-      <caption>A simple coordinate box can become a solid whose height depends on position.</caption>
-      <image width="80%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.82, &gt;=stealth]
-            \begin{scope}
-                \draw[-&gt;] (-0.2,0) -- (3.6,0) node[right] {\(u\)};
-                \draw[-&gt;] (0,-0.2) -- (0,2.8) node[above] {\(w\)};
-
-                \draw[fill=gray!12, thick] (1,0) rectangle (3,2);
-                \node at (2,1) {\(S\)};
-                \node[below] at (1,0) {\(u=1\)};
-                \node[below] at (3,0) {\(u=2\)};
-                \node[left] at (0,2) {\(w=1\)};
-                \node at (1.9,-0.8) {one face of the coordinate box};
-            \end{scope}
-
-            \draw[-&gt;, thick] (4.1,1.2) -- (5.5,1.2);
-            \node[above] at (4.85,1.2) {\(T\)};
-
-            \begin{scope}[shift={(6.7,0)}]
-                \draw[-&gt;] (-0.2,0) -- (4.2,0) node[right] {\(x\)};
-                \draw[-&gt;] (0,-0.2) -- (0,4.0) node[above] {\(z\)};
-
-                \draw[thick, fill=blue!8]
-                    (1,0) -- (3,0) -- (3,3.2)
-                    .. controls (2.2,2.4) and (1.4,1.5) ..
-                    (1,1.1) -- cycle;
-
-                \draw[thick]
-                    plot[smooth] coordinates {(1,1.1) (1.6,1.7) (2.2,2.4) (3,3.2)};
-                \node at (2.35,1.35) {\(E\)};
-                \node[right] at (3,3.2) {\(z=xy\)};
-                \node at (2.1,-0.8) {a curved-ceiling solid};
-            \end{scope}
-        \end{tikzpicture}
-        </latex-image>
-      </image>
+      <caption>A simple coordinate box can become a solid whose height depends on position. Both solids can be rotated interactively.</caption>
+      <sidebyside widths="48% 48%" valign="middle">
+        <image>
+          <shortdescription>A 3D parameter box with 1 to 2 in u, 1 to 3 in v, and 0 to 1 in w.</shortdescription>
+          <asymptote>
+          import three;
+          size(6.8cm);
+          currentprojection=orthographic(7,-10,7);
+          triple A=(1,1,0), B=(2,1,0), C=(2,3,0), D=(1,3,0);
+          triple E=(1,1,1), F=(2,1,1), G=(2,3,1), H=(1,3,1);
+          pen face=rgb(0.53,0.67,0.85)+opacity(0.32);
+          draw(surface(A--B--C--D--cycle),face);
+          draw(surface(E--F--G--H--cycle),face);
+          draw(surface(A--B--F--E--cycle),face);
+          draw(surface(B--C--G--F--cycle),face);
+          draw(A--B--C--D--cycle,gray(0.38)+linewidth(0.7pt));
+          draw(E--F--G--H--cycle,gray(0.38)+linewidth(0.7pt));
+          draw(A--E,gray(0.38)); draw(B--F,gray(0.38));
+          draw(C--G,gray(0.38)); draw(D--H,gray(0.38));
+          draw(O--(2.6,0,0),gray(0.48),Arrow3);
+          draw(O--(0,3.6,0),gray(0.48),Arrow3);
+          draw(O--(0,0,1.7),gray(0.48),Arrow3);
+          label("$u$",(2.6,0,0),2E);
+          label("$v$",(0,3.6,0),2N);
+          label("$w$",(0,0,1.7),2N);
+          label("$S$",(1.5,2,0.5),2N);
+          </asymptote>
+        </image>
+        <image>
+          <shortdescription>The image is a 3D solid over the same rectangle, below the curved ceiling z equals xy.</shortdescription>
+          <asymptote>
+          import graph3;
+          size(6.8cm);
+          currentprojection=orthographic(7,-10,8);
+          triple A=(1,1,0), B=(2,1,0), C=(2,3,0), D=(1,3,0);
+          triple E=(1,1,1), F=(2,1,2), G=(2,3,6), H=(1,3,3);
+          draw(surface(A--B--C--D--cycle),gray(0.83)+opacity(0.25));
+          pen wall=rgb(0.51,0.70,0.88)+opacity(0.22);
+          draw(surface(A--B--F--E--cycle),wall);
+          draw(surface(B--C--G--F--cycle),wall);
+          draw(surface(C--D--H--G--cycle),wall);
+          draw(surface(D--A--E--H--cycle),wall);
+          surface roof=surface(new triple(pair q) {
+            return (q.x,q.y,q.x*q.y);
+          },(1,1),(2,3),24,24);
+          draw(roof,rgb(0.35,0.63,0.86)+opacity(0.55));
+          draw(A--B--C--D--cycle,gray(0.40)+linewidth(0.7pt));
+          draw(E--F--G--H--cycle,rgb(0.15,0.39,0.69)+linewidth(0.9pt));
+          draw(A--E,gray(0.40)); draw(B--F,gray(0.40));
+          draw(C--G,gray(0.40)); draw(D--H,gray(0.40));
+          draw(O--(2.6,0,0),gray(0.48),Arrow3);
+          draw(O--(0,3.6,0),gray(0.48),Arrow3);
+          draw(O--(0,0,6.8),gray(0.48),Arrow3);
+          label("$x$",(2.6,0,0),2E);
+          label("$y$",(0,3.6,0),2N);
+          label("$z$",(0,0,6.8),2N);
+          label("$z=xy$",G,2N,rgb(0.15,0.39,0.69));
+          label("$E$",(1.5,2,1.4),2S);
+          </asymptote>
+        </image>
+      </sidebyside>
     </figure>
 
     <definition xml:id="c12s4-def-jacobian-determinant-space">

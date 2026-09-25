@@ -95,38 +95,36 @@
     </p>
 
     <figure xml:id="c15s6-fig-outward-flux-box">
-      <caption>Divergence measures net outward flux per unit volume.</caption>
+      <caption>Divergence measures net outward flux per unit volume. (Interactive: drag to rotate, scroll to zoom.)</caption>
       <image width="60%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
-            \coordinate (O) at (0,0);
-            \coordinate (A) at (3.5,0);
-            \coordinate (B) at (4.6,1.0);
-            \coordinate (C) at (1.1,1.0);
-            \coordinate (D) at (0,2.4);
-            \coordinate (E) at (3.5,2.4);
-            \coordinate (F) at (4.6,3.4);
-            \coordinate (G) at (1.1,3.4);
-
-            \draw[fill=gray!8, thick] (O)--(A)--(B)--(C)--cycle;
-            \draw[fill=gray!5, thick] (D)--(E)--(F)--(G)--cycle;
-            \draw[thick] (O)--(D);
-            \draw[thick] (A)--(E);
-            \draw[thick] (B)--(F);
-            \draw[thick] (C)--(G);
-
-            \draw[-&gt;, very thick, red!65!black] (4.6,1.7) -- (5.8,2.0)
-                node[right] {out};
-            \draw[-&gt;, very thick, red!65!black] (-0.1,1.2) -- (-1.2,1.0)
-                node[left] {out};
-            \draw[-&gt;, very thick, red!65!black] (2.3,3.4) -- (2.3,4.5)
-                node[above] {out};
-            \draw[-&gt;, very thick, red!65!black] (2.3,-0.05) -- (2.3,-1.0)
-                node[below] {out};
-
-            \node at (2.3,-1.7) {outward flux through opposite faces compares what leaves};
-        \end{tikzpicture}
-        </latex-image>
+        <shortdescription>A rotatable 3D box with outward arrows on opposite pairs of faces, illustrating net flux.</shortdescription>
+        <asymptote>
+        import three;
+        size(9cm);
+        currentprojection=orthographic(8,-10,7);
+        triple O0=(0,0,0), A=(3,0,0), B=(3,2,0), C=(0,2,0);
+        triple D=(0,0,2), E=(3,0,2), F=(3,2,2), G=(0,2,2);
+        pen face=rgb(0.55,0.67,0.84)+opacity(0.13);
+        pen edge=gray(0.38)+linewidth(0.65pt);
+        draw(surface(O0--A--B--C--cycle),face);
+        draw(surface(D--E--F--G--cycle),face);
+        draw(surface(O0--A--E--D--cycle),face);
+        draw(surface(A--B--F--E--cycle),face);
+        draw(surface(B--C--G--F--cycle),face);
+        draw(surface(C--O0--D--G--cycle),face);
+        draw(O0--A--B--C--cycle,edge);
+        draw(D--E--F--G--cycle,edge);
+        draw(O0--D,edge); draw(A--E,edge);
+        draw(B--F,edge); draw(C--G,edge);
+        pen out=rgb(0.78,0.18,0.14)+linewidth(1.5pt);
+        draw((3,1,1)--(4.1,1,1),out,Arrow3);
+        draw((0,1,1)--(-1.1,1,1),out,Arrow3);
+        draw((1.5,2,1)--(1.5,3.1,1),out,Arrow3);
+        draw((1.5,0,1)--(1.5,-1.1,1),out,Arrow3);
+        draw((1.5,1,2)--(1.5,1,3.1),out,Arrow3);
+        draw((1.5,1,0)--(1.5,1,-1.1),out,Arrow3);
+        label("outward flux",(4.1,1,1),2E,out);
+        </asymptote>
       </image>
     </figure>
   </subsection>

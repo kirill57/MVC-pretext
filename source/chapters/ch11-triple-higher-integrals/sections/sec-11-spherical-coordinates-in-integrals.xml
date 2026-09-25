@@ -61,8 +61,64 @@
     </p>
 
     <figure xml:id="c11s4-fig-spherical-volume-element">
-      <caption>The spherical volume element is bounded by small changes in <m>\rho</m>, <m>\theta</m>, and <m>\phi</m>.</caption>
-      <image source="images/Spherical_Volume.png" width="80%"/>
+      <caption>A small spherical-coordinate cell is bounded by changes in <m>\rho</m>, <m>\theta</m>, and <m>\phi</m>. Its three edge lengths are approximately <m>\Delta\rho</m>, <m>\rho\sin\phi\,\Delta\theta</m>, and <m>\rho\,\Delta\phi</m>. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="85%">
+        <shortdescription>A rotatable spherical-coordinate cell showing its radial, azimuthal, and polar edge lengths.</shortdescription>
+        <asymptote>
+        import graph3;
+        size(11cm);
+        currentprojection=orthographic(7,-10,8);
+        real r0=2, r1=2.45, t0=0.35, t1=0.68, p0=0.60, p1=0.93;
+        triple sph(real r,real t,real p) {
+          return (r*sin(p)*cos(t),r*sin(p)*sin(t),r*cos(p));
+        }
+        surface inner=surface(new triple(pair q) {
+          return sph(r0,q.x,q.y);
+        },(t0,p0),(t1,p1),12,12);
+        surface outer=surface(new triple(pair q) {
+          return sph(r1,q.x,q.y);
+        },(t0,p0),(t1,p1),12,12);
+        surface thetaSide0=surface(new triple(pair q) {
+          return sph(q.x,t0,q.y);
+        },(r0,p0),(r1,p1),8,12);
+        surface thetaSide1=surface(new triple(pair q) {
+          return sph(q.x,t1,q.y);
+        },(r0,p0),(r1,p1),8,12);
+        surface phiSide0=surface(new triple(pair q) {
+          return sph(q.x,q.y,p0);
+        },(r0,t0),(r1,t1),8,12);
+        surface phiSide1=surface(new triple(pair q) {
+          return sph(q.x,q.y,p1);
+        },(r0,t0),(r1,t1),8,12);
+        draw(inner,rgb(0.46,0.61,0.88)+opacity(0.23));
+        draw(outer,rgb(0.44,0.61,0.89)+opacity(0.53));
+        draw(thetaSide0,rgb(0.91,0.52,0.39)+opacity(0.43));
+        draw(thetaSide1,rgb(0.91,0.52,0.39)+opacity(0.30));
+        draw(phiSide0,rgb(0.91,0.80,0.40)+opacity(0.43));
+        draw(phiSide1,rgb(0.91,0.80,0.40)+opacity(0.30));
+
+        triple P=sph(r0,t0,p0), Pr=sph(r1,t0,p0);
+        path3 azimuth=Pr, polar=Pr;
+        for(int k=1; k&lt;=24; ++k) {
+          real u=k/24;
+          azimuth=azimuth--sph(r1,t0+u*(t1-t0),p0);
+          polar=polar--sph(r1,t0,p0+u*(p1-p0));
+        }
+        draw(P--Pr,rgb(0.15,0.39,0.73)+linewidth(1.7pt));
+        draw(azimuth,rgb(0.75,0.23,0.15)+linewidth(1.7pt));
+        draw(polar,rgb(0.52,0.36,0.74)+linewidth(1.7pt));
+        label("$\Delta\rho$",0.5*(P+Pr),2N,rgb(0.15,0.39,0.73));
+        label("$\rho\sin\phi\,\Delta\theta$",sph(r1,t1,p0),2E,rgb(0.75,0.23,0.15));
+        label("$\rho\,\Delta\phi$",sph(r1,t0,p1),2N,rgb(0.52,0.36,0.74));
+        draw(O--P,gray(0.5)+linetype("4 3"));
+        draw(O--(2.8,0,0),gray(0.48),Arrow3);
+        draw(O--(0,2.8,0),gray(0.48),Arrow3);
+        draw(O--(0,0,3.1),gray(0.48),Arrow3);
+        label("$x$",(2.8,0,0),2E);
+        label("$y$",(0,2.8,0),2N);
+        label("$z$",(0,0,3.1),2N);
+        </asymptote>
+      </image>
     </figure>
 
     <p>Now find the small volume element.</p>

@@ -72,52 +72,38 @@
         The local continuity equation with no sources or sinks. If more material leaves a tiny neighborhood than enters
         it (<m>\nabla \cdot \mathbf{J} \gt 0</m>), the local density must drop
         (<m>\rho_t \lt 0</m>) to balance the loss.
-      </caption>
+       (Interactive: drag to rotate, scroll to zoom.)</caption>
       <image width="70%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
-            % Coordinates for the differential box
-            \coordinate (O) at (0,0);
-            \coordinate (A) at (3.6,0);
-            \coordinate (B) at (4.6,0.8);
-            \coordinate (C) at (1.0,0.8);
-            \coordinate (D) at (0,1.7);
-            \coordinate (E) at (3.6,1.7);
-            \coordinate (F) at (4.6,2.5);
-            \coordinate (G) at (1.0,2.5);
-
-            % Draw the "differential" box (shifted to purple to imply a tiny local volume)
-            \draw[fill=purple!5, thick] (O)--(A)--(B)--(C)--cycle;
-            \draw[fill=purple!10, thick] (D)--(E)--(F)--(G)--cycle;
-            \draw[thick] (O)--(D);
-            \draw[thick] (A)--(E);
-            \draw[thick] (B)--(F);
-            \draw[thick] (C)--(G);
-
-            % Interior state showing a local drop in density
-            \node at (2.1,1.3) {\textbf{Tiny box}};
-            \node[purple!80!black] at (2.1,0.8) {\(\rho_t \lt 0\)};
-            \node[purple!80!black, font=\small] at (2.1,0.4) {(density drops)};
-
-            % Small inward flux (left face)
-            \draw[-&gt;, thick, blue!65!black] (-0.8,1.45) -- ++(0.7,0);
-            \draw[-&gt;, thick, blue!65!black] (-0.8,1.05) -- ++(0.7,0);
-            \node[blue!65!black, align=right, font=\small, anchor=east] at (-0.9, 1.25) {Small \\ inward flux};
-
-            % Large outward flux (right face)
-            \draw[-&gt;, ultra thick, red!65!black] (4.1,1.45) -- ++(1.4,0);
-            \draw[-&gt;, ultra thick, red!65!black] (4.1,1.05) -- ++(1.4,0);
-            \node[red!65!black, font=\small, anchor=west, align=left] at (5.6,1.25) {Large \\ outward flux};
-
-            % Divergence explanation above the box
-            \node at (2.4, 3.2) {\textbf{Positive Divergence:} \(\nabla \cdot \mathbf{J} \gt 0\) (net spreading)};
-
-            % The local continuity equation
-            \node at (2.4,-1.2)
-                {\(\displaystyle \underbrace{\rho_t}_{\text{Local drop}}
-                + \underbrace{\nabla \cdot \mathbf{J}}_{\text{Net spreading}} = 0\)};
-        \end{tikzpicture}
-        </latex-image>
+        <shortdescription>A 3D tiny box has weaker inward flux than outward flux, so its internal density decreases.</shortdescription>
+        <asymptote>
+        import three;
+        size(9cm);
+        currentprojection=orthographic(8,-10,7);
+        triple O0=(0,0,0), A=(3,0,0), B=(3,2,0), C=(0,2,0);
+        triple D=(0,0,2), E=(3,0,2), F=(3,2,2), G=(0,2,2);
+        pen face=rgb(0.55,0.67,0.84)+opacity(0.13);
+        pen edge=gray(0.38)+linewidth(0.65pt);
+        draw(surface(O0--A--B--C--cycle),face);
+        draw(surface(D--E--F--G--cycle),face);
+        draw(surface(O0--A--E--D--cycle),face);
+        draw(surface(A--B--F--E--cycle),face);
+        draw(surface(B--C--G--F--cycle),face);
+        draw(surface(C--O0--D--G--cycle),face);
+        draw(O0--A--B--C--cycle,edge);
+        draw(D--E--F--G--cycle,edge);
+        draw(O0--D,edge); draw(A--E,edge);
+        draw(B--F,edge); draw(C--G,edge);
+        pen entering=rgb(0.13,0.37,0.74)+linewidth(1.0pt);
+        pen leaving=rgb(0.78,0.18,0.14)+linewidth(2.2pt);
+        draw((-0.8,0.6,1)--(0,0.6,1),entering,Arrow3);
+        draw((-0.8,1.4,1)--(0,1.4,1),entering,Arrow3);
+        draw((3,0.6,1)--(4.6,0.6,1),leaving,Arrow3);
+        draw((3,1.4,1)--(4.6,1.4,1),leaving,Arrow3);
+        label("small inward flux",(-0.8,1,1),2W,entering);
+        label("larger outward flux",(4.6,1,1),2E,leaving);
+        label("$\rho_t&lt;0$",(1.5,1,1),2N);
+        label("$\nabla\cdot\mathbf J&gt;0$",(1.5,1,2.5),2N);
+        </asymptote>
       </image>
     </figure>
   </subsection>

@@ -213,60 +213,39 @@
           The image is a helix.
         </p>
 
-        <!-- 3D-FIGURE: candidate for interactive Asymptote upgrade -->
         <figure xml:id="c4s1-fig-helix">
-          <caption>A helix can be viewed as circular motion together with steady upward motion.</caption>
+          <caption>A helix can be viewed as circular motion together with steady upward motion. (Interactive: drag to rotate, scroll to zoom.)</caption>
           <image width="70%">
-            <latex-image>
-            \begin{tikzpicture}[&gt;=latex]
-
-                \begin{axis}[
-                    name=helixplot,
-                    view={35}{25},
-                    width=8.5cm, height=8.5cm,
-                    axis lines=center,
-                    axis line style={gray, thin},
-                    xlabel={\(x\)}, ylabel={\(y\)}, zlabel={\(z\)},
-                    ticks=none,
-                    xmin=-3.2, xmax=3.5,
-                    ymin=-3.2, ymax=3.5,
-                    zmin=0, zmax=3.8,
-                ]
-
-                    % Bounding cylinder base for depth perception
-                    \addplot3[
-                        gray!40, dashed,
-                        domain=0:360,
-                        samples=60,
-                        samples y=0,
-                        variable=\t
-                    ] ({2*cos(\t)}, {2*sin(\t)}, 0);
-
-                    % Vertical bounding lines
-                    \draw[gray!40, dashed] (2,0,0) -- (2,0,3);
-                    \draw[gray!40, dashed] (-2,0,0) -- (-2,0,3);
-
-                    % 3D Helix
-                    % 3 full turns = 1080 degrees. z = t/(2pi) -> t/360.
-                    \addplot3[
-                        thick, blue!50!black,
-                        domain=0:1080,
-                        samples=250,
-                        samples y=0,
-                        variable=\t,
-                        smooth
-                    ] ({2*cos(\t)}, {2*sin(\t)}, {\t/360});
-
-                    % Displacement vector from t=0 to t=0.6 radians
-                    \draw[-&gt;, very thick] (2,0,0) -- ({2*cos(deg(0.6))}, {2*sin(deg(0.6))}, {0.6/(2*pi)});
-
-                \end{axis}
-
-                % Label positioned neatly below the axis environment
-                \node[align=center] at ([yshift=-0.5cm]helixplot.south) {a three-dimensional drawing of a space helix};
-
-            \end{tikzpicture}
-            </latex-image>
+            <shortdescription>An interactive 3D helix makes three full turns around the z-axis while rising from height 0 to 3.</shortdescription>
+            <asymptote>
+            import three;
+            size(9cm);
+            currentprojection=orthographic(6,-9,5);
+            path3 helix=(2,0,0);
+            path3 base=(2,0,0);
+            for(int k=1; k&lt;=240; ++k) {
+              real t=6pi*k/240;
+              helix=helix--(2*cos(t),2*sin(t),t/(2pi));
+            }
+            for(int k=1; k&lt;72; ++k) {
+              real t=2pi*k/72;
+              base=base--(2*cos(t),2*sin(t),0);
+            }
+            draw(base--cycle,gray(0.6)+linetype("4 3"));
+            draw((2,0,0)--(2,0,3),gray(0.72)+linetype("4 3"));
+            draw((-2,0,0)--(-2,0,3),gray(0.72)+linetype("4 3"));
+            draw(O--(3,0,0),gray(0.43),Arrow3);
+            draw(O--(0,3,0),gray(0.43),Arrow3);
+            draw(O--(0,0,3.8),gray(0.43),Arrow3);
+            label("$x$",(3,0,0),2E);
+            label("$y$",(0,3,0),2N);
+            label("$z$",(0,0,3.8),2N);
+            draw(helix,rgb(0.13,0.35,0.72)+linewidth(1.5pt));
+            dot((2,0,0),rgb(0.13,0.35,0.72));
+            dot((2,0,3),rgb(0.13,0.35,0.72));
+            label("$t=0$",(2,0,0),2S);
+            label("$t=6\pi$",(2,0,3),2N);
+            </asymptote>
           </image>
         </figure>
       </statement>

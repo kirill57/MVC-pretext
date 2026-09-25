@@ -112,6 +112,53 @@
       surface.
     </p>
 
+    <figure xml:id="c11s2-fig-vertical-fiber-shadow">
+      <caption>To set the inner <m>z</m>-bounds, first locate the shadow <m>D</m> in the <m>xy</m>-plane. Above a point of <m>D</m>, the red fiber runs from the lower surface <m>z=g_1(x,y)</m> to the upper surface <m>z=g_2(x,y)</m>. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="75%">
+        <shortdescription>A 3D solid above a rectangular shadow, with a red vertical fiber between distinct lower and upper surfaces.</shortdescription>
+        <asymptote>
+        import three;
+        size(10cm);
+        currentprojection=orthographic(7,-10,6);
+        real lower(real x,real y) {return 0.5+0.1*x;}
+        real upper(real x,real y) {return 2+0.2*x+0.15*y;}
+        triple A=(0,0,0), B=(3,0,0), C=(3,2,0), D=(0,2,0);
+        triple L0=(0,0,lower(0,0)), L1=(3,0,lower(3,0));
+        triple L2=(3,2,lower(3,2)), L3=(0,2,lower(0,2));
+        triple U0=(0,0,upper(0,0)), U1=(3,0,upper(3,0));
+        triple U2=(3,2,upper(3,2)), U3=(0,2,upper(0,2));
+        path3 floor=A--B--C--D--cycle;
+        path3 bottom=L0--L1--L2--L3--cycle;
+        path3 top=U0--U1--U2--U3--cycle;
+        draw(surface(floor),rgb(0.33,0.68,0.39)+opacity(0.32));
+        draw(surface(bottom),rgb(0.59,0.56,0.76)+opacity(0.35));
+        draw(surface(L0--L1--U1--U0--cycle),rgb(0.56,0.72,0.88)+opacity(0.15));
+        draw(surface(L1--L2--U2--U1--cycle),rgb(0.56,0.72,0.88)+opacity(0.15));
+        draw(surface(top),rgb(0.34,0.61,0.86)+opacity(0.48));
+        draw(floor,rgb(0.17,0.48,0.24)+linewidth(0.8pt));
+        draw(bottom,gray(0.42)+linewidth(0.6pt));
+        draw(top,rgb(0.12,0.39,0.66)+linewidth(0.9pt));
+        draw(L0--U0,gray(0.5)); draw(L1--U1,gray(0.5));
+        draw(L2--U2,gray(0.5)); draw(L3--U3,gray(0.5));
+        draw(A--(3.6,0,0),gray(0.45),Arrow3);
+        draw(A--(0,2.7,0),gray(0.45),Arrow3);
+        draw(A--(0,0,3.1),gray(0.45),Arrow3);
+        label("$x$",(3.6,0,0),2E);
+        label("$y$",(0,2.7,0),2N);
+        label("$z$",(0,0,3.1),2N);
+        triple P=(1.5,0.8,0);
+        triple PL=(1.5,0.8,lower(1.5,0.8));
+        triple PU=(1.5,0.8,upper(1.5,0.8));
+        draw(P--PL,gray(0.5)+linetype("4 3"));
+        draw(PL--PU,rgb(0.80,0.16,0.13)+linewidth(1.8pt));
+        dot(P); dot(PL,rgb(0.80,0.16,0.13)); dot(PU,rgb(0.80,0.16,0.13));
+        label("$D$",(0.5,1.1,0),2S,rgb(0.17,0.48,0.24));
+        label("$g_1(x,y)$",PL,2E);
+        label("$g_2(x,y)$",PU,2E);
+        </asymptote>
+      </image>
+    </figure>
+
     <p>That pattern is common enough to name.</p>
 
 

@@ -296,36 +296,55 @@
     </p>
 
     <figure xml:id="c18s1-fig-surface-normal-boundary">
-      <caption>Changing the surface normal reverses the boundary orientation.</caption>
-      <image width="80%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
-            \begin{scope}
-                \draw[fill=gray!10, thick] (0,0) circle (1.6);
-                \draw[-&gt;, very thick, red!65!black]
-                    (1.6,0) arc[start angle=0,end angle=65,radius=1.6];
-
-                \draw[-&gt;, very thick, blue!65!black] (0,0) -- (0,2.4)
-                    node[above] {\(\mathbf n=\mathbf k\)};
-
-                \node at (0,-2.2) {upward normal};
-                \node at (0,-2.65) {counterclockwise boundary};
-            \end{scope}
-
-            \begin{scope}[shift={(5.5,0)}]
-                \draw[fill=gray!10, thick] (0,0) circle (1.6);
-                \draw[-&gt;, very thick, red!65!black]
-                    (1.6,0) arc[start angle=0,end angle=-65,radius=1.6];
-
-                \draw[-&gt;, very thick, blue!65!black] (0,0) -- (0,-2.4)
-                    node[below] {\(\mathbf n=-\mathbf k\)};
-
-                \node at (0,-3.1) {downward normal};
-                \node  at (0,-3.55) {clockwise boundary};
-            \end{scope}
-        \end{tikzpicture}
-        </latex-image>
-      </image>
+      <caption>Changing the surface normal reverses the boundary orientation. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <sidebyside widths="48% 48%" valign="middle">
+        <image>
+          <shortdescription>A 3D disk with an upward normal and counterclockwise boundary arrow.</shortdescription>
+          <asymptote>
+          import three;
+          size(6.5cm);
+          currentprojection=orthographic(7,-10,7);
+          path3 rim=(1.5,0,0), travel=(1.5,0,0);
+          for(int k=1; k&lt;72; ++k) {
+            real t=2pi*k/72;
+            rim=rim--(1.5*cos(t),1.5*sin(t),0);
+          }
+          for(int k=1; k&lt;60; ++k) {
+            real t=1*1.6pi*k/59;
+            travel=travel--(1.5*cos(t),1.5*sin(t),0);
+          }
+          draw(surface(rim--cycle),gray(0.78)+opacity(0.38));
+          draw(rim--cycle,gray(0.35)+linewidth(0.7pt));
+          draw(travel,rgb(0.15,0.40,0.76)+linewidth(1.6pt),Arrow3);
+          draw(O--(0,0,1*1.9),rgb(0.79,0.17,0.14)+linewidth(1.6pt),Arrow3);
+          label("$\mathbf n=\mathbf k$",(0,0,1*1.9),2N);
+          label("counterclockwise",(0,-1.5,0),2S);
+          </asymptote>
+        </image>
+        <image>
+          <shortdescription>A 3D disk with an downward normal and clockwise boundary arrow.</shortdescription>
+          <asymptote>
+          import three;
+          size(6.5cm);
+          currentprojection=orthographic(7,-10,7);
+          path3 rim=(1.5,0,0), travel=(1.5,0,0);
+          for(int k=1; k&lt;72; ++k) {
+            real t=2pi*k/72;
+            rim=rim--(1.5*cos(t),1.5*sin(t),0);
+          }
+          for(int k=1; k&lt;60; ++k) {
+            real t=-1*1.6pi*k/59;
+            travel=travel--(1.5*cos(t),1.5*sin(t),0);
+          }
+          draw(surface(rim--cycle),gray(0.78)+opacity(0.38));
+          draw(rim--cycle,gray(0.35)+linewidth(0.7pt));
+          draw(travel,rgb(0.15,0.40,0.76)+linewidth(1.6pt),Arrow3);
+          draw(O--(0,0,-1*1.9),rgb(0.79,0.17,0.14)+linewidth(1.6pt),Arrow3);
+          label("$\mathbf n=-\mathbf k$",(0,0,-1*1.9),2N);
+          label("clockwise",(0,-1.5,0),2S);
+          </asymptote>
+        </image>
+      </sidebyside>
     </figure>
 
     <p>There is also a version of the <q>region on the left</q> rule for surfaces.</p>
@@ -411,6 +430,81 @@
     <title>The outward-first convention</title>
 
     <p>All boundary orientations in this book come from one convention.</p>
+
+    <figure xml:id="c18s1-fig-outward-first-cases">
+      <caption>Outward first in four settings. At a boundary point, place the outward direction <m>\nu_{\mathrm{out}}</m> before the indicated boundary direction or directions; the resulting ordered list agrees with the orientation of the interval, region, surface, or solid. (Interactive: drag either scene to rotate, scroll to zoom.)</caption>
+      <sidebyside widths="48% 48%" valign="middle">
+        <image>
+          <shortdescription>In a 3D view, an oriented interval has outward directions at its endpoints, and a planar disk has an outward direction followed by the positive boundary tangent.</shortdescription>
+          <asymptote>
+          import three;
+          size(7cm);
+          currentprojection=orthographic(7,-10,8);
+          pen red=rgb(0.77,0.17,0.14)+linewidth(1.4pt);
+          pen blue=rgb(0.14,0.39,0.74)+linewidth(1.4pt);
+          draw((-5.0,0,0)--(-2.1,0,0),blue,Arrow3);
+          dot((-5.0,0,0)); dot((-2.1,0,0));
+          draw((-5.0,0,0)--(-5.7,0,0),red,Arrow3);
+          draw((-2.1,0,0)--(-1.4,0,0),red,Arrow3);
+          label("$a\;(-)$",(-5.0,0,-0.8),S);
+          label("$b\;(+)$",(-2.1,0,-0.8),S);
+          label("interval",(-3.55,0,-2.0),S);
+          path3 rim=(4.0,0,0);
+          for(int k=1; k&lt;72; ++k) {
+            real t=2pi*k/72;
+            rim=rim--(2.9+1.1*cos(t),1.1*sin(t),0);
+          }
+          draw(surface(rim--cycle),rgb(0.57,0.77,0.53)+opacity(0.45));
+          draw(rim--cycle,rgb(0.24,0.48,0.26)+linewidth(0.9pt));
+          draw((4,0,0)--(4.75,0,0),red,Arrow3);
+          draw((4,0,0)--(4,0.8,0),blue,Arrow3);
+          label("$\nu_{\rm out}$",(4.75,0,0),E,red);
+          label("$t$",(4,0.8,0),N,blue);
+          label("plane region",(2.9,0,-2.0),S);
+          </asymptote>
+        </image>
+        <image>
+          <shortdescription>A rotatable oriented surface disk and solid box show the outward-first directions at a boundary point and on the top face.</shortdescription>
+          <asymptote>
+          import three;
+          size(7cm);
+          currentprojection=orthographic(7,-10,8);
+          pen red=rgb(0.77,0.17,0.14)+linewidth(1.4pt);
+          pen blue=rgb(0.14,0.39,0.74)+linewidth(1.4pt);
+          pen green=rgb(0.14,0.52,0.28)+linewidth(1.4pt);
+          path3 rim=(-1.8,0,0);
+          for(int k=1; k&lt;72; ++k) {
+            real t=2pi*k/72;
+            rim=rim--(-2.9+1.1*cos(t),1.1*sin(t),0);
+          }
+          draw(surface(rim--cycle),rgb(0.62,0.49,0.74)+opacity(0.45));
+          draw(rim--cycle,rgb(0.42,0.26,0.58)+linewidth(0.9pt));
+          draw((-2.9,0,0)--(-2.9,0,1.35),green,Arrow3);
+          draw((-1.8,0,0)--(-1.1,0,0),red,Arrow3);
+          draw((-1.8,0,0)--(-1.8,0.75,0),blue,Arrow3);
+          label("$\mathbf n$",(-2.9,0,1.35),N,green);
+          label("$\nu_{\rm out}$",(-1.1,0,0),E,red);
+          label("$t$",(-1.8,0.75,0),N,blue);
+          label("oriented surface",(-2.9,0,-0.8),S);
+          triple A=(2,-0.9,0), B=(3.8,-0.9,0), C=(3.8,0.9,0), D=(2,0.9,0);
+          triple E=(2,-0.9,1.6), F=(3.8,-0.9,1.6), G=(3.8,0.9,1.6), H=(2,0.9,1.6);
+          draw(surface(A--B--F--E--cycle),rgb(0.91,0.62,0.31)+opacity(0.30));
+          draw(surface(B--C--G--F--cycle),rgb(0.91,0.62,0.31)+opacity(0.30));
+          draw(surface(E--F--G--H--cycle),rgb(0.91,0.62,0.31)+opacity(0.48));
+          draw(A--B--C--D--cycle,gray(0.35));
+          draw(E--F--G--H--cycle,gray(0.35));
+          draw(A--E,gray(0.35)); draw(B--F,gray(0.35)); draw(C--G,gray(0.35)); draw(D--H,gray(0.35));
+          draw((2.9,0,1.6)--(2.9,0,2.7),red,Arrow3);
+          draw((2.9,0,1.6)--(3.6,0,1.6),blue,Arrow3);
+          draw((2.9,0,1.6)--(2.9,0.7,1.6),green,Arrow3);
+          label("$\nu_{\rm out}$",(2.9,0,2.7),N,red);
+          label("$v_1$",(3.6,0,1.6),E,blue);
+          label("$v_2$",(2.9,0.7,1.6),N,green);
+          label("oriented solid",(2.9,0,-0.8),S);
+          </asymptote>
+        </image>
+      </sidebyside>
+    </figure>
 
     <exercise xml:id="checkpoint-18-1-boundary-of-a-boundary">
       <title>What is the boundary of a boundary?</title>

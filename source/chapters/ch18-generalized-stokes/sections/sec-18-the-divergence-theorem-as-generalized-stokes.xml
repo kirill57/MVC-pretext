@@ -111,46 +111,37 @@
     </p>
 
     <figure xml:id="c18s6-fig-outward-box-faces">
-      <caption>For a solid, the boundary is a surface. A <m>2</m>-form is the correct boundary integrand.</caption>
+      <caption>For a solid, the boundary is a surface. A <m>2</m>-form is the correct boundary integrand. (Interactive: drag to rotate, scroll to zoom.)</caption>
       <image width="60%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
-            % Coordinates for the box
-            \coordinate (O) at (0,0);
-            \coordinate (A) at (3.2,0);
-            \coordinate (B) at (4.3,1.0);
-            \coordinate (C) at (1.1,1.0);
-            \coordinate (D) at (0,2.2);
-            \coordinate (E) at (3.2,2.2);
-            \coordinate (F) at (4.3,3.2);
-            \coordinate (G) at (1.1,3.2);
-
-            % Draw the box
-            \draw[fill=gray!8, thick] (O)--(A)--(B)--(C)--cycle;
-            \draw[fill=gray!5, thick] (D)--(E)--(F)--(G)--cycle;
-            \draw[thick] (O)--(D);
-            \draw[thick] (A)--(E);
-            \draw[thick] (B)--(F);
-            \draw[thick] (C)--(G);
-
-            % +i direction: Center of the front face (O-A-E-D)
-            % Center = (1.6, 1.1). Points out of the page (down-left).
-            \draw[-&gt;, very thick, red!70!black] (1.6,1.1) -- (0.6,0.19)
-                node[left] {\(+\mathbf{i}\)};
-
-            % +j direction: Center of the right face (A-B-F-E)
-            % Center = (3.75, 1.6). Points right.
-            \draw[-&gt;, very thick, blue!70!black] (3.75,1.6) -- (4.85,1.6)
-                node[right] {\(+\mathbf{j}\)};
-
-            % +k direction: Center of the top face (D-E-F-G)
-            % Center = (2.15, 2.7). Points up.
-            \draw[-&gt;, very thick, green!45!black] (2.15,2.7) -- (2.15,3.8)
-                node[above] {\(+\mathbf{k}\)};
-
-            \node at (2.15,-1.2) {outward-oriented boundary faces};
-        \end{tikzpicture}
-        </latex-image>
+        <shortdescription>A 3D box with the positive x, y, and z face normals marked as outward directions.</shortdescription>
+        <asymptote>
+        import three;
+        size(9cm);
+        currentprojection=orthographic(8,-10,7);
+        triple O0=(0,0,0), A=(3,0,0), B=(3,2,0), C=(0,2,0);
+        triple D=(0,0,2), E=(3,0,2), F=(3,2,2), G=(0,2,2);
+        pen face=rgb(0.55,0.67,0.84)+opacity(0.13);
+        pen edge=gray(0.38)+linewidth(0.65pt);
+        draw(surface(O0--A--B--C--cycle),face);
+        draw(surface(D--E--F--G--cycle),face);
+        draw(surface(O0--A--E--D--cycle),face);
+        draw(surface(A--B--F--E--cycle),face);
+        draw(surface(B--C--G--F--cycle),face);
+        draw(surface(C--O0--D--G--cycle),face);
+        draw(O0--A--B--C--cycle,edge);
+        draw(D--E--F--G--cycle,edge);
+        draw(O0--D,edge); draw(A--E,edge);
+        draw(B--F,edge); draw(C--G,edge);
+        pen xp=rgb(0.75,0.18,0.18)+linewidth(1.6pt);
+        pen yp=rgb(0.14,0.38,0.75)+linewidth(1.6pt);
+        pen zp=rgb(0.19,0.55,0.27)+linewidth(1.6pt);
+        draw((3,1,1)--(4.1,1,1),xp,Arrow3);
+        draw((1.5,2,1)--(1.5,3.1,1),yp,Arrow3);
+        draw((1.5,1,2)--(1.5,1,3.1),zp,Arrow3);
+        label("$+\mathbf i$",(4.1,1,1),2E,xp);
+        label("$+\mathbf j$",(1.5,3.1,1),2N,yp);
+        label("$+\mathbf k$",(1.5,1,3.1),2N,zp);
+        </asymptote>
       </image>
     </figure>
 

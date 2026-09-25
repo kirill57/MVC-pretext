@@ -89,37 +89,44 @@
 
     <figure xml:id="c4s3-fig-cylindrical-coordinates">
       <caption>Cylindrical coordinates use polar coordinates in the horizontal plane and keep
-      the usual height coordinate.</caption>
+      the usual height coordinate. (Interactive: drag to rotate, scroll to zoom.)</caption>
       <image width="60%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.85, &gt;=stealth]
-            % axes
-            \draw[-&gt;] (0,0) -- (5.2,0) node[right] {\(x\)};
-            \draw[-&gt;] (0,0) -- (-2.2,-1.5) node[left] {\(y\)};
-            \draw[-&gt;] (0,0) -- (0,5.1) node[above] {\(z\)};
-
-            % floor ellipse
-            \draw[gray!50] (0,0) ellipse (2.4 and 0.8);
-
-            % point projection
-            \coordinate (O) at (0,0);
-            \coordinate (Pxy) at (2.0,-0.55);
-            \coordinate (P) at (2.0,3.4);
-
-            \draw[dashed] (Pxy) -- (P);
-            \draw[-&gt;, thick] (O) -- (Pxy) node[midway, below] {\(r\)};
-            \draw[-&gt;, thick] (Pxy) -- (P) node[midway, right] {\(z\)};
-
-            \draw[thick] (0.9,0) arc[start angle=0,end angle=-15,x radius=1.0,y radius=0.35];
-            \node at (1.25,-0.28) {\(\theta\)};
-
-            \fill (P) circle (2.5pt);
-            \fill (Pxy) circle (2pt);
-            \node[right] at (P) {\((r,\theta,z)\)};
-
-            \draw[dashed] (0,3.4) -- (P);
-        \end{tikzpicture}
-        </latex-image>
+        <shortdescription>A 3D point above its polar projection, with radius, angle, and height marked in true coordinate directions.</shortdescription>
+        <asymptote>
+        import three;
+        size(9cm);
+        currentprojection=orthographic(7,-10,7);
+        real radius=2, theta=pi/4, height=2.6;
+        triple B=(radius*cos(theta),radius*sin(theta),0);
+        triple P=(radius*cos(theta),radius*sin(theta),height);
+        path3 ring=(radius,0,0);
+        for(int k=1; k&lt;72; ++k) {
+          real t=2pi*k/72;
+          ring=ring--(radius*cos(t),radius*sin(t),0);
+        }
+        ring=ring--cycle;
+        draw(surface(ring),rgb(0.66,0.79,0.89)+opacity(0.16));
+        draw(ring,gray(0.62)+linewidth(0.6pt));
+        draw(O--(3.1,0,0),gray(0.42),Arrow3);
+        draw(O--(0,3.1,0),gray(0.42),Arrow3);
+        draw(O--(0,0,3.5),gray(0.42),Arrow3);
+        label("$x$",(3.1,0,0),2E);
+        label("$y$",(0,3.1,0),2N);
+        label("$z$",(0,0,3.5),2N);
+        draw(O--B,rgb(0.16,0.38,0.73)+linewidth(1.3pt),Arrow3);
+        label("$r$",0.5*B,2S,rgb(0.16,0.38,0.73));
+        draw(B--P,rgb(0.77,0.27,0.12)+linewidth(1.4pt),Arrow3);
+        label("$z$",0.5*(B+P),2E,rgb(0.77,0.27,0.12));
+        path3 angle=(0.6,0,0);
+        for(int k=1; k&lt;16; ++k) {
+          real t=theta*k/15;
+          angle=angle--(0.6*cos(t),0.6*sin(t),0);
+        }
+        draw(angle,gray(0.25)+linewidth(0.8pt));
+        label("$\theta$",(0.8*cos(theta/2),0.8*sin(theta/2),0),2N);
+        dot(B); dot(P);
+        label("$(r,\theta,z)$",P,2E);
+        </asymptote>
       </image>
     </figure>
 
@@ -376,34 +383,51 @@ import graph3;
 
     <figure xml:id="c4s3-fig-spherical-coordinates">
       <caption>Spherical coordinates use one distance <m>\rho</m> and two angles <m>\theta</m>
-      and <m>\phi</m>.</caption>
+      and <m>\phi</m>. (Interactive: drag to rotate, scroll to zoom.)</caption>
       <image width="60%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
-            \draw[-&gt;] (0,0) -- (4.8,0) node[right] {\(x\)};
-            \draw[-&gt;] (0,0) -- (-1.9,-1.2) node[left] {\(y\)};
-            \draw[-&gt;] (0,0) -- (0,4.6) node[above] {\(z\)};
-
-            \coordinate (O) at (0,0);
-            \coordinate (Pxy) at (2.7,-0.7);
-            \coordinate (P) at (2.7,3.0);
-
-            \draw[dashed] (Pxy) -- (P);
-            \draw[dashed] (O) -- (Pxy);
-            \draw[-&gt;, very thick] (O) -- (P) node[midway, above left] {\(\rho\)};
-
-            \draw[thick] (0,1.2) arc[start angle=90,end angle=48,radius=1.2];
-            \node at (0.7,1.55) {\(\phi\)};
-
-            \draw[thick] (0.9,0) arc[start angle=0,end angle=-14,x radius=1.0,y radius=0.32];
-            \node at (1.35,-0.27) {\(\theta\)};
-
-            \draw[-&gt;, thick] (O) -- (Pxy) node[midway, below] {\(\rho\sin\phi\)};
-            \fill (P) circle (2.5pt);
-            \fill (Pxy) circle (2pt);
-            \node[right] at (P) {\((\rho,\theta,\phi)\)};
-        \end{tikzpicture}
-        </latex-image>
+        <shortdescription>A 3D point with radial distance rho, azimuth theta in the xy-plane, and polar angle phi measured from the z-axis.</shortdescription>
+        <asymptote>
+        import three;
+        size(9cm);
+        currentprojection=orthographic(7,-10,7);
+        real rho=3, theta=pi/4, phi=pi/3;
+        real radius=rho*sin(phi);
+        triple B=(radius*cos(theta),radius*sin(theta),0);
+        triple P=(radius*cos(theta),radius*sin(theta),rho*cos(phi));
+        path3 ring=(radius,0,0);
+        for(int k=1; k&lt;72; ++k) {
+          real t=2pi*k/72;
+          ring=ring--(radius*cos(t),radius*sin(t),0);
+        }
+        draw(ring--cycle,gray(0.68)+linewidth(0.6pt));
+        draw(O--(3.5,0,0),gray(0.42),Arrow3);
+        draw(O--(0,3.5,0),gray(0.42),Arrow3);
+        draw(O--(0,0,3.8),gray(0.42),Arrow3);
+        label("$x$",(3.5,0,0),2E);
+        label("$y$",(0,3.5,0),2N);
+        label("$z$",(0,0,3.8),2N);
+        draw(O--P,rgb(0.15,0.38,0.72)+linewidth(1.5pt),Arrow3);
+        label("$\rho$",0.60*P,2W,rgb(0.15,0.38,0.72));
+        draw(O--B,gray(0.45)+linetype("4 3"));
+        draw(B--P,gray(0.45)+linetype("4 3"));
+        label("$\rho\sin\phi$",0.55*B,2S);
+        path3 azimuth=(0.62,0,0);
+        for(int k=1; k&lt;16; ++k) {
+          real t=theta*k/15;
+          azimuth=azimuth--(0.62*cos(t),0.62*sin(t),0);
+        }
+        draw(azimuth,rgb(0.72,0.28,0.12)+linewidth(0.9pt));
+        label("$\theta$",(0.88*cos(theta/2),0.88*sin(theta/2),0),2S);
+        path3 polar=(0,0,0.9);
+        for(int k=1; k&lt;20; ++k) {
+          real t=phi*k/19;
+          polar=polar--(0.9*sin(t)*cos(theta),0.9*sin(t)*sin(theta),0.9*cos(t));
+        }
+        draw(polar,rgb(0.45,0.25,0.68)+linewidth(0.9pt));
+        label("$\phi$",(1.15*sin(phi/2)*cos(theta),1.15*sin(phi/2)*sin(theta),1.15*cos(phi/2)),2E);
+        dot(B); dot(P);
+        label("$(\rho,\theta,\phi)$",P,2E);
+        </asymptote>
       </image>
     </figure>
 

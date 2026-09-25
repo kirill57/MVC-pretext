@@ -259,19 +259,30 @@
     <figure xml:id="c15s5-fig-orientation-boundary">
       <caption>
         For Stokes' theorem, the surface orientation and boundary orientation must match.
-      </caption>
+       (Interactive: drag to rotate, scroll to zoom.)</caption>
       <image width="60%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
-            \draw[fill=gray!10, thick] (0,0) ellipse (2.6 and 0.8);
-            \draw[-&gt;, very thick, red!65!black] (0,0) -- (0,2.1)
-                node[above] {\(\widehat{\mathbf n}\)};
-            \draw[very thick, blue!65!black] (2.6,0) arc[start angle=0,end angle=145,x radius=2.6,y radius=0.8];
-            \draw[-&gt;, very thick, blue!65!black] (-2.12,0.46) arc[start angle=145,end angle=185,x radius=2.6,y radius=0.8];
-            \node[blue!65!black] at (0,-1.45) {positive boundary direction};
-            \node at (0,-2.25) {the normal direction chooses the boundary direction};
-        \end{tikzpicture}
-        </latex-image>
+        <shortdescription>A 3D oriented disk with upward normal and its compatible counterclockwise boundary direction.</shortdescription>
+        <asymptote>
+        import three;
+        size(8.5cm);
+        currentprojection=orthographic(7,-10,8);
+        path3 rim=(2,0,0);
+        path3 travel=(2,0,0);
+        for(int k=1; k&lt;72; ++k) {
+          real t=2pi*k/72;
+          rim=rim--(2*cos(t),2*sin(t),0);
+        }
+        for(int k=1; k&lt;62; ++k) {
+          real t=1.7pi*k/61;
+          travel=travel--(2*cos(t),2*sin(t),0);
+        }
+        draw(surface(rim--cycle),gray(0.79)+opacity(0.40));
+        draw(rim--cycle,gray(0.34)+linewidth(0.7pt));
+        draw(travel,rgb(0.13,0.40,0.76)+linewidth(1.7pt),Arrow3);
+        draw(O--(0,0,2.2),rgb(0.80,0.18,0.15)+linewidth(1.6pt),Arrow3);
+        label("$\widehat{\mathbf n}$",(0,0,2.2),2N,rgb(0.80,0.18,0.15));
+        label("positive boundary",(0,-2,0),2S,rgb(0.13,0.40,0.76));
+        </asymptote>
       </image>
     </figure>
 

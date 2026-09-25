@@ -63,51 +63,51 @@
     </exercise>
 
     <figure xml:id="c4s5-fig-cylinder-from-rectangle">
-      <caption>The rectangle of parameter values is wrapped into a cylinder.</caption>
-      <image width="80%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.82, &gt;=stealth]
-            % parameter domain
-            \begin{scope}
-                \draw[-&gt;] (-0.2,0) -- (4.4,0) node[right] {\(\theta\)};
-                \draw[-&gt;] (0,-0.2) -- (0,3.4) node[above] {\(z\)};
-
-                \draw[thick] (0,0) rectangle (4,3);
-
-                \foreach \x in {0.8,1.6,2.4,3.2}
-                    \draw[gray!45] (\x,0) -- (\x,3);
-                \foreach \y in {0.6,1.2,1.8,2.4}
-                    \draw[gray!45] (0,\y) -- (4,\y);
-
-                \node at (2,-0.65) {parameter rectangle};
-                \node[left] at (0,3) {\(5\)};
-                \node[below] at (4,0) {\(2\pi\)};
-            \end{scope}
-
-            % arrow
-            \draw[-&gt;, thick] (4.7,1.5) -- (6.4,1.5) node[midway, above] {\(\mathbf r\)};
-
-            % cylinder
-            \begin{scope}[shift={(8,0.2)}]
-                \draw[-&gt;] (-2.7,0) -- (2.9,0) node[right] {\(x\)};
-                \draw[-&gt;] (0,-0.5) -- (0,3.9) node[above] {\(z\)};
-
-                \draw[gray!50] (0,0) ellipse (1.5 and 0.38);
-                \draw[thick] (-1.5,0) -- (-1.5,3);
-                \draw[thick] (1.5,0) -- (1.5,3);
-                \draw[thick] (0,3) ellipse (1.5 and 0.38);
-
-                \foreach \h in {0.6,1.2,1.8,2.4}
-                    \draw[gray!45] (0,\h) ellipse (1.5 and 0.38);
-
-                \foreach \x in {-1.0,0,1.0}
-                    \draw[gray!45] (\x,0.1) -- (\x,2.9);
-
-                \node at (0,-0.95) {cylindrical surface};
-            \end{scope}
-        \end{tikzpicture}
-        </latex-image>
-      </image>
+      <caption>The rectangle of parameter values is wrapped into a cylinder. The cylindrical surface can be rotated interactively.</caption>
+      <sidebyside widths="44% 52%" valign="middle">
+        <image>
+          <shortdescription>The parameter rectangle spans angles from 0 to 2 pi and heights from 0 to 5.</shortdescription>
+          <latex-image>
+          \begin{tikzpicture}[scale=0.75, &gt;=stealth]
+            \draw[-&gt;] (-0.3,0)--(5.0,0) node[right] {\(\theta\)};
+            \draw[-&gt;] (0,-0.3)--(0,5.8) node[above] {\(z\)};
+            \filldraw[fill=blue!7,draw=blue!65!black,thick] (0,0) rectangle (4.2,5);
+            \foreach \x in {0.84,1.68,2.52,3.36} \draw[gray!55] (\x,0)--(\x,5);
+            \foreach \y in {1,2,3,4} \draw[gray!55] (0,\y)--(4.2,\y);
+            \node[below] at (4.2,0) {\(2\pi\)};
+            \node[left] at (0,5) {\(5\)};
+            \node at (2.1,-0.8) {parameter rectangle};
+          \end{tikzpicture}
+          </latex-image>
+        </image>
+        <image>
+          <shortdescription>The same grid wrapped onto a 3D cylinder of radius 2 and height 5.</shortdescription>
+          <asymptote>
+          import graph3;
+          size(7cm);
+          currentprojection=orthographic(7,-10,6);
+          surface s=surface(new triple(pair q) {
+            return (2*cos(q.x),2*sin(q.x),q.y);
+          },(0,0),(2pi,5),40,10);
+          draw(s,rgb(0.44,0.68,0.87)+opacity(0.42),meshpen=gray(0.48)+linewidth(0.25pt));
+          path3 base=(2,0,0), top=(2,0,5);
+          for(int k=1; k&lt;72; ++k) {
+            real t=2pi*k/72;
+            base=base--(2*cos(t),2*sin(t),0);
+            top=top--(2*cos(t),2*sin(t),5);
+          }
+          draw(base--cycle,rgb(0.13,0.38,0.70)+linewidth(1.0pt));
+          draw(top--cycle,rgb(0.13,0.38,0.70)+linewidth(1.0pt));
+          draw(O--(2.7,0,0),gray(0.47),Arrow3);
+          draw(O--(0,2.7,0),gray(0.47),Arrow3);
+          draw(O--(0,0,5.8),gray(0.47),Arrow3);
+          label("$x$",(2.7,0,0),2E);
+          label("$y$",(0,2.7,0),2N);
+          label("$z$",(0,0,5.8),2N);
+          label("$\mathbf r(\theta,z)$",(0,-2,3),2S,rgb(0.13,0.38,0.70));
+          </asymptote>
+        </image>
+      </sidebyside>
     </figure>
 
   </subsection>

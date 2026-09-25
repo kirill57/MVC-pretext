@@ -430,56 +430,50 @@
       <caption>
         The same loop can bound different surfaces. Maxwell's displacement-current term makes the
         answer independent of the spanning surface.
-      </caption>
+       (Interactive: drag to rotate, scroll to zoom.)</caption>
       <image width="70%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
-            % plates
-            \draw[fill=gray!20, thick] (3.0,1.0) rectangle (3.25,3.2);
-            \draw[fill=gray!20, thick] (4.6,1.0) rectangle (4.85,3.2);
-            \node at (3.12,3.45) {plate};
-            \node at (4.72,3.45) {plate};
-
-            % wires
-            \draw[thick] (0.2,2.1) -- (3.0,2.1);
-            \draw[thick] (4.85,2.1) -- (6.4,2.1);
-
-            \draw[-&gt;, very thick, blue!65!black] (1.0,2.1) -- (1.8,2.1);
-            \node[blue!65!black] at (1.2,2.45) {current \(I\)};
-
-            % loop C
-            \draw[red!65!black, very thick] (1.7,2.1) ellipse (0.55 and 1.0);
-            \node[red!65!black] at (2.0,0.85) {\(C\)};
-
-            % surface S1
-            \draw[fill=red!12, opacity=0.55, thick] (1.7,2.1) ellipse (0.48 and 0.86);
-            \node[red!65!black] at (0.6,1.0) {\(S_1\) cuts wire};
-
-            % surface S2 schematic (adjusted to arc wider and avoid text)
-            \draw[green!45!black, very thick, dashed]
-                (1.7,3.1) .. controls (2.2,4.4) and (3.9,4.4) .. (3.9,3.2)
-                .. controls (3.9,2.6) and (3.9,1.6) .. (3.9,1.0)
-                .. controls (3.9,-0.2) and (2.2,-0.2) .. (1.7,1.1);
-
-            % label for S2 (moved below the bottom arc)
-            \node[green!45!black] at (2.8,-0.4) {\(S_2\) crosses gap};
-
-            % electric flux between plates
-            \foreach \y in {1.35,1.75,2.15,2.55,2.95} {
-                \draw[-&gt;, purple!70!black, thick] (3.35,\y) -- (4.5,\y);
-            }
-
-            % flux label (stacked and placed safely below the gap)
-            \node[purple!70!black, align=center, font=\small] at (3.92,0.45)
-                {changing \\ electric flux};
-
-            % formula (shifted further down to clear the S2 label)
-            \node at (3.3,-1.4)
-                {\(\displaystyle \int_C\mathcal H
-                =
-                \int_S\mathcal J+\frac{d}{dt}\int_S\mathcal D\)};
-        \end{tikzpicture}
-        </latex-image>
+        <shortdescription>A 3D loop bounds both a disk cutting a wire and a bulged surface reaching the capacitor gap.</shortdescription>
+        <asymptote>
+        import graph3;
+        size(11cm);
+        currentprojection=orthographic(7,-10,8);
+        path3 plate1=(0,1.3,0), plate2=(1.8,1.3,0);
+        path3 loop=(-1.4,1.5,0);
+        for(int k=1; k&lt;72; ++k) {
+          real t=2pi*k/72;
+          plate1=plate1--(0,1.3*cos(t),1.3*sin(t));
+          plate2=plate2--(1.8,1.3*cos(t),1.3*sin(t));
+          loop=loop--(-1.4,1.5*cos(t),1.5*sin(t));
+        }
+        plate1=plate1--cycle;
+        plate2=plate2--cycle;
+        loop=loop--cycle;
+        draw(surface(plate1),gray(0.65)+opacity(0.42));
+        draw(surface(plate2),gray(0.65)+opacity(0.42));
+        draw(plate1,gray(0.36)+linewidth(0.8pt));
+        draw(plate2,gray(0.36)+linewidth(0.8pt));
+        draw((-3,0,0)--(0,0,0),gray(0.27)+linewidth(1.3pt));
+        draw((1.8,0,0)--(4,0,0),gray(0.27)+linewidth(1.3pt));
+        draw((-2.7,0,0)--(-2.0,0,0),rgb(0.13,0.38,0.76)+linewidth(1.7pt),Arrow3);
+        label("$I$",(-2.1,0,0),2N,rgb(0.13,0.38,0.76));
+        surface bulged=surface(new triple(pair q) {
+          real t=q.x, r=q.y;
+          real r2=r*r, r4=r2*r2, r8=r4*r4;
+          return (-1.4+2.4*(1-r8),1.5*r*cos(t),1.5*r*sin(t));
+        },(0,0),(2pi,1),64,18);
+        draw(surface(loop),rgb(0.72,0.42,0.76)+opacity(0.29));
+        draw(bulged,rgb(0.38,0.72,0.49)+opacity(0.33));
+        draw(loop,rgb(0.78,0.15,0.16)+linewidth(1.7pt));
+        label("$C$",(-1.4,1.5,0),2S,rgb(0.78,0.15,0.16));
+        label("$S_1$",(-1.4,0.6,0.6),2W,rgb(0.48,0.23,0.60));
+        label("$S_2$",(0.7,0.55,0.35),2N,rgb(0.16,0.47,0.25));
+        label("plates",(0,1.3,0),2N);
+        pen electric=rgb(0.17,0.43,0.72)+linewidth(1.0pt);
+        draw((0.25,-0.5,0)--(1.55,-0.5,0),electric,Arrow3);
+        draw((0.25,0.5,0)--(1.55,0.5,0),electric,Arrow3);
+        draw((0.25,0,0.5)--(1.55,0,0.5),electric,Arrow3);
+        label("electric field",(1.2,0,0.7),2N,electric);
+        </asymptote>
       </image>
     </figure>
 

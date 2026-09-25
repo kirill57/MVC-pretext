@@ -261,21 +261,33 @@
 
     <figure xml:id="c17s6-fig-spherical-shell">
       <caption>Removing the singular point turns the ball into a shell. The boundary now has
-      two spheres with opposite induced orientations.</caption>
-      <image width="60%">
-        <latex-image>
-        \begin{tikzpicture}[scale=0.9, &gt;=stealth]
-            \draw[fill=gray!8, thick] (0,0) circle (2.4);
-            \draw[fill=white, thick] (0,0) circle (0.8);
-            \draw[-&gt;, very thick, red!65!black] (2.4,0) -- (3.25,0)
-                node[right] {outward on \(S_a\)};
-            \draw[-&gt;, very thick, blue!65!black] (0.8,0) -- (0.05,0)
-                node[below] {outward for the shell};
-            \node [above right] at (0,0) {removed};
-            \node at (0,-3.15)
-                {on a shell, the outer and inner fluxes cancel};
-        \end{tikzpicture}
-        </latex-image>
+      two spheres with opposite induced orientations. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="75%">
+        <shortdescription>Two translucent concentric spheres bound a 3D shell; outer and inner normals point in opposite radial directions.</shortdescription>
+        <asymptote>
+        import graph3;
+        size(9cm);
+        currentprojection=orthographic(8,-10,7);
+        surface sphereAt(real r) {
+          return surface(new triple(pair q) {
+            real t=q.x, p=q.y;
+            return (r*sin(p)*cos(t),r*sin(p)*sin(t),r*cos(p));
+          },(0,0),(2pi,pi),36,18);
+        }
+        draw(sphereAt(2.5),rgb(0.40,0.64,0.86)+opacity(0.16));
+        draw(sphereAt(0.8),rgb(0.66,0.48,0.82)+opacity(0.30));
+        draw(O--(3.5,0,0),gray(0.46),Arrow3);
+        draw(O--(0,3.5,0),gray(0.46),Arrow3);
+        draw(O--(0,0,3.5),gray(0.46),Arrow3);
+        label("$x$",(3.5,0,0),2E);
+        label("$y$",(0,3.5,0),2N);
+        label("$z$",(0,0,3.5),2N);
+        draw((2.5,0,0)--(3.3,0,0),rgb(0.76,0.18,0.15)+linewidth(1.5pt),Arrow3);
+        draw((0.8,0,0)--(0.15,0,0),rgb(0.19,0.39,0.78)+linewidth(1.5pt),Arrow3);
+        label("outer normal",(3.3,0,0),2E);
+        label("inner normal",(0.8,0,0),2N);
+        label("removed point",O,2S);
+        </asymptote>
       </image>
     </figure>
   </subsection>

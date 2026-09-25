@@ -328,7 +328,8 @@
 
     <p>
       For cylindrical coordinates, the shadow is usually drawn in the <m>xy</m>-plane using polar
-      coordinates. Then <m>z</m> runs from a lower surface to an upper surface.
+      coordinates. Then <m>z</m> runs from a lower surface to an upper surface, as in
+      <xref ref="c11s2-fig-vertical-fiber-shadow"/>.
     </p>
 
     <p>A useful routine is:</p>
@@ -357,6 +358,67 @@
       the integral becomes
       <md>\boxed{\iiint_E f(x,y,z)\,dV = \int_\alpha^\beta \int_{a(\theta)}^{b(\theta)} \int_{g_1(r,\theta)}^{g_2(r,\theta)} f(r\cos\theta,r\sin\theta,z)\,r\,dz\,dr\,d\theta.}</md>
     </p>
+
+    <figure xml:id="c11s3-fig-slanted-roof-shadow">
+      <caption>The slanted-roof solid and its disk shadow <m>0\le r\le2</m> in the <m>xy</m>-plane. At the marked point <m>(r,\theta)</m>, the red vertical segment runs from <m>z=0</m> to <m>z=3+r\cos\theta</m>. (Interactive: drag to rotate, scroll to zoom.)</caption>
+      <image width="85%">
+        <shortdescription>3D slanted-roof cylinder above a disk shadow, with a radial arrow and a vertical integration segment.</shortdescription>
+        <asymptote>
+        import graph3;
+        size(11cm);
+        currentprojection=orthographic(-7,-10,8);
+
+        real radius=2, theta=pi/4, r=1.35;
+        triple P=(r*cos(theta),r*sin(theta),0);
+        triple Q=(r*cos(theta),r*sin(theta),3+r*cos(theta));
+        path3 base=(radius,0,0);
+        path3 roof=(radius,0,5);
+        for(int k=1; k&lt;72; ++k) {
+          real t=2pi*k/72;
+          base=base--(radius*cos(t),radius*sin(t),0);
+          roof=roof--(radius*cos(t),radius*sin(t),3+radius*cos(t));
+        }
+        base=base--cycle;
+        roof=roof--cycle;
+
+        draw(surface(base),rgb(0.38,0.70,0.43)+opacity(0.38));
+        surface wall=surface(new triple(pair q) {
+          real t=q.x, u=q.y;
+          return (2*cos(t),2*sin(t),u*(3+2*cos(t)));
+        },(0,0),(2pi,1),48,8);
+        draw(wall,rgb(0.36,0.60,0.84)+opacity(0.20));
+        surface top=surface(new triple(pair q) {
+          real t=q.x, s=q.y;
+          real x=2*s*cos(t), y=2*s*sin(t);
+          return (x,y,3+x);
+        },(0,0),(2pi,1),48,10);
+        draw(top,rgb(0.35,0.60,0.88)+opacity(0.52));
+        draw(base,rgb(0.16,0.50,0.22)+linewidth(0.9pt));
+        draw(roof,rgb(0.13,0.35,0.63)+linewidth(1.0pt));
+
+        draw(O--(2.7,0,0),gray(0.42),Arrow3);
+        draw(O--(0,2.7,0),gray(0.42),Arrow3);
+        draw(O--(0,0,5.7),gray(0.42),Arrow3);
+        label("$x$",(2.7,0,0),2E);
+        label("$y$",(0,2.7,0),2N);
+        label("$z$",(0,0,5.7),2N);
+        draw(O--P,rgb(0.14,0.32,0.72)+linewidth(1.1pt),Arrow3);
+        label("$r$",0.55*P,2S,rgb(0.14,0.32,0.72));
+        path3 angle=(0.55,0,0);
+        for(int k=1; k&lt;16; ++k) {
+          real t=theta*k/15;
+          angle=angle--(0.55*cos(t),0.55*sin(t),0);
+        }
+        draw(angle,gray(0.28)+linewidth(0.7pt));
+        label("$\theta$",(0.73*cos(theta/2),0.73*sin(theta/2),0),2N);
+        draw(P--Q,rgb(0.79,0.15,0.12)+linewidth(1.8pt),Arrow3);
+        dot(P,rgb(0.79,0.15,0.12));
+        dot(Q,rgb(0.79,0.15,0.12));
+        label("$D:0\le r\le2$",(-0.7,-1.05,0),2S,rgb(0.13,0.43,0.20));
+        label("$z=3+r\cos\theta$",Q,2E,rgb(0.13,0.35,0.63));
+        </asymptote>
+      </image>
+    </figure>
 
     <example xml:id="c11s3-ex-cylinder-slanted-roof">
       <title>A cylinder cut by a slanted roof</title>
