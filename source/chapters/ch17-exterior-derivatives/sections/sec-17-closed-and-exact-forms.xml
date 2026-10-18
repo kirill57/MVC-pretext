@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!-- Converted from multivariable_calculus/chapters/ch17-exterior-derivatives.tex, Section 17.5.
-     Status: CONVERTED. -->
-<section xml:id="sec-17-closed-and-exact-forms" xmlns:xi="http://www.w3.org/2001/XInclude">
+     Status: CONVERTED. --><section xmlns:xi="http://www.w3.org/2001/XInclude" xml:id="sec-17-closed-and-exact-forms">
   <title>Closed and exact forms</title>
 
-  <p>
+  <introduction>
+<p>
     Section <xref ref="sec-17-the-rule-d-squared-equals-zero"/> ended with the identity
     <md>d^2=0.</md>
     That identity gives one direction for free:
@@ -12,6 +12,8 @@
     The reverse question is more delicate. If a form has zero exterior derivative, did it come
     from another form? Sometimes yes. Sometimes a hole in the domain stops it.
   </p>
+
+  </introduction>
 
   <subsection xml:id="c17s5-subsec-exact-forms">
     <title>Exact forms: <m>\omega=d\alpha</m></title>
@@ -45,7 +47,7 @@
       <title>Exact form</title>
       <statement>
         <p>
-          A <m>k</m>-form <m>\alpha</m> is called <term>exact</term> on a domain <m>D</m> if there
+          For <m>k\ge1</m>, a <m>k</m>-form <m>\alpha</m> is called <term>exact</term> on a domain <m>D</m> if there
           is a <m>(k-1)</m>-form <m>\beta</m> on <m>D</m> such that
           <md>\boxed{\alpha=d\beta.}</md>
         </p>
@@ -212,8 +214,8 @@
       <statement>
         <p>
           We just saw that exact always forces closed, but not the other way around. In your own
-          words, why should &#8220;<m>\alpha=d\beta</m>&#8221; be a stronger demand than
-          &#8220;<m>d\alpha=0</m>&#8221;? What does an antiderivative <m>\beta</m> give you that
+          words, why should <lq/><m>\alpha=d\beta</m><rq/> be a stronger demand than
+          <lq/><m>d\alpha=0</m><rq/>? What does an antiderivative <m>\beta</m> give you that
           merely knowing <m>d\alpha=0</m> does not?
         </p>
       </statement>
@@ -230,9 +232,8 @@
       <title>Exact forms are closed</title>
       <statement>
         <p>
-          Let <m>\alpha</m> be a form with smooth enough coefficients for the identity
-          <md>d^2=0</md>
-          to apply. If <m>\alpha</m> is exact, then <m>\alpha</m> is closed.
+          Suppose <m>\alpha=d\beta</m> on an open domain, where <m>\beta</m> has
+          <m>C^2</m> coefficient functions. Then <m>\alpha</m> is closed.
         </p>
         <p>
           In symbols,
@@ -350,7 +351,8 @@
     <figure xml:id="c17s5-fig-closed-not-exact">
       <caption>A closed <m>1</m>-form can fail to be exact when the domain has a hole.</caption>
       <image width="60%">
-        <latex-image>
+        <shortdescription>A closed 1-form can fail to be exact when the domain has a hole.</shortdescription>
+<latex-image>
         \begin{tikzpicture}[scale=0.88, &gt;=stealth]
             \draw[-&gt;] (-3.4,0) -- (3.6,0) node[right] {\(x\)};
             \draw[-&gt;] (0,-3.4) -- (0,3.6) node[above] {\(y\)};
@@ -442,15 +444,19 @@
         <p>
           First work in an open ball <m>B</m> centered at <m>a</m> and contained in <m>D</m>.
           Every segment from <m>a</m> to <m>x\in B</m> stays in <m>B</m>. Define
-          <md>\phi_B(x)=\int_0^1\sum_{i=1}^n F_i(a+t(x-a))(x_i-a_i)\,dt.</md>
+          <md>\phi_B(x)=\int_0^1 F(a+tv)\cdot v\,dt,\qquad v=x-a.</md>
           Closedness means <m>\partial_jF_i=\partial_iF_j</m>. Differentiating under this
           integral is justified by <xref ref="c13s6-lem-parameter-integral"/>, applied to
-          each coordinate on a small closed neighborhood of <m>x</m>. With <m>v=x-a</m>,
-          the product and chain rules give
+          each coordinate on a small closed neighborhood of <m>x</m>. The product and chain
+          rules give <m>\partial_j\phi_B(x)=\int_0^1 G_j(t)\,dt</m>, where
           <md>
-            <mrow>\partial_j\phi_B(x)\amp=\int_0^1\left[F_j(a+tv)+t\sum_i v_i\partial_jF_i(a+tv)\right]dt</mrow>
-            <mrow>\amp=\int_0^1\frac{d}{dt}\left[tF_j(a+tv)\right]dt=F_j(x).</mrow>
+            <mrow>G_j(t)\amp=F_j(a+tv)</mrow>
+            <mrow>\amp\qquad+t\sum_i v_i\partial_jF_i(a+tv).</mrow>
           </md>
+          By closedness and the chain rule,
+          <md>G_j(t)=\frac{d}{dt}\left[tF_j(a+tv)\right].</md>
+          The Fundamental Theorem of Calculus therefore gives
+          <md>\partial_j\phi_B(x)=F_j(x).</md>
           Thus <m>d\phi_B=\omega</m> on <m>B</m>. By the fundamental theorem for line
           integrals, two piecewise smooth paths inside this ball with the same endpoints
           have the same integral.
@@ -459,7 +465,11 @@
           Next let <m>C:[0,1]\to D</m> be a piecewise smooth closed path, based at
           <m>p=C(0)=C(1)</m>. Simple connectivity supplies a continuous contraction
           <m>H:[0,1]^2\to D</m> with
-          <md>H(t,0)=C(t),\qquad H(t,1)=q,\qquad H(0,s)=H(1,s)</md>
+          <md>
+            <mrow>H(t,0)\amp=C(t),</mrow>
+            <mrow>H(t,1)\amp=q,</mrow>
+            <mrow>H(0,s)\amp=H(1,s)</mrow>
+          </md>
           for some <m>q\in D</m>. The common endpoint of the intermediate loops may move.
           We need not differentiate <m>H</m>, and its image need not be a regular surface.
         </p>
@@ -530,8 +540,8 @@
       <hint>
         <p>
           Think of <m>d\alpha=0</m> as a clue gathered point by point, and exactness as a verdict
-          about the whole domain at once. The shape of the domain &#8212; whether a loop can be shrunk
-          to a point &#8212; is the missing ingredient.
+          about the whole domain at once. The shape of the domain <mdash/> whether a loop can be shrunk
+          to a point <mdash/> is the missing ingredient.
         </p>
       </hint>
     </exercise>

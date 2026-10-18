@@ -64,9 +64,9 @@ yt = ...
 zt = ...
 
 integrand = (
-    P.subs({x: xt, y: yt, z: zt})*sp.diff(xt, t)
-    + Q.subs({x: xt, y: yt, z: zt})*sp.diff(yt, t)
-    + R.subs({x: xt, y: yt, z: zt})*sp.diff(zt, t)
+    sp.sympify(P).subs({x: xt, y: yt, z: zt}, simultaneous=True)*sp.diff(xt, t)
+    + sp.sympify(Q).subs({x: xt, y: yt, z: zt}, simultaneous=True)*sp.diff(yt, t)
+    + sp.sympify(R).subs({x: xt, y: yt, z: zt}, simultaneous=True)*sp.diff(zt, t)
 )
 
 value = sp.integrate(integrand, (t, a, b))
@@ -127,9 +127,9 @@ rv = r.diff(v)
 normal = ru.cross(rv)
 
 F = sp.Matrix([
-    P.subs({x: xu, y: yu, z: zu}),
-    Q.subs({x: xu, y: yu, z: zu}),
-    R.subs({x: xu, y: yu, z: zu})
+    sp.sympify(P).subs({x: xu, y: yu, z: zu}, simultaneous=True),
+    sp.sympify(Q).subs({x: xu, y: yu, z: zu}, simultaneous=True),
+    sp.sympify(R).subs({x: xu, y: yu, z: zu}, simultaneous=True)
 ])
 
 integrand = sp.simplify(F.dot(normal))
